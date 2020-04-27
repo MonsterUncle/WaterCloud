@@ -19,7 +19,7 @@ using Senparc.CO2NET.Extensions;
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
     [Area("SystemManage")]
-    public class ModuleButtonController : ControllerBaseIgnore
+    public class ModuleButtonController : ControllerBase
     {
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];

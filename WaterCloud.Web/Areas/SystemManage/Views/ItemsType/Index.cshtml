@@ -39,9 +39,14 @@
                     },
                     { field: 'F_Description', title: '备注', width: 150 },
                 ]],
+                done: function () {
+                    //权限控制
+                    common.authorizeButton("toolbar");
+                }
             });
         }
         rendertree();
+
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             var queryJson = data.field.txt_keyword;
@@ -50,6 +55,7 @@
             return false;
         });
         var item;
+
         table.on('row(currentTableFilter)', function (obj) {
             obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
             item = obj;

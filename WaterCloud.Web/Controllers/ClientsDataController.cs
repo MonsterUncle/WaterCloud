@@ -268,7 +268,15 @@ namespace WaterCloud.Web.Controllers
                         munu.child = new List<MenuInfoEntity>();
                         munu.child = ToMenuJsonNew(data, item.F_Id);
                     }
-                    list.Add(munu);
+                    if (item.F_Layers == 1)
+                    {
+                        list.Add(munu);
+                    }
+                    if (item.F_Layers>1&& item.F_IsMenu ==true)
+                    {
+                        list.Add(munu);
+                    }
+
                 };
             }
             return list;

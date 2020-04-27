@@ -474,7 +474,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable'], fun
         authorizeButton : function (id) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             //var moduleId = top.$("layuiminiTabInfo").attr("id").substr(6);
-            var dataJson = top.clients.authorizeButton[moduleId];
+            
+            var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
             var $element = $('#' + id);
             $element.find('button[authorize=yes]').attr('authorize', 'no');
             if (dataJson != undefined) {
