@@ -88,8 +88,18 @@ namespace WaterCloud.Service.SystemSecurity
             logEntity.F_Date = DateTime.Now;
             try
             {
-                logEntity.F_IPAddress = OperatorProvider.Provider.GetCurrent().LoginIPAddress;
-                logEntity.F_IPAddressName = OperatorProvider.Provider.GetCurrent().LoginIPAddressName;
+
+                var operatorModel = OperatorProvider.Provider.GetCurrent();
+                if (operatorModel==null)
+                {
+                    logEntity.F_IPAddress = NetHelper.Ip;
+                    logEntity.F_IPAddressName = "本地局域网";
+                }
+                else
+                {
+                    logEntity.F_IPAddress = OperatorProvider.Provider.GetCurrent().LoginIPAddress;
+                    logEntity.F_IPAddressName = OperatorProvider.Provider.GetCurrent().LoginIPAddressName;
+                }
                 logEntity.Create();
                 service.Insert(logEntity);
             }
