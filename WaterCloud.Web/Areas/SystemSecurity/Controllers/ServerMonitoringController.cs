@@ -31,7 +31,11 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             var arm = computer.RAMRate;
             var cpu = computer.CPURate;
             var iis = computer.RunTime;
-            return Content(new { ARM = arm, CPU = cpu, IIS = iis }.ToJson());
+            var TotalRAM = computer.TotalRAM;
+            string ip = NetHelper.GetWanIp();
+            string ipLocation = IpLocationHelper.GetIpLocation(ip);
+            var IP = string.Format("{0} ({1})", ip, ipLocation);
+            return Content(new { ARM = arm, CPU = cpu, IIS = iis , TotalRAM = TotalRAM,IP=IP }.ToJson());
         }
         [HttpGet]
         public ActionResult GetServerData()

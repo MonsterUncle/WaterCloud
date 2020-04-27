@@ -2,6 +2,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment env
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -168,10 +169,10 @@
         loadChart();
     })
     layui.use(['layer', 'miniTab', 'common'], function () {
-            common = layui.common,
-        common.iframeInterval(function () {
-            loadInfo();
-        }, 10000); //指定10秒刷新一次
+        common = layui.common,
+            common.iframeInterval(function () {
+                loadInfo();
+            }, 10000); //指定10秒刷新一次
     })
 
 
@@ -180,14 +181,12 @@
             url: "/SystemSecurity/ServerMonitoring/GetServerDataJson",
             dataType: "json",
             success: function (data) {
-                loadGaugeIIS(data.IIS);
                 loadGaugeCPU(data.CPU);
                 loadGaugeRAM(data.ARM);
+                $('#TotalRAM').html(data.TotalRAM);
+                $('#OutIP').html(data.IP);
             }
         });
-    }
-    function loadGaugeIIS(iis) {
-        $('#mainb').html("<h2>"+iis+"</h2>")
     }
     function loadGaugeCPU(cpu) {
         var myChartCUP = echarts.init(document.getElementById('maina'));
@@ -288,7 +287,6 @@
     function loadChart() {
         var myChart = echarts.init(document.getElementById('maind'), 'walden');
         var xData = [];
-        var iisData = [];
         var armData = [];
         var cpuData = [];
         $.ajax({
@@ -299,16 +297,13 @@
                 var length = data.length;
                 for (var i = 0; i < length; i++) {
                     if (data[i]['F_Date'] !== null) {
-                        xData.push(new Date(data[i]['F_Date'].replace(/-/g, "/")).toLocaleDateString());
+                        xData.push(new Date(data[i]['F_Date']).Format("yyyy-MM-dd"));
                     }
                     if (data[i]['F_ARM'] !== null) {
                         armData.push(data[i]['F_ARM']);
                     }
                     if (data[i]['F_CPU'] !== null) {
                         cpuData.push(data[i]['F_CPU']);
-                    }
-                    if (data[i]['F_IIS'] !== null) {
-                        iisData.push(data[i]['F_IIS']);
                     }
                 }
             }
@@ -318,7 +313,7 @@
                 trigger: 'axis'
             },
             legend: {
-                data: ['IIS连接数', 'CPU使用率', 'ARM使用率']
+                data: ['CPU使用率', 'ARM使用率']
             },
 
             xAxis: {
@@ -330,10 +325,6 @@
                 type: 'value'
             },
             series: [
-                {
-                    name: 'IIS连接数', type: 'line',
-                    data: iisData
-                },
                 {
                     name: 'CPU使用率', type: 'line',
                     data: cpuData
@@ -355,50 +346,35 @@
 <div class="layuimini-container">
     <div class="layuimini-main">
         <div class="layui-row layui-col-space15">
-            <div class="layui-col-md4">
+            <div class="layui-col-md3">
                 <div class="layui-card">
                     <div class="layui-card-header"><i class="fa fa-warning icon"></i>CPU使用率</div>
                     <div class="layui-card-body">
                         <div class="welcome-module">
-                            <div id="maina" style="width: 250px; height: 250px;"></div>
+                            <div id="maina" style="width: 220px; height: 300px;"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="layui-col-md4">
-                <div class="layui-card">
-                    <div class="layui-card-header"><i class="fa fa-warning icon"></i>运行时间</div>
-                    <div class="layui-card-body">
-                        <div class="welcome-module">
-                            <div id="mainb" style="width: 250px; height: 250px;">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="layui-col-md4">
+            <div class="layui-col-md3">
                 <div class="layui-card">
                     <div class="layui-card-header"><i class="fa fa-warning icon"></i>ARM使用率</div>
                     <div class="layui-card-body">
                         <div class="welcome-module">
-                            <div id="mainc" style="width: 250px;height: 250px;"></div>
+                            <div id="mainc" style="width: 220px;height: 300px;"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="layui-col-md8">
+            <div class="layui-col-md6">
                 <div class="layui-card">
                     <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>报表统计</div>
                     <div class="layui-card-body">
-                        <div id="maind" style="width: 100%;min-height:300px"></div>
+                        <div id="maind" style="width: 100%;min-height:220px"></div>
                     </div>
                 </div>
             </div>
-            <div class="layui-col-md4">
+            <div class="layui-col-md6">
                 <div class="layui-card">
                     <div class="layui-card-header"><i class="fa fa-fire icon"></i>服务器信息</div>
                     <div class="layui-card-body layui-text">
@@ -409,29 +385,69 @@
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <td>操作系统名称</td>
+                                    <td>服务器名称</td>
                                     <td>
-                                        ...
+                                        @Environment.MachineName
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>操作系统版本</td>
-                                    <td>...</td>
+                                    <td>总内存</td>
+                                    <td><span id="TotalRAM"></span></td>
                                 </tr>
                                 <tr>
-                                    <td>数据库服务器端口</td>
-                                    <td>...</td>
+                                    <td>操作系统</td>
+                                    <td>@System.Runtime.InteropServices.RuntimeInformation.OSDescription</td>
                                 </tr>
                                 <tr>
-                                    <td>数据库名称</td>
+                                    <td>系统架构</td>
+                                    <td>@System.Runtime.InteropServices.RuntimeInformation.OSArchitecture</td>
+                                </tr>
+                                <tr>
+                                    <td>外网IP</td>
                                     <td>
-                                        ...
+                                        <span id="OutIP"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="fa fa-fire icon"></i>.NET Core信息</div>
+                    <div class="layui-card-body layui-text">
+                        <table class="layui-table">
+                            <colgroup>
+                                <col width="100">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td>环境变量</td>
+                                    <td>@Html.Raw(env.EnvironmentName)</td>
+                                </tr>
+                                <tr>
+                                    <td>ContentRootPath</td>
+                                    <td>
+                                        @Html.Raw(env.ContentRootPath)
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>用户名</td>
+                                    <td>WebRootPath</td>
+                                    <td>@Html.Raw(env.WebRootPath)</td>
+                                </tr>
+                                <tr>
+                                    <td>.NET Core版本</td>
                                     <td>
-                                        ...
+                                        @Html.Raw(System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>启动时间</td>
+                                    <td>
+                                        @System.Diagnostics.Process.GetCurrentProcess().StartTime.ToString("yyyy-MM-dd HH:mm:ss")
                                     </td>
                                 </tr>
                             </tbody>
