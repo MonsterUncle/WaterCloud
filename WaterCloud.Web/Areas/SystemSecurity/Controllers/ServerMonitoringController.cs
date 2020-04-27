@@ -18,6 +18,11 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     [Area("SystemSecurity")]
     public class ServerMonitoringController : ControllerBase
     {
+        private readonly ServerStateService _serverStateService;
+        public ServerMonitoringController(ServerStateService serverStateService)
+        {
+            _serverStateService = serverStateService;
+        }
         [HttpGet]
         public ActionResult GetServerDataJson()
         {
@@ -31,7 +36,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HttpGet]
         public ActionResult GetServerData()
         {
-            var data = new ServerStateService().GetList(2).OrderBy(a => a.F_Date).ToList() ;
+            var data = _serverStateService.GetList(2).OrderBy(a => a.F_Date).ToList() ;
             return Content(data.ToJson());
         }
     }

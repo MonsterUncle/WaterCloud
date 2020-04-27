@@ -13,6 +13,7 @@ using WaterCloud.Service;
 using System;
 using WaterCloud.Service.SystemManage;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
 {
@@ -21,12 +22,24 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     {
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private DbBackupService dbBackupApp = new DbBackupService();
+        private readonly DbBackupService _dbBackupService;
+        private readonly ModuleService _moduleService;
+        private readonly LogService _logService;
+        [Obsolete]
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public DbBackupController(ModuleService moduleService, LogService logService, DbBackupService dbBackupService, IHostingEnvironment hostingEnvironment)
+        {
+            _moduleService = moduleService;
+            _logService = logService;
+            _dbBackupService = dbBackupService;
+            _hostingEnvironment = hostingEnvironment;
+        }
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetGridJson(string keyword)
         {
-            var data = dbBackupApp.GetList(keyword);
+            var data = _dbBackupService.GetList(keyword);
             return ResultLayUiTable(data.Count,data);
         }
         [HttpPost]
@@ -34,31 +47,32 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(DbBackupEntity dbBackupEntity)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = new ModuleService().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Create.ToString());
             logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                //dbBackupEntity.F_FilePath = Server.MapPath("~/Resource/DbBackup/" + dbBackupEntity.F_FileName + ".bak");
-                //if (!Directory.Exists(Server.MapPath("~/Resource/DbBackup/")))
-                //{
-                //    DirectoryInfo directoryInfo = new DirectoryInfo(Server.MapPath("~/Resource/DbBackup/"));
-                //    directoryInfo.Create();
-                //}
+                string webRootPath = _hostingEnvironment.WebRootPath;
+                dbBackupEntity.F_FilePath = webRootPath+"/Resource/DbBackup/" + dbBackupEntity.F_FileName + ".bak";
+                if (!Directory.Exists(webRootPath+"/Resource/DbBackup/"))
+                {
+                    DirectoryInfo directoryInfo = new DirectoryInfo(webRootPath + "/Resource/DbBackup/");
+                    directoryInfo.Create();
+                }
                 dbBackupEntity.F_FileName = dbBackupEntity.F_FileName + ".bak";
-                dbBackupApp.SubmitForm(dbBackupEntity);
+                _dbBackupService.SubmitForm(dbBackupEntity);
                 logEntity.F_Description += "操作成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
 
@@ -69,24 +83,24 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem= new ModuleService().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem= _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                dbBackupApp.DeleteForm(keyValue);
+                _dbBackupService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("删除成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
@@ -94,13 +108,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HandlerAuthorize]
         public void DownloadBackup(string keyValue)
         {
-            var data = dbBackupApp.GetForm(keyValue);
-            //string filename = Server.UrlDecode(data.F_FileName);
-            //string filepath = Server.MapPath(data.F_FilePath);
-            //if (FileDownHelper.FileExists(filepath))
-            //{
-            //    FileDownHelper.DownLoadold(filepath, filename);
-            //}
+            //需要重新定义
         }
     }
 }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WaterCloud.Web
 {
+    /// <summary>
+    /// mime文件
+    /// </summary>
     public class CustomerFileExtensionContentTypeProvider : FileExtensionContentTypeProvider
     {
         public CustomerFileExtensionContentTypeProvider() :

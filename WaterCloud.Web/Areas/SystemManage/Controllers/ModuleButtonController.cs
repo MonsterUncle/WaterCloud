@@ -23,13 +23,20 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     {
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private ModuleService moduleApp = new ModuleService();
-        private ModuleButtonService moduleButtonApp = new ModuleButtonService();
+        private readonly ModuleService _moduleService;
+        private readonly ModuleButtonService _moduleButtonService;       
+        private readonly LogService _logService;
+        public ModuleButtonController(ModuleButtonService moduleButtonService, LogService logService, ModuleService moduleService)
+        {
+            _moduleButtonService = moduleButtonService;
+            _logService = logService;
+            _moduleService = moduleService;
+        }
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetTreeSelectJson(string moduleId)
         {
-            var data = moduleButtonApp.GetList(moduleId);
+            var data = _moduleButtonService.GetList(moduleId);
             var treeList = new List<TreeSelectModel>();
             foreach (ModuleButtonEntity item in data)
             {
@@ -45,7 +52,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetTreeGridJson(string moduleId)
         {
-            var data = moduleButtonApp.GetList(moduleId);
+            var data = _moduleButtonService.GetList(moduleId);
             //var treeList = new List<TreeGridModel>();
             //foreach (ModuleButtonEntity item in data)
             //{
@@ -64,7 +71,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = moduleButtonApp.GetForm(keyValue);
+            var data = _moduleButtonService.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -72,7 +79,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();           
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();           
             LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
@@ -98,18 +105,18 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 }
                 else
                 {
-                    moduleButtonEntity.F_Layers = moduleButtonApp.GetForm(moduleButtonEntity.F_ParentId).F_Layers + 1;
+                    moduleButtonEntity.F_Layers = _moduleButtonService.GetForm(moduleButtonEntity.F_ParentId).F_Layers + 1;
                 }
-                moduleButtonApp.SubmitForm(moduleButtonEntity, keyValue);
+                _moduleButtonService.SubmitForm(moduleButtonEntity, keyValue);
                 logEntity.F_Description += "操作成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
@@ -118,23 +125,23 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
             LogEntity logEntity = new LogEntity(module.F_FullName, "按钮管理", DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                moduleButtonApp.DeleteForm(keyValue);
+                _moduleButtonService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("删除成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
@@ -147,8 +154,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetCloneButtonTreeJson()
         {
-            var moduledata = moduleApp.GetList();
-            var buttondata = moduleButtonApp.GetList();
+            var moduledata = _moduleService.GetList();
+            var buttondata = _moduleButtonService.GetList();
             var treeList = new List<TreeGridModel>();
             foreach (ModuleEntity item in moduledata)
             {
@@ -222,23 +229,23 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public ActionResult SubmitCloneButton(string moduleId, string Ids)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
             LogEntity logEntity= new LogEntity(module.F_FullName, "按钮管理", DbLogType.Create.ToString());
             logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                moduleButtonApp.SubmitCloneButton(moduleId, Ids);
+                _moduleButtonService.SubmitCloneButton(moduleId, Ids);
                 logEntity.F_Description += "克隆成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("克隆成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "克隆失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }

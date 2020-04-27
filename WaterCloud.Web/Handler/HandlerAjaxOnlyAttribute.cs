@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Routing;
 using System;
-
+/// <summary>
+/// ajax验证
+/// </summary>
 namespace WaterCloud.Web
 {
     [AttributeUsage(AttributeTargets.Method)]

@@ -23,29 +23,36 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     {
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private DutyService dutyApp = new DutyService();
-
+        private readonly DutyService _dutyService;
+        private readonly LogService _logService;
+        private readonly ModuleService _moduleService;
+        public DutyController(DutyService dutyService, LogService logService, ModuleService moduleService)
+        {
+            _dutyService = dutyService;
+            _logService = logService;
+            _moduleService = moduleService;
+        }
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetGridJson(Pagination pagination, string keyword)
         {
             pagination.order = "asc";
             pagination.sort = "F_EnCode";
-            var data = dutyApp.GetList(pagination,keyword);
+            var data = _dutyService.GetList(pagination,keyword);
             return ResultLayUiTable(pagination.records, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetListJson(string keyword)
         {
-            var data = dutyApp.GetList(keyword);
+            var data = _dutyService.GetList(keyword);
             return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = dutyApp.GetForm(keyValue);
+            var data = _dutyService.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -53,8 +60,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(RoleEntity roleEntity, string keyValue)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = new ModuleService().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
@@ -74,16 +81,16 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                dutyApp.SubmitForm(roleEntity, keyValue);
+                _dutyService.SubmitForm(roleEntity, keyValue);
                 logEntity.F_Description += "操作成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
@@ -93,24 +100,24 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = new ModuleService().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                dutyApp.DeleteForm(keyValue);
+                _dutyService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("删除成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }

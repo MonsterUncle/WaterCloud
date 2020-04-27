@@ -23,8 +23,17 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     {
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private UserService userApp = new UserService();
-        private UserLogOnService userLogOnApp = new UserLogOnService();
+        private readonly UserService _userService;
+        private readonly UserLogOnService _userLogOnService;
+        private readonly ModuleService _moduleService;
+        private readonly LogService _logService;
+        public UserController(LogService logService, UserService userService, UserLogOnService userLogOnService, ModuleService moduleService)
+        {
+            _moduleService = moduleService;
+            _userService = userService;
+            _logService = logService;
+            _userLogOnService = userLogOnService;
+        }
 
         [HttpGet]
         [HandlerAjaxOnly]
@@ -32,29 +41,29 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         {
             pagination.order = "asc";
             pagination.sort = "F_DepartmentId";
-            var data = userApp.GetList(pagination, keyword);
+            var data = _userService.GetList(pagination, keyword);
             return ResultLayUiTable(pagination.records, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
-            var data = userApp.GetForm(keyValue);
+            var data = _userService.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetUserFormJson()
         {
-            var data = userApp.GetForm(OperatorProvider.Provider.GetCurrent().UserId);
+            var data = _userService.GetForm(OperatorProvider.Provider.GetCurrent().UserId);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
         public ActionResult SubmitUserForm(UserEntity userEntity)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = new ModuleService().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity= new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
             logEntity.F_KeyValue = userEntity.F_Id;
@@ -63,16 +72,16 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
                 userEntity.F_Id = OperatorProvider.Provider.GetCurrent().UserId;
-                userApp.SubmitUserForm(userEntity);
+                _userService.SubmitUserForm(userEntity);
                 logEntity.F_Description += "操作成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
@@ -81,8 +90,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = new ModuleService().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
@@ -100,7 +109,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能修改用户自身";
-                    new LogService().WriteDbLog(logEntity);
+                    _logService.WriteDbLog(logEntity);
                     return Error(logEntity.F_Description);
                 }
             }
@@ -108,16 +117,16 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                userApp.SubmitForm(userEntity, userLogOnEntity, keyValue);
+                _userService.SubmitForm(userEntity, userLogOnEntity, keyValue);
                 logEntity.F_Description += "操作成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
@@ -127,8 +136,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = new ModuleService().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
@@ -139,19 +148,19 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能删除用户自身";
-                    new LogService().WriteDbLog(logEntity);
+                    _logService.WriteDbLog(logEntity);
                     return Error(logEntity.F_Description);
                 }
-                userApp.DeleteForm(keyValue);
+                _userService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("删除成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
@@ -166,8 +175,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitRevisePassword(string F_UserPassword, string keyValue)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = new ModuleService().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
             logEntity.F_KeyValue = keyValue;
@@ -175,16 +184,16 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                userLogOnApp.RevisePassword(F_UserPassword, keyValue);
+                _userLogOnService.RevisePassword(F_UserPassword, keyValue);
                 logEntity.F_Description += "重置密码成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("重置密码成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "重置密码失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
@@ -194,8 +203,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DisabledAccount(string keyValue)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = new ModuleService().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
             logEntity.F_KeyValue = keyValue;
@@ -210,19 +219,19 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能修改用户自身";
-                    new LogService().WriteDbLog(logEntity);
+                    _logService.WriteDbLog(logEntity);
                     return Error(logEntity.F_Description);
                 }
-                userApp.UpdateForm(userEntity);
+                _userService.UpdateForm(userEntity);
                 logEntity.F_Description += "账户禁用成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("账户禁用成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "账户禁用失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
@@ -232,8 +241,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EnabledAccount(string keyValue)
         {
-            var module = new ModuleService().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = new ModuleService().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
             logEntity.F_KeyValue = keyValue;
@@ -248,19 +257,19 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能修改用户自身";
-                    new LogService().WriteDbLog(logEntity);
+                    _logService.WriteDbLog(logEntity);
                     return Error(logEntity.F_Description);
                 }
-                userApp.UpdateForm(userEntity);
+                _userService.UpdateForm(userEntity);
                 logEntity.F_Description += "账户启用成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Success("账户启用成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "账户启用失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }

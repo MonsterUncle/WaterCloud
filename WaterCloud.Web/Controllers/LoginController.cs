@@ -19,6 +19,16 @@ namespace WaterCloud.Web.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly FilterIPService _filterIPService;
+        private readonly UserService _userService;
+        private readonly LogService _logService;
+
+        public LoginController(FilterIPService filterIPService, UserService userService, LogService logService)
+        {
+            _filterIPService = filterIPService;
+            _userService = userService;
+            _logService = logService;
+        }
         [HttpGet]
         public virtual ActionResult Index()
         {
@@ -90,7 +100,7 @@ namespace WaterCloud.Web.Controllers
                 {
                     throw new Exception("验证码错误，请重新输入");
                 }
-                UserEntity userEntity = new UserService().CheckLogin(username, password);
+                UserEntity userEntity = _userService.CheckLogin(username, password);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
                 operatorModel.UserCode = userEntity.F_Account;
@@ -120,7 +130,7 @@ namespace WaterCloud.Web.Controllers
                 logEntity.F_NickName = userEntity.F_RealName;
                 logEntity.F_Result = true;
                 logEntity.F_Description = "登录成功";
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Content(new AjaxResult { state = ResultType.success.ToString(), message = "登录成功。"}.ToJson());
             }
             catch (Exception ex)
@@ -129,14 +139,14 @@ namespace WaterCloud.Web.Controllers
                 logEntity.F_NickName = username;
                 logEntity.F_Result = false;
                 logEntity.F_Description = "登录失败，" + ex.Message;
-                new LogService().WriteDbLog(logEntity);
+                _logService.WriteDbLog(logEntity);
                 return Content(new AjaxResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
             }
         }
         private bool CheckIP()
         {
             string ip = NetHelper.Ip;
-            return new FilterIPService().CheckIP(ip);
+            return _filterIPService.CheckIP(ip);
         }
     }
 }

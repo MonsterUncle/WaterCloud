@@ -16,9 +16,15 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class RoleAuthorizeController : ControllerBase
     {
-        private RoleAuthorizeService roleAuthorizeApp = new RoleAuthorizeService();
-        private ModuleService moduleApp = new ModuleService();
-        private ModuleButtonService moduleButtonApp = new ModuleButtonService();
+        private readonly RoleAuthorizeService _roleAuthorizeService;
+        private readonly ModuleService _moduleService;
+        private readonly ModuleButtonService _moduleButtonService;
+        public RoleAuthorizeController(RoleAuthorizeService roleAuthorizeService, ModuleButtonService moduleButtonService, ModuleService moduleService)
+        {
+            _roleAuthorizeService = roleAuthorizeService;
+            _moduleService = moduleService;
+            _moduleButtonService = moduleButtonService;
+        }
         public ActionResult GetPermissionTree(string roleId)
         {
             string roleid = OperatorProvider.Provider.GetCurrent().RoleId;
@@ -27,18 +33,18 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             //隐藏系统菜单及字典管理
             if (roleid != null)
             {
-                moduledata = moduleApp.GetListByRole(roleid);
-                buttondata = moduleButtonApp.GetListByRole(roleid);
+                moduledata = _moduleService.GetListByRole(roleid);
+                buttondata = _moduleButtonService.GetListByRole(roleid);
             }
             else
             {
-                moduledata = moduleApp.GetList();
-                buttondata = moduleButtonApp.GetList();
+                moduledata = _moduleService.GetList();
+                buttondata = _moduleButtonService.GetList();
             }
             var authorizedata = new List<RoleAuthorizeEntity>();
             if (!string.IsNullOrEmpty(roleId))
             {
-                authorizedata = roleAuthorizeApp.GetList(roleId);
+                authorizedata = _roleAuthorizeService.GetList(roleId);
             }
             var treeList = new List<TreeGridModel>();
             foreach (ModuleEntity item in moduledata)

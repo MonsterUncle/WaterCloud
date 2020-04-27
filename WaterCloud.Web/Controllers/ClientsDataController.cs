@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System;
 using WaterCloud.Entity;
-using Newtonsoft.Json.Linq;
 using WaterCloud.Service.SystemSecurity;
 using Senparc.CO2NET.Extensions;
 using Microsoft.AspNetCore.Mvc;

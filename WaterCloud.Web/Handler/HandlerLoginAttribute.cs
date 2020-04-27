@@ -2,7 +2,9 @@
 using WaterCloud.Code;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Http;
-
+/// <summary>
+/// 登录验证
+/// </summary>
 namespace WaterCloud.Web
 {
     public class HandlerLoginAttribute : ActionFilterAttribute

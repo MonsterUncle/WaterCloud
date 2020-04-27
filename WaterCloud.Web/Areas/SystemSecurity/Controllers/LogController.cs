@@ -17,7 +17,11 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     [Area("SystemSecurity")]
     public class LogController : ControllerBase
     {
-        private LogService logApp = new LogService();
+        private readonly LogService _logService;
+        public LogController(LogService logService)
+        {
+            _logService = logService;
+        }
 
         [HttpGet]
         public ActionResult RemoveLog()
@@ -30,7 +34,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         {
             pagination.order = "asc";
             pagination.sort = "F_Date";
-            var data = logApp.GetList(pagination, timetype, keyword).OrderByDescending(a=>a.F_CreatorTime).ToList();
+            var data = _logService.GetList(pagination, timetype, keyword).OrderByDescending(a=>a.F_CreatorTime).ToList();
             return ResultLayUiTable(pagination.records, data);
         }
         [HttpPost]
@@ -39,7 +43,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitRemoveLog(string keepTime)
         {
-            logApp.RemoveLog(keepTime);
+            _logService.RemoveLog(keepTime);
             return Success("清空成功。");
         }
     }

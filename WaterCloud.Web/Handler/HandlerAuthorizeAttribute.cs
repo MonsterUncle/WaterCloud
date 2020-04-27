@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Code;
 using Microsoft.Extensions.DependencyInjection;
-
+/// <summary>
+/// 权限验证
+/// </summary>
 namespace WaterCloud.Web
 {
     public class HandlerAuthorizeAttribute : ActionFilterAttribute

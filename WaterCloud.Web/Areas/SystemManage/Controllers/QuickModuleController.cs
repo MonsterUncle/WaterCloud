@@ -17,7 +17,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class QuickModuleController : Controller
     {
-        private QuickModuleService moduleApp = new QuickModuleService();
+        private readonly QuickModuleService _moduleService = new QuickModuleService();
+        public QuickModuleController(QuickModuleService moduleService)
+        {
+            _moduleService = moduleService;
+        }
         [HttpGet]
         public virtual ActionResult Index()
         {
@@ -28,14 +32,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public ActionResult GetTransferJson()
         {
             var userId = OperatorProvider.Provider.GetCurrent().UserId;
-            var data = moduleApp.GetTransferList(userId);
+            var data = _moduleService.GetTransferList(userId);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
         public ActionResult SubmitForm(string permissionIds)
         {
-            moduleApp.SubmitForm(permissionIds.Split(','));
+            _moduleService.SubmitForm(permissionIds.Split(','));
             return Content(new AjaxResult { state = ResultType.success.ToString(), message = "操作成功" }.ToJson());
         }
     }
