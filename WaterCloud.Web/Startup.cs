@@ -53,6 +53,8 @@ namespace WaterCloud.Web
             services.AddControllers();
             //MVC控制器视图
             services.AddControllersWithViews();
+            //定时任务
+            services.AddBackgroundServices();
             services.AddOptions();
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(GlobalContext.HostingEnvironment.ContentRootPath + Path.DirectorySeparatorChar + "DataProtection"));
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
