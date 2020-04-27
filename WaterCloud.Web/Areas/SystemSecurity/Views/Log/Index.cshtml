@@ -84,8 +84,8 @@
                         field: 'F_CreatorTime', title: '创建时间', width: 120,
                         templet: function (d) {
                             if (d.F_CreatorTime) {
-                                var time = new Date(d.F_CreatorTime);
-                                return time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
+                                var time = new Date(d.F_CreatorTime).Format("yyyy-MM-dd HH:mm:ss");
+                                
                             }
                         }
                     },
