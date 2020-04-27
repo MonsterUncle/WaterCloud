@@ -19,7 +19,7 @@ using Senparc.CO2NET.Extensions;
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
     [Area("SystemManage")]
-    public class ItemsTypeController : ControllerBase
+    public class ItemsTypeController : ControllerBaseIgnore
     {
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
@@ -32,7 +32,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             _logService = logService;
             _moduleService = moduleService;
         }
-
         [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetTreeSelectJson()
