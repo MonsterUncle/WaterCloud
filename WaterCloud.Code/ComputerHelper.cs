@@ -19,8 +19,8 @@ namespace WaterCloud.Code
                 MemoryMetricsClient client = new MemoryMetricsClient();
                 MemoryMetrics memoryMetrics = client.GetMetrics();
                 computerInfo.TotalRAM = Math.Ceiling(memoryMetrics.Total / 1024).ToString() + " GB";
-                computerInfo.RAMRate = Math.Ceiling(100 * memoryMetrics.Used / memoryMetrics.Total).ToString() + " %";
-                computerInfo.CPURate = Math.Ceiling(GetCPURate().ParseToDouble()) + " %";
+                computerInfo.RAMRate = Math.Ceiling(100 * memoryMetrics.Used / memoryMetrics.Total).ToString();
+                computerInfo.CPURate = Math.Ceiling(GetCPURate().ParseToDouble()).ToString();
                 computerInfo.RunTime = GetRunTime();
             }
             catch (Exception ex)
