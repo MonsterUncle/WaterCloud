@@ -46,6 +46,7 @@ namespace WaterCloud.Web
             services.AddSingleton(redisDB);
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
             services.AddSession();
+            //´úÌæHttpContext.Current
             services.AddHttpContextAccessor();
             //×¢²á·þÎñ
             services.AddDataService();
