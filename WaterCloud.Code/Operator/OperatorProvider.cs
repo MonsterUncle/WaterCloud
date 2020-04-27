@@ -11,6 +11,10 @@ namespace WaterCloud.Code
 {
     public class OperatorProvider
     {
+        //登录信息保存方式
+        private string LoginProvider = GlobalContext.Configuration.GetSection("SystemConfig:LoginProvider").Value;
+        //是否允许一个账户在多处登录
+        private bool LoginMultiple = GlobalContext.Configuration.GetSection("SystemConfig:LoginMultiple").Value=="true"?true:false;
         public static OperatorProvider Provider
         {
             get { return new OperatorProvider(); }
@@ -32,14 +36,53 @@ namespace WaterCloud.Code
         /// 标记登录的浏览器
         /// </summary>
         private string LoginUserMarkKey = "watercloud_Mark";
-
+        public string GetProvider(string key)
+        {
+            switch (LoginProvider)
+            {
+                case "Cookie":
+                    return WebHelper.GetCookie(key).ToString();
+                case "Session":
+                    return WebHelper.GetSession(key).ToString();
+                default:
+                    throw new Exception("未找到LoginProvider配置");
+            }
+        }
+        public void SetProvider(string key,string value)
+        {
+            switch (LoginProvider)
+            {
+                case "Cookie":
+                    WebHelper.WriteCookie(key, value);
+                    break;
+                case "Session":
+                    WebHelper.WriteSession(key, value);
+                    break;
+                default:
+                    throw new Exception("未找到LoginProvider配置");
+            }
+        }
+        public void RemoveProvider(string key)
+        {
+            switch (LoginProvider)
+            {
+                case "Cookie":
+                    WebHelper.RemoveCookie(key);
+                    break;
+                case "Session":
+                    WebHelper.RemoveSession(key);
+                    break;
+                default:
+                    throw new Exception("未找到LoginProvider配置");
+            }
+        }
         public OperatorModel GetCurrent()
         {
             OperatorModel operatorModel = new OperatorModel();
             try
             {
-                string token =WebHelper.GetCookie(LoginUserToken).ToString();
-                string loginMark = WebHelper.GetCookie(LoginUserMarkKey).ToString();
+                string token = GetProvider(LoginUserToken);
+                string loginMark = GetProvider(LoginUserMarkKey);
                 operatorModel = RedisHelper.Get<OperatorModel>(cacheKeyOperator + loginMark);
             }
             catch
@@ -48,21 +91,17 @@ namespace WaterCloud.Code
             }
             return operatorModel;
         }
-        public void RemoveCurrent()
-        {
-
-        }
         /// <summary>
         /// 获取浏览器设配号
         /// </summary>
         /// <returns></returns>
         public string GetMark()
         {
-            string cookieMark = WebHelper.GetCookie(LoginUserMarkKey).ToString();
+            string cookieMark = GetProvider(LoginUserMarkKey);
             if (string.IsNullOrEmpty(cookieMark))
             {
                 cookieMark = Guid.NewGuid().ToString();
-                WebHelper.WriteCookie(LoginUserMarkKey, cookieMark);
+                SetProvider(LoginUserMarkKey, cookieMark);
             }
             return cookieMark;
         }
@@ -84,17 +123,17 @@ namespace WaterCloud.Code
                 //cookid登录信息更新
                 if (cookie)
                 {
-                    string cookieMark = (WebHelper.GetCookie(LoginUserMarkKey)??"").ToString();
+                    string cookieMark = GetProvider(LoginUserMarkKey);
                     if (string.IsNullOrEmpty(cookieMark))
                     {
                         operatorModel.loginMark = Guid.NewGuid().ToString();
-                        WebHelper.WriteCookie(LoginUserMarkKey, operatorModel.loginMark);
+                        SetProvider(LoginUserMarkKey, operatorModel.loginMark);
                     }
                     else
                     {
                         operatorModel.loginMark = cookieMark;
                     }
-                    WebHelper.WriteCookie(LoginUserToken, token);
+                    SetProvider(LoginUserToken, token);
                 }
                 else
                 {
@@ -137,11 +176,11 @@ namespace WaterCloud.Code
         {
             try
             {
-                string token = WebHelper.GetCookie(LoginUserToken).ToString();
-                string loginMark = WebHelper.GetCookie(LoginUserMarkKey).ToString();
+                string token = GetProvider(LoginUserToken);
+                string loginMark = GetProvider(LoginUserMarkKey);
                 EmptyCurrent(token, loginMark);
-                WebHelper.RemoveCookie(LoginUserMarkKey.Trim());
-                WebHelper.RemoveCookie(LoginUserToken.Trim());
+                RemoveProvider(LoginUserMarkKey.Trim());
+                RemoveProvider(LoginUserToken.Trim());
             }
             catch (Exception)
             {
@@ -178,8 +217,8 @@ namespace WaterCloud.Code
         {
             try
             {
-                string token = WebHelper.GetCookie(LoginUserToken).ToString();
-                string loginMark = WebHelper.GetCookie(LoginUserMarkKey).ToString();
+                string token = GetProvider(LoginUserToken);
+                string loginMark = GetProvider(LoginUserMarkKey);
                 return IsOnLine(token, facilityMark, loginMark);
             }
             catch (Exception)
@@ -217,7 +256,7 @@ namespace WaterCloud.Code
                         RedisHelper.Del(cacheKeyOperator + loginMark);
                     }
                     //账号被顶(排除admin)
-                    else if (!operatorInfo.IsSystem&&token != RedisHelper.Get<string>(cacheKeyOperator + facilityMark + operatorInfo.UserId))
+                    else if (!LoginMultiple&&!operatorInfo.IsSystem&&token != RedisHelper.Get<string>(cacheKeyOperator + facilityMark + operatorInfo.UserId))
                     {
                         operatorResult.stateCode = -2;
                         Dictionary<string, string> tokenMarkList = RedisHelper.Get<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);
@@ -250,11 +289,11 @@ namespace WaterCloud.Code
             int res = 0;
             try
             {
-                string cookieMark = WebHelper.GetCookie(LoginUserMarkKey).ToString();
+                string cookieMark = GetProvider(LoginUserMarkKey);
                 if (string.IsNullOrEmpty(cookieMark))
                 {
                     cookieMark = Guid.NewGuid().ToString();
-                    WebHelper.WriteCookie(LoginUserMarkKey, cookieMark);
+                    SetProvider(LoginUserMarkKey, cookieMark);
                 }
                 string num = RedisHelper.Get<string>(cacheKeyError + cookieMark);
                 if (!string.IsNullOrEmpty(num))
@@ -276,11 +315,11 @@ namespace WaterCloud.Code
             int res = 0;
             try
             {
-                string cookieMark = WebHelper.GetCookie(LoginUserMarkKey).ToString();
+                string cookieMark = GetProvider(LoginUserMarkKey);
                 if (string.IsNullOrEmpty(cookieMark))
                 {
                     cookieMark = Guid.NewGuid().ToString();
-                    WebHelper.WriteCookie(LoginUserMarkKey, cookieMark);
+                    SetProvider(LoginUserMarkKey, cookieMark);
                 }
                 string num = RedisHelper.Get<string>(cacheKeyError + cookieMark);
                 if (!string.IsNullOrEmpty(num))
@@ -303,11 +342,11 @@ namespace WaterCloud.Code
         {
             try
             {
-                string cookieMark = WebHelper.GetCookie(LoginUserMarkKey).ToString();
+                string cookieMark = GetProvider(LoginUserMarkKey);
                 if (string.IsNullOrEmpty(cookieMark))
                 {
                     cookieMark = Guid.NewGuid().ToString();
-                    WebHelper.WriteCookie(LoginUserMarkKey, cookieMark);
+                    SetProvider(LoginUserMarkKey, cookieMark);
                 }
                 RedisHelper.Del(cacheKeyError + cookieMark);
             }

@@ -32,9 +32,9 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetGridJson(Pagination pagination, string keyword,int timetype=2)
         {
-            pagination.order = "asc";
-            pagination.sort = "F_Date";
-            var data = _logService.GetList(pagination, timetype, keyword).OrderByDescending(a=>a.F_CreatorTime).ToList();
+            pagination.order = "desc";
+            pagination.sort = "F_CreatorTime";
+            var data = _logService.GetList(pagination, timetype, keyword).ToList();
             return ResultLayUiTable(pagination.records, data);
         }
         [HttpPost]

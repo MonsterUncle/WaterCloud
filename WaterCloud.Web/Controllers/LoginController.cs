@@ -53,7 +53,7 @@ namespace WaterCloud.Web.Controllers
                 F_Description = "安全退出系统",
             });
             OperatorProvider.Provider.EmptyCurrent();
-            return Redirect("/Home/Index");
+            return Redirect("/Login/Index");
         }
         [HttpPost]
         [HandlerAjaxOnly]

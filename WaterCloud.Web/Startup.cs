@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using WaterCloud.Code;
 using WaterCloud.Code.Model;
 using Microsoft.Extensions.Logging;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace WaterCloud.Web
 {
@@ -28,6 +30,7 @@ namespace WaterCloud.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -41,6 +44,7 @@ namespace WaterCloud.Web
             RedisHelper.Initialization(redisDB);
             //注册服务
             services.AddSingleton(redisDB);
+            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
             services.AddSession();
             services.AddHttpContextAccessor();
             //注册服务
