@@ -13,7 +13,7 @@ namespace WaterCloud.Service.TimeService
 {
 
     /// <summary>
-    /// 定时任务触发器
+    /// 定时任务触发器 
     /// </summary>
     public class TimedService : BackgroundService
     {
