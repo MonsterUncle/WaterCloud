@@ -3,7 +3,7 @@
 #### 介绍
 
 - 请勿用于违反我国法律的web平台、如诈骗等非法平台网站。
-- WaterCloud是一套基于ASP.NET MVC+Chloe+LayUI的框架，源代码完全开源，可以帮助你解决C#.NET项目的重复工作！
+- WaterCloud是一套基于ASP.NET Core 3.1  MVC+Chloe+LayUI的框架，源代码完全开源，可以帮助你解决C#.NET项目的重复工作！
 - 采用主流框架，容易上手，简单易学，学习成本低。
 - 可完全实现二次开发让开发更多关注业务逻辑。既能快速提高开发效率，帮助公司节省人力成本，同时又不失灵活性。
 - 支持SQLServer、MySQL、Oracle、SQLite、Access 等多数据库类型。模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。
@@ -36,13 +36,12 @@
 
 2、后端技术
 
-- 核心框架：ASP.NET MVC5、WEB API
+- 核心框架：ASP.NET Core 3.1、WEB API(暂无)
 - 持久层框架：Chloe（支持多种数据库，复杂查询操作）
-- 定时计划任务：FluentScheduler.5.3.0组件（定时记录服务器状态）
 - 安全支持：过滤器、Sql注入、请求伪造
 - 服务端验证：实体模型验证
-- 缓存框架：微软自带Cache（单点登录控制）
-- 日志管理：Log4net、登录日志、操作日志
+- 缓存框架：微软自带Redis（单点登录控制）
+- 日志管理：Log、登录日志、操作日志
 - 工具类：NPOI、Newtonsoft.Json、验证码、丰富公共类似
 
 3、SDK引入（功能自己研究）
@@ -53,20 +52,17 @@
 
 #### 环境要求
 
-1. VS2015及以上版本；
-2. Net4.5及以上版本；
-3. MVC5.0
-4. Mysql或者SQLSERVER2005及以上版本，database文件夹下有sql文件可执行；
-5. 请使用VS2015及以上版本打开解决方案。
+1. VS2019及以上版本；
+2. Asp.net Core 3.1
+3. Mysql或者SQLSERVER2005及以上版本，database文件夹下有sql文件可执行；
+4. 请使用VS2019及以上版本打开解决方案。
 
 #### 使用说明
 
-1. 项目包含T4模板（mysql和sqlserver可用）
-2. 前端参考Layui 官方文档：https://www.layui.com/doc/
-3. Layui框架参考Layuimini 码云地址：https://gitee.com/zhongshaofa/layuimini
-4. .net后端框架参考DaleCloudNet 码云地址：https://gitee.com/dalecloud/DaleCloudNet
-5. Chole.ORM 文档地址：http://www.52chloe.com/Wiki/Document
-6. WaterCloud讨论交流QQ群（1065447456）
+1. 前端参考Layui 官方文档：https://www.layui.com/doc/
+2. Layui框架参考Layuimini 码云地址：https://gitee.com/zhongshaofa/layuimini
+3. Chole.ORM 文档地址：http://www.52chloe.com/Wiki/Document
+4. WaterCloud讨论交流QQ群（1065447456）
 
 #### 捐赠支持
 
