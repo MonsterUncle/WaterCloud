@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            common = layui.common,
+            laydate = layui.laydate;
+        var keyValue = $.request("keyValue");
+        $(function () {
+            if (!!keyValue) {
+                $.ajax({
+                    url: "/SystemManage/Notice/GetFormJson",
+                    dataType: "json",
+                    data: { keyValue: keyValue },
+                    async: false,
+                    success: function (data) {
+                        common.val('adminform', data);
+
+                    }
+                });
+            }
+            form.render();
+        });
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var postData = data.field;
+            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+            common.submitForm({
+                url: "/SystemManage/Notice/SubmitForm?keyValue=" + keyValue,
+                param: postData,
+                success: function () {
+                    common.parentreload("data-search-btn");
+                }
+            })
+            return false;
+        });
+    });
+</script>
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form" lay-filter="adminform">
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_Title" name="F_Title" lay-verify="required" class="layui-input" placeholder="请输入标题">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label required">内容</label>
+                    <div class="layui-input-block">
+                        <textarea id="F_Content" name="F_Content" class="layui-textarea" lay-verify="required" placeholder="请输入内容"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选项</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>

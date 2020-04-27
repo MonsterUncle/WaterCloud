@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Chloe" Version="4.5.0" />
+    <PackageReference Include="Chloe.Extension" Version="4.5.0" />
+    <PackageReference Include="Chloe.MySql" Version="4.5.0" />
+    <PackageReference Include="Chloe.Oracle" Version="4.5.0" />
+    <PackageReference Include="Chloe.SqlServer" Version="4.5.0" />
+    <PackageReference Include="MySql.Data" Version="8.0.19" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.60" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj" />
+  </ItemGroup>
+
+</Project>

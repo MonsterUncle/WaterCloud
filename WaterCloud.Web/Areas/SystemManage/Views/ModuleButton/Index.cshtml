@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script>
+    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treetable'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            tablePlug = layui.tablePlug,
+            treetable = layui.treetable,
+            common = layui.common;
+        var moduleId = $.request("moduleId");
+        common.rendertable({
+            elem: '#currentTableId',
+            url: "/SystemManage/ModuleButton/GetTreeGridJson?moduleId=" + moduleId,
+            cols: [[
+                { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
+                { field: 'F_FullName', title: '名称', width: 120 },
+                {
+                    field: 'F_Location', title: '位置', width: 60,
+                    templet: function (d) {
+                        if (d.F_Location == 1) {
+                            return "初始";
+                        } else {
+                            return "选中";
+                        }
+                    }
+                },
+                { field: 'F_JsEvent', title: '事件', width: 80 },
+                { field: 'F_UrlAddress', title: '连接', width: 250 },
+                {
+                    field: 'F_Split', title: '分开', width: 60,
+                    templet: function (d) {
+                        if (d.F_IsMenu == true) {
+                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                        } else {
+                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                        }
+                    }
+                },
+                {
+                    field: 'F_IsPublic', title: '公共', width: 60,
+                    templet: function (d) {
+                        if (d.F_IsPublic == true) {
+                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true' >";
+                        } else {
+                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false' >";
+                        }
+                    }
+                },
+                {
+                    field: 'F_EnabledMark', title: '有效', width: 60,
+                    templet: function (d) {
+                        if (d.F_EnabledMark == true) {
+                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                        } else {
+                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                        }
+                    }
+                },
+                { field: 'F_SortCode', title: '排序', width: 60 },
+                { field: 'F_Description', title: '介绍', width: 100 },
+            ]],
+        });
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            var queryJson = data.field.txt_keyword;
+            //执行搜索重载
+            common.reloadtable({
+                elem: 'currentTableId',
+                curr: 1,
+                queryJson: queryJson
+            });
+            return false;
+        });
+        var module;
+        table.on('row(currentTableFilter)', function (obj) {
+            obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
+            module = obj;
+        })
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听操作
+                common.modalOpen({
+                    title: "添加按钮",
+                    url: "/SystemManage/ModuleButton/Form",
+                    width: "500px",
+                    height: "440px",
+                });
+            }
+            else if (obj.event === 'delete') {
+                if (module == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.deleteForm({
+                    url: "/SystemManage/ModuleButton/DeleteForm",
+                    param: { keyValue: module.data.F_Id },
+                    success: function () {
+                        common.reload('data-search-btn');
+                    }
+                });
+            }
+            else if (obj.event === 'edit') {
+                if (module == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalOpen({
+                    title: "编辑按钮",
+                    url: "/SystemManage/ModuleButton/Form?keyValue=" + module.data.F_Id,
+                    width: "500px",
+                    height: "440px",
+                });
+            }
+            else if (obj.event === 'details') {
+                if (module == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalOpen({
+                    title: "查看按钮",
+                    url: "/SystemManage/ModuleButton/Details?keyValue=" + module.data.F_Id,
+                    width: "500px",
+                    height: "440px",
+                    btn: []
+                });
+            }
+            else if (obj.event === 'clonebutton') {
+                common.modalOpen({
+                    title: "克隆按钮",
+                    url: "/SystemManage/ModuleButton/CloneButton?moduleId=" + moduleId,
+                    width: "400px",
+                    height: "600px",
+                });
+            }
+            return false;
+        });
+    });
+</script>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <fieldset class="table-search-fieldset">
+            @*<legend>搜索信息</legend>*@
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">关键字:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="txt_keyword" name="txt_keyword" autocomplete="off" class="layui-input" placeholder="">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container" id="toolbar">
+                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
+                <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+                <button id="NF-clonebutton" authorize="yes" class="layui-btn layui-btn-sm data-clonebutton-btn" lay-event="clonebutton"><i class="fa fa-paste"></i>克隆按钮</button>
+            </div>
+        </script>
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+    </div>
+</div>

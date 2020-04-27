@@ -1,0 +1,226 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<style>
+
+    .layui-table-tool > .layui-table-tool-temp {
+        padding-right: 0px;
+    }
+</style>
+<script>
+
+    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treetable', 'dtree','miniTab'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            miniTab = layui.miniTab,
+            table = layui.table,
+            tablePlug = layui.tablePlug,
+            treetable = layui.treetable,
+            dtree = layui.dtree,
+            common = layui.common;
+        // 初始化树
+        var DemoTree = dtree.render({
+            elem: "#demoTree",
+            height: 'full-50',
+            width: '135px',
+            method: "GET",
+            async: true,
+            line: true,  // 显示树线
+            scroll: "#toolbarDiv", // 绑定div元素
+            icon: ["0", "-1"],  // 显示非最后一级节点图标，隐藏最后一级节点图标
+            initLevel: 0,
+            url: "/SystemManage/ItemsType/GetTreeGridJson" // 使用url加载（可与data加载同时存在）
+        });
+        var treeid;
+        // 绑定节点点击
+        dtree.on("node('demoTree')", function (obj) {
+            treeid = obj.param.nodeId;
+            $("#txt_keyword").val('');
+            $('button[lay-filter="data-search-btn"]').click();//按钮刷新
+        });
+        //$(function () {
+        //    treeView();
+        //});
+        //function treeView() {
+        //    $('#itemTree').treeview({
+        //        url: '/SystemManage/ItemsType/GetTreeJson',
+        //        onnodeclick: function (node) {
+        //            //alert(node.text);  // alert node text property when clicked
+        //            $("#txt_keyword").val('');
+        //            $('button[lay-filter="data-search-btn"]').click();//按钮刷新
+        //        }
+        //    });
+        //}
+        common.rendertable({
+            elem: '#currentTableId',
+            url: "/SystemManage/ItemsData/GetGridJson",
+            where: {
+                itemId: "~",
+                keyword: "",
+            },
+            defaultToolbar: [],
+            page: false,
+            cols: [[
+                { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
+                { field: 'F_ItemName', title: '名称', width: 120 },
+                { field: 'F_ItemCode', title: '编号', width: 120 },
+                { field: 'F_SortCode', title: '排序', width: 60 },
+                {
+                    field: 'F_IsDefault', title: '默认', width: 60,
+                    templet: function (d) {
+                        if (d.F_IsDefault == true) {
+                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                        } else {
+                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                        }
+
+                    }
+                },
+                {
+                    field: 'F_EnabledMark', title: '有效', width: 60,
+                    templet: function (d) {
+                        if (d.F_EnabledMark == true) {
+                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                        } else {
+                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                        }
+                    }
+                },
+                {
+                    field: 'F_CreatorTime', title: '创建时间', width: 120,
+                    templet: function (d) {
+                        if (d.F_CreatorTime) {
+                            var time = new Date(d.F_CreatorTime);
+                            return time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
+                        }
+                    }
+                },
+                { field: 'F_Description', title: '介绍', width: 100 },
+            ]],
+        });
+        //权限控制
+        common.authorizeButton("toolbar");
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            //if (!$("#itemTree").getCurrentNode()) {
+            //    return false;
+            //}
+            //var itemId = $("#itemTree").getCurrentNode().id;
+            //执行搜索重载
+            common.reloadtable({
+                elem: 'currentTableId',
+                page: false,
+                where: {
+                    itemId: treeid,
+                    keyword: data.field.txt_keyword,
+                },
+            });
+            return false;
+        });
+        var item;
+        table.on('row(currentTableFilter)', function (obj) {
+            obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
+            item = obj;
+        })
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听操作
+                if (!treeid) {
+                    return false;
+                }
+                common.modalOpen({
+                    title: "添加字典",
+                    url: "/SystemManage/ItemsData/Form?itemId=" + treeid,
+                    width: "450px",
+                    height: "350px",
+                });
+            }
+            else if (obj.event === 'delete') {
+                if (item == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.deleteForm({
+                    url: "/SystemManage/ItemsData/DeleteForm",
+                    param: { keyValue: item.data.F_Id },
+                    success: function () {
+                        common.reload('data-search-btn');
+                    }
+                });
+            }
+            else if (obj.event === 'edit') {
+                if (item == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalOpen({
+                    title: "编辑字典",
+                    url: "/SystemManage/ItemsData/Form?keyValue=" + item.data.F_Id,
+                    width: "450px",
+                    height: "350px",
+                });
+            }
+            else if (obj.event === 'details') {
+                if (item == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalOpen({
+                    title: "查看字典",
+                    url: "/SystemManage/ItemsData/Details?keyValue=" + item.data.F_Id,
+                    width: "450px",
+                    height: "350px",
+                    btn: []
+                });
+            }
+            else if (obj.event === 'itemstype') {
+                miniTab.openNewTabByIframe({
+                    title: "分类管理",
+                    href: "/SystemManage/ItemsType/Index",
+                });
+            }
+            return false;
+        });
+    });
+</script>
+<div class="layui-fluid" style="padding:0 0px">
+    <div class="layui-row layui-col-space5">
+        <div class="layui-col-md4 layui-col-xs5">
+            <div class="layui-card" style="text-align:left;" id="toolbarDiv">
+                <ul id="demoTree" class="dtree" data-id="0"></ul>
+            </div>
+        </div>
+        <div class="layui-col-md8 layui-col-xs7">
+            <div class="layui-card" style="padding: 5px;">
+                <fieldset class="table-search-fieldset" style="border:1px solid #e6e6e6">
+                    @*<legend>搜索信息</legend>*@
+                    <div style="margin: 2px 2px 2px 2px">
+                        <form class="layui-form layui-form-pane" action="">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <input type="text" id="txt_keyword" name="txt_keyword" autocomplete="off" class="layui-input" placeholder="">
+                                </div>
+                                <div class="layui-inline">
+                                    <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+                <script type="text/html" id="toolbarDemo">
+                    <div class="layui-btn-container" id="toolbar">
+                        <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
+                        <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                        <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                        <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+                        <button id="NF-itemstype" authorize="yes" class="layui-btn layui-btn-sm  data-itemstype-btn"  lay-event="itemstype"> <i class="fa fa-key"></i>分类管理</button>
+                    </div>
+                </script>
+                <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+            </div>
+        </div>
+    </div>
+</div>

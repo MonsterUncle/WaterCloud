@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script>
+    layui.use(['transfer', 'layer', 'util','common'], function () {
+        var $ = layui.$
+            , transfer = layui.transfer
+            , layer = layui.layer
+            , common = layui.common
+            , util = layui.util;
+        //数据
+        var jsondata = [];
+        var jsonvalue = [];
+        $(function () {
+            $.ajax({
+                url: "/SystemManage/QuickModule/GetTransferJson",
+                dataType: "json",
+                async: true,
+                success: function (data) {
+                    jsondata = data;
+                    for (var i = 0; i < jsondata.length; i++) {
+                        if (jsondata[i].F_EnabledMark) {
+                            jsonvalue.push(jsondata[i].F_Id);
+                        }
+                    }
+                    //基础效果
+                    transfer.render({
+                        elem: '#demotransfer'
+                        , title: ['模块菜单', '快捷入口']
+                        , width: '35%'
+                        , showSearch: true
+                        , parseData: function (res) {
+                            return {
+                                "value": res.F_Id //数据值
+                                , "title": res.F_FullName //数据标题
+                            }
+                        }
+                        , data: jsondata,
+                        value: jsonvalue,
+                        id: 'transferval', //定义唯一索引
+                        onchange: function (obj, index) {
+                            var getData = transfer.getData('transferval'); //获取右侧数据
+                            if (getData.length >= 8 && index == 0) {
+                                return false;
+                            }
+                        }
+                    })
+
+                }
+            });
+        });
+
+
+        //批量办法定事件
+        util.event('lay-demoTransferActive', {
+            saveChange: function (othis) {
+                var getData = transfer.getData('transferval'); //获取右侧数据
+                var json = [];
+                if (getData.length>8) {
+                    common.modalAlert("快捷入口最多支持8个选项！");
+                    return false;
+                }
+                for (var i = 0; i < getData.length; i++) {
+                    json.push(getData[i].value);
+                }
+                common.submitForm({
+                    url: "/SystemManage/QuickModule/SubmitForm",
+                    param: { permissionIds: String(json)},
+                    close:false,
+                    success: function () {
+                    }
+                })
+            }
+        });
+
+    });
+</script>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-btn-container text-right">
+            <button type="button" class="layui-btn" lay-demotransferactive="saveChange"> 保 存</button>
+        </div>
+
+        <div id="demotransfer" class="demo-transfer"></div>
+    </div>
+</div>

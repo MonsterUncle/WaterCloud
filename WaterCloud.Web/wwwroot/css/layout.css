@@ -1,0 +1,137 @@
+﻿html{
+}
+body {
+}
+a:active, a:hover {
+    outline: 0;
+}
+a:focus, a:hover {
+    text-decoration: none;
+}
+a:active {
+    text-decoration: none;
+}
+.fa-toggle-on{
+    color: #1ABC9C;
+}
+.dcui-btn-area{
+    margin-bottom:5px;border-bottom:1px solid #e6e6e6;padding-top:3px;padding-bottom:3px;
+}
+.dcui-search-area{
+    margin-bottom:5px;padding-bottom:2px;
+}
+.dcui-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid 
+    transparent;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.dcui-btn{
+    text-decoration: none;
+}
+
+.dcui-btn:hover {
+    background: #e2e2e2;
+    color: #000;
+    filter: none;
+    text-decoration: none;
+}
+.dcui-btn:hover,.dcui-btn:focus{
+   color:#fff;
+}
+.dcui-btn-black:hover, .dcui-btn-blue:hover, .dcui-btn-brown:hover, .dcui-btn-green:hover, .dcui-btn-orange:hover, .dcui-btn-purple:hover, .dcui-btn-red:hover {
+    opacity: .7;
+    filter: alpha(opacity=80);
+}
+.dcui-btn i {
+    margin-right: 5px;
+    font-size: 13px;
+}
+.dcui-btn-green {
+ border:0;
+ background:#009688;
+ color:#fff
+}
+.dcui-btn-green:hover {
+ color:#fff;
+ background:#009688
+}
+.dcui-btn-brown {
+ border:0;
+ background:brown;
+ color:#fff
+}
+.dcui-btn-brown:hover {
+ color:#fff;
+ background:brown
+}
+.dcui-btn-black {
+ border:0;
+ background:#2F4056;
+ color:#fff
+}
+.dcui-btn-black:hover {
+ color:#fff;
+ background:#2F4056
+}
+.dcui-btn-blue {
+ border:0;
+ background:#1E9FFF;
+ color:#fff
+}
+.dcui-btn-blue:hover {
+ color:#fff;
+ background:#1E9FFF
+}
+.dcui-btn-orange {
+ border:0;
+ background:#FFB800;
+ color:#fff
+}
+.dcui-btn-orange:hover {
+ color:#fff;
+ background:#FFB800
+}
+.dcui-btn-red {
+ border:0;
+ background:#FF5722;
+ color:#fff
+}
+.dcui-btn-red:hover {
+ color:#fff;
+ background:#FF5722
+}
+.dcui-btn-purple {
+ border:0;
+ background:purple;
+ color:#fff
+}
+
+.dcui-btn-purple:hover {
+ color:#fff;
+ background:purple
+}
+
+
+/*----------*/

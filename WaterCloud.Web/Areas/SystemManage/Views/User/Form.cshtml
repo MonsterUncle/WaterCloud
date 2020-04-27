@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            common = layui.common,
+            laydate = layui.laydate;
+        var keyValue = $.request("keyValue");
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#F_Birthday'
+            , btns: ['clear', 'now']
+            , trigger: 'click',
+            format: 'yyyy-MM-dd',
+        });
+        function initControl() {
+            $("#F_OrganizeId").bindSelect({
+                url: "/SystemManage/Organize/GetTreeSelectJson"
+            });
+            $("#F_DepartmentId").bindSelect({
+                url: "/SystemManage/Organize/GetTreeSelectJson",
+            });
+            $("#F_RoleId").bindSelect({
+                url: "/SystemManage/Role/GetListJson",
+                id: "F_Id",
+                text: "F_FullName"
+            });
+            $("#F_DutyId").bindSelect({
+                url: "/SystemManage/Duty/GetListJson",
+                id: "F_Id",
+                text: "F_FullName"
+            });
+        }
+        $(function () {
+            initControl();
+            if (!!keyValue) {
+                $.ajax({
+                    url: "/SystemManage/User/GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        common.val('adminform', data);
+                        $("#F_UserPassword").val("******").attr('disabled', 'disabled');
+                    }
+                });
+            }
+            form.render();
+        });
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var postData = data.field;
+            common.submitForm({
+                url: "/SystemManage/User/SubmitForm?keyValue=" + keyValue,
+                param: postData,
+                success: function () {
+                    common.parentreload("data-search-btn");
+                }
+            })
+            return false;
+        });
+    });
+</script>
+<body>
+    <div class="layuimini-container ">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form" lay-filter="adminform">
+                <div class="layui-form-item ">
+                    <div class="layui-inline">
+                        <label class="layui-form-label required">账号</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="F_Account" name="F_Account" lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label required">密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" id="F_UserPassword" name="F_UserPassword" lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label required">公司</label>
+                        <div class="layui-input-inline">
+                            <select id="F_OrganizeId" name="F_OrganizeId" lay-verify="required" lay-search="">
+                                <option value="">==请选择==</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label required">部门</label>
+                        <div class="layui-input-inline">
+                            <select id="F_DepartmentId" name="F_DepartmentId" lay-verify="required" lay-search="">
+                                <option value="">==请选择==</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label required">角色</label>
+                        <div class="layui-input-inline">
+                            <select id="F_RoleId" name="F_RoleId" lay-verify="required" lay-search="">
+                                <option value="">==请选择==</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label required">职位</label>
+                        <div class="layui-input-inline">
+                            <select id="F_DutyId" name="F_DutyId" lay-verify="required" lay-search="">
+                                <option value="">==请选择==</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline ">
+                        <label class="layui-form-label required">姓名</label>
+                        <div class="layui-input-inline">
+                            <input id="F_RealName" name="F_RealName" type="text" lay-verify="required" autocomplete="off" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-inline ">
+                        <label class="layui-form-label required">性别</label>
+                        <div class="layui-input-inline">
+                            <select id="F_Gender" name="F_Gender">
+                                <option value="true">男</option>
+                                <option value="false">女</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline ">
+                        <label class="layui-form-label">手机</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="F_MobilePhone" name="F_MobilePhone" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline ">
+                        <label class="layui-form-label">生日</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="F_Birthday" name="F_Birthday" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">微信</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="F_WeChat" name="F_WeChat" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">邮箱</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="F_Email" name="F_Email" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">高管</label>
+                        <div class="layui-input-inline">
+                            <select id="F_IsSenior" name="F_IsSenior">
+                                <option value="false">否</option>
+                                <option value="true">是</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">部门主管</label>
+                        <div class="layui-input-inline">
+                            <select id="F_IsLeaderInDepts" name="F_IsLeaderInDepts">
+                                <option value="false">否</option>
+                                <option value="true">是</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">类型</label>
+                        <div class="layui-input-inline">
+                            <select id="F_IsAdmin" name="F_IsAdmin">
+                                <option value="false">普通用户</option>
+                                <option value="true">系统管理员</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">允许登录</label>
+                        <div class="layui-input-inline">
+                            <select id="F_EnabledMark" name="F_EnabledMark" lay-verify="required">
+                                <option value="true">是</option>
+                                <option value="false">否</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <div class="layui-row">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="请输入备注" class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                </div>
+            </div>
+    </div>
+
+</body>

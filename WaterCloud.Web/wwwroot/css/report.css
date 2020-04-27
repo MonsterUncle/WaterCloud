@@ -1,0 +1,181 @@
+﻿@charset "UTF-8";
+.layui-elem-quote {
+    margin-bottom: 10px;
+    padding: 15px;
+        padding-left: 15px;
+    line-height: 22px;
+    border-left: 5px solid #009688;
+    border-radius: 0 2px 2px 0;
+    background-color: #f2f2f2;
+}
+blockquote, body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, td, textarea, th, ul {
+    margin: 0;
+        margin-bottom: 0px;
+    padding: 0;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, table, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+    font: 14px/normal "microsoft yahei","Times New Roman","宋体",Times,serif;
+        font-size: 14px;
+        line-height: normal;
+    letter-spacing: 1px;
+}
+.layui-col-space30 > * {
+    padding: 15px;
+}
+.layui-table {
+    width: 100%;
+    background-color: #fff;
+    color: #666;
+}
+.layui-table, .layui-table-view {
+    margin: 10px 0;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.layui-table tr {
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+.layui-table td, .layui-table th {
+    position: relative;
+    padding: 9px 15px;
+    min-height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+}
+.layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin="line"], .layui-table[lay-skin="row"] {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e6e6e6;
+}
+
+
+body,main{
+    width: 100%;
+    height: 100%;
+    background: url("/images/report/bg.jpg") no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+    color: #fff;
+    /*padding-bottom: 10px;*/
+}
+main .md3,.md12,.md6{
+    background: url("/images/report/border-bg.png") no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
+.layui-elem-quote{
+    width: 45%;
+    padding-left: 25px;
+    background: url("/images/report/title-bg.png") no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+    border-left: none;
+    line-height: 0;
+}
+.md6 .layui-elem-quote{
+    padding-left: 30px;
+}
+.layui-col-space10>*{
+    padding: 0;
+}
+
+.layui-row{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+.md3{
+    width: 45%;
+    overflow: hidden;
+}
+
+.layui-table td{
+    border-color: #00feff;
+    text-align: center;
+}
+.layui-table tbody tr:hover{
+    background: #223244;
+    color: #fff;
+}
+.title{
+    font-size: 18px;
+}
+.b-title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px 0 0 0 !important;
+}
+.b-title .date{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.date .topjui-row{
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+}
+.c-title{
+    color: #00feff !important;
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+    line-height: 2;
+    background: url("/images/report/header-bg.png") no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
+.t-title{
+    width: 40%;
+    height: 50px;
+}
+/*.t-left{*/
+    /*background: url("../../topjui/images/report/t-left-bg.png") no-repeat;*/
+    /*-webkit-background-size: 100% 100%;*/
+    /*background-size: 100% 100%;*/
+/*}*/
+/*.t-right{*/
+    /*background: url("/coalmine/topjui/images/report/t-right-bg.png") no-repeat;*/
+    /*-webkit-background-size: 100% 100%;*/
+    /*background-size: 100% 100%;*/
+/*}*/
+.layui-table thead tr{
+    background: #07414e;
+}
+.layui-table tbody{
+    background: rgba(2,11,18,0.5);
+}
+.layui-table tbody tr{
+    background: rgba(0,0,0,0.5);
+}
+.layui-table tbody tr:nth-last-of-type(even){
+    background:transparent;
+}
+div.box{
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+}
+@media screen and (max-width:1250px){
+    .md3,.md6{
+        width: 94% !important;
+        margin: 0 auto;
+    }
+    .md12{
+        width: 94% !important;
+    }
+    .c-title{
+        font-size: 18px !important;
+        line-height: 1.5 !important;
+    }
+}

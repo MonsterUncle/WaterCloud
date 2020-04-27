@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "RemoveLog";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    layui.use(['form', 'jquery', 'common','tablePlug'], function () {
+        var form = layui.form
+            , $ = layui.$,
+            common = layui.common;
+        //监听提交
+        form.on('submit(clear)', function (data) {
+            common.submitForm({
+                loading: "正在备份数据...",
+                url: "/SystemSecurity/Log/SubmitRemoveLog",
+                param: data.field,
+                success: function () {
+                    //parent.location.reload();//整体刷新
+                    //parent.$('button[lay-filter="data-search-btn"]').click();//按钮刷新
+                    //$(window.parent.document).find('.layui-laypage-btn').click();//当前页刷新
+                    common.parentreload("data-search-btn");
+                }
+            })
+            return false;
+        });
+
+    });
+</script>
+<div class="layui-form select_option_to_layer">
+    <div style="margin: 25px; margin-left: 40px; margin-right: 40px;">
+        <div class="layui-form-item">
+            <select id="keepTime" name="keepTime" lay-verify="required">
+                <option value="">==请选择保留时间==</option>
+                <option value="7">保留近一周</option>
+                <option value="1">保留近一个月</option>
+                <option value="3">保留近三个月</option>
+                <option value="0">不保留，全部删除</option>
+            </select>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <button style="float:right" class="layui-btn" id="submit" lay-submit lay-filter="clear">确认清空</button>
+        </div>
+    </div>
+</div>

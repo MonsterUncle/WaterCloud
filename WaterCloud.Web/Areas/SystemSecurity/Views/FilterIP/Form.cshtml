@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+    <body>
+        <div class="layuimini-container">
+            <div class="layuimini-main">
+                <blockquote class="layui-elem-quote layui-text">
+                    注意!IP地址格式：192.168.0.1；192.168.0.*
+                </blockquote>
+                <div class="layui-form layuimini-form" lay-filter="adminform">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">策略类型</label>
+                        <div class="layui-input-block">
+                            <select id="F_Type" name="F_Type">
+                                <option value="">==请选择==</option>
+                                <option value="true">允许访问</option>
+                                <option value="false">拒绝访问</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">起始IP</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="F_StartIP" name="F_StartIP" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">F_EndIP</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="F_EndIP" name="F_EndIP" value="" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">有效</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" checked="" id="F_EnabledMark" name="F_EnabledMark" lay-skin="switch" lay-filter="switchTest" value="true" lay-text="ON|OFF">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入备注"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+        </div>
+    </body>
+<script>
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            common = layui.common,
+            laydate = layui.laydate;
+        var keyValue = $.request("keyValue");
+        $(function () {
+            if (!!keyValue) {
+                $.ajax({
+                    url: "/SystemSecurity/FilterIP/GetFormJson",
+                    dataType: "json",
+                    data: { keyValue: keyValue },
+                    async: false,
+                    success: function (data) {
+                        common.val('adminform', data);
+                        form.render();
+                    }
+                });
+            }
+        });
+        function compareIP(ipBegin, ipEnd) {
+            var temp1 = ipBegin.split(".");
+            var temp2 = ipEnd.split(".");
+            if ((temp1[0] + temp1[1] + temp1[2]) == (temp2[0] + temp2[1] + temp2[2])) {
+                if (temp2[3] >= temp1[3]) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            } else {
+                return -1;//不在同一个网段内
+            }
+        }
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var index = layer.load(1, {
+                shade: [0.5, '#000'] //0.1透明度的背景
+            });
+            var postData = data.field;
+            var StartIP = data.field.F_StartIP;
+            var EndIP = data.field.F_EndIP;
+            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+            if (!!EndIP) {
+
+                if (compareIP(StartIP, EndIP) == -1) {
+                    common.modalMsg("不在同一个网段内");
+                    return false;
+                }
+                if (compareIP(StartIP, EndIP) == 0) {
+                    common.modalMsg("结束IP不能大于开始IP");
+                    return false;
+                }
+            }
+            common.submitForm({
+                url: "/SystemSecurity/FilterIP/SubmitForm?keyValue=" + keyValue,
+                param: postData,
+                success: function () {
+                    common.parentreload("data-search-btn");
+                }
+            })
+            layer.close(index);
+            return false;
+        });
+    });
+</script>
+

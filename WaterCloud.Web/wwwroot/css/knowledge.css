@@ -1,0 +1,461 @@
+﻿body {
+}
+.content-center {
+ position:relative;
+ margin:32px auto 0;
+ overflow:visible!important
+}
+article, aside, blockquote, body, button, code, dd, details, div, dl, dt, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, input, legend, li, menu, nav, ol, p, pre, section, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+h3 {
+    font-size: 18px;
+    line-height: 25px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+    letter-spacing: -0.25px;
+}
+
+li {
+    line-height: 20px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.rank-list {
+    margin: 0 20px 2px 0px;
+}
+
+    .rank-list li {
+        position: relative;
+        _display: block;
+        padding: 10px 0 0 25px;
+        height: 25px;
+        vertical-align: top;
+    }
+
+        .rank-list li span {
+            float: right;
+            margin-left: 5px;
+            color: #999;
+            _padding: 2px 0 2px 5px;
+            _z-index: 2;
+            _position: absolute;
+            _background: #fff;
+            _right: 0;
+        }
+
+        .rank-list li.active .num {
+            top: 12px;
+            background: #d60007;
+            font-family: Georgia, "Times New Roman", Times, serif;
+        }
+
+        .rank-list li .num {
+            position: absolute;
+            left: 0px;
+            top: 12px;
+            display: inline-block;
+            vertical-align: -3px;
+            *vertical-align: middle;
+            width: 16px;
+            height: 16px;
+            margin-right: 10px;
+            background: #1389d7;
+            font-style: normal;
+            color: #fff;
+            font-size: 10px;
+            font-family: Verdana, Geneva, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .rank-list li a {
+            display: block;
+            padding: 0;
+            color: #888;
+            font-size: 13px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            _position: absolute;
+        }
+
+.search-box {
+    height: 42px;
+    padding: 4px;
+    position: relative;
+}
+
+    .search-box .input-group .form-control {
+        box-shadow: none;
+        height: 38px;
+        line-height: 38px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-right: 0px;
+        padding-left: 7px;
+        resize: none;
+    }
+
+.btn-primary {
+    background-color: #1ABC9C;
+    border-color: #1ABC9C;
+}
+
+.search-box .input-group .btn {
+    padding: 0px 0px;
+    font-size: 14px;
+    height: 38px;
+    min-width: 40px;
+}
+
+    .search-box .input-group .btn i {
+        margin-right: 0px;
+    }
+
+.btn i {
+    margin-right: 4px;
+    font-size: 14px;
+}
+
+.help-n-list {
+    padding-top: 10px;
+}
+
+    .help-n-list li {
+        display: block;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #E5E5E5;
+        overflow: hidden;
+    }
+
+        .help-n-list li h2 {
+            padding: 5px 0 5px 0;
+            font-size: 16px;
+            line-height: 20px;
+            font-weight: normal;
+            margin: 4px;
+        }
+
+            .help-n-list li h2 a {
+                font-size: 16px;
+                font-weight: bold;
+                line-height: 29px;
+                color: #3b8dd1;
+                text-decoration: none;
+            }
+
+        .help-n-list li .note .info {
+            padding-top: 5px;
+            font: 12px/1.5 "Microsoft Yahei";
+        }
+
+.info span {
+    font-weight: 100;
+    padding: 5px;
+}
+
+.zhaiyao{
+    padding: 0 5px;
+    max-width:500px;
+    color: rgb(136, 136, 136);
+font-size: 13px;
+text-overflow: ellipsis;
+white-space: nowrap;
+overflow: hidden;
+}
+.list-item-tags{
+
+}
+.item-tags{
+border: 1px solid #1abc9c;
+border-radius: 4px;
+padding: 2px 4px;
+font-size: 11px;
+color: #1abc9c;
+height: 20px;
+line-height: 20px;
+}
+
+.tags-list{
+    margin: 5px 20px 2px 0px;
+}
+.tags-list .tag-info{
+border: 1px solid #1abc9c;
+border-radius: 4px;
+padding: 2px 6px;
+font-size: 13px;
+color: #1abc9c;
+height: 24px;
+line-height: 24px;
+margin-right: 8px;
+}
+
+
+/*
+    以下是评论功能样式
+*/
+ .clear {
+    zoom: 1;
+    overflow: hidden;
+}
+        em {
+    font-style: normal;
+}
+
+        .comment #mpbox {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    font-weight: 400;
+    text-align: left;
+    color: #333;
+    font-size: 12px;
+    line-height: 1;
+    overflow: visible;
+    background-color: transparent;
+}
+        #mpbox {
+    font-weight: 400;
+    text-align: left;
+    color: #333;
+    font-size: 12px;
+    line-height: 1;
+} 
+          #mpbox .left {
+    float: left;
+    display: inline;
+}
+        #mpbox .right {
+    float: right;
+    display: inline;
+    position: relative;
+}
+        #mpbox .clear {
+    zoom: 1;
+    overflow: hidden;
+}
+         #mpbox .c-comment-header {
+    padding: 11px 0 7px;
+    /*height: 42px;*/
+    line-height: 24px;
+    font-size: 16px;
+}
+        
+          #mpbox .c-comment-header .c-opinion {
+    font-size: 18px;
+    color: #191919;
+}
+          #mpbox .c-comment-header .c-opinion .c-line {
+    float: left;
+    margin-top: 3px;
+    width: 4px;
+    height: 19px;
+    background: #fdd000;
+    border-radius: 2px;
+    margin-right: 12px;
+}
+
+ .c-num-red {
+    font-size: 22px;
+    font-family: "Georgia Regular",Georgia;
+    color: #d92227;
+}
+ #mpbox .c-comment-submiter {
+    margin-top: 5px;
+    position: relative;
+    border: 1px solid #b7b7b7;
+}
+ #mpbox .c-comment-submiter .c-comment-box {
+    position: relative;
+    z-index: 9;
+    zoom: 1;
+    padding: 7px 10px 0 15px;
+    overflow: hidden;
+    background-color: #fff;
+}
+  #mpbox .c-comment-submiter .c-comment-box .c-comment-textbox {
+    padding: 0;
+    margin: 0 0 9px;
+    width: 100%;
+    height: 66px;
+    line-height: 22px;
+    font-size: 14px;
+    resize: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-image: none;
+    color: #ccc;
+    background-attachment: scroll;
+    border: 0;
+    outline: 0;
+}
+
+  #mpbox .c-comment-submiter.c-active {
+      border: 1px solid #ee4046; }
+  #mpbox .c-comment-submiter.c-active .c-comment-textbox {
+        color: #333; }
+  #mpbox .c-comment-submiter .c-submit-btn-unlogin {
+
+    font-size: 14px;
+    text-indent: 0;
+    letter-spacing: 0;
+
+}
+  #mpbox .c-comment-submiter .c-submit-btn:hover, #mpbox .c-comment-submiter .c-submit-btn-unlogin:hover {
+        background: #cc0f15; 
+  }
+  #mpbox .c-comment-submiter .c-submit-closed {
+      right: 0;
+      bottom: 0;
+      height: 35px;
+      background: #cdcdcd; 
+  }
+  #mpbox .c-comment-submiter .c-submit-closed:hover {
+        background: #cdcdcd;
+  }
+  #mpbox .c-comment-submiter .c-submit-btn, #mpbox .c-comment-submiter .c-submit-btn-unlogin {
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 90px;
+    height: 37px;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    line-height: 37px;
+    color: #fff;
+    background: #d81519;
+    z-index: 10;
+    cursor: pointer;
+    text-align: center;
+    text-indent: 2px;
+    letter-spacing: 0px;
+}
+ 
+  #mpbox .c-comment-submiter .c-empty {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 82px;
+    line-height: 82px;
+    font-size: 15px;
+    z-index: 10;
+    background: #fff;
+    color: #d92227;
+    text-align: center;
+    cursor: text;
+}
+  #mpbox .c-comment-content .c-new {
+    margin-top: 20px;
+}
+  #mpbox .c-comment-content .c-comment-title {
+    height: 17px;
+    line-height: 17px;
+}
+  #mpbox .c-comment-content .c-comment-title span {
+    float: left;
+    line-height: 1;
+    font-size: 16px;
+}
+  #mpbox .c-comment-content .c-comment-title span .c-line {
+    float: left;
+    margin-right: 12px;
+    width: 4px;
+    height: 17px;
+    background: #e0e0e0;
+    border-radius: 2px;
+}
+  #mpbox .c-comment-content .c-comment-main {
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+}
+  #mpbox .c-comment-content .c-comment-main .c-item-comment {
+    padding: 20px 0 11px;
+    border-bottom: 1px dashed #e5e5e5;
+    overflow: visible;
+}
+  
+   #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-head {
+    width: 50px;
+}
+   #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-head .c-head-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+   #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-head .c-head-wrapper img {
+    width: 50px;
+    height: 50px;
+}
+   #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content {
+    padding-left: 64px;
+}
+    #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-item-info {
+    padding: 1px 0 15px;
+}
+    #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-item-info .c-username {
+    font-size: 13px;
+    color: #d92227;
+}
+     #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-item-info .c-username span {
+    font-size: 11px;
+    padding: 0 2px;
+    color: #7e7e7e;
+}
+     .article-page #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-discuss, .article-page
+      #mpbox .c-make-floor .c-floor .c-floor-discuss {
+    word-wrap: break-word;
+    word-break: normal;
+}
+      #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-discuss {
+    padding: 0 7px 11px 0;
+    line-height: 22px;
+    font-size: 14px;
+    word-break: break-all;
+}
+      #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-controller {
+    position: relative;
+    text-align: right;
+    height: 16px;
+    line-height: 16px;
+}
+      #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-controller .c-date {
+    font-size: 12px;
+    color: #7e7e7e;
+}
+      #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-controller .c-reply {
+    padding: 0 10px;
+}
+       #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-controller a {
+    margin: 0 5px;
+    color: #7e7e7e;
+    font-size: 12px;
+    line-height: 17px;
+}
+       #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-controller a {
+    margin: 0 5px;
+    color: #7e7e7e;
+    font-size: 12px;
+    line-height: 17px;
+}
+       #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-controller .c-thumb-icon {
+    vertical-align: top;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjZTZhMmJiNS01YjA2LTY0NDgtOWUxZC03MDRmOGFkMTgzOGIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QjJCMzQ3OUMyNEU0MTFFNzhBNjc5MTkxRTJCMEMxQjUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QjJCMzQ3OUIyNEU0MTFFNzhBNjc5MTkxRTJCMEMxQjUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Y2U2YTJiYjUtNWIwNi02NDQ4LTllMWQtNzA0ZjhhZDE4MzhiIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOmNlNmEyYmI1LTViMDYtNjQ0OC05ZTFkLTcwNGY4YWQxODM4YiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgVjcsgAAACoSURBVHjaYvz//z8DCOzZs4cBDcwBYl8grgLiucgSTAy4gQsQiwFxPboELk1GQCwPZV9Al2TB4iw+IJ6MxG/B0ITGjwTiXiCWRBI7AsRfkPkgTYehHFsg7kDTAAKsQCyIxHcHabJBEuBiwA9+AXEWExZT8QE2IFZjYiADoGv6RkD9cyCuQdf0m4AmbpBFpDovGoh/skDjgREq+BGIP0EjGFvIgS0BCDAA0eEcY6x9OdEAAAAASUVORK5CYII=) no-repeat center;
+}
+       #mpbox .c-comment-content .c-comment-main .c-item-comment .c-item-content .c-controller i {
+    vertical-align: middle;
+    margin-right: 2px;
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+}

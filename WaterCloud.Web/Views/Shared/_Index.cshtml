@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/lib/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="~/js/lay-module/dtree/dtree.css">
+    <link rel="stylesheet" href="~/js/lay-module/dtree/font/dtreefont.css">
+    @*<script src="~/js/bootstrap/bootstrap.js"></script>
+        <link href="~/js/bootstrap/bootstrap.min.css" rel="stylesheet" />
+        <script src="~/js/datepicker/WdatePicker.js"></script>
+        <link href="~/css/framework-ui.css" rel="stylesheet" />*@
+    @*<link href="~/css/layout.css" rel="stylesheet" />*@
+    @*<link rel="stylesheet" href="~/css/layuimini.css?v=2.0.0" media="all">*@
+    <script src="~/js/framework-ui.js?v=@WaterCloud.Code.Ext.ToDateString()"></script>
+    @*<link rel="stylesheet" href="~/js/easyui/themes/bootstrap/easyui-green.css" type="text/css" />
+        <link rel="stylesheet" href="~/js/easyui/themes/icon.css" type="text/css">
+        <script src="~/js/easyui/jquery.easyui.min.js"></script>*@
+    @*<script src="~/js/easyui/easyui-lang-zh_CN.js"></script>*@
+    @*<script src="~/js/easyui/datagrid-export.js"></script>*@
+    @*<link rel="stylesheet" href="~/css/iconfont.css" media="all">*@
+    <script src="~/lib/layui-v2.5.5/layui.js"></script>
+    <link rel="stylesheet" href="~/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/css/public.css" media="all">
+    <script src="~/js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+    <link href="~/css/watercloud.css" rel="stylesheet" />
+
+    <!-- 只有在钉钉内做业务系统时使用
+    <script type="text/javascript" src="https://g.alicdn.com/dingding/dingtalk-jsapi/2.6.0/dingtalk.open.js"></script>
+    <script src="~/js/dingtalk/dingtalkinit.js"></script>
+    -->
+</head>
+<body>
+    @RenderBody()
+    @Html.AntiForgeryToken()
+</body>
+</html>
