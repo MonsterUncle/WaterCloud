@@ -43,7 +43,7 @@ namespace WaterCloud.Web
                     return false;
                 }
                 var roleId = result.userInfo.RoleId;
-                var action = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext.Request.Headers["SCRIPT_NAME"].ToString();
+                var action = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext.Request.Path;
                 return new RoleAuthorizeService().ActionValidate(roleId, action);
             }
             catch (System.Exception)
