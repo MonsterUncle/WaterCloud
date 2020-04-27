@@ -37,10 +37,11 @@
 2、后端技术
 
 - 核心框架：ASP.NET Core 3.1、WEB API(暂无)
+- 定时任务：BackgroundService Timer
 - 持久层框架：Chloe（支持多种数据库，复杂查询操作）
 - 安全支持：过滤器、Sql注入、请求伪造
 - 服务端验证：实体模型验证
-- 缓存框架：微软自带Redis（单点登录控制）
+- 缓存框架：Redis（单点登录控制）
 - 日志管理：Log、登录日志、操作日志
 - 工具类：NPOI、Newtonsoft.Json、验证码、丰富公共类似
 
