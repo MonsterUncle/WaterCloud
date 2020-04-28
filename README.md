@@ -37,7 +37,7 @@
 2、后端技术
 
 - 核心框架：ASP.NET Core 3.1、WEB API(暂无)
-- 定时任务：BackgroundService Timer
+- 定时任务：BackgroundService Timer（服务已注入，只需要在TimeService下新建类，继承BackgroundService）
 - 持久层框架：Chloe（支持多种数据库，复杂查询操作）
 - 安全支持：过滤器、Sql注入、请求伪造
 - 服务端验证：实体模型验证
@@ -54,9 +54,10 @@
 #### 环境要求
 
 1. VS2019及以上版本；
-2. Asp.net Core 3.1
+2. Asp.net Core 3.1；
 3. Mysql或者SQLSERVER2005及以上版本，database文件夹下有sql文件可执行；
 4. 请使用VS2019及以上版本打开解决方案。
+5. 部署lunix环境时，mysql数据库需要设置不区分大小写。
 
 #### 使用说明
 
