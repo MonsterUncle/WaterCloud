@@ -45,11 +45,6 @@
 - 日志管理：Log、登录日志、操作日志
 - 工具类：NPOI、Newtonsoft.Json、验证码、丰富公共类似
 
-3、SDK引入（功能自己研究）
-
-- 微信SDK：Senparc.Weixin.6.4.8，Senparc.Weixin.MP.16.7.9，Senparc.Weixin.MP.MVC.7.2.13
-- 钉钉SDK：TopSdk
-- 二维码：zxing
 
 #### 环境要求
 
