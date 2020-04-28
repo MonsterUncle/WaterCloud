@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 28/04/2020 08:57:08
+ Date: 28/04/2020 09:55:45
 */
 
 SET NAMES utf8mb4;
@@ -755,7 +755,7 @@ INSERT INTO `sys_items` VALUES ('77070117-3F1A-41BA-BF81-B8B85BF10D5E', '0', 'Sy
 INSERT INTO `sys_items` VALUES ('8CEB2F71-026C-4FA6-9A61-378127AE7320', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', '102', '生育', 0, 2, 13, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('954AB9A1-9928-4C6D-820A-FC1CDC85CDE0', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'AuditState', '审核状态', 0, 2, 6, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('9a7079bd-0660-4549-9c2d-db5e8616619f', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'DbLogType', '系统日志', 0, 2, 16, 0, 1, NULL, '2016-07-19 17:09:45', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_items` VALUES ('9EB4602B-BF9A-4710-9D80-C73CE89BEC5D', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'OrganizeCategory', '机构分类', 0, 2, 2, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_items` VALUES ('9EB4602B-BF9A-4710-9D80-C73CE89BEC5D', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'OrganizeCategory', '机构分类', 0, 2, 2, 0, 1, NULL, NULL, NULL, '2020-04-28 09:07:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_items` VALUES ('BDD797C3-2323-4868-9A63-C8CC3437AEAA', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', '104', '性别', 0, 2, 15, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('D94E4DC1-C2FD-4D19-9D5D-3886D39900CE', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'RoleType', '角色类型', 0, 2, 3, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('FA7537E2-1C64-4431-84BF-66158DD63269', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', '101', '婚姻', 0, 2, 12, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -873,6 +873,7 @@ CREATE TABLE `sys_log`  (
 INSERT INTO `sys_log` VALUES ('004681c2-f051-496e-be21-4a29cf40cc09', '2020-04-27 16:49:31', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-27 16:49:31', NULL, NULL);
 INSERT INTO `sys_log` VALUES ('00b9d444-88ce-49a8-aacf-cfa95b4c5005', '2020-04-17 10:34:16', '10010', '10010', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 0, '登录失败，可为空的对象必须具有一个值。', '2020-04-17 10:34:28', NULL, NULL);
 INSERT INTO `sys_log` VALUES ('00e2c94c-8290-477a-89d2-3b7447c7e1f5', '2020-04-17 13:41:15', '10000', '2222', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-04-17 13:41:15', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL);
+INSERT INTO `sys_log` VALUES ('01988474-fdae-4090-938e-405ef14f48a5', '2020-04-28 09:55:07', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '系统管理', 1, '菜单按钮操作,修改操作成功', '2020-04-28 09:55:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '43e09a61-c2b0-46c1-9b81-76d686b390d4');
 INSERT INTO `sys_log` VALUES ('021da30b-d40d-4428-95d4-f6368b0af6d0', '2020-04-14 08:25:45', 'admin', '超级管理员', 'Login', '117.81.192.182', '江苏省苏州市 电信', NULL, '系统登录', 1, '登录成功', '2020-04-14 08:25:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
 INSERT INTO `sys_log` VALUES ('0233641b-e71a-4377-94e2-102d58d8cb8b', '2020-04-20 16:25:08', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-20 16:25:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
 INSERT INTO `sys_log` VALUES ('04491b36-6e16-48c8-a420-9dd171e131d8', '2020-04-17 10:33:52', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-04-17 10:33:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
@@ -1090,6 +1091,7 @@ INSERT INTO `sys_log` VALUES ('9a28deda-aaa8-4cad-98a0-8bc61444ab00', '2020-04-1
 INSERT INTO `sys_log` VALUES ('9a7a86f5-dbb1-42df-9e83-f49fb0503fd8', '2020-04-17 11:45:31', '10000', 'aaa', 'Login', '127.0.0.1', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-17 11:45:31', '547395a9-1de6-41c6-a829-f1dc036c60b3', NULL);
 INSERT INTO `sys_log` VALUES ('9aef7f0c-b516-44df-a702-dd331531453a', '2020-04-17 13:30:51', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-04-17 13:30:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
 INSERT INTO `sys_log` VALUES ('9e173056-a6f9-4e54-b98d-456bdd5cb4a3', '2020-04-17 10:50:30', '10000', '莎莎声', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-17 10:50:30', '8af4f5d6-85a4-4137-87f8-3d1390a67f93', NULL);
+INSERT INTO `sys_log` VALUES ('9e3b2813-1ce7-48e1-a660-7b2c3180ba2f', '2020-04-28 09:07:08', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '系统管理', 1, '字典分类操作,修改操作成功', '2020-04-28 09:07:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '9EB4602B-BF9A-4710-9D80-C73CE89BEC5D');
 INSERT INTO `sys_log` VALUES ('9e4b526c-7c7e-4ffd-9bd1-fd6663233b77', '2020-04-27 14:33:05', '10000', '2222', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-27 14:33:05', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL);
 INSERT INTO `sys_log` VALUES ('9f069c00-54a3-4680-b2c1-cb8cd724339c', '2020-04-17 11:32:21', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '系统管理', 1, '角色管理操作,删除操作成功', '2020-04-17 11:32:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
 INSERT INTO `sys_log` VALUES ('9f5646eb-f05b-4e43-a760-4ad17a834a56', '2020-04-17 11:32:09', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '系统管理', 1, '角色管理操作,删除操作成功', '2020-04-17 11:32:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
@@ -1137,6 +1139,7 @@ INSERT INTO `sys_log` VALUES ('ba2c1ba0-c2a0-4d6d-8da3-7fad50b689a7', '2020-04-2
 INSERT INTO `sys_log` VALUES ('bafcb1e7-b732-4258-a22b-bd37b86cf630', '2020-04-17 13:33:44', '10000', '2222', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-17 13:33:44', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL);
 INSERT INTO `sys_log` VALUES ('bbd9faad-5388-4f7b-a0be-a87e87fdfc8e', '2020-04-17 13:45:28', '10000', '2222', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-17 13:45:28', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL);
 INSERT INTO `sys_log` VALUES ('bdd52ff5-4f4f-4019-b8be-8786ac179844', '2020-04-17 12:58:44', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-17 12:58:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
+INSERT INTO `sys_log` VALUES ('be71a99e-dbf1-4fff-871d-d6653396671d', '2020-04-28 09:54:52', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '系统管理', 1, '菜单按钮操作,新增操作成功', '2020-04-28 09:54:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
 INSERT INTO `sys_log` VALUES ('bea3d9bc-0310-4ccf-8cff-b69ac36d7569', '2020-04-20 14:49:21', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-04-20 14:49:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
 INSERT INTO `sys_log` VALUES ('c2933590-9577-4580-83c5-26c3bce8de63', '2020-04-23 17:01:13', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-23 17:01:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
 INSERT INTO `sys_log` VALUES ('c3483e50-39fb-4e85-94c2-5fe53ee12e8a', '2020-04-23 14:17:20', 'admin', '超级管理员', 'Update', '127.0.0.1', '本地局域网', NULL, '系统管理', 1, '按钮管理操作,修改操作成功', '2020-04-23 14:17:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '9fc77888-bbca-4996-9240-a0f389819f6f');
@@ -1176,6 +1179,7 @@ INSERT INTO `sys_log` VALUES ('dda4b10c-2805-4589-865b-6d9411e4a514', '2020-04-1
 INSERT INTO `sys_log` VALUES ('deb4a527-650b-4f9e-a88c-d51ff3ec3fd0', '2020-04-16 14:57:58', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '系统安全', 1, '访问控制操作,修改操作成功', '2020-04-16 14:57:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b3fbe66f-82cd-4f4a-ada3-61eb5a2d9eee');
 INSERT INTO `sys_log` VALUES ('df4e985c-9ad3-4208-9f84-e87bf01adff5', '2020-04-17 10:45:24', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-17 10:45:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
 INSERT INTO `sys_log` VALUES ('df83132b-86c6-4e84-9079-8572fcbefea4', '2020-04-27 17:38:21', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '系统管理', 1, '按钮管理操作,修改操作成功', '2020-04-27 17:38:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'a0a41d87-494b-40b5-bd03-0f75c75be7cb');
+INSERT INTO `sys_log` VALUES ('dfd7aa92-8a73-4223-92c0-872ec61ba51a', '2020-04-28 09:06:20', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-28 09:06:20', NULL, NULL);
 INSERT INTO `sys_log` VALUES ('e0767bdf-ab54-4642-9c76-8d6db23ac790', '2020-04-17 10:37:25', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-17 10:37:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
 INSERT INTO `sys_log` VALUES ('e10023bb-a851-4763-bfaa-2cfa2030b41b', '2020-04-17 10:59:55', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-04-17 10:59:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL);
 INSERT INTO `sys_log` VALUES ('e3b743d1-297f-410d-ad0c-a849bed6b224', '2020-04-17 11:48:17', '10000', 'aaa', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-04-17 11:48:17', '547395a9-1de6-41c6-a829-f1dc036c60b3', NULL);
@@ -1335,6 +1339,7 @@ INSERT INTO `sys_modulebutton` VALUES ('3a35c662-a356-45e4-953d-00ebd981cad6', '
 INSERT INTO `sys_modulebutton` VALUES ('3d0e99d1-a150-43dc-84ae-f0e2e0ad2217', 'ed757a25-82d5-43cc-89f4-ed26a51fb4f0', '0', 1, 'NF-edit', '修改按钮', NULL, 2, 'edit', '/SystemManage/ModuleButton/Form', 0, 0, 0, 0, 2, 0, 1, NULL, NULL, NULL, '2020-04-27 16:57:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('3f69d32f-cb3b-4fa0-863b-98b9a090d7e9', '7e4e4a48-4d51-4159-a113-2a211186f13a', '0', 1, 'NF-add', '新建公告', NULL, 1, 'add', '/SystemManage/Notice/Form', 0, 0, 0, 0, 1, 0, 1, NULL, NULL, NULL, '2020-04-20 17:09:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('41862743-f703-4b6d-be54-08d253eb0ebc', 'e72c75d0-3a69-41ad-b220-13c9a62ec788', '0', 1, 'NF-add', '新建备份', NULL, 1, 'add', '/SystemSecurity/DbBackup/Form', 0, 0, 0, 0, 1, 0, 1, NULL, NULL, NULL, '2016-07-25 15:43:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('43e09a61-c2b0-46c1-9b81-76d686b390d4', 'ed757a25-82d5-43cc-89f4-ed26a51fb4f0', '0', 1, 'NF-clonebutton', '克隆按钮', NULL, 1, 'clonebutton', '/SystemManage/ModuleButton/Index', 0, 0, 0, 0, 5, 0, 1, NULL, '2020-04-28 09:54:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-04-28 09:55:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('4727adf7-5525-4c8c-9de5-39e49c268349', '38CA5A66-C993-4410-AF95-50489B22939C', '0', 1, 'NF-edit', '修改用户', NULL, 2, 'edit', '/SystemManage/User/Form', 0, 0, 0, 0, 2, 0, 1, NULL, NULL, NULL, '2016-07-25 14:16:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('48afe7b3-e158-4256-b50c-cd0ee7c6dcc9', '337A4661-99A5-4E5E-B028-861CACAF9917', '0', 1, 'NF-add', '新建区域', NULL, 1, 'add', '/SystemManage/Area/Form', 0, 0, 0, 0, 1, 0, 1, NULL, NULL, NULL, '2016-07-25 15:32:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('4b876abc-1b85-47b0-abc7-96e313b18ed8', '423A200B-FA5F-4B29-B7B7-A3F5474B725F', '0', NULL, 'NF-itemstype', '分类管理', NULL, 1, 'itemstype', '/SystemManage/ItemsType/Index', 0, 0, 0, 0, 2, 0, 1, NULL, '2016-07-25 15:36:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-04-07 14:33:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
@@ -1697,7 +1702,7 @@ INSERT INTO `sys_serverstate` VALUES ('3a823abe-dc4e-4899-a157-c434e2120956', 'W
 INSERT INTO `sys_serverstate` VALUES ('53386811-6c32-42a0-a451-475091a776db', 'WaterCloud.Web', '82.93', '29.88', '0', '2020-04-20', 33);
 INSERT INTO `sys_serverstate` VALUES ('91ba06c3-c7b1-472a-a05f-73670533c474', 'WaterCloud.Web', '88.19', '24.63', '0', '2020-04-22', 8);
 INSERT INTO `sys_serverstate` VALUES ('a6cd0949-e779-44e5-aa9d-4ac1f26081f2', 'WaterCloud.Web', '83.28', '20.04', '0', '2020-04-23', 78);
-INSERT INTO `sys_serverstate` VALUES ('c14b1fab-cd81-420e-82d9-c7c979e15e22', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '89', '34.67', '0', '2020-04-28', 6);
+INSERT INTO `sys_serverstate` VALUES ('c14b1fab-cd81-420e-82d9-c7c979e15e22', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '80.81', '26.73', '0', '2020-04-28', 30);
 INSERT INTO `sys_serverstate` VALUES ('ce3224a6-a90a-4808-aba7-4a2b988cc189', 'WaterCloud.Web', '83.45', '23.45', '0', '2020-04-21', 33);
 INSERT INTO `sys_serverstate` VALUES ('e7182526-1d56-4508-a8d9-c108454cbea2', 'WaterCloud.Web', '78.03', '16.18', '0', '2020-04-15', 59);
 
