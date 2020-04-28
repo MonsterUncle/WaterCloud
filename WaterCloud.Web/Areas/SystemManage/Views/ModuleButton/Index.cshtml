@@ -62,9 +62,11 @@
                 { field: 'F_SortCode', title: '排序', width: 60 },
                 { field: 'F_Description', title: '介绍', width: 100 },
             ]],
+            done: function () {
+                //权限控制
+                common.authorizeButton("toolbar");
+            }
         });
-        //权限控制
-        common.authorizeButton("toolbar");
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             var queryJson = data.field.txt_keyword;
@@ -88,7 +90,7 @@
             if (obj.event === 'add') {  // 监听操作
                 common.modalOpen({
                     title: "添加按钮",
-                    url: "/SystemManage/ModuleButton/Form",
+                    url: "/SystemManage/ModuleButton/Form?moduleId=" + moduleId,
                     width: "500px",
                     height: "440px",
                 });

@@ -38,9 +38,11 @@
                     }
                 }
             ]],
+            done: function () {
+                //权限控制
+                common.authorizeButton("toolbar");
+            }
         });
-        //权限控制
-        common.authorizeButton("toolbar");
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             //执行搜索重载
