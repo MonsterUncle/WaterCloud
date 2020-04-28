@@ -22,11 +22,15 @@
             bottom: 45px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            background: #F2F2F2;
+        }
+        .watercolor {
+            background-color: #fff;
         }
 
         .message-list-item {
             display: block;
-            padding: 10px 20px;
+            padding: 0px 15px;
             line-height: 24px;
             position: relative;
             border-bottom: 1px solid #e8e8e8;
@@ -37,21 +41,22 @@
             }
 
             .message-list-item .message-item-icon {
-                width: 40px;
-                height: 40px;
-                line-height: 40px;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
                 margin-top: -20px;
                 border-radius: 50%;
                 position: absolute;
-                left: 20px;
+                left: 50px;
                 top: 50%;
             }
 
                 .message-list-item .message-item-icon.layui-icon {
                     color: #fff;
-                    font-size: 22px;
+                    font-size: 15px;
                     text-align: center;
                     background-color: #FE5D58;
+                    margin-top: -20px;
                 }
 
                 .message-list-item .message-item-icon + .message-item-right {
@@ -61,17 +66,20 @@
             .message-list-item .message-item-title {
                 color: #666;
                 font-size: 14px;
+                padding-left: 30px;
             }
 
             .message-list-item .message-item-text {
                 color: #999;
                 font-size: 12px;
+                padding-left: 30px;
             }
 
             .message-list-item > .layui-badge {
                 position: absolute;
                 right: 20px;
                 top: 12px;
+                left: 30px;
             }
 
                 .message-list-item > .layui-badge + .message-item-right {
@@ -85,6 +93,7 @@
             line-height: 24px;
             text-align: center;
             cursor: pointer;
+            background-color:#fff;
         }
 
         .message-btn-clear {
@@ -125,31 +134,130 @@
         .show-empty .message-btn-clear, .show-empty .message-list {
             display: none;
         }
-
+        .layui-badge {
+            position: relative;
+            display: inline-block;
+            padding: 0 6px;
+            font-size: 12px;
+            text-align: center;
+            background-color: #FF5722;
+            color: #fff;
+            border-radius: 2px;
+            left:30px;
+        }
+        .layui-badge-yellow {
+            margin-top: 5px;
+            color: #faad14;
+            background: #fff;
+            border: 1px solid #ffe58f;
+        }
+        .layui-badge-green {
+            margin-top: 5px;
+            color: #52c41a;
+            background: #fff;
+            border: 1px solid #b7eb8f;
+        }
+        .layui-badge-red {
+            margin-top: 5px;
+            color: #f5222d;
+            background: #fff;
+            border: 1px solid #ffa39e;
+        }
         /** //消息列表样式结束 */
     </style>
     <script>
+
+
         layui.use(['element','jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
             var form = layui.form,
                 $ = layui.$,
                 common = layui.common,
                 laydate = layui.laydate;
-
-            /* 加载更多按钮点击事件 */
-            $('#messageMoreBtn2').click(function () {
-                var $that = $(this);
-                admin.btnLoading($that);
-                setTimeout(function () {
-                    admin.btnLoading($that, false);
-                    $that.before($that.prev()[0].outerHTML);
-                }, 300);
+            $(function () {
+                //todo ajax获取3个信息的参数 进行显示
+                //通知值
+                var num1 = 5;
+                //私信值
+                var num2 = 4;
+                //带办值
+                var num3 = 3;
+                $('#message1').html("通知(" + num1 + ")");
+                $('#message2').html("私信(" + num2 + ")");
+                $('#message3').html("待办(" + num3 + ")");
+                var html1 = '';
+                var html2 = '';
+                var html3 = '';
+                html1 += '<a class="message-list-item" href="javascript:;">'
+                + '<div class="watercolor" >'
+                +'<i class="layui-icon layui-icon-speaker message-item-icon"></i>'
+                +'<div class="message-item-right">'
+                    + '<h2 class="message-item-title">' + 'XXXX' +'通知</h2>'
+                +'<p class="message-item-text">'+'10个月前'+'</p>'
+                + '</div>'
+                + '</div >'
+                + '</a >'
+                html2 += '<a class="message-list-item" href="javascript:;">'
+                    + '<div class="watercolor" >'
+                    + '<!--<img class="message-item-icon" src="assets/images/head.jpg" alt = ""> -->'
+                    + '<div class="message-item-right">'
+                    + '<h2 class="message-item-title">' + 'a' +'评论了你</h2>'
+                    + '<p class="message-item-text">'+'xxxxxxxx'+'</p>'
+                    + '<p class="message-item-text">'+'10个月前'+'</p>'
+                    + '</div>'
+                    + '</div>'
+                    + '</a>'
+                    + '<a id="messageMoreBtn2" class="message-btn-more">加载更多</a>';
+                html3 += '<a class="message-list-item" href="javascript:;">'
+                    + '<div class="watercolor" >'
+                    + '<span class="layui-badge '+'layui-badge-yellow'+'">'+'待完成'+'</span>'
+                    + '<div class="message-item-right">'
+                    + '<h2 class="message-item-title">' + 'sss' +'待完成</h2>'
+                    + '<p class="message-item-text">'+'10个月前'+'</p>'
+                    + '</div>'
+                    + '</div>'
+                    + '</a>';
+                $('#list1').html(html1);
+                $('#list2').html(html2);
+                $('#list3').html(html3);
             });
-
-            /* 清空消息点击事件 */
-            $('#messageClearBtn1,#messageClearBtn2,#messageClearBtn3').click(function () {
+            /* 加载更多按钮点击事件 */
+            $(document).on('click', '#messageMoreBtn2', function () {
+                var $that = $(this);
+                //todo 前后交互，htm2是根据后端数据生成的
+                var html2 = '';
+                html2 += '<a class="message-list-item" href="javascript:;">'
+                    + '<div class="watercolor" >'
+                    + '<!--<img class="message-item-icon" src="assets/images/head.jpg" alt = ""> -->'
+                    + '<div class="message-item-right">'
+                    + '<h2 class="message-item-title">' + 'a' + '评论了你</h2>'
+                    + '<p class="message-item-text">' + 'xxxxxxxx' + '</p>'
+                    + '<p class="message-item-text">' + '10个月前' + '</p>'
+                    + '</div>'
+                    + '</div>'
+                    + '</a>'
+                    + '<a id="messageMoreBtn2" class="message-btn-more">加载更多</a>';
+                $('#messageMoreBtn2').remove();
+                $('#list2').each(function () {
+                    var y = $(this).children().last();
+                    y.after(html2);
+                });
+            });
+            /* 清空消息点击事件 分开写交互*/
+            $('#messageClearBtn1').click(function () {
+                //需要前后端交互
+                $('#message1').html("通知(0)");
                 $(this).parents('.layui-tab-item').addClass('show-empty');
             });
-
+            $('#messageClearBtn2').click(function () {
+                //需要前后端交互
+                $('#message2').html("私信(0)");
+                $(this).parents('.layui-tab-item').addClass('show-empty');
+            });
+            $('#messageClearBtn3').click(function () {
+                //需要前后端交互
+                $('#message3').html("待办(0)");
+                $(this).parents('.layui-tab-item').addClass('show-empty');
+            });
         });
     </script>
 </head>
@@ -157,34 +265,40 @@
     <div class="layui-card" style="box-shadow: none;border: none;">
         <div class="layui-tab layui-tab-brief">
             <ul class="layui-tab-title" style="text-align: center;">
-                <li class="layui-this">通知(5)</li>
-                <li>私信(12)</li>
-                <li>待办(3)</li>
+                <li class="layui-this" id="message1">通知(5)</li>
+                <li id="message2">私信(12)</li>
+                <li id="message3">待办(3)</li>
             </ul>
             <div class="layui-tab-content" style="padding: 0;">
                 <!-- tab1 -->
                 <div class="layui-tab-item layui-show">
-                    <div class="message-list">
-                        <!-- 实际项目请使用后台数据循环出来 -->
+                    <div class="message-list" id="list1">
+                            <!-- 实际项目请使用后台数据循环出来 -->
                         <a class="message-list-item" href="javascript:;">
-                            <i class="layui-icon layui-icon-speaker message-item-icon"></i>
-                            <div class="message-item-right">
-                                <h2 class="message-item-title">你收到了14份新周报</h2>
-                                <p class="message-item-text">10个月前</p>
+                            <div class="watercolor">
+                                <i class="layui-icon layui-icon-speaker message-item-icon"></i>
+                                <div class="message-item-right">
+                                    <h2 class="message-item-title">你收到了14份新周报</h2>
+                                    <p class="message-item-text">10个月前</p>
+                                </div>
                             </div>
                         </a>
                         <a class="message-list-item" href="javascript:;">
-                            <i class="layui-icon layui-icon-speaker message-item-icon"></i>
-                            <div class="message-item-right">
-                                <h2 class="message-item-title">你收到了14份新周报</h2>
-                                <p class="message-item-text">10个月前</p>
+                            <div class="watercolor">
+                                <i class="layui-icon layui-icon-speaker message-item-icon"></i>
+                                <div class="message-item-right">
+                                    <h2 class="message-item-title">你收到了14份新周报</h2>
+                                    <p class="message-item-text">10个月前</p>
+                                </div>
                             </div>
                         </a>
                         <a class="message-list-item" href="javascript:;">
-                            <i class="layui-icon layui-icon-speaker message-item-icon"></i>
-                            <div class="message-item-right">
-                                <h2 class="message-item-title">你收到了14份新周报</h2>
-                                <p class="message-item-text">10个月前</p>
+                            <div class="watercolor">
+                                <i class="layui-icon layui-icon-speaker message-item-icon"></i>
+                                <div class="message-item-right">
+                                    <h2 class="message-item-title">你收到了14份新周报</h2>
+                                    <p class="message-item-text">10个月前</p>
+                                </div>
                             </div>
                         </a>
                     </div>
@@ -197,29 +311,35 @@
                 </div>
                 <!-- tab2 -->
                 <div class="layui-tab-item">
-                    <div class="message-list">
+                    <div class="message-list"  id="list2">
                         <a class="message-list-item" href="javascript:;">
-                            <!--<img class="message-item-icon" src="assets/images/head.jpg" alt="">-->
-                            <div class="message-item-right">
-                                <h2 class="message-item-title">xx评论了你</h2>
-                                <p class="message-item-text">哈哈哈哈哈哈</p>
-                                <p class="message-item-text">10个月前</p>
+                            <div class="watercolor">
+                                <!--<img class="message-item-icon" src="assets/images/head.jpg" alt="">-->
+                                <div class="message-item-right">
+                                    <h2 class="message-item-title">a评论了你</h2>
+                                    <p class="message-item-text">xxxxxxxx</p>
+                                    <p class="message-item-text">10个月前</p>
+                                </div>
                             </div>
                         </a>
                         <a class="message-list-item" href="javascript:;">
-                            <!--<img class="message-item-icon" src="assets/images/head.jpg" alt="">-->
-                            <div class="message-item-right">
-                                <h2 class="message-item-title">xx评论了你</h2>
-                                <p class="message-item-text">哈哈哈哈哈哈</p>
-                                <p class="message-item-text">10个月前</p>
+                            <div class="watercolor">
+                                <!--<img class="message-item-icon" src="assets/images/head.jpg" alt="">-->
+                                <div class="message-item-right">
+                                    <h2 class="message-item-title">b评论了你</h2>
+                                    <p class="message-item-text">ssssssss</p>
+                                    <p class="message-item-text">10个月前</p>
+                                </div>
                             </div>
                         </a>
                         <a class="message-list-item" href="javascript:;">
-                            <!--<img class="message-item-icon" src="assets/images/head.jpg" alt="">-->
-                            <div class="message-item-right">
-                                <h2 class="message-item-title">xx评论了你</h2>
-                                <p class="message-item-text">哈哈哈哈哈哈</p>
-                                <p class="message-item-text">10个月前</p>
+                            <div class="watercolor">
+                                <!--<img class="message-item-icon" src="assets/images/head.jpg" alt="">-->
+                                <div class="message-item-right">
+                                    <h2 class="message-item-title">c评论了你</h2>
+                                    <p class="message-item-text">ggggggggg</p>
+                                    <p class="message-item-text">10个月前</p>
+                                </div>
                             </div>
                         </a>
                         <a id="messageMoreBtn2" class="message-btn-more">加载更多</a>
@@ -233,26 +353,32 @@
                 </div>
                 <!-- tab3 -->
                 <div class="layui-tab-item">
-                    <div class="message-list">
+                    <div class="message-list"  id="list3">
                         <a class="message-list-item" href="javascript:;">
-                            <span class="layui-badge layui-badge-yellow">待完成</span>
-                            <div class="message-item-right">
-                                <h2 class="message-item-title">你收到了14份新周报</h2>
-                                <p class="message-item-text">10个月前</p>
+                            <div class="watercolor">
+                                <span class="layui-badge layui-badge-yellow">待完成</span>
+                                <div class="message-item-right">
+                                    <h2 class="message-item-title">sss待完成</h2>
+                                    <p class="message-item-text">10个月前</p>
+                                </div>
                             </div>
                         </a>
                         <a class="message-list-item" href="javascript:;">
-                            <span class="layui-badge layui-badge-green">已完成</span>
-                            <div class="message-item-right">
-                                <h2 class="message-item-title">你收到了14份新周报</h2>
-                                <p class="message-item-text">10个月前</p>
+                            <div class="watercolor">
+                                <span class="layui-badge layui-badge-green">已完成</span>
+                                <div class="message-item-right">
+                                    <h2 class="message-item-title">XXXX已完成</h2>
+                                    <p class="message-item-text">10个月前</p>
+                                </div>
                             </div>
                         </a>
                         <a class="message-list-item" href="javascript:;">
-                            <span class="layui-badge layui-badge-red">未完成</span>
-                            <div class="message-item-right">
-                                <h2 class="message-item-title">你收到了14份新周报</h2>
-                                <p class="message-item-text">10个月前</p>
+                            <div class="watercolor">
+                                <span class="layui-badge layui-badge-red">未完成</span>
+                                <div class="message-item-right">
+                                    <h2 class="message-item-title">sssss未完成</h2>
+                                    <p class="message-item-text">10个月前</p>
+                                </div>
                             </div>
                         </a>
                     </div>

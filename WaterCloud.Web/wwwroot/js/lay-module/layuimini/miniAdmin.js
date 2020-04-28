@@ -273,6 +273,31 @@ layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function 
             });
 
             /**
+             * 消息
+             */
+            $('body').on('click', '[data-notice]', function () {
+                var loading = layer.load(0, { shade: false, time: 2 * 1000 });
+                var clientHeight = (document.documentElement.clientHeight) - 60;
+                layer.open({
+                    type: 2,
+                    title: false,
+                    closeBtn: 0,
+                    shade: 0.2,
+                    anim: 2,
+                    shadeClose: true,
+                    id: 'layuiMessage',
+                    area: ['340px', clientHeight + 'px'],
+                    offset: 'rb',
+                    content: '../page/message.html',
+                    success: function (index, layero) {
+                    },
+                    end: function () {
+                        $('.layui-icon-notice').empty();
+                    }
+                });
+                layer.close(loading);
+            });
+            /**
              * 刷新
              */
             $('body').on('click', '[data-refresh]', function () {
