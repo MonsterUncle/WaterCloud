@@ -38,7 +38,7 @@ namespace WaterCloud.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             //redis 注入服务
-            string redisConnectiong = Configuration.GetConnectionString("Redis");
+            string redisConnectiong = Configuration.GetSection("SystemConfig:RedisConnectionString").Value;
             // 多客户端
             var redisDB = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
             RedisHelper.Initialization(redisDB);

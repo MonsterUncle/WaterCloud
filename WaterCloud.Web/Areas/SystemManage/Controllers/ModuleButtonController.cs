@@ -79,19 +79,21 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
         {
-            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();           
+            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+
             LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
                 moduleButtonEntity.F_DeleteMark = false;
                 moduleButtonEntity.F_AllowEdit = false;
                 moduleButtonEntity.F_AllowDelete = false;
-                logEntity = new LogEntity(module.F_FullName, "按钮管理", DbLogType.Create.ToString());
+                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }
             else
             {
-                logEntity = new LogEntity(module.F_FullName, "按钮管理", DbLogType.Update.ToString());
+                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
             }
@@ -126,7 +128,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public ActionResult DeleteForm(string keyValue)
         {
             var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            LogEntity logEntity = new LogEntity(module.F_FullName, "按钮管理", DbLogType.Delete.ToString());
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
@@ -230,7 +233,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public ActionResult SubmitCloneButton(string moduleId, string Ids)
         {
             var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            LogEntity logEntity= new LogEntity(module.F_FullName, "按钮管理", DbLogType.Create.ToString());
+            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Create.ToString());
             logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
