@@ -92,16 +92,16 @@ layui.define(["element", "layer", "jquery"], function (exports) {
             options.title = options.title || null;
             var loading = parent.layer.load(0, { shade: false, time: 2 * 1000 });
             if (options.href === null || options.href === undefined) options.href = new Date().getTime();
-            var checkTab = miniTab.check(options.href, true);
+            var checkTab = miniTab.check(options.href.split("?")[0], true);
             if (!checkTab) {
                 miniTab.create({
-                    tabId: options.href,
+                    tabId: options.href.split("?")[0],
                     href: options.href,
                     title: options.title,
                     isIframe: true,
                 });
             }
-            parent.layui.element.tabChange('layuiminiTab', options.href);
+            parent.layui.element.tabChange('layuiminiTab', options.href.split("?")[0]);
             parent.layer.close(loading);
         },
 

@@ -168,6 +168,9 @@
                     common.modalMsg("未选中数据", "warning");
                     return false;
                 }
+                if (miniTab.check("/SystemManage/ModuleButton/Index", true)) {
+                    common.modalAlert("系统按钮界面已打开,请关闭后重试", "warning");
+                }
                 miniTab.openNewTabByIframe({
                     title: "系统按钮",
                     href: "/SystemManage/ModuleButton/Index?moduleId=" + module.data.F_Id,
