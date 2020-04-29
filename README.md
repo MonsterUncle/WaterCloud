@@ -52,7 +52,7 @@
 2. Asp.net Core 3.1；
 3. Mysql或者SQLSERVER2005及以上版本，database文件夹下有sql文件可执行；
 4. 请使用VS2019及以上版本打开解决方案。
-5. 部署lunix环境时，mysql数据库需要设置不区分大小写。
+5. 部署lunix环境时，mysql数据库需要设置不区分大小写，centos上安装libgdiplus-devel。
 
 #### 使用说明
 
