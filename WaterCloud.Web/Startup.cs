@@ -81,19 +81,9 @@ namespace WaterCloud.Web
                 app.UseExceptionHandler("/Home/Error");
             }
             //文件地址Resource
-            string resource = Path.Combine(env.ContentRootPath, "Resource");
-            FileHelper.CreateFolder(resource);
             //静态资源wwwroot
             app.UseStaticFiles(new StaticFileOptions
             {
-                ContentTypeProvider = new CustomerFileExtensionContentTypeProvider(),
-                OnPrepareResponse = GlobalContext.SetCacheControl
-            });
-            //静态资源/Resource
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                RequestPath = "/Resource",
-                FileProvider = new PhysicalFileProvider(resource),
                 ContentTypeProvider = new CustomerFileExtensionContentTypeProvider(),
                 OnPrepareResponse = GlobalContext.SetCacheControl
             });

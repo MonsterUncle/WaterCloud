@@ -6,15 +6,11 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-nanoserver-1809 AS base
 WORKDIR /app
 EXPOSE 80
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-1809 AS build
 WORKDIR /src
 COPY ["WaterCloud.Web/WaterCloud.Web.csproj", "WaterCloud.Web/"]
-COPY ["WaterCloud.Application/WaterCloud.Service.csproj", "WaterCloud.Application/"]
-COPY ["WaterCloud.Data/WaterCloud.DataBase.csproj", "WaterCloud.Data/"]
-COPY ["WaterCloud.Code/WaterCloud.Code.csproj", "WaterCloud.Code/"]
-COPY ["WaterCloud.Repository/WaterCloud.Repository.csproj", "WaterCloud.Repository/"]
-COPY ["WaterCloud.Domain/WaterCloud.Domain.csproj", "WaterCloud.Domain/"]
 RUN dotnet restore "WaterCloud.Web/WaterCloud.Web.csproj"
 COPY . .
 WORKDIR "/src/WaterCloud.Web"
