@@ -17,7 +17,7 @@ namespace WaterCloud.Web
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (OperatorProvider.Provider.GetCurrent().IsSystem)
+            if (OperatorProvider.Provider.GetCurrent() != null&& OperatorProvider.Provider.GetCurrent().IsSystem)
             {
                 return;
             }
