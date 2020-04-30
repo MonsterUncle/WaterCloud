@@ -13,6 +13,7 @@
 - 适用范围：可以开发OA、ERP、BPM、CRM、WMS、TMS、MIS、BI、电商平台后台、物流管理系统、快递管理系统、教务管理系统等各类管理软件。
 
 项目演示地址：http://www.watercloud.vip/
+文档地址：http://qian_wei_hong.gitee.io/waterclouddocument/#/
 
 #### 前端以及后端使用技术介绍
 
