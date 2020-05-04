@@ -45,7 +45,7 @@ namespace WaterCloud.Code
                 case "Session":
                     return WebHelper.GetSession(key).ToString();
                 default:
-                    throw new Exception("未找到LoginProvider配置");
+                    return WebHelper.GetCookie(key).ToString();
             }
         }
         public void SetProvider(string key,string value)
@@ -59,7 +59,8 @@ namespace WaterCloud.Code
                     WebHelper.WriteSession(key, value);
                     break;
                 default:
-                    throw new Exception("未找到LoginProvider配置");
+                    WebHelper.WriteCookie(key, value);
+                    break;
             }
         }
         public void RemoveProvider(string key)
@@ -73,7 +74,8 @@ namespace WaterCloud.Code
                     WebHelper.RemoveSession(key);
                     break;
                 default:
-                    throw new Exception("未找到LoginProvider配置");
+                    WebHelper.RemoveCookie(key);
+                    break;
             }
         }
         public OperatorModel GetCurrent()
