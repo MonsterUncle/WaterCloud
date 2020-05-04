@@ -30,7 +30,6 @@ namespace WaterCloud.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -64,13 +63,14 @@ namespace WaterCloud.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
-            //虚拟目录
-            if (!string.IsNullOrEmpty(GlobalContext.SystemConfig.VirtualDirectory))
-            {
-                app.UsePathBase(new PathString(GlobalContext.SystemConfig.VirtualDirectory)); // 让 Pathbase 中间件成为第一个处理请求的中间件， 才能正确的模拟虚拟路径
-            }
+            //虚拟目录 
+            //如需使用，所有URL修改，例："/Home/Index"改成'@Url.Content("~/Home/Index")'，部署访问首页必须带虚拟目录;
+            //if (!string.IsNullOrEmpty(GlobalContext.SystemConfig.VirtualDirectory))
+            //{
+            //    app.UsePathBase(new PathString(GlobalContext.SystemConfig.VirtualDirectory)); // 让 Pathbase 中间件成为第一个处理请求的中间件， 才能正确的模拟虚拟路径
+            //}
             if (WebHostEnvironment.IsDevelopment())
             {
                 GlobalContext.SystemConfig.Debug = true;
@@ -91,11 +91,6 @@ namespace WaterCloud.Web
             app.UseSession();
             //路径
             app.UseRouting();
-            //API路由
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
             //MVC路由
             app.UseEndpoints(endpoints =>
             {
