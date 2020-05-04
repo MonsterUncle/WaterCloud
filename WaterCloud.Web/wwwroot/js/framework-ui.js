@@ -190,7 +190,7 @@ $.fn.bindBtnDropdown = function (options) {
     });
 
 }
-// 事件格式方法
+// 时间格式方法
 Date.prototype.Format = function (fmt) {
     var o = {
 
