@@ -288,7 +288,7 @@ layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function 
                     id: 'layuiMessage',
                     area: ['340px', clientHeight + 'px'],
                     offset: 'rb',
-                    content: '../page/message.html',
+                    content: '/Home/Message',
                     success: function (index, layero) {
                     },
                     end: function () {

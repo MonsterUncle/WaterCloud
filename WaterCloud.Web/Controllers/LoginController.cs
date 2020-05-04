@@ -32,6 +32,11 @@ namespace WaterCloud.Web.Controllers
         [HttpGet]
         public virtual ActionResult Index()
         {
+            if (GlobalContext.SystemConfig.Demo)
+            {
+                ViewBag.UserName = "admin";
+                ViewBag.Password = "0000";
+            }
             var test = string.Format("{0:E2}", 1);
             return View();
         }

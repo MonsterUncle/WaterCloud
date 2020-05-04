@@ -338,7 +338,7 @@
                     for (var i = 0; i < data.length; i++) {
                         noticeHtml += '<div class="layuimini-notice">';
                         noticeHtml += '<div class="layuimini-notice-title">' + data[i].F_Title + '</div>';
-                        noticeHtml += '<div class="layuimini-notice-extra">' + data[i].F_CreatorTime + '</div>';
+                        noticeHtml += '<div class="layuimini-notice-extra">' + new Date(data[i].F_CreatorTime).Format("yyyy-MM-dd hh:mm") + '</div>';
                         noticeHtml += '<div class="layuimini-notice-content layui-hide">';
                         var n = 20;
                         var str = data[i].F_Content;

@@ -12,9 +12,9 @@ namespace WaterCloud.Code
     public class OperatorProvider
     {
         //登录信息保存方式
-        private string LoginProvider = GlobalContext.Configuration.GetSection("SystemConfig:LoginProvider").Value;
+        private string LoginProvider = GlobalContext.SystemConfig.LoginProvider;
         //是否允许一个账户在多处登录
-        private bool LoginMultiple = GlobalContext.Configuration.GetSection("SystemConfig:LoginMultiple").Value=="true"?true:false;
+        private bool LoginMultiple = GlobalContext.SystemConfig.LoginMultiple;
         public static OperatorProvider Provider
         {
             get { return new OperatorProvider(); }

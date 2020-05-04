@@ -32,5 +32,10 @@ namespace WaterCloud.Web.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public ActionResult Message()
+        {
+            return View();
+        }
     }
 }

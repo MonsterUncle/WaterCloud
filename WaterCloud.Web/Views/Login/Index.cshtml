@@ -218,11 +218,11 @@
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-icon layui-icon-username" for="username"></label>
-                        <input type="text" id="username" lay-verify="required|account" placeholder="用户名" autocomplete="off" class="layui-input">
+                        <input type="text" id="username" lay-verify="required|account" placeholder="用户名" autocomplete="off" class="layui-input"  value="@ViewBag.UserName" >
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-icon layui-icon-password" for="password"></label>
-                        <input type="password" id="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input">
+                        <input type="password" id="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input"  value="@ViewBag.Password" >
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-icon layui-icon-vercode" for="captcha"></label>
@@ -242,9 +242,6 @@
                     <div class="layui-form-item">
                         <div class="login_tips"></div>
                         <button id="login_button" class="layui-btn layui-btn-fluid"style="background-color:#FFFFCE;color:orange" lay-submit="" lay-filter="login">登 入</button>
-                    </div>
-                    <div class="row" style="margin-top:5px;color:orange;">
-                        <span>测试账号admin,密码0000</span>
                     </div>
                     @*<div class="row" style="padding: 5px 0;">
                             <button id="login_button" type="button" style="background-color:#38adff;" onclick="gotoDingTalkLogin();"><span>钉钉扫码登录</span></button>
