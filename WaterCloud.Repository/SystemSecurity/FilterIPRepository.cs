@@ -5,9 +5,7 @@
  * Website：
 *********************************************************************************/
 using WaterCloud.DataBase;
-using WaterCloud.Entity.SystemSecurity;
-using WaterCloud.Domain.IRepository.SystemSecurity;
-using WaterCloud.Repository.SystemSecurity;
+using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Repository.SystemSecurity
 {

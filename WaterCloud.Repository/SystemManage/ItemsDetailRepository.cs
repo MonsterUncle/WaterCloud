@@ -5,12 +5,8 @@
  * Website：
 *********************************************************************************/
 using WaterCloud.DataBase;
-using WaterCloud.Entity.SystemManage;
-using WaterCloud.Domain.IRepository.SystemManage;
-using WaterCloud.Repository.SystemManage;
+using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Data.SqlClient;
 using System.Text;
 using Chloe;
 

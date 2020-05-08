@@ -5,9 +5,7 @@
  * Website：
 *********************************************************************************/
 using WaterCloud.DataBase;
-using WaterCloud.Entity.SystemManage;
-using WaterCloud.Domain.IRepository.SystemManage;
-using WaterCloud.Repository.SystemManage;
+using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 
 namespace WaterCloud.Repository.SystemManage
@@ -25,6 +23,17 @@ namespace WaterCloud.Repository.SystemManage
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
         }
+
+        public void CreateModuleCode(ModuleEntity entity, List<ModuleButtonEntity> buttonlist)
+        {
+            using (var db = new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            {
+                db.Insert(entity);
+                db.Insert(buttonlist);
+                db.Commit();
+            }
+        }
+
         public List<ModuleEntity> GetListByRole(string roleid)
         {
             using (var db = new RepositoryBase(ConnectStr, providerName))

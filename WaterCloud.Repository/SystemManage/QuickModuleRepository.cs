@@ -8,13 +8,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using WaterCloud.DataBase;
-using WaterCloud.Entity.SystemManage;
-using WaterCloud.Domain.IRepository.SystemManage;
-using System;
+using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WaterCloud.Repository.SystemManage
 {

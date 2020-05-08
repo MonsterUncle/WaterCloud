@@ -6,9 +6,7 @@
 *********************************************************************************/
 using WaterCloud.Code;
 using WaterCloud.DataBase;
-using WaterCloud.Entity.SystemManage;
-using WaterCloud.Domain.IRepository.SystemManage;
-using WaterCloud.Repository.SystemManage;
+using WaterCloud.Domain.SystemManage;
 
 namespace WaterCloud.Repository.SystemManage
 {

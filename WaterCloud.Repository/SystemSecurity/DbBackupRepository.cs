@@ -7,8 +7,7 @@
 using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.DataBase.Extensions;
-using WaterCloud.Entity.SystemSecurity;
-using WaterCloud.Domain.IRepository.SystemSecurity; 
+using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Repository.SystemSecurity
 {

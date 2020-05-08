@@ -5,7 +5,7 @@
  * Website：
 *********************************************************************************/
 using WaterCloud.DataBase;
-using WaterCloud.Entity.WeixinManage;
+using WaterCloud.Domain.WeixinManage;
 
 namespace WaterCloud.Repository.WeixinManage
 {

@@ -6,7 +6,7 @@
 *********************************************************************************/
 
 using WaterCloud.DataBase;
-using WaterCloud.Entity.DingTalkManage;
+using WaterCloud.Domain.DingTalkManage;
 
 
 namespace WaterCloud.Repository.DingTalkManage

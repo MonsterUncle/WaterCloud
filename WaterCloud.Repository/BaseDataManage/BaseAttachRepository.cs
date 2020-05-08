@@ -6,7 +6,7 @@
 *********************************************************************************/
 
 using WaterCloud.DataBase;
-using WaterCloud.Entity.BaseDataManage;
+using WaterCloud.Domain.BaseDataManage;
 
 
 namespace WaterCloud.Repository.BaseDataManage

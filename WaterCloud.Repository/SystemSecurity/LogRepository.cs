@@ -5,13 +5,7 @@
  * Website：
 *********************************************************************************/
 using WaterCloud.DataBase;
-using WaterCloud.Entity.SystemSecurity;
-using WaterCloud.Domain.IRepository.SystemSecurity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Repository.SystemSecurity
 {

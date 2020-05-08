@@ -8,9 +8,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using WaterCloud.DataBase;
-using WaterCloud.Entity.SystemSecurity;
-using WaterCloud.Domain.IRepository.SystemSecurity;
-using WaterCloud.Entity.SystemManage;
+using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Repository.SystemSecurity
 {
