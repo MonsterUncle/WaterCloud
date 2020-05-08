@@ -7,7 +7,7 @@
 using Chloe.Annotations;
 using System;
 
-namespace WaterCloud.Entity.SystemManage
+namespace WaterCloud.Domain.SystemManage
 {
     [TableAttribute("Sys_ModuleButton")]
     public class ModuleButtonEntity : IEntity<ModuleButtonEntity>, ICreationAudited, IDeleteAudited, IModificationAudited

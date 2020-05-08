@@ -7,7 +7,7 @@
 using Chloe.Annotations;
 using System;
 
-namespace WaterCloud.Entity.SystemManage
+namespace WaterCloud.Domain.SystemManage
 {
     [TableAttribute("Sys_Role")]
     public class RoleEntity : IEntity<RoleEntity>, ICreationAudited, IDeleteAudited, IModificationAudited

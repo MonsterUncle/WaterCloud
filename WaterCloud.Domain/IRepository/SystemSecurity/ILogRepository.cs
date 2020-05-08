@@ -5,9 +5,8 @@
  * Website：
 *********************************************************************************/
 using WaterCloud.DataBase;
-using WaterCloud.Entity.SystemSecurity;
 
-namespace WaterCloud.Domain.IRepository.SystemSecurity
+namespace WaterCloud.Domain.SystemSecurity
 {
     public interface ILogRepository : IRepositoryBase<LogEntity>
     {

@@ -8,14 +8,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using WaterCloud.DataBase;
-using WaterCloud.Entity.SystemManage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace WaterCloud.Domain.IRepository.SystemManage
+namespace WaterCloud.Domain.SystemManage
 {
     public interface INoticeRepository : IRepositoryBase<NoticeEntity>
     {

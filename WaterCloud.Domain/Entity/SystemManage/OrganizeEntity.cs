@@ -7,7 +7,7 @@
 using Chloe.Annotations;
 using System;
 
-namespace WaterCloud.Entity.SystemManage
+namespace WaterCloud.Domain.SystemManage
 {
     [TableAttribute("Sys_Organize")]
     public class OrganizeEntity : IEntity<OrganizeEntity>, ICreationAudited, IDeleteAudited, IModificationAudited

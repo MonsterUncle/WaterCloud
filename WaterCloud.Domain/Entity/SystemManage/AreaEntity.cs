@@ -7,7 +7,7 @@
 using System;
 using Chloe.Annotations;
 
-namespace WaterCloud.Entity.SystemManage
+namespace WaterCloud.Domain.SystemManage
 {
     [TableAttribute("Sys_Area")]
     public class AreaEntity : IEntity<AreaEntity>, ICreationAudited, IDeleteAudited, IModificationAudited

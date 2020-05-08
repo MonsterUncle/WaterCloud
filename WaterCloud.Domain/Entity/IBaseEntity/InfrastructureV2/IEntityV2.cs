@@ -7,7 +7,7 @@
 using WaterCloud.Code;
 using System;
 
-namespace WaterCloud.Entity
+namespace WaterCloud.Domain
 {
     public class IEntityV2<TEntity>
     {

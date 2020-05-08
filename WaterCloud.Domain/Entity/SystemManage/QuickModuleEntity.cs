@@ -8,18 +8,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Chloe.Annotations;
-using WaterCloud.Entity;
 
-namespace WaterCloud.Entity.SystemManage
+namespace WaterCloud.Domain.SystemManage
 {
-    /// <summary>
-    /// QuickModule Entity Model
-    /// </summary>
+	/// <summary>
+	/// QuickModule Entity Model
+	/// </summary>
 	[TableAttribute("Sys_QuickModule")]
     public class QuickModuleEntity : IEntity<QuickModuleEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using Chloe.Annotations;
 
-namespace WaterCloud.Entity.DingTalkManage
+namespace WaterCloud.Domain.DingTalkManage
 {
     //DingTalk_Department
     [TableAttribute("Dtk_Department")]

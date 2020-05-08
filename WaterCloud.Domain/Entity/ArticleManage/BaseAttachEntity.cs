@@ -8,7 +8,7 @@
 using System;
 using Chloe.Annotations;
 
-namespace WaterCloud.Entity.BaseDataManage
+namespace WaterCloud.Domain.BaseDataManage
 {
     //Store_Knowledge_Attach
     

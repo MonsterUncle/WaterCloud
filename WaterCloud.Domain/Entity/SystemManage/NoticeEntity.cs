@@ -8,18 +8,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Chloe.Annotations;
-using WaterCloud.Entity;
 
-namespace WaterCloud.Entity.SystemManage
+namespace WaterCloud.Domain.SystemManage
 {
-    /// <summary>
-    /// Notice Entity Model
-    /// </summary>
+	/// <summary>
+	/// Notice Entity Model
+	/// </summary>
 	[TableAttribute("Sys_Notice")]
     public class NoticeEntity : IEntity<NoticeEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {

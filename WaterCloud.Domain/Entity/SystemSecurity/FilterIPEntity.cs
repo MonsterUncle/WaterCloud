@@ -7,7 +7,7 @@
 using Chloe.Annotations;
 using System;
 
-namespace WaterCloud.Entity.SystemSecurity
+namespace WaterCloud.Domain.SystemSecurity
 {
     [TableAttribute("Sys_FilterIP")]
 

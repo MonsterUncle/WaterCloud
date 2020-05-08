@@ -7,7 +7,7 @@
 using Chloe.Annotations;
 using System;
 
-namespace WaterCloud.Entity.WeixinManage
+namespace WaterCloud.Domain.WeixinManage
 {
     [TableAttribute("Wct_WxAppConfig")]
 

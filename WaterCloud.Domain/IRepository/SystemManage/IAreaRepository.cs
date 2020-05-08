@@ -5,9 +5,8 @@
  * Website：
 *********************************************************************************/
 using WaterCloud.DataBase;
-using WaterCloud.Entity.SystemManage;
 
-namespace WaterCloud.Domain.IRepository.SystemManage
+namespace WaterCloud.Domain.SystemManage
 {
     public interface IAreaRepository : IRepositoryBase<AreaEntity>
     {

@@ -7,7 +7,7 @@
 using Chloe.Annotations;
 using System;
 
-namespace WaterCloud.Entity.WeixinManage
+namespace WaterCloud.Domain.WeixinManage
 {
     [TableAttribute("Wct_WxPropertyInfo")]
     public class WxPropertyInfoEntity : IEntityV2<WxPropertyInfoEntity>, ICreationAuditedV2, IModificationAuditedV2

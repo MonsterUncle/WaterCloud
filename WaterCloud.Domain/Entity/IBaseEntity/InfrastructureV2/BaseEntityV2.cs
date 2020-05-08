@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WaterCloud.Code;
 
 
-namespace WaterCloud.Entity
+namespace WaterCloud.Domain
 {
     public class BaseEntityV2<TEntity>
     {

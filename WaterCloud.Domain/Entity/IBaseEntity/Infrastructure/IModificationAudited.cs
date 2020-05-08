@@ -6,7 +6,7 @@
 *********************************************************************************/
 using System;
 
-namespace WaterCloud.Entity
+namespace WaterCloud.Domain
 {
     public interface IModificationAudited
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WaterCloud.Entity
+namespace WaterCloud.Domain
 {
     public class MenuInfoEntity
     {

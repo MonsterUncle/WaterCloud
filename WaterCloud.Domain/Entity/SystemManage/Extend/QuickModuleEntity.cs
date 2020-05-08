@@ -13,9 +13,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Chloe.Annotations;
-using WaterCloud.Entity;
+using WaterCloud.Domain;
 
-namespace WaterCloud.Entity.SystemManage
+namespace WaterCloud.Domain.SystemManage
 {
     /// <summary>
     /// QuickModule Entity Model

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using Chloe.Annotations;
 
-namespace WaterCloud.Entity.WeixinManage 
+namespace WaterCloud.Domain.WeixinManage 
 {
     //WeixinMP_TemplateMessage
     [TableAttribute("Wct_TemplateMessage")]
