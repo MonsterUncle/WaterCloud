@@ -261,7 +261,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            else");
             sb.AppendLine("            {");
             sb.AppendLine("                entity.Modify(keyValue); ");
-            sb.AppendLine("                service.Update(roleEntity);");
+            sb.AppendLine("                service.Update(entity);");
             sb.AppendLine("                RedisHelper.Del(cacheKey + keyValue);");
             sb.AppendLine("                RedisHelper.Del(cacheKey + \"list\");");
             sb.AppendLine("            }");
