@@ -550,7 +550,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("     var rendertree = function (queryJson) {");
                 sb.AppendLine("         common.rendertreetable({");
                 sb.AppendLine("             elem: '#currentTableId',");
-                sb.AppendLine("             url: !queryJson ?'/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson?keyword=' + queryJson',");
+                sb.AppendLine("             url: !queryJson ?'/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson': '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson?keyword=' + queryJson,");
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");
@@ -564,7 +564,8 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                 common.authorizeButton(\"toolbar\");");
                 sb.AppendLine("             }");
                 sb.AppendLine("         });");
-                sb.AppendLine("         rendertree();");
+                sb.AppendLine("     }");
+                sb.AppendLine("     rendertree();");
             }
             else
             {
