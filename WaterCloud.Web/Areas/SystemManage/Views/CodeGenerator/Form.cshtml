@@ -409,7 +409,6 @@
                         //});
                         codeList = data.data;
                         step.next('#stepForm');
-                        common.modalMsg(data.message, data.state);
                     }
                     else {
                         common.modalAlert(data.message, data.state);
@@ -424,7 +423,6 @@
             common.submitForm({
                 url: "/SystemManage/CodeGenerator/CodeGenerateJson",
                 param: postData,
-                close: false,
                 success: function () {
                 }
             })
