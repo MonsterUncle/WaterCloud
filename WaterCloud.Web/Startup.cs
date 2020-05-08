@@ -73,6 +73,7 @@ namespace WaterCloud.Web
             //}
             if (WebHostEnvironment.IsDevelopment())
             {
+                GlobalContext.SystemConfig.Debug = true;
                 app.UseDeveloperExceptionPage();
             }
             else

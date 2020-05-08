@@ -6,11 +6,11 @@
 *********************************************************************************/
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Code;
-using WaterCloud.Entity.SystemManage;
+using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using WaterCloud.Entity.SystemSecurity;
+using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service;
 using WaterCloud.Service.SystemSecurity;
 using System;
@@ -78,6 +78,22 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
+        public ActionResult GetSelectJson(string keyword)
+        {
+            var data = _moduleService.GetList().Where(a => a.F_Layers == 1).ToList();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                data = data.Where(a => a.F_FullName.Contains(keyword)).ToList();
+            }
+            List<object> list = new List<object>();
+            foreach (var item in data)
+            {
+                list.Add(new { id = item.F_EnCode, text = item.F_EnCode });
+            }
+            return Content(list.ToJson());
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
         public ActionResult GetFormJson(string keyValue)
         {
             var data = _moduleService.GetForm(keyValue);
@@ -85,6 +101,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
+        [HandlerAdmin]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(ModuleEntity moduleEntity, string keyValue)
         {
@@ -138,6 +155,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
+        [HandlerAdmin]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
@@ -152,7 +170,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 _moduleService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 _logService.WriteDbLog(logEntity);
-                return Success("删除成功。");
+                return Success("操作成功。");
             }
             catch (Exception ex)
             {

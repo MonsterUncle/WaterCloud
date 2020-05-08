@@ -6,12 +6,12 @@
 *********************************************************************************/
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Code;
-using WaterCloud.Entity.SystemManage;
+using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System;
-using WaterCloud.Entity;
+using WaterCloud.Domain;
 using WaterCloud.Service.SystemSecurity;
 using Senparc.CO2NET.Extensions;
 using Microsoft.AspNetCore.Mvc;

@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script>
+    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'miniTab'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            miniTab = layui.miniTab,
+            common = layui.common;
+        common.rendertable({
+            elem: '#currentTableId',
+            url: '/SystemManage/CodeGenerator/GetTablePageListJson',
+            cols: [[
+                { field: 'Id', title: 'ID', sort: true, hide: true, hideAlways: true },
+                { field: 'TableName', title: '表名称', width: 200, sort: true },
+                { field: 'TableKeyName', title: '主键名称', width: 100 },
+                { field: 'TableKey', title: '主键字段', width: 250 },
+                { field: 'TableCount', title: '记录数', width: 80 },
+                { field: 'Remark', title: '备注', width: 150 },
+            ]],
+            done: function () {
+                //权限控制
+                common.authorizeButton("toolbar");
+            }
+        });
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            //执行搜索重载
+            common.reloadtable({
+                elem: 'currentTableId',
+                page: false,
+                curr: 1,
+                where: { keyword: data.field.txt_keyword}
+            });
+            return false;
+        });
+        var entity;
+        table.on('row(currentTableFilter)', function (obj) {
+            obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
+            entity = obj;
+        })
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听删除操作
+                if (entity == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                if (miniTab.check("/SystemManage/CodeGenerator/Form", true)) {
+                    common.modalAlert("代码生成界面已打开,请关闭后重试", "warning");
+                }
+                miniTab.openNewTabByIframe({
+                    title: "代码生成器",
+                    href: "/SystemManage/CodeGenerator/Form?keyValue=" + entity.data.TableName,
+                });
+            }
+            else if (obj.event === 'details') {
+                if (entity == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalOpen({
+                    title: "查看数据表",
+                    url: "/SystemManage/CodeGenerator/Details?keyValue=" + entity.data.TableName,
+                    width: "700px",
+                    height: "600px",
+                    btn: []
+                });
+            }
+            return false;
+        });
+    });
+</script>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <fieldset class="table-search-fieldset">
+            @*<legend>搜索信息</legend>*@
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">表名称:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="txt_keyword" name="txt_keyword" autocomplete="off" class="layui-input" placeholder="">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container" id="toolbar">
+                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>生成</button>
+                <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+    </div>
+</div>

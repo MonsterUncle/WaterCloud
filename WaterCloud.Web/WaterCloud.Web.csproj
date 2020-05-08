@@ -13,17 +13,29 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WaterCloud.Application\WaterCloud.Service.csproj" />
+    <ProjectReference Include="..\WaterCloud.CodeGenerator\WaterCloud.CodeGenerator.csproj" />
     <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj" />
+    <ProjectReference Include="..\WaterCloud.Service\WaterCloud.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\SystemSecurity\Views\ServerMonitoring\" />
-    <Folder Include="Areas\" />
+    <Folder Include="wwwroot\js\lay-module\xm-select\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Views\Home\Message.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\SystemManage\Views\CodeGenerator\Form.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\CodeGenerator\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 

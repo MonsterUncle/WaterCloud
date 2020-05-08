@@ -9,12 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Microsoft.AspNetCore.Mvc;
-using WaterCloud.Entity.SystemManage;
+using WaterCloud.Domain.SystemManage;
 using WaterCloud.Service.SystemManage;
 using Senparc.CO2NET.Extensions;
 using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Service;
-using WaterCloud.Entity.SystemSecurity;
+using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -142,7 +142,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 _areaService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 _logService.WriteDbLog(logEntity);
-                return Success("删除成功。");
+                return Success("操作成功。");
             }
             catch (Exception ex)
             {

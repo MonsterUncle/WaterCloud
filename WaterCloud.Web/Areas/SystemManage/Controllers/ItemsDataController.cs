@@ -4,17 +4,17 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using WaterCloud.Service.SystemManage;
-using WaterCloud.Code;
-using WaterCloud.Entity.SystemManage;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using WaterCloud.Entity.SystemSecurity;
-using WaterCloud.Service;
 using System;
-using WaterCloud.Service.SystemSecurity;
+using System.Linq;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Senparc.CO2NET.Extensions;
+using WaterCloud.Code;
+using WaterCloud.Domain.SystemManage;
+using WaterCloud.Domain.SystemSecurity;
+using WaterCloud.Service;
+using WaterCloud.Service.SystemManage;
+using WaterCloud.Service.SystemSecurity;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -116,7 +116,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 _itemsDetailService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 _logService.WriteDbLog(logEntity);
-                return Success("删除成功。");
+                return Success("操作成功。");
             }
             catch (Exception ex)
             {

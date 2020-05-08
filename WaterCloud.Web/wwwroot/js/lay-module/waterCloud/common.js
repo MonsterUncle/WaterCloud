@@ -4,12 +4,13 @@
  * version:2.0
  * description:layuimini 主体框架扩展
  */
-layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable'], function (exports) {
+layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xmSelect'], function (exports) {
     var $ = layui.jquery,
         form = layui.form,
         layer = layui.layer,
         treetable = layui.treetable,
         tablePlug = layui.tablePlug,
+        xmSelect = layui.xmSelect,
         table = layui.table;
 
     var obj = {
@@ -105,11 +106,14 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable'], fun
                 if (type == 'success') {
                     icon = 1;
                 }
-                if (type == 'error') {
+                else if (type == 'error') {
                     icon = 2;
                 }
-                if (type == 'warning') {
+                else if (type == 'warning') {
                     icon = 7;
+                }
+                else {
+                    icon = 5;
                 }
                 top.layer.msg(content, {
                     icon: icon, time: 1000, shift: 5,
@@ -504,6 +508,63 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable'], fun
                     func.call();
                 }
             }, time);
+        },
+        multipleSelectRender: function (options) {
+            var defaults = {
+                filterable: true,//搜索模式
+                autoRow: true,//自动换行
+                empty: '没有数据!',//空数据提示
+                toolbar: { show: true },//工具栏
+                remoteSearch: true,//远程搜索
+                paging: true,//分页
+                pageSize: 5,//分页大小
+                direction: 'auto',//下拉方向
+                data: [],
+                prop: {
+                    name: 'text',
+                    value: 'id',
+                },
+                remoteMethod: function (val, cb, show) {
+                    //远程数据方法
+                    //val 搜索参数
+                    //cb data的值
+                    //show 执行完显示值
+                }
+            };
+            var options = $.extend(defaults, options);
+            return xmSelect.render(options);
+        },
+        radioSelectRender: function (options) {
+            var defaults = {
+                filterable: true,//搜索模式
+                toolbar: { show: true, list: ["CLEAR"] },//工具栏
+                empty: '没有数据!',//空数据提示
+                remoteSearch: true,//远程搜索
+                paging: true,//分页
+                pageSize: 5,//分页大小
+                data: [],
+                radio: true,//单选
+                clickClose: true,//选择关闭
+                direction: 'auto',//下拉方向
+                prop: {
+                    name: 'text',
+                    value: 'id',
+                },
+                model: {
+                    icon: 'hidden',//图标隐藏
+                    label: {
+                        type: 'text'//显示
+                    }
+                },
+                remoteMethod: function (val, cb, show) {
+                    //远程数据方法
+                    //val 搜索参数
+                    //cb data的值
+                    //show 执行完显示值
+                }
+            };
+            var options = $.extend(defaults, options);
+            return xmSelect.render(options);
         },
     }
     exports("common", obj);

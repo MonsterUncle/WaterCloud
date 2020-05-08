@@ -12,8 +12,8 @@ using WaterCloud.Service;
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Code;
-using WaterCloud.Entity.SystemManage;
-using WaterCloud.Entity.SystemSecurity;
+using WaterCloud.Domain.SystemManage;
+using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Web.Controllers
 {

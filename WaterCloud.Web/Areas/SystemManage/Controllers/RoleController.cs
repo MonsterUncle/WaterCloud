@@ -6,11 +6,11 @@
 *********************************************************************************/
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Code;
-using WaterCloud.Entity.SystemManage;
+using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using WaterCloud.Entity.SystemSecurity;
+using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service;
 using WaterCloud.Service.SystemSecurity;
 using System;
@@ -126,7 +126,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 _roleService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 _logService.WriteDbLog(logEntity);
-                return Success("删除成功。");
+                return Success("操作成功。");
             }
             catch (Exception ex)
             {

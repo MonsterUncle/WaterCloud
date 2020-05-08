@@ -6,11 +6,11 @@
 *********************************************************************************/
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Code;
-using WaterCloud.Entity.SystemManage;
+using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using WaterCloud.Entity.SystemSecurity;
+using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service;
 using WaterCloud.Service.SystemSecurity;
 using System;
@@ -53,18 +53,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public ActionResult GetTreeGridJson(string moduleId)
         {
             var data = _moduleButtonService.GetList(moduleId);
-            //var treeList = new List<TreeGridModel>();
-            //foreach (ModuleButtonEntity item in data)
-            //{
-            //    TreeGridModel treeModel = new TreeGridModel();
-            //    bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
-            //    treeModel.id = item.F_Id;
-            //    treeModel.isLeaf = hasChildren;
-            //    treeModel.parentId = item.F_ParentId;
-            //    treeModel.expanded = hasChildren;
-            //    treeModel.entityJson = item.ToJson();
-            //    treeList.Add(treeModel);
-            //}
             return ResultLayUiTable(data.Count, data);
         }
         [HttpGet]
@@ -76,12 +64,12 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
+        [HandlerAdmin]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
         {
             var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
             var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
-
             LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
@@ -123,6 +111,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
         }
         [HttpPost]
+        [HandlerAdmin]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
@@ -138,7 +127,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 _moduleButtonService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 _logService.WriteDbLog(logEntity);
-                return Success("删除成功。");
+                return Success("操作成功。");
             }
             catch (Exception ex)
             {
@@ -183,51 +172,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             return ResultDTree(treeList.TreeList());
         }
-        //public ActionResult GetCloneButtonTreeJson()
-        //{
-        //    var moduledata = moduleApp.GetList();
-        //    var buttondata = moduleButtonApp.GetList();
-        //    var treeList = new List<TreeViewModel>();
-        //    foreach (ModuleEntity item in moduledata)
-        //    {
-        //        TreeViewModel tree = new TreeViewModel();
-        //        bool hasChildren = moduledata.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
-        //        tree.id = item.F_Id;
-        //        tree.text = item.F_FullName;
-        //        tree.value = item.F_EnCode;
-        //        tree.parentId = item.F_ParentId;
-        //        tree.isexpand = true;
-        //        tree.complete = true;
-        //        tree.hasChildren = true;
-        //        treeList.Add(tree);
-        //    }
-        //    foreach (ModuleButtonEntity item in buttondata)
-        //    {
-        //        TreeViewModel tree = new TreeViewModel();
-        //        bool hasChildren = buttondata.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
-        //        tree.id = item.F_Id;
-        //        tree.text = item.F_FullName;
-        //        tree.value = item.F_EnCode;
-        //        if (item.F_ParentId == "0")
-        //        {
-        //            tree.parentId = item.F_ModuleId;
-        //        }
-        //        else
-        //        {
-        //            tree.parentId = item.F_ParentId;
-        //        }
-        //        tree.isexpand = true;
-        //        tree.complete = true;
-        //        tree.showcheck = true;
-        //        tree.hasChildren = hasChildren;
-        //        if (item.F_Icon != "")
-        //        {
-        //            tree.img = item.F_Icon;
-        //        }
-        //        treeList.Add(tree);
-        //    }
-        //    return Content(treeList.TreeViewJson());
-        //}
         [HttpPost]
         [HandlerAjaxOnly]
         public ActionResult SubmitCloneButton(string moduleId, string Ids)

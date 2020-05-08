@@ -1,0 +1,604 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script src="~/lib/jquery.ui/1.12.1/jquery-ui.min.js" charset="utf-8"></script>
+<link href="~/lib/jquery.ui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
+<style>
+    .layui-layer-btn- {
+        display: none;
+    }
+
+    .layui-form-label {
+        float: left;
+        display: block;
+        padding: 9px 15px;
+        width: 60px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: right;
+    }
+
+    .lay-step {
+        font-size: 0;
+        width: 400px;
+        margin: 0 auto;
+        max-width: 100%;
+        padding-left: 30px;
+    }
+
+    .layui-input-block {
+        margin-left: 90px;
+        min-height: 36px;
+        margin-right: 10px;
+    }
+
+    .droppable-active {
+        background-color: #ffe !important
+    }
+
+    .draggable {
+        cursor: move
+    }
+    .layui-card> .layui-card-body {
+        position: relative;
+        padding: 10px 15px;
+        line-height: 24px;
+        overflow: auto;
+        height: 300px;
+    }
+</style>
+<script>
+    var setup_draggable = function () {
+        $(".draggable").draggable({
+            appendTo: "body",
+            helper: "clone"
+        });
+        $(".droppable").droppable({
+            accept: ".draggable",
+            helper: "clone",
+            hoverClass: "droppable-active",
+            drop: function (event, ui) {
+                $(".empty-form").remove();
+                var $orig = $(ui.draggable);
+                if (!$(ui.draggable).hasClass("dropped")) {
+                    var $el = $orig.clone().addClass("dropped").css({ "position": "static", "left": null, "right": null }).appendTo(this);
+                    var id = $orig.find(":input").attr("id");
+                    if (id) {
+                        id = id.split("-").slice(0, -1).join("-") + "-" + (parseInt(id.split("-").slice(-1)[0]) + 1);
+                        $orig.find(":input").attr("id", id);
+                        $orig.find("label").attr("for", id)
+                    }
+                    //$('<p class="tools col-sm-12 col-sm-offset-3"><a class="edit-link">编辑HTML<a></p>').appendTo($el)
+                } else {
+                    if ($(this)[0] != $orig.parent()[0]) {
+                        var $el = $orig.clone().css({ "position": "static", "left": null, "right": null }).appendTo(this);
+                        $orig.remove()
+                    }
+                }
+            }
+        }).sortable();
+    };
+    layui.use(['element','form', 'step', 'common', 'dtree', 'laydate', 'xmSelect'], function () {
+        var $ = layui.$,
+            form = layui.form,
+            element = layui.element,
+            xmSelect = layui.xmSelect,
+            dtree = layui.dtree,
+            laydate = layui.laydate,
+            common = layui.common,
+            step = layui.step;
+        var keyValue = $.request("keyValue");
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#CreateDate'
+            , btns: ['clear', 'now']
+            , type: 'datetime'
+            , trigger: 'click',
+            format: 'yyyy-MM-dd HH:mm',
+        });
+        //初始化步骤控件
+        step.render({
+            elem: '#stepForm',
+            filter: 'stepForm',
+            width: '100%', //设置容器宽度
+            stepWidth: '600px',
+            height: '430px',
+            stepItems: [{
+                title: '基本配置'
+            }, {
+                title: '列表界面'
+            }, {
+                title: '表单页面'
+            }, {
+                title: '代码预览'
+            }]
+        });
+        var baseConfig;
+        $(function () {
+            setup_draggable();
+            if (!!keyValue) {
+                $.ajax({
+                    url: "/SystemManage/CodeGenerator/GetBaseConfigJson",
+                    dataType: "json",
+                    data: { keyValue: keyValue },
+                    async: false,
+                    success: function (data) {
+                        baseConfig = data;
+                        common.val('stepForm', data);
+                        common.val('stepForm', data.FileConfig);
+                        common.val('stepForm', data.OutputConfig);
+                        $("#n_columns").val(data.PageForm.ShowMode);
+                        form.render();
+                    }
+                });
+            }
+        });
+        //渲染多选
+        var outputModule = common.radioSelectRender({
+            el: '#OutputModule',
+            name: 'outputmodule',
+            remoteMethod: function (val, cb, show) {
+                $.ajax({
+                    url: '/SystemManage/Module/GetSelectJson',
+                    data: { keyword: val },
+                    dataType: "json",
+                    success: function (data) {
+                        cb(data)
+                    },
+                    error: function () {
+                        cb([]);
+                    }
+                });
+            }
+        });
+        //页面选择
+        var outputOptions = common.multipleSelectRender({
+            el: '#OutputOptions',
+            remoteSearch: false,
+            layVerify: 'required',
+            layVerType: 'msg',
+            data: [
+                { text: '菜单显示', id: 'IsMunu', selected: true },
+                { text: '树形表格', id: 'IsTree', selected: false },
+                { text: '搜索框', id: 'IsSearch', selected: true },
+                { text: '分页', id: 'IsPagination', selected: true },
+            ]
+        });
+        //按钮选择
+        var buttonList = common.multipleSelectRender({
+            el: '#ButtonList',
+            remoteSearch: false,
+            layVerify: 'required',
+            layVerType: 'msg',
+            data: [
+                { text: '添加按钮', id: 'add', selected: true },
+                { text: '编辑按钮', id: 'edit', selected: true },
+                { text: '删除按钮', id: 'delete', selected: true },
+                { text: '查看按钮', id: 'details', selected: true },
+            ]
+        });
+        //字段选择
+        var columnList = common.multipleSelectRender({
+            el: '#ColumnList',
+            name: 'columnlist',
+            layVerify: 'required',
+            layVerType: 'msg',
+            model: {
+                label: {
+                    type: 'setnum', //自定义与下面的对应
+                    setnum: {
+                        template(data, sels) {
+                            return "已选中 " + sels.length + " 项, 共 " + data.length + " 项"
+                        }
+                    },
+                }
+            },
+            remoteMethod: function (val, cb, show) {
+                $.ajax({
+                    url: '/SystemManage/CodeGenerator/GetTableFieldFilterSelectJson',
+                    dataType: "json",
+                    data: { keyValue: keyValue, keyword: val },
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            data[i].selected = true;
+                        }
+                        cb(data);
+                    },
+                    error: function () {
+                        cb([]);
+                    }
+                });
+            }
+        });
+        //form字段选择
+        var formColumnList = dtree.render({
+            elem: "#formColumnList",
+            height: 'full-200',
+            width: '180px',
+            checkbar: true,
+            checkbarType: "all", // 默认就是all，其他的值为： no-all  p-casc   self  only
+            method: "GET",
+            scroll: "#toolbarDiv", // 绑定div元素
+            ficon: "-1",
+            icon: "-1",  // 显示非最后一级节点图标，隐藏最后一级节点图标
+            initLevel: 0,
+            url: "/SystemManage/CodeGenerator/GetTableFieldFilterTreeJson?keyValue=" + keyValue, // 使用url加载（可与data加载同时存在）
+            checkbarFun: {
+                chooseBefore: function ($i, node) {
+                    var id = node.nodeId;
+                    var divId = "#" + "div" + node.context;
+                    if (node.checked=="0") {
+                        if ($(divId).length == 0) {
+
+                            var target = null;
+                            if (parseInt($("#n_columns").val()) == 1) {
+                                target = $(".layui-card-body .layui-col-md12");
+                            }
+                            else {
+                                var firstColumnInput = $(".layui-card-body .layui-col-md6").first().find("input").length;
+                                var secondColumnInput = $(".layui-card-body .layui-col-md6").last().find("input").length;
+                                if (firstColumnInput > secondColumnInput) {
+                                    target = $(".layui-card-body .layui-col-md6").last();
+                                }
+                                else {
+                                    target = $(".layui-card-body .layui-col-md6").first();
+                                }
+                            }
+                            var html = $("#divInputTemplate").prop("outerHTML");
+                            html = html.replace("FieldName", node.context);
+                            html = html.replace(/fieldName/g, id); // 替换多个
+                            html = html.replace("divInputTemplate", "div" + node.context);
+                            var obj = $(html);
+                            obj.removeAttr("style");
+                            obj.appendTo(target);
+                            formColumnList.checkStatus($i).check();
+                        }
+                    }
+                    else {
+                        if ($(divId).length > 0) {
+                            $(divId).remove();
+                        }
+                        formColumnList.checkStatus($i).noCheck();  // 恢复选中状态
+                    }
+                },
+                chooseDone: function (checkbarNodesParam) { //复选框点击事件完毕后，返回该树关于复选框操作的全部信息。
+                    return;
+                }
+            }
+        });
+        //tree单击节点 监听事件
+        dtree.on("node('formColumnList')", function (obj) {
+            var nodeId = obj.param.nodeId;
+            formColumnList.clickNodeCheckbar(nodeId);// 点击节点选中复选框
+            var id = obj.param.nodeId;
+            var divId = "#" + "div" + obj.param.context;
+            if (obj.param.checked == "0") {
+                if ($(divId).length == 0) {
+
+                    var target = null;
+                    if (parseInt($("#n_columns").val()) == 1) {
+                        target = $(".layui-card-body .layui-col-md12");
+                    }
+                    else {
+                        var firstColumnInput = $(".layui-card-body .layui-col-md6").first().find("input").length;
+                        var secondColumnInput = $(".layui-card-body .layui-col-md6").last().find("input").length;
+                        if (firstColumnInput > secondColumnInput) {
+                            target = $(".layui-card-body .layui-col-md6").last();
+                        }
+                        else {
+                            target = $(".layui-card-body .layui-col-md6").first();
+                        }
+                    }
+                    var html = $("#divInputTemplate").prop("outerHTML");
+                    html = html.replace("FieldName", obj.param.context);
+                    html = html.replace(/fieldName/g, id); // 替换多个
+                    html = html.replace("divInputTemplate", "div" + obj.param.context);
+                    var obj = $(html);
+                    obj.removeAttr("style");
+                    obj.appendTo(target);
+                }
+            }
+            else {
+                if ($(divId).length > 0) {
+                    $(divId).remove();
+                }
+            }
+
+        });
+        form.on('select(n_columns)', function (data) {
+            var v = $("select[name=n_columns").val();
+            if (v === "1") {
+                var $col = $(".layui-card-body .layui-col-md12").toggle(true);
+                $(".layui-card-body .layui-col-md6 .draggable").each(function (i, el) {
+                    $(this).remove().appendTo($col);
+                });
+                $(".layui-card-body .layui-col-md6").toggle(false);
+            } else {
+                var $col = $(".layui-card-body .layui-col-md6").toggle(true);
+                $(".layui-card-body .layui-col-md12 .draggable").each(function (i, el) {
+                    $(this).remove().appendTo(i % 2 ? $col[1] : $col[0]);
+                });
+                $(".layui-card-body .layui-col-md12").toggle(false);
+            }
+        });
+        form.on('submit(formStep1)', function (data) {
+            if (outputModule.getValue('value').length == 0) {
+                outputModule.warning();
+                return false;
+            }
+            baseConfig.FileConfig.ClassPrefix = data.field.ClassPrefix;
+            baseConfig.FileConfig.ClassDescription = data.field.ClassDescription;
+            baseConfig.FileConfig.CreateUserName = data.field.CreateUserName;
+            baseConfig.FileConfig.CreateDate = data.field.CreateDate;
+            baseConfig.OutputConfig.OutputModule = outputModule.getValue()[0].id;
+            step.next('#stepForm');
+            return false;
+        });
+        form.on('submit(formStep2)', function (data) {
+            if (outputOptions.getValue('value').length == 0) {
+                outputOptions.warning();
+                return false;
+            }
+            if (buttonList.getValue('value').length == 0) {
+                buttonList.warning();
+                return false;
+            }
+            if (columnList.getValue('value').length == 0) {
+                columnList.warning();
+                return false;
+            }
+            var options = outputOptions.getValue('value');
+            if (options.indexOf("IsMunu") > -1) {
+                baseConfig.PageIndex.IsMunu = 1;
+            }
+            else {
+                baseConfig.PageIndex.IsMunu = 0;
+            }
+            if (options.indexOf("IsSearch") > -1) {
+                baseConfig.PageIndex.IsSearch = 1;
+            }
+            else {
+                baseConfig.PageIndex.IsSearch = 0;
+            }
+            if (options.indexOf("IsTree") > -1) {
+                baseConfig.PageIndex.IsTree = 1;
+            }
+            else {
+                baseConfig.PageIndex.IsTree = 0;
+            }
+            if (options.indexOf("IsPagination") > -1) {
+                baseConfig.PageIndex.IsPagination = 1;
+            }
+            else {
+                baseConfig.PageIndex.IsPagination = 0;
+            }
+            baseConfig.PageIndex.ButtonList = buttonList.getValue('value');
+            baseConfig.PageIndex.ColumnList = columnList.getValue('value');
+            step.next('#stepForm');
+            return false;
+        });
+        var codeList;
+        form.on('submit(formStep3)', function (data) {
+            baseConfig.PageForm.ShowMode = $("#n_columns").val();
+            baseConfig.PageForm.FieldList = [];
+            $("#divForm label:not(.hidden)").each(function (i, ele) {
+                if ($(ele).parent().css("display") != "none") {
+                    baseConfig.PageForm.FieldList.push($(ele).html());
+                }
+            });
+            $.ajax({
+                url: "/SystemManage/CodeGenerator/CodePreviewJson",
+                type: "post",
+                dataType: 'json',
+                async: false,
+                data: baseConfig,
+                success: function (data) {
+                    if (data.state == "success") {
+                        $("div.layui-tab-item").each(function (i, ele) {
+                            var col = $(ele).attr("col");
+                            if (col == "CodeMenu") {
+                                $(this).html("<pre class='no-padding no-margin no-top-border'><code class='html'>" + data.data[col] + "</code></pre>");
+                            }
+                            else {
+                                $(this).html("<pre class='no-padding no-margin no-top-border'><code class='csharp'>" + data.data[col] + "</code></pre>");
+                            }
+                        });
+                        //$('pre code').each(function (i, ele) {
+                        //    hljs.highlightBlock(ele)
+                        //});
+                        codeList = data.data;
+                        step.next('#stepForm');
+                        common.modalMsg(data.message, data.state);
+                    }
+                    else {
+                        common.modalAlert(data.message, data.state);
+                    }
+                }
+            });
+            return false;
+        });
+        form.on('submit(formStep4)', function (data) {
+            var postData = baseConfig;
+            postData.Code = encodeURIComponent(JSON.stringify(codeList));
+            common.submitForm({
+                url: "/SystemManage/CodeGenerator/CodeGenerateJson",
+                param: postData,
+                success: function () {
+                }
+            })
+            return false;
+        });
+        $('.pre').click(function () {
+            step.pre('#stepForm');
+        });
+    })
+</script>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-carousel" id="stepForm" lay-filter="stepForm">
+            <div carousel-item>
+                <div>
+                    <form class="layui-form layuimini-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label required">类名前缀</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="ClassPrefix" name="ClassPrefix" autocomplete="off" lay-verify="required" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label required">界面名称</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="ClassDescription" name="ClassDescription" autocomplete="off" lay-verify="required" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label required">输出模块名</label>
+                            <div class="layui-input-block">
+                                <div id="OutputModule" name="OutputModule" class="xm-select-demo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label required">创建人员</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="CreateUserName" name="CreateUserName" autocomplete="off" lay-verify="required" class="layui-input">
+                            </div>
+
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label required">创建日期</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="CreateDate" name="CreateDate" autocomplete="off" lay-verify="required" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="form-group-bottom text-right">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="formStep1">下一步</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <form class="layui-form layuimini-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label required">页面选项</label>
+                            <div class="layui-input-block">
+                                <div id="OutputOptions" name="OutputOptions" class="xm-select-demo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label required">按钮选项</label>
+                            <div class="layui-input-block">
+                                <div id="ButtonList" name="ButtonList" class="xm-select-demo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label required">字段选择</label>
+                            <div class="layui-input-block">
+                                <div id="ColumnList" name="ColumnList" class="xm-select-demo"></div>
+                            </div>
+                        </div>
+                        <div class="form-group-bottom text-right">
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                <button class="layui-btn" lay-submit lay-filter="formStep2">下一步</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <form class="layui-form layuimini-form ">
+                        <div class="layui-fluid" style="padding:0 0px">
+                            <div class="layui-row layui-col-space5">
+                                <div class="layui-card layui-col-md3 layui-col-xs4">
+                                    <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>字段选择</div>
+                                    <div class="layui-card-body" style="background-color:#cce3ff3b" id="toolbarDiv">
+                                        <ul id="formColumnList" name="formColumnList" class="dtree" data-id="0"></ul>
+                                    </div>
+                                </div>
+                                <div class="layui-card layui-col-md9 layui-col-xs8">
+                                    <div class="layui-card-header layui-col-md3 layui-col-xs5">
+                                        <i class="fa fa-warning icon"></i>列数
+                                    </div>
+                                    <div class="layui-card-header layui-col-md9  layui-col-xs7">
+                                        <select id="n_columns" name="n_columns" lay-filter="n_columns">
+                                            <option value="1">显示1列</option>
+                                            <option value="2">显示2列</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-card-body" id="divForm">
+                                        <div id="divInputTemplate" class="layui-form-item draggable ui-draggable dropped" style="display:none">
+                                            <label class="layui-form-label">FieldName</label>
+                                            <div class="layui-input-block" style="padding-right: 70px;">
+                                                <input id="fieldName" col="FieldName" type="text" class="layui-input" readonly>
+                                                <button class="layui-btn layui-btn-normal data-info-btn" style="position: absolute;top: 0;right: 6px;cursor: pointer;" type="button" readonly>编辑</button>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md12 layui-col-xs12 droppable sortable">
+                                        </div>
+                                        <div class="layui-col-md6 layui-col-xs6 droppable sortable" style="display:none">
+                                        </div>
+                                        <div class="layui-col-md6 layui-col-xs6 droppable sortable" style="display:none">
+                                        </div>
+                                    </div>
+                                    </div>
+                            </div>
+                            </div>
+                        <div class="form-group-bottom text-right">
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                <button class="layui-btn" lay-submit lay-filter="formStep3">下一步</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <form class="layui-form layuimini-form">
+                        <div class="layui-tab">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">实体类</li>
+                                <li>业务接口</li>
+                                <li>业务类</li>
+                                <li>服务类</li>
+                                <li>控制器</li>
+                                <li>列表页</li>
+                                <li>表单页</li>
+                                <li>详情页</li>
+                                <li>菜单</li>
+                            </ul>
+                            <div class="layui-tab-content" style="height:300px;overflow:auto">
+                                <div class="layui-tab-item layui-show" id="codeEntity" col="CodeEntity"></div>
+                                <div class="layui-tab-item" id="codeIRepository" col="CodeIRepository">
+                                </div>
+                                <div class="layui-tab-item" id="codeRepository" col="CodeRepository">
+                                </div>
+                                <div class="layui-tab-item" id="codeService" col="CodeService">
+                                </div>
+                                <div class="layui-tab-item" id="codeController" col="CodeController">
+                                </div>
+                                <div class="layui-tab-item" id="codeIndex" col="CodeIndex">
+                                </div>
+                                <div class="layui-tab-item" id="codeForm" col="CodeForm">
+                                </div>
+                                <div class="layui-tab-item" id="codeDetails" col="CodeDetails">
+                                </div>
+                                <div class="layui-tab-item" id="codeMenu" col="CodeMenu">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group-bottom text-right">
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                <button class="layui-btn" lay-submit lay-filter="formStep4">确认生成</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

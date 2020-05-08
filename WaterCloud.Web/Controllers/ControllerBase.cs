@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.Code.Extension;
 using WaterCloud.Code.Model;
-using WaterCloud.Entity.SystemSecurity;
+using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Web
 {

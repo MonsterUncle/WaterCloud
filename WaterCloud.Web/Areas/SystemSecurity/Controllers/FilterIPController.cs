@@ -6,7 +6,7 @@
 *********************************************************************************/
 using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Code;
-using WaterCloud.Entity.SystemSecurity;
+using WaterCloud.Domain.SystemSecurity;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Service;
 using System;
@@ -103,7 +103,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
                 _filterIPService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 _logService.WriteDbLog(logEntity);
-                return Success("删除成功。");
+                return Success("操作成功。");
             }
             catch (Exception ex)
             {
