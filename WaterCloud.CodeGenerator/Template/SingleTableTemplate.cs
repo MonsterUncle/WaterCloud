@@ -226,6 +226,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        #region 获取数据");
             sb.AppendLine("        public List<" + baseConfigModel.FileConfig.EntityName + "> GetList(string keyword = \"\")");
             sb.AppendLine("        {");
+            sb.AppendLine("            var cachedata = service.CheckCacheList(cacheKey + \"list\");");
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
             sb.AppendLine("            {");
             sb.AppendLine("                //此处需修改");
@@ -1069,7 +1070,8 @@ namespace WaterCloud.CodeGenerator
                 moduleEntity.F_EnabledMark = true;
                 moduleEntity.F_DeleteMark = false;
                 moduleEntity.F_ParentId = moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).F_Id;
-                moduleEntity.F_SortCode = (moduleRepository.IQueryable(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).Max(a=>a.F_SortCode)??0)+1;
+                var parentModule = moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
+                moduleEntity.F_SortCode = (moduleRepository.IQueryable(a => a.F_ParentId == parentModule.F_Id).Max(a=>a.F_SortCode)??0)+1;
                 List<ModuleButtonEntity> moduleButtonList = new List<ModuleButtonEntity>();
                 int sort = 0;
                 foreach (var item in baseConfigModel.PageIndex.ButtonList)
