@@ -257,7 +257,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        #region 提交数据");
             sb.AppendLine("        public void SubmitForm(" + baseConfigModel.FileConfig.EntityName + " entity, string keyValue)");
             sb.AppendLine("        {");
-            sb.AppendLine("            if (!string.IsNullOrEmpty(keyValue))");
+            sb.AppendLine("            if (string.IsNullOrEmpty(keyValue))");
             sb.AppendLine("            {");
             sb.AppendLine("                entity.Create();");
             sb.AppendLine("                service.Insert(entity);");
