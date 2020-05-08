@@ -1193,7 +1193,7 @@ namespace WaterCloud.CodeGenerator
             list.Add(new KeyValue { Key = "add", Value = "NF-add", Description = "新增" });
             list.Add(new KeyValue { Key = "edit", Value = "NF-edit", Description = "修改" });
             list.Add(new KeyValue { Key = "delete", Value = "NF-delete", Description = "删除" });
-            list.Add(new KeyValue { Key = "details", Value = "NF-delete", Description = "查看" });
+            list.Add(new KeyValue { Key = "details", Value = "NF-details", Description = "查看" });
             return list;
         }
         #endregion 
