@@ -288,7 +288,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildController
-        public string BuildController(BaseConfigModel baseConfigModel,bool istree=false)
+        public string BuildController(BaseConfigModel baseConfigModel)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
@@ -325,13 +325,13 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        #region 获取数据");
-            if (istree)
+            if (baseConfigModel.PageIndex.IsTree>0)
             {
                 sb.AppendLine("        [HttpGet]");
                 sb.AppendLine("        [HandlerAjaxOnly]");
                 sb.AppendLine("        public ActionResult GetTreeGridJson(string keyword)");
                 sb.AppendLine("        {");
-                sb.AppendLine("            var data = _service.GetList(pagination,keyword);");
+                sb.AppendLine("            var data = _service.GetList(keyword);");
                 sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
                 sb.AppendLine("            {");
                 sb.AppendLine("                 //此处需修改");
