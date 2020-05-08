@@ -346,7 +346,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("        {");
                 sb.AppendLine("            var data = _service.GetList();");
                 sb.AppendLine("            var treeList = new List<TreeSelectModel>();");
-                sb.AppendLine("            foreach (AreaEntity item in data)");
+                sb.AppendLine("            foreach (var item in data)");
                 sb.AppendLine("            {");
                 sb.AppendLine("                //此处需修改");
                 sb.AppendLine("                TreeSelectModel treeModel = new TreeSelectModel();");
