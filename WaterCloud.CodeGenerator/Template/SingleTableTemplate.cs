@@ -566,6 +566,13 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("         });");
                 sb.AppendLine("     }");
                 sb.AppendLine("     rendertree();");
+                sb.AppendLine("         // 监听搜索操作");
+                sb.AppendLine("         form.on('submit(data-search-btn)', function (data) {");
+                sb.AppendLine("             var queryJson = data.field.txt_keyword;");
+                sb.AppendLine("             //执行搜索重载");
+                sb.AppendLine("             rendertree(queryJson);");
+                sb.AppendLine("             return false;");
+                sb.AppendLine("         });");
             }
             else
             {
@@ -589,21 +596,21 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                 common.authorizeButton(\"toolbar\");");
                 sb.AppendLine("             }");
                 sb.AppendLine("         });");
+                sb.AppendLine("         // 监听搜索操作");
+                sb.AppendLine("         form.on('submit(data-search-btn)', function (data) {");
+                sb.AppendLine("             //执行搜索重载");
+                sb.AppendLine("             common.reloadtable({");
+                sb.AppendLine("                 elem: 'currentTableId',");
+                if (baseConfigModel.PageIndex.IsTree == 1 || baseConfigModel.PageIndex.IsPagination != 1)
+                {
+                    sb.AppendLine("                 page: false,");
+                }
+                sb.AppendLine("                 curr: 1,");
+                sb.AppendLine("                 where: { keyword: data.field.txt_keyword}");
+                sb.AppendLine("             });");
+                sb.AppendLine("             return false;");
+                sb.AppendLine("         });");
             }
-            sb.AppendLine("         // 监听搜索操作");
-            sb.AppendLine("         form.on('submit(data-search-btn)', function (data) {");
-            sb.AppendLine("             //执行搜索重载");
-            sb.AppendLine("             common.reloadtable({");
-            sb.AppendLine("                 elem: 'currentTableId',");
-            if (baseConfigModel.PageIndex.IsTree == 1|| baseConfigModel.PageIndex.IsPagination != 1)
-            {
-                sb.AppendLine("                 page: false,");
-            }
-            sb.AppendLine("                 curr: 1,");
-            sb.AppendLine("                 where: { keyword: data.field.txt_keyword}");
-            sb.AppendLine("             });");
-            sb.AppendLine("             return false;");
-            sb.AppendLine("         });");
             sb.AppendLine("         var entity;");
             sb.AppendLine("         table.on('row(currentTableFilter)', function (obj) {");
             sb.AppendLine("             obj.tr.addClass(\"layui-table-click\").siblings().removeClass(\"layui-table-click\");");
