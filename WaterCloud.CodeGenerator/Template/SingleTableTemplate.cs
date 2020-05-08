@@ -224,9 +224,13 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        private " + baseConfigModel.FileConfig.IRepositoryName + " service = new "+ baseConfigModel.FileConfig.RepositoryName + "();");
             sb.AppendLine("        private string cacheKey = \"watercloud_ " + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
             sb.AppendLine("        #region 获取数据");
-            sb.AppendLine("        public List<" + baseConfigModel.FileConfig.EntityName + "> GetList()");
+            sb.AppendLine("        public List<" + baseConfigModel.FileConfig.EntityName + "> GetList(string keyword = \"\")");
             sb.AppendLine("        {");
-            sb.AppendLine("            var cachedata = service.CheckCacheList(cacheKey + \"list\");");
+            sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
+            sb.AppendLine("            {");
+            sb.AppendLine("                //此处需修改");
+            sb.AppendLine("                cachedata = cachedata.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword)).ToList();");
+            sb.AppendLine("            }");
             sb.AppendLine("            return cachedata.OrderByDescending(t => t.F_CreatorTime).ToList();");
             sb.AppendLine("        }");
             sb.AppendLine();
