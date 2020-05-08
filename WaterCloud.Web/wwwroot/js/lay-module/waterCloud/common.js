@@ -4,9 +4,10 @@
  * version:2.0
  * description:layuimini 主体框架扩展
  */
-layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xmSelect'], function (exports) {
+layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xmSelect','miniTab'], function (exports) {
     var $ = layui.jquery,
         form = layui.form,
+        miniTab = layui.miniTab,
         layer = layui.layer,
         treetable = layui.treetable,
         tablePlug = layui.tablePlug,
@@ -241,7 +242,14 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                             options.success(data);
                             obj.modalMsg(data.message, data.state);
                             if (options.close) {
-                                obj.modalClose();
+                                try {
+                                    obj.modalClose();
+                                }
+                                catch(err){
+                                    parent.layer.close(index);
+                                    miniTab.deleteCurrentByIframe();
+                                }
+
                             }
                         } else {
                             obj.modalAlert(data.message, data.state);
