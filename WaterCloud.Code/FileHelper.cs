@@ -249,7 +249,24 @@ namespace WaterCloud.Code
                 throw ex;
             }
         }
-
+        #region 创建文本文件
+        /// <summary>
+        /// 创建文件
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="content"></param>
+        public static void CreateFile(string path, string content)
+        {
+            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+            }
+            using (StreamWriter sw = new StreamWriter(path, false, Encoding.UTF8))
+            {
+                sw.Write(content);
+            }
+        }
+        #endregion
         /// <summary>
         /// 创建一个文件,并将字节流写入文件。
         /// </summary>

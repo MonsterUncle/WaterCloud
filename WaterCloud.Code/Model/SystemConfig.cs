@@ -11,6 +11,10 @@ namespace WaterCloud.Code.Model
         /// </summary>
         public bool Demo { get; set; }
         /// <summary>
+        /// 是否是调试模式
+        /// </summary>
+        public bool Debug { get; set; }
+        /// <summary>
         /// 允许一个用户在多个电脑同时登录
         /// </summary>
         public bool LoginMultiple { get; set; }

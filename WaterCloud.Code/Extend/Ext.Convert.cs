@@ -276,20 +276,5 @@ namespace WaterCloud.Code
                 return true;
             return false;
         }
-        /// <summary>
-        /// 是否为空
-        /// </summary>
-        /// <param name="value">值</param>
-        public static bool IsEmpty(this object value)
-        {
-            if (value != null && !string.IsNullOrEmpty(value.ToString()))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
     }
 }
