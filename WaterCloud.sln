@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaterCloud.Repository", "Wa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 Application应用服务", "03 Application应用服务", "{DB3B0F56-4245-4ACA-81C2-C67F2A28DFD3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 Web", "04 Web", "{C62E4ABA-29D7-4A0C-BDAA-D4EAB43859C1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 Web 应用程序", "04 Web 应用程序", "{C62E4ABA-29D7-4A0C-BDAA-D4EAB43859C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaterCloud.CodeGenerator", "WaterCloud.CodeGenerator\WaterCloud.CodeGenerator.csproj", "{25C1E690-0B45-4994-87C0-F1997F4227A6}"
 EndProject
