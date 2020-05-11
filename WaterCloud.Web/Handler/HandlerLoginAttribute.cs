@@ -24,6 +24,7 @@ namespace WaterCloud.Web
             {
                 WebHelper.WriteCookie("WaterCloud_login_error", "overdue");
                 filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '/page/error.html?msg=" + "系统登录已超时，请重新登录！" + "';</script>");
+                OperatorProvider.Provider.EmptyCurrent();
                 return;
             }
             //登录检测
