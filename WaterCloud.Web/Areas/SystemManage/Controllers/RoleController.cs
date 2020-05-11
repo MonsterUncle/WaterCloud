@@ -15,6 +15,7 @@ using WaterCloud.Service;
 using WaterCloud.Service.SystemSecurity;
 using System;
 using Senparc.CO2NET.Extensions;
+using System.Text;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -89,7 +90,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                _roleService.SubmitForm(roleEntity, permissionIds.Split(','), keyValue);
+                _roleService.SubmitForm(roleEntity,string.IsNullOrEmpty(permissionIds)?new string[0]: permissionIds.Split(','), keyValue);
                 logEntity.F_Description += "操作成功";
                 _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");

@@ -61,6 +61,7 @@ namespace WaterCloud.Service.SystemManage
             service.DeleteForm(keyValue);
             RedisHelper.Del(cacheKey + keyValue);
             RedisHelper.Del(cacheKey + "list");
+            RedisHelper.Del(authorizecacheKey + "list");
             RedisHelper.Del(authorizecacheKey + keyValue);
         }
         public void SubmitForm(RoleEntity roleEntity, string[] permissionIds, string keyValue)
@@ -98,6 +99,7 @@ namespace WaterCloud.Service.SystemManage
             service.SubmitForm(roleEntity, roleAuthorizeEntitys, keyValue);
             RedisHelper.Del(cacheKey + keyValue);
             RedisHelper.Del(cacheKey + "list");
+            RedisHelper.Del(authorizecacheKey + "list");
             RedisHelper.Del(authorizecacheKey + keyValue);
         }
     }
