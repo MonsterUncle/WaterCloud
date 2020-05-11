@@ -37,6 +37,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public ActionResult GetTreeSelectJson()
         {
             var data = _itemsService.GetList();
+            data = data.Where(a => a.F_Layers == 1).ToList();
             var treeList = new List<TreeSelectModel>();
             foreach (ItemsEntity item in data)
             {

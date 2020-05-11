@@ -7,6 +7,7 @@
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
+using System;
 
 namespace WaterCloud.Repository.SystemManage
 {
@@ -30,6 +31,16 @@ namespace WaterCloud.Repository.SystemManage
             {
                 db.Insert(entity);
                 db.Insert(buttonlist);
+                db.Commit();
+            }
+        }
+
+        public void DeleteForm(string keyValue)
+        {
+            using (var db = new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            {
+                db.Delete<ModuleEntity>(a=>a.F_Id== keyValue);
+                db.Delete<ModuleButtonEntity>(a=>a.F_ModuleId== keyValue);
                 db.Commit();
             }
         }

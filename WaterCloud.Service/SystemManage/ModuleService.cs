@@ -21,6 +21,7 @@ namespace WaterCloud.Service.SystemManage
         private string cacheKey = "watercloud_moduleldata_";
         private string quickcacheKey = "watercloud_quickmoduledata_";
         private string initcacheKey = "watercloud_init_";
+        private string modulebuttoncacheKey = "watercloud_modulebuttondata_";
 
         public List<ModuleEntity> GetList()
         {
@@ -40,12 +41,13 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
-                service.Delete(t => t.F_Id == keyValue);
+                service.DeleteForm(keyValue);
                 RedisHelper.Del(cacheKey + keyValue);
                 RedisHelper.Del(cacheKey + "list");
                 RedisHelper.Del(quickcacheKey + "list");
                 RedisHelper.Del(initcacheKey + "list");
                 RedisHelper.Del(initcacheKey + "modulebutton_list");
+                RedisHelper.Del(modulebuttoncacheKey + "list");
             }
         }
 
@@ -72,7 +74,7 @@ namespace WaterCloud.Service.SystemManage
             RedisHelper.Del(quickcacheKey + "list");
             RedisHelper.Del(initcacheKey + "list");
             RedisHelper.Del(initcacheKey + "modulebutton_list");
-
+            RedisHelper.Del(modulebuttoncacheKey + "list");
         }
     }
 }

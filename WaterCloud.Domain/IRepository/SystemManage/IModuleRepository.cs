@@ -4,6 +4,7 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using System;
 using System.Collections.Generic;
 using WaterCloud.DataBase;
 
@@ -13,5 +14,6 @@ namespace WaterCloud.Domain.SystemManage
     {
         List<ModuleEntity> GetListByRole(string roleid);
         void CreateModuleCode(ModuleEntity entity,List<ModuleButtonEntity> buttonlist);
+        void DeleteForm(string keyValue);
     }
 }
