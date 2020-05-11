@@ -73,14 +73,6 @@ namespace WaterCloud.Web
         {
             return Content(new AjaxResult { state = ResultType.success.ToString(), message = message, data = data }.ToJson());
         }
-        protected virtual ActionResult SuccessByEasyUI(bool state, string message)
-        {
-            return Content(new AjaxResultByEasyUI { success = state, message = message }.ToJson());
-        }
-        protected virtual ActionResult ResultDataGrid(int total, object data)
-        {
-            return Content(new AjaxResultDataGrid { total = total, rows = data }.ToJson());
-        }
         protected virtual ActionResult ResultLayUiTable(int total, object data)
         {
             return Content(new AjaxResultLayUiTable {code=0,msg="", count = total, data = data }.ToJson());
