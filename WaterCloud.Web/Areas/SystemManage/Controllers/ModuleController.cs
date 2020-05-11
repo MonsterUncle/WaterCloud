@@ -34,13 +34,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
 
         [HttpGet]
-        [HandlerAuthorize]
-        public virtual ActionResult FontIcons()
-        {
-            return View();
-        }
-
-        [HttpGet]
         [HandlerAjaxOnly]
         public ActionResult GetTreeSelectJson()
         {
