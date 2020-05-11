@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.Domain;
 
-namespace WaterCloud.Service.CommonService
+namespace WaterCloud.Service
 {
     public interface IDatabaseTableService
     {
