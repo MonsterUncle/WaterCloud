@@ -29,6 +29,6 @@ layui.config({
     common: 'waterCloud/common', //  工具类
     tablePlug: 'tablePlug/tablePlug', //  tabl扩展
     dtree: 'dtree/dtree', //  树形扩展
-    xmSelect:'xm-select/xm-select'
+    xmSelect:'xm-select/xm-select' //select多选扩展
     //optimizeSelectOption: 'tablePlug/optimizeSelectOption/optimizeSelectOption', //  tabl扩展
 });
