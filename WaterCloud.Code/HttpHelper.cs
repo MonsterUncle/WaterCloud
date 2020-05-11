@@ -7,7 +7,6 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
-using WaterCloud.Code.Extension;
 
 namespace WaterCloud.Code
 {

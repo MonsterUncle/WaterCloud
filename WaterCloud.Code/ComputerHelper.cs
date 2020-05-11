@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using WaterCloud.Code.Extension;
 
 namespace WaterCloud.Code
 {
@@ -20,7 +14,7 @@ namespace WaterCloud.Code
                 MemoryMetrics memoryMetrics = client.GetMetrics();
                 computerInfo.TotalRAM = Math.Ceiling(memoryMetrics.Total / 1024).ToString() + " GB";
                 computerInfo.RAMRate = Math.Ceiling(100 * memoryMetrics.Used / memoryMetrics.Total).ToString();
-                computerInfo.CPURate = Math.Ceiling(GetCPURate().ParseToDouble()).ToString();
+                computerInfo.CPURate = Math.Ceiling(GetCPURate().ToDouble()).ToString();
                 computerInfo.RunTime = GetRunTime();
             }
             catch (Exception ex)
@@ -61,7 +55,7 @@ namespace WaterCloud.Code
                 {
                     string output = ShellHelper.Bash("uptime -s");
                     output = output.Trim();
-                    runTime = DateTimeHelper.FormatTime((DateTime.Now - output.ParseToDateTime()).TotalMilliseconds.ToString().Split('.')[0].ParseToLong());
+                    runTime = DateTimeHelper.FormatTime((DateTime.Now - output.ToDate()).TotalMilliseconds.ToString().Split('.')[0].ToLong());
                 }
                 else
                 {
@@ -69,7 +63,7 @@ namespace WaterCloud.Code
                     string[] outputArr = output.Split("=", StringSplitOptions.RemoveEmptyEntries);
                     if (outputArr.Length == 2)
                     {
-                        runTime = DateTimeHelper.FormatTime((DateTime.Now - outputArr[1].Split('.')[0].ParseToDateTime()).TotalMilliseconds.ToString().Split('.')[0].ParseToLong());
+                        runTime = DateTimeHelper.FormatTime((DateTime.Now - outputArr[1].Split('.')[0].ToDate()).TotalMilliseconds.ToString().Split('.')[0].ToLong());
                     }
                 }
             }

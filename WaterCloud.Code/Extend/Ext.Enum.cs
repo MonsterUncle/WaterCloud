@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace WaterCloud.Code.Extension
+namespace WaterCloud.Code
 {
     public static partial class Extensions
     {

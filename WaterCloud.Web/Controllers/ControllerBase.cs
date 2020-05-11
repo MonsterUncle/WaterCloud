@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json;
 using Serenity;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WaterCloud.Code;
-using WaterCloud.Code.Extension;
 using WaterCloud.Code.Model;
-using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Web
 {
@@ -32,9 +28,13 @@ namespace WaterCloud.Web
                     string[] allowAction = new string[] { "LoginJson", "ExportUserJson", "CodePreviewJson" };
                     if (!allowAction.Select(p => p.ToUpper()).Contains(action.ToUpper()))
                     {
-                        TData obj = new TData();
-                        obj.Message = "演示模式，不允许操作";
-                        context.Result = new JsonResult(obj);
+
+                        string Message = "演示模式，不允许操作";
+                        context.Result = new JsonResult(new AjaxResult{
+                            state = ResultType.error.ToString(),
+                            message = Message
+
+                        });
                         return;
                     }
                 }

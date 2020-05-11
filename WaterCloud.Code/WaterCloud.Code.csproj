@@ -5,6 +5,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extend\**" />
+    <Compile Remove="Extension\**" />
+    <EmbeddedResource Remove="Extend\**" />
+    <EmbeddedResource Remove="Extension\**" />
+    <None Remove="Extend\**" />
+    <None Remove="Extension\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Extend\Ext.Convert.cs" />
+    <Compile Include="Extend\Ext.DateTime.cs" />
+    <Compile Include="Extend\Ext.Enum.cs" />
+    <Compile Include="Extend\Ext.Exception.cs" />
+    <Compile Include="Extend\Ext.Format.cs" />
+    <Compile Include="Extend\Ext.Validate.cs" />
+    <Compile Include="Extend\ExtLinq.cs" />
+    <Compile Include="Extend\ExtLinq.SortBy.cs" />
+    <Compile Include="Extend\ExtList.Comparint.cs" />
+    <Compile Include="Extend\ExtList.cs" />
+    <Compile Include="Extend\ExtTable.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CSRedisCore" Version="3.6.2" />
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />

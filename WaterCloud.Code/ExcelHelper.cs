@@ -9,7 +9,6 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using WaterCloud.Code.Extension;
 
 namespace WaterCloud.Code
 {
@@ -28,7 +27,7 @@ namespace WaterCloud.Code
         /// <param name="list"></param>
         public string ExportToExcel(string sFileName, string sHeaderText, List<T> list, string[] columns)
         {
-            sFileName = string.Format("{0}_{1}", SecurityHelper.GetGuid(), sFileName);
+            sFileName = string.Format("{0}_{1}", Utils.GetGuid(), sFileName);
             string sRoot = GlobalContext.HostingEnvironment.ContentRootPath;
             string partDirectory = string.Format("Resource{0}Export{0}Excel", Path.DirectorySeparatorChar);
             string sDirectory = Path.Combine(sRoot, partDirectory);
@@ -152,13 +151,13 @@ namespace WaterCloud.Code
 
                         case "System.DateTime":
                         case "System.Nullable`1[System.DateTime]":
-                            newCell.SetCellValue(drValue.ParseToDateTime());
+                            newCell.SetCellValue(drValue.ToDate());
                             newCell.CellStyle = dateStyle; //格式化显示  
                             break;
 
                         case "System.Boolean":
                         case "System.Nullable`1[System.Boolean]":
-                            newCell.SetCellValue(drValue.ParseToBool());
+                            newCell.SetCellValue(drValue.ToBool());
                             break;
 
                         case "System.Byte":
@@ -167,7 +166,7 @@ namespace WaterCloud.Code
                         case "System.Nullable`1[System.Int16]":
                         case "System.Int32":
                         case "System.Nullable`1[System.Int32]":
-                            newCell.SetCellValue(drValue.ParseToInt());
+                            newCell.SetCellValue(drValue.ToInt());
                             break;
 
                         case "System.Int64":
@@ -177,12 +176,12 @@ namespace WaterCloud.Code
 
                         case "System.Double":
                         case "System.Nullable`1[System.Double]":
-                            newCell.SetCellValue(drValue.ParseToDouble());
+                            newCell.SetCellValue(drValue.ToDouble());
                             break;
 
                         case "System.Decimal":
                         case "System.Nullable`1[System.Decimal]":
-                            newCell.SetCellValue(drValue.ParseToDouble());
+                            newCell.SetCellValue(drValue.ToDouble());
                             break;
 
                         case "System.DBNull":
@@ -265,12 +264,12 @@ namespace WaterCloud.Code
                             {
                                 case "System.DateTime":
                                 case "System.Nullable`1[System.DateTime]":
-                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ParseToDateTime());
+                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ToDate());
                                     break;
 
                                 case "System.Boolean":
                                 case "System.Nullable`1[System.Boolean]":
-                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ParseToBool());
+                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ToBool());
                                     break;
 
                                 case "System.Byte":
@@ -283,22 +282,22 @@ namespace WaterCloud.Code
                                     break;
                                 case "System.Int32":
                                 case "System.Nullable`1[System.Int32]":
-                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ParseToInt());
+                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ToInt());
                                     break;
 
                                 case "System.Int64":
                                 case "System.Nullable`1[System.Int64]":
-                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ParseToLong());
+                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ToLong());
                                     break;
 
                                 case "System.Double":
                                 case "System.Nullable`1[System.Double]":
-                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ParseToDouble());
+                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ToDouble());
                                     break;
 
                                 case "System.Decimal":
                                 case "System.Nullable`1[System.Decimal]":
-                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ParseToDecimal());
+                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ToDecimal());
                                     break;
 
                                 default:

@@ -5,22 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WaterCloud.Code.Extension
+namespace WaterCloud.Code
 {
     public static partial class Extensions
     {
-        public static bool IsEmpty(this object value)
-        {
-            if (value != null && !string.IsNullOrEmpty(value.ParseToString()))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
         public static bool IsNullOrZero(this object value)
         {
             if (value == null || value.ParseToString().Trim() == "0")

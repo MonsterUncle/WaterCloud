@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using WaterCloud.Code.Extension;
 
 namespace WaterCloud.Code
 {
@@ -35,7 +30,7 @@ namespace WaterCloud.Code
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return reader.Value.ParseToLong();
+            return reader.Value.ToLong();
         }
 
         public override bool CanConvert(Type objectType)
@@ -69,7 +64,7 @@ namespace WaterCloud.Code
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return reader.Value.ParseToString().ParseToDateTime();
+            return reader.Value.ParseToString().ToDate();
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

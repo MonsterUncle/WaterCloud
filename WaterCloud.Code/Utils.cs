@@ -27,5 +27,9 @@ namespace WaterCloud.Code
             return code;
         }
         #endregion
+        public static string GetGuid()
+        {
+            return Guid.NewGuid().ToString().Replace("-", string.Empty).ToLower();
+        }
     }
 }

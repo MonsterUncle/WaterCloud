@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WaterCloud.Code.Extension
+namespace WaterCloud.Code
 {
     public static partial class Extensions
     {

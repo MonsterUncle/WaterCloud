@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WaterCloud.Code.Extension;
+﻿using System.Text;
+using WaterCloud.Code;
 
 namespace WaterCloud.CodeGenerator
 {
