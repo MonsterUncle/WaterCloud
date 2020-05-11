@@ -40,7 +40,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         public ActionResult GetGridJson(string keyword)
         {
             var data = _dbBackupService.GetList(keyword);
-            return ResultLayUiTable(data.Count,data);
+            return Success(data.Count,data);
         }
         [HttpPost]
         [HandlerAjaxOnly]

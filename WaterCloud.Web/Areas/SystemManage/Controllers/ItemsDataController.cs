@@ -41,7 +41,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             //var itemId = queryParam["itemId"].IsEmpty() ? "" : queryParam["itemId"].ToString();
             //var keyword = queryParam["txt_keyword"].IsEmpty() ? "" : queryParam["txt_keyword"].ToString();
             var data = _itemsDetailService.GetList(itemId, keyword);
-            return ResultLayUiTable(data.Count, data);
+            return Success(data.Count, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]

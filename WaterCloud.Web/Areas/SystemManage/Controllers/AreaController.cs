@@ -71,7 +71,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             //{
             //    treeList = treeList.TreeWhere(t => t.text.Contains(keyword), "id", "parentId");
             //}
-            return ResultLayUiTable(data.Count, data);
+            return Success(data.Count, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]

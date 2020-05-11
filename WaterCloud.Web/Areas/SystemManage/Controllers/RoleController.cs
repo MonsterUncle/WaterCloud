@@ -48,7 +48,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             pagination.order = "asc";
             pagination.sort = "F_EnCode";
             var data = _roleService.GetList(pagination,keyword);
-            return ResultLayUiTable(pagination.records,data);
+            return Success(pagination.records,data);
         }
         [HttpGet]
         [HandlerAjaxOnly]

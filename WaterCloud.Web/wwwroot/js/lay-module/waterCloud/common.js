@@ -37,6 +37,14 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                     pageName: 'page' //页码的参数名称，默认：page
                     , limitName: 'rows' //每页数据量的参数名，默认：limit
                 },
+                parseData: function (res) { //res 即为原始返回的数据
+                    return {
+                        "code": res.state, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.count, //解析数据长度
+                        "data": res.data //解析数据列表
+                        };
+                    },
                 done: function (res, curr, count) { // 使用自定义参数hideAlways隐藏
                     //$(".layui-table-box").find("[data-field='F_Id']").css("display", "none");
                 }

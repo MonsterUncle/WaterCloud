@@ -51,7 +51,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public ActionResult GetTablePageListJson(Pagination pagination,string keyword)
         {
             List<TableInfo> data = _service.GetTablePageList(keyword, pagination);
-            return ResultLayUiTable(pagination.records, data);
+            return Success(pagination.records, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
@@ -81,7 +81,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             {
                 data = data.Where(a => a.TableColumn.Contains(keyword)).ToList();
             }
-            return ResultLayUiTable(data.Count, data);
+            return Success(data.Count, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]

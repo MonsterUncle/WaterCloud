@@ -35,7 +35,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             pagination.order = "desc";
             pagination.sort = "F_CreatorTime";
             var data = _logService.GetList(pagination, timetype, keyword).ToList();
-            return ResultLayUiTable(pagination.records, data);
+            return Success(pagination.records, data);
         }
         [HttpPost]
         [HandlerAjaxOnly]

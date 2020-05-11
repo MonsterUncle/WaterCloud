@@ -53,7 +53,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public ActionResult GetTreeGridJson(string moduleId)
         {
             var data = _moduleButtonService.GetList(moduleId);
-            return ResultLayUiTable(data.Count, data);
+            return Success(data.Count, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]

@@ -68,7 +68,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             //    treeModel.self = item;
             //    treeList.Add(treeModel);
             //}
-            return ResultLayUiTable(data.Count, data);
+            return Success(data.Count, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]

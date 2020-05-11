@@ -37,7 +37,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         public ActionResult GetGridJson(string keyword)
         {
             var data = _filterIPService.GetList(keyword);
-            return ResultLayUiTable(data.Count,data);
+            return Success(data.Count,data);
         }
         [HttpGet]
         [HandlerAjaxOnly]

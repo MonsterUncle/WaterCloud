@@ -69,13 +69,13 @@ namespace WaterCloud.Web
         {
             return Content(new AjaxResult { state = ResultType.success.ToString(), message = message }.ToJson());
         }
-        protected virtual ActionResult Success(string message, object data)
+        protected virtual ActionResult Success<T>(string message, T data)
         {
-            return Content(new AjaxResult { state = ResultType.success.ToString(), message = message, data = data }.ToJson());
+            return Content(new AjaxResult<T> { state = ResultType.success.ToString(), message = message, data = data }.ToJson());
         }
-        protected virtual ActionResult ResultLayUiTable(int total, object data)
+        protected virtual ActionResult Success<T>(int total, T data)
         {
-            return Content(new AjaxResultLayUiTable {code=0,msg="", count = total, data = data }.ToJson());
+            return Content(new AjaxResult<T> { state = 0, message = "", count = total, data = data }.ToJson());
         }
         protected virtual ActionResult ResultDTree(object data)
         {

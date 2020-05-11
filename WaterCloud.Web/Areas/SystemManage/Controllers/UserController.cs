@@ -42,7 +42,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             pagination.order = "asc";
             pagination.sort = "F_DepartmentId";
             var data = _userService.GetList(pagination, keyword);
-            return ResultLayUiTable(pagination.records, data);
+            return Success(pagination.records, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
