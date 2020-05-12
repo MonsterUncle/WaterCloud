@@ -36,9 +36,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(string itemId, string keyword)
         {
-            //var queryParam = queryJson.ToJObject();
-            //var itemId = queryParam["itemId"].IsEmpty() ? "" : queryParam["itemId"].ToString();
-            //var keyword = queryParam["txt_keyword"].IsEmpty() ? "" : queryParam["txt_keyword"].ToString();
             var data =await _itemsDetailService.GetList(itemId, keyword);
             return Success(data.Count, data);
         }

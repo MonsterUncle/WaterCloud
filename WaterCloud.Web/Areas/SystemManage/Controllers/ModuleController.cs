@@ -60,15 +60,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
             }
-            //var treeList = new List<TreeGridModel2>();
-            //foreach (ModuleEntity item in data)
-            //{
-            //    TreeGridModel2 treeModel = new TreeGridModel2();
-            //    treeModel.id = item.F_Id;
-            //    treeModel.parentId = item.F_ParentId;
-            //    treeModel.self = item;
-            //    treeList.Add(treeModel);
-            //}
             return Success(data.Count, data);
         }
         [HttpGet]
