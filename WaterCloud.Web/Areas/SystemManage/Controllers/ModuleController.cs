@@ -39,7 +39,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetTreeSelectJson()
         {
             var data =await _moduleService.GetList();
-            data = data.Where(a => a.F_Target == "expand").ToList();
+            data = data.Where(a => a.F_Target == "expand"&&a.F_IsExpand==true).ToList();
             var treeList = new List<TreeSelectModel>();
             foreach (ModuleEntity item in data)
             {

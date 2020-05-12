@@ -39,10 +39,12 @@ namespace WaterCloud.Service.SystemManage
             if (OperatorProvider.Provider.GetCurrent().IsSystem)
             {
                 data =await moduleApp.GetList();
+                data = data.Where(a => a.F_IsMenu == true).ToList();
             }
             else
             {
                 var moduledata =await moduleApp.GetList();
+                moduledata = moduledata.Where(a => a.F_IsMenu == true).ToList();
                 var role =await roleservice.FindEntity(roleId);
                 if (role==null||role.F_EnabledMark==false)
                 {
