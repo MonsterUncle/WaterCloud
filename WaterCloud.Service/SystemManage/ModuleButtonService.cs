@@ -11,12 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NPOI.SS.Formula.Functions;
 
 namespace WaterCloud.Service.SystemManage
 {
     public class ModuleButtonService: IDenpendency
     {
         private IModuleButtonRepository service = new ModuleButtonRepository();
+        private IModuleRepository moduleservice = new ModuleRepository();
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -69,6 +71,11 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
+                var module = await moduleservice.FindEntity(a => a.F_Id == moduleButtonEntity.F_ModuleId);
+                if (string.IsNullOrEmpty(module.F_UrlAddress) || module.F_Target != "iframe")
+                {
+                    throw new Exception("菜单不能创建按钮");
+                }
                 moduleButtonEntity.Create();
                 await service.Insert(moduleButtonEntity);
                 await RedisHelper.DelAsync(cacheKey + "list");
@@ -80,15 +87,21 @@ namespace WaterCloud.Service.SystemManage
             string[] ArrayId = Ids.Split(',');
             var data =await this.GetList();
             List<ModuleButtonEntity> entitys = new List<ModuleButtonEntity>();
+            var module = await moduleservice.FindEntity(a => a.F_Id == moduleId);
+            if (string.IsNullOrEmpty(module.F_UrlAddress)||module.F_Target!= "iframe")
+            {
+                throw new Exception("菜单不能创建按钮");
+            }
             foreach (string item in ArrayId)
             {
                 ModuleButtonEntity moduleButtonEntity = data.Find(t => t.F_Id == item);
-                moduleButtonEntity.F_Id = Utils.GuId();
+                moduleButtonEntity.Create();
                 moduleButtonEntity.F_ModuleId = moduleId;
                 entitys.Add(moduleButtonEntity);
             }
             await service.Insert(entitys);
             await RedisHelper.DelAsync(cacheKey + "list");
+            await RedisHelper.DelAsync(initcacheKey + "modulebutton_" + "list");
         }
 
         public async Task<List<ModuleButtonEntity>> GetListNew(string moduleId = "")

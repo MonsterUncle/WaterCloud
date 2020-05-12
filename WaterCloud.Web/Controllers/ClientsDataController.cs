@@ -61,11 +61,11 @@ namespace WaterCloud.Web.Controllers
             var data = new
             {
                 dataItems =await this.GetDataItemList(),
-                organize =await this.GetOrganizeList(),
-                role =await this.GetRoleList(),
-                duty =await this.GetDutyList(),
-                user =await this.GetUserList(),
-                authorizeButton =await this.GetMenuButtonListNew(),
+                organize = await this.GetOrganizeList(),
+                role = await this.GetRoleList(),
+                duty = await this.GetDutyList(),
+                user = await this.GetUserList(),
+                authorizeButton = await this.GetMenuButtonListNew(),
             };
             return Content(data.ToJson());
         }
@@ -292,7 +292,7 @@ namespace WaterCloud.Web.Controllers
             Dictionary<string, object> dictionaryItem = new Dictionary<string, object>();
             foreach (var item in await _itemsService.GetList())
             {
-                var dataItemList = itemdata.FindAll(t => t.F_ItemId.Equals(item.F_Id));
+                var dataItemList = itemdata.FindAll(t => t.F_ItemId==item.F_Id);
                 Dictionary<string, string> dictionaryItemList = new Dictionary<string, string>();
                 foreach (var itemList in dataItemList)
                 {
@@ -377,7 +377,7 @@ namespace WaterCloud.Web.Controllers
             var dictionarytemp = new Dictionary<string, List<ModuleButtonEntity>>();
             foreach (ModuleButtonEntity item in dataModuleId)
             {
-                var buttonList = data.Where(t => t.F_ModuleId.Equals(item.F_ModuleId)).ToList();
+                var buttonList = data.Where(t => t.F_ModuleId==item.F_ModuleId).ToList();
                 dictionarytemp.Add(item.F_ModuleId, buttonList);
             }
             if (dictionary == null)
