@@ -82,38 +82,7 @@ namespace WaterCloud.DataBase
             int i = 1;
             try
             {
-                if (dbcontext.DatabaseProvider.DatabaseType == "SqlServer")
-                {
-                    await dbcontext.InsertRangeAsync(entitys);
-                }
-                else
-                {
-                    if (dbcontext.Session.CurrentTransaction == null)
-                    {
-                        dbcontext.Session.BeginTransaction();
-                        foreach (var item in entitys)
-                        {
-                            if (await dbcontext.InsertAsync(item)==null)
-                            {
-                                i = 0;
-                            }
-                        }
-                        if (i==1)
-                        {
-                            dbcontext.Session.CommitTransaction();
-                        }
-                    }
-                    else
-                    {
-                        foreach (var item in entitys)
-                        {
-                            if (await dbcontext.InsertAsync(item) == null)
-                            {
-                                i = 0;
-                            }
-                        }
-                    }
-                }
+                await dbcontext.InsertRangeAsync(entitys);
                 return i;
             }
             catch (Exception)
