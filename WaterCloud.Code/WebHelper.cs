@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Encodings.Web;
+using System.Net.Sockets;
 
 namespace WaterCloud.Code
 {
@@ -388,6 +389,338 @@ namespace WaterCloud.Code
             html = html.Replace("'", "’");
             html = html.Replace("&nbsp;", " ");
             return html;
+        }
+        #endregion
+
+        #region 当前连接
+        public static HttpContext HttpContext
+        {
+            get { return GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext; }
+        }
+        #endregion
+
+        #region 网络信息
+        public static string Ip
+        {
+            get
+            {
+                string result = string.Empty;
+                try
+                {
+                    if (HttpContext != null)
+                    {
+                        result = GetWebClientIp();
+                    }
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        result = GetLanIp();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.WriteWithTime(ex);
+                }
+                return result;
+            }
+        }
+
+        private static string GetWebClientIp()
+        {
+            try
+            {
+                string ip = GetWebRemoteIp();
+                foreach (var hostAddress in Dns.GetHostAddresses(ip))
+                {
+                    if (hostAddress.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        return hostAddress.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteWithTime(ex);
+            }
+            return string.Empty;
+        }
+
+        public static string GetLanIp()
+        {
+            try
+            {
+                foreach (var hostAddress in Dns.GetHostAddresses(Dns.GetHostName()))
+                {
+                    if (hostAddress.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        return hostAddress.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteWithTime(ex);
+            }
+            return string.Empty;
+        }
+
+        public static string GetWanIp()
+        {
+            string ip = string.Empty;
+            try
+            {
+                string url = "http://www.net.cn/static/customercare/yourip.asp";
+                string html = HttpHelper.HttpGet(url);
+                if (!string.IsNullOrEmpty(html))
+                {
+                    ip = HtmlHelper.Resove(html, "<h2>", "</h2>");
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteWithTime(ex);
+            }
+            return ip;
+        }
+
+        private static string GetWebRemoteIp()
+        {
+            try
+            {
+                string ip = HttpContext?.Connection?.RemoteIpAddress.ParseToString();
+                if (HttpContext != null && HttpContext.Request != null)
+                {
+                    if (HttpContext.Request.Headers.ContainsKey("X-Real-IP"))
+                    {
+                        ip = HttpContext.Request.Headers["X-Real-IP"].ToString();
+                    }
+
+                    if (HttpContext.Request.Headers.ContainsKey("X-Forwarded-For"))
+                    {
+                        ip = HttpContext.Request.Headers["X-Forwarded-For"].ToString();
+                    }
+                }
+                return ip;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteWithTime(ex);
+            }
+            return string.Empty;
+        }
+
+        public static string UserAgent
+        {
+            get
+            {
+                string userAgent = string.Empty;
+                try
+                {
+                    userAgent = HttpContext?.Request?.Headers["User-Agent"];
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.WriteWithTime(ex);
+                }
+                return userAgent;
+            }
+        }
+
+        public static string GetOSVersion()
+        {
+            var osVersion = string.Empty;
+            try
+            {
+                var userAgent = UserAgent;
+                if (userAgent.Contains("NT 10"))
+                {
+                    osVersion = "Windows 10";
+                }
+                else if (userAgent.Contains("NT 6.3"))
+                {
+                    osVersion = "Windows 8";
+                }
+                else if (userAgent.Contains("NT 6.1"))
+                {
+                    osVersion = "Windows 7";
+                }
+                else if (userAgent.Contains("NT 6.0"))
+                {
+                    osVersion = "Windows Vista/Server 2008";
+                }
+                else if (userAgent.Contains("NT 5.2"))
+                {
+                    osVersion = "Windows Server 2003";
+                }
+                else if (userAgent.Contains("NT 5.1"))
+                {
+                    osVersion = "Windows XP";
+                }
+                else if (userAgent.Contains("NT 5"))
+                {
+                    osVersion = "Windows 2000";
+                }
+                else if (userAgent.Contains("NT 4"))
+                {
+                    osVersion = "Windows NT4";
+                }
+                else if (userAgent.Contains("Android"))
+                {
+                    osVersion = "Android";
+                }
+                else if (userAgent.Contains("Me"))
+                {
+                    osVersion = "Windows Me";
+                }
+                else if (userAgent.Contains("98"))
+                {
+                    osVersion = "Windows 98";
+                }
+                else if (userAgent.Contains("95"))
+                {
+                    osVersion = "Windows 95";
+                }
+                else if (userAgent.Contains("Mac"))
+                {
+                    osVersion = "Mac";
+                }
+                else if (userAgent.Contains("Unix"))
+                {
+                    osVersion = "UNIX";
+                }
+                else if (userAgent.Contains("Linux"))
+                {
+                    osVersion = "Linux";
+                }
+                else if (userAgent.Contains("SunOS"))
+                {
+                    osVersion = "SunOS";
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteWithTime(ex);
+            }
+            return osVersion;
+        }
+        #endregion
+
+        #region IP位置查询
+        public static string GetIpLocation(string ipAddress)
+        {
+            string ipLocation = string.Empty;
+            try
+            {
+                if (!IsInnerIP(ipAddress))
+                {
+                    ipLocation = GetIpLocationFromTaoBao(ipAddress);
+                    if (string.IsNullOrEmpty(ipLocation))
+                    {
+                        ipLocation = GetIpLocationFromIpIp(ipAddress);
+                    }
+                    if (string.IsNullOrEmpty(ipLocation))
+                    {
+                        ipLocation = GetIpLocationFromPCOnline(ipAddress);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteWithTime(ex);
+            }
+            return ipLocation;
+        }
+
+        private static string GetIpLocationFromTaoBao(string ipAddress)
+        {
+            string url = "http://ip.taobao.com/service/getIpInfo2.php";
+            string postData = string.Format("ip={0}", ipAddress);
+            string result = HttpHelper.HttpPost(url, postData);
+            string ipLocation = string.Empty;
+            if (!string.IsNullOrEmpty(result))
+            {
+                var json = JsonHelper.ToJObject(result);
+                var jsonData = json["data"];
+                ipLocation = jsonData["region"] + " " + jsonData["city"];
+                ipLocation = ipLocation.Trim();
+            }
+            return ipLocation;
+        }
+
+        private static string GetIpLocationFromIpIp(string ipAddress)
+        {
+            string url = "http://freeapi.ipip.net/" + ipAddress;
+            string result = HttpHelper.HttpGet(url);
+            string ipLocation = string.Empty;
+            if (!string.IsNullOrEmpty(result))
+            {
+                result = result.Replace("\"", string.Empty);
+                var resultArr = result.Split(',');
+                ipLocation = resultArr[1] + " " + resultArr[2];
+                ipLocation = ipLocation.Trim();
+            }
+            return ipLocation;
+        }
+
+        private static string GetIpLocationFromPCOnline(string ipAddress)
+        {
+            HttpResult httpResult = new HttpHelper().GetHtml(new HttpItem
+            {
+                URL = "http://whois.pconline.com.cn/ip.jsp?ip=" + ipAddress,
+                ContentType = "text/html; charset=gb2312"
+            });
+
+            string ipLocation = string.Empty;
+            if (!string.IsNullOrEmpty(httpResult.Html))
+            {
+                var resultArr = httpResult.Html.Split(' ');
+                ipLocation = resultArr[0].Replace("省", "  ").Replace("市", "");
+                ipLocation = ipLocation.Trim();
+            }
+            return ipLocation;
+        }
+        #endregion
+
+        #region 判断是否是外网IP
+        public static bool IsInnerIP(string ipAddress)
+        {
+            bool isInnerIp = false;
+            long ipNum = GetIpNum(ipAddress);
+            /**
+                私有IP：A类 10.0.0.0-10.255.255.255
+                            B类 172.16.0.0-172.31.255.255
+                            C类 192.168.0.0-192.168.255.255
+                当然，还有127这个网段是环回地址 
+           **/
+            long aBegin = GetIpNum("10.0.0.0");
+            long aEnd = GetIpNum("10.255.255.255");
+            long bBegin = GetIpNum("172.16.0.0");
+            long bEnd = GetIpNum("172.31.255.255");
+            long cBegin = GetIpNum("192.168.0.0");
+            long cEnd = GetIpNum("192.168.255.255");
+            isInnerIp = IsInner(ipNum, aBegin, aEnd) || IsInner(ipNum, bBegin, bEnd) || IsInner(ipNum, cBegin, cEnd) || ipAddress.Equals("127.0.0.1");
+            return isInnerIp;
+        }
+
+        /// <summary>
+        /// 把IP地址转换为Long型数字
+        /// </summary>
+        /// <param name="ipAddress">IP地址字符串</param>
+        /// <returns></returns>
+        private static long GetIpNum(string ipAddress)
+        {
+            string[] ip = ipAddress.Split('.');
+            long a = int.Parse(ip[0]);
+            long b = int.Parse(ip[1]);
+            long c = int.Parse(ip[2]);
+            long d = int.Parse(ip[3]);
+
+            long ipNum = a * 256 * 256 * 256 + b * 256 * 256 + c * 256 + d;
+            return ipNum;
+        }
+
+        private static bool IsInner(long userIp, long begin, long end)
+        {
+            return (userIp >= begin) && (userIp <= end);
         }
         #endregion
     }

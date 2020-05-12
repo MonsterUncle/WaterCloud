@@ -91,7 +91,7 @@ namespace WaterCloud.Service.SystemSecurity
                 var operatorModel = OperatorProvider.Provider.GetCurrent();
                 if (operatorModel==null)
                 {
-                    logEntity.F_IPAddress = NetHelper.Ip;
+                    logEntity.F_IPAddress = WebHelper.Ip;
                     logEntity.F_IPAddressName = "本地局域网";
                 }
                 else
@@ -104,7 +104,7 @@ namespace WaterCloud.Service.SystemSecurity
             }
             catch (Exception)
             {
-                logEntity.F_IPAddress = NetHelper.Ip;
+                logEntity.F_IPAddress = WebHelper.Ip;
                 logEntity.F_IPAddressName = "本地局域网";
                 logEntity.Create();
                 service.Insert(logEntity);

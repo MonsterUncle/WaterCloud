@@ -113,7 +113,7 @@ namespace WaterCloud.Web.Controllers
                 operatorModel.CompanyId = userEntity.F_OrganizeId;
                 operatorModel.DepartmentId = userEntity.F_DepartmentId;
                 operatorModel.RoleId = userEntity.F_RoleId;
-                operatorModel.LoginIPAddress = NetHelper.Ip;
+                operatorModel.LoginIPAddress = WebHelper.Ip;
                 operatorModel.LoginIPAddressName = "本地局域网";//Net.GetLocation(operatorModel.LoginIPAddress);
                 operatorModel.LoginTime = DateTime.Now;
                 operatorModel.DdUserId = userEntity.F_DingTalkUserId;
@@ -150,7 +150,7 @@ namespace WaterCloud.Web.Controllers
         }
         private bool CheckIP()
         {
-            string ip = NetHelper.Ip;
+            string ip = WebHelper.Ip;
             return _filterIPService.CheckIP(ip);
         }
     }
