@@ -10,6 +10,7 @@ using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -25,7 +26,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             _moduleService = moduleService;
             _moduleButtonService = moduleButtonService;
         }
-        public ActionResult GetPermissionTree(string roleId)
+        public async Task<ActionResult> GetPermissionTree(string roleId)
         {
             string roleid = OperatorProvider.Provider.GetCurrent().RoleId;
             var moduledata = new List<ModuleEntity>();
@@ -33,18 +34,18 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             //隐藏系统菜单及字典管理
             if (roleid != null)
             {
-                moduledata = _moduleService.GetListByRole(roleid);
-                buttondata = _moduleButtonService.GetListByRole(roleid);
+                moduledata =await _moduleService.GetListByRole(roleid);
+                buttondata =await _moduleButtonService.GetListByRole(roleid);
             }
             else
             {
-                moduledata = _moduleService.GetList();
-                buttondata = _moduleButtonService.GetList();
+                moduledata =await _moduleService.GetList();
+                buttondata =await _moduleButtonService.GetList();
             }
             var authorizedata = new List<RoleAuthorizeEntity>();
             if (!string.IsNullOrEmpty(roleId))
             {
-                authorizedata = _roleAuthorizeService.GetList(roleId);
+                authorizedata =await _roleAuthorizeService.GetList(roleId);
             }
             var treeList = new List<TreeGridModel>();
             foreach (ModuleEntity item in moduledata)

@@ -13,6 +13,7 @@ using System;
 using WaterCloud.Service.SystemManage;
 using System.Linq;
 using Senparc.CO2NET.Extensions;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
 {
@@ -22,67 +23,64 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly FilterIPService _filterIPService;
-        private readonly ModuleService _moduleService;
         private readonly LogService _logService;
 
-        public FilterIPController(FilterIPService filterIPService, LogService logService, ModuleService moduleService)
+        public FilterIPController(FilterIPService filterIPService, LogService logService)
         {
             _filterIPService = filterIPService;
             _logService = logService;
-            _moduleService = moduleService;
         }
 
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetGridJson(string keyword)
+        public async Task<ActionResult> GetGridJson(string keyword)
         {
-            var data = _filterIPService.GetList(keyword);
+            var data =await _filterIPService.GetList(keyword);
             return Success(data.Count,data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetFormJson(string keyValue)
+        public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data = _filterIPService.GetForm(keyValue);
+            var data =await _filterIPService.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
+        public async Task<ActionResult> SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
         {
-            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var currentuser = OperatorProvider.Provider.GetCurrent();
             LogEntity logEntity ;
             if (!string.IsNullOrEmpty(keyValue))
             {
-                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Update.ToString());
+                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
             }
             else
             {
-                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Create.ToString());
+                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = currentuser.UserCode;
+                logEntity.F_NickName = currentuser.UserName;
                 if (string.IsNullOrEmpty(keyValue))
                 {
                     filterIPEntity.F_DeleteMark = false;
                 }
-                _filterIPService.SubmitForm(filterIPEntity, keyValue);
+                await _filterIPService.SubmitForm(filterIPEntity, keyValue);
                 logEntity.F_Description += "操作成功";
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
@@ -90,26 +88,25 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(string keyValue)
+        public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
-            LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Delete.ToString());
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                _filterIPService.DeleteForm(keyValue);
+                logEntity.F_Account = currentuser.UserCode;
+                logEntity.F_NickName = currentuser.UserName;
+                await _filterIPService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }

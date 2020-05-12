@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Code;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 /// <summary>
 /// 权限验证
 /// </summary>
@@ -25,7 +26,7 @@ namespace WaterCloud.Web
             {
                 return;
             }
-            if (!this.ActionAuthorize(filterContext))
+            if (!ActionAuthorize(filterContext))
             {
                 OperatorProvider.Provider.EmptyCurrent();
                 filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '/page/error.html?msg=" + "很抱歉！您的权限不足，访问被拒绝！" + "';</script>");
@@ -36,7 +37,7 @@ namespace WaterCloud.Web
         {
             try
             {
-                OperatorResult result= OperatorProvider.Provider.IsOnLine("pc_");
+                OperatorResult result=OperatorProvider.Provider.IsOnLine("pc_").Result;
                 if (result.stateCode<=0)
                 {
 
@@ -44,7 +45,7 @@ namespace WaterCloud.Web
                 }
                 var roleId = result.userInfo.RoleId;
                 var action = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext.Request.Path;
-                return new RoleAuthorizeService().ActionValidate(roleId, action);
+                return new RoleAuthorizeService().ActionValidate(roleId, action).Result;
             }
             catch (System.Exception)
             {

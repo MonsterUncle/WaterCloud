@@ -9,6 +9,7 @@ using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System.Text;
 using Chloe;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Repository.SystemManage
 {
@@ -25,7 +26,7 @@ namespace WaterCloud.Repository.SystemManage
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
         }
-        public List<ItemsDetailEntity> GetItemList(string enCode)
+        public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT  d.*
@@ -40,7 +41,7 @@ namespace WaterCloud.Repository.SystemManage
             {
                  new DbParam("@enCode",enCode)
             };
-            return this.FindList(strSql.ToString(), parameter);
+            return await this.FindList(strSql.ToString(), parameter);
         }
     }
 }

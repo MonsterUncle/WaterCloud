@@ -9,14 +9,17 @@ using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Repository.SystemSecurity;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using WaterCloud.Service.SystemManage;
+using System.Linq;
 
 namespace WaterCloud.Service.SystemSecurity
 {
     public class LogService: IDenpendency
     {
         private ILogRepository service = new LogRepository();
-
-        public List<LogEntity> GetList(Pagination pagination, int timetype, string keyword="")
+        private ModuleService moduleservice = new ModuleService();
+        public async Task<List<LogEntity>> GetList(Pagination pagination, int timetype, string keyword="")
         {
             var expression = ExtLinq.True<LogEntity>();
             if (!string.IsNullOrEmpty(keyword))
@@ -42,13 +45,13 @@ namespace WaterCloud.Service.SystemSecurity
                     break;
             }
             expression = expression.And(t => t.F_Date >= startTime && t.F_Date <= endTime);
-            return service.FindList(expression, pagination);
+            return await service.FindList(expression, pagination);
         }
-        public List<LogEntity> GetList()
+        public async Task<List<LogEntity>> GetList()
         {           
             return service.IQueryable().ToList();
         }
-        public void RemoveLog(string keepTime)
+        public async Task RemoveLog(string keepTime)
         {
             DateTime operateTime = DateTime.Now;
             if (keepTime == "7")            //保留近一周
@@ -65,9 +68,9 @@ namespace WaterCloud.Service.SystemSecurity
             }
             var expression = ExtLinq.True<LogEntity>();
             expression = expression.And(t => t.F_Date <= operateTime);
-            service.Delete(expression);
+            await service.Delete(expression);
         }
-        public void WriteDbLog(bool result, string resultLog)
+        public async Task WriteDbLog(bool result, string resultLog)
         {
             LogEntity logEntity = new LogEntity();
             logEntity.F_Id = Utils.GuId();
@@ -79,9 +82,9 @@ namespace WaterCloud.Service.SystemSecurity
             logEntity.F_Result = result;
             logEntity.F_Description = resultLog;
             logEntity.Create();
-            service.Insert(logEntity);
+            await service.Insert(logEntity);
         }
-        public void WriteDbLog(LogEntity logEntity)
+        public async Task WriteDbLog(LogEntity logEntity)
         {
             logEntity.F_Id = Utils.GuId();
             logEntity.F_Date = DateTime.Now;
@@ -100,15 +103,22 @@ namespace WaterCloud.Service.SystemSecurity
                     logEntity.F_IPAddressName = OperatorProvider.Provider.GetCurrent().LoginIPAddressName;
                 }
                 logEntity.Create();
-                service.Insert(logEntity);
+                await service.Insert(logEntity);
             }
             catch (Exception)
             {
                 logEntity.F_IPAddress = WebHelper.Ip;
                 logEntity.F_IPAddressName = "本地局域网";
                 logEntity.Create();
-                service.Insert(logEntity);
+                await service.Insert(logEntity);
             }
+        }
+
+        public async Task<LogEntity> CreateLog(string moduleName, string className, string type)
+        {
+            var module = (await moduleservice.GetList()).Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = (await moduleservice.GetList()).Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            return new LogEntity(module.F_FullName, moduleitem.F_FullName, type);
         }
     }
 }

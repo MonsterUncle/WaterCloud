@@ -15,6 +15,7 @@ using WaterCloud.Service;
 using WaterCloud.Service.SystemSecurity;
 using System;
 using Senparc.CO2NET.Extensions;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -24,55 +25,51 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly NoticeService _noticeService;
-        private readonly ModuleService _moduleService;
         private readonly LogService _logService;
-        public NoticeController(NoticeService noticeService, LogService logService, ModuleService moduleService)
+        public NoticeController(NoticeService noticeService, LogService logService)
         {
             _noticeService = noticeService;
             _logService = logService;
-            _moduleService = moduleService;
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetGridJson(Pagination pagination, string keyword)
+        public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)
         {
             pagination.order = "desc";
             pagination.sort = "F_CreatorTime";
-            var data = _noticeService.GetList(pagination,keyword);
+            var data =await _noticeService.GetList(pagination,keyword);
             return Success(pagination.records, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetListJson(string keyword)
+        public async Task<ActionResult> GetListJson(string keyword)
         {
-            var data = _noticeService.GetList(keyword);
+            var data =await _noticeService.GetList(keyword);
             return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetFormJson(string keyValue)
+        public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data = _noticeService.GetForm(keyValue);
+            var data =await _noticeService.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(NoticeEntity noticeEntity, string keyValue)
+        public async Task<ActionResult> SubmitForm(NoticeEntity noticeEntity, string keyValue)
         {
-            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
                 noticeEntity.F_DeleteMark = false;
-                noticeEntity.F_CreatorUserName = new UserService().GetForm(OperatorProvider.Provider.GetCurrent().UserId).F_RealName;
-                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Create.ToString());
+                noticeEntity.F_CreatorUserName =(await new UserService().GetForm(OperatorProvider.Provider.GetCurrent().UserId)).F_RealName;
+                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }
             else
             {
-                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Update.ToString());
+                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
             }
@@ -80,16 +77,16 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                _noticeService.SubmitForm(noticeEntity, keyValue);
+                await _noticeService.SubmitForm(noticeEntity, keyValue);
                 logEntity.F_Description += "操作成功";
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
@@ -97,26 +94,24 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(string keyValue)
+        public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
-            LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Delete.ToString());
+            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Delete.ToString()); 
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                _noticeService.DeleteForm(keyValue);
+                await _noticeService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }

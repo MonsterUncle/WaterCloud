@@ -7,6 +7,7 @@
 // * history : Created by T4 04/13/2020 16:51:21 
 // </copyright>
 //-----------------------------------------------------------------------
+using System.Threading.Tasks;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
 
@@ -25,11 +26,11 @@ namespace WaterCloud.Repository.SystemManage
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
             using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
-                db.Delete<NoticeEntity>(t => t.F_Id == keyValue);
+                await db.Delete<NoticeEntity>(t => t.F_Id == keyValue);
                 db.Commit();
             }
         }

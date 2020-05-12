@@ -10,6 +10,7 @@ using WaterCloud.Repository.SystemManage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -23,21 +24,21 @@ namespace WaterCloud.Service.SystemManage
         private string cacheKey = "watercloud_modulebuttondata_";
         private string initcacheKey = "watercloud_init_";
 
-        public List<ModuleButtonEntity> GetList(string moduleId = "")
+        public async Task<List<ModuleButtonEntity>> GetList(string moduleId = "")
         {
-            var cachedata = service.CheckCacheList(cacheKey + "list");
+            var cachedata =await service.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(moduleId))
             {
                 cachedata = cachedata.Where(t => t.F_ModuleId == moduleId).ToList();
             }
             return cachedata.OrderBy(t => t.F_SortCode).ToList();
         }
-        public ModuleButtonEntity GetForm(string keyValue)
+        public async Task<ModuleButtonEntity> GetForm(string keyValue)
         {
-            var cachedata = service.CheckCache(cacheKey, keyValue);
+            var cachedata =await service.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
             if (service.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
             {
@@ -45,39 +46,39 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
-                service.Delete(t => t.F_Id == keyValue);
-                RedisHelper.Del(cacheKey + keyValue);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Delete(t => t.F_Id == keyValue);
+                await RedisHelper.DelAsync(cacheKey + keyValue);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
-            RedisHelper.Del(initcacheKey + "modulebutton_" + "list");
+            await RedisHelper.DelAsync(initcacheKey + "modulebutton_" + "list");
         }
 
-        public List<ModuleButtonEntity> GetListByRole(string roleid)
+        public async Task<List<ModuleButtonEntity>> GetListByRole(string roleid)
         {
-            return service.GetListByRole(roleid);
+            return await service.GetListByRole(roleid);
         }
 
-        public void SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
+        public async Task SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
                 moduleButtonEntity.Modify(keyValue);
-                service.Update(moduleButtonEntity);
-                RedisHelper.Del(cacheKey + keyValue);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Update(moduleButtonEntity);
+                await RedisHelper.DelAsync(cacheKey + keyValue);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
             else
             {
                 moduleButtonEntity.Create();
-                service.Insert(moduleButtonEntity);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Insert(moduleButtonEntity);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
-            RedisHelper.Del(initcacheKey + "modulebutton_" + "list");
+            await RedisHelper.DelAsync(initcacheKey + "modulebutton_" + "list");
         }
-        public void SubmitCloneButton(string moduleId, string Ids)
+        public async Task SubmitCloneButton(string moduleId, string Ids)
         {
             string[] ArrayId = Ids.Split(',');
-            var data = this.GetList();
+            var data =await this.GetList();
             List<ModuleButtonEntity> entitys = new List<ModuleButtonEntity>();
             foreach (string item in ArrayId)
             {
@@ -86,13 +87,13 @@ namespace WaterCloud.Service.SystemManage
                 moduleButtonEntity.F_ModuleId = moduleId;
                 entitys.Add(moduleButtonEntity);
             }
-            service.SubmitCloneButton(entitys);
-            RedisHelper.Del(cacheKey + "list");
+            await service.Insert(entitys);
+            await RedisHelper.DelAsync(cacheKey + "list");
         }
 
-        public List<ModuleButtonEntity> GetListNew(string moduleId = "")
+        public async Task<List<ModuleButtonEntity>> GetListNew(string moduleId = "")
         {
-            return service.GetListNew(moduleId);
+            return await service.GetListNew(moduleId);
         }
     }
 }

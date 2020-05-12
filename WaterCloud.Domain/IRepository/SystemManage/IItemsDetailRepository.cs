@@ -6,11 +6,12 @@
 *********************************************************************************/
 using WaterCloud.DataBase;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Domain.SystemManage
 {
     public interface IItemsDetailRepository : IRepositoryBase<ItemsDetailEntity>
     {
-        List<ItemsDetailEntity> GetItemList(string enCode);
+        Task<List<ItemsDetailEntity>> GetItemList(string enCode);
     }
 }

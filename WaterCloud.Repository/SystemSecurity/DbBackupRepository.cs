@@ -4,6 +4,7 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.DataBase.Extensions;
@@ -24,25 +25,25 @@ namespace WaterCloud.Repository.SystemSecurity
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
             using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
-                var dbBackupEntity = db.FindEntity<DbBackupEntity>(keyValue);
+                var dbBackupEntity =await db.FindEntity<DbBackupEntity>(keyValue);
                 if (dbBackupEntity != null)
                 {
                     FileHelper.DeleteFile(dbBackupEntity.F_FilePath);
                 }
-                db.Delete<DbBackupEntity>(dbBackupEntity);
+                await db.Delete<DbBackupEntity>(dbBackupEntity);
                 db.Commit();
             }
         }
-        public void ExecuteDbBackup(DbBackupEntity dbBackupEntity)
+        public async Task ExecuteDbBackup(DbBackupEntity dbBackupEntity)
         {
             DbHelper.ExecuteSqlCommand(string.Format("backup database {0} to disk ='{1}'", dbBackupEntity.F_DbName, dbBackupEntity.F_FilePath));
             dbBackupEntity.F_FileSize = FileHelper.ToFileSize(FileHelper.GetFileSize(dbBackupEntity.F_FilePath));
             dbBackupEntity.F_FilePath = "/Resource/DbBackup/" + dbBackupEntity.F_FileName;
-            this.Insert(dbBackupEntity);
+            await this.Insert(dbBackupEntity);
         }
     }
 }

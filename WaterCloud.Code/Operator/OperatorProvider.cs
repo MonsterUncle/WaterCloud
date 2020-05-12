@@ -6,6 +6,7 @@
 *********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web;
 namespace WaterCloud.Code
 {
@@ -85,7 +86,7 @@ namespace WaterCloud.Code
             {
                 string token = GetProvider(LoginUserToken);
                 string loginMark = GetProvider(LoginUserMarkKey);
-                operatorModel = RedisHelper.Get<OperatorModel>(cacheKeyOperator + loginMark);
+                operatorModel =RedisHelper.Get<OperatorModel>(cacheKeyOperator + loginMark);
             }
             catch
             {
@@ -115,7 +116,7 @@ namespace WaterCloud.Code
         /// <param name="facilityMark">设备类型</param>
         /// <param name="cookie">是否保存cookie，默认是</param>
         /// <returns></returns>
-        public string AddLoginUser(OperatorModel operatorModel, string loginMark, string facilityMark, bool cookie = true)
+        public async Task<string> AddLoginUser(OperatorModel operatorModel, string loginMark, string facilityMark, bool cookie = true)
         {
             string token = Guid.NewGuid().ToString();
             try
@@ -142,7 +143,7 @@ namespace WaterCloud.Code
                     operatorModel.loginMark = loginMark;
                 }
                 //redis 登录token列表更新
-                Dictionary<string, string> tokenMarkList = RedisHelper.Get<Dictionary<string, string>>(cacheKeyToken + operatorModel.UserId);
+                Dictionary<string, string> tokenMarkList =await RedisHelper.GetAsync<Dictionary<string, string>>(cacheKeyToken + operatorModel.UserId);
                 if (tokenMarkList == null)// 此账号第一次登录
                 {
                     tokenMarkList = new Dictionary<string, string>();
@@ -160,10 +161,10 @@ namespace WaterCloud.Code
                     }
                 }
 
-                RedisHelper.Set(cacheKeyToken + operatorModel.UserId, tokenMarkList);
-                RedisHelper.Set(cacheKeyOperator + operatorModel.loginMark, operatorModel);
-                RedisHelper.Del(cacheKeyOperator + facilityMark + operatorModel.UserId);
-                RedisHelper.Set(cacheKeyOperator + facilityMark + operatorModel.UserId, token);
+                await RedisHelper.SetAsync(cacheKeyToken + operatorModel.UserId, tokenMarkList);
+                await RedisHelper.SetAsync(cacheKeyOperator + operatorModel.loginMark, operatorModel);
+                await RedisHelper.DelAsync(cacheKeyOperator + facilityMark + operatorModel.UserId);
+                await RedisHelper.SetAsync(cacheKeyOperator + facilityMark + operatorModel.UserId, token);
                 return token;
             }
             catch (Exception)
@@ -174,13 +175,13 @@ namespace WaterCloud.Code
         /// <summary>
         /// 清空当前登录信息
         /// </summary>
-        public void EmptyCurrent()
+        public async Task EmptyCurrent()
         {
             try
             {
                 string token = GetProvider(LoginUserToken);
                 string loginMark = GetProvider(LoginUserMarkKey);
-                EmptyCurrent(token, loginMark);
+                await EmptyCurrent(token, loginMark);
                 RemoveProvider(LoginUserMarkKey.Trim());
                 RemoveProvider(LoginUserToken.Trim());
             }
@@ -194,17 +195,17 @@ namespace WaterCloud.Code
         /// <param name="token">登录票据</param>
         /// <param name="facilityMark">登录设备</param>
         /// <param name="loginMark">登录设备标识</param>
-        public void EmptyCurrent(string token, string loginMark)
+        public async Task EmptyCurrent(string token, string loginMark)
         {
             try
             {
-                OperatorModel operatorInfo = RedisHelper.Get<OperatorModel>(cacheKeyOperator + loginMark);
+                OperatorModel operatorInfo =await RedisHelper.GetAsync<OperatorModel>(cacheKeyOperator + loginMark);
                 if (operatorInfo != null && operatorInfo.LoginToken == token)
                 {
-                    Dictionary<string, string> tokenMarkList = RedisHelper.Get<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);
+                    Dictionary<string, string> tokenMarkList =await RedisHelper.GetAsync<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);
                     tokenMarkList.Remove(loginMark);
-                    RedisHelper.Del(cacheKeyOperator + loginMark);
-                    RedisHelper.Set(cacheKeyToken + operatorInfo.UserId, tokenMarkList);
+                    await RedisHelper.DelAsync(cacheKeyOperator + loginMark);
+                    await RedisHelper.SetAsync(cacheKeyToken + operatorInfo.UserId, tokenMarkList);
                 }
             }
             catch (Exception)
@@ -215,13 +216,13 @@ namespace WaterCloud.Code
         /// 判断登录状态
         /// </summary>
         /// <returns>-1未登录,1登录成功,0登录过期,-2账号被顶</returns>
-        public OperatorResult IsOnLine(string facilityMark)
+        public async Task<OperatorResult> IsOnLine(string facilityMark)
         {
             try
             {
                 string token = GetProvider(LoginUserToken);
                 string loginMark = GetProvider(LoginUserMarkKey);
-                return IsOnLine(token, facilityMark, loginMark);
+                return await IsOnLine(token, facilityMark, loginMark);
             }
             catch (Exception)
             {
@@ -234,7 +235,7 @@ namespace WaterCloud.Code
         /// <param name="token">登录票据</param>
         /// <param name="loginMark">登录设备标识</param>
         /// <returns>-1未登录,1登录成功,0登录过期,-2账号被顶</returns>
-        public OperatorResult IsOnLine(string token, string facilityMark, string loginMark)
+        public async Task<OperatorResult> IsOnLine(string token, string facilityMark, string loginMark)
         {
             OperatorResult operatorResult = new OperatorResult();
             operatorResult.stateCode = -1; // -1未登录,1登录成功,0登录过期
@@ -244,7 +245,7 @@ namespace WaterCloud.Code
                 {
                     return operatorResult;
                 }
-                OperatorModel operatorInfo = RedisHelper.Get<OperatorModel>(cacheKeyOperator + loginMark);
+                OperatorModel operatorInfo =await RedisHelper.GetAsync<OperatorModel>(cacheKeyOperator + loginMark);
                 if (operatorInfo != null && operatorInfo.LoginToken == token)
                 {
                     TimeSpan span = (TimeSpan)(DateTime.Now - operatorInfo.LoginTime);
@@ -252,19 +253,19 @@ namespace WaterCloud.Code
                     if (span.TotalHours >= 12)// 登录操作过12小时移除
                     {
                         operatorResult.stateCode = 0;
-                        Dictionary<string, string> tokenMarkList = RedisHelper.Get<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);
+                        Dictionary<string, string> tokenMarkList =await RedisHelper.GetAsync<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);
                         tokenMarkList.Remove(loginMark);
-                        RedisHelper.Set(cacheKeyToken + operatorInfo.UserId, tokenMarkList);
-                        RedisHelper.Del(cacheKeyOperator + loginMark);
+                        await RedisHelper.SetAsync(cacheKeyToken + operatorInfo.UserId, tokenMarkList);
+                        await RedisHelper.DelAsync(cacheKeyOperator + loginMark);
                     }
                     //账号被顶(排除admin)
-                    else if (!LoginMultiple&&!operatorInfo.IsSystem&&token != RedisHelper.Get<string>(cacheKeyOperator + facilityMark + operatorInfo.UserId))
+                    else if (!LoginMultiple&&!operatorInfo.IsSystem&&token != await RedisHelper.GetAsync<string>(cacheKeyOperator + facilityMark + operatorInfo.UserId))
                     {
                         operatorResult.stateCode = -2;
-                        Dictionary<string, string> tokenMarkList = RedisHelper.Get<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);
+                        Dictionary<string, string> tokenMarkList =await RedisHelper.GetAsync<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);
                         tokenMarkList.Remove(loginMark);
-                        RedisHelper.Set(cacheKeyToken + operatorInfo.UserId, tokenMarkList);
-                        RedisHelper.Del(cacheKeyOperator + loginMark);
+                        await RedisHelper.SetAsync(cacheKeyToken + operatorInfo.UserId, tokenMarkList);
+                        await RedisHelper.DelAsync(cacheKeyOperator + loginMark);
                     }
                     else
                     {
@@ -286,7 +287,7 @@ namespace WaterCloud.Code
         /// 获取当前登录错误次数
         /// </summary>
         /// <returns></returns>
-        public int GetCurrentErrorNum()
+        public async Task<int> GetCurrentErrorNum()
         {
             int res = 0;
             try
@@ -297,7 +298,7 @@ namespace WaterCloud.Code
                     cookieMark = Guid.NewGuid().ToString();
                     SetProvider(LoginUserMarkKey, cookieMark);
                 }
-                string num = RedisHelper.Get<string>(cacheKeyError + cookieMark);
+                string num =await RedisHelper.GetAsync<string>(cacheKeyError + cookieMark);
                 if (!string.IsNullOrEmpty(num))
                 {
                     res = Convert.ToInt32(num);
@@ -312,7 +313,7 @@ namespace WaterCloud.Code
         /// 增加错误次数
         /// </summary>
         /// <returns></returns>
-        public int AddCurrentErrorNum()
+        public async Task<int> AddCurrentErrorNum()
         {
             int res = 0;
             try
@@ -323,14 +324,14 @@ namespace WaterCloud.Code
                     cookieMark = Guid.NewGuid().ToString();
                     SetProvider(LoginUserMarkKey, cookieMark);
                 }
-                string num = RedisHelper.Get<string>(cacheKeyError + cookieMark);
+                string num =await RedisHelper.GetAsync<string>(cacheKeyError + cookieMark);
                 if (!string.IsNullOrEmpty(num))
                 {
                     res = Convert.ToInt32(num);
                 }
                 res++;
                 num = res + "";
-                RedisHelper.Set(cacheKeyError + cookieMark, num);
+                await RedisHelper.SetAsync(cacheKeyError + cookieMark, num);
             }
             catch (Exception)
             {
@@ -340,7 +341,7 @@ namespace WaterCloud.Code
         /// <summary>
         /// 清除当前登录错误次数
         /// </summary>
-        public void ClearCurrentErrorNum()
+        public async Task ClearCurrentErrorNum()
         {
             try
             {
@@ -350,7 +351,7 @@ namespace WaterCloud.Code
                     cookieMark = Guid.NewGuid().ToString();
                     SetProvider(LoginUserMarkKey, cookieMark);
                 }
-                RedisHelper.Del(cacheKeyError + cookieMark);
+               await RedisHelper.DelAsync(cacheKeyError + cookieMark);
             }
             catch (Exception)
             {

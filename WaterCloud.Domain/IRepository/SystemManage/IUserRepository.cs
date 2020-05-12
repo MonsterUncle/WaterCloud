@@ -4,13 +4,14 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using System.Threading.Tasks;
 using WaterCloud.DataBase;
 
 namespace WaterCloud.Domain.SystemManage
 {
     public interface IUserRepository : IRepositoryBase<UserEntity>
     {
-        void DeleteForm(string keyValue);
-        void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue);
+        Task DeleteForm(string keyValue);
+        Task SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue);
     }
 }

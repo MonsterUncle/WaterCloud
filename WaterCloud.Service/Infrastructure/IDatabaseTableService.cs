@@ -7,9 +7,9 @@ namespace WaterCloud.Service
 {
     public interface IDatabaseTableService
     {
-        bool DatabaseBackup(string database, string backupPath);
-        List<TableInfo> GetTableList(string tableName);
-        List<TableInfo> GetTablePageList(string tableName, Pagination pagination);
-        List<TableFieldInfo> GetTableFieldList(string tableName);
+        Task<bool> DatabaseBackup(string database, string backupPath);
+        Task<List<TableInfo>> GetTableList(string tableName);
+        Task<List<TableInfo>> GetTablePageList(string tableName, Pagination pagination);
+        Task<List<TableFieldInfo>> GetTableFieldList(string tableName);
     }
 }

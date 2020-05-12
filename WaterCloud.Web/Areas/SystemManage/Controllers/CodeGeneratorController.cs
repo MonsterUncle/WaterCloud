@@ -12,6 +12,7 @@ using WaterCloud.Domain.SystemSecurity;
 using System.Linq;
 using WaterCloud.Service;
 using Senparc.CO2NET.Extensions;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -22,8 +23,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly IDatabaseTableService _service;
         private readonly LogService _logService;
-        private readonly ModuleService _moduleService;
-        public CodeGeneratorController(LogService logService, ModuleService moduleService)
+        public CodeGeneratorController(LogService logService)
         {
             string dbType = GlobalContext.SystemConfig.DBProvider;
             switch (dbType)
@@ -39,7 +39,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                     break;
             }
             _logService = logService;
-            _moduleService = moduleService;
         }
         #region 视图功能
 
@@ -48,23 +47,23 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         #region 获取数据
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTablePageListJson(Pagination pagination,string keyword)
+        public async Task<ActionResult> GetTablePageListJson(Pagination pagination,string keyword)
         {
-            List<TableInfo> data = _service.GetTablePageList(keyword, pagination);
+            List<TableInfo> data =await _service.GetTablePageList(keyword, pagination);
             return Success(pagination.records, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTableJson(string keyword)
+        public async Task<ActionResult> GetTableJson(string keyword)
         {
-            List<TableInfo> data = _service.GetTableList(keyword);
+            List<TableInfo> data =await _service.GetTableList(keyword);
             return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTableSelectJson(string keyword)
+        public async Task<ActionResult> GetTableSelectJson(string keyword)
         {
-            List<TableInfo> data = _service.GetTableList(keyword);
+            List<TableInfo> data =await _service.GetTableList(keyword);
             List<object> list = new List<object>();
             foreach (var item in data)
             {
@@ -74,9 +73,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTableFieldJson(string keyValue,string keyword)
+        public async Task<ActionResult> GetTableFieldJson(string keyValue,string keyword)
         {
-            List<TableFieldInfo> data = _service.GetTableFieldList(keyValue);
+            List<TableFieldInfo> data =await _service.GetTableFieldList(keyValue);
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.Where(a => a.TableColumn.Contains(keyword)).ToList();
@@ -85,9 +84,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTableFieldSelectJson(string keyValue)
+        public async Task<ActionResult> GetTableFieldSelectJson(string keyValue)
         {
-            List<TableFieldInfo> data = _service.GetTableFieldList(keyValue);
+            List<TableFieldInfo> data =await _service.GetTableFieldList(keyValue);
             List<object> list = new List<object>();
             foreach (var item in data)
             {
@@ -97,9 +96,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTableFieldFilterSelectJson(string keyValue)
+        public async Task<ActionResult> GetTableFieldFilterSelectJson(string keyValue)
         {
-            List<TableFieldInfo> data = _service.GetTableFieldList(keyValue);
+            List<TableFieldInfo> data =await _service.GetTableFieldList(keyValue);
             data.RemoveAll(p => BaseField.BaseFieldList.Contains(p.TableColumn));
             List<object> list = new List<object>();
             foreach (var item in data)
@@ -110,9 +109,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTableFieldFilterTreeJson(string keyValue)
+        public async Task<ActionResult> GetTableFieldFilterTreeJson(string keyValue)
         {
-            List<TableFieldInfo> data = _service.GetTableFieldList(keyValue);
+            List<TableFieldInfo> data =await _service.GetTableFieldList(keyValue);
             data.RemoveAll(p => BaseField.BaseFieldList.Contains(p.TableColumn));
             var treeList = new List<TreeGridModel>();
             foreach (var item in data)
@@ -129,12 +128,12 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetBaseConfigJson(string keyValue)
+        public async Task<ActionResult> GetBaseConfigJson(string keyValue)
         {
             BaseConfigModel data = new BaseConfigModel();
 
             string tableDescription = string.Empty;
-            List<TableFieldInfo> tDataTableField = _service.GetTableFieldList(keyValue);
+            List<TableFieldInfo> tDataTableField =await _service.GetTableFieldList(keyValue);
             List<string> columnList = tDataTableField.Where(p => !BaseField.BaseFieldList.Contains(p.TableColumn)).Select(p => p.TableColumn).ToList();
 
             string serverPath = GlobalContext.HostingEnvironment.ContentRootPath;
@@ -146,11 +145,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         #region 提交数据
         [HttpPost]
         [HandlerAjaxOnly]
-        public ActionResult CodePreviewJson(BaseConfigModel baseConfig)
+        public async Task<ActionResult> CodePreviewJson(BaseConfigModel baseConfig)
         {
             try
             {
-                List<TableFieldInfo> list = _service.GetTableFieldList(baseConfig.TableName);
+                List<TableFieldInfo> list =await _service.GetTableFieldList(baseConfig.TableName);
                 SingleTableTemplate template = new SingleTableTemplate();
                 DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
                 string codeEntity = template.BuildEntity(baseConfig, dt);
@@ -189,12 +188,10 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult CodeGenerateJson(BaseConfigModel baseConfig, string Code)
+        public async Task<ActionResult> CodeGenerateJson(BaseConfigModel baseConfig, string Code)
         {
-            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
-            LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Delete.ToString());
-            logEntity.F_Description += DbLogType.Delete.ToDescription();
+            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
+            logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
@@ -206,17 +203,17 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 else
                 {
                     SingleTableTemplate template = new SingleTableTemplate();
-                    template.CreateCode(baseConfig, HttpUtility.UrlDecode(Code));
+                    await template.CreateCode(baseConfig, HttpUtility.UrlDecode(Code));
                 }
                 logEntity.F_Description += "操作成功";
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (System.Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }

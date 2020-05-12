@@ -15,6 +15,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace WaterCloud.DataBase
 {
@@ -72,25 +73,59 @@ namespace WaterCloud.DataBase
                 dbcontext.Session.RollbackTransaction();
             }
         }
-        public void Insert<TEntity>(TEntity entity) where TEntity : class
+        public async Task<TEntity> Insert<TEntity>(TEntity entity) where TEntity : class
         {
-            dbcontext.Insert(entity);
+           return await dbcontext.InsertAsync(entity);
         }
-        public void Insert<TEntity>(List<TEntity> entitys) where TEntity : class
+        public async Task<int> Insert<TEntity>(List<TEntity> entitys) where TEntity : class
         {
-            if (dbcontext.DatabaseProvider.DatabaseType=="SqlServer")
+            int i = 1;
+            try
             {
-                dbcontext.BulkInsert(entitys);
-            }
-            else
-            {
-                foreach (var item in entitys)
+                if (dbcontext.DatabaseProvider.DatabaseType == "SqlServer")
                 {
-                    dbcontext.Insert(item);
+                    await dbcontext.InsertRangeAsync(entitys);
                 }
+                else
+                {
+                    if (dbcontext.Session.CurrentTransaction == null)
+                    {
+                        dbcontext.Session.BeginTransaction();
+                        foreach (var item in entitys)
+                        {
+                            if (await dbcontext.InsertAsync(item)==null)
+                            {
+                                i = 0;
+                            }
+                        }
+                        if (i==1)
+                        {
+                            dbcontext.Session.CommitTransaction();
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in entitys)
+                        {
+                            if (await dbcontext.InsertAsync(item) == null)
+                            {
+                                i = 0;
+                            }
+                        }
+                    }
+                }
+                return i;
             }
+            catch (Exception)
+            {
+                i = 0;
+                if (dbcontext.Session.CurrentTransaction != null)
+                    Rollback();
+                return i;
+            }
+
         }
-        public int Update<TEntity>(TEntity entity) where TEntity : class
+        public async Task<int> Update<TEntity>(TEntity entity) where TEntity : class
         {
 
             TEntity newentity = dbcontext.QueryByKey<TEntity>(entity);
@@ -110,29 +145,25 @@ namespace WaterCloud.DataBase
                     }
                 }
             }
-            int id = dbcontext.Update(newentity);
-            return id;
+            return await dbcontext.UpdateAsync(newentity);
         }
-        public int Update<TEntity>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> content) where TEntity : class
+        public async Task<int> Update<TEntity>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> content) where TEntity : class
         {
-            int id = dbcontext.Update(predicate, content);
-            return id;
+            return await dbcontext.UpdateAsync(predicate, content);
         }
-        public int Delete<TEntity>(TEntity entity) where TEntity : class
+        public async Task<int> Delete<TEntity>(TEntity entity) where TEntity : class
         {
-            int id = dbcontext.Delete(entity);
-            return id;
+            return await dbcontext.DeleteAsync(entity);
         }
-        public int Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        public async Task<int> Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
         {
-            int id = dbcontext.Delete(predicate);
-            return id;
+            return await dbcontext.DeleteAsync(predicate);
         }
-        public TEntity FindEntity<TEntity>(object keyValue) where TEntity : class
+        public async Task<TEntity> FindEntity<TEntity>(object keyValue) where TEntity : class
         {
-            return dbcontext.QueryByKey<TEntity>(keyValue);
+            return await dbcontext.QueryByKeyAsync<TEntity>(keyValue);
         }
-        public TEntity FindEntity<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        public async Task<TEntity> FindEntity<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
         {
             return dbcontext.Query<TEntity>().FirstOrDefault(predicate);
         }
@@ -144,15 +175,15 @@ namespace WaterCloud.DataBase
         {
             return dbcontext.Query<TEntity>().Where(predicate);
         }
-        public List<TEntity> FindList<TEntity>(string strSql) where TEntity : class
+        public async Task<List<TEntity>> FindList<TEntity>(string strSql) where TEntity : class
         {
-            return dbcontext.SqlQuery<TEntity>(strSql).ToList<TEntity>();
+            return await dbcontext.SqlQueryAsync<TEntity>(strSql);
         }
-        public List<TEntity> FindList<TEntity>(string strSql, DbParam[] dbParameter) where TEntity : class
+        public async Task<List<TEntity>> FindList<TEntity>(string strSql, DbParam[] dbParameter) where TEntity : class
         {
-            return dbcontext.SqlQuery<TEntity>(strSql, dbParameter).ToList<TEntity>();
+            return await dbcontext.SqlQueryAsync<TEntity>(strSql, dbParameter);
         }
-        public List<TEntity> FindList<TEntity>(Pagination pagination) where TEntity : class, new()
+        public async Task<List<TEntity>> FindList<TEntity>(Pagination pagination) where TEntity : class, new()
         {
             bool isAsc = pagination.order.ToLower() == "asc" ? true : false;
             string[] _order = pagination.sort.Split(',');
@@ -180,7 +211,7 @@ namespace WaterCloud.DataBase
             tempData = tempData.Skip<TEntity>(pagination.rows * (pagination.page - 1)).Take<TEntity>(pagination.rows).AsQueryable();
             return tempData.ToList();
         }
-        public List<TEntity> FindList<TEntity>(Expression<Func<TEntity, bool>> predicate, Pagination pagination) where TEntity : class, new()
+        public async Task<List<TEntity>> FindList<TEntity>(Expression<Func<TEntity, bool>> predicate, Pagination pagination) where TEntity : class, new()
         {
             bool isAsc = pagination.order.ToLower() == "asc" ? true : false;
             string[] _order = pagination.sort.Split(',');
@@ -208,7 +239,7 @@ namespace WaterCloud.DataBase
             tempData = tempData.Skip<TEntity>(pagination.rows * (pagination.page - 1)).Take<TEntity>(pagination.rows).AsQueryable();
             return tempData.ToList();
         }
-        public List<T> OrderList<T>(IQuery<T> query, Pagination pagination)
+        public async Task<List<T>> OrderList<T>(IQuery<T> query, Pagination pagination)
         {
             bool isAsc = pagination.order.ToLower() == "asc" ? true : false;
             string[] _order = pagination.sort.Split(',');
@@ -236,29 +267,29 @@ namespace WaterCloud.DataBase
             tempData = tempData.Skip<T>(pagination.rows * (pagination.page - 1)).Take<T>(pagination.rows).AsQueryable();
             return tempData.ToList();
         }
-        public List<TEntity> CheckCacheList<TEntity>(string cacheKey, long old = 0) where TEntity : class
+        public async Task<List<TEntity>> CheckCacheList<TEntity>(string cacheKey, long old = 0) where TEntity : class
         {
-            var cachedata = RedisHelper.Get<List<TEntity>>(cacheKey);
+            var cachedata = await RedisHelper.GetAsync<List<TEntity>>(cacheKey);
             if (cachedata == null || cachedata.Count() == 0)
             {
                 using (var db = new RepositoryBase().BeginTrans())
                 {
                     cachedata = db.IQueryable<TEntity>().ToList();
-                    RedisHelper.Set(cacheKey, cachedata);
+                    await RedisHelper.SetAsync(cacheKey, cachedata);
                 }
             }
             return cachedata;
         }
 
-        public TEntity CheckCache<TEntity>(string cacheKey, string keyValue, long old = 0) where TEntity : class
+        public async Task<TEntity> CheckCache<TEntity>(string cacheKey, string keyValue, long old = 0) where TEntity : class
         {
-            var cachedata = RedisHelper.Get<TEntity>(cacheKey + keyValue);
+            var cachedata = await RedisHelper.GetAsync<TEntity>(cacheKey + keyValue);
             if (cachedata == null)
             {
                 using (var db = new RepositoryBase().BeginTrans())
                 {
-                    cachedata = db.FindEntity<TEntity>(keyValue);
-                    RedisHelper.Set(cacheKey + keyValue, cachedata);
+                    cachedata =await db.FindEntity<TEntity>(keyValue);
+                    await  RedisHelper.SetAsync(cacheKey + keyValue, cachedata);
                 }
             }
             return cachedata;

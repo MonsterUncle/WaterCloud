@@ -10,6 +10,7 @@ using WaterCloud.Repository.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -22,9 +23,9 @@ namespace WaterCloud.Service.SystemManage
         /// </summary>
         private string cacheKey = "watercloud_dutydata_";// 岗位
 
-        public List<RoleEntity> GetList(string keyword = "")
+        public async Task<List<RoleEntity>> GetList(string keyword = "")
         {
-            var cachedata = service.CheckCacheList(cacheKey + "list");
+            var cachedata =await service.CheckCacheList(cacheKey + "list");
             cachedata = cachedata.Where(t => t.F_Category == 2).ToList();
             if (!string.IsNullOrEmpty(keyword))
             {
@@ -32,7 +33,7 @@ namespace WaterCloud.Service.SystemManage
             }
             return cachedata.OrderBy(t => t.F_SortCode).ToList();
         }
-        public List<RoleEntity> GetList(Pagination pagination, string keyword = "")
+        public async Task<List<RoleEntity>> GetList(Pagination pagination, string keyword = "")
         {
             var expression = ExtLinq.True<RoleEntity>();
             if (!string.IsNullOrEmpty(keyword))
@@ -41,38 +42,38 @@ namespace WaterCloud.Service.SystemManage
                 expression = expression.Or(t => t.F_EnCode.Contains(keyword));
             }
             expression = expression.And(t => t.F_Category == 2);
-            return service.FindList(expression, pagination);
+            return await service.FindList(expression, pagination);
         }
-        public RoleEntity GetForm(string keyValue)
+        public async Task<RoleEntity> GetForm(string keyValue)
         {
-            var cachedata = service.CheckCache(cacheKey, keyValue);
+            var cachedata = await service.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
             if (userservice.IQueryable(a => a.F_DutyId == keyValue).Count() > 0)
             {
                 throw new Exception("岗位使用中，无法删除");
             }
-            service.Delete(t => t.F_Id == keyValue);
-            RedisHelper.Del(cacheKey + keyValue);
-            RedisHelper.Del(cacheKey + "list");
+            await service.Delete(t => t.F_Id == keyValue);
+            await RedisHelper.DelAsync(cacheKey + keyValue);
+            await RedisHelper.DelAsync(cacheKey + "list");
         }
-        public void SubmitForm(RoleEntity roleEntity, string keyValue)
+        public async Task SubmitForm(RoleEntity roleEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
                 roleEntity.Modify(keyValue);
-                service.Update(roleEntity);
-                RedisHelper.Del(cacheKey + keyValue);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Update(roleEntity);
+                await RedisHelper.DelAsync(cacheKey + keyValue);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
             else
             {
                 roleEntity.Create();
                 roleEntity.F_Category = 2;
-                service.Insert(roleEntity);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Insert(roleEntity);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
         }
     }

@@ -15,6 +15,7 @@ using WaterCloud.Service;
 using WaterCloud.Service.SystemSecurity;
 using System;
 using Senparc.CO2NET.Extensions;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -25,18 +26,16 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly ItemsService _itemsService;
         private readonly LogService _logService;
-        private readonly ModuleService _moduleService;
-        public ItemsTypeController(ItemsService itemsService, LogService logService, ModuleService moduleService)
+        public ItemsTypeController(ItemsService itemsService, LogService logService)
         {
             _itemsService = itemsService;
             _logService = logService;
-            _moduleService = moduleService;
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTreeSelectJson()
+        public async Task<ActionResult> GetTreeSelectJson()
         {
-            var data = _itemsService.GetList();
+            var data =await _itemsService.GetList();
             data = data.Where(a => a.F_Layers == 1).ToList();
             var treeList = new List<TreeSelectModel>();
             foreach (ItemsEntity item in data)
@@ -51,9 +50,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTreeJson()
+        public async Task<ActionResult> GetTreeJson()
         {
-            var data = _itemsService.GetList();
+            var data =await _itemsService.GetList();
             var treeList = new List<TreeViewModel>();
             foreach (ItemsEntity item in data)
             {
@@ -72,9 +71,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTreeGridJson(string keyword)
+        public async Task<ActionResult> GetTreeGridJson(string keyword)
         {
-            var data = _itemsService.GetList();
+            var data =await _itemsService.GetList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
@@ -93,9 +92,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetGridJson(string keyword)
+        public async Task<ActionResult> GetGridJson(string keyword)
         {
-            var data = _itemsService.GetList();
+            var data =await _itemsService.GetList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
@@ -113,29 +112,27 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetFormJson(string keyValue)
+        public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data = _itemsService.GetForm(keyValue);
+            var data =await _itemsService.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(ItemsEntity itemsEntity, string keyValue)
+        public async Task<ActionResult> SubmitForm(ItemsEntity itemsEntity, string keyValue)
         {
-            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
                 itemsEntity.F_DeleteMark = false;
                 itemsEntity.F_IsTree = false;
-                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Create.ToString());
+                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }
             else
             {
-                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Update.ToString());
+                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
             }
@@ -153,45 +150,42 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 }
                 else
                 {
-                    itemsEntity.F_Layers = _itemsService.GetForm(itemsEntity.F_ParentId).F_Layers + 1;
+                    itemsEntity.F_Layers =(await _itemsService.GetForm(itemsEntity.F_ParentId)).F_Layers + 1;
                 }
-                _itemsService.SubmitForm(itemsEntity, keyValue);
+                await _itemsService.SubmitForm(itemsEntity, keyValue);
                 logEntity.F_Description += "操作成功";
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteForm(string keyValue)
+        public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            var module = _moduleService.GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = _moduleService.GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
-
-            LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Delete.ToString());
+            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Delete.ToString()); 
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                _itemsService.DeleteForm(keyValue);
+                await _itemsService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
             }
             catch (Exception ex)
             {
                 logEntity.F_Result = false;
                 logEntity.F_Description += "操作失败，" + ex.Message;
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Error(ex.Message);
             }
         }

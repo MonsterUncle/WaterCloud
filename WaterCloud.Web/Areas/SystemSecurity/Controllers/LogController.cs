@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
 {
@@ -30,20 +31,20 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetGridJson(Pagination pagination, string keyword,int timetype=2)
+        public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword,int timetype=2)
         {
             pagination.order = "desc";
             pagination.sort = "F_CreatorTime";
-            var data = _logService.GetList(pagination, timetype, keyword).ToList();
+            var data =await _logService.GetList(pagination, timetype, keyword);
             return Success(pagination.records, data);
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitRemoveLog(string keepTime)
+        public async Task<ActionResult> SubmitRemoveLog(string keepTime)
         {
-            _logService.RemoveLog(keepTime);
+            await _logService.RemoveLog(keepTime);
             return Success("清空成功。");
         }
     }

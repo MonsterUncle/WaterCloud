@@ -15,6 +15,7 @@ using WaterCloud.Domain;
 using WaterCloud.Service.SystemSecurity;
 using Senparc.CO2NET.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Controllers
 {
@@ -55,104 +56,107 @@ namespace WaterCloud.Web.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetClientsDataJson()
+        public async Task<ActionResult> GetClientsDataJson()
         {
             var data = new
             {
-                dataItems = this.GetDataItemList(),
-                organize = this.GetOrganizeList(),
-                role = this.GetRoleList(),
-                duty = this.GetDutyList(),
-                user = this.GetUserList(),
-                authorizeButton = this.GetMenuButtonListNew(),
+                dataItems =await this.GetDataItemList(),
+                organize =await this.GetOrganizeList(),
+                role =await this.GetRoleList(),
+                duty =await this.GetDutyList(),
+                user =await this.GetUserList(),
+                authorizeButton =await this.GetMenuButtonListNew(),
             };
             return Content(data.ToJson());
         }
 
-        private object GetQuickModuleList()
+        private async Task<object> GetQuickModuleList()
         {
-            if (OperatorProvider.Provider.GetCurrent()==null)
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            if (currentuser == null)
             {
                 return null;
             }
-            var userId = OperatorProvider.Provider.GetCurrent().UserId;
-            var data = RedisHelper.Get<Dictionary<string,List<QuickModuleExtend>>>(cacheKey + "list");
+            var userId = currentuser.UserId;
+            var data =await RedisHelper.GetAsync<Dictionary<string,List<QuickModuleExtend>>>(cacheKey + "list");
             if (data==null)
             {
                 data = new Dictionary<string, List<QuickModuleExtend>>();
-                data.Add(userId, _quickModuleService.GetQuickModuleList(userId));
+                data.Add(userId,await _quickModuleService.GetQuickModuleList(userId));
             }
             else
             {
                 if (data.ContainsKey(userId))
                 {
-                    data[userId] = _quickModuleService.GetQuickModuleList(userId);
+                    data[userId] =await _quickModuleService.GetQuickModuleList(userId);
                 }
                 else
                 {
-                    data.Add(userId, _quickModuleService.GetQuickModuleList(userId));
+                    data.Add(userId,await _quickModuleService.GetQuickModuleList(userId));
                 }
             }
-            RedisHelper.Del(cacheKey + "list");
-            RedisHelper.Set(cacheKey + "list", data);
+            await RedisHelper.DelAsync(cacheKey + "list");
+            await RedisHelper.SetAsync(cacheKey + "list", data);
             return data[userId];
         }
 
-        private object GetNoticeList()
+        private async Task<object> GetNoticeList()
         {
-            var data = _noticeService.GetList("").Where(a=>a.F_EnabledMark==true).OrderByDescending(a=>a.F_CreatorTime).Take(6).ToList();
+            var data =(await _noticeService.GetList("")).Where(a=>a.F_EnabledMark==true).OrderByDescending(a=>a.F_CreatorTime).Take(6).ToList();
             return data;
         }
 
         [HttpGet]
-        public ActionResult GetInitDataJson()
+        public async Task<ActionResult> GetInitDataJson()
         {
-            var roleId = OperatorProvider.Provider.GetCurrent().RoleId;
-            if (roleId==null&& OperatorProvider.Provider.GetCurrent().IsSystem)
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var roleId = currentuser.RoleId;
+            if (roleId==null&& currentuser.IsSystem)
             {
                 roleId = "admin";
             }
-            Dictionary<string, string > data = RedisHelper.Get<Dictionary<string, string>>(initcacheKey + "list");
+            Dictionary<string, string > data =await RedisHelper.GetAsync<Dictionary<string, string>>(initcacheKey + "list");
             if (data == null)
             {
                 data =new Dictionary <string, string>();
-                data .Add(roleId, this.GetMenuListNew());
+                data .Add(roleId,await this.GetMenuListNew());
 
             }
             else
             {
                 if (data.ContainsKey(roleId))
                 {
-                    data[roleId] = this.GetMenuListNew();
+                    data[roleId] =await this.GetMenuListNew();
                 }
                 else
                 {
-                    data.Add(roleId, this.GetMenuListNew());
+                    data.Add(roleId,await this.GetMenuListNew());
                 }
             }
-            RedisHelper.Del(initcacheKey + "list");
-            RedisHelper.Set(initcacheKey + "list",data);
+            await RedisHelper.DelAsync(initcacheKey + "list");
+            await RedisHelper.SetAsync(initcacheKey + "list",data);
             return Content(data[roleId]);
         }
         [HttpGet]
-        public ActionResult GetNoticeInfo()
+        public async Task<ActionResult> GetNoticeInfo()
         {
-            var data = this.GetNoticeList();
+            var data =await this.GetNoticeList();
             return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetUserCode()
+        public async Task<ActionResult> GetUserCode()
         {
-            var data = new UserService().GetForm(OperatorProvider.Provider.GetCurrent().UserId);
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var data =await new UserService().GetForm(currentuser.UserId);
             return Content(data.ToJson());
         }
         [HttpGet]
-        public ActionResult GetQuickModule()
+        public async Task<ActionResult> GetQuickModule()
         {
             try
             {
-                var data = this.GetQuickModuleList();
+                var data =await this.GetQuickModuleList();
                 return Content(data.ToJson());
             }
             catch (Exception)
@@ -161,18 +165,20 @@ namespace WaterCloud.Web.Controllers
             }
         }
         [HttpGet]
-        public ActionResult GetCoutData()
+        public async Task<ActionResult> GetCoutData()
         {
-            int usercout = _userService.GetUserList("").Count();
-            int logincout = RedisHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + OperatorProvider.Provider.GetCurrent().UserId).F_LogOnCount??0;
-            int modulecout = _moduleService.GetList().Where(a => a.F_EnabledMark == true && a.F_UrlAddress != null).Count();
-            int logcout = _logService.GetList().Count();
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            int usercout =(await _userService.GetUserList("")).Count();
+            int logincout = RedisHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + currentuser.UserId).F_LogOnCount??0;
+            int modulecout =(await _moduleService.GetList()).Where(a => a.F_EnabledMark == true && a.F_UrlAddress != null).Count();
+            int logcout = (await _logService.GetList()).Count();
             var data= new { usercout = usercout, logincout = logincout, modulecout = modulecout, logcout = logcout };
             return Content(data.ToJson());
         }
-        private string GetMenuListNew()
+        private async Task<string> GetMenuListNew()
         {
-            var roleId = OperatorProvider.Provider.GetCurrent().RoleId;
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var roleId = currentuser.RoleId;
             StringBuilder sbJson = new StringBuilder();
             InitEntity init = new InitEntity();
             init.homeInfo = new HomeInfoEntity();
@@ -185,10 +191,8 @@ namespace WaterCloud.Web.Controllers
             munu.href = "";
             munu.target = "_self";
             munu.child = new List<MenuInfoEntity>();
-            munu.child = ToMenuJsonNew(_roleAuthorizeService.GetMenuList(roleId), "0");
+            munu.child = ToMenuJsonNew(await _roleAuthorizeService.GetMenuList(roleId), "0");
             CreateMunu(init.menuInfo);
-
-
             sbJson.Append(init.ToJson());
             return sbJson.ToString() ;
         }
@@ -282,11 +286,11 @@ namespace WaterCloud.Web.Controllers
             return list;
         }
 
-        private object GetDataItemList()
+        private async Task<object> GetDataItemList()
         {
-            var itemdata = _itemsDetailService.GetList();
+            var itemdata =await _itemsDetailService.GetList();
             Dictionary<string, object> dictionaryItem = new Dictionary<string, object>();
-            foreach (var item in _itemsService.GetList())
+            foreach (var item in await _itemsService.GetList())
             {
                 var dataItemList = itemdata.FindAll(t => t.F_ItemId.Equals(item.F_Id));
                 Dictionary<string, string> dictionaryItemList = new Dictionary<string, string>();
@@ -299,9 +303,9 @@ namespace WaterCloud.Web.Controllers
 
             return dictionaryItem;
         }
-        private object GetOrganizeList()
+        private async Task<object> GetOrganizeList()
         {
-            var data = _organizeService.GetList();
+            var data =await _organizeService.GetList();
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (OrganizeEntity item in data)
             {
@@ -314,9 +318,9 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
-        private object GetRoleList()
+        private async Task<object> GetRoleList()
         {
-            var data = _roleService.GetList();
+            var data =await _roleService.GetList();
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (RoleEntity item in data)
             {
@@ -329,9 +333,9 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
-        private object GetDutyList()
+        private async Task<object> GetDutyList()
         {
-            var data = _dutyService.GetList();
+            var data =await _dutyService.GetList();
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (RoleEntity item in data)
             {
@@ -344,9 +348,9 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
-        private object GetUserList()
+        private async Task<object> GetUserList()
         {
-            var data = _userService.GetUserList("");
+            var data =await _userService.GetUserList("");
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (UserEntity item in data)
             {
@@ -359,16 +363,17 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
-        private object GetMenuButtonListNew()
+        private async Task<object> GetMenuButtonListNew()
         {
-            var roleId = OperatorProvider.Provider.GetCurrent().RoleId;
-            var data = _roleAuthorizeService.GetButtonList(roleId);
-            if (roleId==null&& OperatorProvider.Provider.GetCurrent().IsSystem)
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var roleId = currentuser.RoleId;
+            var data =await _roleAuthorizeService.GetButtonList(roleId);
+            if (roleId==null&& currentuser.IsSystem)
             {
                 roleId = "admin";
             }
             var dataModuleId = data.Distinct(new ExtList<ModuleButtonEntity>("F_ModuleId"));
-            Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>> dictionary = RedisHelper.Get<Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>>(initcacheKey+ "modulebutton_list");
+            Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>> dictionary =await RedisHelper.GetAsync<Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>>(initcacheKey+ "modulebutton_list");
             var dictionarytemp = new Dictionary<string, List<ModuleButtonEntity>>();
             foreach (ModuleButtonEntity item in dataModuleId)
             {
@@ -391,8 +396,8 @@ namespace WaterCloud.Web.Controllers
                     dictionary.Add(roleId, dictionarytemp);
                 }
             }
-            RedisHelper.Del(initcacheKey + "modulebutton_list");
-            RedisHelper.Set(initcacheKey + "modulebutton_list", dictionary);
+            await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
+            await RedisHelper.SetAsync(initcacheKey + "modulebutton_list", dictionary);
             return dictionary[roleId];
         }
     }

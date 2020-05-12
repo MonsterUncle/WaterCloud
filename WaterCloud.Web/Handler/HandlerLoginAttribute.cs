@@ -52,7 +52,7 @@ namespace WaterCloud.Web
             try
             {
 
-                OperatorResult result = OperatorProvider.Provider.IsOnLine("pc_");
+                OperatorResult result = OperatorProvider.Provider.IsOnLine("pc_").Result;
                 switch (result.stateCode)
                 {
                     case 1:
@@ -83,7 +83,7 @@ namespace WaterCloud.Web
             {
                 var roleId = OperatorProvider.Provider.GetCurrent().RoleId;
                 var userId = OperatorProvider.Provider.GetCurrent().UserId;
-                return new RoleAuthorizeService().RoleValidate(userId, roleId);
+                return new RoleAuthorizeService().RoleValidate(userId, roleId).Result;
             }
             catch (System.Exception)
             {

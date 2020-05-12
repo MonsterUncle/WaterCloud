@@ -7,6 +7,7 @@
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Repository.SystemManage
 {
@@ -23,30 +24,30 @@ namespace WaterCloud.Repository.SystemManage
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
             using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
-                db.Delete<RoleEntity>(t => t.F_Id == keyValue);
-                db.Delete<RoleAuthorizeEntity>(t => t.F_ObjectId == keyValue);
+                await db.Delete<RoleEntity>(t => t.F_Id == keyValue);
+                await db.Delete<RoleAuthorizeEntity>(t => t.F_ObjectId == keyValue);
                 db.Commit();
             }
         }
-        public void SubmitForm(RoleEntity roleEntity, List<RoleAuthorizeEntity> roleAuthorizeEntitys, string keyValue)
+        public async Task SubmitForm(RoleEntity roleEntity, List<RoleAuthorizeEntity> roleAuthorizeEntitys, string keyValue)
         {
             using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
                 if (!string.IsNullOrEmpty(keyValue))
                 {
-                    db.Update(roleEntity);
+                    await db.Update(roleEntity);
                 }
                 else
                 {
                     roleEntity.F_Category = 1;
-                    db.Insert(roleEntity);
+                    await db.Insert(roleEntity);
                 }
-                db.Delete<RoleAuthorizeEntity>(t => t.F_ObjectId == roleEntity.F_Id);
-                db.Insert(roleAuthorizeEntitys);
+                await db.Delete<RoleAuthorizeEntity>(t => t.F_ObjectId == roleEntity.F_Id);
+                await db.Insert(roleAuthorizeEntitys);
                 db.Commit();
             }
         }

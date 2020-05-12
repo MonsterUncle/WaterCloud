@@ -17,20 +17,20 @@ namespace WaterCloud.Service.CommonService
     public class DatabaseTableMySqlService : RepositoryBase, IDatabaseTableService
     {
         #region 获取数据
-        public List<TableInfo> GetTableList(string tableName)
+        public async Task<List<TableInfo>> GetTableList(string tableName)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT table_name TableName FROM information_schema.tables WHERE table_schema='" + GetDatabase() + "' AND table_type='base table'");
-            IEnumerable<TableInfo> list = FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString());
             if (!string.IsNullOrEmpty(tableName))
             {
                 list = list.Where(p => p.TableName.Contains(tableName)).ToList();
             }
-            SetTableDetail(list);
+            await SetTableDetail(list);
             return list.ToList();
         }
 
-        public List<TableInfo> GetTablePageList(string tableName, Pagination pagination)
+        public async Task<List<TableInfo>> GetTablePageList(string tableName, Pagination pagination)
         {
             StringBuilder strSql = new StringBuilder();
             var parameter = new List<DbParam>();
@@ -42,14 +42,14 @@ namespace WaterCloud.Service.CommonService
                 parameter.Add(new DbParam("@TableName", '%' + tableName + '%'));
             }
 
-            IEnumerable<TableInfo> list = FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
+            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
             pagination.records = list.Count();
             var tempData = list.Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows).AsQueryable().ToList();
-            SetTableDetail(tempData);
+            await SetTableDetail(tempData);
             return tempData;
         }
 
-        public List<TableFieldInfo> GetTableFieldList(string tableName)
+        public async Task<List<TableFieldInfo>> GetTableFieldList(string tableName)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT COLUMN_NAME TableColumn, 
@@ -62,13 +62,13 @@ namespace WaterCloud.Service.CommonService
                              FROM information_schema.columns WHERE table_schema='" + GetDatabase() + "' AND table_name=@TableName");
             var parameter = new List<DbParam>();
             parameter.Add(new DbParam("@TableName", tableName));
-            var list = FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
+            var list =await FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
             return list;
         }
         #endregion
 
         #region 公有方法
-        public bool DatabaseBackup(string database, string backupPath)
+        public async Task<bool> DatabaseBackup(string database, string backupPath)
         {
             string backupFile = string.Format("{0}\\{1}_{2}.bak", backupPath, database, DateTime.Now.ToString("yyyyMMddHHmmss"));
             string strSql = string.Format(" backup database [{0}] to disk = '{1}'", database, backupFile);
@@ -80,37 +80,37 @@ namespace WaterCloud.Service.CommonService
         /// 仅用在WaterCloud框架里面，同步不同数据库之间的数据，以 MySql 为主库，同步 MySql 的数据到SqlServer和Oracle，保证各个数据库的数据是一样的
         /// </summary>
         /// <returns></returns>
-        public void SyncDatabase()
+        public async Task SyncDatabase()
         {
             #region 同步SqlServer数据库
-           SyncSqlServerTable<AreaEntity>();
-           SyncSqlServerTable<ModuleEntity>();
-           SyncSqlServerTable<ModuleButtonEntity>();
-           SyncSqlServerTable<ItemsEntity>();
-           SyncSqlServerTable<ItemsDetailEntity>();
-           SyncSqlServerTable<NoticeEntity>();
-           SyncSqlServerTable<OrganizeEntity>();
-           SyncSqlServerTable<QuickModuleEntity>();
-           SyncSqlServerTable<RoleAuthorizeEntity>();
-           SyncSqlServerTable<RoleEntity>();
-           SyncSqlServerTable<LogEntity>();
-           SyncSqlServerTable<RoleEntity>();
-           SyncSqlServerTable<UserEntity>();
-           SyncSqlServerTable<UserLogOnEntity>();
-           SyncSqlServerTable<ServerStateEntity>();
-           SyncSqlServerTable<FilterIPEntity>();
-           SyncSqlServerTable<DbBackupEntity>();
+            await SyncSqlServerTable<AreaEntity>();
+            await SyncSqlServerTable<ModuleEntity>();
+            await SyncSqlServerTable<ModuleButtonEntity>();
+            await SyncSqlServerTable<ItemsEntity>();
+            await SyncSqlServerTable<ItemsDetailEntity>();
+            await SyncSqlServerTable<NoticeEntity>();
+            await SyncSqlServerTable<OrganizeEntity>();
+            await SyncSqlServerTable<QuickModuleEntity>();
+            await SyncSqlServerTable<RoleAuthorizeEntity>();
+            await SyncSqlServerTable<RoleEntity>();
+            await SyncSqlServerTable<LogEntity>();
+            await SyncSqlServerTable<RoleEntity>();
+            await SyncSqlServerTable<UserEntity>();
+            await SyncSqlServerTable<UserLogOnEntity>();
+            await SyncSqlServerTable<ServerStateEntity>();
+            await SyncSqlServerTable<FilterIPEntity>();
+            await SyncSqlServerTable<DbBackupEntity>();
             #endregion
         }
-        private void SyncSqlServerTable<T>() where T : class, new()
+        private async Task SyncSqlServerTable<T>() where T : class, new()
         {
             string sqlServerConnectionString = "192.168.1.17;Initial Catalog = WaterCloudNetDb;User ID=sa;Password=admin@12345;MultipleActiveResultSets=true";
             var list = new RepositoryBase().IQueryable<T>().ToList();
             var context=new RepositoryBase(sqlServerConnectionString, "System.Data.SqlClient");
-            context.Delete<T>(p => true);
+            await context.Delete<T>(p => true);
             foreach (var item in list)
             {
-                context.Insert<T>(item);
+                await context.Insert<T>(item);
             }
         }
         #endregion
@@ -120,14 +120,14 @@ namespace WaterCloud.Service.CommonService
         /// 获取所有表的主键、主键名称、记录数
         /// </summary>
         /// <returns></returns>
-        private List<TableInfo> GetTableDetailList()
+        private async Task<List<TableInfo>> GetTableDetailList()
         {
             string strSql = @"SELECT t1.TABLE_NAME TableName,t1.TABLE_COMMENT Remark,t1.TABLE_ROWS TableCount,t2.CONSTRAINT_NAME TableKeyName,t2.column_name TableKey
                                      FROM information_schema.TABLES as t1 
 	                                 LEFT JOIN INFORMATION_SCHEMA.`KEY_COLUMN_USAGE` as t2 on t1.TABLE_NAME = t2.TABLE_NAME
                                      WHERE t1.TABLE_SCHEMA='" + GetDatabase() + "' AND t2.TABLE_SCHEMA='" + GetDatabase() + "'";
 
-            IEnumerable<TableInfo> list = FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list =await  FindList<TableInfo>(strSql.ToString());
             return list.ToList();
         }
 
@@ -135,9 +135,9 @@ namespace WaterCloud.Service.CommonService
         /// 赋值表的主键、主键名称、记录数
         /// </summary>
         /// <param name="list"></param>
-        private void SetTableDetail(IEnumerable<TableInfo> list)
+        private async Task SetTableDetail(IEnumerable<TableInfo> list)
         {
-            List<TableInfo> detailList = GetTableDetailList();
+            List<TableInfo> detailList =await GetTableDetailList();
             foreach (TableInfo table in list)
             {
                 table.TableKey = string.Join(",", detailList.Where(p => p.TableName == table.TableName).Select(p => p.TableKey));

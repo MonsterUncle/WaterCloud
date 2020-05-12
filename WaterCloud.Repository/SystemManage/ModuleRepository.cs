@@ -8,6 +8,7 @@ using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Repository.SystemManage
 {
@@ -25,27 +26,27 @@ namespace WaterCloud.Repository.SystemManage
             this.providerName = providerName;
         }
 
-        public void CreateModuleCode(ModuleEntity entity, List<ModuleButtonEntity> buttonlist)
+        public async Task CreateModuleCode(ModuleEntity entity, List<ModuleButtonEntity> buttonlist)
         {
             using (var db = new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
-                db.Insert(entity);
-                db.Insert(buttonlist);
+                await db.Insert(entity);
+                await db.Insert(buttonlist);
                 db.Commit();
             }
         }
 
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
             using (var db = new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
-                db.Delete<ModuleEntity>(a=>a.F_Id== keyValue);
-                db.Delete<ModuleButtonEntity>(a=>a.F_ModuleId== keyValue);
+                await db.Delete<ModuleEntity>(a=>a.F_Id== keyValue);
+                await db.Delete<ModuleButtonEntity>(a=>a.F_ModuleId== keyValue);
                 db.Commit();
             }
         }
 
-        public List<ModuleEntity> GetListByRole(string roleid)
+        public async Task<List<ModuleEntity>> GetListByRole(string roleid)
         {
             using (var db = new RepositoryBase(ConnectStr, providerName))
             {

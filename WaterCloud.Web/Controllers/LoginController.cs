@@ -14,6 +14,7 @@ using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemManage;
 using WaterCloud.Domain.SystemSecurity;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Controllers
 {
@@ -46,9 +47,9 @@ namespace WaterCloud.Web.Controllers
             return File(new VerifyCodeHelper().GetVerifyCode(), @"image/Gif");
         }
         [HttpGet]
-        public ActionResult OutLogin()
+        public async Task<ActionResult> OutLogin()
         {
-            new LogService().WriteDbLog(new LogEntity
+            await new LogService().WriteDbLog(new LogEntity
             {
                 F_ModuleName = "系统登录",
                 F_Type = DbLogType.Exit.ToString(),
@@ -57,12 +58,12 @@ namespace WaterCloud.Web.Controllers
                 F_Result = true,
                 F_Description = "安全退出系统",
             });
-            OperatorProvider.Provider.EmptyCurrent();
+            await OperatorProvider.Provider.EmptyCurrent();
             return Redirect("/Login/Index");
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public ActionResult CheckLoginState()
+        public async Task<ActionResult> CheckLoginState()
         {
             try
             {
@@ -72,9 +73,9 @@ namespace WaterCloud.Web.Controllers
                     return Content(new AjaxResult { state = ResultType.error.ToString() }.ToJson());
                 }
                 //登录检测      
-                if (OperatorProvider.Provider.IsOnLine("pc_").stateCode<=0)
+                if ((await OperatorProvider.Provider.IsOnLine("pc_")).stateCode<=0)
                 {
-                    OperatorProvider.Provider.EmptyCurrent();
+                    await OperatorProvider.Provider.EmptyCurrent();
                     return Content(new AjaxResult { state = ResultType.error.ToString() }.ToJson());
                 }
                 else
@@ -90,9 +91,9 @@ namespace WaterCloud.Web.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public ActionResult CheckLogin(string username, string password, string code)
+        public async Task<ActionResult> CheckLogin(string username, string password, string code)
         {
-            if (!CheckIP())
+            if (!await CheckIP())
             {
                 throw new Exception("IP受限");
             }
@@ -105,7 +106,7 @@ namespace WaterCloud.Web.Controllers
                 {
                     throw new Exception("验证码错误，请重新输入");
                 }
-                UserEntity userEntity = _userService.CheckLogin(username, password);
+                UserEntity userEntity =await _userService.CheckLogin(username, password);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
                 operatorModel.UserCode = userEntity.F_Account;
@@ -130,12 +131,12 @@ namespace WaterCloud.Web.Controllers
                 {
                     operatorModel.IsSystem = false;
                 }
-                OperatorProvider.Provider.AddLoginUser(operatorModel, "","pc_");
+                await OperatorProvider.Provider.AddLoginUser(operatorModel, "","pc_");
                 logEntity.F_Account = userEntity.F_Account;
                 logEntity.F_NickName = userEntity.F_RealName;
                 logEntity.F_Result = true;
                 logEntity.F_Description = "登录成功";
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Content(new AjaxResult { state = ResultType.success.ToString(), message = "登录成功。"}.ToJson());
             }
             catch (Exception ex)
@@ -144,14 +145,14 @@ namespace WaterCloud.Web.Controllers
                 logEntity.F_NickName = username;
                 logEntity.F_Result = false;
                 logEntity.F_Description = "登录失败，" + ex.Message;
-                _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity);
                 return Content(new AjaxResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
             }
         }
-        private bool CheckIP()
+        private async Task<bool> CheckIP()
         {
             string ip = WebHelper.Ip;
-            return _filterIPService.CheckIP(ip);
+            return await _filterIPService.CheckIP(ip);
         }
     }
 }

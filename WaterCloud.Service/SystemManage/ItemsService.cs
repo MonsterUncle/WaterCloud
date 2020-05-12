@@ -9,6 +9,7 @@ using WaterCloud.Repository.SystemManage;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -21,17 +22,17 @@ namespace WaterCloud.Service.SystemManage
 
         private string cacheKey = "watercloud_itemsdata_";// 字典分类
 
-        public List<ItemsEntity> GetList()
+        public async Task<List<ItemsEntity>> GetList()
         {
-            var cachedata = service.CheckCacheList(cacheKey + "list");
+            var cachedata =await service.CheckCacheList(cacheKey + "list");
             return cachedata.OrderBy(t => t.F_SortCode).ToList();
         }
-        public ItemsEntity GetForm(string keyValue)
+        public async Task<ItemsEntity> GetForm(string keyValue)
         {
-            var cachedata = service.CheckCache(cacheKey, keyValue);
+            var cachedata =await service.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
             if (service.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
             {
@@ -39,25 +40,25 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
-                service.Delete(t => t.F_Id == keyValue);
-                RedisHelper.Del(cacheKey + keyValue);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Delete(t => t.F_Id == keyValue);
+                await RedisHelper.DelAsync(cacheKey + keyValue);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
         }
-        public void SubmitForm(ItemsEntity itemsEntity, string keyValue)
+        public async Task SubmitForm(ItemsEntity itemsEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
                 itemsEntity.Modify(keyValue);
-                service.Update(itemsEntity);
-                RedisHelper.Del(cacheKey + keyValue);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Update(itemsEntity);
+                await RedisHelper.DelAsync(cacheKey + keyValue);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
             else
             {
                 itemsEntity.Create();
-                service.Insert(itemsEntity);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Insert(itemsEntity);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
         }
     }

@@ -9,6 +9,7 @@ using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Repository.SystemSecurity;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemSecurity
 {
@@ -16,7 +17,7 @@ namespace WaterCloud.Service.SystemSecurity
     {
         private IDbBackupRepository service = new DbBackupRepository();
 
-        public List<DbBackupEntity> GetList(string keyword)
+        public async Task<List<DbBackupEntity>> GetList(string keyword)
         {
             var expression = ExtLinq.True<DbBackupEntity>();
             if (!string.IsNullOrEmpty(keyword))
@@ -26,20 +27,20 @@ namespace WaterCloud.Service.SystemSecurity
             }
             return service.IQueryable(expression).OrderByDesc(t => t.F_BackupTime).ToList();
         }
-        public DbBackupEntity GetForm(string keyValue)
+        public async Task<DbBackupEntity> GetForm(string keyValue)
         {
-            return service.FindEntity(keyValue);
+            return await service.FindEntity(keyValue);
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
-            service.DeleteForm(keyValue);
+            await service.DeleteForm(keyValue);
         }
-        public void SubmitForm(DbBackupEntity dbBackupEntity)
+        public async Task SubmitForm(DbBackupEntity dbBackupEntity)
         {
             dbBackupEntity.F_Id = Utils.GuId();
             dbBackupEntity.F_EnabledMark = true;
             dbBackupEntity.F_BackupTime = DateTime.Now;
-            service.ExecuteDbBackup(dbBackupEntity);
+            await service.ExecuteDbBackup(dbBackupEntity);
         }
     }
 }

@@ -10,6 +10,7 @@
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Repository.SystemManage
 {
@@ -26,7 +27,7 @@ namespace WaterCloud.Repository.SystemManage
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
         }
-        public List<QuickModuleExtend> GetQuickModuleList(string userId)
+        public async Task<List<QuickModuleExtend>> GetQuickModuleList(string userId)
         {
             using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
@@ -35,15 +36,15 @@ namespace WaterCloud.Repository.SystemManage
                 List<QuickModuleEntity> quicks = new List<QuickModuleEntity>();
                 if (quicklist.Count()==0)
                 {
-                    var roleId = db.FindEntity<UserEntity>(userId).F_RoleId;
+                    var roleId =(await db.FindEntity<UserEntity>(userId)).F_RoleId;
                     var modulelist= db.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleId && a.F_ItemType == 1).Select(a=>a.F_ItemId).ToList();
-                    if (db.FindEntity<UserEntity>(userId).F_Account=="admin")
+                    if ((await db.FindEntity<UserEntity>(userId)).F_Account=="admin")
                     {
                         modulelist= db.IQueryable<ModuleEntity>(a => a.F_EnabledMark==true).Select(a => a.F_Id).ToList();
                     }
                     foreach (var item in modulelist)
                     {
-                        var module = db.FindEntity<ModuleEntity>(a => a.F_Id == item);
+                        var module =await db.FindEntity<ModuleEntity>(a => a.F_Id == item);
                         if (module.F_UrlAddress!=null&&list.Count<8)
                         {
                             list.Add(new QuickModuleExtend
@@ -66,7 +67,7 @@ namespace WaterCloud.Repository.SystemManage
                 {
                     foreach (var item in quicklist.ToList())
                     {
-                        var module = db.FindEntity<ModuleEntity>(a => a.F_Id==item.F_ModuleId);
+                        var module =await  db.FindEntity<ModuleEntity>(a => a.F_Id==item.F_ModuleId);
                         list.Add( new QuickModuleExtend { 
                         id= module.F_Id,
                             title=module.F_FullName,
@@ -77,7 +78,7 @@ namespace WaterCloud.Repository.SystemManage
                 }
                 if (quicks.Count>0)
                 {
-                    db.Insert(quicks);
+                    await db.Insert(quicks);
                     db.Commit();
                 }
                 return list;
@@ -85,16 +86,16 @@ namespace WaterCloud.Repository.SystemManage
             }
         }
 
-        public List<ModuleEntity> GetTransferList(string userId)
+        public async Task<List<ModuleEntity>> GetTransferList(string userId)
         {
             using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
 
                 var quicklist = db.IQueryable<QuickModuleEntity>(t => t.F_CreatorUserId == userId && t.F_EnabledMark == true).ToList();
                 List<ModuleEntity> quicks = new List<ModuleEntity>();
-                var roleId = db.FindEntity<UserEntity>(userId).F_RoleId;
+                var roleId =(await db.FindEntity<UserEntity>(userId)).F_RoleId;
                 var modulelist = db.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleId && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
-                if (db.FindEntity<UserEntity>(userId).F_Account == "admin")
+                if ((await db.FindEntity<UserEntity>(userId)).F_Account == "admin")
                 {
                     modulelist = db.IQueryable<ModuleEntity>(a => a.F_EnabledMark == true&&a.F_IsPublic==false).Select(a => a.F_Id).ToList();
                 }
@@ -113,12 +114,12 @@ namespace WaterCloud.Repository.SystemManage
             }
         }
 
-        public void SubmitForm(List<QuickModuleEntity> list)
+        public async Task SubmitForm(List<QuickModuleEntity> list)
         {
             using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
-                db.Delete<QuickModuleEntity>(t => t.F_CreatorUserId == list[0].F_CreatorUserId);
-                db.Insert(list);
+                await db.Delete<QuickModuleEntity>(t => t.F_CreatorUserId == list[0].F_CreatorUserId);
+                await db.Insert(list);
                 db.Commit();
             }
         }

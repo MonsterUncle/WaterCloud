@@ -4,6 +4,7 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
@@ -23,22 +24,22 @@ namespace WaterCloud.Repository.SystemManage
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
             using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
-                db.Delete<UserEntity>(t => t.F_Id == keyValue);
-                db.Delete<UserLogOnEntity>(t => t.F_UserId == keyValue);
+                await db.Delete<UserEntity>(t => t.F_Id == keyValue);
+                await db.Delete<UserLogOnEntity>(t => t.F_UserId == keyValue);
                 db.Commit();
             }
         }
-        public void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
+        public async Task SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
             using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
                 if (!string.IsNullOrEmpty(keyValue))
                 {
-                    db.Update(userEntity);
+                    await db.Update(userEntity);
                 }
                 else
                 {
@@ -46,8 +47,8 @@ namespace WaterCloud.Repository.SystemManage
                     userLogOnEntity.F_UserId = userEntity.F_Id;
                     userLogOnEntity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                     userLogOnEntity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userLogOnEntity.F_UserPassword, 32).ToLower(), userLogOnEntity.F_UserSecretkey).ToLower(), 32).ToLower();
-                    db.Insert(userEntity);
-                    db.Insert(userLogOnEntity);
+                    await db.Insert(userEntity);
+                    await db.Insert(userLogOnEntity);
                 }
                 db.Commit();
             }

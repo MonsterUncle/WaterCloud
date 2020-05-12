@@ -9,13 +9,14 @@
 //-----------------------------------------------------------------------
 using WaterCloud.DataBase;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Domain.SystemManage
 {
     public interface IQuickModuleRepository : IRepositoryBase<QuickModuleEntity>
     {
-        List<QuickModuleExtend> GetQuickModuleList(string userId);
-        void SubmitForm(List<QuickModuleEntity> list);
-        List<ModuleEntity> GetTransferList(string userId);
+        Task<List<QuickModuleExtend>> GetQuickModuleList(string userId);
+        Task SubmitForm(List<QuickModuleEntity> list);
+        Task<List<ModuleEntity>> GetTransferList(string userId);
     }
 }

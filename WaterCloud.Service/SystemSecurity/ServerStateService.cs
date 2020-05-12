@@ -12,13 +12,15 @@ using WaterCloud.Repository.SystemSecurity;
 using System;
 using System.Collections.Generic;
 using WaterCloud.Code;
+using System.Threading.Tasks;
+
 namespace WaterCloud.Service.SystemSecurity
 {
     public class ServerStateService:IDenpendency
     {
 		private IServerStateRepository service = new ServerStateRepository();
 
-		public List<ServerStateEntity> GetList(int timetype)
+		public async Task<List<ServerStateEntity>> GetList(int timetype)
         {
             var expression = ExtLinq.True<ServerStateEntity>();
             DateTime startTime = DateTime.Now.ToString("yyyy-MM-dd").ToDate();
@@ -43,12 +45,12 @@ namespace WaterCloud.Service.SystemSecurity
             return service.IQueryable(expression).ToList();
         }
 
-	    public ServerStateEntity GetForm(string keyValue)
+	    public async Task<ServerStateEntity> GetForm(string keyValue)
         {
-            return service.FindEntity(keyValue);
+            return await service.FindEntity(keyValue);
         }
 
-		public void SubmitForm(ServerStateEntity entity)
+		public async Task SubmitForm(ServerStateEntity entity)
         {
             var old = service.IQueryable(a => a.F_WebSite == entity.F_WebSite && a.F_Date == DateTime.Now.Date).FirstOrDefault();
             if (old != null)
@@ -59,20 +61,20 @@ namespace WaterCloud.Service.SystemSecurity
                 entity.F_ARM = Math.Round(((old.F_ARM).ToDouble() * old.F_Cout + entity.F_ARM.ToDouble()) / entity.F_Cout, 2).ToString();
                 entity.F_CPU = Math.Round(((old.F_CPU).ToDouble() * old.F_Cout + entity.F_CPU.ToDouble()) / entity.F_Cout, 2).ToString();
                 entity.F_IIS = Math.Round(((old.F_IIS).ToDouble() * old.F_Cout + entity.F_IIS.ToDouble()) / entity.F_Cout, 0).ToString();
-                service.Update(entity);
+                await service.Update(entity);
             }
             else
             {
                 entity.F_Id = Utils.GuId();
                 entity.F_Cout = 1;
                 entity.F_Date = DateTime.Now.Date;
-                service.Insert(entity);
+                await service.Insert(entity);
             }
         }
 
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
-            service.DeleteForm(keyValue);
+            await service.DeleteForm(keyValue);
         }
 
     }

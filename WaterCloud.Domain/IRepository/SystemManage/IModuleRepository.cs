@@ -6,14 +6,15 @@
 *********************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WaterCloud.DataBase;
 
 namespace WaterCloud.Domain.SystemManage
 {
     public interface IModuleRepository : IRepositoryBase<ModuleEntity>
     {
-        List<ModuleEntity> GetListByRole(string roleid);
-        void CreateModuleCode(ModuleEntity entity,List<ModuleButtonEntity> buttonlist);
-        void DeleteForm(string keyValue);
+        Task<List<ModuleEntity>> GetListByRole(string roleid);
+        Task CreateModuleCode(ModuleEntity entity,List<ModuleButtonEntity> buttonlist);
+        Task DeleteForm(string keyValue);
     }
 }

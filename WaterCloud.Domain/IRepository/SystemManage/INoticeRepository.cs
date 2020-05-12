@@ -7,12 +7,13 @@
 // * history : Created by T4 04/13/2020 16:51:21 
 // </copyright>
 //-----------------------------------------------------------------------
+using System.Threading.Tasks;
 using WaterCloud.DataBase;
 
 namespace WaterCloud.Domain.SystemManage
 {
     public interface INoticeRepository : IRepositoryBase<NoticeEntity>
     {
-		void DeleteForm(string keyValue);
+        Task DeleteForm(string keyValue);
     }
 }

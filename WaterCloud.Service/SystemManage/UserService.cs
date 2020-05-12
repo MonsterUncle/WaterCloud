@@ -10,6 +10,7 @@ using WaterCloud.Repository.SystemManage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -26,7 +27,7 @@ namespace WaterCloud.Service.SystemManage
         private string cacheKey = "watercloud_userdata_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
 
-        public List<UserEntity> GetList(Pagination pagination, string keyword)
+        public async Task<List<UserEntity>> GetList(Pagination pagination, string keyword)
         {
             var expression = ExtLinq.True<UserEntity>();
             if (!string.IsNullOrEmpty(keyword))
@@ -36,11 +37,11 @@ namespace WaterCloud.Service.SystemManage
                 expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
             }
             expression = expression.And(t => t.F_Account != "admin");
-            return service.FindList(expression, pagination);
+            return await service.FindList(expression, pagination);
         }
-        public List<UserEntity> GetList(string keyword)
+        public async Task<List<UserEntity>> GetList(string keyword)
         {
-            var cachedata = service.CheckCacheList(cacheKey + "list");
+            var cachedata =await service.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(keyword))
             {
                 cachedata = cachedata.Where(t => t.F_Account.Contains(keyword) || t.F_RealName.Contains(keyword) || t.F_MobilePhone.Contains(keyword)).ToList();
@@ -48,16 +49,16 @@ namespace WaterCloud.Service.SystemManage
             return cachedata.Where(t => t.F_Account != "admin").OrderBy(t => t.F_Account).ToList();
         }
 
-        public void SubmitUserForm(UserEntity userEntity)
+        public async Task SubmitUserForm(UserEntity userEntity)
         {
-            service.Update(userEntity);
-            RedisHelper.Del(cacheKey + userEntity.F_Id);
-            RedisHelper.Del(cacheKey + "list");
+            await service.Update(userEntity);
+            await RedisHelper.DelAsync(cacheKey + userEntity.F_Id);
+            await RedisHelper.DelAsync(cacheKey + "list");
         }
 
-        public List<UserEntity> GetUserList(string keyword)
+        public async Task<List<UserEntity>> GetUserList(string keyword)
         {
-            var cachedata = service.CheckCacheList(cacheKey + "list");
+            var cachedata =await service.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(keyword))
             {
                 cachedata = cachedata.Where(t => t.F_Account.Contains(keyword) || t.F_RealName.Contains(keyword) || t.F_MobilePhone.Contains(keyword)).ToList();
@@ -65,42 +66,42 @@ namespace WaterCloud.Service.SystemManage
             return cachedata.Where(t => t.F_EnabledMark ==true).OrderBy(t => t.F_Account).ToList();
         }
 
-        public UserEntity GetForm(string keyValue)
+        public async Task<UserEntity> GetForm(string keyValue)
         {
-            var cachedata = service.CheckCache(cacheKey, keyValue);
+            var cachedata =await service.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
-            service.DeleteForm(keyValue);
-            RedisHelper.Del(cacheKey + keyValue);
-            RedisHelper.Del(cacheKey + "list");
+            await service.DeleteForm(keyValue);
+            await RedisHelper.DelAsync(cacheKey + keyValue);
+            await RedisHelper.DelAsync(cacheKey + "list");
         }
-        public void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
+        public async Task SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
                 userEntity.Modify(keyValue);
-                RedisHelper.Del(cacheKey + keyValue);
-                RedisHelper.Del(cacheKey + "list");
+                await RedisHelper.DelAsync(cacheKey + keyValue);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
             else
             {
                 userEntity.Create();
                 userLogOnEntity.F_Id= Utils.GuId();
                 userLogOnEntity.F_UserId = userEntity.F_Id;
-               userLogOnEntity.F_ErrorNum = 0;
+                 userLogOnEntity.F_ErrorNum = 0;
                 userLogOnEntity.F_UserOnLine = false;
                 userLogOnEntity.F_LogOnCount = 0;
-                RedisHelper.Del(cacheKey + "list");
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
-            service.SubmitForm(userEntity, userLogOnEntity, keyValue);
+            await service.SubmitForm(userEntity, userLogOnEntity, keyValue);
         }
-        public void UpdateForm(UserEntity userEntity)
+        public async Task UpdateForm(UserEntity userEntity)
         {
-            service.Update(userEntity);
-            RedisHelper.Del(cacheKey + userEntity.F_Id);
-            RedisHelper.Del(cacheKey + "list");
+            await service.Update(userEntity);
+            await RedisHelper.DelAsync(cacheKey + userEntity.F_Id);
+            await RedisHelper.DelAsync(cacheKey + "list");
         }
         /// <summary>
         /// 登录判断
@@ -108,19 +109,19 @@ namespace WaterCloud.Service.SystemManage
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public UserEntity CheckLogin(string username, string password)
+        public async Task<UserEntity> CheckLogin(string username, string password)
         {
-            UserEntity userEntity = service.FindEntity(t => t.F_Account == username);
+            UserEntity userEntity =await service.FindEntity(t => t.F_Account == username);
             if (userEntity != null)
             {
                 if (userEntity.F_EnabledMark == true)
                 {
                     //缓存用户账户信息
-                    var userLogOnEntity= RedisHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + userEntity.F_Id);
+                    var userLogOnEntity=await RedisHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + userEntity.F_Id);
                     if (userLogOnEntity==null)
                     {
                         userLogOnEntity = new OperatorUserInfo();
-                        UserLogOnEntity entity = userLogOnApp.GetForm(userEntity.F_Id);
+                        UserLogOnEntity entity =await userLogOnApp.GetForm(userEntity.F_Id);
                         userLogOnEntity.F_UserPassword = entity.F_UserPassword;
                         userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
                         userLogOnEntity.F_AllowEndTime = entity.F_AllowEndTime;
@@ -135,7 +136,7 @@ namespace WaterCloud.Service.SystemManage
                         userLogOnEntity.F_PreviousVisitTime = entity.F_PreviousVisitTime;
                         userLogOnEntity.F_Question = entity.F_Question;
                         userLogOnEntity.F_Theme = entity.F_Theme;
-                        RedisHelper.Set(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
+                        await RedisHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
                     }
                     if (userLogOnEntity == null)
                     {
@@ -146,7 +147,7 @@ namespace WaterCloud.Service.SystemManage
                     {
                         if (userEntity.F_Account != "admin")
                         {
-                            var role = roleservice.FindEntity(userEntity.F_RoleId);
+                            var role =await roleservice.FindEntity(userEntity.F_RoleId);
                             if (role == null || role.F_EnabledMark == false)
                             {
                                 throw new Exception("账户未设置权限,请联系管理员");
@@ -161,8 +162,8 @@ namespace WaterCloud.Service.SystemManage
                         userLogOnEntity.F_LastVisitTime = lastVisitTime;
                         userLogOnEntity.F_LogOnCount = LogOnCount;
                         userLogOnEntity.F_UserOnLine = true;
-                        RedisHelper.Del(cacheKeyOperator + "info_" + userEntity.F_Id);
-                        RedisHelper.Set(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
+                        await RedisHelper.DelAsync(cacheKeyOperator + "info_" + userEntity.F_Id);
+                        await RedisHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
                         OperatorProvider.Provider.ClearCurrentErrorNum();
                         return userEntity;
                     }
@@ -170,12 +171,12 @@ namespace WaterCloud.Service.SystemManage
                     {
                         if (userEntity.F_Account != "admin")
                         {
-                            int num = OperatorProvider.Provider.AddCurrentErrorNum();
+                            int num =await OperatorProvider.Provider.AddCurrentErrorNum();
                             string erornum = (5 - num).ToString();
                             if (num == 5)
                             {
                                 userEntity.F_EnabledMark = false;
-                                service.Update(userEntity);
+                                await service.Update(userEntity);
                                 OperatorProvider.Provider.ClearCurrentErrorNum();
                                 throw new Exception("密码不正确，账户被系统锁定");
                             }
@@ -198,74 +199,6 @@ namespace WaterCloud.Service.SystemManage
             else
             {
                 throw new Exception("账户不存在，请重新输入");
-            }
-        }
-
-        /// <summary>
-        /// 通过钉钉UserId实现用户登录
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public UserEntity CheckLoginByDingTalk(string userId)
-        {
-            UserEntity userEntity = service.FindEntity(t => t.F_DingTalkUserId == userId);
-            if (userEntity != null)
-            {
-                if (userEntity.F_EnabledMark == true)
-                {
-                    return userEntity;
-                }
-                else
-                {
-                    throw new Exception("账户被系统锁定,请联系管理员");
-                }
-            }
-            else
-            {
-                throw new Exception("账户不存在，请重新输入");
-            }
-        }
-
-        /// <summary>
-        /// 根据用户Id或者角色Id查询用户
-        /// </summary>
-        /// <param name="list"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public List<UserEntity> GetUserList(List<string> list,string type="Users")
-        {
-            var expression = ExtLinq.True<UserEntity>();
-            expression = expression.And(t => t.F_EnabledMark == true);
-            List<UserEntity> data = service.IQueryable(expression).ToList();
-            List<UserEntity> users = new List<UserEntity>();
-            try
-            {
-                if (data != null && list != null)
-                {
-                    if (type == "Roles")
-                    {
-                        foreach (string f_id in list)
-                        {
-                            users.AddRange(data.FindAll(delegate (UserEntity p) { return p.F_RoleId == f_id; }));
-                        }
-                    }
-                    else
-                    {
-                        foreach (string f_id in list)
-                        {
-                            users.Add(data.Find(delegate (UserEntity p) { return p.F_Id == f_id; }));
-                        }
-                    }
-                    return users;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch(Exception ex)
-            {
-                return null;
             }
         }
     }

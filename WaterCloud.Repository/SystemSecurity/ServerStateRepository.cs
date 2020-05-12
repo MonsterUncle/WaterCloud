@@ -7,6 +7,7 @@
 // * history : Created by T4 04/13/2020 11:54:49 
 // </copyright>
 //-----------------------------------------------------------------------
+using System.Threading.Tasks;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemSecurity;
 
@@ -25,13 +26,9 @@ namespace WaterCloud.Repository.SystemSecurity
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
-            using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
-            {
-                db.Delete<ServerStateEntity>(t => t.F_Id == keyValue);
-                db.Commit();
-            }
+            await this.Delete(t => t.F_Id == keyValue);
         }
     }
 }

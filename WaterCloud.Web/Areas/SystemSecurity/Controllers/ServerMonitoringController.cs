@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Senparc.CO2NET.Extensions;
 using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Code;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
 {
@@ -24,7 +25,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             _serverStateService = serverStateService;
         }
         [HttpGet]
-        public ActionResult GetServerDataJson()
+        public async Task<ActionResult> GetServerDataJson()
         {
             //windows环境
             var computer = ComputerHelper.GetComputerInfo();
@@ -38,9 +39,9 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             return Content(new { ARM = arm, CPU = cpu, IIS = iis , TotalRAM = TotalRAM,IP=IP }.ToJson());
         }
         [HttpGet]
-        public ActionResult GetServerData()
+        public async Task<ActionResult> GetServerData()
         {
-            var data = _serverStateService.GetList(2).OrderBy(a => a.F_Date).ToList() ;
+            var data =(await _serverStateService.GetList(2)).OrderBy(a => a.F_Date).ToList() ;
             return Content(data.ToJson());
         }
     }

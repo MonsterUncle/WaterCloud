@@ -16,20 +16,20 @@ namespace WaterCloud.Service.CommonService
     public class DatabaseTableSqlServerService : RepositoryBase, IDatabaseTableService
     {
         #region 获取数据
-        public List<TableInfo> GetTableList(string tableName)
+        public async Task<List<TableInfo>> GetTableList(string tableName)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT id Id,name TableName FROM sysobjects WHERE xtype = 'u' order by name");
-            IEnumerable<TableInfo> list = FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString());
             if (!tableName.IsEmpty())
             {
                 list = list.Where(p => p.TableName.Contains(tableName));
             }
-            SetTableDetail(list);
+            await SetTableDetail(list);
             return list.ToList();
         }
 
-        public List<TableInfo> GetTablePageList(string tableName, Pagination pagination)
+        public async Task<List<TableInfo>> GetTablePageList(string tableName, Pagination pagination)
         {
             StringBuilder strSql = new StringBuilder();
             var parameter = new List<DbParam>();
@@ -41,14 +41,14 @@ namespace WaterCloud.Service.CommonService
                 parameter.Add(new DbParam("@TableName", '%' + tableName + '%'));
             }
 
-            IEnumerable<TableInfo> list =FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
+            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
             pagination.records = list.Count();
             var tempData = list.Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows).AsQueryable().ToList();
-            SetTableDetail(tempData);
+            await SetTableDetail(tempData);
             return tempData;
         }
 
-        public List<TableFieldInfo> GetTableFieldList(string tableName)
+        public async Task<List<TableFieldInfo>> GetTableFieldList(string tableName)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT  
@@ -67,13 +67,13 @@ namespace WaterCloud.Service.CommonService
                                   ORDER BY b.colid");
             var parameter = new List<DbParam>();
             parameter.Add(new DbParam("@TableName", tableName));
-            var list =FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
+            var list =await FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
             return list.ToList();
         }
         #endregion
 
         #region 公有方法
-        public bool DatabaseBackup(string database, string backupPath)
+        public async Task<bool> DatabaseBackup(string database, string backupPath)
         {
             string backupFile = string.Format("{0}\\{1}_{2}.bak", backupPath, database, DateTime.Now.ToString("yyyyMMddHHmmss"));
             string strSql = string.Format(" backup database [{0}] to disk = '{1}'", database, backupFile);
@@ -87,7 +87,7 @@ namespace WaterCloud.Service.CommonService
         /// 获取所有表的主键、主键名称、记录数
         /// </summary>
         /// <returns></returns>
-        private List<TableInfo> GetTableDetailList()
+        private async Task<List<TableInfo>> GetTableDetailList()
         {
             string strSql = @"SELECT syscolumns.id Id,syscolumns.name TableKey,sysobjects.name TableKeyName,sysindexes.rows TableCount
                                      FROM syscolumns,sysobjects,sysindexes,sysindexkeys 
@@ -98,7 +98,7 @@ namespace WaterCloud.Service.CommonService
                                            AND sysindexkeys.indid = sysindexes.indid 
                                            AND syscolumns.colid = sysindexkeys.colid;";
 
-            IEnumerable<TableInfo> list =FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString());
             return list.ToList();
         }
 
@@ -106,9 +106,9 @@ namespace WaterCloud.Service.CommonService
         /// 赋值表的主键、主键名称、记录数
         /// </summary>
         /// <param name="list"></param>
-        private void SetTableDetail(IEnumerable<TableInfo> list)
+        private async Task SetTableDetail(IEnumerable<TableInfo> list)
         {
-            List<TableInfo> detailList =GetTableDetailList();
+            List<TableInfo> detailList =await GetTableDetailList();
             foreach (TableInfo table in list)
             {
                 table.TableKey = string.Join(",", detailList.Where(p => p.Id == table.Id).Select(p => p.TableKey));

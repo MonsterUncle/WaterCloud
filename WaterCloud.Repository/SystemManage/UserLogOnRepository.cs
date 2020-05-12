@@ -4,6 +4,7 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using System.Threading.Tasks;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
 
@@ -22,12 +23,12 @@ namespace WaterCloud.Repository.SystemManage
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
         }
-        public void ChangeForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity)
+        public async Task ChangeForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity)
         {
             using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
-                db.Update(userEntity);
-                db.Update(userLogOnEntity);
+                await db.Update(userEntity);
+                await db.Update(userLogOnEntity);
                 db.Commit();
             }
         }

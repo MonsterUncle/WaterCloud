@@ -7,6 +7,7 @@
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Repository.SystemManage
 {
@@ -24,7 +25,7 @@ namespace WaterCloud.Repository.SystemManage
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
         }
-        public List<ModuleButtonEntity> GetListByRole(string roleid)
+        public async Task<List<ModuleButtonEntity>> GetListByRole(string roleid)
         {
             using (var db =new RepositoryBase(ConnectStr, providerName))
             {
@@ -35,7 +36,7 @@ namespace WaterCloud.Repository.SystemManage
             }
         }
 
-        public List<ModuleButtonEntity> GetListNew(string moduleId)
+        public async Task<List<ModuleButtonEntity>> GetListNew(string moduleId)
         {
             using (var db = new RepositoryBase(ConnectStr, providerName))
             {
@@ -72,15 +73,6 @@ namespace WaterCloud.Repository.SystemManage
                     query = query.Where(a => a.F_ModuleId == moduleId);
                 }
                 return query.OrderBy(a=>a.F_SortCode).ToList();
-            }
-        }
-
-        public void SubmitCloneButton(List<ModuleButtonEntity> entitys)
-        {
-            using (var db = new RepositoryBase(ConnectStr, providerName).BeginTrans())
-            {
-                db.Insert(entitys);
-                db.Commit();
             }
         }
     }

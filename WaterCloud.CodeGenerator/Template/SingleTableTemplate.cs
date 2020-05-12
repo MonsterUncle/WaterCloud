@@ -10,6 +10,7 @@ using WaterCloud.Code;
 using WaterCloud.Code.Model;
 using WaterCloud.Repository.SystemManage;
 using WaterCloud.Domain.SystemManage;
+using System.Threading.Tasks;
 
 namespace WaterCloud.CodeGenerator
 {
@@ -953,7 +954,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region CreateCode
-        public List<KeyValue> CreateCode(BaseConfigModel baseConfigModel, string code)
+        public async Task<List<KeyValue>> CreateCode(BaseConfigModel baseConfigModel, string code)
         {
             List<KeyValue> result = new List<KeyValue>();
             JObject param = code.ToJObject();
@@ -1064,7 +1065,7 @@ namespace WaterCloud.CodeGenerator
                 string menuUrl ="/"+ baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + baseConfigModel.FileConfig.PageIndexName;
                 ModuleEntity moduleEntity = new ModuleEntity();
                 moduleEntity.Create();
-                moduleEntity.F_Layers = moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).F_Layers+1; ;
+                moduleEntity.F_Layers =(await moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Layers+1; ;
                 moduleEntity.F_FullName = baseConfigModel.FileConfig.ClassDescription;
                 moduleEntity.F_UrlAddress = menuUrl;
                 moduleEntity.F_EnCode = baseConfigModel.FileConfig.ClassPrefix;
@@ -1076,8 +1077,8 @@ namespace WaterCloud.CodeGenerator
                 moduleEntity.F_AllowDelete = false;
                 moduleEntity.F_EnabledMark = true;
                 moduleEntity.F_DeleteMark = false;
-                moduleEntity.F_ParentId = moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).F_Id;
-                var parentModule = moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
+                moduleEntity.F_ParentId =(await moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Id;
+                var parentModule =await moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
                 moduleEntity.F_SortCode = (moduleRepository.IQueryable(a => a.F_ParentId == parentModule.F_Id).Max(a=>a.F_SortCode)??0)+1;
                 List<ModuleButtonEntity> moduleButtonList = new List<ModuleButtonEntity>();
                 int sort = 0;
@@ -1118,12 +1119,12 @@ namespace WaterCloud.CodeGenerator
                     modulebutton.F_UrlAddress = url;
                     moduleButtonList.Add(modulebutton);
                 }
-                moduleRepository.CreateModuleCode(moduleEntity,moduleButtonList);
-                RedisHelper.Del(buttoncacheKey + "list");
-                RedisHelper.Del(cacheKey + "list");
-                RedisHelper.Del(quickcacheKey + "list");
-                RedisHelper.Del(initcacheKey + "list");
-                RedisHelper.Del(initcacheKey + "modulebutton_list");
+                await moduleRepository.CreateModuleCode(moduleEntity,moduleButtonList);
+                await RedisHelper.DelAsync(buttoncacheKey + "list");
+                await RedisHelper.DelAsync(cacheKey + "list");
+                await RedisHelper.DelAsync(quickcacheKey + "list");
+                await RedisHelper.DelAsync(initcacheKey + "list");
+                await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
             }
             #endregion
 

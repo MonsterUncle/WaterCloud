@@ -7,12 +7,13 @@
 // * history : Created by T4 04/13/2020 11:54:49 
 // </copyright>
 //-----------------------------------------------------------------------
+using System.Threading.Tasks;
 using WaterCloud.DataBase;
 
 namespace WaterCloud.Domain.SystemSecurity
 {
     public interface IServerStateRepository : IRepositoryBase<ServerStateEntity>
     {
-		void DeleteForm(string keyValue);
+        Task DeleteForm(string keyValue);
     }
 }

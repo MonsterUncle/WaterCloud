@@ -4,12 +4,13 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using System.Threading.Tasks;
 using WaterCloud.DataBase;
 
 namespace WaterCloud.Domain.SystemManage
 {
     public interface IUserLogOnRepository : IRepositoryBase<UserLogOnEntity>
     {
-        void ChangeForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity);
+        Task ChangeForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity);
     }
 }

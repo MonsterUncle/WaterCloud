@@ -6,13 +6,13 @@
 *********************************************************************************/
 using WaterCloud.DataBase;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Domain.SystemManage
 {
     public interface IModuleButtonRepository : IRepositoryBase<ModuleButtonEntity>
     {
-        void SubmitCloneButton(List<ModuleButtonEntity> entitys);
-        List<ModuleButtonEntity> GetListNew(string moduleId);
-        List<ModuleButtonEntity> GetListByRole(string roleid);
+        Task<List<ModuleButtonEntity>> GetListNew(string moduleId);
+        Task<List<ModuleButtonEntity>> GetListByRole(string roleid);
     }
 }

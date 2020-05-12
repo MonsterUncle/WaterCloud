@@ -4,13 +4,14 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using System.Threading.Tasks;
 using WaterCloud.DataBase;
 
 namespace WaterCloud.Domain.SystemSecurity
 {
     public interface IDbBackupRepository : IRepositoryBase<DbBackupEntity>
     {
-        void DeleteForm(string keyValue);
-        void ExecuteDbBackup(DbBackupEntity dbBackupEntity);
+        Task DeleteForm(string keyValue);
+        Task ExecuteDbBackup(DbBackupEntity dbBackupEntity);
     }
 }

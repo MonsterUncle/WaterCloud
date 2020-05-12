@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Senparc.CO2NET.Extensions;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -29,17 +30,17 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public ActionResult GetTransferJson()
+        public async Task<ActionResult> GetTransferJson()
         {
             var userId = OperatorProvider.Provider.GetCurrent().UserId;
-            var data = _moduleService.GetTransferList(userId);
+            var data =await _moduleService.GetTransferList(userId);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public ActionResult SubmitForm(string permissionIds)
+        public async Task<ActionResult> SubmitForm(string permissionIds)
         {
-            _moduleService.SubmitForm(permissionIds.Split(','));
+            await _moduleService.SubmitForm(permissionIds.Split(','));
             return Content(new AjaxResult { state = ResultType.success.ToString(), message = "操作成功" }.ToJson());
         }
     }

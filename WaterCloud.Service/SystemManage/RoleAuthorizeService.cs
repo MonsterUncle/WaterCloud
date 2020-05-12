@@ -11,6 +11,7 @@ using WaterCloud.Repository.SystemManage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -26,28 +27,28 @@ namespace WaterCloud.Service.SystemManage
 
         private string cacheKey = "watercloud_authorizeurldata_";// +权限
 
-        public List<RoleAuthorizeEntity> GetList(string ObjectId)
+        public async Task<List<RoleAuthorizeEntity>> GetList(string ObjectId)
         {
-            var cachedata = service.CheckCacheList(cacheKey + "list");
+            var cachedata =await service.CheckCacheList(cacheKey + "list");
             cachedata = cachedata.Where(t => t.F_ObjectId == ObjectId).ToList();
             return cachedata.ToList();
         }
-        public List<ModuleEntity> GetMenuList(string roleId)
+        public async Task<List<ModuleEntity>> GetMenuList(string roleId)
         {
             var data = new List<ModuleEntity>();
             if (OperatorProvider.Provider.GetCurrent().IsSystem)
             {
-                data = moduleApp.GetList();
+                data =await moduleApp.GetList();
             }
             else
             {
-                var moduledata = moduleApp.GetList();
-                var role = roleservice.FindEntity(roleId);
+                var moduledata =await moduleApp.GetList();
+                var role =await roleservice.FindEntity(roleId);
                 if (role==null||role.F_EnabledMark==false)
                 {
                     return data;
                 }
-                var authorizedata = service.CheckCacheList(cacheKey + "list").Where(t => t.F_ObjectId == roleId && t.F_ItemType == 1).ToList();
+                var authorizedata =(await service.CheckCacheList(cacheKey + "list")).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 1).ToList();
                 foreach (var item in authorizedata)
                 {
                     ModuleEntity moduleEntity = moduledata.Find(t => t.F_Id == item.F_ItemId);
@@ -59,22 +60,22 @@ namespace WaterCloud.Service.SystemManage
             }
             return data.OrderBy(t => t.F_SortCode).ToList();
         }
-        public List<ModuleButtonEntity> GetButtonList(string roleId)
+        public async Task<List<ModuleButtonEntity>> GetButtonList(string roleId)
         {
             var data = new List<ModuleButtonEntity>();
             if (OperatorProvider.Provider.GetCurrent().IsSystem)
             {
-                data = moduleButtonApp.GetListNew();
+                data =await moduleButtonApp.GetListNew();
             }
             else
             {
-                var buttondata = moduleButtonApp.GetListNew();
-                var role = roleservice.FindEntity(roleId);
+                var buttondata =await moduleButtonApp.GetListNew();
+                var role =await roleservice.FindEntity(roleId);
                 if (role == null || role.F_EnabledMark == false)
                 {
                     return data;
                 }
-                var authorizedata = service.CheckCacheList(cacheKey + "list").Where(t => t.F_ObjectId == roleId && t.F_ItemType == 2).ToList();
+                var authorizedata =(await service.CheckCacheList(cacheKey + "list")).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 2).ToList();
                 foreach (var item in authorizedata)
                 {
                     ModuleButtonEntity moduleButtonEntity = buttondata.Find(t => t.F_Id == item.F_ItemId);
@@ -86,23 +87,23 @@ namespace WaterCloud.Service.SystemManage
             }
             return data.OrderBy(t => t.F_SortCode).ToList();
         }
-        public bool ActionValidate(string roleId, string action)
+        public async Task<bool> ActionValidate(string roleId, string action)
         {
             var authorizeurldata = new List<AuthorizeActionModel>();
-            var user = new UserService().GetForm(OperatorProvider.Provider.GetCurrent().UserId);
+            var user =await new UserService().GetForm(OperatorProvider.Provider.GetCurrent().UserId);
             if (user == null || user.F_EnabledMark == false)
             {
                 return false;
             }
-            var cachedata = RedisHelper.Get<List<AuthorizeActionModel>>(cacheKey + "authorize_" + roleId);
+            var cachedata =await RedisHelper.GetAsync<List<AuthorizeActionModel>>(cacheKey + "authorize_" + roleId);
             if (cachedata == null)
             {
-                var moduledata = moduleApp.GetList();
-                var buttondata = moduleButtonApp.GetList();
-                var role = roleservice.FindEntity(roleId);
+                var moduledata =await moduleApp.GetList();
+                var buttondata =await moduleButtonApp.GetList();
+                var role =await roleservice.FindEntity(roleId);
                 if (role != null && role.F_EnabledMark != false)
                 {
-                    var authorizedata = GetList(roleId);
+                    var authorizedata =await GetList(roleId);
                     foreach (var item in authorizedata)
                     {
                         try
@@ -130,7 +131,7 @@ namespace WaterCloud.Service.SystemManage
                             continue;
                         }
                     }
-                    RedisHelper.Set(cacheKey + "authorize_" + roleId,authorizeurldata);
+                    await RedisHelper.SetAsync(cacheKey + "authorize_" + roleId,authorizeurldata);
                 }
             }
             else
@@ -144,23 +145,23 @@ namespace WaterCloud.Service.SystemManage
             }
             return false;
         }
-        public bool RoleValidate(string userId,string roleId)
+        public async Task<bool> RoleValidate(string userId,string roleId)
         {
             var authorizeurldata = new List<AuthorizeActionModel>();
-            var user = new UserService().GetForm(userId);
+            var user =await new UserService().GetForm(userId);
             if (user==null||user.F_EnabledMark==false)
             {
                 return false;
             }
-            var cachedata = RedisHelper.Get<List<AuthorizeActionModel>>(cacheKey + "authorize_" + roleId);
+            var cachedata =await RedisHelper.GetAsync<List<AuthorizeActionModel>>(cacheKey + "authorize_" + roleId);
             if (cachedata == null)
             {
-                var moduledata = moduleApp.GetList();
-                var buttondata = moduleButtonApp.GetList();
-                var role = roleservice.FindEntity(roleId);
+                var moduledata =await moduleApp.GetList();
+                var buttondata =await moduleButtonApp.GetList();
+                var role =await roleservice.FindEntity(roleId);
                 if (role != null && role.F_EnabledMark != false)
                 {
-                    var authorizedata = GetList(roleId);
+                    var authorizedata =await GetList(roleId);
                     foreach (var item in authorizedata)
                     {
                         try
@@ -188,7 +189,7 @@ namespace WaterCloud.Service.SystemManage
                             continue;
                         }
                     }
-                    RedisHelper.Set(cacheKey + "authorize_" + roleId, authorizeurldata);
+                    await RedisHelper.SetAsync(cacheKey + "authorize_" + roleId, authorizeurldata);
                 }               
             }
             else

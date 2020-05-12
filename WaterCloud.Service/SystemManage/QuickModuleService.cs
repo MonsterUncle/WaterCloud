@@ -11,6 +11,8 @@ using WaterCloud.Domain.SystemManage;
 using WaterCloud.Repository.SystemManage;
 using System.Collections.Generic;
 using WaterCloud.Code;
+using System.Threading.Tasks;
+
 namespace WaterCloud.Service.SystemManage
 {
     public class QuickModuleService: IDenpendency
@@ -22,17 +24,17 @@ namespace WaterCloud.Service.SystemManage
 
         private string cacheKey = "watercloud_quickmoduledata_";
 
-        public object GetTransferList(string userId)
+        public async Task<object> GetTransferList(string userId)
         {
-            return service.GetTransferList(userId);
+            return await service.GetTransferList(userId);
         }
 
-        public List<QuickModuleExtend> GetQuickModuleList(string userId)
+        public async Task<List<QuickModuleExtend>> GetQuickModuleList(string userId)
         {
-            return service.GetQuickModuleList(userId);
+            return await service.GetQuickModuleList(userId);
         }
 
-        public void SubmitForm(string[] permissionIds)
+        public async Task SubmitForm(string[] permissionIds)
         {
             List<QuickModuleEntity> list = new List<QuickModuleEntity>();
             foreach (var itemId in permissionIds)
@@ -44,14 +46,14 @@ namespace WaterCloud.Service.SystemManage
                 entity.F_DeleteMark = false;
                 list.Add(entity);
             }
-            service.SubmitForm(list);
-            var data = RedisHelper.Get<Dictionary<string, List<QuickModuleExtend>>>(cacheKey + "list");
+            await service.SubmitForm(list);
+            var data =await RedisHelper.GetAsync<Dictionary<string, List<QuickModuleExtend>>>(cacheKey + "list");
             if (data != null&&data.ContainsKey(OperatorProvider.Provider.GetCurrent().UserId))
             {
                 data.Remove(OperatorProvider.Provider.GetCurrent().UserId);
             }
-            RedisHelper.Del(cacheKey + "list");
-            RedisHelper.Set(cacheKey + "list",data);
+            await RedisHelper.DelAsync(cacheKey + "list");
+            await RedisHelper.SetAsync(cacheKey + "list",data);
         }
 
     }

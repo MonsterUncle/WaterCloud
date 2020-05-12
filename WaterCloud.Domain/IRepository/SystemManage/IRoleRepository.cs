@@ -6,12 +6,13 @@
 *********************************************************************************/
 using WaterCloud.DataBase;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Domain.SystemManage
 {
     public interface IRoleRepository : IRepositoryBase<RoleEntity>
     {
-        void DeleteForm(string keyValue);
-        void SubmitForm(RoleEntity roleEntity, List<RoleAuthorizeEntity> roleAuthorizeEntitys, string keyValue);
+        Task DeleteForm(string keyValue);
+        Task SubmitForm(RoleEntity roleEntity, List<RoleAuthorizeEntity> roleAuthorizeEntitys, string keyValue);
     }
 }

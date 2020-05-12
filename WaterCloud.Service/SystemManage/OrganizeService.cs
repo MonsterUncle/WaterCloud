@@ -8,6 +8,7 @@ using WaterCloud.Domain.SystemManage;
 using WaterCloud.Repository.SystemManage;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -21,17 +22,17 @@ namespace WaterCloud.Service.SystemManage
 
         private string cacheKey = "watercloud_organizedata_";
 
-        public List<OrganizeEntity> GetList()
+        public async Task<List<OrganizeEntity>> GetList()
         {
-            var cachedata = service.CheckCacheList(cacheKey + "list");
+            var cachedata =await service.CheckCacheList(cacheKey + "list");
             return cachedata;
         }
-        public OrganizeEntity GetForm(string keyValue)
+        public async Task<OrganizeEntity> GetForm(string keyValue)
         {
-            var cachedata = service.CheckCache(cacheKey, keyValue);
+            var cachedata =await service.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
             if (service.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
             {
@@ -43,25 +44,25 @@ namespace WaterCloud.Service.SystemManage
                 {
                     throw new Exception("组织使用中，无法删除");
                 }
-                service.Delete(t => t.F_Id == keyValue);
-                RedisHelper.Del(cacheKey + keyValue);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Delete(t => t.F_Id == keyValue);
+                await RedisHelper.DelAsync(cacheKey + keyValue);
+                await  RedisHelper.DelAsync(cacheKey + "list");
             }
         }
-        public void SubmitForm(OrganizeEntity organizeEntity, string keyValue)
+        public async Task SubmitForm(OrganizeEntity organizeEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
                 organizeEntity.Modify(keyValue);
-                service.Update(organizeEntity);
-                RedisHelper.Del(cacheKey + keyValue);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Update(organizeEntity);
+                await RedisHelper.DelAsync(cacheKey + keyValue);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
             else
             {
                 organizeEntity.Create();
-                service.Insert(organizeEntity);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Insert(organizeEntity);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
         }
     }

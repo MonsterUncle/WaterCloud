@@ -9,6 +9,7 @@ using WaterCloud.Repository.SystemSecurity;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemSecurity
 {
@@ -21,9 +22,9 @@ namespace WaterCloud.Service.SystemSecurity
 
         private string cacheKey = "watercloud_filterip_";// 区域
 
-        public List<FilterIPEntity> GetList(string keyword)
+        public async Task<List<FilterIPEntity>> GetList(string keyword)
         {
-            var cachedata = service.CheckCacheList(cacheKey + "list");
+            var cachedata =await service.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(keyword))
             {
                 cachedata = cachedata.Where(t => t.F_StartIP.Contains(keyword)).ToList();
@@ -31,20 +32,20 @@ namespace WaterCloud.Service.SystemSecurity
             }
             return cachedata.OrderBy(t => t.F_CreatorTime).ToList();
         }
-        public FilterIPEntity GetForm(string keyValue)
+        public async Task<FilterIPEntity> GetForm(string keyValue)
         {
-            var cachedata = service.CheckCache(cacheKey, keyValue);
+            var cachedata =await service.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
-        public void DeleteForm(string keyValue)
+        public async Task DeleteForm(string keyValue)
         {
-            service.Delete(t => t.F_Id == keyValue);
-            RedisHelper.Del(cacheKey + keyValue);
-            RedisHelper.Del(cacheKey + "list");
+            await service.Delete(t => t.F_Id == keyValue);
+            await RedisHelper.DelAsync(cacheKey + keyValue);
+            await RedisHelper.DelAsync(cacheKey + "list");
         }
-        public bool CheckIP(string ip)
+        public async Task<bool> CheckIP(string ip)
         {
-            var list = GetList("");
+            var list =await GetList("");
             foreach (var item in list)
             {
                 if (item.F_Type == false)
@@ -75,20 +76,20 @@ namespace WaterCloud.Service.SystemSecurity
             }
             return (long)num;
         }
-        public void SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
+        public async Task SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
                 filterIPEntity.Modify(keyValue);
-                service.Update(filterIPEntity);
-                RedisHelper.Del(cacheKey + keyValue);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Update(filterIPEntity);
+                await RedisHelper.DelAsync(cacheKey + keyValue);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
             else
             {
                 filterIPEntity.Create();
-                service.Insert(filterIPEntity);
-                RedisHelper.Del(cacheKey + "list");
+                await service.Insert(filterIPEntity);
+                await RedisHelper.DelAsync(cacheKey + "list");
             }
         }
     }
