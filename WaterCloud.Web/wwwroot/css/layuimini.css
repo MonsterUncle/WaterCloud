@@ -130,6 +130,8 @@
 
     .layuimini-tab .layui-tab-content {
         height: calc(100% - 37px) !important;
+        -webkit-overflow-scrolling: touch;
+        overflow-y: scroll;
     }
 
         .layuimini-tab .layui-tab-content .layui-tab-item {

@@ -271,7 +271,6 @@ layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function 
                     return miniAdmin.success('清除缓存成功');
                 }
             });
-
             /**
              * 消息
              */
@@ -290,6 +289,7 @@ layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function 
                     offset: 'rb',
                     content: '/Home/Message',
                     success: function (index, layero) {
+                        $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
                     },
                     end: function () {
                         $('.layui-icon-notice').empty();

@@ -209,6 +209,9 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 area: [_width, _height],
                 content: options.url,
                 btn: options.btn,
+                success: function (layero) {
+                    $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
+                },
                 //btnclass: options.btnclass,
                 yes: function (index, layero) {
                     if (!!options.yes) {

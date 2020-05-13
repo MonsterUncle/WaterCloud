@@ -383,7 +383,15 @@
                                 layer.msg(data.message);
                                 $.login.formMessage(data.message);
                             }
+                        },
+                        error: function () {
+                            $("#login_button").empty();
+                            $("#login_button").removeAttr('disabled').html("登 入");
+                            $("#switchCode").trigger("click");
+                            layer.msg("系统未知错误,请重新登录");
+                            $.login.formMessage("系统未知错误,请重新登录");
                         }
+
                     });
 
                     return false;

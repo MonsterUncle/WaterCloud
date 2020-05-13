@@ -89,3 +89,7 @@
         display: none;
     }
 }
+.scroll-wrapper {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
+}

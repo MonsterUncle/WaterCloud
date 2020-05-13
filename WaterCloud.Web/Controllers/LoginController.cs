@@ -93,16 +93,16 @@ namespace WaterCloud.Web.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> CheckLogin(string username, string password, string code)
         {
-            if (!await CheckIP())
-            {
-                throw new Exception("IP受限");
-            }
             LogEntity logEntity = new LogEntity();
             logEntity.F_ModuleName ="系统登录";
             logEntity.F_Type = DbLogType.Login.ToString();
             try
             {
-                if (WebHelper.GetSession("wcloud_session_verifycode").IsEmpty() || Md5.md5(code.ToLower(), 16) != WebHelper.GetSession("wcloud_session_verifycode").ToString())
+                if (!await CheckIP())
+                {
+                    throw new Exception("IP受限");
+                }
+                if (WebHelper.GetSession("wcloud_session_verifycode").IsEmpty()|| Md5.md5(code.ToLower(), 16) != WebHelper.GetSession("wcloud_session_verifycode"))
                 {
                     throw new Exception("验证码错误，请重新输入");
                 }
