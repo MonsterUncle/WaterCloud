@@ -29,7 +29,7 @@
                     field: 'F_CreatorUserName', title: '创建人', width: 100, sort: true,
                 },
                 {
-                    field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true,
+                    field: 'F_CreatorTime', title: '创建时间', minWidth: 120, sort: true,
                     templet: function (d) {
                         if (d.F_CreatorTime) {
                             var time = new Date(d.F_CreatorTime);
