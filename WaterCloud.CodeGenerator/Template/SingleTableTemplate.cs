@@ -550,10 +550,11 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");
-                foreach (var item in baseConfigModel.PageIndex.ColumnList)
+                for (int i = 0; i < baseConfigModel.PageIndex.ColumnList.Count-1; i++)
                 {
-                    sb.AppendLine("                 { field: '" + item + "', title: '" + item + "', width: 120, sort: true },");
+                    sb.AppendLine("                 { field: '" + baseConfigModel.PageIndex.ColumnList[i] + "', title: '" + baseConfigModel.PageIndex.ColumnList[i] + "', width: 120, sort: true },");
                 }
+                sb.AppendLine("                 { field: '" + baseConfigModel.PageIndex.ColumnList[baseConfigModel.PageIndex.ColumnList.Count-1] + "', title: '" + baseConfigModel.PageIndex.ColumnList[baseConfigModel.PageIndex.ColumnList.Count - 1] + "', width: 120, sort: true }");
                 sb.AppendLine("             ]],");
                 sb.AppendLine("             done: function () {");
                 sb.AppendLine("                 //权限控制");
@@ -582,10 +583,11 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");
-                foreach (var item in baseConfigModel.PageIndex.ColumnList)
+                for (int i = 0; i < baseConfigModel.PageIndex.ColumnList.Count - 1; i++)
                 {
-                    sb.AppendLine("                 { field: '" + item + "', title: '" + item + "', width: 120, sort: true },");
+                    sb.AppendLine("                 { field: '" + baseConfigModel.PageIndex.ColumnList[i] + "', title: '" + baseConfigModel.PageIndex.ColumnList[i] + "', width: 120 },");
                 }
+                sb.AppendLine("                 { field: '" + baseConfigModel.PageIndex.ColumnList[baseConfigModel.PageIndex.ColumnList.Count - 1] + "', title: '" + baseConfigModel.PageIndex.ColumnList[baseConfigModel.PageIndex.ColumnList.Count - 1] + "', minWidth: 120 }");
                 sb.AppendLine("             ]],");
                 sb.AppendLine("             done: function () {");
                 sb.AppendLine("                 //权限控制");
