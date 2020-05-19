@@ -24,13 +24,13 @@ namespace WaterCloud.Web
             {
                 WebHelper.WriteCookie("WaterCloud_login_error", "overdue");
                 filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '/page/error.html?msg=" + "系统登录已超时，请重新登录！" + "';</script>");
-                OperatorProvider.Provider.EmptyCurrent();
+                OperatorProvider.Provider.EmptyCurrent("pc_");
                 return;
             }
             //登录检测
             if (!this.LoginAuthorize(filterContext))
             {
-                OperatorProvider.Provider.EmptyCurrent();
+                OperatorProvider.Provider.EmptyCurrent("pc_");
                 return;
             }
             //管理员跳过检测
@@ -41,7 +41,7 @@ namespace WaterCloud.Web
             //用户和角色检测
             if (!this.RoleAuthorize())
             {
-                OperatorProvider.Provider.EmptyCurrent();
+                OperatorProvider.Provider.EmptyCurrent("pc_");
                 filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '/page/error.html?msg=" + "很抱歉！您的权限不足，访问被拒绝！" + "';</script>");
                 return;
             }
