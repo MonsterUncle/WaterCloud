@@ -164,7 +164,7 @@ namespace WaterCloud.Service.SystemManage
                         userLogOnEntity.F_UserOnLine = true;
                         await RedisHelper.DelAsync(cacheKeyOperator + "info_" + userEntity.F_Id);
                         await RedisHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
-                        OperatorProvider.Provider.ClearCurrentErrorNum();
+                        await OperatorProvider.Provider.ClearCurrentErrorNum();
                         return userEntity;
                     }
                     else
@@ -177,7 +177,7 @@ namespace WaterCloud.Service.SystemManage
                             {
                                 userEntity.F_EnabledMark = false;
                                 await service.Update(userEntity);
-                                OperatorProvider.Provider.ClearCurrentErrorNum();
+                                await OperatorProvider.Provider.ClearCurrentErrorNum();
                                 throw new Exception("密码不正确，账户被系统锁定");
                             }
                             else
