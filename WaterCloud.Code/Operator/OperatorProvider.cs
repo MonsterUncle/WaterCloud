@@ -162,6 +162,8 @@ namespace WaterCloud.Code
                 await RedisHelper.SetAsync(cacheKeyOperator + operatorModel.loginMark, operatorModel);
                 await RedisHelper.DelAsync(cacheKeyOperator + facilityMark + operatorModel.UserId);
                 await RedisHelper.SetAsync(cacheKeyOperator + facilityMark + operatorModel.UserId, token);
+                RedisHelper.Expire(cacheKeyOperator + operatorModel.loginMark, 43200);//过期时间12小时
+                RedisHelper.Expire(cacheKeyOperator + facilityMark + operatorModel.UserId, 43200);//过期时间12小时
                 return token;
             }
             catch (Exception)
@@ -348,6 +350,7 @@ namespace WaterCloud.Code
                 res++;
                 num = res + "";
                 await RedisHelper.SetAsync(cacheKeyError + cookieMark, num);
+                RedisHelper.Expire(cacheKeyError + cookieMark, 86400);//过期时间一天
             }
             catch (Exception)
             {
