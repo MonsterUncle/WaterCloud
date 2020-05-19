@@ -109,7 +109,7 @@ namespace WaterCloud.Service.SystemManage
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<UserEntity> CheckLogin(string username, string password)
+        public async Task<UserEntity> CheckLogin(string username, string password,string apitoken="")
         {
             UserEntity userEntity =await service.FindEntity(t => t.F_Account == username);
             if (userEntity != null)
@@ -164,20 +164,20 @@ namespace WaterCloud.Service.SystemManage
                         userLogOnEntity.F_UserOnLine = true;
                         await RedisHelper.DelAsync(cacheKeyOperator + "info_" + userEntity.F_Id);
                         await RedisHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
-                        await OperatorProvider.Provider.ClearCurrentErrorNum();
+                        await OperatorProvider.Provider.ClearCurrentErrorNum(apitoken);
                         return userEntity;
                     }
                     else
                     {
                         if (userEntity.F_Account != "admin")
                         {
-                            int num =await OperatorProvider.Provider.AddCurrentErrorNum();
+                            int num =await OperatorProvider.Provider.AddCurrentErrorNum(apitoken);
                             string erornum = (5 - num).ToString();
                             if (num == 5)
                             {
                                 userEntity.F_EnabledMark = false;
                                 await service.Update(userEntity);
-                                await OperatorProvider.Provider.ClearCurrentErrorNum();
+                                await OperatorProvider.Provider.ClearCurrentErrorNum(apitoken);
                                 throw new Exception("密码不正确，账户被系统锁定");
                             }
                             else

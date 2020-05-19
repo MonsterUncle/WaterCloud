@@ -17,6 +17,8 @@ namespace WaterCloud.Service.SystemSecurity
 {
     public class LogService: IDenpendency
     {
+        //登录信息保存方式
+        private string LoginProvider = GlobalContext.SystemConfig.LoginProvider;
         private ILogRepository service = new LogRepository();
         private ModuleService moduleservice = new ModuleService();
         public async Task<List<LogEntity>> GetList(Pagination pagination, int timetype, string keyword="")
@@ -94,7 +96,7 @@ namespace WaterCloud.Service.SystemSecurity
                 var operatorModel = OperatorProvider.Provider.GetCurrent();
                 if (operatorModel==null)
                 {
-                    logEntity.F_IPAddress = WebHelper.Ip;
+                    logEntity.F_IPAddress = LoginProvider=="WebApi"? "未连接未知": WebHelper.Ip;
                     logEntity.F_IPAddressName = "本地局域网";
                 }
                 else
@@ -107,7 +109,7 @@ namespace WaterCloud.Service.SystemSecurity
             }
             catch (Exception)
             {
-                logEntity.F_IPAddress = WebHelper.Ip;
+                logEntity.F_IPAddress = LoginProvider == "WebApi" ? "未连接未知" : WebHelper.Ip;
                 logEntity.F_IPAddressName = "本地局域网";
                 logEntity.Create();
                 await service.Insert(logEntity);
