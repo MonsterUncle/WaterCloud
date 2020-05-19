@@ -58,7 +58,7 @@ namespace WaterCloud.Web.Controllers
                 F_Result = true,
                 F_Description = "安全退出系统",
             });
-            await OperatorProvider.Provider.EmptyCurrent();
+            await OperatorProvider.Provider.EmptyCurrent("pc_");
             return Redirect("/Login/Index");
         }
         [HttpPost]
@@ -75,7 +75,7 @@ namespace WaterCloud.Web.Controllers
                 //登录检测      
                 if ((await OperatorProvider.Provider.IsOnLine("pc_")).stateCode<=0)
                 {
-                    await OperatorProvider.Provider.EmptyCurrent();
+                    await OperatorProvider.Provider.EmptyCurrent("pc_");
                     return Content(new AjaxResult { state = ResultType.error.ToString() }.ToJson());
                 }
                 else
@@ -91,7 +91,7 @@ namespace WaterCloud.Web.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> CheckLogin(string username, string password, string code)
+        public async Task<ActionResult> CheckLogin(string username, string password)
         {
             LogEntity logEntity = new LogEntity();
             logEntity.F_ModuleName ="系统登录";
@@ -101,10 +101,6 @@ namespace WaterCloud.Web.Controllers
                 if (!await CheckIP())
                 {
                     throw new Exception("IP受限");
-                }
-                if (WebHelper.GetSession("wcloud_session_verifycode").IsEmpty()|| Md5.md5(code.ToLower(), 16) != WebHelper.GetSession("wcloud_session_verifycode"))
-                {
-                    throw new Exception("验证码错误，请重新输入");
                 }
                 UserEntity userEntity =await _userService.CheckLogin(username, password);
                 OperatorModel operatorModel = new OperatorModel();
