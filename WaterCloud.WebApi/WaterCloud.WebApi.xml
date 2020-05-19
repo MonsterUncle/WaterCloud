@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WaterCloud.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:WaterCloud.WebApi.Controllers.TestController">
+            <summary>
+            测试文件
+            </summary>
+        </member>
+        <member name="T:WaterCloud.WebApi.Controllers.UserController">
+            <summary>
+            用户接口
+            </summary>
+        </member>
+        <member name="M:WaterCloud.WebApi.Controllers.UserController.Login(System.String,System.String,System.String)">
+            <summary>
+            用户登录
+            </summary>
+            <param name="userName"></param>
+            <param name="password"></param>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.WebApi.Controllers.UserController.LoginOff(System.String)">
+            <summary>
+            用户退出登录
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WaterCloud.WebApi.AuthorizeFilterAttribute">
+            <summary>
+            验证token
+            </summary>
+        </member>
+        <member name="F:WaterCloud.WebApi.AuthorizeFilterAttribute.IgnoreToken">
+            <summary>
+            忽略token的方法
+            </summary>
+        </member>
+        <member name="M:WaterCloud.WebApi.AuthorizeFilterAttribute.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
+            <summary>
+            异步接口日志
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
