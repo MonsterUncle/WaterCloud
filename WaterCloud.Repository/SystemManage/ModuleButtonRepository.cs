@@ -30,7 +30,7 @@ namespace WaterCloud.Repository.SystemManage
             using (var db =new RepositoryBase(ConnectStr, providerName))
             {
                 var moduleList = db.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 2).Select(a => a.F_ItemId).ToList();
-                var query = db.IQueryable<ModuleButtonEntity>().Where(a => moduleList.Contains(a.F_Id) && a.F_EnabledMark == true);
+                var query = db.IQueryable<ModuleButtonEntity>().Where(a => (moduleList.Contains(a.F_Id)||a.F_IsPublic==true) && a.F_EnabledMark == true);
                 var result = query.OrderBy(a => a.F_SortCode).ToList();
                 return result;
             }
@@ -40,8 +40,8 @@ namespace WaterCloud.Repository.SystemManage
         {
             using (var db = new RepositoryBase(ConnectStr, providerName))
             {
-                var query = db.IQueryable<ModuleButtonEntity>()
-                    .InnerJoin<ModuleEntity>((a, b) => a.F_ModuleId == b.F_Id)
+                var query = db.IQueryable<ModuleButtonEntity>(a=>a.F_EnabledMark==true)
+                    .InnerJoin<ModuleEntity>((a, b) => a.F_ModuleId == b.F_Id&& b.F_EnabledMark == true)
                     .Select((a, b) => new ModuleButtonEntity { 
                     F_Id=a.F_Id,
                     F_AllowDelete=a.F_AllowDelete,

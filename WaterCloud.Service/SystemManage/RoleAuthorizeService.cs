@@ -39,12 +39,12 @@ namespace WaterCloud.Service.SystemManage
             if (OperatorProvider.Provider.GetCurrent().IsSystem)
             {
                 data =await moduleApp.GetList();
-                data = data.Where(a => a.F_IsMenu == true).ToList();
+                data = data.Where(a => a.F_IsMenu == true&&a.F_EnabledMark==true).ToList();
             }
             else
             {
                 var moduledata =await moduleApp.GetList();
-                moduledata = moduledata.Where(a => a.F_IsMenu == true).ToList();
+                moduledata = moduledata.Where(a => a.F_IsMenu == true && a.F_EnabledMark == true).ToList();
                 var role =await roleservice.FindEntity(roleId);
                 if (role==null||role.F_EnabledMark==false)
                 {
@@ -86,6 +86,7 @@ namespace WaterCloud.Service.SystemManage
                         data.Add(moduleButtonEntity);
                     }
                 }
+                data.AddRange(buttondata.Where(a => a.F_IsPublic == true));
             }
             return data.OrderBy(t => t.F_SortCode).ToList();
         }

@@ -102,6 +102,10 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             else
             {
+                if (keyValue==moduleEntity.F_ParentId)
+                {
+                    throw new Exception("父级不能是自身");
+                }
                 //前端传值为null，更新的时候null不更新
                 if (moduleEntity.F_Icon==null)
                 {

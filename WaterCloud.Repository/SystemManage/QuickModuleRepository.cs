@@ -44,7 +44,7 @@ namespace WaterCloud.Repository.SystemManage
                     }
                     foreach (var item in modulelist)
                     {
-                        var module =await db.FindEntity<ModuleEntity>(a => a.F_Id == item);
+                        var module =await db.FindEntity<ModuleEntity>(a => a.F_Id == item&& a.F_EnabledMark == true);
                         if (module.F_UrlAddress!=null&&list.Count<8)
                         {
                             list.Add(new QuickModuleExtend
@@ -97,9 +97,9 @@ namespace WaterCloud.Repository.SystemManage
                 var modulelist = db.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleId && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
                 if ((await db.FindEntity<UserEntity>(userId)).F_Account == "admin")
                 {
-                    modulelist = db.IQueryable<ModuleEntity>(a => a.F_EnabledMark == true&&a.F_IsPublic==false).Select(a => a.F_Id).ToList();
+                    modulelist = db.IQueryable<ModuleEntity>(a => a.F_EnabledMark == true).Select(a => a.F_Id).ToList();
                 }
-                quicks = db.IQueryable<ModuleEntity>(a => modulelist.Contains(a.F_Id) && a.F_UrlAddress != null)
+                quicks = db.IQueryable<ModuleEntity>(a => modulelist.Contains(a.F_Id) && a.F_EnabledMark==true && a.F_UrlAddress != null)
                     .Select(a=>new ModuleEntity { 
                     F_Id=a.F_Id,
                     F_EnabledMark=false,
