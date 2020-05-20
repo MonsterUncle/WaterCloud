@@ -45,7 +45,7 @@ namespace WaterCloud.Repository.SystemManage
                     foreach (var item in modulelist)
                     {
                         var module =await db.FindEntity<ModuleEntity>(a => a.F_Id == item&& a.F_EnabledMark == true);
-                        if (module.F_UrlAddress!=null&&list.Count<8)
+                        if (module!=null&&module.F_UrlAddress!=null&&list.Count<8)
                         {
                             list.Add(new QuickModuleExtend
                             {
@@ -67,13 +67,18 @@ namespace WaterCloud.Repository.SystemManage
                 {
                     foreach (var item in quicklist.ToList())
                     {
-                        var module =await  db.FindEntity<ModuleEntity>(a => a.F_Id==item.F_ModuleId);
-                        list.Add( new QuickModuleExtend { 
-                        id= module.F_Id,
-                            title=module.F_FullName,
-                            href=module.F_UrlAddress,
-                            icon=module.F_Icon
-                        });
+                        var module =await  db.FindEntity<ModuleEntity>(a => a.F_Id==item.F_ModuleId&&a.F_EnabledMark==true);
+                        if (module!=null)
+                        {
+                            list.Add(new QuickModuleExtend
+                            {
+                                id = module.F_Id,
+                                title = module.F_FullName,
+                                href = module.F_UrlAddress,
+                                icon = module.F_Icon
+                            });
+                        }
+
                     }                   
                 }
                 if (quicks.Count>0)
@@ -107,7 +112,11 @@ namespace WaterCloud.Repository.SystemManage
                     }).ToList();
                 foreach (var item in quicklist)
                 {
-                    quicks.Find(a => a.F_Id == item.F_ModuleId).F_EnabledMark = true;
+                   var temp =quicks.Find(a => a.F_Id == item.F_ModuleId);
+                    if (temp!=null)
+                    {
+                        temp.F_EnabledMark = true;
+                    }
                 }
                 return quicks;
 
