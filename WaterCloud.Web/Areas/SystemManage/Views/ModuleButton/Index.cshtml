@@ -11,6 +11,15 @@
             treetable = layui.treetable,
             common = layui.common;
         var moduleId = $.request("moduleId");
+        var modulename = $.request("modulename");
+        if (!!modulename) {
+            try {
+                $('#txt_name').val(decodeURI(escape(modulename)));
+            } catch (e) {
+                $('#txt_name').val(decodeURI(modulename));
+            }
+
+        }
         common.rendertable({
             elem: '#currentTableId',
             url: "/SystemManage/ModuleButton/GetTreeGridJson?moduleId=" + moduleId,
@@ -115,7 +124,7 @@
                 }
                 common.modalOpen({
                     title: "编辑按钮",
-                    url: "/SystemManage/ModuleButton/Form?keyValue=" + module.data.F_Id,
+                    url: "/SystemManage/ModuleButton/Form?moduleId=" + moduleId+"&keyValue=" + module.data.F_Id,
                     width: "500px",
                     height: "440px",
                 });
@@ -152,6 +161,12 @@
             <div style="margin: 10px 10px 10px 10px">
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">菜单名称:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="txt_name" name="txt_name" readonly class="layui-input">
+                            </div>
+                        </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">关键字:</label>
                             <div class="layui-input-inline">

@@ -176,8 +176,25 @@
                     return false;
                 }
                 miniTab.openNewTabByIframe({
-                    title: "系统按钮",
-                    href: "/SystemManage/ModuleButton/Index?moduleId=" + module.data.F_Id,
+                    title: "按钮管理",
+                    href: "/SystemManage/ModuleButton/Index?moduleId=" + module.data.F_Id + "&modulename=" + module.data.F_FullName,
+                });
+            }
+            else if (obj.event === 'modulefields') {
+                if (module == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                if (miniTab.check("/SystemManage/ModuleFields/Index", true)) {
+                    common.modalAlert("系统按钮界面已打开,请关闭后重试", "warning");
+                }
+                if (module.data.F_Target != "iframe" || !module.data.F_UrlAddress||module.data.F_IsPublic) {
+                    common.modalAlert("菜单不能创建按钮,请修改后重试", "warning");
+                    return false;
+                }
+                miniTab.openNewTabByIframe({
+                    title: "字段管理",
+                    href: "/SystemManage/ModuleFields/Index?moduleId=" + module.data.F_Id + "&modulename=" + module.data.F_FullName,
                 });
             }
             return false;
@@ -211,6 +228,7 @@
                 <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
                 <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
                 <button id="NF-modulebutton" authorize="yes" class="layui-btn layui-btn-sm  data-modulebutton-btn" lay-event="modulebutton"> <i class="fa fa-gavel"></i>按钮管理</button>
+                <button id="NF_modulefields" authorize="yes" class="layui-btn layui-btn-sm  data-modulefields-btn" lay-event="modulefields"> <i class="fa fa-table"></i>字段管理</button>
             </div>
         </script>
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
