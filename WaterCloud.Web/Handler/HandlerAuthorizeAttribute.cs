@@ -4,6 +4,8 @@ using WaterCloud.Service.SystemManage;
 using WaterCloud.Code;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
+using System.Security.Policy;
+using Serenity.Web;
 /// <summary>
 /// 权限验证
 /// </summary>
@@ -29,7 +31,7 @@ namespace WaterCloud.Web
             if (!ActionAuthorize(filterContext))
             {
                 OperatorProvider.Provider.EmptyCurrent("pc_");
-                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '/page/error.html?msg=" + "很抱歉！您的权限不足，访问被拒绝！" + "';</script>");
+                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.GetBaseUri() + "Home/Error?msg=" + "很抱歉！您的权限不足，访问被拒绝！" + "';</script>");
                 return;
             }
         }

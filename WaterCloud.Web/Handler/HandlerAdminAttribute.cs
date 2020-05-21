@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Serenity.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace WaterCloud.Web
             }
             else
             {
-                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '/page/error.html?msg=" + "很抱歉！您的权限不足，请使用管理员登录！" + "';</script>");
+                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '"+ filterContext .HttpContext.Request.GetBaseUri()+ "Home/Error?msg=" + "很抱歉！您的权限不足，请使用管理员登录！" + "';</script>");
                 return;
             }
         }

@@ -1,6 +1,5 @@
 using CSRedis;
 using System.IO;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Builder;
@@ -10,9 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WaterCloud.Code;
 using WaterCloud.Code.Model;
-using Microsoft.Extensions.Logging;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Newtonsoft.Json.Serialization;
 
 namespace WaterCloud.Web
 {
@@ -51,8 +50,15 @@ namespace WaterCloud.Web
             services.AddDataService();
             //API控制器
             services.AddControllers();
-            //MVC控制器视图
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<GlobalExceptionFilter>();
+                options.ModelMetadataDetailsProviders.Add(new ModelBindingMetadataProvider());
+            }).AddNewtonsoftJson(options =>
+            {
+                // 返回数据首字母不小写，CamelCasePropertyNamesContractResolver是小写
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            });
             //定时任务
             services.AddBackgroundServices();
             services.AddOptions();

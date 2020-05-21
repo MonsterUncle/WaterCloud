@@ -8,31 +8,35 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WaterCloud.Web.Controllers
 {
-    [HandlerLogin]
     public class HomeController : Controller
     {
         [HttpGet]
+        [HandlerLogin]
         public ActionResult Index()
         {
 
             return View();
         }
         [HttpGet]
+        [HandlerLogin]
         public ActionResult Default()
         {
             return View();
         }
         [HttpGet]
+        [HandlerLogin]
         public ActionResult UserSetting()
         {
             return View();
         }
         [HttpGet]
+        [HandlerLogin(false)]
         public ActionResult Error()
         {
             return View();
         }
         [HttpGet]
+        [HandlerLogin]
         public ActionResult Message()
         {
             return View();
