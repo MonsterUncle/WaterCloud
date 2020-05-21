@@ -78,6 +78,7 @@ namespace WaterCloud.WebApi
             app.UseCors(builder => builder.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
+            app.UseMiddleware(typeof(GlobalExceptionMiddleware));
             app.UseCors(builder =>
             {
                 builder.WithOrigins(GlobalContext.SystemConfig.AllowCorsSite.Split(',')).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
