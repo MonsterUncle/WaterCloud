@@ -22,7 +22,6 @@ namespace WaterCloud.Web
                 obj.message = context.Exception.GetOriginalException().Message;
                 if (string.IsNullOrEmpty(obj.message))
                 {
-                    LogHelper.WriteWithTime(obj.message);
                     obj.message = "抱歉，系统错误，请联系管理员！";
                 }
                 context.Result = new JsonResult(obj);
@@ -31,7 +30,6 @@ namespace WaterCloud.Web
             else
             {
                 string errorMessage = context.Exception.GetOriginalException().Message;
-                LogHelper.WriteWithTime(errorMessage);
                 context.Result = new RedirectResult(context.HttpContext.Request.GetBaseUri() + "Home/Error?message=" + HttpUtility.UrlEncode(errorMessage));
                 context.ExceptionHandled = true;
             }

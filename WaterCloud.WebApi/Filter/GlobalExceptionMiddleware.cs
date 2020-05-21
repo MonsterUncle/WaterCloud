@@ -26,7 +26,6 @@ namespace WaterCloud.WebApi
             }
             catch (Exception ex)
             {
-                LogHelper.WriteWithTime(ex.Message);
                 await HandleExceptionAsync(context, ex);
             }
         }
@@ -34,7 +33,7 @@ namespace WaterCloud.WebApi
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             var code = HttpStatusCode.OK;
-            LogHelper.WriteWithTime(exception.Message);
+            LogHelper.WriteWithTime(exception);
             var result = JsonConvert.SerializeObject(new AjaxResult
             {
                 state = ResultType.error.ToString(),
