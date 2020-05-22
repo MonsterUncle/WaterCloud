@@ -99,6 +99,16 @@ namespace WaterCloud.Service.SystemManage
             await RedisHelper.DelAsync(cacheKey + "list");
             await RedisHelper.DelAsync(initcacheKey + "modulefields_" + "list");
         }
+
+        public async Task<List<ModuleFieldsEntity>> GetListByRole(string roleid)
+        {
+            return await service.GetListByRole(roleid);
+        }
+
+        internal async Task<List<ModuleFieldsEntity>> GetListNew(string moduleId="")
+        {
+            return await service.GetListNew(moduleId);
+        }
         #endregion
 
     }

@@ -17,6 +17,7 @@ namespace WaterCloud.CodeGenerator
     public class SingleTableTemplate
     {
         private string buttoncacheKey = "watercloud_modulebuttondata_";
+        private string fieldscacheKey = "watercloud_modulefieldsdata_";
         private string cacheKey = "watercloud_moduleldata_";
         private string quickcacheKey = "watercloud_quickmoduledata_";
         private string initcacheKey = "watercloud_init_";
@@ -1118,11 +1119,13 @@ namespace WaterCloud.CodeGenerator
                     moduleButtonList.Add(modulebutton);
                 }
                 await moduleRepository.CreateModuleCode(moduleEntity,moduleButtonList);
+                await RedisHelper.DelAsync(fieldscacheKey + "list");
                 await RedisHelper.DelAsync(buttoncacheKey + "list");
                 await RedisHelper.DelAsync(cacheKey + "list");
                 await RedisHelper.DelAsync(quickcacheKey + "list");
                 await RedisHelper.DelAsync(initcacheKey + "list");
                 await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
+                await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
             }
             #endregion
 

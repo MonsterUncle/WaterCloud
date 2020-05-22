@@ -21,6 +21,8 @@ namespace WaterCloud.Service.SystemManage
         private IRoleAuthorizeRepository service = new RoleAuthorizeRepository();
         private ModuleService moduleApp = new ModuleService();
         private ModuleButtonService moduleButtonApp = new ModuleButtonService();
+        private ModuleFieldsService moduleFieldsApp = new ModuleFieldsService();
+        
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -89,6 +91,33 @@ namespace WaterCloud.Service.SystemManage
                 data.AddRange(buttondata.Where(a => a.F_IsPublic == true));
             }
             return data.OrderBy(t => t.F_SortCode).ToList();
+        }
+        public async Task<List<ModuleFieldsEntity>> GetFieldsList(string roleId)
+        {
+            var data = new List<ModuleFieldsEntity>();
+            if (OperatorProvider.Provider.GetCurrent().IsSystem)
+            {
+                data = await moduleFieldsApp.GetListNew();
+            }
+            else
+            {
+                var fieldsdata = await moduleFieldsApp.GetListNew();
+                var role = await roleservice.FindEntity(roleId);
+                if (role == null || role.F_EnabledMark == false)
+                {
+                    return data;
+                }
+                var authorizedata = (await service.CheckCacheList(cacheKey + "list")).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 3).ToList();
+                foreach (var item in authorizedata)
+                {
+                    ModuleFieldsEntity moduleFieldsEntity = fieldsdata.Find(t => t.F_Id == item.F_ItemId);
+                    if (moduleFieldsEntity != null)
+                    {
+                        data.Add(moduleFieldsEntity);
+                    }
+                }
+            }
+            return data.OrderByDescending(t => t.F_CreatorTime).ToList();
         }
         public async Task<bool> ActionValidate(string roleId, string action)
         {

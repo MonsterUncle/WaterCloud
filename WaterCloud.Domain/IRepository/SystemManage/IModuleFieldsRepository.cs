@@ -1,4 +1,6 @@
-﻿using WaterCloud.DataBase;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Domain.SystemManage
 {
@@ -9,5 +11,7 @@ namespace WaterCloud.Domain.SystemManage
     /// </summary>
     public interface IModuleFieldsRepository : IRepositoryBase<ModuleFieldsEntity>
     {
+        Task<List<ModuleFieldsEntity>> GetListByRole(string roleid);
+        Task<List<ModuleFieldsEntity>> GetListNew(string moduleId);
     }
 }

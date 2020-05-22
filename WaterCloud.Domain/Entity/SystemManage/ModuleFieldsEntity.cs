@@ -36,11 +36,6 @@ namespace WaterCloud.Domain.SystemManage
         /// 
         /// </summary>
         /// <returns></returns>
-        public int? F_SortCode { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool? F_DeleteMark { get; set; }
         /// <summary>
         /// 

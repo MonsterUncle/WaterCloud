@@ -20,6 +20,7 @@ namespace WaterCloud.Service.SystemManage
         private IRoleRepository service = new RoleRepository();
         private ModuleService moduleApp = new ModuleService();
         private ModuleButtonService moduleButtonApp = new ModuleButtonService();
+        private ModuleFieldsService moduleFieldsApp = new ModuleFieldsService();
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -65,7 +66,7 @@ namespace WaterCloud.Service.SystemManage
             await  RedisHelper.DelAsync(authorizecacheKey + "list");
             await  RedisHelper.DelAsync(authorizecacheKey + keyValue);
         }
-        public async Task SubmitForm(RoleEntity roleEntity, string[] permissionIds, string keyValue)
+        public async Task SubmitForm(RoleEntity roleEntity, string[] permissionIds,string[] permissionfieldsIds, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
@@ -79,6 +80,7 @@ namespace WaterCloud.Service.SystemManage
             }
             var moduledata =await moduleApp.GetList();
             var buttondata =await moduleButtonApp.GetList();
+            var fieldsdata = await moduleFieldsApp.GetList();
             List<RoleAuthorizeEntity> roleAuthorizeEntitys = new List<RoleAuthorizeEntity>();
             foreach (var itemId in permissionIds)
             {
@@ -90,12 +92,26 @@ namespace WaterCloud.Service.SystemManage
                 if (moduledata.Find(t => t.F_Id == itemId) != null)
                 {
                     roleAuthorizeEntity.F_ItemType = 1;
+                    roleAuthorizeEntitys.Add(roleAuthorizeEntity);
                 }
                 if (buttondata.Find(t => t.F_Id == itemId) != null)
                 {
                     roleAuthorizeEntity.F_ItemType = 2;
+                    roleAuthorizeEntitys.Add(roleAuthorizeEntity);
                 }
-                roleAuthorizeEntitys.Add(roleAuthorizeEntity);
+            }
+            foreach (var itemId in permissionfieldsIds)
+            {
+                RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
+                roleAuthorizeEntity.F_Id = Utils.GuId();
+                roleAuthorizeEntity.F_ObjectType = 1;
+                roleAuthorizeEntity.F_ObjectId = roleEntity.F_Id;
+                roleAuthorizeEntity.F_ItemId = itemId;
+                if (fieldsdata.Find(t => t.F_Id == itemId) != null)
+                {
+                    roleAuthorizeEntity.F_ItemType = 3;
+                    roleAuthorizeEntitys.Add(roleAuthorizeEntity);
+                }
             }
             await service.SubmitForm(roleEntity, roleAuthorizeEntitys, keyValue);
             await  RedisHelper.DelAsync(cacheKey + keyValue);
