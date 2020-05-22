@@ -14,9 +14,42 @@
     <link href="../css/watercloud.css" rel="stylesheet" />
     <style>
         /** 消息列表样式 */
+        .layui-badge {
+            position: relative;
+            display: inline-block;
+            padding: 0 6px;
+            font-size: 12px;
+            text-align: center;
+            background-color: #FF5722;
+            color: #fff;
+            border-radius: 2px;
+            left: 40px;
+        }
+
+        .layui-badge-yellow {
+            margin-top: 5px;
+            color: #faad14;
+            background: #fff;
+            border: 1px solid #ffe58f;
+        }
+
+        .layui-badge-green {
+            margin-top: 5px;
+            color: #52c41a;
+            background: #fff;
+            border: 1px solid #b7eb8f;
+        }
+
+        .layui-badge-red {
+            margin-top: 5px;
+            color: #f5222d;
+            background: #fff;
+            border: 1px solid #ffa39e;
+        }
         .message-list {
             position: absolute;
             top: 48px;
+            padding: 0px 15px;
             left: 0;
             right: 0;
             bottom: 45px;
@@ -30,7 +63,6 @@
 
         .message-list-item {
             display: block;
-            padding: 0px 15px;
             line-height: 24px;
             position: relative;
             border-bottom: 1px solid #e8e8e8;
@@ -47,7 +79,7 @@
                 margin-top: -20px;
                 border-radius: 50%;
                 position: absolute;
-                left: 50px;
+                left: 40px;
                 top: 50%;
             }
 
@@ -60,32 +92,27 @@
                 }
 
                 .message-list-item .message-item-icon + .message-item-right {
-                    margin-left: 55px;
+                    margin-left: 40px;
                 }
 
             .message-list-item .message-item-title {
                 color: #666;
                 font-size: 14px;
-                padding-left: 30px;
+                padding-left: 40px;
             }
 
             .message-list-item .message-item-text {
                 color: #999;
                 font-size: 12px;
-                padding-left: 30px;
+                padding-left: 40px;
             }
 
             .message-list-item > .layui-badge {
                 position: absolute;
                 right: 20px;
                 top: 12px;
-                left: 30px;
+                left: 40px;
             }
-
-                .message-list-item > .layui-badge + .message-item-right {
-                    margin-right: 50px;
-                }
-
         .message-btn-clear, .message-btn-more {
             color: #666;
             display: block;
@@ -134,53 +161,20 @@
         .show-empty .message-btn-clear, .show-empty .message-list {
             display: none;
         }
-        .layui-badge {
-            position: relative;
-            display: inline-block;
-            padding: 0 6px;
-            font-size: 12px;
-            text-align: center;
-            background-color: #FF5722;
-            color: #fff;
-            border-radius: 2px;
-            left:30px;
-        }
-        .layui-badge-yellow {
-            margin-top: 5px;
-            color: #faad14;
-            background: #fff;
-            border: 1px solid #ffe58f;
-        }
-        .layui-badge-green {
-            margin-top: 5px;
-            color: #52c41a;
-            background: #fff;
-            border: 1px solid #b7eb8f;
-        }
-        .layui-badge-red {
-            margin-top: 5px;
-            color: #f5222d;
-            background: #fff;
-            border: 1px solid #ffa39e;
-        }
+
         /** //消息列表样式结束 */
     </style>
     <script>
-
-
-        layui.use(['element','jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
-            var form = layui.form,
-                $ = layui.$,
-                common = layui.common,
-                laydate = layui.laydate;
+        layui.use(['element','jquery'], function () {
+            var $ = layui.$;
             $(function () {
                 //todo ajax获取3个信息的参数 进行显示
                 //通知值
-                var num1 = 5;
+                var num1 = 1;
                 //私信值
-                var num2 = 4;
+                var num2 = 1;
                 //带办值
-                var num3 = 3;
+                var num3 = 1;
                 $('#message1').html("通知(" + num1 + ")");
                 $('#message2').html("私信(" + num2 + ")");
                 $('#message3').html("待办(" + num3 + ")");
