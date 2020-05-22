@@ -20,12 +20,15 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         private readonly RoleAuthorizeService _roleAuthorizeService;
         private readonly ModuleService _moduleService;
         private readonly ModuleButtonService _moduleButtonService;
-        public RoleAuthorizeController(RoleAuthorizeService roleAuthorizeService, ModuleButtonService moduleButtonService, ModuleService moduleService)
+        private readonly ModuleFieldsService _moduleFieldsService;
+        public RoleAuthorizeController(RoleAuthorizeService roleAuthorizeService, ModuleButtonService moduleButtonService, ModuleService moduleService, ModuleFieldsService moduleFieldsService)
         {
             _roleAuthorizeService = roleAuthorizeService;
             _moduleService = moduleService;
             _moduleButtonService = moduleButtonService;
+            _moduleFieldsService = moduleFieldsService;
         }
+        [HttpGet]
         public async Task<ActionResult> GetPermissionTree(string roleId)
         {
             string roleid = OperatorProvider.Provider.GetCurrent().RoleId;
@@ -74,6 +77,57 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 {
                     tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
                 }
+                treeList.Add(tree);
+            }
+            return ResultDTree(treeList.TreeList());
+        }
+        [HttpPost]
+        public async Task<ActionResult> GetPermissionFieldsTree(string roleId,string moduleids)
+        {
+            string roleid = OperatorProvider.Provider.GetCurrent().RoleId;
+            var moduledata = new List<ModuleEntity>();
+            var fieldsdata = new List<ModuleFieldsEntity>();
+            //隐藏系统菜单及字典管理
+            if (roleid != null)
+            {
+                moduledata = await _moduleService.GetListByRole(roleid);
+                fieldsdata = await _moduleFieldsService.GetListByRole(roleid);
+            }
+            else
+            {
+                moduledata = await _moduleService.GetList();
+                fieldsdata = await _moduleFieldsService.GetList();
+                moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
+                fieldsdata = fieldsdata.Where(a => a.F_EnabledMark == true).ToList();
+            }
+            moduledata = moduledata.Where(a => a.F_IsPublic==false).ToList();
+            if (!string.IsNullOrEmpty(moduleids))
+            {
+                var list=moduleids.Split(',');
+                moduledata= moduledata.Where(a=> list.Contains(a.F_Id)).ToList();
+            }
+            var authorizedata = new List<RoleAuthorizeEntity>();
+            if (!string.IsNullOrEmpty(roleId))
+            {
+                authorizedata = await _roleAuthorizeService.GetList(roleId);
+            }
+            var treeList = new List<TreeGridModel>();
+            foreach (ModuleEntity item in moduledata)
+            {
+                TreeGridModel tree = new TreeGridModel();
+                tree.id = item.F_Id;
+                tree.title = item.F_FullName;
+                tree.parentId = item.F_ParentId;
+                tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
+                treeList.Add(tree);
+            }
+            foreach (ModuleFieldsEntity item in fieldsdata)
+            {
+                TreeGridModel tree = new TreeGridModel();
+                tree.id = item.F_Id;
+                tree.title = item.F_FullName;
+                tree.parentId = item.F_ModuleId;
+                tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
                 treeList.Add(tree);
             }
             return ResultDTree(treeList.TreeList());

@@ -8,6 +8,7 @@
             $ = layui.$,
             common = layui.common,
             laydate = layui.laydate;
+        common.authorizeFields('adminform');
         var keyValue = $.request("keyValue");
         $(function () {
             if (!!keyValue) {

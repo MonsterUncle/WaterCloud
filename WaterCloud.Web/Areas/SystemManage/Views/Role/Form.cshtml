@@ -38,7 +38,9 @@
                 title: '填写角色信息'
             }, {
                 title: '设置功能权限'
-            }]
+                }, {
+                    title: '设置字段权限'
+                }]
         });
         $(function () {
             initControl();
@@ -65,8 +67,8 @@
             });
         }
         // 初始化树
-        var DemoTree = dtree.render({
-            elem: "#demoTree",
+        var DemoTree1 = dtree.render({
+            elem: "#demoTree1",
             width: '200px',
             method: "GET",
             async: false,
@@ -75,7 +77,7 @@
             initLevel: 0,
             icon: "-1" , // 隐藏二级图标
             checkbarType: "p-casc",
-            scroll:"#toolbarDiv", // 绑定div元素
+            scroll:"#toolbarDiv1", // 绑定div元素
             url: "/SystemManage/RoleAuthorize/GetPermissionTree", // 使用url加载（可与data加载同时存在）
             request: { roleId: keyValue }
         });
@@ -86,14 +88,39 @@
             step.next('#stepForm');
             return false;
         });
+        var moduleids = [];
         form.on('submit(formStep2)', function (data) {
+            var params = dtree.getCheckbarNodesParam("demoTree1");
+            for (var i = 0; i < params.length; i++) {
+                moduleids.push(params[i].nodeId);
+            }
+            // 初始化树
+            var DemoTree2 = dtree.render({
+                elem: "#demoTree2",
+                width: '200px',
+                method: "POST",
+                async: false,
+                checkbar: true,
+                line: true,  // 显示树线
+                initLevel: 0,
+                icon: "-1", // 隐藏二级图标
+                checkbarType: "p-casc",
+                scroll: "#toolbarDiv2", // 绑定div元素
+                url: "/SystemManage/RoleAuthorize/GetPermissionFieldsTree", // 使用url加载（可与data加载同时存在）
+                request: { roleId: keyValue, moduleids: String(moduleids) }
+            }); 
+            step.next('#stepForm');
+            return false;
+        });
+        form.on('submit(formStep3)', function (data) {
             var postData = role;
-            var params = dtree.getCheckbarNodesParam("demoTree");
+            var params = dtree.getCheckbarNodesParam("demoTree2");
             var note = [];
             for (var i = 0; i < params.length; i++) {
                 note.push(params[i].nodeId);
             }
-            postData["permissionIds"] = String(note);
+            postData["permissionbuttonIds"] = String(moduleids);
+            postData["permissionfieldsIds"] = String(note);
             common.submitForm({
                 url: "/SystemManage/Role/SubmitForm?keyValue=" + keyValue,
                 param: postData,
@@ -171,14 +198,31 @@
                 <div>
                     <form class="layui-form layuimini-form">
                         <div class="layui-form-item ">
-                            <div style="height: 350px;overflow: auto;" id="toolbarDiv">
-                                <ul id="demoTree" class="dtree" data-id="0"></ul>
+                            <div style="height: 350px;overflow: auto;" id="toolbarDiv1">
+                                <ul id="demoTree1" class="dtree" data-id="0"></ul>
                             </div>
                         </div>
                         <div class="form-group-bottom text-right">
                             <div class="layui-input-block">
                                 <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
                                 <button class="layui-btn" lay-submit lay-filter="formStep2">
+                                    &emsp;下一步&emsp;
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <form class="layui-form layuimini-form">
+                        <div class="layui-form-item ">
+                            <div style="height: 350px;overflow: auto;" id="toolbarDiv2">
+                                <ul id="demoTree2" class="dtree" data-id="0"></ul>
+                            </div>
+                        </div>
+                        <div class="form-group-bottom text-right">
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                <button class="layui-btn" lay-submit lay-filter="formStep3">
                                     确认保存
                                 </button>
                             </div>

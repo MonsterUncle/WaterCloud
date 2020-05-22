@@ -13,10 +13,10 @@
             url: '/SystemManage/Notice/GetGridJson',
             cols: [[
                 { field: 'F_Id', title: 'ID', fixed: "left", hide: true, hideAlways: true },
-                { field: 'F_Title', title: '标题', width: 120 },
-                { field: 'F_Content', title: '内容', width: 250},
+                { field: 'F_Title', title: '标题', Width: 120 },
+                { field: 'F_Content', title: '内容', Width: 250},
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
+                    field: 'F_EnabledMark', title: '状态', Width: 80, sort: true,
                     templet: function (d) {
                         if (d.F_EnabledMark == true) {
                             return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
@@ -26,7 +26,7 @@
                     }
                 },
                 {
-                    field: 'F_CreatorUserName', title: '创建人', width: 100, sort: true,
+                    field: 'F_CreatorUserName', title: '创建人', Width: 100, sort: true,
                 },
                 {
                     field: 'F_CreatorTime', title: '创建时间', minWidth: 120, sort: true,

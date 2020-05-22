@@ -59,7 +59,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SubmitForm(RoleEntity roleEntity, string permissionIds, string keyValue)
+        public async Task<ActionResult> SubmitForm(RoleEntity roleEntity, string permissionbuttonIds, string permissionfieldsIds, string keyValue)
         {
             LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
@@ -87,7 +87,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                await _roleService.SubmitForm(roleEntity,string.IsNullOrEmpty(permissionIds)?new string[0]: permissionIds.Split(','), keyValue);
+                await _roleService.SubmitForm(roleEntity,string.IsNullOrEmpty(permissionbuttonIds) ?new string[0]: permissionbuttonIds.Split(','), string.IsNullOrEmpty(permissionfieldsIds) ? new string[0] : permissionfieldsIds.Split(','), keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");

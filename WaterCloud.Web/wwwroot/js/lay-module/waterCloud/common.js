@@ -15,7 +15,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
         table = layui.table;
 
     var obj = {
-        //table渲染封装
+        //table渲染封装里面有字段权限
         rendertable: function (options) {
             var defaults = {
                 elem: '#currentTableId',//主键
@@ -23,6 +23,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 cellMinWidth: 80,  //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 defaultToolbar: ['filter', 'exports', 'print'],//默认工具栏
                 method: 'get',//请求方法
+                cellMinWidth: 100,//最小宽度
                 limit: 10,//每页数据 默认
                 height: $(window).height() > 500 ? 'full-150' : 'full-190',
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -50,9 +51,25 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 }
             };
             var options = $.extend(defaults, options);
+            var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == false) {
+                var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
+                $.each(options.cols[0], function (i) {
+                    options.cols[0][i].hideAlways = true;
+                    options.cols[0][i].hide = true;
+                    if (dataJson != undefined) {
+                        dataJson.find(item => {
+                            if (options.cols[0][i].field == item.F_EnCode) {
+                                options.cols[0][i].hideAlways = false;
+                                options.cols[0][i].hide = false;
+                            }
+                        });
+                    }
+                });
+            };
            return table.render(options);
         },
-        //tabletree渲染封装
+        //tabletree渲染封装里面有字段权限
         rendertreetable: function (options) {
             //样式不协调，先不加
             //layer.load(2);
@@ -65,6 +82,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 treePidName: 'F_ParentId',	//父级节点字段
                 height: $(window).height() > 500 ? 'full-150' : 'full-190',
                 method: 'get',//请求方法
+                cellMinWidth: 100,//最小宽度
                 smartReloadModel: true, // 是否开启智能reload的模式
                 page: false,
                 icon: false,             
@@ -75,6 +93,22 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 }
             };
             var options = $.extend(defaults, options);
+            var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == false) {
+                var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
+                $.each(options.cols[0], function (i) {
+                    options.cols[0][i].hideAlways = true;
+                    options.cols[0][i].hide = true;
+                    if (dataJson != undefined) {
+                        dataJson.find(item => {
+                            if (options.cols[0][i].field == item.F_EnCode) {
+                                options.cols[0][i].hideAlways = false;
+                                options.cols[0][i].hide = false;
+                            }
+                        });
+                    }
+                });
+            };
             return treetable.render(options);
         },
         //table刷新
@@ -509,6 +543,26 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
             $element.find("[authorize=no]").parents('button').prev('.split').remove();
             $element.find("[authorize=no]").parents('button').remove();
             $element.find('[authorize=no]').remove();
+        },
+        //权限字段
+        authorizeFields: function (filter) {
+            var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            var element = $('div[lay-filter=' + filter + ']');
+            if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == false) {
+                var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
+                element.find('input,select,textarea').each(function (r) {
+                    var $this = $(this);
+                    var id = $this.attr('id');
+                    $this.parent().parent().addClass('layui-hide');
+                    if (dataJson != undefined) {
+                        dataJson.find(item => {
+                            if (id == item.F_EnCode) {
+                                $this.parent().parent().removeClass('layui-hide');
+                            }
+                        });
+                    }
+                });
+            };
         },
         //iframe定时器方法
         iframeInterval:function(func, time){

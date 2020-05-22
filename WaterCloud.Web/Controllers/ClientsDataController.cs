@@ -66,8 +66,23 @@ namespace WaterCloud.Web.Controllers
                 duty = await this.GetDutyList(),
                 user = await this.GetUserList(),
                 authorizeButton = await this.GetMenuButtonListNew(),
+                moduleFields = await this.GetMenuFields(),
+                authorizeFields = await this.GetMenuFieldsListNew(),
             };
             return Content(data.ToJson());
+        }
+
+        private async Task<object> GetMenuFields()
+        {
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var roleId = currentuser.RoleId;
+            Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
+            var list= await _roleAuthorizeService.GetMenuList(roleId);
+            foreach (ModuleEntity item in list.Where(a=>a.F_UrlAddress!=null))
+            {
+                dictionary.Add(item.F_UrlAddress, item.F_IsPublic??false);
+            }
+            return dictionary;
         }
 
         private async Task<object> GetQuickModuleList()
@@ -398,6 +413,43 @@ namespace WaterCloud.Web.Controllers
             }
             await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
             await RedisHelper.SetAsync(initcacheKey + "modulebutton_list", dictionary);
+            return dictionary[roleId];
+        }
+        private async Task<object> GetMenuFieldsListNew()
+        {
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var roleId = currentuser.RoleId;
+            var data = await _roleAuthorizeService.GetFieldsList(roleId);
+            if (roleId == null && currentuser.IsSystem)
+            {
+                roleId = "admin";
+            }
+            var dataModuleId = data.Distinct(new ExtList<ModuleFieldsEntity>("F_ModuleId"));
+            Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>> dictionary = await RedisHelper.GetAsync<Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>>>(initcacheKey + "modulefields_list");
+            var dictionarytemp = new Dictionary<string, List<ModuleFieldsEntity>>();
+            foreach (ModuleFieldsEntity item in dataModuleId)
+            {
+                var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId).ToList();
+                dictionarytemp.Add(item.F_ModuleId, buttonList);
+            }
+            if (dictionary == null)
+            {
+                dictionary = new Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>>();
+                dictionary.Add(roleId, dictionarytemp);
+            }
+            else
+            {
+                if (dictionary.ContainsKey(roleId))
+                {
+                    dictionary[roleId] = dictionarytemp;
+                }
+                else
+                {
+                    dictionary.Add(roleId, dictionarytemp);
+                }
+            }
+            await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
+            await RedisHelper.SetAsync(initcacheKey + "modulefields_list", dictionary);
             return dictionary[roleId];
         }
     }
