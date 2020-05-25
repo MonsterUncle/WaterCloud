@@ -49,7 +49,7 @@ namespace WaterCloud.Code
         /// <param name="dateTime">日期</param>
         public static string ToDateString()
         {
-            return DateTime.Now.ToString("yyyy-MM-dd");
+            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
         /// <summary>
