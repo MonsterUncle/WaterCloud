@@ -64,6 +64,7 @@ namespace WaterCloud.CodeGenerator
             baseConfigModel.PageIndex.IsMunu = 1;
             baseConfigModel.PageIndex.IsTree = 0;
             baseConfigModel.PageIndex.IsSearch = 1;
+            baseConfigModel.PageIndex.IsSystem = 1;
             baseConfigModel.PageIndex.IsPagination = 1;
             baseConfigModel.PageIndex.ButtonList = new List<string>();
             baseConfigModel.PageIndex.ColumnList = new List<string>();
@@ -509,22 +510,22 @@ namespace WaterCloud.CodeGenerator
             if (baseConfigModel.PageIndex.ButtonList.Contains("add"))
             {
                 KeyValue button = list.Where(p => p.Key == "add").FirstOrDefault();
-                sb.AppendLine("                 <button id=\""+ button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm data-add-btn\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe654;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\""+ button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm data-add-btn layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe654;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("edit"))
             {
                 KeyValue button = list.Where(p => p.Key == "edit").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm layui-btn-warm data-edit-btn\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe642;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe642;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("delete"))
             {
                 KeyValue button = list.Where(p => p.Key == "delete").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm layui-btn-danger data-delete-btn\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe640;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe640;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("details"))
             {
                 KeyValue button = list.Where(p => p.Key == "details").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm layui-btn-normal data-info-btn\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe60b;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe60b;</i>" + button.Description + "</button>");
             }
             sb.AppendLine("             </div>");
             sb.AppendLine("         </script>");
@@ -694,6 +695,8 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            common = layui.common,");
             sb.AppendLine("            laydate = layui.laydate;");
             sb.AppendLine("        var keyValue = $.request(\"keyValue\");");
+            sb.AppendLine("        //权限字段");
+            sb.AppendLine("        common.authorizeFields('adminform');");
             sb.AppendLine("        //此处需修改");
             sb.AppendLine("        //类型为时间时");
             sb.AppendLine("        //laydate.render({");
@@ -760,7 +763,7 @@ namespace WaterCloud.CodeGenerator
                         {
                             field = baseConfigModel.PageForm.FieldList[i];
                             fieldLower = TableMappingHelper.FirstLetterLowercase(field);
-                            sb.AppendLine( "                <div class=\"layui-form-item\">");
+                            sb.AppendLine("                <div class=\"layui-form-item layui-hide\">");
                             sb.AppendLine( "                   <label class=\"layui-form-label required\">"+ field + "</label>");
                             sb.AppendLine( "                   <div class=\"layui-input-block\">");
                             sb.AppendLine("                        <input type=\"text\" id=\""+ field + "\" name=\"" + field + "\" autocomplete=\"off\" lay-verify=\"required\" class=\"layui-input\">");
@@ -780,7 +783,7 @@ namespace WaterCloud.CodeGenerator
                                 sb.AppendLine("                       <div class=\"layui-form-item\">");
                             }
 
-                            sb.AppendLine("                    <div class=\"layui-inline\">");
+                            sb.AppendLine("                    <div class=\"layui-inline layui-hide\">");
                             sb.AppendLine("                        <label class=\"layui-form-label required\">" + field + "</label>");
                             sb.AppendLine("                        <div class=\"layui-input-inline\">");
                             sb.AppendLine("                            <input type=\"text\" id=\"" + field + "\" name=\"" + field + "\" autocomplete=\"off\" lay-verify=\"required\" class=\"layui-input\">");
@@ -828,6 +831,8 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            common = layui.common,");
             sb.AppendLine("            laydate = layui.laydate;");
             sb.AppendLine("        var keyValue = $.request(\"keyValue\");");
+            sb.AppendLine("        //权限字段");
+            sb.AppendLine("        common.authorizeFields('adminform');");
             sb.AppendLine("        //此处需修改");
             sb.AppendLine("        //类型为时间时");
             sb.AppendLine("        //laydate.render({");
@@ -876,7 +881,7 @@ namespace WaterCloud.CodeGenerator
                         {
                             field = baseConfigModel.PageForm.FieldList[i];
                             fieldLower = TableMappingHelper.FirstLetterLowercase(field);
-                            sb.AppendLine("                <div class=\"layui-form-item\">");
+                            sb.AppendLine("                <div class=\"layui-form-item layui-hide\">");
                             sb.AppendLine("                   <label class=\"layui-form-label required\">" + field + "</label>");
                             sb.AppendLine("                   <div class=\"layui-input-block\">");
                             sb.AppendLine("                        <input type=\"text\" id=\"" + field + "\" name=\"" + field + "\" lay-verify=\"required\" class=\"layui-input\">");
@@ -896,7 +901,7 @@ namespace WaterCloud.CodeGenerator
                                 sb.AppendLine("                       <div class=\"layui-form-item\">");
                             }
 
-                            sb.AppendLine("                    <div class=\"layui-inline\">");
+                            sb.AppendLine("                    <div class=\"layui-inline layui-hide\">");
                             sb.AppendLine("                        <label class=\"layui-form-label required\">" + field + "</label>");
                             sb.AppendLine("                        <div class=\"layui-input-inline\">");
                             sb.AppendLine("                            <input type=\"text\" id=\"" + field + "\" name=\"" + field + "\" lay-verify=\"required\" class=\"layui-input\">");
@@ -1068,9 +1073,9 @@ namespace WaterCloud.CodeGenerator
                 moduleEntity.F_FullName = baseConfigModel.FileConfig.ClassDescription;
                 moduleEntity.F_UrlAddress = menuUrl;
                 moduleEntity.F_EnCode = baseConfigModel.FileConfig.ClassPrefix;
-                moduleEntity.F_IsPublic =false;
                 moduleEntity.F_IsExpand = false;
                 moduleEntity.F_IsMenu = baseConfigModel.PageIndex.IsMunu==1?true:false;
+                moduleEntity.F_IsPublic = baseConfigModel.PageIndex.IsSystem == 1 ? true : false;
                 moduleEntity.F_Target = "iframe";
                 moduleEntity.F_AllowEdit = false;
                 moduleEntity.F_AllowDelete = false;
@@ -1118,7 +1123,22 @@ namespace WaterCloud.CodeGenerator
                     modulebutton.F_UrlAddress = url;
                     moduleButtonList.Add(modulebutton);
                 }
-                await moduleRepository.CreateModuleCode(moduleEntity,moduleButtonList);
+                List<ModuleFieldsEntity> moduleFieldsList = new List<ModuleFieldsEntity>();
+                if (baseConfigModel.PageIndex.IsSystem!=1)
+                {
+                    foreach (var item in baseConfigModel.PageIndex.ColumnList)
+                    {
+                        ModuleFieldsEntity moduleFields = new ModuleFieldsEntity();
+                        moduleFields.Create();
+                        moduleFields.F_ModuleId = moduleEntity.F_Id;
+                        moduleFields.F_EnCode = item;
+                        moduleFields.F_FullName = item;
+                        moduleFields.F_EnabledMark = true;
+                        moduleFields.F_DeleteMark = false;
+                        moduleFieldsList.Add(moduleFields);
+                    }
+                }
+                await moduleRepository.CreateModuleCode(moduleEntity,moduleButtonList, moduleFieldsList);
                 await RedisHelper.DelAsync(fieldscacheKey + "list");
                 await RedisHelper.DelAsync(buttoncacheKey + "list");
                 await RedisHelper.DelAsync(cacheKey + "list");

@@ -10,6 +10,8 @@
             common = layui.common,
             step = layui.step;
         var keyValue = $.request("keyValue");
+        //权限字段
+        common.authorizeFields('stepForm');
         step.render({
             elem: '#stepForm',
             filter: 'stepForm',
@@ -79,48 +81,48 @@
                         <div carousel-item>
                             <div>
                                 <form class="layui-form">
-                                    <div class="layui-form-item">
+                                    <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">归属组织</label>
                                         <div class="layui-input-block">
                                             <select id="F_OrganizeId" name="F_OrganizeId" lay-verify="required">
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="layui-form-item">
+                                    <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">角色名称</label>
                                         <div class="layui-input-block">
                                             <input type="text" id="F_FullName" name="F_FullName" lay-verify="required" class="layui-input" placeholder="请填写角色名称">
                                         </div>
                                     </div>
-                                    <div class="layui-form-item">
+                                    <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">角色编号</label>
                                         <div class="layui-input-block">
                                             <input id="F_EnCode" name="F_EnCode" type="text" lay-verify="required" class="layui-input" placeholder="请输入角色编号" />
                                         </div>
                                     </div>
-                                    <div class="layui-form-item">
+                                    <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">角色类型</label>
                                         <div class="layui-input-block">
                                             <select id="F_Type" name="F_Type" lay-verify="required">
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="layui-form-item">
+                                    <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">显示顺序</label>
                                         <div class="layui-input-block">
                                             <input id="F_SortCode" name="F_SortCode" type="number" pattern="[0-9]*" class="layui-input" lay-verify="required" />
                                         </div>
                                     </div>
-                                    <div class="layui-form-item">
+                                    <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">选项</label>
                                         <div class="layui-input-block">
                                             <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
                                         </div>
                                     </div>
-                                    <div class="layui-form-item layui-form-text">
+                                    <div class="layui-form-item layui-form-text layui-hide">
                                         <label class="layui-form-label">备注</label>
                                         <div class="layui-input-block">
-                                            <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入备注"></textarea>
+                                            <textarea id="F_Description" name="F_Description" class="layui-textarea"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group-bottom text-right">

@@ -7,6 +7,8 @@
         var form = layui.form
             , $ = layui.$,
             common = layui.common;
+        //权限字段
+        common.authorizeFields('adminform');
         //监听提交
         form.on('submit(clear)', function (data) {
             common.submitForm({
@@ -27,7 +29,7 @@
 </script>
 <div class="layui-form select_option_to_layer">
     <div style="margin: 25px; margin-left: 40px; margin-right: 40px;">
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-hide">
             <select id="keepTime" name="keepTime" lay-verify="required">
                 <option value="">==请选择保留时间==</option>
                 <option value="7">保留近一周</option>

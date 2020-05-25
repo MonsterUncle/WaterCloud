@@ -79,7 +79,7 @@
             }
         }).sortable();
     };
-    layui.use(['element','form', 'step', 'common', 'dtree', 'laydate', 'xmSelect'], function () {
+    layui.use(['element', 'form', 'step', 'common', 'dtree', 'laydate', 'xmSelect'], function () {
         var $ = layui.$,
             form = layui.form,
             element = layui.element,
@@ -89,6 +89,8 @@
             common = layui.common,
             step = layui.step;
         var keyValue = $.request("keyValue");
+        //权限字段
+        common.authorizeFields('stepForm');
         //执行一个laydate实例
         laydate.render({
             elem: '#CreateDate'
@@ -163,6 +165,7 @@
                 { text: '树形表格', id: 'IsTree', selected: false },
                 { text: '搜索框', id: 'IsSearch', selected: true },
                 { text: '分页', id: 'IsPagination', selected: true },
+                { text: '系统显示', id: 'IsSystem', selected: true },
             ]
         });
         //按钮选择
@@ -228,7 +231,7 @@
                 chooseBefore: function ($i, node) {
                     var id = node.nodeId;
                     var divId = "#" + "div" + node.context;
-                    if (node.checked=="0") {
+                    if (node.checked == "0") {
                         if ($(divId).length == 0) {
 
                             var target = null;
@@ -439,13 +442,13 @@
             <div carousel-item>
                 <div>
                     <form class="layui-form layuimini-form">
-                        <div class="layui-form-item">
+                        <div class="layui-form-item layui-hide">
                             <label class="layui-form-label required">类名前缀</label>
                             <div class="layui-input-block">
                                 <input type="text" id="ClassPrefix" name="ClassPrefix" autocomplete="off" lay-verify="required" class="layui-input">
                             </div>
                         </div>
-                        <div class="layui-form-item">
+                        <div class="layui-form-item layui-hide">
                             <label class="layui-form-label required">界面名称</label>
                             <div class="layui-input-block">
                                 <input type="text" id="ClassDescription" name="ClassDescription" autocomplete="off" lay-verify="required" class="layui-input">
@@ -458,14 +461,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-form-item">
+                        <div class="layui-form-item layui-hide">
                             <label class="layui-form-label required">创建人员</label>
                             <div class="layui-input-block">
                                 <input type="text" id="CreateUserName" name="CreateUserName" autocomplete="off" lay-verify="required" class="layui-input">
                             </div>
 
                         </div>
-                        <div class="layui-form-item">
+                        <div class="layui-form-item layui-hide">
                             <label class="layui-form-label required">创建日期</label>
                             <div class="layui-input-block">
                                 <input type="text" id="CreateDate" name="CreateDate" autocomplete="off" lay-verify="required" class="layui-input">

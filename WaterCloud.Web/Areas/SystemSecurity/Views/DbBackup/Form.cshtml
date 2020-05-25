@@ -7,6 +7,8 @@
         var form = layui.form,
             $ = layui.$,
             common = layui.common;
+        //权限字段
+        common.authorizeFields('adminform');
         //监听提交
         form.on('submit(saveBtn)', function (data) {
             var postData = data.field;
@@ -28,7 +30,7 @@
                 注意:备份成功后，请将备份文件下载到本地保存！
             </blockquote>
             <div class="layui-form layuimini-form" lay-filter="adminform">
-                <div class="layui-form-item">
+                <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">数据库名</label>
                     <div class="layui-input-block">
                         <select id="F_DbName" name="F_DbName">
@@ -36,13 +38,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">备份名称</label>
                     <div class="layui-input-block">
                         <input type="text" id="F_FileName" name="F_FileName" value="@WaterCloud.Code.Utils.CreateNo()" placeholder="请输入备份名称" lay-verify="required" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">备份模式</label>
                     <div class="layui-input-block">
                         <select id="F_BackupType" name="F_BackupType">
@@ -51,7 +53,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="layui-form-item layui-form-text">
+                <div class="layui-form-item layui-form-text layui-hide">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-block">
                         <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入备注"></textarea>

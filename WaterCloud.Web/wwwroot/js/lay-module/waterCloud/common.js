@@ -538,6 +538,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
             if (dataJson != undefined) {
                 $.each(dataJson, function (i) {
                     $element.find("#" + dataJson[i].F_EnCode).attr('authorize', 'yes');
+                    $element.find("#" + dataJson[i].F_EnCode).removeClass('layui-hide');
                 });
             }
             $element.find("[authorize=no]").parents('button').prev('.split').remove();
@@ -553,16 +554,23 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 element.find('input,select,textarea').each(function (r) {
                     var $this = $(this);
                     var id = $this.attr('id');
-                    $this.parent().parent().addClass('layui-hide');
+                    $this.addClass('layui-hide');
                     if (dataJson != undefined) {
                         dataJson.find(item => {
                             if (id == item.F_EnCode) {
                                 $this.parent().parent().removeClass('layui-hide');
+                                $this.removeClass('layui-hide');
                             }
                         });
                     }
                 });
-            };
+            }
+            else {
+                element.find('input,select,textarea').each(function (r) {
+                    var $this = $(this);
+                    $this.parent().parent().removeClass('layui-hide');
+                });
+            }
         },
         //iframe定时器方法
         iframeInterval:function(func, time){

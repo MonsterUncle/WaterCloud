@@ -14,7 +14,7 @@ namespace WaterCloud.Domain.SystemManage
     public interface IModuleRepository : IRepositoryBase<ModuleEntity>
     {
         Task<List<ModuleEntity>> GetListByRole(string roleid);
-        Task CreateModuleCode(ModuleEntity entity,List<ModuleButtonEntity> buttonlist);
+        Task CreateModuleCode(ModuleEntity entity,List<ModuleButtonEntity> buttonlist, List<ModuleFieldsEntity> moduleFieldsList);
         Task DeleteForm(string keyValue);
     }
 }

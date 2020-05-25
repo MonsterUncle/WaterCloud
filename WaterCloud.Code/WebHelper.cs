@@ -632,51 +632,75 @@ namespace WaterCloud.Code
 
         private static string GetIpLocationFromTaoBao(string ipAddress)
         {
-            string url = "http://ip.taobao.com/service/getIpInfo2.php";
-            string postData = string.Format("ip={0}", ipAddress);
-            string result = HttpHelper.HttpPost(url, postData);
-            string ipLocation = string.Empty;
-            if (!string.IsNullOrEmpty(result))
+            try
             {
-                var json = JsonHelper.ToJObject(result);
-                var jsonData = json["data"];
-                ipLocation = jsonData["region"] + " " + jsonData["city"];
-                ipLocation = ipLocation.Trim();
+                string url = "http://ip.taobao.com/service/getIpInfo2.php";
+                string postData = string.Format("ip={0}", ipAddress);
+                string result = HttpHelper.HttpPost(url, postData);
+                string ipLocation = string.Empty;
+                if (!string.IsNullOrEmpty(result))
+                {
+                    var json = JsonHelper.ToJObject(result);
+                    var jsonData = json["data"];
+                    ipLocation = jsonData["region"] + " " + jsonData["city"];
+                    ipLocation = ipLocation.Trim();
+                }
+                return ipLocation;
             }
-            return ipLocation;
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
 
         private static string GetIpLocationFromIpIp(string ipAddress)
         {
-            string url = "http://freeapi.ipip.net/" + ipAddress;
-            string result = HttpHelper.HttpGet(url);
-            string ipLocation = string.Empty;
-            if (!string.IsNullOrEmpty(result))
+            try
             {
-                result = result.Replace("\"", string.Empty);
-                var resultArr = result.Split(',');
-                ipLocation = resultArr[1] + " " + resultArr[2];
-                ipLocation = ipLocation.Trim();
+                string url = "http://freeapi.ipip.net/" + ipAddress;
+                string result = HttpHelper.HttpGet(url);
+                string ipLocation = string.Empty;
+                if (!string.IsNullOrEmpty(result))
+                {
+                    result = result.Replace("\"", string.Empty);
+                    var resultArr = result.Split(',');
+                    ipLocation = resultArr[1] + " " + resultArr[2];
+                    ipLocation = ipLocation.Trim();
+                }
+                return ipLocation;
             }
-            return ipLocation;
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
 
         private static string GetIpLocationFromPCOnline(string ipAddress)
         {
-            HttpResult httpResult = new HttpHelper().GetHtml(new HttpItem
+            try
             {
-                URL = "http://whois.pconline.com.cn/ip.jsp?ip=" + ipAddress,
-                ContentType = "text/html; charset=gb2312"
-            });
+                HttpResult httpResult = new HttpHelper().GetHtml(new HttpItem
+                {
+                    URL = "http://whois.pconline.com.cn/ip.jsp?ip=" + ipAddress,
+                    ContentType = "text/html; charset=gb2312"
+                });
 
-            string ipLocation = string.Empty;
-            if (!string.IsNullOrEmpty(httpResult.Html))
-            {
-                var resultArr = httpResult.Html.Split(' ');
-                ipLocation = resultArr[0].Replace("省", "  ").Replace("市", "");
-                ipLocation = ipLocation.Trim();
+                string ipLocation = string.Empty;
+                if (!string.IsNullOrEmpty(httpResult.Html))
+                {
+                    var resultArr = httpResult.Html.Split(' ');
+                    ipLocation = resultArr[0].Replace("省", "  ").Replace("市", "");
+                    ipLocation = ipLocation.Trim();
+                }
+                return ipLocation;
             }
-            return ipLocation;
+            catch (Exception)
+            {
+                return null;
+            }    
+
         }
         #endregion
 

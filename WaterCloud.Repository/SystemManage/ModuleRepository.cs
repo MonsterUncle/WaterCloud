@@ -26,12 +26,16 @@ namespace WaterCloud.Repository.SystemManage
             this.providerName = providerName;
         }
 
-        public async Task CreateModuleCode(ModuleEntity entity, List<ModuleButtonEntity> buttonlist)
+        public async Task CreateModuleCode(ModuleEntity entity, List<ModuleButtonEntity> buttonlist, List<ModuleFieldsEntity> fieldsList)
         {
             using (var db = new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
                 await db.Insert(entity);
                 await db.Insert(buttonlist);
+                if (fieldsList.Count>0)
+                {
+                    await db.Insert(fieldsList);
+                }
                 db.Commit();
             }
         }

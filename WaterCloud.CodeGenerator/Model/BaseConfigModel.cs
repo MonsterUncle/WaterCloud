@@ -60,6 +60,10 @@ namespace WaterCloud.CodeGenerator
         /// 是否树形表格
         /// </summary>
         public int IsTree { get; set; }
+        /// <summary>
+        /// 是否系统
+        /// </summary>
+        public int IsSystem { get; set; }
 
         /// <summary>
         /// 工具栏按钮（新增 修改 删除 查看）
