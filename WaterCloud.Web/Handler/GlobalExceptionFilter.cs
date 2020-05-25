@@ -30,7 +30,7 @@ namespace WaterCloud.Web
             else
             {
                 string errorMessage = context.Exception.GetOriginalException().Message;
-                context.Result = new RedirectResult(context.HttpContext.Request.GetBaseUri() + "Home/Error?message=" + HttpUtility.UrlEncode(errorMessage));
+                context.Result = new RedirectResult(context.HttpContext.Request.PathBase + "/Home/Error?message=" + HttpUtility.UrlEncode(errorMessage));
                 context.ExceptionHandled = true;
             }
         }

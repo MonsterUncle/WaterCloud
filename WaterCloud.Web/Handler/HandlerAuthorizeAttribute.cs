@@ -31,7 +31,7 @@ namespace WaterCloud.Web
             if (!ActionAuthorize(filterContext))
             {
                 OperatorProvider.Provider.EmptyCurrent("pc_");
-                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.GetBaseUri() + "Home/Error?msg=" + "很抱歉！您的权限不足，访问被拒绝！" + "';</script>");
+                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + "很抱歉！您的权限不足，访问被拒绝！" + "';</script>");
                 return;
             }
         }
