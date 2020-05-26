@@ -49,7 +49,12 @@ $.fn.bindSelect = function (options) {
             async: false,
             success: function (data) {
                 $.each(data, function (i) {
-                    $element.append($("<option></option>").val(data[i][options.id]).html(data[i][options.text]));
+                    if (options.id=="") {
+                        $element.append($("<option></option>").val(data[i]).html(data[i]));
+                    }
+                    else {
+                        $element.append($("<option></option>").val(data[i][options.id]).html(data[i][options.text]));
+                    }
                 });
                 //$element.select2({
                 //    minimumResultsForSearch: options.search == true ? 0 : -1
