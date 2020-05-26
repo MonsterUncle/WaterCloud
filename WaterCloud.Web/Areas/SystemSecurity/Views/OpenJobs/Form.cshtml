@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+    <body>
+        <div class="layuimini-container">
+            <div class="layuimini-main">
+                <div class="layui-form layuimini-form" lay-filter="adminform">
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label required">任务组名</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="F_JobGroup" name="F_JobGroup" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">任务名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="F_JobName" name="F_JobName" value="" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">文件名称</label>
+                        <div class="layui-input-block">
+                            <select id="F_FileName" name="F_FileName">
+                                <option value="">==请选择==</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">Cron表达式</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="F_CronExpress" name="F_CronExpress" value="" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <label class="layui-form-label">有效</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" checked="" id="F_EnabledMark" name="F_EnabledMark" lay-skin="switch" lay-filter="switchTest" value="true" lay-text="ON|OFF">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text layui-hide">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入备注"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-hide">
+                        <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+<script>
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            common = layui.common,
+            laydate = layui.laydate;
+        var keyValue = $.request("keyValue");
+        //权限字段
+        common.authorizeFields('adminform');
+        $(function () {
+            initControl();
+            if (!!keyValue) {
+                $.ajax({
+                    url: "/SystemSecurity/OpenJobs/GetFormJson",
+                    dataType: "json",
+                    data: { keyValue: keyValue },
+                    async: false,
+                    success: function (data) {
+                        common.val('adminform', data);
+                    }
+                });
+            }
+            form.render();
+        });
+        function initControl() {
+            $("#F_FileName").bindSelect({
+                url: "/SystemSecurity/OpenJobs/QueryLocalHandlers",
+                id: ""
+            });
+        }
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var postData = data.field;
+            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+            common.submitForm({
+                url: "/SystemSecurity/OpenJobs/SubmitForm?keyValue=" + keyValue,
+                param: postData,
+                success: function () {
+                    common.parentreload("data-search-btn");
+                }
+            })
+            return false;
+        });
+    });
+</script>
+

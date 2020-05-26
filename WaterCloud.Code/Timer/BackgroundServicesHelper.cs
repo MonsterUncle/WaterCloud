@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace WaterCloud.Code
 {
+    /// <summary>
+    /// 已废除
+    /// </summary>
     public static class BackgroundServicesHelper
     {
         /// <summary>

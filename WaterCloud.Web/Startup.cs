@@ -12,6 +12,7 @@ using WaterCloud.Code.Model;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Newtonsoft.Json.Serialization;
+using WaterCloud.Service.AutoJob;
 
 namespace WaterCloud.Web
 {
@@ -59,8 +60,8 @@ namespace WaterCloud.Web
                 // 返回数据首字母不小写，CamelCasePropertyNamesContractResolver是小写
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
-            //定时任务
-            services.AddBackgroundServices();
+            ////定时任务（已废除）
+            //services.AddBackgroundServices();
             services.AddOptions();
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(GlobalContext.HostingEnvironment.ContentRootPath + Path.DirectorySeparatorChar + "DataProtection"));
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
@@ -104,6 +105,7 @@ namespace WaterCloud.Web
                 endpoints.MapControllerRoute("default", "{controller=Login}/{action=Index}/{id?}");
             });
             GlobalContext.ServiceProvider = app.ApplicationServices;
+            new JobCenter().Start(); // 使用Quartz定时任务
         }
     }
 }
