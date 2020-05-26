@@ -20,7 +20,7 @@ namespace WaterCloud.Service.SystemSecurity
         /// 缓存操作类
         /// </summary>
 
-        private string cacheKey = "watercloud_filterip_";// 区域
+        private string cacheKey = "watercloud_filterip_";// IP过滤
 
         public async Task<List<FilterIPEntity>> GetList(string keyword)
         {
