@@ -45,6 +45,7 @@ namespace WaterCloud.WebApi
             //×¢²á·þÎñ
             services.AddSingleton(redisDB);
             services.AddOptions();
+            //¿çÓò
             services.AddCors();
             services.AddControllers(options =>
             {
@@ -75,14 +76,15 @@ namespace WaterCloud.WebApi
             {
                 OnPrepareResponse = GlobalContext.SetCacheControl
             });
+            app.UseMiddleware(typeof(GlobalExceptionMiddleware));
+            //¿çÓòÉèÖÃ
             app.UseCors(builder => builder.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
-            app.UseMiddleware(typeof(GlobalExceptionMiddleware));
-            app.UseCors(builder =>
-            {
-                builder.WithOrigins(GlobalContext.SystemConfig.AllowCorsSite.Split(',')).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
-            });
+            //app.UseCors(builder =>
+            //{
+            //    builder.WithOrigins(GlobalContext.SystemConfig.AllowCorsSite.Split(',')).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+            //});
             app.UseSwagger(c =>
             {
                 c.RouteTemplate = "api-doc/{documentName}/swagger.json";
