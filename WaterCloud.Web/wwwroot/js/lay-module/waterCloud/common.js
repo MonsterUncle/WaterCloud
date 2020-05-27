@@ -62,6 +62,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                             if (options.cols[0][i].field == dataJson[j].F_EnCode) {
                                 options.cols[0][i].hideAlways = false;
                                 options.cols[0][i].hide = false;
+                                break;
                             }
                         }
                         //dataJson.find(item => {
@@ -110,6 +111,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                             if (options.cols[0][i].field == dataJson[j].F_EnCode) {
                                 options.cols[0][i].hideAlways = false;
                                 options.cols[0][i].hide = false;
+                                break;
                             }
                         }
                         //dataJson.find(item => {
@@ -574,6 +576,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                             if (id == dataJson[i].F_EnCode) {
                                 $this.parent().parent().removeClass('layui-hide');
                                 $this.removeClass('layui-hide');
+                                break;
                             }
                         }
                         //dataJson.find(item => {
