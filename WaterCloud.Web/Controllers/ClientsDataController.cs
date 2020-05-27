@@ -16,6 +16,8 @@ using WaterCloud.Service.SystemSecurity;
 using Senparc.CO2NET.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using CSRedis;
+using WaterCloud.Code.Model;
 
 namespace WaterCloud.Web.Controllers
 {
@@ -71,7 +73,11 @@ namespace WaterCloud.Web.Controllers
             };
             return Content(data.ToJson());
         }
-
+        [HttpGet]
+        public async Task<ActionResult> ClearCache()
+        {
+            return Content(new {code=1,msg= "服务端清理缓存成功" }.ToJson());
+        }
         private async Task<object> GetMenuFields()
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();

@@ -73,11 +73,10 @@ namespace WaterCloud.Service.CommonService
         #endregion
 
         #region 公有方法
-        public async Task<bool> DatabaseBackup(string database, string backupPath)
+        public async Task<bool> DatabaseBackup(string backupPath)
         {
-            string backupFile = string.Format("{0}\\{1}_{2}.bak", backupPath, database, DateTime.Now.ToString("yyyyMMddHHmmss"));
-            string strSql = string.Format(" backup database [{0}] to disk = '{1}'", database, backupFile);
-            var result = DbHelper.ExecuteSqlCommand(strSql);
+            string database = HtmlHelper.Resove(GlobalContext.SystemConfig.DBConnectionString, "Initial Catalog = ", ";");
+            var result = DbHelper.ExecuteSqlCommand(database, backupPath);
             return result > 0 ? true : false;
         }
         #endregion

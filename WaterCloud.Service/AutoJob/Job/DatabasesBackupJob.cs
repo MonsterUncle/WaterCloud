@@ -17,10 +17,10 @@ namespace WaterCloud.Service.AutoJob
             switch (dbType)
             {
                 case "MySql.Data.MySqlClient":
-                    databaseTableService = new DatabaseTableSqlServerService();
+                    databaseTableService = new DatabaseTableMySqlService ();
                     break;
                 case "System.Data.SqlClient":
-                    databaseTableService = new DatabaseTableMySqlService();
+                    databaseTableService = new DatabaseTableSqlServerService();
                     break;
                 default:
                     throw new Exception("未找到数据库配置");
@@ -44,8 +44,7 @@ namespace WaterCloud.Service.AutoJob
             {
                 Directory.CreateDirectory(backupPath);
             }
-            string database = HtmlHelper.Resove(GlobalContext.SystemConfig.DBConnectionString.ToLower(), "database=", ";");
-            if(await databaseTableService.DatabaseBackup(database,backupPath))
+            if(await databaseTableService.DatabaseBackup(backupPath))
             {
                 obj.state = ResultType.success.ToString();
                 obj.message = "备份路径：" + backupPath;
