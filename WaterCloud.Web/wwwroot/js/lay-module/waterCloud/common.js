@@ -158,7 +158,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
         },
         //msg
         modalMsg: function (content, type, close) {
-            var close = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+            var close = close|| false;
             if (type != undefined) {
                 var icon = 0;
                 if (type == 'success') {
@@ -187,7 +187,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
         },
         //alert
         modalAlert: function (content, type, close) {
-            var close = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+            var close = close || false;
             var icon = 0;
             if (type == 'success') {
                 icon = 1;
