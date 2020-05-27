@@ -1526,7 +1526,7 @@ CREATE TABLE `sys_openjob`  (
 -- ----------------------------
 -- Records of sys_openjob
 -- ----------------------------
-INSERT INTO `sys_openjob` VALUES ('1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'WaterCloud.Service.AutoJob.SaveServerStateJob', '服务器状态', 'WaterCloud', '2020-05-26 17:35:28', '2020-05-26 17:35:23', '* 0/10 * * * ?', 0, 1, '', '2020-05-26 14:50:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-27 08:41:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_openjob` VALUES ('1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'WaterCloud.Service.AutoJob.SaveServerStateJob', '服务器状态', 'WaterCloud', '2020-05-26 17:35:28', '2020-05-26 17:35:23', '0 0/10 * * * ?', 0, 1, '', '2020-05-26 14:50:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-27 08:41:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_openjob` VALUES ('8f7b8d82-53c2-4d0e-885f-145a06141c81', 'WaterCloud.Service.AutoJob.DatabasesBackupJob', '数据备份', 'WaterCloud', '2020-05-26 14:48:24', '2020-05-26 17:17:17', '0 0 0 * * ?', 0, 0, '', '2020-05-26 14:24:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-27 08:41:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 
 -- ----------------------------
