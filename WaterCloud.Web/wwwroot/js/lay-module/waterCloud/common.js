@@ -58,8 +58,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                     options.cols[0][i].hideAlways = true;
                     options.cols[0][i].hide = true;
                     if (dataJson != undefined) {
-                        for (var i = 0; i < dataJson.length; i++) {
-                            if (options.cols[0][i].field == dataJson[i].F_EnCode) {
+                        for (var j = 0; j < dataJson.length; j++) {
+                            if (options.cols[0][i].field == dataJson[j].F_EnCode) {
                                 options.cols[0][i].hideAlways = false;
                                 options.cols[0][i].hide = false;
                             }
@@ -106,8 +106,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                     options.cols[0][i].hideAlways = true;
                     options.cols[0][i].hide = true;
                     if (dataJson != undefined) {
-                        for (var i = 0; i < dataJson.length; i++) {
-                            if (options.cols[0][i].field == dataJson[i].F_EnCode) {
+                        for (var j = 0; j < dataJson.length; j++) {
+                            if (options.cols[0][i].field == dataJson[j].F_EnCode) {
                                 options.cols[0][i].hideAlways = false;
                                 options.cols[0][i].hide = false;
                             }
