@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Quartz;
 using WaterCloud.Code;
@@ -15,6 +16,7 @@ namespace WaterCloud.Service.AutoJob
             Task.Run(async () =>
             {
                 List<OpenJobEntity> obj = await new OpenJobService().GetList(null);
+                obj = obj.Where(a => a.F_EnabledMark == true).ToList();
                 if (obj.Count > 0)
                 {
                     AddScheduleJob(obj);
