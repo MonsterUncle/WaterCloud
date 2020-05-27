@@ -32,7 +32,7 @@
                         templet: function (d) {
                             if (d.F_CreatorTime) {
                                 var time = new Date(d.F_CreatorTime);
-                                return time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
+                                return time.Format("yyyy-MM-dd");
                             }
                         }
                     },

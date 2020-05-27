@@ -19,25 +19,25 @@
                     { field: 'F_FileName', title: '文件名', Width: 150 },
                     { field: 'F_CronExpress', title: 'CRON', Width: 150 },
                     {
-                        field: 'F_StarRunTime', title: '开始时间', Width: 120,
+                        field: 'F_StarRunTime', title: '最近启动时间', Width: 180,
                         templet: function (d) {
                             if (d.F_StarRunTime) {
                                 var time = new Date(d.F_StarRunTime);
-                                return time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
+                                return time.Format("yyyy-MM-dd hh:mm:ss");
                             }
                         }
                     },
                     {
-                        field: 'F_EndRunTime', title: '关闭时间', Width: 120,
+                        field: 'F_EndRunTime', title: '最近关闭时间', Width: 180,
                         templet: function (d) {
                             if (d.F_EndRunTime) {
                                 var time = new Date(d.F_EndRunTime);
-                                return time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
+                                return time.Format("yyyy-MM-dd hh:mm:ss");
                             }
                         }
                     },
                     {
-                        field: 'F_EnabledMark', title: '状态', width: 100, sort: true,
+                        field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
                         templet: function (d) {
                             if (d.F_EnabledMark == true) {
                                 return "<span class=\"layui-bg-green\">启动</span>";

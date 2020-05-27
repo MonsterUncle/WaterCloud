@@ -43,12 +43,10 @@ namespace WaterCloud.Service.AutoJob
             {
                 foreach (OpenJobEntity entity in entityList)
                 {
-                    if (entity.F_StarRunTime == null)
-                    {
-                        entity.F_StarRunTime = DateTime.Now;
-                    }
+                    entity.F_StarRunTime = DateTime.Now;
+                    entity.F_EndRunTime = DateTime.Now.AddSeconds(-1);
                     DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(entity.F_StarRunTime, 1);
-                    DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(DateTime.MaxValue.AddDays(-1), 1);
+                    DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(DateTime.MaxValue.AddDays(-1), 1);                    
                     new OpenJobService().SubmitForm(entity, entity.F_Id);
                     var scheduler = JobScheduler.GetScheduler();
                     IJobDetail job = JobBuilder.Create<JobExecute>().WithIdentity(entity.F_JobName, entity.F_JobGroup).Build();
