@@ -100,7 +100,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
                 fieldsdata = fieldsdata.Where(a => a.F_EnabledMark == true).ToList();
             }
-            moduledata = moduledata.Where(a => a.F_IsPublic==false).ToList();
+            moduledata = moduledata.Where(a => a.F_IsPublic==false||(a.F_Layers==1&&a.F_IsExpand==true)).ToList();
             if (!string.IsNullOrEmpty(moduleids))
             {
                 var list=moduleids.Split(',');
