@@ -58,12 +58,18 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                     options.cols[0][i].hideAlways = true;
                     options.cols[0][i].hide = true;
                     if (dataJson != undefined) {
-                        dataJson.find(item => {
-                            if (options.cols[0][i].field == item.F_EnCode) {
+                        for (var i = 0; i < dataJson.length; i++) {
+                            if (options.cols[0][i].field == dataJson[i].F_EnCode) {
                                 options.cols[0][i].hideAlways = false;
                                 options.cols[0][i].hide = false;
                             }
-                        });
+                        }
+                        //dataJson.find(item => {
+                        //    if (options.cols[0][i].field == item.F_EnCode) {
+                        //        options.cols[0][i].hideAlways = false;
+                        //        options.cols[0][i].hide = false;
+                        //    }
+                        //});
                     }
                 });
             };
@@ -100,12 +106,18 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                     options.cols[0][i].hideAlways = true;
                     options.cols[0][i].hide = true;
                     if (dataJson != undefined) {
-                        dataJson.find(item => {
-                            if (options.cols[0][i].field == item.F_EnCode) {
+                        for (var i = 0; i < dataJson.length; i++) {
+                            if (options.cols[0][i].field == dataJson[i].F_EnCode) {
                                 options.cols[0][i].hideAlways = false;
                                 options.cols[0][i].hide = false;
                             }
-                        });
+                        }
+                        //dataJson.find(item => {
+                        //    if (options.cols[0][i].field == item.F_EnCode) {
+                        //        options.cols[0][i].hideAlways = false;
+                        //        options.cols[0][i].hide = false;
+                        //    }
+                        //});
                     }
                 });
             };
@@ -143,7 +155,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
 
         },
         //msg
-        modalMsg: function (content, type, close = false) {
+        modalMsg: function (content, type, close) {
+            var close = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
             if (type != undefined) {
                 var icon = 0;
                 if (type == 'success') {
@@ -171,7 +184,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
             }
         },
         //alert
-        modalAlert: function (content, type, close = false) {
+        modalAlert: function (content, type, close) {
+            var close = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
             var icon = 0;
             if (type == 'success') {
                 icon = 1;
@@ -556,12 +570,18 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                     var id = $this.attr('id');
                     $this.addClass('layui-hide');
                     if (dataJson != undefined) {
-                        dataJson.find(item => {
-                            if (id == item.F_EnCode) {
+                        for (var i = 0; i < dataJson.length; i++) {
+                            if (id == dataJson[i].F_EnCode) {
                                 $this.parent().parent().removeClass('layui-hide');
                                 $this.removeClass('layui-hide');
                             }
-                        });
+                        }
+                        //dataJson.find(item => {
+                        //    if (id == item.F_EnCode) {
+                        //        $this.parent().parent().removeClass('layui-hide');
+                        //        $this.removeClass('layui-hide');
+                        //    }
+                        //});
                     }
                 });
             }
