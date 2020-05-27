@@ -40,8 +40,8 @@
 
 2、后端技术
 
-- 核心框架：ASP.NET Core 3.1、WEB API(暂无)
-- 定时任务：BackgroundService Timer（服务已注入，只需要在TimeService下新建类，继承BackgroundService）
+- 核心框架：ASP.NET Core 3.1、WEB API
+- 定时任务：QuartZ，实现web控制(WaterCloud.Service/AutoJob/Job下新建job，web端创建定时任务)
 - 持久层框架：Chloe（支持多种数据库，复杂查询操作）
 - 安全支持：过滤器、Sql注入、请求伪造
 - 服务端验证：实体模型验证
