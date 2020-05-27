@@ -41,6 +41,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
+                entity.F_EnabledMark = false;
                 entity.F_DeleteMark = false;
                 logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
