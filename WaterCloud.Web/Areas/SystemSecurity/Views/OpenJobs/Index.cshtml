@@ -75,7 +75,7 @@
             table.on('toolbar(currentTableFilter)', function (obj) {
                 if (obj.event === 'add') {  // 监听删除操作
                     common.modalOpen({
-                        title: "添加计划",
+                        title: "添加任务",
                         url: "/SystemSecurity/OpenJobs/Form",
                         width: "550px",
                         height: "500px",
@@ -100,7 +100,7 @@
                         return false;
                     }
                     common.modalOpen({
-                        title: "修改计划",
+                        title: "修改任务",
                         url: "/SystemSecurity/OpenJobs/Form?keyValue=" + entity.data.F_Id,
                         width: "550px",
                         height: "500px",
@@ -112,10 +112,10 @@
                         return false;
                     }
                     if (entity.data.F_EnabledMark!=true) {
-                        common.modalMsg("计划未启动，无法关闭！", "warning");
+                        common.modalMsg("任务未启动，无法关闭！", "warning");
                         return false;
                     }
-                    common.modalConfirm("注：您确定要【关闭】该项计划吗？", function (r) {
+                    common.modalConfirm("注：您确定要【关闭】该项任务吗？", function (r) {
                         if (r) {
                             common.submitForm({
                                 url: "/SystemSecurity/OpenJobs/ChangeStatus",
@@ -134,10 +134,10 @@
                         return false;
                     }
                     if (entity.data.F_EnabledMark == true) {
-                        common.modalMsg("计划已启动，无法启动！", "warning");
+                        common.modalMsg("任务已启动，无法启动！", "warning");
                         return false;
                     }
-                    common.modalConfirm("注：您确定要【启动】该项计划吗？", function (r) {
+                    common.modalConfirm("注：您确定要【启动】该项任务吗？", function (r) {
                         if (r) {
                             common.submitForm({
                                 url: "/SystemSecurity/OpenJobs/ChangeStatus",
@@ -181,8 +181,9 @@
                 <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
                 <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
                 <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
-                <button id="NF-disabled" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-disabled-btn layui-hide" lay-event="disabled"><i class="fa fa-stop-circle"></i>关闭</button>
                 <button id="NF-enabled" authorize="yes" class="layui-btn layui-btn-sm data-enabled-btn layui-hide" lay-event="enabled"> <i class="fa fa-play-circle"></i>启动</button>
+                <button id="NF-disabled" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-disabled-btn layui-hide" lay-event="disabled"><i class="fa fa-stop-circle"></i>关闭</button>
+
             </div>
         </script>
 
