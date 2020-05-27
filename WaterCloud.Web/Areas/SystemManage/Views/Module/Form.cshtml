@@ -63,6 +63,23 @@
             })
             return false;
         });
+        //select验证
+        form.verify({
+            required: function (value, item) {
+                var msg = "必填项不能为空";
+                value = $.trim(value);
+                var isEmpty = !value || value.length < 1;
+                // 当前验证元素是select且为空时,将页面定位至layui渲染的select处，或自定义想定位的位置
+                if (item.tagName == 'SELECT' && isEmpty) {
+                    $("html").animate({
+                        scrollTop: $(item).siblings(".layui-form-select").offset().top - 74
+                    }, 50);
+                }
+                if (isEmpty) {
+                    return msg;
+                }
+            }
+        });
         //监听按钮
         form.on('submit(clearIcon)', function (data) {
             iconPickerFa.checkIcon('iconPicker', "");
@@ -98,7 +115,7 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">上级</label>
                     <div class="layui-input-block">
-                        <select id="F_ParentId" name="F_ParentId" lay-search>
+                        <select id="F_ParentId" name="F_ParentId"  lay-verify="required"  lay-search>
                             <option value="0" selected>父节点</option>
                         </select>
                     </div>

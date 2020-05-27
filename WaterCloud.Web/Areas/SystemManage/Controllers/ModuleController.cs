@@ -127,6 +127,20 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 {
                     moduleEntity.F_Layers =(await _moduleService.GetForm(moduleEntity.F_ParentId)).F_Layers + 1;
                 }
+                if (!string.IsNullOrEmpty(moduleEntity.F_UrlAddress))
+                {
+                    var templist = await _moduleService.GetList();
+                    if (!string.IsNullOrEmpty(keyValue))
+                    {
+                        templist = templist.Where(a => a.F_Id != keyValue).ToList();
+                    }
+                    if(templist.Find(a=>a.F_UrlAddress==moduleEntity.F_UrlAddress)!=null)
+                    throw new Exception("菜单地址不能重复！");
+                }
+                else
+                {
+                    moduleEntity.F_UrlAddress = null;
+                }
                 await _moduleService.SubmitForm(moduleEntity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);

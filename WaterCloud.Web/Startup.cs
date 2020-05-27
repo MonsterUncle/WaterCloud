@@ -49,8 +49,6 @@ namespace WaterCloud.Web
             services.AddHttpContextAccessor();
             //×¢²á·þÎñ
             services.AddDataService();
-            //API¿ØÖÆÆ÷
-            services.AddControllers();
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<GlobalExceptionFilter>();
