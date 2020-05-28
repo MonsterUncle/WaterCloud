@@ -51,6 +51,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 }
             };
             var options = $.extend(defaults, options);
+            //ie缓存问题
+            if (options.url.indexOf("?") >= 0) { 
+                options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
+            else {
+                options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == false) {
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
@@ -100,6 +107,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 }
             };
             var options = $.extend(defaults, options);
+            //ie缓存问题
+            if (options.url.indexOf("?") >= 0) {
+                options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
+            else {
+                options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == false) {
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
@@ -286,6 +300,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 close: true
             };
             var options = $.extend(defaults, options);
+            //ie缓存
+            if (options.url.indexOf("?") >= 0) {
+                options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
+            else {
+                options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
             window.setTimeout(function () {
                 if ($('[name=__RequestVerificationToken]').length > 0) {
                     options.param["__RequestVerificationToken"] = $('[name=__RequestVerificationToken]').val();
@@ -368,6 +389,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 close: false
             };
             var options = $.extend(defaults, options);
+            //ie缓存
+            if (options.url.indexOf("?") >= 0) {
+                options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
+            else {
+                options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
             if ($('[name=__RequestVerificationToken]').length > 0) {
                 options.param["__RequestVerificationToken"] = $('[name=__RequestVerificationToken]').val();
             }
@@ -418,6 +446,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 close: false
             };
             var options = $.extend(defaults, options);
+            //ie缓存
+            if (options.url.indexOf("?") >= 0) {
+                options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
+            else {
+                options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
             if ($('[name=__RequestVerificationToken]').length > 0) {
                 options.param["__RequestVerificationToken"] = $('[name=__RequestVerificationToken]').val();
             }

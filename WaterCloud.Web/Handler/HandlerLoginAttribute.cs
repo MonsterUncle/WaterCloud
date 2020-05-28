@@ -24,7 +24,7 @@ namespace WaterCloud.Web
             if (OperatorProvider.Provider.GetCurrent() == null)
             {
                 WebHelper.WriteCookie("WaterCloud_login_error", "overdue");
-                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + "系统登录已超时，请重新登录！" + "';</script>");
+                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + "系统登录已超时，请重新登录！" + "';window.event.returnValue = false;</script>");
                 OperatorProvider.Provider.EmptyCurrent("pc_");
                 return;
             }

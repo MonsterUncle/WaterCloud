@@ -62,11 +62,10 @@ namespace WaterCloud.Service.SystemManage
                 throw new Exception("角色使用中，无法删除");
             }
             await service.DeleteForm(keyValue);
-            await  RedisHelper.DelAsync(cacheKey + keyValue);
-            await  RedisHelper.DelAsync(cacheKey + "list");
-            await  RedisHelper.DelAsync(authorizecacheKey + "list");
-            await  RedisHelper.DelAsync(authorizecacheKey + keyValue);
-            await  RedisHelper.DelAsync(authorizecacheKey + "authorize_" + keyValue);
+            await RedisHelper.DelAsync(cacheKey + keyValue);
+            await RedisHelper.DelAsync(cacheKey + "list");
+            await RedisHelper.DelAsync(authorizecacheKey + "list");
+            await RedisHelper.DelAsync(authorizecacheKey + "authorize_list");
             await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
             await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
             await RedisHelper.DelAsync(initcacheKey + "list");
@@ -119,11 +118,10 @@ namespace WaterCloud.Service.SystemManage
                 }
             }
             await service.SubmitForm(roleEntity, roleAuthorizeEntitys, keyValue);
-            await  RedisHelper.DelAsync(cacheKey + keyValue);
-            await  RedisHelper.DelAsync(cacheKey + "list");
-            await  RedisHelper.DelAsync(authorizecacheKey + "list");
-            await  RedisHelper.DelAsync(authorizecacheKey + keyValue);
-            await RedisHelper.DelAsync(authorizecacheKey + "authorize_" + keyValue);
+            await RedisHelper.DelAsync(cacheKey + keyValue);
+            await RedisHelper.DelAsync(cacheKey + "list");
+            await RedisHelper.DelAsync(authorizecacheKey + "list");
+            await RedisHelper.DelAsync(authorizecacheKey + "authorize_list");
             await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
             await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
             await RedisHelper.DelAsync(initcacheKey + "list");

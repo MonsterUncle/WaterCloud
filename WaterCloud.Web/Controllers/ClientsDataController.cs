@@ -190,7 +190,8 @@ namespace WaterCloud.Web.Controllers
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
             int usercout =(await _userService.GetUserList("")).Count();
-            int logincout = RedisHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + currentuser.UserId).F_LogOnCount??0;
+            var temp = RedisHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + currentuser.UserId);
+            int logincout = temp!=null&&temp.F_LogOnCount!=null? (int)temp.F_LogOnCount : 0;
             int modulecout =(await _moduleService.GetList()).Where(a => a.F_EnabledMark == true && a.F_UrlAddress != null).Count();
             int logcout = (await _logService.GetList()).Count();
             var data= new { usercout = usercout, logincout = logincout, modulecout = modulecout, logcout = logcout };

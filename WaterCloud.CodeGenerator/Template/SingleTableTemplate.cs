@@ -21,6 +21,7 @@ namespace WaterCloud.CodeGenerator
         private string cacheKey = "watercloud_moduleldata_";
         private string quickcacheKey = "watercloud_quickmoduledata_";
         private string initcacheKey = "watercloud_init_";
+        private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         #region GetBaseConfig
         public BaseConfigModel GetBaseConfig(string path,string username, string tableName, string tableDescription, List<string> tableFieldList)
         {
@@ -1146,6 +1147,7 @@ namespace WaterCloud.CodeGenerator
                 await RedisHelper.DelAsync(initcacheKey + "list");
                 await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
                 await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
+                await RedisHelper.DelAsync(authorizecacheKey + "list");
             }
             #endregion
 

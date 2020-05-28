@@ -24,6 +24,7 @@ namespace WaterCloud.Service.SystemManage
         private string initcacheKey = "watercloud_init_";
         private string modulebuttoncacheKey = "watercloud_modulebuttondata_";
         private string modulefieldscacheKey = "watercloud_modulefieldsdata_";
+        private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
 
         public async Task<List<ModuleEntity>> GetList()
         {
@@ -50,6 +51,8 @@ namespace WaterCloud.Service.SystemManage
                 await RedisHelper.DelAsync(initcacheKey + "list");
                 await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
                 await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
+                await RedisHelper.DelAsync(authorizecacheKey + "list");
+                await RedisHelper.DelAsync(authorizecacheKey + "authorize_list");
                 await RedisHelper.DelAsync(modulebuttoncacheKey + "list");
                 await RedisHelper.DelAsync(modulefieldscacheKey + "list");
             }
@@ -79,6 +82,8 @@ namespace WaterCloud.Service.SystemManage
             await RedisHelper.DelAsync(initcacheKey + "list");
             await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
             await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
+            await RedisHelper.DelAsync(authorizecacheKey + "list");
+            await RedisHelper.DelAsync(authorizecacheKey + "authorize_list");
             await RedisHelper.DelAsync(modulebuttoncacheKey + "list");
             await RedisHelper.DelAsync(modulefieldscacheKey + "list");
         }

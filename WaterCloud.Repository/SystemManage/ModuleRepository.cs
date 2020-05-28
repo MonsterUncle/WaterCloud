@@ -46,6 +46,7 @@ namespace WaterCloud.Repository.SystemManage
             {
                 await db.Delete<ModuleEntity>(a=>a.F_Id== keyValue);
                 await db.Delete<ModuleButtonEntity>(a=>a.F_ModuleId== keyValue);
+                await db.Delete<ModuleFieldsEntity>(a => a.F_ModuleId == keyValue);
                 db.Commit();
             }
         }

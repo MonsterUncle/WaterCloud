@@ -159,7 +159,7 @@
                 miniTongji = layui.miniTongji;
             function loadUser() {
                 $.ajax({
-                    url: "/ClientsData/GetUserCode",
+                    url: "/ClientsData/GetUserCode?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
                     dataType: "json",
                     async: true,
                     success: function (data) {
@@ -169,8 +169,8 @@
                 });
             };
             var options = {
-                iniUrl: "/ClientsData/GetInitDataJson",    // 初始化接口
-                clearUrl: "/ClientsData/ClearCache", // 缓存清理接口
+                iniUrl: "/ClientsData/GetInitDataJson?v="+new Date().Format("yyyy-MM-dd hh:mm:ss"),    // 初始化接口
+                clearUrl: "/ClientsData/ClearCache?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"), // 缓存清理接口
                 urlHashLocation: false,      // 是否打开hash定位  说明：url地址显示
                 bgColorDefault: 0,          // 主题默认配置
                 multiModule: true,          // 是否开启多模块

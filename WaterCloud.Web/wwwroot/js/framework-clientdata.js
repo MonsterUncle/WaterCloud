@@ -15,7 +15,7 @@ $.clientsInit = function () {
     };
     var init = function () {
         $.ajax({
-            url: "/ClientsData/GetClientsDataJson",
+            url: "/ClientsData/GetClientsDataJson?v="+new Date().Format("yyyy-MM-dd hh:mm:ss"),
             type: "get",
             dataType: "json",
             async: false,

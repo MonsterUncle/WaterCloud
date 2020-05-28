@@ -19,6 +19,7 @@ namespace WaterCloud.Service.SystemManage
         private IModuleRepository moduleservice = new ModuleRepository();
         private string cacheKey = "watercloud_ modulefieldsdata_";
         private string initcacheKey = "watercloud_init_";
+        private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         #region 获取数据
         public async Task<List<ModuleFieldsEntity>> GetList(string keyword = "")
         {
@@ -76,6 +77,7 @@ namespace WaterCloud.Service.SystemManage
             await RedisHelper.DelAsync(cacheKey + keyValue);
             await RedisHelper.DelAsync(cacheKey + "list");
             await RedisHelper.DelAsync(initcacheKey + "modulefields_" + "list");
+            await RedisHelper.DelAsync(authorizecacheKey + "list");
         }
 
         public async Task SubmitCloneFields(string moduleId, string ids)
@@ -98,6 +100,7 @@ namespace WaterCloud.Service.SystemManage
             await service.Insert(entitys);
             await RedisHelper.DelAsync(cacheKey + "list");
             await RedisHelper.DelAsync(initcacheKey + "modulefields_" + "list");
+            await RedisHelper.DelAsync(authorizecacheKey + "list");
         }
 
         public async Task<List<ModuleFieldsEntity>> GetListByRole(string roleid)
