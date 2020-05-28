@@ -143,9 +143,8 @@
                     });
                 }
             }
-            layui.use(['form','common'], function () {
+            layui.use(['form'], function () {
                 var form = layui.form,
-                    common = layui.common,
                     layer = layui.layer;
                 // 登录过期的时候，跳出ifram框架
                 if (top.location != self.location) top.location = self.location;
