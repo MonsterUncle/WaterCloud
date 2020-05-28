@@ -273,6 +273,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 }
             };
             var options = $.extend(defaults, options);
+            //ie缓存问题
+            if (options.url.indexOf("?") >= 0) {
+                options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
+            else {
+                options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
             var _width = top.$(window).width() > parseInt(options.width.replace('px', '')) ? options.width : top.$(window).width() - 20 + 'px';
             var _height = top.$(window).height() > parseInt(options.height.replace('px', '')) ? options.height : top.$(window).height() - 20 + 'px';
             layer.open({
@@ -666,7 +673,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 toolbar: { show: true },//工具栏
                 remoteSearch: true,//远程搜索
                 paging: true,//分页
-                pageSize: 5,//分页大小
+                pageSize: 4,//分页大小
                 direction: 'auto',//下拉方向
                 data: [],
                 prop: {
@@ -690,7 +697,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 empty: '没有数据!',//空数据提示
                 remoteSearch: true,//远程搜索
                 paging: true,//分页
-                pageSize: 5,//分页大小
+                pageSize: 4,//分页大小
                 data: [],
                 radio: true,//单选
                 clickClose: true,//选择关闭

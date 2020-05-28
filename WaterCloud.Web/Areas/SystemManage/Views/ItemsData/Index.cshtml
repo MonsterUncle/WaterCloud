@@ -30,7 +30,7 @@
             scroll: "#toolbarDiv", // 绑定div元素
             icon: ["0", "-1"],  // 显示非最后一级节点图标，隐藏最后一级节点图标
             initLevel: 0,
-            url: "/SystemManage/ItemsType/GetTreeGridJson" // 使用url加载（可与data加载同时存在）
+            url: "/SystemManage/ItemsType/GetTreeGridJson?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss") // 使用url加载（可与data加载同时存在）
         });
         var treeid;
         // 绑定节点点击

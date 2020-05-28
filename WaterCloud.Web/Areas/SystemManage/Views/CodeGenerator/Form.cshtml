@@ -120,7 +120,7 @@
         $(function () {
             setup_draggable();
             if (!!keyValue) {
-                $.ajax({
+                common.ajax({
                     url: "/SystemManage/CodeGenerator/GetBaseConfigJson",
                     dataType: "json",
                     data: { keyValue: keyValue },
@@ -141,12 +141,12 @@
             el: '#OutputModule',
             name: 'outputmodule',
             remoteMethod: function (val, cb, show) {
-                $.ajax({
+                common.ajax({
                     url: '/SystemManage/Module/GetSelectJson',
                     data: { keyword: val },
                     dataType: "json",
                     success: function (data) {
-                        cb(data)
+                        cb(data);
                     },
                     error: function () {
                         cb([]);
@@ -154,6 +154,8 @@
                 });
             }
         });
+        //清空沙雕ie存的方法
+        outputModule.setValue([]);
         //页面选择
         var outputOptions = common.multipleSelectRender({
             el: '#OutputOptions',
@@ -181,31 +183,31 @@
                 { text: '查看按钮', id: 'details', selected: true },
             ]
         });
+        var templist;
         //字段选择
         var columnList = common.multipleSelectRender({
             el: '#ColumnList',
             name: 'columnlist',
             layVerify: 'required',
             layVerType: 'msg',
-            model: {
-                label: {
-                    type: 'setnum', //自定义与下面的对应
-                    setnum: {
-                        template(data, sels) {
-                            return "已选中 " + sels.length + " 项, 共 " + data.length + " 项"
-                        }
-                    },
-                }
-            },
+            pageSize: 3,//分页大小
+            //model: {
+            //    label: {
+            //        type: 'setnum', //自定义与下面的对应
+            //        setnum: {
+            //            template(data, sels) {
+            //                return "已选中 " + sels.length + " 项, 共 " + data.length + " 项"
+            //            }
+            //        },
+            //    }
+            //},
             remoteMethod: function (val, cb, show) {
-                $.ajax({
+                common.ajax({
                     url: '/SystemManage/CodeGenerator/GetTableFieldFilterSelectJson',
                     dataType: "json",
                     data: { keyValue: keyValue, keyword: val },
                     success: function (data) {
-                        for (var i = 0; i < data.length; i++) {
-                            data[i].selected = true;
-                        }
+                        templist = data;
                         cb(data);
                     },
                     error: function () {
@@ -214,6 +216,12 @@
                 });
             }
         });
+        //清空沙雕ie存的方法
+        columnList.setValue([]);
+        //赋值
+        for (var i = 0; i < templist.length; i++) {
+            columnList.append([templist[i].id]);
+        }
         //form字段选择
         var formColumnList = dtree.render({
             elem: "#formColumnList",
@@ -226,7 +234,7 @@
             ficon: "-1",
             icon: "-1",  // 显示非最后一级节点图标，隐藏最后一级节点图标
             initLevel: 0,
-            url: "/SystemManage/CodeGenerator/GetTableFieldFilterTreeJson?keyValue=" + keyValue, // 使用url加载（可与data加载同时存在）
+            url: "/SystemManage/CodeGenerator/GetTableFieldFilterTreeJson?keyValue=" + keyValue + "&v="+new Date().Format("yyyy-MM-dd hh:mm:ss"), // 使用url加载（可与data加载同时存在）
             checkbarFun: {
                 chooseBefore: function ($i, node) {
                     var id = node.nodeId;
