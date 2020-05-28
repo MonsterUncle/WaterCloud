@@ -562,6 +562,8 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             done: function () {");
                 sb.AppendLine("                 //权限控制");
                 sb.AppendLine("                 common.authorizeButton(\"toolbar\");");
+                sb.AppendLine("                 //关闭加载");
+                sb.AppendLine("                 layer.closeAll('loading');");
                 sb.AppendLine("             }");
                 sb.AppendLine("         });");
                 sb.AppendLine("     }");
@@ -595,6 +597,8 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             done: function () {");
                 sb.AppendLine("                 //权限控制");
                 sb.AppendLine("                 common.authorizeButton(\"toolbar\");");
+                sb.AppendLine("                 //关闭加载");
+                sb.AppendLine("                 layer.closeAll('loading');");
                 sb.AppendLine("             }");
                 sb.AppendLine("         });");
                 sb.AppendLine("         // 监听搜索操作");
@@ -710,7 +714,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        $(function () {");
             sb.AppendLine("            initControl();");
             sb.AppendLine("            if (!!keyValue) {");
-            sb.AppendLine("                 $.ajax({");
+            sb.AppendLine("                 common.ajax({");
             sb.AppendLine("                   url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetFormJson',");
             sb.AppendLine("                   dataType: 'json',");
             sb.AppendLine("                   data: { keyValue: keyValue },");
@@ -845,7 +849,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("");
             sb.AppendLine("        $(function () {");
             sb.AppendLine("            initControl();");
-            sb.AppendLine("            $.ajax({");
+            sb.AppendLine("            common.ajax({");
             sb.AppendLine("                url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetFormJson',");
             sb.AppendLine("                dataType: 'json',");
             sb.AppendLine("                data: { keyValue: keyValue },");
