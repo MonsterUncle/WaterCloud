@@ -2,123 +2,124 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
-<script>
-    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug'], function () {
-        var $ = layui.jquery,
-            form = layui.form,
-            table = layui.table,
-            common = layui.common;
-        common.rendertable({
-            elem: '#currentTableId',
-            url: '/SystemManage/Duty/GetGridJson',
-            cols: [[
-                { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
-                { field: 'F_FullName', title: '岗位名称', width: 120, sort: true },
-                { field: 'F_EnCode', title: '岗位编号', width: 120, sort: true },
-                {
-                    field: 'F_OrganizeId', title: '归属机构', width: 120, sort: true,
-                    templet: function (d) {
-                        return top.clients.organize[d.F_OrganizeId] == null ? "" : top.clients.organize[d.F_OrganizeId].fullname;
-                    }
-                },
-                {
-                    field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
-                    templet: function (d) {
-                        if (d.F_EnabledMark == true) {
-                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
-                        } else {
-                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+    <script>
+        layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', "layer"], function () {
+            var $ = layui.jquery,
+                form = layui.form,
+                table = layui.table,
+                layer = layui.layer,
+                common = layui.common;
+            common.rendertable({
+                elem: '#currentTableId',
+                url: '/SystemManage/Duty/GetGridJson',
+                cols: [[
+                    { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
+                    { field: 'F_FullName', title: '岗位名称', width: 120, sort: true },
+                    { field: 'F_EnCode', title: '岗位编号', width: 120, sort: true },
+                    {
+                        field: 'F_OrganizeId', title: '归属机构', width: 120, sort: true,
+                        templet: function (d) {
+                            return top.clients.organize[d.F_OrganizeId] == null ? "" : top.clients.organize[d.F_OrganizeId].fullname;
                         }
-                    }
-                },
-                {
-                    field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true,
-                    templet: function (d) {
-                        if (d.F_CreatorTime) {
-                            var time = new Date(d.F_CreatorTime);
-                            return time.Format("yyyy-MM-dd");
+                    },
+                    {
+                        field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
+                        templet: function (d) {
+                            if (d.F_EnabledMark == true) {
+                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                            } else {
+                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                            }
                         }
-                    }
-                },
-                { field: 'F_Description', title: '备注', minWidth: 150, sort: true },
-            ]],
-            done: function () {
-                //权限控制
-                common.authorizeButton("toolbar");
-                //关闭加载
-                layer.closeAll('loading');
-            }
-        });
-        // 监听搜索操作
-        form.on('submit(data-search-btn)', function (data) {
-            //执行搜索重载
-            common.reloadtable({
-                elem: 'currentTableId',
-                page: false,
-                curr: 1,
-                where: { keyword: data.field.txt_keyword}
+                    },
+                    {
+                        field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true,
+                        templet: function (d) {
+                            if (d.F_CreatorTime) {
+                                var time = new Date(d.F_CreatorTime);
+                                return time.Format("yyyy-MM-dd");
+                            }
+                        }
+                    },
+                    { field: 'F_Description', title: '备注', minWidth: 150, sort: true },
+                ]],
+                done: function () {
+                    //权限控制
+                    common.authorizeButton("toolbar");
+                    //关闭加载
+                    layer.closeAll('loading');
+                }
             });
-            return false;
-        });
-        var duty;
-        table.on('row(currentTableFilter)', function (obj) {
-            obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
-            duty = obj;
-        })
-        /**
-         * toolbar监听事件
-         */
-        table.on('toolbar(currentTableFilter)', function (obj) {
-            if (obj.event === 'add') {  // 监听删除操作
-                common.modalOpen({
-                    title: "添加岗位",
-                    url: "/SystemManage/Duty/Form",
-                    width: "550px",
-                    height: "620px",
+            // 监听搜索操作
+            form.on('submit(data-search-btn)', function (data) {
+                //执行搜索重载
+                common.reloadtable({
+                    elem: 'currentTableId',
+                    page: false,
+                    curr: 1,
+                    where: { keyword: data.field.txt_keyword }
                 });
-            }
-            else if (obj.event === 'delete') {
-                if (duty == null) {
-                    common.modalMsg("未选中数据", "warning");
-                    return false;
+                return false;
+            });
+            var duty;
+            table.on('row(currentTableFilter)', function (obj) {
+                obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
+                duty = obj;
+            })
+            /**
+             * toolbar监听事件
+             */
+            table.on('toolbar(currentTableFilter)', function (obj) {
+                if (obj.event === 'add') {  // 监听删除操作
+                    common.modalOpen({
+                        title: "添加岗位",
+                        url: "/SystemManage/Duty/Form",
+                        width: "550px",
+                        height: "620px",
+                    });
                 }
-                common.deleteForm({
-                    url: "/SystemManage/Duty/DeleteForm",
-                    param: { keyValue: duty.data.F_Id },
-                    success: function () {
-                        common.reload('data-search-btn');
+                else if (obj.event === 'delete') {
+                    if (duty == null) {
+                        common.modalMsg("未选中数据", "warning");
+                        return false;
                     }
-                });
-            }
-            else if (obj.event === 'edit') {
-                if (duty == null) {
-                    common.modalMsg("未选中数据", "warning");
-                    return false;
+                    common.deleteForm({
+                        url: "/SystemManage/Duty/DeleteForm",
+                        param: { keyValue: duty.data.F_Id },
+                        success: function () {
+                            common.reload('data-search-btn');
+                        }
+                    });
                 }
-                common.modalOpen({
-                    title: "编辑岗位",
-                    url: "/SystemManage/Duty/Form?keyValue=" + duty.data.F_Id,
-                    width: "550px",
-                    height: "620px",
-                });
-            }
-            else if (obj.event === 'details') {
-                if (duty == null) {
-                    common.modalMsg("未选中数据", "warning");
-                    return false;
+                else if (obj.event === 'edit') {
+                    if (duty == null) {
+                        common.modalMsg("未选中数据", "warning");
+                        return false;
+                    }
+                    common.modalOpen({
+                        title: "编辑岗位",
+                        url: "/SystemManage/Duty/Form?keyValue=" + duty.data.F_Id,
+                        width: "550px",
+                        height: "620px",
+                    });
                 }
-                common.modalOpen({
-                    title: "查看岗位",
-                    url: "/SystemManage/Duty/Details?keyValue=" + duty.data.F_Id,
-                    width: "550px",
-                    height: "620px",
-                    btn: []
-                });
-            }
-            return false;
+                else if (obj.event === 'details') {
+                    if (duty == null) {
+                        common.modalMsg("未选中数据", "warning");
+                        return false;
+                    }
+                    common.modalOpen({
+                        title: "查看岗位",
+                        url: "/SystemManage/Duty/Details?keyValue=" + duty.data.F_Id,
+                        width: "550px",
+                        height: "620px",
+                        btn: []
+                    });
+                }
+                return false;
+            });
         });
-    });
-</script>
+    </script>
 <div class="layuimini-container">
     <div class="layuimini-main">
         <fieldset class="table-search-fieldset">

@@ -2,207 +2,210 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
-<script>
-    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treetable','miniTab'], function () {
-        var $ = layui.jquery,
-            form = layui.form,
-            table = layui.table,
-            miniTab = layui.miniTab,
-            tablePlug = layui.tablePlug,
-            treetable = layui.treetable,
-            common = layui.common;
-        var rendertree = function (queryJson) {
-            common.rendertreetable({
-                elem: '#currentTableId',
-                url: !queryJson ? '/SystemManage/Module/GetTreeGridJson' : '/SystemManage/Module/GetTreeGridJson?keyword=' + queryJson,
-                cols: [[
-                    { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
-                    { field: 'F_FullName', title: '名称', width: 120 },
-                    {
-                        field: 'F_Icon', title: '图标', width: 60,
-                        templet: function (d) {
-                            return d.F_Icon == "" ? "<i class=\"fa \"></i>" : "<i class=\"fa " + d.F_Icon + "\"></i>";
-                        }
-                    },
-                    { field: 'F_UrlAddress', title: '连接', width: 220 },
-                    {
-                        field: 'F_Target', title: '目标', width: 80,
-                        templet: function (d) {
-                            if (d.F_Target == "expand") {
-                                return "无页面";
-                            } else if (d.F_Target == "iframe") {
-                                return "框架页";
-                            } else if (d.F_Target == "open") {
-                                return "弹出页";
-                            } else if (d.F_Target == "blank") {
-                                return "自定义";
+    <script>
+        layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treetable', 'miniTab', 'layer'], function () {
+            var $ = layui.jquery,
+                form = layui.form,
+                table = layui.table,
+                layer = layui.layer,
+                miniTab = layui.miniTab,
+                tablePlug = layui.tablePlug,
+                treetable = layui.treetable,
+                common = layui.common;
+            //加载数据
+            var loading = layer.load(0, { shade: false });
+            var rendertree = function (queryJson) {
+                common.rendertreetable({
+                    elem: '#currentTableId',
+                    url: !queryJson ? '/SystemManage/Module/GetTreeGridJson' : '/SystemManage/Module/GetTreeGridJson?keyword=' + queryJson,
+                    cols: [[
+                        { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
+                        { field: 'F_FullName', title: '名称', width: 120 },
+                        {
+                            field: 'F_Icon', title: '图标', width: 60,
+                            templet: function (d) {
+                                return d.F_Icon == "" ? "<i class=\"fa \"></i>" : "<i class=\"fa " + d.F_Icon + "\"></i>";
                             }
-                        }
-                    },
-                    {
-                        field: 'F_IsMenu', title: '菜单', width: 60,
-                        templet: function (d) {
-                            if (d.F_IsMenu == true) {
-                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
-                            } else {
-                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                        },
+                        { field: 'F_UrlAddress', title: '连接', width: 220 },
+                        {
+                            field: 'F_Target', title: '目标', width: 80,
+                            templet: function (d) {
+                                if (d.F_Target == "expand") {
+                                    return "无页面";
+                                } else if (d.F_Target == "iframe") {
+                                    return "框架页";
+                                } else if (d.F_Target == "open") {
+                                    return "弹出页";
+                                } else if (d.F_Target == "blank") {
+                                    return "自定义";
+                                }
                             }
-                        }
-                    },
-                    {
-                        field: 'F_IsExpand', title: '展开', width: 60,
-                        templet: function (d) {
-                            if (d.F_IsExpand == true) {
-                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
-                            } else {
-                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                        },
+                        {
+                            field: 'F_IsMenu', title: '菜单', width: 60,
+                            templet: function (d) {
+                                if (d.F_IsMenu == true) {
+                                    return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                                } else {
+                                    return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                                }
                             }
-                        }
-                    },
-                    {
-                        field: 'F_IsPublic', title: '系统', width: 60,
-                        templet: function (d) {
-                            if (d.F_IsPublic == true) {
-                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true' >";
-                            } else {
-                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false' >";
+                        },
+                        {
+                            field: 'F_IsExpand', title: '展开', width: 60,
+                            templet: function (d) {
+                                if (d.F_IsExpand == true) {
+                                    return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                                } else {
+                                    return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                                }
                             }
-                        }
-                    },
-                    {
-                        field: 'F_EnabledMark', title: '有效', width: 60,
-                        templet: function (d) {
-                            if (d.F_EnabledMark == true) {
-                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
-                            } else {
-                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                        },
+                        {
+                            field: 'F_IsPublic', title: '系统', width: 60,
+                            templet: function (d) {
+                                if (d.F_IsPublic == true) {
+                                    return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true' >";
+                                } else {
+                                    return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false' >";
+                                }
                             }
-                        }
-                    },
-                    { field: 'F_SortCode', title: '排序', width: 60 },
-                    {
-                        field: 'F_CreatorTime', title: '创建时间', width: 100,
-                        templet: function (d) {
-                            if (d.F_CreatorTime) {
-                                var time = new Date(d.F_CreatorTime);
-                                return time.Format("yyyy-MM-dd");
+                        },
+                        {
+                            field: 'F_EnabledMark', title: '有效', width: 60,
+                            templet: function (d) {
+                                if (d.F_EnabledMark == true) {
+                                    return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                                } else {
+                                    return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                                }
                             }
-                        }
-                    },
-                    { field: 'F_Description', title: '备注', minWidth: 100 },
-                ]],
-                done: function () {
-                    //权限控制
-                    common.authorizeButton("toolbar");
-                    //关闭加载
-                    layer.closeAll('loading');
-                }
-            });
-        }
-        rendertree();
-        // 监听搜索操作
-        form.on('submit(data-search-btn)', function (data) {
-            var queryJson = data.field.txt_keyword;
-            //执行搜索重载
-            rendertree(queryJson);
-            return false;
-        });
-        var module;
-        table.on('row(currentTableFilter)', function (obj) {
-            obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
-            module = obj;
-        })
-        /**
-         * toolbar监听事件
-         */
-        table.on('toolbar(currentTableFilter)', function (obj) {
-            if (obj.event === 'add') {  // 监听操作
-                keyValue = !!module ? module.data.F_Id :null;
-                common.modalOpen({
-                    title: "添加菜单",
-                    url: "/SystemManage/Module/Form?event=add&keyValue=" + keyValue,
-                    width: "500px",
-                    height: "500px",
-                    btn: [],
-                });
-            }
-            else if (obj.event === 'delete') {
-                if (module == null) {
-                    common.modalMsg("未选中数据", "warning");
-                    return false;
-                }
-                common.deleteForm({
-                    url: "/SystemManage/Module/DeleteForm",
-                    param: { keyValue: module.data.F_Id },
-                    success: function () {
-                        common.reload('data-search-btn');
+                        },
+                        { field: 'F_SortCode', title: '排序', width: 60 },
+                        {
+                            field: 'F_CreatorTime', title: '创建时间', width: 100,
+                            templet: function (d) {
+                                if (d.F_CreatorTime) {
+                                    var time = new Date(d.F_CreatorTime);
+                                    return time.Format("yyyy-MM-dd");
+                                }
+                            }
+                        },
+                        { field: 'F_Description', title: '备注', minWidth: 100 },
+                    ]],
+                    done: function () {
+                        //权限控制
+                        common.authorizeButton("toolbar");
+                        //关闭加载
+                        layer.closeAll('loading');
                     }
                 });
             }
-            else if (obj.event === 'edit') {
-                if (module == null) {
-                    common.modalMsg("未选中数据", "warning");
-                    return false;
+            rendertree();
+            // 监听搜索操作
+            form.on('submit(data-search-btn)', function (data) {
+                var queryJson = data.field.txt_keyword;
+                //执行搜索重载
+                rendertree(queryJson);
+                return false;
+            });
+            var module;
+            table.on('row(currentTableFilter)', function (obj) {
+                obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
+                module = obj;
+            })
+            /**
+             * toolbar监听事件
+             */
+            table.on('toolbar(currentTableFilter)', function (obj) {
+                if (obj.event === 'add') {  // 监听操作
+                    keyValue = !!module ? module.data.F_Id : null;
+                    common.modalOpen({
+                        title: "添加菜单",
+                        url: "/SystemManage/Module/Form?event=add&keyValue=" + keyValue,
+                        width: "500px",
+                        height: "500px",
+                        btn: [],
+                    });
                 }
-                common.modalOpen({
-                    title: "编辑菜单",
-                    url: "/SystemManage/Module/Form?event=edit&keyValue=" + module.data.F_Id,
-                    width: "500px",
-                    height: "500px",
-                    btn: []
-                });
-            }
-            else if (obj.event === 'details') {
-                if (module == null) {
-                    common.modalMsg("未选中数据", "warning");
-                    return false;
+                else if (obj.event === 'delete') {
+                    if (module == null) {
+                        common.modalMsg("未选中数据", "warning");
+                        return false;
+                    }
+                    common.deleteForm({
+                        url: "/SystemManage/Module/DeleteForm",
+                        param: { keyValue: module.data.F_Id },
+                        success: function () {
+                            common.reload('data-search-btn');
+                        }
+                    });
                 }
-                common.modalOpen({
-                    title: "查看菜单",
-                    url: "/SystemManage/Module/Details?keyValue=" + module.data.F_Id,
-                    width: "500px",
-                    height: "500px",
-                    btn: []
-                });
-            }
-            else if (obj.event === 'modulebutton') {
-                if (module == null) {
-                    common.modalMsg("未选中数据", "warning");
-                    return false;
+                else if (obj.event === 'edit') {
+                    if (module == null) {
+                        common.modalMsg("未选中数据", "warning");
+                        return false;
+                    }
+                    common.modalOpen({
+                        title: "编辑菜单",
+                        url: "/SystemManage/Module/Form?event=edit&keyValue=" + module.data.F_Id,
+                        width: "500px",
+                        height: "500px",
+                        btn: []
+                    });
                 }
-                if (miniTab.check("/SystemManage/ModuleButton/Index", true)) {
-                    common.modalAlert("系统按钮界面已打开,请关闭后重试", "warning");
+                else if (obj.event === 'details') {
+                    if (module == null) {
+                        common.modalMsg("未选中数据", "warning");
+                        return false;
+                    }
+                    common.modalOpen({
+                        title: "查看菜单",
+                        url: "/SystemManage/Module/Details?keyValue=" + module.data.F_Id,
+                        width: "500px",
+                        height: "500px",
+                        btn: []
+                    });
                 }
-                if (module.data.F_Target != "iframe" || !module.data.F_UrlAddress) {
-                    common.modalAlert("菜单不能创建按钮,请修改后重试", "warning");
-                    return false;
+                else if (obj.event === 'modulebutton') {
+                    if (module == null) {
+                        common.modalMsg("未选中数据", "warning");
+                        return false;
+                    }
+                    if (miniTab.check("/SystemManage/ModuleButton/Index", true)) {
+                        common.modalAlert("系统按钮界面已打开,请关闭后重试", "warning");
+                    }
+                    if (module.data.F_Target != "iframe" || !module.data.F_UrlAddress) {
+                        common.modalAlert("菜单不能创建按钮,请修改后重试", "warning");
+                        return false;
+                    }
+                    miniTab.openNewTabByIframe({
+                        title: "按钮管理",
+                        href: "/SystemManage/ModuleButton/Index?moduleId=" + module.data.F_Id + "&modulename=" + module.data.F_FullName,
+                    });
                 }
-                miniTab.openNewTabByIframe({
-                    title: "按钮管理",
-                    href: "/SystemManage/ModuleButton/Index?moduleId=" + module.data.F_Id + "&modulename=" + module.data.F_FullName,
-                });
-            }
-            else if (obj.event === 'modulefields') {
-                if (module == null) {
-                    common.modalMsg("未选中数据", "warning");
-                    return false;
+                else if (obj.event === 'modulefields') {
+                    if (module == null) {
+                        common.modalMsg("未选中数据", "warning");
+                        return false;
+                    }
+                    if (miniTab.check("/SystemManage/ModuleFields/Index", true)) {
+                        common.modalAlert("系统字段界面已打开,请关闭后重试", "warning");
+                    }
+                    if (module.data.F_Target != "iframe" || !module.data.F_UrlAddress || module.data.F_IsPublic) {
+                        common.modalAlert("菜单不能创建字段,请修改后重试", "warning");
+                        return false;
+                    }
+                    miniTab.openNewTabByIframe({
+                        title: "字段管理",
+                        href: "/SystemManage/ModuleFields/Index?moduleId=" + module.data.F_Id + "&modulename=" + module.data.F_FullName,
+                    });
                 }
-                if (miniTab.check("/SystemManage/ModuleFields/Index", true)) {
-                    common.modalAlert("系统字段界面已打开,请关闭后重试", "warning");
-                }
-                if (module.data.F_Target != "iframe" || !module.data.F_UrlAddress||module.data.F_IsPublic) {
-                    common.modalAlert("菜单不能创建字段,请修改后重试", "warning");
-                    return false;
-                }
-                miniTab.openNewTabByIframe({
-                    title: "字段管理",
-                    href: "/SystemManage/ModuleFields/Index?moduleId=" + module.data.F_Id + "&modulename=" + module.data.F_FullName,
-                });
-            }
-            return false;
+                return false;
+            });
         });
-    });
-</script>
+    </script>
 <div class="layuimini-container">
     <div class="layuimini-main">
         <fieldset class="table-search-fieldset">

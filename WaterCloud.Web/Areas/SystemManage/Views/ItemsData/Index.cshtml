@@ -19,6 +19,8 @@
             treetable = layui.treetable,
             dtree = layui.dtree,
             common = layui.common;
+        //加载数据
+        var loading = layer.load(0, { shade: false });
         // 初始化树
         var DemoTree = dtree.render({
             elem: "#demoTree",

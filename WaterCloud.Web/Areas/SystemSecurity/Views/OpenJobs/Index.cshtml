@@ -3,11 +3,14 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
     <script>
-        layui.use(['jquery', 'form', 'table', 'common', 'tablePlug'], function () {
+        layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', "layer"], function () {
             var $ = layui.jquery,
                 form = layui.form,
                 table = layui.table,
+                layer = layui.layer,
                 common = layui.common;
+            //加载数据
+            var loading = layer.load(0, { shade: false });
             common.rendertable({
                 elem: '#currentTableId',
                 url: '/SystemSecurity/OpenJobs/GetGridJson',
