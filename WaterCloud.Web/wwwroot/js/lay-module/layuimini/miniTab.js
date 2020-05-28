@@ -222,7 +222,22 @@ layui.define(["element", "layer", "jquery"], function (exports) {
                     window.open(href, "_blank");
                     return false;
                 }
-
+                if (target === '_open') {
+                    layer.close(loading);
+                    layer.open({
+                        type: 2,
+                        title: title,
+                        isOutAnim: true,//关闭动画
+                        maxmin: true, //开启最大化最小化按钮
+                        fix: false,
+                        area: ['500px', '500px'],
+                        content: href,
+                        success: function (layero) {
+                            $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
+                        }
+                    });
+                    return false;
+                }
                 if (tabId === null || tabId === undefined) tabId = new Date().getTime();
                 var checkTab = miniTab.check(tabId);
                 if (!checkTab) {

@@ -288,7 +288,21 @@ namespace WaterCloud.Web.Controllers
                     munu.title = item.F_FullName;
                     munu.icon = item.F_Icon;
                     munu.href = item.F_UrlAddress;
-                    munu.target = "_self";
+                    switch (item.F_Target)
+                    {
+                        case "iframe":
+                            munu.target = "_self";
+                            break;
+                        case "open":
+                            munu.target = "_open";
+                            break;
+                        case "blank":
+                            munu.target = "_blank";
+                            break;
+                        default:
+                            munu.target = "_self";
+                            break;
+                    }                    
                     if (data.FindAll(t => t.F_ParentId == item.F_Id).Count>0)
                     {
                         munu.child = new List<MenuInfoEntity>();
