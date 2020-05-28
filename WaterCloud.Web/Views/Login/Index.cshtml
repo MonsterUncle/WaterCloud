@@ -174,8 +174,8 @@
                     }
                     $("#login_button").empty();
                     $("#login_button").attr('disabled', 'disabled').html("loading...");
-                    common.ajax({
-                        url: "/Login/CheckLogin",
+                    $.ajax({
+                        url: "/Login/CheckLogin?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
                         data: { username: $.trim($('#username').val()), password: $.md5($.trim($('#password').val())) },
                         type: "post",
                         dataType: "json",
