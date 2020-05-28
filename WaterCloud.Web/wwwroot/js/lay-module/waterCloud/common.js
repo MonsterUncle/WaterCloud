@@ -258,7 +258,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 width: "100px",
                 height: "100px",
                 anim: 0,//动画
-                isOutAnim:true,//关闭动画
+                isOutAnim: true,//关闭动画
+                maxmin: true, //开启最大化最小化按钮
                 url: '',
                 shade: 0.3,
                 btn: ['确认', '关闭'],
@@ -286,6 +287,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 type: 2,
                 shade: options.shade,
                 title: options.title,
+                isOutAnim: options.isOutAnim,//关闭动画
+                maxmin: options.maxmin, //开启最大化最小化按钮
                 fix: false,
                 area: [_width, _height],
                 content: options.url,
