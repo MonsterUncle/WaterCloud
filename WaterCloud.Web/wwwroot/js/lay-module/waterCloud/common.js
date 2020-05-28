@@ -17,6 +17,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
     var obj = {
         //table渲染封装里面有字段权限
         rendertable: function (options) {
+            var loading = layer.load(0, { shade: false });
             var defaults = {
                 elem: '#currentTableId',//主键
                 toolbar: '#toolbarDemo',//工具栏
@@ -26,6 +27,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 cellMinWidth: 100,//最小宽度
                 limit: 10,//每页数据 默认
                 height: $(window).height() > 500 ? 'full-150' : 'full-190',
+                loading:false,
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['skip', 'prev', 'page', 'next','count'] //自定义分页布局
                     //,curr: 2 //设定初始在第 5 页
@@ -48,6 +50,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                     },
                 done: function (res, curr, count) { // 使用自定义参数hideAlways隐藏
                     //$(".layui-table-box").find("[data-field='F_Id']").css("display", "none");
+                    //关闭加载
+                    layer.closeAll('loading');
                 }
             };
             var options = $.extend(defaults, options);
@@ -86,7 +90,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
         //tabletree渲染封装里面有字段权限
         rendertreetable: function (options) {
             //样式不协调，先不加
-            //layer.load(2);
+            var loading = layer.load(0, { shade: false });
             var defaults = {
                 elem: '#currentTableId',//主键
                 toolbar: '#toolbarDemo',//工具栏
@@ -94,6 +98,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 treeSpid: '0',		//最上级的父级id
                 treeIdName: 'F_Id',	//id字段的名称
                 treePidName: 'F_ParentId',	//父级节点字段
+                loading: false,
                 height: $(window).height() > 500 ? 'full-150' : 'full-190',
                 method: 'get',//请求方法
                 cellMinWidth: 100,//最小宽度
@@ -103,7 +108,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 done: function () {
                     //$(".layui-table-box").find("[data-field='F_Id']").css("display", "none");
                     //关闭加载
-                    //layer.closeAll('loading');
+                    layer.closeAll('loading');
                 }
             };
             var options = $.extend(defaults, options);
@@ -141,6 +146,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
         },
         //table刷新
         reloadtable: function (options) {
+            var loading = layer.load(0, { shade: false });
             var defaults = {
                 elem: 'currentTableId',//主键
                 page: true,//分页参数
@@ -148,6 +154,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 where: {}
             };
             var options = $.extend(defaults, options);
+            options.where.time = new Date().Format("yyyy-MM-dd hh:mm:ss");
             if (options.page) {
                 //执行搜索重载
                 table.reload(options.elem, {
@@ -168,7 +175,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                     where: options.where
                 }, 'data');
             }
-
+            //关闭加载
+            layer.closeAll('loading');
         },
         //msg
         modalMsg: function (content, type, close) {
@@ -249,6 +257,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 title: '系统窗口',
                 width: "100px",
                 height: "100px",
+                anim: 0,//动画
+                isOutAnim:true,//关闭动画
                 url: '',
                 shade: 0.3,
                 btn: ['确认', '关闭'],
@@ -705,6 +715,22 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
             var options = $.extend(defaults, options);
             return xmSelect.render(options);
         },
+        ajax: function (options) {
+            var defaults = {
+                dataType: "json",
+                async: false,
+                type: "GET"
+            };
+            var options = $.extend(defaults, options);
+            //ie缓存问题
+            if (options.url.indexOf("?") >= 0) {
+                options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
+            else {
+                options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+            }
+            return $.ajax(options);
+        }
     }
     exports("common", obj);
 });

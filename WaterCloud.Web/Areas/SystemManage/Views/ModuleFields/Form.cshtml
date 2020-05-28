@@ -14,7 +14,7 @@
         common.authorizeFields('adminform');
         $(function () {
             if (!!keyValue) {
-                 $.ajax({
+                common.ajax({
                    url: '/SystemManage/ModuleFields/GetFormJson',
                    dataType: 'json',
                    data: { keyValue: keyValue },

@@ -39,7 +39,7 @@
         $(function () {
             initControl();
             if (!!keyValue) {
-                $.ajax({
+                common.ajax({
                     url: "/SystemManage/User/GetFormJson",
                     data: { keyValue: keyValue },
                     dataType: "json",

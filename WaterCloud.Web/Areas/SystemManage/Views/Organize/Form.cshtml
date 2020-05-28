@@ -15,7 +15,7 @@
         $(function () {
             initControl();
             if (event == "edit") {
-                $.ajax({
+                common.ajax({
                     url: "/SystemManage/Organize/GetFormJson",
                     dataType: "json",
                     data: { keyValue: keyValue },

@@ -152,13 +152,14 @@
                 });
             })
         };
-        layui.use(['jquery', 'layer', 'miniAdmin', 'miniTongji', 'miniTab'], function () {
+        layui.use(['jquery', 'layer', 'miniAdmin', 'miniTongji', 'miniTab', 'common'], function () {
             var $ = layui.jquery,
                 layer = layui.layer,
                 miniAdmin = layui.miniAdmin,
+                common=layui.common,
                 miniTongji = layui.miniTongji;
             function loadUser() {
-                $.ajax({
+                common.ajax({
                     url: "/ClientsData/GetUserCode?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
                     dataType: "json",
                     async: true,

@@ -178,7 +178,7 @@
 
     function loadInfo() {
         $.ajax({
-            url: "/SystemSecurity/ServerMonitoring/GetServerDataJson",
+            url: "/SystemSecurity/ServerMonitoring/GetServerDataJson?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
             dataType: "json",
             success: function (data) {
                 loadGaugeCPU(data.CPU);
@@ -290,7 +290,7 @@
         var armData = [];
         var cpuData = [];
         $.ajax({
-            url: "/SystemSecurity/ServerMonitoring/GetServerData",
+            url: "/SystemSecurity/ServerMonitoring/GetServerData?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
             dataType: "json",
             async: false,
             success: function (data) {

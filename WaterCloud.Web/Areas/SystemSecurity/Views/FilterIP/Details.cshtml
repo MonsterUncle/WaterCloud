@@ -58,7 +58,7 @@
         //权限字段
         common.authorizeFields('adminform');
         $(function () {
-            $.ajax({
+            common.ajax({
                 url: "/SystemSecurity/FilterIP/GetFormJson",
                 dataType: "json",
                 data: { keyValue: keyValue },

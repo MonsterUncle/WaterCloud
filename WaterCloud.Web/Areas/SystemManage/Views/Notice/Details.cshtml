@@ -13,7 +13,7 @@
         common.authorizeFields('adminform');
         $(function () {
             if (!!keyValue) {
-                $.ajax({
+                common.ajax({
                     url: "/SystemManage/Notice/GetFormJson",
                     dataType: "json",
                     data: { keyValue: keyValue },

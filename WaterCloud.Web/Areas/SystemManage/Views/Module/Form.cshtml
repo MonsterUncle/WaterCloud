@@ -22,7 +22,7 @@
         $(function () {
             initControl();
             if (event == "edit") {
-                $.ajax({
+                common.ajax({
                     url: "/SystemManage/Module/GetFormJson",
                     dataType: "json",
                     data: { keyValue: keyValue },

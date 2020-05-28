@@ -65,6 +65,7 @@
     <script src="~/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
     <script src="~/lib/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
     <script src="~/js/login.js?v=@WaterCloud.Code.Ext.ToDateString()"></script>
+    <script src="~/js/framework-ui.js?v=@WaterCloud.Code.Ext.ToDateString()"></script>
     <script>
         (function ($) {
             var show_num = [];
@@ -95,7 +96,7 @@
                 },
                 checkLogin: function () {
                     $.ajax({
-                        url: "/Login/CheckLoginState",
+                        url: "/Login/CheckLoginState?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
                         type: "post",
                         async: false,
                         dataType: "json",
@@ -142,8 +143,9 @@
                     });
                 }
             }
-            layui.use(['form'], function () {
+            layui.use(['form','common'], function () {
                 var form = layui.form,
+                    common = layui.common,
                     layer = layui.layer;
                 // 登录过期的时候，跳出ifram框架
                 if (top.location != self.location) top.location = self.location;
@@ -172,7 +174,7 @@
                     }
                     $("#login_button").empty();
                     $("#login_button").attr('disabled', 'disabled').html("loading...");
-                    $.ajax({
+                    common.ajax({
                         url: "/Login/CheckLogin",
                         data: { username: $.trim($('#username').val()), password: $.md5($.trim($('#password').val())) },
                         type: "post",

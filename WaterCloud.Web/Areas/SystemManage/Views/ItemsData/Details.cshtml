@@ -15,7 +15,7 @@
         $(function () {
             initControl();
             if (!!keyValue) {
-                $.ajax({
+                common.ajax({
                     url: "/SystemManage/ItemsData/GetFormJson",
                     dataType: "json",
                     data: { keyValue: keyValue },

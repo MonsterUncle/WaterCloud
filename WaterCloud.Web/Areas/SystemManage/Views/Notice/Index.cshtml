@@ -41,6 +41,8 @@
             done: function () {
                 //权限控制
                 common.authorizeButton("toolbar");
+                //关闭加载
+                layer.closeAll('loading');
             }
         });
         // 监听搜索操作

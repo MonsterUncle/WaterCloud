@@ -319,7 +319,7 @@
         //记录信息
         loadInfo = function () {
             $.ajax({
-                url: "/ClientsData/GetCoutData",
+                url: "/ClientsData/GetCoutData?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
                 dataType: "json",
                 success: function (data) {
                     $('#usercout').html(data.usercout);
@@ -332,7 +332,7 @@
         //公告
         noticeInfo = function () {
             $.ajax({
-                url: "/ClientsData/GetNoticeInfo",
+                url: "/ClientsData/GetNoticeInfo?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
                 dataType: "json",
                 success: function (data) {
                     var noticeHtml = '';
@@ -357,7 +357,7 @@
         //快捷入口
         quickModuleInfo = function () {
             $.ajax({
-                url: "/ClientsData/GetQuickModule",
+                url: "/ClientsData/GetQuickModule?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
                 dataType: "json",
                 success: function (data) {
                     var qiuckHtml = '';
@@ -427,7 +427,7 @@
                 var xData = [];
                 var armData = [];
                 var cpuData = [];
-                $.ajax({
+                common.ajax({
                     url: "/SystemSecurity/ServerMonitoring/GetServerData",
                     dataType: "json",
                     async: false,

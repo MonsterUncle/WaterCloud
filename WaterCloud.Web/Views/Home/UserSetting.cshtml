@@ -85,7 +85,7 @@
                 common = layui.common,
                 laydate = layui.laydate;
             $(function () {
-                $.ajax({
+                common.ajax({
                     url: "/SystemManage/User/GetUserFormJson",
                     dataType: "json",
                     async: false,

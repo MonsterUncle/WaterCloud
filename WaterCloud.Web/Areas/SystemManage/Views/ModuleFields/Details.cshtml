@@ -12,7 +12,7 @@
         //权限字段
         common.authorizeFields('adminform');
         $(function () {
-            $.ajax({
+            common.ajax({
                 url: '/SystemManage/ModuleFields/GetFormJson',
                 dataType: 'json',
                 data: { keyValue: keyValue },

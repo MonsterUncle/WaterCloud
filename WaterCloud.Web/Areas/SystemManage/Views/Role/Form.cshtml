@@ -47,7 +47,7 @@
         $(function () {
             initControl();
             if (!!keyValue) {
-                $.ajax({
+                common.ajax({
                     url: "/SystemManage/Role/GetFormJson",
                     dataType: "json",
                     data: { keyValue: keyValue },

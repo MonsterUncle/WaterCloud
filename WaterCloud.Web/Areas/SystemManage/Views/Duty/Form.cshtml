@@ -14,14 +14,13 @@
         $(function () {
             initControl();
             if (!!keyValue) {
-                $.ajax({
+                common.ajax({
                     url: "/SystemManage/Duty/GetFormJson",
                     dataType: "json",
                     data: { keyValue: keyValue },
                     async: false,
                     success: function (data) {
                         common.val('adminform', data);
-
                     }
                 });
             }

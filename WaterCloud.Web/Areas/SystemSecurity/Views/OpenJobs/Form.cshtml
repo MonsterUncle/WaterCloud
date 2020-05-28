@@ -58,7 +58,7 @@
         $(function () {
             initControl();
             if (!!keyValue) {
-                $.ajax({
+                common.ajax({
                     url: "/SystemSecurity/OpenJobs/GetFormJson",
                     dataType: "json",
                     data: { keyValue: keyValue },
