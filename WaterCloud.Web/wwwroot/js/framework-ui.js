@@ -40,6 +40,13 @@ $.fn.bindSelect = function (options) {
         change: null
     };
     var options = $.extend(defaults, options);
+    //ie缓存问题
+    if (options.url.indexOf("?") >= 0) {
+        options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+    }
+    else {
+        options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+    }
     var $element = $(this);
     if (options.url != "") {
         $.ajax({
@@ -85,6 +92,13 @@ $.fn.bindComboBox= function (options) {
         change: null
     };
     var options = $.extend(defaults, options);
+    //ie缓存问题
+    if (options.url.indexOf("?") >= 0) {
+        options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+    }
+    else {
+        options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+    }
     var $element = $(this);
     if (options.url != "") {
         $.ajax({
@@ -123,6 +137,13 @@ $.fn.bindRadioBox = function (options) {
         change: null
     };
     var options = $.extend(defaults, options);
+    //ie缓存问题
+    if (options.url.indexOf("?") >= 0) {
+        options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+    }
+    else {
+        options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+    }
     var $element = $(this);
 
     $("[id=" + $element.attr("id") + "]").each(function () {
