@@ -42,7 +42,7 @@ namespace WaterCloud.Service.SystemManage
                 expression = expression.And(t => t.F_FullName.Contains(keyword));
                 expression = expression.Or(t => t.F_EnCode.Contains(keyword));
             }
-            expression = expression.And(t => t.F_EnabledMark==false);
+            expression = expression.And(t => t.F_DeleteMark == false);
             return await service.FindList(expression, pagination);
         }
 
