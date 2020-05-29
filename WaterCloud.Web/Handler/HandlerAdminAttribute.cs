@@ -19,7 +19,7 @@ namespace WaterCloud.Web
             }
             else
             {
-                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '"+ filterContext .HttpContext.Request.PathBase + "/Home/Error?msg=" + "很抱歉！您的权限不足，请使用管理员登录！" + "';window.event.returnValue = false;</script>");
+                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '"+ filterContext .HttpContext.Request.PathBase + "/Home/Error?msg=" + "很抱歉！您的权限不足，请使用管理员登录！" + "';if(document.all) window.event.returnValue = false;</script>");
                 return;
             }
         }

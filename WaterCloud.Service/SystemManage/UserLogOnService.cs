@@ -4,6 +4,7 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using System;
 using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemManage;
@@ -66,10 +67,21 @@ namespace WaterCloud.Service.SystemManage
                 userLogOnEntity.F_PreviousVisitTime = entity.F_PreviousVisitTime;
                 userLogOnEntity.F_Question = entity.F_Question;
                 userLogOnEntity.F_Theme = entity.F_Theme;
-                RedisHelper.Set(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
             }
             userLogOnEntity.F_UserPassword = entity.F_UserPassword;
             await RedisHelper.DelAsync(cacheKeyOperator + "info_" + keyValue);
+            await RedisHelper.SetAsync(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
+        }
+
+        public async Task ReviseSelfPassword(string userPassword, string keyValue)
+        {
+            UserLogOnEntity entity = new UserLogOnEntity();
+            entity = service.IQueryable(a => a.F_UserId == keyValue).FirstOrDefault();
+            entity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+            entity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.F_UserSecretkey).ToLower(), 32).ToLower();
+            await service.Update(entity);
+            var userLogOnEntity = await RedisHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
+            userLogOnEntity.F_UserPassword = entity.F_UserPassword;
             await RedisHelper.SetAsync(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
         }
     }

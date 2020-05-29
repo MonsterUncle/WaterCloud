@@ -190,6 +190,36 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 return Error(ex.Message);
             }
         }
+        [HttpGet]
+        public ActionResult ReviseSelfPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [HandlerAjaxOnly]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SubmitReviseSelfPassword(string F_UserPassword)
+        {
+            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+            logEntity.F_Description += DbLogType.Update.ToDescription();
+            logEntity.F_KeyValue = OperatorProvider.Provider.GetCurrent().UserId;
+            try
+            {
+                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
+                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                await _userLogOnService.ReviseSelfPassword(F_UserPassword, logEntity.F_KeyValue);
+                logEntity.F_Description += "重置密码成功";
+                await _logService.WriteDbLog(logEntity);
+                return Success("重置密码成功。");
+            }
+            catch (Exception ex)
+            {
+                logEntity.F_Result = false;
+                logEntity.F_Description += "重置密码失败，" + ex.Message;
+                await _logService.WriteDbLog(logEntity);
+                return Error(ex.Message);
+            }
+        }
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
