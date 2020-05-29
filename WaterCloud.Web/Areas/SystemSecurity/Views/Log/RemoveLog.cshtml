@@ -27,16 +27,18 @@
 
     });
 </script>
-<div class="layui-form select_option_to_layer">
+<div class="layui-form select_option_to_layer" lay-filter="adminform">
     <div style="margin: 25px; margin-left: 40px; margin-right: 40px;">
         <div class="layui-form-item layui-hide">
-            <select id="keepTime" name="keepTime" lay-verify="required">
-                <option value="">==请选择保留时间==</option>
-                <option value="7">保留近一周</option>
-                <option value="1">保留近一个月</option>
-                <option value="3">保留近三个月</option>
-                <option value="0">不保留，全部删除</option>
-            </select>
+            <div>
+                <select id="keepTime" name="keepTime" lay-verify="required">
+                    <option value="">==请选择保留时间==</option>
+                    <option value="7">保留近一周</option>
+                    <option value="1">保留近一个月</option>
+                    <option value="3">保留近三个月</option>
+                    <option value="0">不保留，全部删除</option>
+                </select>
+            </div>
         </div>
         <div class="layui-form-item layui-hide">
             <button style="float:right" class="layui-btn" id="submit" lay-submit lay-filter="clear">确认清空</button>
