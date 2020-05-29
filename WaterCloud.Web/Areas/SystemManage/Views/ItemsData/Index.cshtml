@@ -154,6 +154,7 @@
                     param: { keyValue: item.data.F_Id },
                     success: function () {
                         common.reload('data-search-btn');
+                        item = null;
                     }
                 });
             }

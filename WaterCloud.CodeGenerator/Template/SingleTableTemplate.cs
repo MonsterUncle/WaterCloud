@@ -643,6 +643,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                     param: { keyValue: entity.data.F_Id },");
             sb.AppendLine("                     success: function () {");
             sb.AppendLine("                         common.reload('data-search-btn');");
+            sb.AppendLine("                         entity = null;");
             sb.AppendLine("                   }");
             sb.AppendLine("               });");
             sb.AppendLine( "           }");

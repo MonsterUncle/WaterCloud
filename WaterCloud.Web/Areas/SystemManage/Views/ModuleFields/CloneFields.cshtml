@@ -25,7 +25,7 @@
             initLevel: 0,
             icon: "-1", // 隐藏二级图标
             scroll: "#toolbarDiv", // 绑定div元素
-            url: "/SystemManage/ModuleFields/GetCloneFieldsTreeJson",
+            url: "/SystemManage/ModuleFields/GetCloneFieldsTreeJson?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
         });
         //监听提交
         form.on('submit(saveBtn)', function (data) {
