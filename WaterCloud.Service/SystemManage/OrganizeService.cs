@@ -9,6 +9,7 @@ using WaterCloud.Repository.SystemManage;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -25,7 +26,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<OrganizeEntity>> GetList()
         {
             var cachedata =await service.CheckCacheList(cacheKey + "list");
-            return cachedata;
+            return cachedata.Where(a=>a.F_DeleteMark==false).ToList();
         }
         public async Task<OrganizeEntity> GetForm(string keyValue)
         {

@@ -12,6 +12,7 @@ using WaterCloud.Repository.SystemManage;
 using System.Collections.Generic;
 using WaterCloud.Code;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -26,12 +27,14 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<object> GetTransferList(string userId)
         {
-            return await service.GetTransferList(userId);
+            var data = await service.GetTransferList(userId);
+            return data;
         }
 
         public async Task<List<QuickModuleExtend>> GetQuickModuleList(string userId)
         {
-            return await service.GetQuickModuleList(userId);
+            var data= await service.GetQuickModuleList(userId);
+            return data;
         }
 
         public async Task SubmitForm(string[] permissionIds)

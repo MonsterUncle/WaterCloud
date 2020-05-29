@@ -26,7 +26,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<RoleEntity>> GetList(string keyword = "")
         {
             var cachedata =await service.CheckCacheList(cacheKey + "list");
-            cachedata = cachedata.Where(t => t.F_Category == 2).ToList();
+            cachedata = cachedata.Where(t => t.F_Category == 2&&t.F_DeleteMark==false).ToList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 cachedata = cachedata.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword)).ToList();
@@ -41,7 +41,7 @@ namespace WaterCloud.Service.SystemManage
                 expression = expression.And(t => t.F_FullName.Contains(keyword));
                 expression = expression.Or(t => t.F_EnCode.Contains(keyword));
             }
-            expression = expression.And(t => t.F_Category == 2);
+            expression = expression.And(t => t.F_Category == 2 && t.F_DeleteMark == false);
             return await service.FindList(expression, pagination);
         }
         public async Task<RoleEntity> GetForm(string keyValue)

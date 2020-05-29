@@ -37,6 +37,7 @@ namespace WaterCloud.Service.SystemManage
                 expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
             }
             expression = expression.And(t => t.F_Account != "admin");
+            expression = expression.And(t => t.F_DeleteMark == false);
             return await service.FindList(expression, pagination);
         }
         public async Task<List<UserEntity>> GetList(string keyword)
@@ -46,7 +47,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 cachedata = cachedata.Where(t => t.F_Account.Contains(keyword) || t.F_RealName.Contains(keyword) || t.F_MobilePhone.Contains(keyword)).ToList();
             }
-            return cachedata.Where(t => t.F_Account != "admin").OrderBy(t => t.F_Account).ToList();
+            return cachedata.Where(t => t.F_Account != "admin" && t.F_DeleteMark == false).OrderBy(t => t.F_Account).ToList();
         }
 
         public async Task SubmitUserForm(UserEntity userEntity)
@@ -63,7 +64,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 cachedata = cachedata.Where(t => t.F_Account.Contains(keyword) || t.F_RealName.Contains(keyword) || t.F_MobilePhone.Contains(keyword)).ToList();
             }
-            return cachedata.Where(t => t.F_EnabledMark ==true).OrderBy(t => t.F_Account).ToList();
+            return cachedata.Where(t => t.F_EnabledMark ==true && t.F_DeleteMark == false).OrderBy(t => t.F_Account).ToList();
         }
 
         public async Task<UserEntity> GetForm(string keyValue)

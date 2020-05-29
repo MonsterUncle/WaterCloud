@@ -36,6 +36,7 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 expression = expression.And(t => t.F_JobName.Contains(keyword));
             }
+            expression = expression.And(t => t.F_DeleteMark == false);
             return await service.FindList(expression, pagination);
         }
         public async Task<List<OpenJobEntity>> GetList(string keyword = "")
@@ -45,7 +46,7 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 cachedata = cachedata.Where(t => t.F_JobName.Contains(keyword)).ToList();
             }
-            return cachedata;
+            return cachedata.Where(a => a.F_DeleteMark == false).ToList();
         }
         public async Task<OpenJobEntity> GetForm(string keyValue)
         {

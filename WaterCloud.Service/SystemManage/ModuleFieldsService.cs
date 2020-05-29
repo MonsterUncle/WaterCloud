@@ -29,13 +29,14 @@ namespace WaterCloud.Service.SystemManage
                 //此处需修改
                 cachedata = cachedata.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword)).ToList();
             }
-            return cachedata.OrderByDescending(t => t.F_CreatorTime).ToList();
+            return cachedata.Where(a=>a.F_DeleteMark==false).OrderByDescending(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<ModuleFieldsEntity>> GetList(Pagination pagination, string moduleId, string keyword = "")
         {
             var expression = ExtLinq.True<ModuleFieldsEntity>();
             expression = expression.And(t => t.F_ModuleId.Equals(moduleId));
+            expression = expression.And(t => t.F_EnabledMark.Equals(false));
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改

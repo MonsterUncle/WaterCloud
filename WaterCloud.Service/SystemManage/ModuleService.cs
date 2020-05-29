@@ -29,7 +29,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ModuleEntity>> GetList()
         {
             var cachedata =await service.CheckCacheList(cacheKey + "list");
-            return service.IQueryable().OrderBy(t => t.F_SortCode).ToList();
+            return service.IQueryable().Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<ModuleEntity> GetForm(string keyValue)
         {

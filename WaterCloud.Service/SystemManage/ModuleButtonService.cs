@@ -34,7 +34,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 cachedata = cachedata.Where(t => t.F_ModuleId == moduleId).ToList();
             }
-            return cachedata.OrderBy(t => t.F_SortCode).ToList();
+            return cachedata.Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<ModuleButtonEntity> GetForm(string keyValue)
         {

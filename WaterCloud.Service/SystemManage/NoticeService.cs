@@ -32,7 +32,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 cachedata = cachedata.Where(t => t.F_Title .Contains( keyword)||t.F_Content.Contains(keyword)).ToList();
             }
-            return cachedata.ToList();
+            return cachedata.Where(a=>a.F_DeleteMark==false).ToList();
         }
         public async Task<List<NoticeEntity>> GetList(Pagination pagination, string keyword = "")
         {
@@ -42,7 +42,7 @@ namespace WaterCloud.Service.SystemManage
                 expression = expression.And(t => t.F_Title.Contains(keyword));
                 expression = expression.Or(t => t.F_Content.Contains(keyword));
             }
-            expression = expression.And(t => t.F_EnabledMark == true);
+            expression = expression.And(t => t.F_DeleteMark == false);
             return await service.FindList(expression, pagination);
         }
         public async Task<NoticeEntity> GetForm(string keyValue)

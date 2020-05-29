@@ -30,7 +30,7 @@ namespace WaterCloud.Service.SystemSecurity
                 cachedata = cachedata.Where(t => t.F_StartIP.Contains(keyword)).ToList();
 
             }
-            return cachedata.OrderBy(t => t.F_CreatorTime).ToList();
+            return cachedata.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList();
         }
         public async Task<FilterIPEntity> GetForm(string keyValue)
         {
@@ -46,7 +46,7 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task<bool> CheckIP(string ip)
         {
             var list =await GetList("");
-            list = list.Where(a => a.F_EnabledMark == true).ToList();
+            list = list.Where(a => a.F_EnabledMark == true&&a.F_DeleteMark==false).ToList();
             foreach (var item in list)
             {
                 if (item.F_Type == false)

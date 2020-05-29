@@ -25,7 +25,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ItemsEntity>> GetList()
         {
             var cachedata =await service.CheckCacheList(cacheKey + "list");
-            return cachedata.OrderBy(t => t.F_SortCode).ToList();
+            return cachedata.Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<ItemsEntity> GetForm(string keyValue)
         {

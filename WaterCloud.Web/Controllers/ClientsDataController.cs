@@ -326,7 +326,8 @@ namespace WaterCloud.Web.Controllers
         {
             var itemdata =await _itemsDetailService.GetList();
             Dictionary<string, object> dictionaryItem = new Dictionary<string, object>();
-            foreach (var item in await _itemsService.GetList())
+            var itemlist = await _itemsService.GetList();
+            foreach (var item in itemlist.Where(a=>a.F_EnabledMark==true).ToList())
             {
                 var dataItemList = itemdata.FindAll(t => t.F_ItemId==item.F_Id);
                 Dictionary<string, string> dictionaryItemList = new Dictionary<string, string>();
