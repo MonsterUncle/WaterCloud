@@ -179,8 +179,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
             layer.closeAll('loading');
         },
         //msg
-        modalMsg: function (content, type, close) {
-            var close = close|| false;
+        modalMsg: function (content, type) {
             if (type != undefined) {
                 var icon = 0;
                 if (type == 'success') {
@@ -197,19 +196,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 }
                 top.layer.msg(content, {
                     icon: icon, time: 1000, shift: 5,
-                }, function () {
-                    if (close) {
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
-                    }
                 });
             } else {
                 top.layer.msg(content);
             }
         },
         //alert
-        modalAlert: function (content, type, close) {
-            var close = close || false;
+        modalAlert: function (content, type) {
             var icon = 0;
             if (type == 'success') {
                 icon = 1;
@@ -226,14 +219,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 btn: ['确认'],
                 btnclass: ['btn btn-primary'],
                 yes: function (index) {
-                    if (close) {
-                        var pindex = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(pindex);
-                        top.layer.close(index);
-                    }
-                    else {
-                        top.layer.close(index);
-                    }
+                    top.layer.close(index);
                 }
             });
         },
