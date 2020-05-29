@@ -36,14 +36,14 @@ namespace WaterCloud.Service.SystemManage
         {
             var expression = ExtLinq.True<ModuleFieldsEntity>();
             expression = expression.And(t => t.F_ModuleId.Equals(moduleId));
-            expression = expression.And(t => t.F_EnabledMark.Equals(false));
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
                 expression = expression.And(t => t.F_FullName.Contains(keyword));
                 expression = expression.Or(t => t.F_EnCode.Contains(keyword));
             }
-            return await service.FindList(expression, pagination); ;
+            expression = expression.And(t => t.F_EnabledMark==false);
+            return await service.FindList(expression, pagination);
         }
 
         public async Task<ModuleFieldsEntity> GetForm(string keyValue)

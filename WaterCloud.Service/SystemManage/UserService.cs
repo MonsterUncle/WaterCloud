@@ -30,6 +30,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<UserEntity>> GetList(Pagination pagination, string keyword)
         {
             var expression = ExtLinq.True<UserEntity>();
+            expression = expression.And(t => t.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
                 expression = expression.And(t => t.F_Account.Contains(keyword));
@@ -37,7 +38,6 @@ namespace WaterCloud.Service.SystemManage
                 expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
             }
             expression = expression.And(t => t.F_Account != "admin");
-            expression = expression.And(t => t.F_DeleteMark == false);
             return await service.FindList(expression, pagination);
         }
         public async Task<List<UserEntity>> GetList(string keyword)
