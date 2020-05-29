@@ -82,6 +82,7 @@ namespace WaterCloud.Service.SystemManage
             await service.Update(entity);
             var userLogOnEntity = await RedisHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
             userLogOnEntity.F_UserPassword = entity.F_UserPassword;
+            userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
             await RedisHelper.SetAsync(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
         }
     }
