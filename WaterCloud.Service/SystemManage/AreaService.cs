@@ -26,13 +26,13 @@ namespace WaterCloud.Service.SystemManage
             var cachedata =await service.CheckCacheList(cacheKey + "list");
             if (layers==0)
             {
-                cachedata = cachedata.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true).ToList();
+                cachedata = cachedata.ToList();
             }
             else
             {
-                cachedata = cachedata.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true && t.F_Layers == layers).ToList();
+                cachedata = cachedata.Where(t => t.F_Layers == layers).ToList();
             }
-            return cachedata.OrderBy(t => t.F_SortCode).ToList();
+            return cachedata.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<AreaEntity> GetForm(string keyValue)
         {

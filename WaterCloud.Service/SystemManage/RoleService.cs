@@ -47,7 +47,6 @@ namespace WaterCloud.Service.SystemManage
                 expression = expression.Or(t => t.F_EnCode.Contains(keyword));
             }
             expression = expression.And(t => t.F_Category == 1 && t.F_DeleteMark == false);
-            expression = expression.And(t => t.F_DeleteMark == false);
             return await service.FindList(expression, pagination);
         }
         public async Task<RoleEntity> GetForm(string keyValue)

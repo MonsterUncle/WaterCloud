@@ -26,7 +26,6 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ItemsDetailEntity>> GetList(string itemId = "", string keyword = "")
         {
             var cachedata =await service.CheckCacheList(cacheKey + "list");
-            cachedata = cachedata.Where(a => a.F_DeleteMark == false).ToList();
             if (!string.IsNullOrEmpty(itemId))
             {
                 cachedata = cachedata.Where(t => t.F_ItemId == itemId).ToList();
@@ -35,7 +34,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 cachedata = cachedata.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword)).ToList();
             }
-            return cachedata.OrderBy(t => t.F_SortCode).ToList();
+            return cachedata.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {

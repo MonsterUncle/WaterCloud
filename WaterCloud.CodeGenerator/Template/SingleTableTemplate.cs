@@ -236,12 +236,13 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                //此处需修改");
             sb.AppendLine("                cachedata = cachedata.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword)).ToList();");
             sb.AppendLine("            }");
-            sb.AppendLine("            return cachedata.OrderByDescending(t => t.F_CreatorTime).ToList();");
+            sb.AppendLine("            return cachedata.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetList(Pagination pagination,string keyword = \"\")");
             sb.AppendLine("        {");
             sb.AppendLine("            var expression = ExtLinq.True<"+ baseConfigModel.FileConfig.EntityName + ">();");
+            sb.AppendLine("            expression = expression.And(t => t.F_DeleteMark == false);");
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
             sb.AppendLine("            {");
             sb.AppendLine("                //此处需修改");
