@@ -38,6 +38,16 @@
                         }
                     }
                 },
+                {
+                    field: 'F_EnabledMark', title: '有效', Width: 80, sort: true,
+                    templet: function (d) {
+                        if (d.F_EnabledMark == true) {
+                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                        } else {
+                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                        }
+                    }
+                },
                 { field: 'F_Description', title: '备注', minWidth: 150},
            ]],
            done: function () {
@@ -85,6 +95,7 @@
                     param: { keyValue: fitlerIP.data.F_Id },
                     success: function () {
                         common.reload('data-search-btn');
+                        fitlerIP = null;
                     }
                 });
             }

@@ -46,6 +46,7 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task<bool> CheckIP(string ip)
         {
             var list =await GetList("");
+            list = list.Where(a => a.F_EnabledMark == true).ToList();
             foreach (var item in list)
             {
                 if (item.F_Type == false)
@@ -83,14 +84,13 @@ namespace WaterCloud.Service.SystemSecurity
                 filterIPEntity.Modify(keyValue);
                 await service.Update(filterIPEntity);
                 await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
             }
             else
             {
                 filterIPEntity.Create();
                 await service.Insert(filterIPEntity);
-                await RedisHelper.DelAsync(cacheKey + "list");
             }
+            await RedisHelper.DelAsync(cacheKey + "list");
         }
     }
 }
