@@ -84,7 +84,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildEntity
-        public string BuildEntity(BaseConfigModel baseConfigModel, DataTable dt)
+        public string BuildEntity(BaseConfigModel baseConfigModel, DataTable dt,string idColumn = "F_Id")
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
@@ -100,7 +100,7 @@ namespace WaterCloud.CodeGenerator
             SetClassDescription("实体类", baseConfigModel, sb);
 
             sb.AppendLine("    [TableAttribute(\"" + baseConfigModel.TableNameUpper + "\")]");
-            sb.AppendLine("    public class " + baseConfigModel.FileConfig.EntityName + " : " + GetBaseEntity(baseConfigModel.FileConfig.EntityName,dt));
+            sb.AppendLine("    public class " + baseConfigModel.FileConfig.EntityName + " : " + GetBaseEntity(baseConfigModel.FileConfig.EntityName,dt, idColumn));
             sb.AppendLine("    {");
 
             string column = string.Empty;
@@ -124,9 +124,9 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("        /// " + remark);
                 sb.AppendLine("        /// </summary>");
                 sb.AppendLine("        /// <returns></returns>");
-                if (column== "F_Id")
+                if (idColumn== column)
                 {
-                    sb.AppendLine("        [ColumnAttribute(\"F_Id\", IsPrimaryKey = true)]");
+                    sb.AppendLine("        [ColumnAttribute(\""+ column + "\", IsPrimaryKey = true)]");
                 }
                 //switch (datatype)
                 //{
@@ -202,10 +202,8 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildService
-        public string BuildService(BaseConfigModel baseConfigModel, DataTable dt)
+        public string BuildService(BaseConfigModel baseConfigModel, string idColumn = "F_Id")
         {
-            string baseEntity = GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt);
-
             StringBuilder sb = new StringBuilder();
             string method = string.Empty;
             sb.AppendLine("using System;");
@@ -279,7 +277,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine();
             sb.AppendLine("        public async Task DeleteForm(string keyValue)");
             sb.AppendLine("        {");
-            sb.AppendLine("            await service.Delete(t => t.F_Id == keyValue);");
+            sb.AppendLine("            await service.Delete(t => t."+ idColumn + " == keyValue);");
             sb.AppendLine("            await RedisHelper.DelAsync(cacheKey + keyValue);");
             sb.AppendLine("            await RedisHelper.DelAsync(cacheKey + \"list\");");
             sb.AppendLine("        }");
@@ -293,7 +291,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildController
-        public string BuildController(BaseConfigModel baseConfigModel)
+        public string BuildController(BaseConfigModel baseConfigModel, string idColumn="F_Id")
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
@@ -354,7 +352,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("            {");
                 sb.AppendLine("                //此处需修改");
                 sb.AppendLine("                TreeSelectModel treeModel = new TreeSelectModel();");
-                sb.AppendLine("                treeModel.id = item.F_Id;");
+                sb.AppendLine("                treeModel.id = item."+ idColumn + ";");
                 sb.AppendLine("                treeModel.text = item.F_FullName;");
                 sb.AppendLine("                treeModel.parentId = item.F_ParentId;");
                 sb.AppendLine("                treeList.Add(treeModel);");
@@ -462,7 +460,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildIndex
-        public string BuildIndex(BaseConfigModel baseConfigModel)
+        public string BuildIndex(BaseConfigModel baseConfigModel, string idColumn = "F_Id")
         {
             #region 初始化集合
             if (baseConfigModel.PageIndex.ButtonList == null)
@@ -554,7 +552,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             elem: '#currentTableId',");
                 sb.AppendLine("             url: !queryJson ?'/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson': '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson?keyword=' + queryJson,");
                 sb.AppendLine("             cols: [[");
-                sb.AppendLine("                 { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },");
+                sb.AppendLine("                 { field: '"+ idColumn + "', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");
                 for (int i = 0; i < baseConfigModel.PageIndex.ColumnList.Count-1; i++)
                 {
@@ -589,7 +587,7 @@ namespace WaterCloud.CodeGenerator
                     sb.AppendLine("             page: false,");
                 }                
                 sb.AppendLine("             cols: [[");
-                sb.AppendLine("                 { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },");
+                sb.AppendLine("                 { field: '" + idColumn + "', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");
                 for (int i = 0; i < baseConfigModel.PageIndex.ColumnList.Count - 1; i++)
                 {
@@ -641,7 +639,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                 }");
             sb.AppendLine("                 common.deleteForm({");
             sb.AppendLine("                     url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/DeleteForm\",");
-            sb.AppendLine("                     param: { keyValue: entity.data.F_Id },");
+            sb.AppendLine("                     param: { keyValue: entity.data." + idColumn + " },");
             sb.AppendLine("                     success: function () {");
             sb.AppendLine("                         common.reload('data-search-btn');");
             sb.AppendLine("                         entity = null;");
@@ -655,7 +653,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine( "               }");
             sb.AppendLine( "               common.modalOpen({");
             sb.AppendLine( "                  title: \"编辑界面\",");
-            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Form?keyValue=\" + entity.data.F_Id,");
+            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Form?keyValue=\" + entity.data." + idColumn + ",");
             sb.AppendLine("                   width: \"500px\",");
             sb.AppendLine("                   height: \"500px\",");
             sb.AppendLine( "               });");
@@ -667,7 +665,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine( "               }");
             sb.AppendLine( "               common.modalOpen({");
             sb.AppendLine( "                  title: \"查看界面\",");
-            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Details?keyValue=\" + entity.data.F_Id,");
+            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Details?keyValue=\" + entity.data." + idColumn + ",");
             sb.AppendLine("                   width: \"500px\",");
             sb.AppendLine("                   height: \"500px\",");
             sb.AppendLine( "                  btn: []");
@@ -935,12 +933,13 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildMenu
-        public string BuildMenu(BaseConfigModel baseConfigModel)
+        public string BuildMenu(BaseConfigModel baseConfigModel, string idColumn = "F_Id")
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine();
             sb.AppendLine("  菜单路径:/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + baseConfigModel.FileConfig.PageIndexName);
             sb.AppendLine();
+            sb.AppendLine("  主键："+ idColumn);
             List<KeyValue> list = GetButtonAuthorizeList();
             foreach (string btn in baseConfigModel.PageIndex.ButtonList)
             {
@@ -1237,20 +1236,22 @@ namespace WaterCloud.CodeGenerator
         }
         #endregion 
 
-        private string GetBaseEntity(string EntityName, DataTable dt)
+        private string GetBaseEntity(string EntityName, DataTable dt,string idColumn="F_Id")
         {
             string entity = string.Empty;
             var columnList = dt.AsEnumerable().Select(p => p["TableColumn"].ParseToString()).ToList();
 
-            bool id = columnList.Where(p => p == "F_Id").Any();
+            bool id = columnList.Where(p => p == idColumn).Any();
             bool baseIsDelete = columnList.Where(p => p == "F_DeleteUserId").Any()&& columnList.Where(p => p == "F_DeleteTime").Any()&& columnList.Where(p => p == "F_DeleteMark").Any();
             bool baseIsCreate = columnList.Where(p => p == "F_Id").Any() && columnList.Where(p => p == "F_CreatorUserId").Any() && columnList.Where(p => p == "F_CreatorTime").Any();
             bool baseIsModifie = columnList.Where(p => p == "F_Id").Any() && columnList.Where(p => p == "F_LastModifyUserId").Any() && columnList.Where(p => p == "F_LastModifyTime").Any();
-
-
             if (!id)
             {
                 throw new Exception("数据库表必须有主键id字段");
+            }
+            if (idColumn!= "F_Id")
+            {
+                return null;
             }
             entity = "IEntity<"+ EntityName + ">";
             if (baseIsCreate)

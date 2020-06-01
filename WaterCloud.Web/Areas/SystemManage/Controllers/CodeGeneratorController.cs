@@ -152,12 +152,21 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 List<TableFieldInfo> list =await _service.GetTableFieldList(baseConfig.TableName);
                 SingleTableTemplate template = new SingleTableTemplate();
                 DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
-                string codeEntity = template.BuildEntity(baseConfig, dt);
+                string idcolumn = string.Empty;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (dr["TableIdentity"].ToString() == "Y")
+                    {
+                        idcolumn = dr["TableColumn"].ToString();
+                        break;
+                    }
+                }
+                string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
                 string codeIRepository = template.BuildIRepository(baseConfig);
                 string codeRepository = template.BuildRepository(baseConfig);
-                string codeService = template.BuildService(baseConfig, dt);
-                string codeController = template.BuildController(baseConfig);
-                string codeIndex = template.BuildIndex(baseConfig);
+                string codeService = template.BuildService(baseConfig, idcolumn);
+                string codeController = template.BuildController(baseConfig, idcolumn);
+                string codeIndex = template.BuildIndex(baseConfig, idcolumn);
                 string codeForm = template.BuildForm(baseConfig);
                 string codeDetails = template.BuildDetails(baseConfig);
                 string codeMenu = template.BuildMenu(baseConfig);
