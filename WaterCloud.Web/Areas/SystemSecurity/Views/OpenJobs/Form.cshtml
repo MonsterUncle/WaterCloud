@@ -13,23 +13,23 @@
                         </div>
                     </div>
                     <div class="layui-form-item layui-hide">
-                        <label class="layui-form-label">任务名称</label>
+                        <label class="layui-form-label required">任务名称</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_JobName" name="F_JobName" value="" class="layui-input ">
+                            <input type="text" id="F_JobName" name="F_JobName" value="" lay-verify="required" class="layui-input ">
                         </div>
                     </div>
                     <div class="layui-form-item layui-hide">
-                        <label class="layui-form-label">文件名称</label>
+                        <label class="layui-form-label required">文件名称</label>
                         <div class="layui-input-block">
-                            <select id="F_FileName" name="F_FileName">
+                            <select id="F_FileName" name="F_FileName"  lay-verify="required">
                                 <option value="">==请选择==</option>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item layui-hide">
-                        <label class="layui-form-label">Cron表达式</label>
+                        <label class="layui-form-label required">Cron表达式</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_CronExpress" name="F_CronExpress" value="" class="layui-input ">
+                            <input type="text" id="F_CronExpress" name="F_CronExpress"  lay-verify="required" value="" class="layui-input ">
                         </div>
                     </div>
                     <div class="layui-form-item layui-form-text layui-hide">
@@ -76,6 +76,23 @@
                 id: ""
             });
         }
+        //select验证
+        form.verify({
+            required: function (value, item) {
+                var msg = "必填项不能为空";
+                value = $.trim(value);
+                var isEmpty = !value || value.length < 1;
+                // 当前验证元素是select且为空时,将页面定位至layui渲染的select处，或自定义想定位的位置
+                if (item.tagName == 'SELECT' && isEmpty) {
+                    $("html").animate({
+                        scrollTop: $(item).siblings(".layui-form-select").offset().top - 74
+                    }, 50);
+                }
+                if (isEmpty) {
+                    return msg;
+                }
+            }
+        });
         //监听提交
         form.on('submit(saveBtn)', function (data) {
             var postData = data.field;
