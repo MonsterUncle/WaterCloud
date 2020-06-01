@@ -757,7 +757,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("</script>");
             sb.AppendLine("");
             sb.AppendLine("<body>");
-            sb.AppendLine("    <div class=\"layuimini - container\">");
+            sb.AppendLine("    <div class=\"layuimini-container\">");
             sb.AppendLine("        <div class=\"layuimini-main\">");
             sb.AppendLine("            <div class=\"layui-form layuimini-form\" lay-filter=\"adminform\">");
             #region 表单控件
@@ -875,7 +875,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("</script>");
             sb.AppendLine("");
             sb.AppendLine("<body>");
-            sb.AppendLine("    <div class=\"layuimini - container\">");
+            sb.AppendLine("    <div class=\"layuimini-container\">");
             sb.AppendLine("        <div class=\"layuimini-main\">");
             sb.AppendLine("            <div class=\"layui-form layuimini-form\" lay-filter=\"adminform\">");
             #region 表单控件
