@@ -234,7 +234,7 @@
             ficon: "-1",
             icon: "-1",  // 显示非最后一级节点图标，隐藏最后一级节点图标
             initLevel: 0,
-            url: "/SystemManage/CodeGenerator/GetTableFieldFilterTreeJson?keyValue=" + keyValue + "&v="+new Date().Format("yyyy-MM-dd hh:mm:ss"), // 使用url加载（可与data加载同时存在）
+            url: "/SystemManage/CodeGenerator/GetTableFieldFilterTreeJson?keyValue=" + keyValue + "&v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"), // 使用url加载（可与data加载同时存在）
             checkbarFun: {
                 chooseBefore: function ($i, node) {
                     var id = node.nodeId;
@@ -339,6 +339,11 @@
                 return false;
             }
             baseConfig.FileConfig.ClassPrefix = data.field.ClassPrefix;
+            baseConfig.FileConfig.EntityName = data.field.ClassPrefix +"Entity";
+            baseConfig.FileConfig.IRepositoryName =  "I"+data.field.ClassPrefix + "Repository";
+            baseConfig.FileConfig.RepositoryName = data.field.ClassPrefix +"Repository";
+            baseConfig.FileConfig.ServiceName = data.field.ClassPrefix +"Service";
+            baseConfig.FileConfig.ControllerName = data.field.ClassPrefix +"Controller";
             baseConfig.FileConfig.ClassDescription = data.field.ClassDescription;
             baseConfig.FileConfig.CreateUserName = data.field.CreateUserName;
             baseConfig.FileConfig.CreateDate = data.field.CreateDate;
