@@ -76,7 +76,7 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">上级</label>
                     <div class="layui-input-block">
-                        <select id="F_ParentId" name="F_ParentId" lay-search>
+                        <select id="F_ParentId" name="F_ParentId" lay-verify="required" lay-search>
                             <option value="0" selected>父节点</option>
                         </select>
                     </div>
@@ -84,7 +84,7 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">类型</label>
                     <div class="layui-input-block">
-                        <select id="F_CategoryId" name="F_CategoryId">
+                        <select id="F_CategoryId" name="F_CategoryId" lay-verify="required">
                             <option value="">==请选择==</option>
                             <option value="Group">集团</option>
                             <option value="Company">公司</option>
