@@ -226,7 +226,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("    public class " + baseConfigModel.FileConfig.ServiceName + " :  IDenpendency");
             sb.AppendLine("    {");                    
             sb.AppendLine("        private " + baseConfigModel.FileConfig.IRepositoryName + " service = new "+ baseConfigModel.FileConfig.RepositoryName + "();");
-            sb.AppendLine("        private string cacheKey = \"watercloud_ " + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
+            sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
             sb.AppendLine("        #region 获取数据");
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetList(string keyword = \"\")");
             sb.AppendLine("        {");
