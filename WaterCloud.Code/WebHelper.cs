@@ -14,6 +14,7 @@ using System.Web;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Encodings.Web;
 using System.Net.Sockets;
+using System.Linq;
 
 namespace WaterCloud.Code
 {
@@ -642,6 +643,10 @@ namespace WaterCloud.Code
                 {
                     var json = JsonHelper.ToJObject(result);
                     var jsonData = json["data"];
+                    if (!jsonData.Contains("region")|| !jsonData.Contains("city"))
+                    {
+                        return null;
+                    }
                     ipLocation = jsonData["region"] + " " + jsonData["city"];
                     ipLocation = ipLocation.Trim();
                 }
