@@ -41,11 +41,13 @@ $.fn.bindSelect = function (options) {
     };
     var options = $.extend(defaults, options);
     //ie缓存问题
-    if (options.url.indexOf("?") >= 0) {
-        options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-    }
-    else {
-        options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+    if (!!options.url) {
+        if (options.url.indexOf("?") >= 0) {
+            options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+        }
+        else {
+            options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+        }
     }
     var $element = $(this);
     if (options.url != "") {
@@ -93,11 +95,13 @@ $.fn.bindComboBox= function (options) {
     };
     var options = $.extend(defaults, options);
     //ie缓存问题
-    if (options.url.indexOf("?") >= 0) {
-        options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-    }
-    else {
-        options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+    if (!!options.url) {
+        if (options.url.indexOf("?") >= 0) {
+            options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+        }
+        else {
+            options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+        }
     }
     var $element = $(this);
     if (options.url != "") {
@@ -138,11 +142,13 @@ $.fn.bindRadioBox = function (options) {
     };
     var options = $.extend(defaults, options);
     //ie缓存问题
-    if (options.url.indexOf("?") >= 0) {
-        options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-    }
-    else {
-        options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+    if (!!options.url) {
+        if (options.url.indexOf("?") >= 0) {
+            options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+        }
+        else {
+            options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+        }
     }
     var $element = $(this);
 
