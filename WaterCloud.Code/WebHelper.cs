@@ -643,7 +643,7 @@ namespace WaterCloud.Code
                 {
                     var json = JsonHelper.ToJObject(result);
                     var jsonData = json["data"];
-                    if (!jsonData.Contains("region")|| !jsonData.Contains("city"))
+                    if (jsonData==null||!jsonData.Contains("region")|| !jsonData.Contains("city"))
                     {
                         return null;
                     }
