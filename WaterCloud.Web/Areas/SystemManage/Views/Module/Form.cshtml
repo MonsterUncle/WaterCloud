@@ -80,11 +80,6 @@
                 }
             }
         });
-        //监听按钮
-        form.on('submit(clearIcon)', function (data) {
-            iconPickerFa.checkIcon('iconPicker', "");
-            $("#F_Icon").val("");
-        });
         iconPickerFa.render({
             // 选择器，推荐使用input
             elem: '#iconPicker',
@@ -107,6 +102,12 @@
             }
         });
     });
+    function clearIcon() {
+        layui.use(['iconPickerFa'], function () {
+            layui.iconPickerFa.checkIcon('iconPicker', "");
+            $("#F_Icon").val("");
+        });
+    }
 </script>
 <body>
     <div class="layuimini-container">
@@ -152,9 +153,10 @@
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">图标</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-block" style="padding-right: 70px;">
                         <input type="text" id="F_Icon" name="F_Icon" class="layui-input layui-hide">
                         <input type="text" id="iconPicker" @*value="fa fa-file-image-o"*@ lay-filter="iconPicker" class="hide">
+                        <button class="layui-btn layui-btn-warm"  onclick="clearIcon()" style="position: absolute;top: 0;right: 6px;cursor: pointer;" >清除图标</button>
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
@@ -178,9 +180,8 @@
                         <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入介绍"></textarea>
                     </div>
                 </div>
-                <div class="form-group-bottom text-right">
-                    <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
-                    <button class="layui-btn layui-btn-warm" lay-submit lay-filter="clearIcon">清除图标</button>
+                <div class="layui-form-item layui-hide">
+                    <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
                 </div>
             </div>
         </div>
