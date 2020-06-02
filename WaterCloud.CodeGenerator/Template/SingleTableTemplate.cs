@@ -550,6 +550,8 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("     var rendertree = function (queryJson) {");
                 sb.AppendLine("         common.rendertreetable({");
                 sb.AppendLine("             elem: '#currentTableId',");
+                sb.AppendLine("             treeIdName: '" + idColumn + "',");
+                sb.AppendLine("             //此处需修改 父Id修改");
                 sb.AppendLine("             url: !queryJson ?'/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson': '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson?keyword=' + queryJson,");
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 { field: '"+ idColumn + "', title: 'ID', sort: true, hide: true, hideAlways: true },");
