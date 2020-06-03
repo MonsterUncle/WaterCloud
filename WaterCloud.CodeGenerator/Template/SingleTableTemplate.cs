@@ -1134,19 +1134,16 @@ namespace WaterCloud.CodeGenerator
                     moduleButtonList.Add(modulebutton);
                 }
                 List<ModuleFieldsEntity> moduleFieldsList = new List<ModuleFieldsEntity>();
-                if (baseConfigModel.PageIndex.IsSystem!=1)
+                foreach (var item in baseConfigModel.PageIndex.ColumnList)
                 {
-                    foreach (var item in baseConfigModel.PageIndex.ColumnList)
-                    {
-                        ModuleFieldsEntity moduleFields = new ModuleFieldsEntity();
-                        moduleFields.Create();
-                        moduleFields.F_ModuleId = moduleEntity.F_Id;
-                        moduleFields.F_EnCode = item;
-                        moduleFields.F_FullName = item;
-                        moduleFields.F_EnabledMark = true;
-                        moduleFields.F_DeleteMark = false;
-                        moduleFieldsList.Add(moduleFields);
-                    }
+                    ModuleFieldsEntity moduleFields = new ModuleFieldsEntity();
+                    moduleFields.Create();
+                    moduleFields.F_ModuleId = moduleEntity.F_Id;
+                    moduleFields.F_EnCode = item;
+                    moduleFields.F_FullName = item;
+                    moduleFields.F_EnabledMark = true;
+                    moduleFields.F_DeleteMark = false;
+                    moduleFieldsList.Add(moduleFields);
                 }
                 await moduleRepository.CreateModuleCode(moduleEntity,moduleButtonList, moduleFieldsList);
                 await RedisHelper.DelAsync(fieldscacheKey + "list");
