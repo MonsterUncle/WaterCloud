@@ -100,7 +100,15 @@ namespace WaterCloud.CodeGenerator
             SetClassDescription("实体类", baseConfigModel, sb);
 
             sb.AppendLine("    [TableAttribute(\"" + baseConfigModel.TableNameUpper + "\")]");
-            sb.AppendLine("    public class " + baseConfigModel.FileConfig.EntityName + " : " + GetBaseEntity(baseConfigModel.FileConfig.EntityName,dt, idColumn));
+            var baseEntity= GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn);
+            if (string.IsNullOrEmpty(baseEntity))
+            {
+                sb.AppendLine("    public class " + baseConfigModel.FileConfig.EntityName);
+            }
+            else
+            {
+                sb.AppendLine("    public class " + baseConfigModel.FileConfig.EntityName + " : " + baseEntity);
+            }
             sb.AppendLine("    {");
 
             string column = string.Empty;
@@ -202,8 +210,9 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildService
-        public string BuildService(BaseConfigModel baseConfigModel, string idColumn = "F_Id")
+        public string BuildService(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id")
         {
+            var baseEntity = GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn);
             StringBuilder sb = new StringBuilder();
             string method = string.Empty;
             sb.AppendLine("using System;");
@@ -262,13 +271,29 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        {");
             sb.AppendLine("            if (string.IsNullOrEmpty(keyValue))");
             sb.AppendLine("            {");
-            sb.AppendLine("                entity.Create();");
+            sb.AppendLine("                    //此处需修改");
+            if (string.IsNullOrEmpty(baseEntity))
+            {
+                sb.AppendLine("                entity."+ idColumn + "=Utils.GuId();");
+            }
+            else
+            {
+                sb.AppendLine("                entity.Create();");
+            }
             sb.AppendLine("                await service.Insert(entity);");
             sb.AppendLine("                await RedisHelper.DelAsync(cacheKey + \"list\");");
             sb.AppendLine("            }");
             sb.AppendLine("            else");
             sb.AppendLine("            {");
-            sb.AppendLine("                entity.Modify(keyValue); ");
+            sb.AppendLine("                    //此处需修改");
+            if (string.IsNullOrEmpty(baseEntity))
+            {
+                sb.AppendLine("                entity." + idColumn + "=keyValue;");
+            }
+            else
+            {
+                sb.AppendLine("                entity.Modify(keyValue); ");
+            }
             sb.AppendLine("                await service.Update(entity);");
             sb.AppendLine("                await RedisHelper.DelAsync(cacheKey + keyValue);");
             sb.AppendLine("                await RedisHelper.DelAsync(cacheKey + \"list\");");
