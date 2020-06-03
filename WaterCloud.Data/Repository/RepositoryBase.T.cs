@@ -40,18 +40,8 @@ namespace WaterCloud.DataBase
         public async Task<int> Insert(List<TEntity> entitys)
         {
             int i = 1;
-            try
-            {
-                await dbcontext.InsertRangeAsync(entitys);
-                return i;
-            }
-            catch (Exception)
-            {
-                i = 0;
-                if (dbcontext.Session.CurrentTransaction != null)
-                    dbcontext.Session.RollbackTransaction();
-                return i;
-            }
+            await dbcontext.InsertRangeAsync(entitys);
+            return i;
         }
         public async Task<int> Update(TEntity entity)
         {
