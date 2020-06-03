@@ -13,6 +13,7 @@ using System.Linq;
 using WaterCloud.Service;
 using Senparc.CO2NET.Extensions;
 using System.Threading.Tasks;
+using WaterCloud.Code.Extend;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -99,7 +100,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetTableFieldFilterSelectJson(string keyValue)
         {
             List<TableFieldInfo> data =await _service.GetTableFieldList(keyValue);
-            data.RemoveAll(p => BaseField.BaseFieldList.Contains(p.TableColumn));
+            data.RemoveAll(p => BaseField.BaseFieldList.Contains(p.TableColumn) || p.TableIdentity == "Y");
             List<object> list = new List<object>();
             foreach (var item in data)
             {
@@ -112,7 +113,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetTableFieldFilterTreeJson(string keyValue)
         {
             List<TableFieldInfo> data =await _service.GetTableFieldList(keyValue);
-            data.RemoveAll(p => BaseField.BaseFieldList.Contains(p.TableColumn));
+            data.RemoveAll(p => BaseField.BaseFieldList.Contains(p.TableColumn) || p.TableIdentity == "Y");
             var treeList = new List<TreeGridModel>();
             foreach (var item in data)
             {
@@ -134,7 +135,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
 
             string tableDescription = string.Empty;
             List<TableFieldInfo> tDataTableField =await _service.GetTableFieldList(keyValue);
-            List<string> columnList = tDataTableField.Where(p => !BaseField.BaseFieldList.Contains(p.TableColumn)).Select(p => p.TableColumn).ToList();
+
+            List<string> columnList = tDataTableField.Where(p => !BaseField.BaseFieldList.Contains(p.TableColumn)&&p.TableIdentity!="Y").Select(p => p.TableColumn).ToList();
 
             string serverPath = GlobalContext.HostingEnvironment.ContentRootPath;
             data = new SingleTableTemplate().GetBaseConfig(serverPath, OperatorProvider.Provider.GetCurrent().UserName, keyValue, tableDescription, columnList);
@@ -161,6 +163,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                         break;
                     }
                 }
+                baseConfig.PageIndex.ButtonList=ExtList.removeNull(baseConfig.PageIndex.ButtonList);
+                baseConfig.PageIndex.ColumnList=ExtList.removeNull(baseConfig.PageIndex.ColumnList);
+                baseConfig.PageForm.FieldList=ExtList.removeNull(baseConfig.PageForm.FieldList);
                 string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
                 string codeIRepository = template.BuildIRepository(baseConfig);
                 string codeRepository = template.BuildRepository(baseConfig);
