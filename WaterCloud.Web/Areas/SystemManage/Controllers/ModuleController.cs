@@ -80,6 +80,22 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
+        public async Task<ActionResult> GetSelectMunuJson(string keyword)
+        {
+            var data = (await _moduleService.GetList()).Where(a => a.F_Target=="iframe").ToList();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                data = data.Where(a => a.F_FullName.Contains(keyword)).ToList();
+            }
+            List<object> list = new List<object>();
+            foreach (var item in data)
+            {
+                list.Add(new { id = item.F_Id, text = item.F_FullName });
+            }
+            return Content(list.ToJson());
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
             var data =await _moduleService.GetForm(keyValue);

@@ -192,7 +192,7 @@
                     if (miniTab.check("/SystemManage/ModuleFields/Index", true)) {
                         common.modalAlert("系统字段界面已打开,请关闭后重试", "warning");
                     }
-                    if (module.data.F_Target != "iframe" || !module.data.F_UrlAddress || module.data.F_IsPublic) {
+                    if (module.data.F_Target != "iframe" || !module.data.F_UrlAddress) {
                         common.modalAlert("菜单不能创建字段,请修改后重试", "warning");
                         return false;
                     }

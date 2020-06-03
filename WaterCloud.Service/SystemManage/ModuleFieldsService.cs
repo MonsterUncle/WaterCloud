@@ -87,9 +87,9 @@ namespace WaterCloud.Service.SystemManage
             var data = await this.GetList();
             List<ModuleFieldsEntity> entitys = new List<ModuleFieldsEntity>();
             var module = await moduleservice.FindEntity(a => a.F_Id == moduleId);
-            if (string.IsNullOrEmpty(module.F_UrlAddress) || module.F_Target != "iframe"||module.F_IsPublic==true)
+            if (string.IsNullOrEmpty(module.F_UrlAddress) || module.F_Target != "iframe")
             {
-                throw new Exception("菜单不能创建按钮");
+                throw new Exception("框架页才能创建按钮");
             }
             foreach (string item in ArrayId)
             {
