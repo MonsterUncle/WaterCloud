@@ -36,5 +36,22 @@ namespace WaterCloud.Code.Extend
             list.CopyTo(array, 0);
             return new List<T>(array);
         }
+        /// <summary>
+        /// 去除空元素
+        /// </summary>
+        public static List<string> removeNull(List<string> oldList)
+        {
+            // 临时集合
+            List<string> listTemp = new List<string>();
+            foreach (var item in oldList)
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    listTemp.Add(item);
+                }
+
+            }
+            return listTemp;
+        }
     }
 }
