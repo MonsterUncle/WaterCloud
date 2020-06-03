@@ -10,8 +10,6 @@ namespace WaterCloud.Domain
         {
             "F_Id",
             "F_DeleteMark",
-            "F_CreatorTime",
-            "F_CreatorUserId",
             "F_LastModifyTime",
             "F_LastModifyUserId",
             "F_DeleteTime",
