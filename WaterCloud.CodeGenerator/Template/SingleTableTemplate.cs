@@ -427,6 +427,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            {");
             sb.AppendLine("                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());");
             sb.AppendLine("                logEntity.F_Description += DbLogType.Create.ToDescription();");
+            sb.AppendLine("                entity.F_DeleteMark = false;");
             sb.AppendLine("            }");
             sb.AppendLine("            else");
             sb.AppendLine("            {");
