@@ -18,13 +18,13 @@ namespace WaterCloud.DataBase
             DbContext context;
             switch (providerName)
             {
-                case "System.Data.SqlClient":
+                case Define.DBTYPE_SQLSERVER:
                     context = new MsSqlContext(ConnectStr);
                     break;
-                case "MySql.Data.MySqlClient":
+                case Define.DBTYPE_MYSQL:
                     context = new MySqlContext(new MySqlConnectionFactory(ConnectStr));
                     break;
-                case "Oracle.ManagedDataAccess.Client":
+                case Define.DBTYPE_ORACLE:
                     var con = new OracleContext(new OracleConnectionFactory(ConnectStr));
                     con.ConvertToUppercase = false;
                     context = con;

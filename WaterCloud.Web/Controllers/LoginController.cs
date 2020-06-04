@@ -35,8 +35,8 @@ namespace WaterCloud.Web.Controllers
         {
             if (GlobalContext.SystemConfig.Demo)
             {
-                ViewBag.UserName = "admin";
-                ViewBag.Password = "0000";
+                ViewBag.UserName = Define.SYSTEM_USERNAME;
+                ViewBag.Password = Define.SYSTEM_USERPWD;
             }
             var test = string.Format("{0:E2}", 1);
             return View();

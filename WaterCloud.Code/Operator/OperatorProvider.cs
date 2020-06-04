@@ -41,10 +41,12 @@ namespace WaterCloud.Code
         {
             switch (LoginProvider)
             {
-                case "Cookie":
+                case Define.PROVIDER_COOKIE:
                     return WebHelper.GetCookie(key).ToString();
-                case "Session":
+                case Define.PROVIDER_SESSION:
                     return WebHelper.GetSession(key).ToString();
+                case Define.PROVIDER_WEBAPI:
+                    return apitoken;
                 default:
                     return apitoken;
             }
@@ -53,11 +55,13 @@ namespace WaterCloud.Code
         {
             switch (LoginProvider)
             {
-                case "Cookie":
+                case Define.PROVIDER_COOKIE:
                     WebHelper.WriteCookie(key, value);
                     break;
-                case "Session":
+                case Define.PROVIDER_SESSION:
                     WebHelper.WriteSession(key, value);
+                    break;
+                case Define.PROVIDER_WEBAPI:
                     break;
                 default:
                     break;
@@ -67,11 +71,13 @@ namespace WaterCloud.Code
         {
             switch (LoginProvider)
             {
-                case "Cookie":
+                case Define.PROVIDER_COOKIE:
                     WebHelper.RemoveCookie(key);
                     break;
-                case "Session":
+                case Define.PROVIDER_SESSION:
                     WebHelper.RemoveSession(key);
+                    break;
+                case Define.PROVIDER_WEBAPI:
                     break;
                 default:
                     break;
@@ -206,7 +212,7 @@ namespace WaterCloud.Code
                     Dictionary<string, string> tokenMarkList =await RedisHelper.GetAsync<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);
                     tokenMarkList.Remove(loginMark);
                     await RedisHelper.DelAsync(cacheKeyOperator + loginMark);
-                    if (operatorInfo.LoginToken == token|| LoginProvider == "WebApi")
+                    if (operatorInfo.LoginToken == token|| LoginProvider == Define.PROVIDER_WEBAPI)
                     {
                         await RedisHelper.DelAsync(cacheKeyOperator + facilityMark + operatorInfo.UserId);
                     }
@@ -256,7 +262,7 @@ namespace WaterCloud.Code
                 OperatorModel operatorInfo =await RedisHelper.GetAsync<OperatorModel>(cacheKeyOperator + loginMark);
                 if (operatorInfo != null)
                 {
-                    if (operatorInfo.LoginToken == token || LoginProvider == "WebApi")
+                    if (operatorInfo.LoginToken == token || LoginProvider == Define.PROVIDER_WEBAPI)
                     {
                         TimeSpan span = (TimeSpan)(DateTime.Now - operatorInfo.LoginTime);
                         //超时
@@ -277,7 +283,7 @@ namespace WaterCloud.Code
                             await RedisHelper.SetAsync(cacheKeyToken + operatorInfo.UserId, tokenMarkList);
                             await RedisHelper.DelAsync(cacheKeyOperator + loginMark);
                         }
-                        else if(LoginProvider == "WebApi"&& !operatorInfo.IsSystem && operatorInfo.LoginToken != await RedisHelper.GetAsync<string>(cacheKeyOperator + facilityMark + operatorInfo.UserId))
+                        else if(LoginProvider == Define.PROVIDER_WEBAPI && !operatorInfo.IsSystem && operatorInfo.LoginToken != await RedisHelper.GetAsync<string>(cacheKeyOperator + facilityMark + operatorInfo.UserId))
                         {
                             operatorResult.stateCode = -2;
                             Dictionary<string, string> tokenMarkList = await RedisHelper.GetAsync<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);
