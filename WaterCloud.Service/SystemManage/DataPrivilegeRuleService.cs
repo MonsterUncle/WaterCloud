@@ -41,13 +41,13 @@ namespace WaterCloud.Service.SystemManage
                 list = list.Where(u => u.F_ModuleCode.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark == false);
-            return await service.OrderList(list, pagination);
+            return GetFieldsFilterData(await service.OrderList(list, pagination), className.Substring(0, className.Length - 7));
         }
 
         public async Task<DataPrivilegeRuleEntity> GetForm(string keyValue)
         {
             var cachedata = await service.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
         }
         #endregion
 

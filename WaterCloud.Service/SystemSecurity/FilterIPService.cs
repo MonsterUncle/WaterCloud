@@ -51,12 +51,12 @@ namespace WaterCloud.Service.SystemSecurity
                 list = list.Where(t => t.F_StartIP.Contains(keyword)||t.F_EndIP.Contains(keyword)).ToList();
 
             }
-            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList();
+            return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList(), className.Substring(0, className.Length - 7));
         }
         public async Task<FilterIPEntity> GetForm(string keyValue)
         {
             var cachedata =await service.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
         }
         public async Task DeleteForm(string keyValue)
         {

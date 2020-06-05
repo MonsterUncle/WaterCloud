@@ -40,12 +40,13 @@ namespace WaterCloud.Service.SystemManage
                 var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
                 list = forms.ToList();
             }
-            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
+            return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList(), className.Substring(0, className.Length - 7));
         }
         public async Task<ItemsEntity> GetForm(string keyValue)
         {
             var cachedata =await service.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+
         }
         public async Task DeleteForm(string keyValue)
         {

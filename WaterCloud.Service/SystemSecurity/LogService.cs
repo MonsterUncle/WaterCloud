@@ -50,7 +50,7 @@ namespace WaterCloud.Service.SystemSecurity
                     break;
             }
             list = list.Where(t => t.F_Date >= startTime && t.F_Date <= endTime);
-            return await service.OrderList(list, pagination);
+            return GetFieldsFilterData(await service.OrderList(list, pagination), className.Substring(0, className.Length - 7));
         }
         public async Task<List<LogEntity>> GetList()
         {           

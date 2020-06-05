@@ -44,12 +44,12 @@ namespace WaterCloud.Service.SystemManage
                 list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark == false&& u.F_Category == 2);
-            return await service.OrderList(list, pagination);
+            return GetFieldsFilterData(await service.OrderList(list, pagination), className.Substring(0, className.Length - 7));
         }
         public async Task<RoleEntity> GetForm(string keyValue)
         {
             var cachedata = await service.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
         }
         public async Task DeleteForm(string keyValue)
         {

@@ -38,7 +38,7 @@ namespace WaterCloud.Service.SystemManage
                 list = list.Where(u => u.F_Account.Contains(keyword) || u.F_RealName.Contains(keyword)||u.F_MobilePhone.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark == false && u.F_Account != "admin");
-            return await service.OrderList(list, pagination);
+            return GetFieldsFilterData(await service.OrderList(list, pagination), className.Substring(0, className.Length - 7));
         }
         public async Task<List<UserEntity>> GetList(string keyword)
         {
@@ -70,7 +70,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<UserEntity> GetForm(string keyValue)
         {
             var cachedata =await service.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
         }
         public async Task DeleteForm(string keyValue)
         {

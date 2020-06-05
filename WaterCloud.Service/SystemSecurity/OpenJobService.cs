@@ -40,7 +40,7 @@ namespace WaterCloud.Service.SystemSecurity
                 list = list.Where(u => u.F_JobName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark == false);
-            return await service.OrderList(list, pagination);
+            return GetFieldsFilterData(await service.OrderList(list, pagination), className.Substring(0, className.Length - 7));
         }
         public async Task<List<OpenJobEntity>> GetList(string keyword = "")
         {
@@ -54,7 +54,7 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task<OpenJobEntity> GetForm(string keyValue)
         {
             var cachedata = await service.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
         }
 
         public async Task SubmitForm(OpenJobEntity entity, string keyValue)
