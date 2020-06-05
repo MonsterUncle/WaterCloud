@@ -29,32 +29,42 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<NoticeEntity>> GetList(string keyword)
         {
-            var cachedata =await service.CheckCacheList(cacheKey + "list");
+            List<NoticeEntity> list = new List<NoticeEntity>();
+            list = await service.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(keyword))
             {
-                cachedata = cachedata.Where(t => t.F_Title .Contains( keyword)||t.F_Content.Contains(keyword)).ToList();
+                list = list.Where(t => t.F_Title.Contains(keyword) || t.F_Content.Contains(keyword)).ToList();
             }
-            return cachedata.Where(a=>a.F_DeleteMark==false).ToList();
+            //公告这里不控制
+            //if (!CheckDataPrivilege("u", className.Substring(0, className.Length - 7)))
+            //{
+            //    list = await service.CheckCacheList(cacheKey + "list");
+            //    if (!string.IsNullOrEmpty(keyword))
+            //    {
+            //        list = list.Where(t => t.F_Title.Contains(keyword) || t.F_Content.Contains(keyword)).ToList();
+            //    }
+            //}
+            //else
+            //{
+            //    var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+            //    if (!string.IsNullOrEmpty(keyword))
+            //    {
+            //        forms = forms.Where(u => u.F_Title.Contains(keyword) || u.F_Content.Contains(keyword));
+            //    }
+            //    list = list.ToList();
+            //}
+            return list.Where(a => a.F_DeleteMark == false).ToList();
         }
         public async Task<List<NoticeEntity>> GetList(Pagination pagination, string keyword = "")
         {
-            //var expression = ExtLinq.True<NoticeEntity>();
-            //if (!string.IsNullOrEmpty(keyword))
-            //{
-            //    expression = expression.And(t => t.F_Title.Contains(keyword));
-            //    expression = expression.Or(t => t.F_Content.Contains(keyword));
-            //}
-            //expression = expression.And(t => t.F_DeleteMark == false);
-            //return await service.FindList(expression, pagination);
-
             //获取数据权限
-            var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
             if (!string.IsNullOrEmpty(keyword))
             {
-                forms = forms.Where(u => u.F_Title.Contains(keyword) || u.F_Content.Contains(keyword));
+                list = list.Where(u => u.F_Title.Contains(keyword) || u.F_Content.Contains(keyword));
             }
-            forms = forms.Where(u => u.F_DeleteMark==false);
-            return await service.OrderList(forms, pagination);
+            list = list.Where(u => u.F_DeleteMark==false);
+            return await service.OrderList(list, pagination);
         }
         public async Task<NoticeEntity> GetForm(string keyValue)
         {

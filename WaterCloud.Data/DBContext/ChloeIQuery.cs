@@ -139,7 +139,6 @@ namespace WaterCloud.DataBase
             query = query.Where(param.GenerateTypeLambda<T>(result));
             return query;
         }
-
         /// <summary>
         /// 转换filterlist为表达式
         /// </summary>

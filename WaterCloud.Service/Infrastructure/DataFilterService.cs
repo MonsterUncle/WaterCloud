@@ -50,5 +50,21 @@ namespace WaterCloud.Service
             return Repository.IQueryable().GenerateFilter(parametername,
                 JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
         }
+        /// <summary>
+        ///  获取当前登录用户是否需要数据控制
+        /// </summary>
+        /// <param name=""parameterName>linq表达式参数的名称，如u=>u.name中的"u"</param>
+        /// <param name=""moduleName>菜单名称</param>
+        /// <returns></returns>
+        protected bool CheckDataPrivilege(string parametername, string moduleName)
+        {
+            if (loginUser.UserCode == Define.SYSTEM_USERNAME) return false;  //超级管理员特权
+            var rule = UnitWork.FindEntity<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).Result;
+            if (rule == null)
+            {
+                return false; //没有设置数据规则，那么视为该资源允许被任何主体查看
+            }
+            return true;
+        }
     }
 }
