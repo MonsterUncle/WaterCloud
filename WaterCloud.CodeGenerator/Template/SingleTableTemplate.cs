@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -379,7 +379,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("        [HandlerAjaxOnly]");
                 sb.AppendLine("        public async Task<ActionResult> GetTreeGridJson(string keyword)");
                 sb.AppendLine("        {");
-                sb.AppendLine("            var data = await _service.GetList(keyword);");
+                sb.AppendLine("            var data = await _service.GetLookList(keyword);");
                 sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
                 sb.AppendLine("            {");
                 sb.AppendLine("                 //此处需修改");
@@ -415,7 +415,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("            //此处需修改");
                 sb.AppendLine("            pagination.order = \"desc\";");
                 sb.AppendLine("            pagination.sort = \"F_CreatorTime\";");
-                sb.AppendLine("            var data = await _service.GetList(pagination,keyword);");
+                sb.AppendLine("            var data = await _service.GetLookList(pagination,keyword);");
                 sb.AppendLine("            return Success(pagination.records, data);");
                 sb.AppendLine("        }");
                 sb.AppendLine();
