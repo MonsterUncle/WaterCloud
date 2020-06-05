@@ -16,9 +16,11 @@ using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class NoticeService: IDenpendency
+    public class NoticeService: DataFilterService<NoticeEntity>,IDenpendency
     {
 		private INoticeRepository service = new NoticeRepository();
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -36,14 +38,23 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<List<NoticeEntity>> GetList(Pagination pagination, string keyword = "")
         {
-            var expression = ExtLinq.True<NoticeEntity>();
+            //var expression = ExtLinq.True<NoticeEntity>();
+            //if (!string.IsNullOrEmpty(keyword))
+            //{
+            //    expression = expression.And(t => t.F_Title.Contains(keyword));
+            //    expression = expression.Or(t => t.F_Content.Contains(keyword));
+            //}
+            //expression = expression.And(t => t.F_DeleteMark == false);
+            //return await service.FindList(expression, pagination);
+
+            //获取数据权限
+            var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
             if (!string.IsNullOrEmpty(keyword))
             {
-                expression = expression.And(t => t.F_Title.Contains(keyword));
-                expression = expression.Or(t => t.F_Content.Contains(keyword));
+                forms = forms.Where(u => u.F_Title.Contains(keyword) || u.F_Content.Contains(keyword));
             }
-            expression = expression.And(t => t.F_DeleteMark == false);
-            return await service.FindList(expression, pagination);
+            forms = forms.Where(u => u.F_DeleteMark==false);
+            return await service.OrderList(forms, pagination);
         }
         public async Task<NoticeEntity> GetForm(string keyValue)
         {

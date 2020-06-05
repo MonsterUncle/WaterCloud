@@ -46,6 +46,19 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             return Success(pagination.records, data);
         }
         [HttpGet]
+        [HandlerAuthorize]
+        public virtual ActionResult AddForm()
+        {
+            return View();
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public async Task<ActionResult> GetListJson(string keyword)
+        {
+            var data = await _userService.GetList(keyword);
+            return Success(data.Count, data);
+        }
+        [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {

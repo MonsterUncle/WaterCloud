@@ -1,105 +1,108 @@
-﻿/*******************************************************************************
- * Copyright © 2020 WaterCloud.Framework 版权所有
- * Author: WaterCloud
- * Description: WaterCloud快速开发平台
- * Website：
-*********************************************************************************/
-using WaterCloud.Service.SystemManage;
-using WaterCloud.Code;
-using WaterCloud.Domain.SystemManage;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Senparc.CO2NET.Extensions;
+using WaterCloud.Code;
 using WaterCloud.Domain.SystemSecurity;
+using WaterCloud.Domain.SystemManage;
 using WaterCloud.Service;
 using WaterCloud.Service.SystemSecurity;
-using System;
-using Senparc.CO2NET.Extensions;
-using System.Text;
-using System.Threading.Tasks;
+using WaterCloud.Service.SystemManage;
+using Newtonsoft.Json;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
+    /// <summary>
+    /// 创 建：超级管理员
+    /// 日 期：2020-06-01 09:44
+    /// 描 述：数据权限控制器类
+    /// </summary>
     [Area("SystemManage")]
-    public class RoleController : ControllerBase
+    public class DataPrivilegeRuleController :  ControllerBase
     {
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly RoleService _roleService;
         private readonly LogService _logService;
-        public RoleController(LogService logService,RoleService roleService)
+        private readonly DataPrivilegeRuleService _service;
+        public DataPrivilegeRuleController(DataPrivilegeRuleService service, LogService logService)
         {
-            _roleService = roleService;
             _logService = logService;
+            _service = service;
         }
-        [HttpGet]
-        [HandlerAuthorize]
-        public virtual ActionResult AddForm()
-        {
-            return View();
-        }
-        [HttpGet]
-        [HandlerAjaxOnly]
-        public async Task<ActionResult> GetListJson(string keyword)
-        {
-            var data =await _roleService.GetList(keyword);
-            return Content(data.ToJson());
-        }
-        [HttpGet]
-        [HandlerAjaxOnly]
-        public async Task<ActionResult> GetSelectJson(string keyword)
-        {
-            var data = await _roleService.GetList(keyword);
-            return Success(data.Count, data);
-        }
+
+        #region 获取数据
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)
         {
-            pagination.order = "asc";
-            pagination.sort = "F_EnCode";
-            var data =await _roleService.GetList(pagination,keyword);
-            return Success(pagination.records,data);
+            //此处需修改
+            pagination.order = "desc";
+            pagination.sort = "F_CreatorTime";
+            var data = await _service.GetList(pagination,keyword);
+            return Success(pagination.records, data);
         }
+
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public async Task<ActionResult> GetListJson(string keyword)
+        {
+            var data = await _service.GetList(keyword);
+            return Content(data.ToJson());
+        }
+
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _roleService.GetForm(keyValue);
+            var data = await _service.GetForm(keyValue);
             return Content(data.ToJson());
         }
+        [HttpGet]
+        public ActionResult RuleForm()
+        {
+            return View();
+        }
+        #endregion
+
+        #region 提交数据
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SubmitForm(RoleEntity roleEntity, string permissionbuttonIds, string permissionfieldsIds, string keyValue)
+        public async Task<ActionResult> SubmitForm(DataPrivilegeRuleEntity entity,string listData, string keyValue)
         {
             LogEntity logEntity;
+            var filterList = JsonConvert.DeserializeObject<List<FilterList>>(listData);
+            foreach (var item in filterList)
+            {
+                if (!string.IsNullOrEmpty(item.Description))
+                {
+                    entity.F_Description += item.Description+",";
+                }
+            }
+            if (!string.IsNullOrEmpty(entity.F_Description))
+            {
+                entity.F_Description = entity.F_Description.Substring(0, entity.F_Description.Length - 1);
+            }
+            entity.F_PrivilegeRules = filterList.ToJson();
             if (string.IsNullOrEmpty(keyValue))
             {
-                roleEntity.F_DeleteMark = false;
-                roleEntity.F_AllowEdit = false;
-                roleEntity.F_AllowDelete = false;
                 logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
+                entity.F_DeleteMark = false;
             }
             else
             {
                 logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
-                if (OperatorProvider.Provider.GetCurrent().RoleId == keyValue)
-                {
-                    logEntity.F_Result = false;
-                    logEntity.F_Description += "操作失败，不能修改用户当前角色" ;
-                    await _logService.WriteDbLog(logEntity);
-                    return Error(logEntity.F_Description);
-                }
             }
             try
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                await _roleService.SubmitForm(roleEntity,string.IsNullOrEmpty(permissionbuttonIds) ?new string[0]: permissionbuttonIds.Split(','), string.IsNullOrEmpty(permissionfieldsIds) ? new string[0] : permissionfieldsIds.Split(','), keyValue);
+                await _service.SubmitForm(entity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -112,6 +115,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 return Error(ex.Message);
             }
         }
+
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
@@ -124,14 +128,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             {
                 logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
                 logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                if (OperatorProvider.Provider.GetCurrent().RoleId == keyValue)
-                {
-                    logEntity.F_Result = false;
-                    logEntity.F_Description += "操作失败，不能删除用户当前角色";
-                    await _logService.WriteDbLog(logEntity);
-                    return Error(logEntity.F_Description);
-                }
-                await _roleService.DeleteForm(keyValue);
+                await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -144,5 +141,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 return Error(ex.Message);
             }
         }
+        #endregion
     }
 }

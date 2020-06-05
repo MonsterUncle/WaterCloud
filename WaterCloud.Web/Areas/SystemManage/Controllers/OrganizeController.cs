@@ -32,6 +32,12 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             _logService = logService;
         }
         [HttpGet]
+        [HandlerAuthorize]
+        public virtual ActionResult AddForm()
+        {
+            return View();
+        }
+        [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeSelectJson()
         {
