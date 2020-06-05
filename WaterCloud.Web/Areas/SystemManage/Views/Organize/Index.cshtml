@@ -15,7 +15,8 @@
         var rendertree = function (queryJson) {
             common.rendertreetable({
                 elem: '#currentTableId',
-                url: !queryJson ?'/SystemManage/Organize/GetTreeGridJson':'/SystemManage/Organize/GetTreeGridJson?keyword=' + queryJson,
+                url: !queryJson ? '/SystemManage/Organize/GetTreeGridJson' : '/SystemManage/Organize/GetTreeGridJson?keyword=' + queryJson,
+                sqlkey: 'F_Id',//数据库主键
                 cols: [[
                     { field: 'F_Id', title: 'ID', fixed: "left", hide: true, hideAlways: true },
                     { field: 'F_FullName', title: '名称', width: 120 },

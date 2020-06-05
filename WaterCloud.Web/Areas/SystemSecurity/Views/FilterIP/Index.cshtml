@@ -14,7 +14,8 @@
        common.rendertable({
             elem: '#currentTableId',
             url: '/SystemSecurity/FilterIP/GetGridJson',
-            page:false,
+           page: false,
+           sqlkey: 'F_Id',//数据库主键
             cols: [[
                 { field: 'F_Id', title: 'ID', sort: true, fixed: "left",hide:true, hideAlways: true },
                 {

@@ -600,6 +600,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             treeIdName: '" + idColumn + "',");
                 sb.AppendLine("             //此处需修改 父Id修改");
                 sb.AppendLine("             url: !queryJson ?'/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson': '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson?keyword=' + queryJson,");
+                sb.AppendLine("             sqlkey: '"+ idColumn + "',//数据库主键");
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 { field: '"+ idColumn + "', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");
@@ -634,7 +635,8 @@ namespace WaterCloud.CodeGenerator
                 if (baseConfigModel.PageIndex.IsPagination != 1)
                 {
                     sb.AppendLine("             page: false,");
-                }                
+                }
+                sb.AppendLine("             sqlkey: '" + idColumn + "',//数据库主键");
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 { field: '" + idColumn + "', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");

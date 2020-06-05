@@ -27,7 +27,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 cellMinWidth: 100,//最小宽度
                 limit: 10,//每页数据 默认
                 height: $(window).height() > 500 ? 'full-150' : 'full-190',
-                loading:false,
+                loading: false,
+                sqlkey: 'F_Id',//数据库主键
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['skip', 'prev', 'page', 'next','count'] //自定义分页布局
                     //,curr: 2 //设定初始在第 5 页
@@ -67,14 +68,19 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == false) {
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
+                var array = [];
                 $.each(options.cols[0], function (i) {
                     options.cols[0][i].hideAlways = true;
                     options.cols[0][i].hide = true;
+                    if (options.cols[0][i].field==options.sqlkey) {
+                        array.push(options.cols[0][i]);
+                    }
                     if (dataJson != undefined) {
                         for (var j = 0; j < dataJson.length; j++) {
                             if (options.cols[0][i].field == dataJson[j].F_EnCode) {
                                 options.cols[0][i].hideAlways = false;
                                 options.cols[0][i].hide = false;
+                                array.push(options.cols[0][i]);
                                 break;
                             }
                         }
@@ -86,6 +92,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                         //});
                     }
                 });
+                options.cols[0] = array;
             };
            return table.render(options);
         },
@@ -103,6 +110,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 loading: false,
                 height: $(window).height() > 500 ? 'full-150' : 'full-190',
                 method: 'get',//请求方法
+                sqlkey: 'F_Id',//数据库主键
                 cellMinWidth: 100,//最小宽度
                 smartReloadModel: true, // 是否开启智能reload的模式
                 page: false,
@@ -126,14 +134,19 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == false) {
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
+                var array = [];
                 $.each(options.cols[0], function (i) {
                     options.cols[0][i].hideAlways = true;
                     options.cols[0][i].hide = true;
+                    if (options.cols[0][i].field == options.sqlkey) {
+                        array.push(options.cols[0][i]);
+                    }
                     if (dataJson != undefined) {
                         for (var j = 0; j < dataJson.length; j++) {
                             if (options.cols[0][i].field == dataJson[j].F_EnCode) {
                                 options.cols[0][i].hideAlways = false;
                                 options.cols[0][i].hide = false;
+                                array.push(options.cols[0][i]);
                                 break;
                             }
                         }
@@ -145,6 +158,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                         //});
                     }
                 });
+                options.cols[0] = array;
             };
             return treetable.render(options);
         },
