@@ -1,7 +1,10 @@
 ﻿using Chloe;
+using Chloe.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
@@ -24,7 +27,7 @@ namespace WaterCloud.Service
         /// <param name=""parameterName>linq表达式参数的名称，如u=>u.name中的"u"</param>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
-        protected IQuery<T> GetDataPrivilege(string parametername,string moduleName)
+        protected IQuery<T> GetDataPrivilege(string parametername, string moduleName)
         {
             if (!CheckDataPrivilege(moduleName))
             {
@@ -72,6 +75,53 @@ namespace WaterCloud.Service
             //    return false; //没有设置数据规则，那么视为该资源允许被任何主体查看
             //}
             return true;
+        }
+        /// <summary>
+        ///  字段权限处理
+        /// </summary>
+        ///<param name=""list>数据列表</param>
+        /// <param name=""moduleName>菜单名称</param>
+        /// <returns></returns>
+        protected List<T> GetFieldsFilterData(List<T> list, string moduleName)
+        {
+            //管理员跳过
+            if (loginUser.RoleId == "admin"||loginUser.IsSystem)
+            {
+                return list;
+            }
+            //系统菜单跳过
+            var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).Result;
+            if (module.F_IsPublic==true)
+            {
+                return list;
+            }
+            var rule = UnitWork.IQueryable<RoleAuthorizeEntity>(u=>u.F_ObjectId==loginUser.RoleId&&u.F_ItemType==3).Select(a=>a.F_ItemId).ToList();
+            var fieldsList = UnitWork.IQueryable<ModuleFieldsEntity>(u => rule.Contains(u.F_Id)).Select(u => u.F_EnCode).ToList();
+            DataTable dt = DataTableHelper.ListToDataTable(list);
+            PropertyInfo pkProp = typeof(T).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
+            List<string> tempList = new List<string>();
+            foreach (var item in dt.Columns)
+            {
+                if (!fieldsList.Contains(item.ToString()) && pkProp.Name !=item.ToString())
+                {
+                    tempList.Add(item.ToString());
+                }
+            }
+            foreach (var item in tempList)
+            {
+                dt.Columns.Remove(item);
+            }       
+            return dt.ToDataList<T>();
+        }
+        /// <summary>
+        ///  字段权限处理
+        /// </summary>
+        /// <returns></returns>
+        protected T GetFieldsFilterData(T entity, string moduleName)
+        {
+            List<T> list = new List<T>();
+            list.Add(entity);
+            return GetFieldsFilterData(list, moduleName)[0];
         }
     }
 }
