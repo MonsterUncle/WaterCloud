@@ -110,7 +110,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         {
             pagination.order = "desc";
             pagination.sort = "F_EnabledMark";
-            var data = await _jobService.GetList(pagination, keyword);
+            var data = await _jobService.GetLookList(pagination, keyword);
             return Success(pagination.records, data);
         }
         /// <summary>

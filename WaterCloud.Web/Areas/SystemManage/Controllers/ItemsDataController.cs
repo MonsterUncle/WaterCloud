@@ -36,7 +36,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(string itemId, string keyword)
         {
-            var data =await _itemsDetailService.GetList(itemId, keyword);
+            var data =await _itemsDetailService.GetLookList(itemId, keyword);
             return Success(data.Count, data);
         }
         [HttpGet]

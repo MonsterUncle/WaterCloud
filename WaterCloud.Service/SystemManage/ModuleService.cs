@@ -9,10 +9,11 @@ using WaterCloud.Repository.SystemManage;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class ModuleService: IDenpendency
+    public class ModuleService : DataFilterService<ModuleEntity>, IDenpendency
     {
         private IModuleRepository service = new ModuleRepository();
         /// <summary>
@@ -25,11 +26,27 @@ namespace WaterCloud.Service.SystemManage
         private string modulebuttoncacheKey = "watercloud_modulebuttondata_";
         private string modulefieldscacheKey = "watercloud_modulefieldsdata_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
 
         public async Task<List<ModuleEntity>> GetList()
         {
             var cachedata =await service.CheckCacheList(cacheKey + "list");
-            return service.IQueryable().Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
+            return cachedata.Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
+        }
+        public async Task<List<ModuleEntity>> GetLookList()
+        {
+            var list = new List<ModuleEntity>();
+            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            {
+                list = await service.CheckCacheList(cacheKey + "list");
+            }
+            else
+            {
+                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                list = forms.ToList();
+            }
+            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<ModuleEntity> GetForm(string keyValue)
         {

@@ -26,9 +26,11 @@ namespace WaterCloud.Service
         /// <returns></returns>
         protected IQuery<T> GetDataPrivilege(string parametername,string moduleName)
         {
-            if (loginUser.UserCode == Define.SYSTEM_USERNAME) return Repository.IQueryable();  //超级管理员特权
+            if (!CheckDataPrivilege(moduleName))
+            {
+                return Repository.IQueryable();
+            }
             var rule = UnitWork.FindEntity<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).Result;
-            if (rule == null) return Repository.IQueryable(); //没有设置数据规则，那么视为该资源允许被任何主体查看
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
@@ -53,17 +55,22 @@ namespace WaterCloud.Service
         /// <summary>
         ///  获取当前登录用户是否需要数据控制
         /// </summary>
-        /// <param name=""parameterName>linq表达式参数的名称，如u=>u.name中的"u"</param>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
-        protected bool CheckDataPrivilege(string parametername, string moduleName)
+        protected bool CheckDataPrivilege(string moduleName)
         {
             if (loginUser.UserCode == Define.SYSTEM_USERNAME) return false;  //超级管理员特权
             var rule = UnitWork.FindEntity<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).Result;
+            ////系统菜单也不需要数据权限 跟字段重合取消这样处理
+            //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).Result;
             if (rule == null)
             {
                 return false; //没有设置数据规则，那么视为该资源允许被任何主体查看
             }
+            //if (rule == null|| module.F_IsPublic==true)
+            //{
+            //    return false; //没有设置数据规则，那么视为该资源允许被任何主体查看
+            //}
             return true;
         }
     }

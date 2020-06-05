@@ -55,7 +55,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeGridJson(string keyword)
         {
-            var data =await _moduleService.GetList();
+            var data =await _moduleService.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
@@ -82,7 +82,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetSelectMunuJson(string keyword)
         {
-            var data = (await _moduleService.GetList()).Where(a => a.F_Target=="iframe").ToList();
+            var data = (await _moduleService.GetList()).Where(a => a.F_Target=="iframe"&&a.F_IsPublic==false).ToList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.Where(a => a.F_FullName.Contains(keyword)).ToList();

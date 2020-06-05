@@ -13,13 +13,15 @@ namespace WaterCloud.Service.SystemManage
     /// 日 期：2020-05-21 14:38
     /// 描 述：字段管理服务类
     /// </summary>
-    public class ModuleFieldsService :  IDenpendency
+    public class ModuleFieldsService : DataFilterService<ModuleFieldsEntity>, IDenpendency
     {
         private IModuleFieldsRepository service = new ModuleFieldsRepository();
         private IModuleRepository moduleservice = new ModuleRepository();
         private string cacheKey = "watercloud_ modulefieldsdata_";
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         #region 获取数据
         public async Task<List<ModuleFieldsEntity>> GetList(string keyword = "")
         {
@@ -32,18 +34,16 @@ namespace WaterCloud.Service.SystemManage
             return cachedata.Where(a=>a.F_DeleteMark==false).OrderByDescending(t => t.F_CreatorTime).ToList();
         }
 
-        public async Task<List<ModuleFieldsEntity>> GetList(Pagination pagination, string moduleId, string keyword = "")
+        public async Task<List<ModuleFieldsEntity>> GetLookList(Pagination pagination, string moduleId, string keyword = "")
         {
-            var expression = ExtLinq.True<ModuleFieldsEntity>();
-            expression = expression.And(t => t.F_ModuleId.Equals(moduleId));
+            //获取数据权限
+            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
-                expression = expression.And(t => t.F_FullName.Contains(keyword));
-                expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
             }
-            expression = expression.And(t => t.F_DeleteMark == false);
-            return await service.FindList(expression, pagination);
+            list = list.Where(u => u.F_DeleteMark == false&&u.F_ModuleId== moduleId);
+            return await service.OrderList(list, pagination);
         }
 
         public async Task<ModuleFieldsEntity> GetForm(string keyValue)

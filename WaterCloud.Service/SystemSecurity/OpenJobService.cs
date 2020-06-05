@@ -17,7 +17,7 @@ using WaterCloud.Service.AutoJob;
 
 namespace WaterCloud.Service.SystemSecurity
 {
-    public class OpenJobService : IDenpendency
+    public class OpenJobService : DataFilterService<OpenJobEntity>, IDenpendency
     {
         private IOpenJobRepository service = new OpenJobRepository();
         private IScheduler _scheduler=JobScheduler.GetScheduler();
@@ -26,18 +26,21 @@ namespace WaterCloud.Service.SystemSecurity
         /// </summary>
 
         private string cacheKey = "watercloud_openjob_";// IP过滤
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         /// <summary>
         /// 加载列表
         /// </summary>
-        public async Task<List<OpenJobEntity>> GetList(Pagination pagination, string keyword = "")
+        public async Task<List<OpenJobEntity>> GetLookList(Pagination pagination, string keyword = "")
         {
-            var expression = ExtLinq.True<OpenJobEntity>();
+            //获取数据权限
+            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
             if (!string.IsNullOrEmpty(keyword))
             {
-                expression = expression.And(t => t.F_JobName.Contains(keyword));
+                list = list.Where(u => u.F_JobName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
-            expression = expression.And(t => t.F_DeleteMark == false);
-            return await service.FindList(expression, pagination);
+            list = list.Where(u => u.F_DeleteMark == false);
+            return await service.OrderList(list, pagination);
         }
         public async Task<List<OpenJobEntity>> GetList(string keyword = "")
         {

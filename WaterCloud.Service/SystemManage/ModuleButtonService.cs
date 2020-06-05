@@ -15,10 +15,12 @@ using NPOI.SS.Formula.Functions;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class ModuleButtonService: IDenpendency
+    public class ModuleButtonService : DataFilterService<ModuleButtonEntity>, IDenpendency
     {
         private IModuleButtonRepository service = new ModuleButtonRepository();
         private IModuleRepository moduleservice = new ModuleRepository();
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -26,15 +28,33 @@ namespace WaterCloud.Service.SystemManage
         private string cacheKey = "watercloud_modulebuttondata_";
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
-
         public async Task<List<ModuleButtonEntity>> GetList(string moduleId = "")
         {
-            var cachedata =await service.CheckCacheList(cacheKey + "list");
+            var list = new List<ModuleButtonEntity>();
+            list = await service.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(moduleId))
             {
-                cachedata = cachedata.Where(t => t.F_ModuleId == moduleId).ToList();
+                list = list.Where(t => t.F_ModuleId == moduleId).ToList();
             }
-            return cachedata.Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
+            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
+        }
+        public async Task<List<ModuleButtonEntity>> GetLookList(string moduleId = "")
+        {
+            var list = new List<ModuleButtonEntity>();
+            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            {
+                list = await service.CheckCacheList(cacheKey + "list");
+            }
+            else
+            {
+                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                list = forms.ToList();
+            }
+            if (!string.IsNullOrEmpty(moduleId))
+            {
+                list = list.Where(t => t.F_ModuleId == moduleId).ToList();
+            }
+            return list.Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<ModuleButtonEntity> GetForm(string keyValue)
         {

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class RoleService: IDenpendency
+    public class RoleService : DataFilterService<RoleEntity>, IDenpendency
     {
         private IUserRepository userservice = new UserRepository();
         private IRoleRepository service = new RoleRepository();
@@ -28,6 +28,8 @@ namespace WaterCloud.Service.SystemManage
         private string cacheKey = "watercloud_roledata_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         private string initcacheKey = "watercloud_init_";
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
 
         public async Task<List<RoleEntity>> GetList( string keyword = "")
         {
@@ -38,16 +40,16 @@ namespace WaterCloud.Service.SystemManage
             }
             return cachedata.Where(t => t.F_Category == 1&&t.F_DeleteMark==false).ToList();
         }
-        public async Task<List<RoleEntity>> GetList(Pagination pagination, string keyword = "")
+        public async Task<List<RoleEntity>> GetLookList(Pagination pagination, string keyword = "")
         {
-            var expression = ExtLinq.True<RoleEntity>();
+            //获取数据权限
+            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
             if (!string.IsNullOrEmpty(keyword))
             {
-                expression = expression.And(t => t.F_FullName.Contains(keyword));
-                expression = expression.Or(t => t.F_EnCode.Contains(keyword));
+                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
             }
-            expression = expression.And(t => t.F_Category == 1 && t.F_DeleteMark == false);
-            return await service.FindList(expression, pagination);
+            list = list.Where(u => u.F_DeleteMark == false && u.F_Category == 1);
+            return await service.OrderList(list, pagination);
         }
         public async Task<RoleEntity> GetForm(string keyValue)
         {

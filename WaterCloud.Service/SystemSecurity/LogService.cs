@@ -15,18 +15,21 @@ using System.Linq;
 
 namespace WaterCloud.Service.SystemSecurity
 {
-    public class LogService: IDenpendency
+    public class LogService : DataFilterService<LogEntity>, IDenpendency
     {
         //登录信息保存方式
         private string LoginProvider = GlobalContext.SystemConfig.LoginProvider;
         private ILogRepository service = new LogRepository();
         private ModuleService moduleservice = new ModuleService();
-        public async Task<List<LogEntity>> GetList(Pagination pagination, int timetype, string keyword="")
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        public async Task<List<LogEntity>> GetLookList(Pagination pagination, int timetype, string keyword="")
         {
-            var expression = ExtLinq.True<LogEntity>();
+            //获取数据权限
+            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
             if (!string.IsNullOrEmpty(keyword))
             {
-                expression = expression.And(t => t.F_Account.Contains(keyword));
+                list = list.Where(u => u.F_Account.Contains(keyword) || u.F_Description.Contains(keyword) || u.F_ModuleName.Contains(keyword));
             }
             DateTime startTime = DateTime.Now.ToString("yyyy-MM-dd").ToDate();
             DateTime endTime = DateTime.Now.ToString("yyyy-MM-dd").ToDate().AddDays(1);
@@ -46,8 +49,8 @@ namespace WaterCloud.Service.SystemSecurity
                 default:
                     break;
             }
-            expression = expression.And(t => t.F_Date >= startTime && t.F_Date <= endTime);
-            return await service.FindList(expression, pagination);
+            list = list.Where(t => t.F_Date >= startTime && t.F_Date <= endTime);
+            return await service.OrderList(list, pagination);
         }
         public async Task<List<LogEntity>> GetList()
         {           

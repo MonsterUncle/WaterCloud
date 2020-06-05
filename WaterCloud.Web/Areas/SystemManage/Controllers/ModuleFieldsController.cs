@@ -40,7 +40,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         {
             pagination.order = "desc";
             pagination.sort = "F_CreatorTime";
-            var data = await _service.GetList(pagination, moduleId, keyword);
+            var data = await _service.GetLookList(pagination, moduleId, keyword);
             return Success(pagination.records, data);
         }
 

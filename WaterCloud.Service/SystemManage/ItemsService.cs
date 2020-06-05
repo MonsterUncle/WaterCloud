@@ -13,19 +13,34 @@ using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class ItemsService: IDenpendency
+    public class ItemsService : DataFilterService<ItemsEntity>,IDenpendency
     {
         private IItemsRepository service = new ItemsRepository();
         /// <summary>
         /// 缓存操作类
         /// </summary>
-
         private string cacheKey = "watercloud_itemsdata_";// 字典分类
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
 
         public async Task<List<ItemsEntity>> GetList()
         {
             var cachedata =await service.CheckCacheList(cacheKey + "list");
             return cachedata.Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
+        }
+        public async Task<List<ItemsEntity>> GetLookList()
+        {
+            var list = new List<ItemsEntity>();
+            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            {
+                list = await service.CheckCacheList(cacheKey + "list");
+            }
+            else
+            {
+                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                list = forms.ToList();
+            }
+            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<ItemsEntity> GetForm(string keyValue)
         {

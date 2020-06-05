@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class ItemsDetailService: IDenpendency
+    public class ItemsDetailService : DataFilterService<ItemsDetailEntity>,IDenpendency
     {
         private IItemsDetailRepository service = new ItemsDetailRepository();
         private IItemsRepository itemservice = new ItemsRepository();
@@ -22,19 +22,43 @@ namespace WaterCloud.Service.SystemManage
 
         private string cacheKey = "watercloud_itemdetaildata_";
         private string itemcacheKey = "watercloud_itemdata_";
-
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         public async Task<List<ItemsDetailEntity>> GetList(string itemId = "", string keyword = "")
         {
-            var cachedata =await service.CheckCacheList(cacheKey + "list");
+            var list = new List<ItemsDetailEntity>();
+            list = await service.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(itemId))
             {
-                cachedata = cachedata.Where(t => t.F_ItemId == itemId).ToList();
+                list = list.Where(t => t.F_ItemId == itemId).ToList();
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                cachedata = cachedata.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword)).ToList();
+                list = list.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword)).ToList();
             }
-            return cachedata.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
+            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
+        }
+        public async Task<List<ItemsDetailEntity>> GetLookList(string itemId = "", string keyword = "")
+        {
+            var list = new List<ItemsDetailEntity>();
+            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            {
+                list = await service.CheckCacheList(cacheKey + "list");
+            }
+            else
+            {
+                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                list = forms.ToList();
+            }
+            if (!string.IsNullOrEmpty(itemId))
+            {
+                list = list.Where(t => t.F_ItemId == itemId).ToList();
+            }
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                list = list.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword)).ToList();
+            }
+            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {

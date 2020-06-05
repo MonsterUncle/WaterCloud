@@ -13,34 +13,35 @@ namespace WaterCloud.Service.SystemManage
     /// 日 期：2020-06-01 09:44
     /// 描 述：数据权限服务类
     /// </summary>
-    public class DataPrivilegeRuleService :  IDenpendency
+    public class DataPrivilegeRuleService : DataFilterService<DataPrivilegeRuleEntity>,IDenpendency
     {
         private IDataPrivilegeRuleRepository service = new DataPrivilegeRuleRepository();
         private IModuleRepository moduleservice = new ModuleRepository();
         private string cacheKey = "watercloud_ dataprivilegeruledata_";
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         #region 获取数据
         public async Task<List<DataPrivilegeRuleEntity>> GetList(string keyword = "")
         {
-            var cachedata = await service.CheckCacheList(cacheKey + "list");
+            var list = new List<DataPrivilegeRuleEntity>();
+            list = await service.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
-                cachedata = cachedata.Where(t => t.F_ModuleCode.Contains(keyword) || t.F_Description.Contains(keyword)).ToList();
+                list = list.Where(t => t.F_ModuleCode.Contains(keyword) || t.F_Description.Contains(keyword)).ToList();
             }
-            return cachedata.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
+            return list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
         }
 
-        public async Task<List<DataPrivilegeRuleEntity>> GetList(Pagination pagination,string keyword = "")
+        public async Task<List<DataPrivilegeRuleEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
-            var expression = ExtLinq.True<DataPrivilegeRuleEntity>();
-            expression = expression.And(t => t.F_DeleteMark == false);
+            //获取数据权限
+            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
-                expression = expression.And(t => t.F_ModuleCode.Contains(keyword));
-                expression = expression.Or(t => t.F_Description.Contains(keyword));
+                list = list.Where(u => u.F_ModuleCode.Contains(keyword) || u.F_Description.Contains(keyword));
             }
-            return await service.FindList(expression, pagination);
+            list = list.Where(u => u.F_DeleteMark == false);
+            return await service.OrderList(list, pagination);
         }
 
         public async Task<DataPrivilegeRuleEntity> GetForm(string keyValue)

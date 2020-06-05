@@ -73,7 +73,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeGridJson(string keyword)
         {
-            var data =await _itemsService.GetList();
+            var data =await _itemsService.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
@@ -94,7 +94,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(string keyword)
         {
-            var data =await _itemsService.GetList();
+            var data =await _itemsService.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));

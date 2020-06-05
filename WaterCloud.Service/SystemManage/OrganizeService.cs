@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class OrganizeService: IDenpendency
+    public class OrganizeService : DataFilterService<OrganizeEntity>, IDenpendency
     {
         private IUserRepository userservice = new UserRepository();
         private IOrganizeRepository service = new OrganizeRepository();
@@ -22,11 +22,26 @@ namespace WaterCloud.Service.SystemManage
         /// </summary>
 
         private string cacheKey = "watercloud_organizedata_";
-
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         public async Task<List<OrganizeEntity>> GetList()
         {
             var cachedata =await service.CheckCacheList(cacheKey + "list");
             return cachedata.Where(a=>a.F_DeleteMark==false).ToList();
+        }
+        public async Task<List<OrganizeEntity>> GetLookList()
+        {
+            var list = new List<OrganizeEntity>();
+            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            {
+                list = await service.CheckCacheList(cacheKey + "list");
+            }
+            else
+            {
+                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                list = forms.ToList();
+            }
+            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<OrganizeEntity> GetForm(string keyValue)
         {

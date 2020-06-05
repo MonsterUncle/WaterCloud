@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class UserService: IDenpendency
+    public class UserService : DataFilterService<UserEntity>, IDenpendency
     {
         private IRoleRepository roleservice = new RoleRepository();
         private IUserRepository service = new UserRepository();
@@ -26,19 +26,19 @@ namespace WaterCloud.Service.SystemManage
 
         private string cacheKey = "watercloud_userdata_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
 
-        public async Task<List<UserEntity>> GetList(Pagination pagination, string keyword)
+        public async Task<List<UserEntity>> GetLookList(Pagination pagination, string keyword)
         {
-            var expression = ExtLinq.True<UserEntity>();
-            expression = expression.And(t => t.F_DeleteMark == false);
+            //获取数据权限
+            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
             if (!string.IsNullOrEmpty(keyword))
             {
-                expression = expression.And(t => t.F_Account.Contains(keyword));
-                expression = expression.Or(t => t.F_RealName.Contains(keyword));
-                expression = expression.Or(t => t.F_MobilePhone.Contains(keyword));
+                list = list.Where(u => u.F_Account.Contains(keyword) || u.F_RealName.Contains(keyword)||u.F_MobilePhone.Contains(keyword));
             }
-            expression = expression.And(t => t.F_Account != "admin");
-            return await service.FindList(expression, pagination);
+            list = list.Where(u => u.F_DeleteMark == false && u.F_Account != "admin");
+            return await service.OrderList(list, pagination);
         }
         public async Task<List<UserEntity>> GetList(string keyword)
         {

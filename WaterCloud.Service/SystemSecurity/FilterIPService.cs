@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemSecurity
 {
-    public class FilterIPService: IDenpendency
+    public class FilterIPService : DataFilterService<FilterIPEntity>, IDenpendency
     {
         private IFilterIPRepository service = new FilterIPRepository();
         /// <summary>
@@ -21,16 +21,37 @@ namespace WaterCloud.Service.SystemSecurity
         /// </summary>
 
         private string cacheKey = "watercloud_filterip_";// IP过滤
-
+        //获取类名
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         public async Task<List<FilterIPEntity>> GetList(string keyword)
         {
-            var cachedata =await service.CheckCacheList(cacheKey + "list");
+            var list = new List<FilterIPEntity>();
+            list = await service.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(keyword))
             {
-                cachedata = cachedata.Where(t => t.F_StartIP.Contains(keyword)).ToList();
+                list = list.Where(t => t.F_StartIP.Contains(keyword) || t.F_EndIP.Contains(keyword)).ToList();
 
             }
-            return cachedata.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList();
+            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList();
+        }
+        public async Task<List<FilterIPEntity>> GetLookList(string keyword)
+        {
+            var list = new List<FilterIPEntity>();
+            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            {
+                list = await service.CheckCacheList(cacheKey + "list");
+            }
+            else
+            {
+                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                list = forms.ToList();
+            }
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                list = list.Where(t => t.F_StartIP.Contains(keyword)||t.F_EndIP.Contains(keyword)).ToList();
+
+            }
+            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList();
         }
         public async Task<FilterIPEntity> GetForm(string keyValue)
         {

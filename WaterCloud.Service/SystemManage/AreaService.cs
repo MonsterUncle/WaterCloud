@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class AreaService: IDenpendency
+    public class AreaService : DataFilterService<AreaEntity>, IDenpendency
     {
         private IAreaRepository service = new AreaRepository();
         //获取类名
@@ -22,19 +22,33 @@ namespace WaterCloud.Service.SystemManage
         /// 缓存操作类
         /// </summary>
         private string cacheKey = "watercloud_areadata_";// 区域
-
-        public async Task<List<AreaEntity>> GetList(int layers=0)
+        public async Task<List<AreaEntity>> GetList(int layers = 0)
         {
-            var cachedata =await service.CheckCacheList(cacheKey + "list");
-            if (layers==0)
+            var list = new List<AreaEntity>();
+            list = await service.CheckCacheList(cacheKey + "list");
+            if (layers != 0)
             {
-                cachedata = cachedata.ToList();
+                list = list.Where(t => t.F_Layers == layers).ToList();
+            }
+            return list.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true).OrderBy(t => t.F_SortCode).ToList();
+        }
+        public async Task<List<AreaEntity>> GetLookList(int layers=0)
+        {
+            var list =new List<AreaEntity>();
+            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            {
+                list = await service.CheckCacheList(cacheKey + "list");
             }
             else
             {
-                cachedata = cachedata.Where(t => t.F_Layers == layers).ToList();
+                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                list = forms.ToList();
             }
-            return cachedata.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true).OrderBy(t => t.F_SortCode).ToList();
+            if (layers!=0)
+            { 
+                list = list.Where(t => t.F_Layers == layers).ToList();
+            }
+            return list.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<AreaEntity> GetForm(string keyValue)
         {

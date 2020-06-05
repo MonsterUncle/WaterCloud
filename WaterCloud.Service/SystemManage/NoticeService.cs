@@ -36,26 +36,23 @@ namespace WaterCloud.Service.SystemManage
                 list = list.Where(t => t.F_Title.Contains(keyword) || t.F_Content.Contains(keyword)).ToList();
             }
             //公告这里不控制
+            //数据权限和缓存获取冲突
             //if (!CheckDataPrivilege("u", className.Substring(0, className.Length - 7)))
             //{
             //    list = await service.CheckCacheList(cacheKey + "list");
-            //    if (!string.IsNullOrEmpty(keyword))
-            //    {
-            //        list = list.Where(t => t.F_Title.Contains(keyword) || t.F_Content.Contains(keyword)).ToList();
-            //    }
             //}
             //else
             //{
-            //    var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
-            //    if (!string.IsNullOrEmpty(keyword))
-            //    {
-            //        forms = forms.Where(u => u.F_Title.Contains(keyword) || u.F_Content.Contains(keyword));
-            //    }
+            //    var forms = GetDataPrivilege(className.Substring(0, className.Length - 7));
             //    list = list.ToList();
+            //}
+            //if (!string.IsNullOrEmpty(keyword))
+            //{
+            //    list = list.Where(t => t.F_Title.Contains(keyword) || t.F_Content.Contains(keyword)).ToList();
             //}
             return list.Where(a => a.F_DeleteMark == false).ToList();
         }
-        public async Task<List<NoticeEntity>> GetList(Pagination pagination, string keyword = "")
+        public async Task<List<NoticeEntity>> GetLookList(Pagination pagination, string keyword = "")
         {
             //获取数据权限
             var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
