@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright © 2020 WaterCloud.Framework 版权所有
  * Author: WaterCloud
  * Description: WaterCloud快速开发平台
@@ -54,7 +54,7 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task<OpenJobEntity> GetForm(string keyValue)
         {
             var cachedata = await service.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+            return cachedata;
         }
 
         public async Task SubmitForm(OpenJobEntity entity, string keyValue)
