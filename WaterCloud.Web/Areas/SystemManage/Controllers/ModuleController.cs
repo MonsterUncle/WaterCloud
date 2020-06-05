@@ -82,7 +82,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetSelectMunuJson(string keyword)
         {
-            var data = (await _moduleService.GetList()).Where(a => a.F_Target=="iframe"&&a.F_IsPublic==false).ToList();
+            var data = (await _moduleService.GetList()).Where(a => a.F_Target=="iframe").ToList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.Where(a => a.F_FullName.Contains(keyword)).ToList();
