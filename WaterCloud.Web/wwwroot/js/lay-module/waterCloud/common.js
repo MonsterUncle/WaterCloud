@@ -624,11 +624,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                     var $this = $(this);
                     var id = $this.attr('id');
                     $this.addClass('layui-hide');
+                    $this.attr('authorize', 'no');
                     if (dataJson != undefined) {
                         for (var i = 0; i < dataJson.length; i++) {
                             if (id == dataJson[i].F_EnCode) {
                                 $this.parent().parent().removeClass('layui-hide');
                                 $this.removeClass('layui-hide');
+                                $this.attr('authorize', 'yes');
                                 break;
                             }
                         }
@@ -640,6 +642,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                         //});
                     }
                 });
+                element.find('[authorize=no]').parent().parent().remove();
             }
             else {
                 element.find('input,select,textarea').each(function (r) {
