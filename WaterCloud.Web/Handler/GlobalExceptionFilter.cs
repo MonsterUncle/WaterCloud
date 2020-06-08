@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Web;
 using WaterCloud.Code;
 using Serenity.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace WaterCloud.Web
 {
@@ -30,7 +31,8 @@ namespace WaterCloud.Web
             else
             {
                 string errorMessage = context.Exception.GetOriginalException().Message;
-                context.Result = new RedirectResult(context.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode(errorMessage));
+                context.HttpContext.Response.WriteAsync("<script>top.location.href ='" + context.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode(errorMessage) + "';if(document.all) window.event.returnValue = false;</script>");
+                //context.Result = new RedirectResult(context.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode(errorMessage));
                 context.ExceptionHandled = true;
             }
         }

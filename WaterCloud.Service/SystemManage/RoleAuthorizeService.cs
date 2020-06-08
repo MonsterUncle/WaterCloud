@@ -192,7 +192,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<bool> RoleValidate(string userId,string roleId)
         {
             var authorizeurldata = new List<AuthorizeActionModel>();
-            var user = await new UserService().GetForm(OperatorProvider.Provider.GetCurrent().UserId);
+            var user = await new UserService().GetForm(userId);
             if (user == null || user.F_EnabledMark == false)
             {
                 return false;

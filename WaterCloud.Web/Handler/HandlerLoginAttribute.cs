@@ -26,7 +26,8 @@ namespace WaterCloud.Web
             if (OperatorProvider.Provider.GetCurrent() == null)
             {
                 WebHelper.WriteCookie("WaterCloud_login_error", "overdue");
-                filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("系统登录已超时，请重新登录！"));
+                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("系统登录已超时，请重新登录！") + "';if(document.all) window.event.returnValue = false;</script>");
+                //filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("系统登录已超时，请重新登录！"));
                 OperatorProvider.Provider.EmptyCurrent("pc_");
                 return;
             }
@@ -45,7 +46,8 @@ namespace WaterCloud.Web
             if (!this.RoleAuthorize())
             {
                 OperatorProvider.Provider.EmptyCurrent("pc_");
-                filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("很抱歉！您的权限不足，访问被拒绝！"));
+                //filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("很抱歉！您的权限不足，访问被拒绝！"));
+                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("很抱歉！您的权限不足，访问被拒绝！") + "';if(document.all) window.event.returnValue = false;</script>");
                 return;
             }
             base.OnActionExecuting(filterContext);
@@ -61,13 +63,13 @@ namespace WaterCloud.Web
                     case 1:
                         return true;
                     case 0:
-                        filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("系统登录已超时,请重新登录！"));
+                        filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("系统登录已超时,请重新登录！") + "';if(document.all) window.event.returnValue = false;</script>");
                         return false;
                     case -1:
-                        filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("账号未登录，请登录！"));
+                        filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '" + filterContext.HttpContext.Request.PathBase + "Home/Error?msg=" + HttpUtility.UrlEncode("账号未登录，请登录！") + "';if(document.all) window.event.returnValue = false;</script>");
                         return false;
                     case -2:
-                        filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("您的帐号已在其它地方登录,请重新登录！"));
+                        filterContext.HttpContext.Response.WriteAsync("<script>top.location.href = '" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("您的帐号已在其它地方登录,请重新登录！") + "';if(document.all) window.event.returnValue = false;</script>");
                         return false;
                     default:
                         return false;
