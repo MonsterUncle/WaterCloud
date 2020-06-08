@@ -15,7 +15,7 @@ namespace WaterCloud.Service.AutoJob
         {
             Task.Run(async () =>
             {
-                List<OpenJobEntity> obj = await new OpenJobService().GetList(null);
+                List<OpenJobEntity> obj = await new OpenJobsService().GetList(null);
                 obj = obj.Where(a => a.F_EnabledMark == true).ToList();
                 if (obj.Count > 0)
                 {
@@ -47,7 +47,7 @@ namespace WaterCloud.Service.AutoJob
                     entity.F_EndRunTime = DateTime.Now.AddSeconds(-1);
                     DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(entity.F_StarRunTime, 1);
                     DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(DateTime.MaxValue.AddDays(-1), 1);                    
-                    new OpenJobService().SubmitForm(entity, entity.F_Id);
+                    new OpenJobsService().SubmitForm(entity, entity.F_Id);
                     var scheduler = JobScheduler.GetScheduler();
                     IJobDetail job = JobBuilder.Create<JobExecute>().WithIdentity(entity.F_JobName, entity.F_JobGroup).Build();
                     job.JobDataMap.Add("F_Id", entity.F_Id);

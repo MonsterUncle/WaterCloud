@@ -2,46 +2,47 @@
     ViewBag.Title = "Form"; 
     Layout = "~/Views/Shared/_Form.cshtml";
 }
-<script>
-    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
-        var form = layui.form,
-            $ = layui.$,
-            common = layui.common,
-            laydate = layui.laydate;
-        var keyValue = $.request("keyValue");
-        var moduleId = $.request("moduleId");
-        //权限字段
-        common.authorizeFields('adminform');
-        $(function () {
-            if (!!keyValue) {
-                common.ajax({
-                   url: '/SystemManage/ModuleFields/GetFormJson',
-                   dataType: 'json',
-                   data: { keyValue: keyValue },
-                   async: false,
-                   success: function (data) {
-                       common.val('adminform', data);
+    <script>
+        layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+            var form = layui.form,
+                $ = layui.$,
+                common = layui.common,
+                laydate = layui.laydate;
+            var keyValue = $.request("keyValue");
+            var moduleId = $.request("moduleId");
+            //权限字段
+            common.authorizeFields('adminform');
+            $(function () {
+                if (!!keyValue) {
+                    common.ajax({
+                        url: '/SystemManage/ModuleFields/GetFormJson',
+                        dataType: 'json',
+                        data: { keyValue: keyValue },
+                        async: false,
+                        success: function (data) {
+                            common.val('adminform', data);
+                        }
+                    });
+                }
+                form.render();
+            });
+            //监听提交
+            form.on('submit(saveBtn)', function (data) {
+                var postData = data.field;
+                if (!postData["F_IsPublic"]) postData["F_IsPublic"] = false;
+                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+                postData["F_ModuleId"] = moduleId;
+                common.submitForm({
+                    url: '/SystemManage/ModuleFields/SubmitForm?keyValue=' + keyValue,
+                    param: postData,
+                    success: function () {
+                        common.parentreload('data-search-btn');
                     }
-               });
-           }
-           form.render();
-       });
-       //监听提交
-       form.on('submit(saveBtn)', function (data) {
-           var postData = data.field;
-           if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-           postData["F_ModuleId"] = moduleId;
-           common.submitForm({
-               url: '/SystemManage/ModuleFields/SubmitForm?keyValue=' + keyValue,
-               param: postData,
-               success: function () {
-                   common.parentreload('data-search-btn');
-               }
-           })
-           return false;
-       });
-   });
-</script>
+                })
+                return false;
+            });
+        });
+    </script>
 
 <body>
     <div class="layuimini - container">
@@ -62,6 +63,7 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">选项</label>
                     <div class="layui-input-block">
+                        <input id="F_IsPublic" name="F_IsPublic" type="checkbox" value="true" title="公共">
                         <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效">
                     </div>
                 </div>

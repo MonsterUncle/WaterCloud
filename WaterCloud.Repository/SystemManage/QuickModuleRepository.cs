@@ -11,6 +11,7 @@ using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace WaterCloud.Repository.SystemManage
 {
@@ -42,6 +43,12 @@ namespace WaterCloud.Repository.SystemManage
                     {
                         modulelist= db.IQueryable<ModuleEntity>(a => a.F_EnabledMark==true).Select(a => a.F_Id).ToList();
                     }
+                    var temp= db.IQueryable<ModuleEntity>(a => a.F_IsPublic == true && a.F_IsMenu == true && a.F_EnabledMark == true && a.F_DeleteMark == false).Select(a => a.F_Id).ToList();
+                    foreach (var item in modulelist)
+                    {
+                        if(temp.Where(a => a == item).Count()>0) temp.Remove(item);
+                    }
+                    modulelist.AddRange(temp);
                     foreach (var item in modulelist)
                     {
                         var module =await db.FindEntity<ModuleEntity>(a => a.F_Id == item&& a.F_EnabledMark == true);
@@ -104,7 +111,7 @@ namespace WaterCloud.Repository.SystemManage
                 {
                     modulelist = db.IQueryable<ModuleEntity>(a => a.F_EnabledMark == true).Select(a => a.F_Id).ToList();
                 }
-                quicks = db.IQueryable<ModuleEntity>(a => modulelist.Contains(a.F_Id) && a.F_EnabledMark==true && a.F_UrlAddress != null)
+                quicks = db.IQueryable<ModuleEntity>(a => (modulelist.Contains(a.F_Id)||a.F_IsPublic==true)&&a.F_IsMenu==true && a.F_EnabledMark==true && a.F_UrlAddress != null)
                     .Select(a=>new ModuleEntity { 
                     F_Id=a.F_Id,
                     F_EnabledMark=false,

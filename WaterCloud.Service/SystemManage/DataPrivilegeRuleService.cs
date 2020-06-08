@@ -17,7 +17,7 @@ namespace WaterCloud.Service.SystemManage
     {
         private IDataPrivilegeRuleRepository service = new DataPrivilegeRuleRepository();
         private IModuleRepository moduleservice = new ModuleRepository();
-        private string cacheKey = "watercloud_ dataprivilegeruledata_";
+        private string cacheKey = "watercloud_dataprivilegeruledata_";
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         #region 获取数据

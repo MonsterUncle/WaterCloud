@@ -17,7 +17,7 @@ using WaterCloud.Service.AutoJob;
 
 namespace WaterCloud.Service.SystemSecurity
 {
-    public class OpenJobService : DataFilterService<OpenJobEntity>, IDenpendency
+    public class OpenJobsService : DataFilterService<OpenJobEntity>, IDenpendency
     {
         private IOpenJobRepository service = new OpenJobRepository();
         private IScheduler _scheduler=JobScheduler.GetScheduler();

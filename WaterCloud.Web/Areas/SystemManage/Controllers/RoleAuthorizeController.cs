@@ -59,7 +59,15 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 tree.id = item.F_Id;
                 tree.title = item.F_FullName;
                 tree.parentId = item.F_ParentId;
-                tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0?"1":"0";
+                if (item.F_IsPublic == true)
+                {
+                    tree.checkArr = "1";
+                    tree.disabled = true;
+                }
+                else
+                {
+                    tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
+                }
                 treeList.Add(tree);
             }
             foreach (ModuleButtonEntity item in buttondata)
@@ -104,7 +112,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             if (!string.IsNullOrEmpty(moduleids))
             {
                 var list=moduleids.Split(',');
-                moduledata= moduledata.Where(a=> list.Contains(a.F_Id)).ToList();
+                moduledata= moduledata.Where(a=> list.Contains(a.F_Id)||a.F_IsPublic==true).ToList();
+            }
+            else
+            {
+                moduledata = moduledata.Where(a =>a.F_IsPublic == true).ToList();
             }
             var authorizedata = new List<RoleAuthorizeEntity>();
             if (!string.IsNullOrEmpty(roleId))
@@ -118,7 +130,15 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 tree.id = item.F_Id;
                 tree.title = item.F_FullName;
                 tree.parentId = item.F_ParentId;
-                tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
+                if (item.F_IsPublic == true)
+                {
+                    tree.checkArr = "1";
+                    tree.disabled = true;
+                }
+                else
+                {
+                    tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
+                }
                 treeList.Add(tree);
             }
             foreach (ModuleFieldsEntity item in fieldsdata)
@@ -127,7 +147,15 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 tree.id = item.F_Id;
                 tree.title = item.F_FullName;
                 tree.parentId = item.F_ModuleId;
-                tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
+                if (item.F_IsPublic == true)
+                {
+                    tree.checkArr = "1";
+                    tree.disabled = true;
+                }
+                else
+                {
+                    tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
+                }
                 treeList.Add(tree);
             }
             return ResultDTree(treeList.TreeList());

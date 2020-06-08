@@ -91,12 +91,13 @@ namespace WaterCloud.Service
             }
             //系统菜单跳过
             var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).Result;
+            //判断是否需要字段权限
             if (module.F_IsFields==false)
             {
                 return list;
             }
             var rule = UnitWork.IQueryable<RoleAuthorizeEntity>(u=>u.F_ObjectId==loginUser.RoleId&&u.F_ItemType==3).Select(a=>a.F_ItemId).ToList();
-            var fieldsList = UnitWork.IQueryable<ModuleFieldsEntity>(u => rule.Contains(u.F_Id)).Select(u => u.F_EnCode).ToList();
+            var fieldsList = UnitWork.IQueryable<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id)||u.F_IsPublic==true)&&u.F_ModuleId==module.F_Id).Select(u => u.F_EnCode).ToList();
             if (list.Count==0)
             {
                 return list;

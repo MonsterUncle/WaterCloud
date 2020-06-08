@@ -24,9 +24,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     {
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly ItemsDetailService _itemsDetailService;
+        private readonly ItemsDataService _itemsDetailService;
         private readonly LogService _logService;
-        public ItemsDataController(ItemsDetailService itemsDetailService, LogService logService)
+        public ItemsDataController(ItemsDataService itemsDetailService, LogService logService)
         {
             _itemsDetailService = itemsDetailService;
             _logService = logService;

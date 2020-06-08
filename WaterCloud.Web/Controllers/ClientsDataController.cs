@@ -36,13 +36,13 @@ namespace WaterCloud.Web.Controllers
         private readonly ModuleService _moduleService;
         private readonly LogService _logService;
         private readonly RoleAuthorizeService _roleAuthorizeService;
-        private readonly ItemsDetailService _itemsDetailService;
-        private readonly ItemsService _itemsService;
+        private readonly ItemsDataService _itemsDetailService;
+        private readonly ItemsTypeService _itemsService;
         private readonly OrganizeService _organizeService;
         private readonly RoleService _roleService;
         private readonly DutyService _dutyService;
 
-        public ClientsDataController(QuickModuleService quickModuleService, NoticeService noticeService, UserService userService, ModuleService moduleService, LogService logService, RoleAuthorizeService roleAuthorizeService, ItemsDetailService itemsDetailService, ItemsService itemsService, OrganizeService organizeService, RoleService roleService, DutyService dutyService)
+        public ClientsDataController(QuickModuleService quickModuleService, NoticeService noticeService, UserService userService, ModuleService moduleService, LogService logService, RoleAuthorizeService roleAuthorizeService, ItemsDataService itemsDetailService, ItemsTypeService itemsService, OrganizeService organizeService, RoleService roleService, DutyService dutyService)
         {
             _quickModuleService = quickModuleService;
             _noticeService = noticeService;

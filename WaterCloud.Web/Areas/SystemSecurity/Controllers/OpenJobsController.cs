@@ -18,10 +18,10 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     {
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly OpenJobService _jobService;
+        private readonly OpenJobsService _jobService;
         private readonly LogService _logService;
 
-        public OpenJobsController(OpenJobService jobService, LogService logService)
+        public OpenJobsController(OpenJobsService jobService, LogService logService)
         {
             _jobService = jobService;
             _logService = logService;

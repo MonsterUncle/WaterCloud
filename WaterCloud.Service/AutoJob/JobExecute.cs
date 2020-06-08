@@ -14,7 +14,7 @@ namespace WaterCloud.Service.AutoJob
 {
     public class JobExecute : IJob
     {
-        private OpenJobService autoJobService = new OpenJobService();
+        private OpenJobsService autoJobService = new OpenJobsService();
 
         public Task Execute(IJobExecutionContext context)
         {

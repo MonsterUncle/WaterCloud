@@ -68,6 +68,16 @@
                  { field: 'F_EnCode', title: '编号', width: 120 },
                  { field: 'F_FullName', title: '名称', width: 120 },
                  {
+                     field: 'F_IsPublic', title: '公共', width: 60,
+                     templet: function (d) {
+                         if (d.F_IsPublic == true) {
+                             return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true' >";
+                         } else {
+                             return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false' >";
+                         }
+                     }
+                 },
+                 {
                      field: 'F_EnabledMark', title: '有效', width: 60,
                      templet: function (d) {
                          if (d.F_EnabledMark == true) {

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class ItemsService : DataFilterService<ItemsEntity>,IDenpendency
+    public class ItemsTypeService : DataFilterService<ItemsEntity>,IDenpendency
     {
         private IItemsRepository service = new ItemsRepository();
         /// <summary>

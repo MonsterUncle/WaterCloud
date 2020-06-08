@@ -149,12 +149,13 @@ namespace WaterCloud.DataBase
         public static Expression ConvertList<T>(List<FilterList> filterList, ParameterExpression param)
         {
             if (filterList == null) return null;
-            Expression res = ConvertFilters<T>(JsonHelper.ToObject<Filter[]>(filterList[0].Filters), param, filterList[0].Operation); 
+            Expression result = ConvertFilters<T>(JsonHelper.ToObject<Filter[]>(filterList[0].Filters), param, filterList[0].Operation);
             foreach (var item in filterList.Skip(1))
             {
-                res.Or(ConvertFilters<T>(JsonHelper.ToObject<Filter[]>(item.Filters), param, item.Operation));
+                var gresult = ConvertFilters<T>(JsonHelper.ToObject<Filter[]>(item.Filters), param, item.Operation);
+                result = result.Or(gresult);
             }
-            return res;
+            return result;
         }
         /// <summary>
         /// 转换Filter数组为表达式

@@ -56,6 +56,7 @@ namespace WaterCloud.Repository.SystemManage
                         F_LastModifyTime = a.F_LastModifyTime,
                         F_LastModifyUserId = a.F_LastModifyUserId,
                         F_ModuleId = b.F_UrlAddress,
+                        F_IsPublic=a.F_IsPublic
                     });
                 if (!string.IsNullOrEmpty(moduleId))
                 {
