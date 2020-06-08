@@ -14,7 +14,6 @@ namespace WaterCloud.Web.Controllers
         [HandlerLogin]
         public ActionResult Index()
         {
-
             return View();
         }
         [HttpGet]

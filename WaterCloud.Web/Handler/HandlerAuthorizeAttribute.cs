@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using System.Security.Policy;
 using Serenity.Web;
+using System.Web;
+using Microsoft.AspNetCore.Mvc;
 /// <summary>
 /// 权限验证
 /// </summary>
@@ -31,7 +33,7 @@ namespace WaterCloud.Web
             if (!ActionAuthorize(filterContext))
             {
                 OperatorProvider.Provider.EmptyCurrent("pc_");
-                filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + "很抱歉！您的权限不足，访问被拒绝！" + "';if(document.all) window.event.returnValue = false;</script>");
+                filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode("很抱歉！您的权限不足，访问被拒绝！"));
                 return;
             }
         }

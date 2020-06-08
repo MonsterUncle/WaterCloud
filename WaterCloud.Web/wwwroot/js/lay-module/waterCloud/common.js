@@ -268,6 +268,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 shade: 0.3,
                 btn: ['确认', '关闭'],
                 btnclass: ['layui-btn', 'layui-btn-primary'],
+                isMax:false,//最大化属性 默认不是
                 callBack: null,
                 end: null,
                 yes: function (index, layero) {
@@ -289,7 +290,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
             }
             var _width = top.$(window).width() > parseInt(options.width.replace('px', '')) ? options.width : top.$(window).width() - 20 + 'px';
             var _height = top.$(window).height() > parseInt(options.height.replace('px', '')) ? options.height : top.$(window).height() - 20 + 'px';
-            layer.open({
+            var index= layer.open({
                 type: 2,
                 shade: options.shade,
                 title: options.title,
@@ -316,6 +317,9 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                     }
                 }
             });
+            if (options.isMax) {
+                layer.full(index);
+            }
         },
         //表单提交
         submitForm: function (options) {
@@ -683,6 +687,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 }
             }, time);
         },
+        //xmselect多选
         multipleSelectRender: function (options) {
             var defaults = {
                 filterable: true,//搜索模式
@@ -708,6 +713,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
             var options = $.extend(defaults, options);
             return xmSelect.render(options);
         },
+        //xmselect单选
         radioSelectRender: function (options) {
             var defaults = {
                 filterable: true,//搜索模式
@@ -740,6 +746,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
             var options = $.extend(defaults, options);
             return xmSelect.render(options);
         },
+        //ajax封装
         ajax: function (options) {
             var defaults = {
                 dataType: "json",
@@ -757,7 +764,23 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 }
             }
             return $.ajax(options);
-        }
+        },
+        //打开新Tab页签
+        openNewTabByIframe: function (options) {
+            var defaults = {
+                title: "",
+                href: "",
+                checkOpen: true
+            };
+            var options = $.extend(defaults, options);
+            if (options.checkOpen && miniTab.check(options.href.split("?")[0], true)) {
+                obj.modalAlert("界面已打开,请关闭后重试", "warning");
+            }
+            miniTab.openNewTabByIframe({
+                title: options.title,
+                href: options.href
+            });
+        },
     }
     exports("common", obj);
 });

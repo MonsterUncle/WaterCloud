@@ -56,10 +56,7 @@
                     common.modalMsg("未选中数据", "warning");
                     return false;
                 }
-                if (miniTab.check("/SystemManage/CodeGenerator/Form", true)) {
-                    common.modalAlert("代码生成界面已打开,请关闭后重试", "warning");
-                }
-                miniTab.openNewTabByIframe({
+                common.openNewTabByIframe({
                     title: "代码生成器",
                     href: "/SystemManage/CodeGenerator/Form?keyValue=" + entity.data.TableName,
                 });

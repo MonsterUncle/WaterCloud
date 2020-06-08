@@ -123,10 +123,7 @@
                    common.modalMsg("未选中数据", "warning");
                    return false;
                  }
-                 if (miniTab.check("/SystemManage/DataPrivilegeRule/Form", true)) {
-                     common.modalAlert("数据权限界面已打开,请关闭后重试", "warning");
-                 }
-                 miniTab.openNewTabByIframe({
+                 common.openNewTabByIframe({
                      title: "修改规则",
                      href: "/SystemManage/DataPrivilegeRule/Form?keyValue=" + entity.data.F_Id,
                  });

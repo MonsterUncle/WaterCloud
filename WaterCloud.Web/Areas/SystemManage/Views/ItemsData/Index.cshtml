@@ -185,9 +185,10 @@
                 });
             }
             else if (obj.event === 'itemstype') {
-                miniTab.openNewTabByIframe({
+                common.openNewTabByIframe({
                     title: "分类管理",
                     href: "/SystemManage/ItemsType/Index",
+                    checkOpen: false
                 });
             }
             return false;
