@@ -262,9 +262,9 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
             sb.AppendLine("            {");
             sb.AppendLine("                //此处需修改");
-            sb.AppendLine("                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));");
+            sb.AppendLine("                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword)).ToList();");
             sb.AppendLine("            }");
-            sb.AppendLine("            return GetFieldsFilterData(cachedata.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));");
+            sb.AppendLine("            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(Pagination pagination,string keyword = \"\")");
@@ -281,6 +281,13 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetForm(string keyValue)");
+            sb.AppendLine("        {");
+            sb.AppendLine("            var cachedata = await service.CheckCache(cacheKey, keyValue);");
+            sb.AppendLine("            return cachedata;");
+            sb.AppendLine("        }");
+            sb.AppendLine("        #endregion");
+            sb.AppendLine();
+            sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetLookForm(string keyValue)");
             sb.AppendLine("        {");
             sb.AppendLine("            var cachedata = await service.CheckCache(cacheKey, keyValue);");
             sb.AppendLine("            return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));");
