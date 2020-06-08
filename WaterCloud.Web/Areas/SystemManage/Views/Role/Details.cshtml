@@ -78,21 +78,38 @@
             for (var i = 0; i < params.length; i++) {
                 moduleids.push(params[i].nodeId);
             }
-            // 初始化树
-            var DemoTree2 = dtree.render({
-                elem: "#demoTree2",
-                width: '200px',
-                method: "POST",
-                async: false,
-                checkbar: true,
-                line: true,  // 显示树线
-                initLevel: 0,
-                icon: "-1", // 隐藏二级图标
-                checkbarType: "p-casc",
-                scroll: "#toolbarDiv2", // 绑定div元素
-                url: "/SystemManage/RoleAuthorize/GetPermissionFieldsTree?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"), // 使用url加载（可与data加载同时存在）
-                request: { roleId: keyValue, moduleids: String(moduleids) }
-            });
+            if (moduleids.length > 0) {
+                // 初始化树
+                var DemoTree2 = dtree.render({
+                    elem: "#demoTree2",
+                    width: '200px',
+                    method: "POST",
+                    async: false,
+                    checkbar: true,
+                    line: true,  // 显示树线
+                    initLevel: 0,
+                    icon: "-1", // 隐藏二级图标
+                    checkbarType: "p-casc",
+                    scroll: "#toolbarDiv2", // 绑定div元素
+                    url: "/SystemManage/RoleAuthorize/GetPermissionFieldsTree?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"), // 使用url加载（可与data加载同时存在）
+                    request: { roleId: keyValue, moduleids: String(moduleids) }
+                });
+            }
+            else {
+                var DemoTree2 = dtree.render({
+                    elem: "#demoTree2",
+                    width: '200px',
+                    method: "POST",
+                    async: false,
+                    checkbar: true,
+                    line: true,  // 显示树线
+                    initLevel: 0,
+                    icon: "-1", // 隐藏二级图标
+                    checkbarType: "p-casc",
+                    scroll: "#toolbarDiv2", // 绑定div元素
+                    data: [], // 使用url加载（可与data加载同时存在）
+                });
+            }
             step.next('#stepForm');
             return false;
         });
