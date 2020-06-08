@@ -77,5 +77,6 @@ namespace WaterCloud.Domain.SystemManage
         /// </summary>
         /// <returns></returns>
         public string F_DeleteUserId { get; set; }
+        public bool? F_IsPublic { get; set; }
     }
 }
