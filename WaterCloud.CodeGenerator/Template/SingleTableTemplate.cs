@@ -65,8 +65,10 @@ namespace WaterCloud.CodeGenerator
             baseConfigModel.PageIndex.IsMunu = 1;
             baseConfigModel.PageIndex.IsTree = 0;
             baseConfigModel.PageIndex.IsSearch = 1;
-            baseConfigModel.PageIndex.IsSystem = 1;
+            baseConfigModel.PageIndex.IsFields = 1;
             baseConfigModel.PageIndex.IsPagination = 1;
+            baseConfigModel.PageIndex.IsFields = 0;
+            baseConfigModel.PageIndex.IsPublic = 0;
             baseConfigModel.PageIndex.ButtonList = new List<string>();
             baseConfigModel.PageIndex.ColumnList = new List<string>();
             baseConfigModel.PageIndex.ColumnList.AddRange(tableFieldList.Take(defaultField));
@@ -292,7 +294,6 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            var cachedata = await service.CheckCache(cacheKey, keyValue);");
             sb.AppendLine("            return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));");
             sb.AppendLine("        }");
-            sb.AppendLine("        #endregion");
             sb.AppendLine();
             sb.AppendLine("        #region 提交数据");
             sb.AppendLine("        public async Task SubmitForm(" + baseConfigModel.FileConfig.EntityName + " entity, string keyValue)");
@@ -1141,7 +1142,8 @@ namespace WaterCloud.CodeGenerator
                 moduleEntity.F_EnCode = baseConfigModel.FileConfig.ClassPrefix;
                 moduleEntity.F_IsExpand = false;
                 moduleEntity.F_IsMenu = baseConfigModel.PageIndex.IsMunu==1?true:false;
-                moduleEntity.F_IsPublic = baseConfigModel.PageIndex.IsSystem == 1 ? true : false;
+                moduleEntity.F_IsFields = baseConfigModel.PageIndex.IsFields == 1 ? true : false;
+                moduleEntity.F_IsPublic = baseConfigModel.PageIndex.IsPublic == 1 ? true : false;
                 moduleEntity.F_Target = "iframe";
                 moduleEntity.F_AllowEdit = false;
                 moduleEntity.F_AllowDelete = false;

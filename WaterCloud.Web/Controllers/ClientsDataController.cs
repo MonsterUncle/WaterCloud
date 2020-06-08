@@ -86,7 +86,7 @@ namespace WaterCloud.Web.Controllers
             var list= await _roleAuthorizeService.GetMenuList(roleId);
             foreach (ModuleEntity item in list.Where(a=>a.F_UrlAddress!=null))
             {
-                dictionary.Add(item.F_UrlAddress, item.F_IsPublic??false);
+                dictionary.Add(item.F_UrlAddress, item.F_IsFields??false);
             }
             return dictionary;
         }

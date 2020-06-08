@@ -61,9 +61,13 @@ namespace WaterCloud.CodeGenerator
         /// </summary>
         public int IsTree { get; set; }
         /// <summary>
-        /// 是否系统
+        /// 是否字段控制
         /// </summary>
-        public int IsSystem { get; set; }
+        public int IsFields { get; set; }
+        /// <summary>
+        /// 是否公共
+        /// </summary>
+        public int IsPublic { get; internal set; }
 
         /// <summary>
         /// 工具栏按钮（新增 修改 删除 查看）
@@ -76,6 +80,7 @@ namespace WaterCloud.CodeGenerator
         public int IsPagination { get; set; }
 
         public List<string> ColumnList { get; set; }
+
     }
     public class PageFormModel
     {

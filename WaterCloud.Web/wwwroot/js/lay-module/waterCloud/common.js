@@ -66,7 +66,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 }
             }
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
-            if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == false) {
+            if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == true) {
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
                 var array = [];
                 $.each(options.cols[0], function (i) {
@@ -132,7 +132,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 }
             }
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
-            if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == false) {
+            if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == true) {
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
                 var array = [];
                 $.each(options.cols[0], function (i) {
@@ -636,7 +636,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
         authorizeFields: function (filter) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             var element = $('div[lay-filter=' + filter + ']');
-            if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == false) {
+            if (!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == true) {
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
                 element.find('input,select,textarea').each(function (r) {
                     var $this = $(this);

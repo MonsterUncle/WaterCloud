@@ -113,6 +113,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 moduleEntity.F_DeleteMark = false;
                 moduleEntity.F_AllowEdit = false;
                 moduleEntity.F_AllowDelete = false;
+                moduleEntity.F_IsPublic = false;
                 logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }

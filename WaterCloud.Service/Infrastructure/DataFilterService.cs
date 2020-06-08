@@ -91,7 +91,7 @@ namespace WaterCloud.Service
             }
             //系统菜单跳过
             var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).Result;
-            if (module.F_IsPublic==true)
+            if (module.F_IsFields==false)
             {
                 return list;
             }

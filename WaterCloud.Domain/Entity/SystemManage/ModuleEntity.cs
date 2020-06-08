@@ -24,6 +24,7 @@ namespace WaterCloud.Domain.SystemManage
         public bool? F_IsMenu { get; set; }
         public bool? F_IsExpand { get; set; }
         public bool? F_IsPublic { get; set; }
+        public bool? F_IsFields { get; set; }
         public bool? F_AllowEdit { get; set; }
         public bool? F_AllowDelete { get; set; }
         public int? F_SortCode { get; set; }

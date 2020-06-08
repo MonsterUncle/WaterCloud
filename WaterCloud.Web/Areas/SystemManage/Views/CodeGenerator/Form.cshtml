@@ -167,7 +167,7 @@
                 { text: '树形表格', id: 'IsTree', selected: false },
                 { text: '搜索框', id: 'IsSearch', selected: true },
                 { text: '分页', id: 'IsPagination', selected: true },
-                { text: '系统显示', id: 'IsSystem', selected: true },
+                { text: '字段控制', id: 'IsFields', selected: false },
             ]
         });
         //按钮选择
@@ -388,6 +388,12 @@
             }
             else {
                 baseConfig.PageIndex.IsPagination = 0;
+            }
+            if (options.indexOf("IsFields") > -1) {
+                baseConfig.PageIndex.IsFields = 1;
+            }
+            else {
+                baseConfig.PageIndex.IsFields = 0;
             }
             baseConfig.PageIndex.ButtonList = buttonList.getValue('value');
             baseConfig.PageIndex.ColumnList = columnList.getValue('value');

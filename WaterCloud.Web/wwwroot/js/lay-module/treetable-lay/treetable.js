@@ -70,33 +70,34 @@ layui.define(['layer', 'table', 'tablePlug'], function (exports) {
                 count: param.data.length,
                 limit: param.data.length
             };
-            param.cols[0][param.treeColIndex].templet = function (d) {
-                var mId = d.id;
-                var mPid = d.pid;
-                var isDir = d.isParent;
-                var emptyNum = treetable.getEmptyNum(mPid, mData);
-                var iconHtml = '';
-                for (var i = 0; i < emptyNum; i++) {
-                    iconHtml += '<span class="treeTable-empty"></span>';
-                }
-                if (isDir) {
-                    if (!!d.icon && d.icon) {
-                        iconHtml += '<i class="layui-icon layui-icon-triangle-d"></i> <i class="layui-icon layui-icon-layer"></i>';
+            if (!!param.cols[0][param.treeColIndex]) {
+                param.cols[0][param.treeColIndex].templet = function (d) {
+                    var mId = d.id;
+                    var mPid = d.pid;
+                    var isDir = d.isParent;
+                    var emptyNum = treetable.getEmptyNum(mPid, mData);
+                    var iconHtml = '';
+                    for (var i = 0; i < emptyNum; i++) {
+                        iconHtml += '<span class="treeTable-empty"></span>';
                     }
-                    else {
-                        iconHtml += '<i class="layui-icon layui-icon-triangle-d"></i>';
+                    if (isDir) {
+                        if (!!d.icon && d.icon) {
+                            iconHtml += '<i class="layui-icon layui-icon-triangle-d"></i> <i class="layui-icon layui-icon-layer"></i>';
+                        }
+                        else {
+                            iconHtml += '<i class="layui-icon layui-icon-triangle-d"></i>';
+                        }
+                    } else {
+                        if (!!d.icon && d.icon) {
+                            iconHtml += '<i class="layui-icon layui-icon-file"></i>';
+                        }
                     }
-                } else {
-                    if (!!d.icon && d.icon) {
-                        iconHtml += '<i class="layui-icon layui-icon-file"></i>';
-                    }
-                }
-                iconHtml += '&nbsp;&nbsp;';
-                var ttype = isDir ? 'dir' : 'file';
-                var vg = '<span class="treeTable-icon open" lay-tid="' + mId + '" lay-tpid="' + mPid + '" lay-ttype="' + ttype + '">';
-                return vg + iconHtml + d[param.cols[0][param.treeColIndex].field] + '</span>'
-            };
-
+                    iconHtml += '&nbsp;&nbsp;';
+                    var ttype = isDir ? 'dir' : 'file';
+                    var vg = '<span class="treeTable-icon open" lay-tid="' + mId + '" lay-tpid="' + mPid + '" lay-ttype="' + ttype + '">';
+                    return vg + iconHtml + d[param.cols[0][param.treeColIndex].field] + '</span>'
+                };
+            }
             param.done = function (res, curr, count) {
                 $(param.elem).next().addClass('treeTable');
                 $('.treeTable .layui-table-page').css('display', 'none');
