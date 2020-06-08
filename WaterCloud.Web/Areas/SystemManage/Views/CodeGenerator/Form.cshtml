@@ -164,6 +164,7 @@
             layVerType: 'msg',
             data: [
                 { text: '菜单显示', id: 'IsMunu', selected: true },
+                { text: '是否公共', id: 'IsPublic', selected: false },
                 { text: '树形表格', id: 'IsTree', selected: false },
                 { text: '搜索框', id: 'IsSearch', selected: true },
                 { text: '分页', id: 'IsPagination', selected: true },
@@ -394,6 +395,12 @@
             }
             else {
                 baseConfig.PageIndex.IsFields = 0;
+            }
+            if (options.indexOf("IsPublic") > -1) {
+                baseConfig.PageIndex.IsPublic = 1;
+            }
+            else {
+                baseConfig.PageIndex.IsPublic = 0;
             }
             baseConfig.PageIndex.ButtonList = buttonList.getValue('value');
             baseConfig.PageIndex.ColumnList = columnList.getValue('value');
