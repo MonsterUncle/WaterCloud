@@ -68,10 +68,15 @@ namespace WaterCloud.Service.SystemManage
             cachedata = cachedata.Where(a => a.F_DeleteMark == false && a.F_EnabledMark == true && a.F_ItemId == item.F_Id).OrderBy(a => a.F_SortCode).ToList();
             return cachedata;
         }
-        public async Task<ItemsDetailEntity> GetForm(string keyValue)
+        public async Task<ItemsDetailEntity> GetLookForm(string keyValue)
         {
             var cachedata =await service.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+        }
+        public async Task<ItemsDetailEntity> GetForm(string keyValue)
+        {
+            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            return cachedata;
         }
         public async Task DeleteForm(string keyValue)
         {

@@ -97,6 +97,10 @@ namespace WaterCloud.Service
             }
             var rule = UnitWork.IQueryable<RoleAuthorizeEntity>(u=>u.F_ObjectId==loginUser.RoleId&&u.F_ItemType==3).Select(a=>a.F_ItemId).ToList();
             var fieldsList = UnitWork.IQueryable<ModuleFieldsEntity>(u => rule.Contains(u.F_Id)).Select(u => u.F_EnCode).ToList();
+            if (list.Count==0)
+            {
+                return list;
+            }
             DataTable dt = DataTableHelper.ListToDataTable(list);
             PropertyInfo pkProp = typeof(T).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
             List<string> tempList = new List<string>();

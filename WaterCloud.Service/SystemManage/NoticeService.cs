@@ -63,13 +63,17 @@ namespace WaterCloud.Service.SystemManage
             list = list.Where(u => u.F_DeleteMark==false);
             return GetFieldsFilterData(await service.OrderList(list, pagination), className.Substring(0, className.Length - 7));
         }
-        public async Task<NoticeEntity> GetForm(string keyValue)
+        public async Task<NoticeEntity> GetLookForm(string keyValue)
         {
             var cachedata =await service.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));
         }
-
-		public async Task SubmitForm(NoticeEntity entity, string keyValue)
+        public async Task<NoticeEntity> GetForm(string keyValue)
+        {
+            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            return cachedata;
+        }
+        public async Task SubmitForm(NoticeEntity entity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {

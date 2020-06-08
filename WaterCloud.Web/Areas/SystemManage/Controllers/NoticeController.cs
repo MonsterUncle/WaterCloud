@@ -51,7 +51,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _noticeService.GetForm(keyValue);
+            var data =await _noticeService.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]

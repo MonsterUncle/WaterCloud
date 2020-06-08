@@ -44,10 +44,15 @@ namespace WaterCloud.Service.SystemManage
             return GetFieldsFilterData(await service.OrderList(list, pagination), className.Substring(0, className.Length - 7));
         }
 
-        public async Task<DataPrivilegeRuleEntity> GetForm(string keyValue)
+        public async Task<DataPrivilegeRuleEntity> GetLookForm(string keyValue)
         {
             var cachedata = await service.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+        }
+        public async Task<DataPrivilegeRuleEntity> GetForm(string keyValue)
+        {
+            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            return cachedata;
         }
         #endregion
 

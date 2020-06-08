@@ -30,7 +30,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HttpGet]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data = await _jobService.GetForm(keyValue);
+            var data = await _jobService.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]

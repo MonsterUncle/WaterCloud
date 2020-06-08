@@ -53,10 +53,15 @@ namespace WaterCloud.Service.SystemSecurity
             }
             return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList(), className.Substring(0, className.Length - 7));
         }
-        public async Task<FilterIPEntity> GetForm(string keyValue)
+        public async Task<FilterIPEntity> GetLookForm(string keyValue)
         {
             var cachedata =await service.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+        }
+        public async Task<FilterIPEntity> GetForm(string keyValue)
+        {
+            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            return cachedata;
         }
         public async Task DeleteForm(string keyValue)
         {

@@ -56,7 +56,11 @@ namespace WaterCloud.Service.SystemSecurity
             var cachedata = await service.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
-
+        public async Task<OpenJobEntity> GetLookForm(string keyValue)
+        {
+            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+        }
         public async Task SubmitForm(OpenJobEntity entity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))

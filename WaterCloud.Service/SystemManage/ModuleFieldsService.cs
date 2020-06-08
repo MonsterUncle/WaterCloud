@@ -47,10 +47,15 @@ namespace WaterCloud.Service.SystemManage
 
         }
 
-        public async Task<ModuleFieldsEntity> GetForm(string keyValue)
+        public async Task<ModuleFieldsEntity> GetLookForm(string keyValue)
         {
             var cachedata = await service.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+        }
+        public async Task<ModuleFieldsEntity> GetForm(string keyValue)
+        {
+            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            return cachedata;
         }
         #endregion
 

@@ -42,7 +42,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _filterIPService.GetForm(keyValue);
+            var data =await _filterIPService.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]

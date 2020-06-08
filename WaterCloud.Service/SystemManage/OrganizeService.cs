@@ -43,10 +43,15 @@ namespace WaterCloud.Service.SystemManage
             }
             return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList(), className.Substring(0, className.Length - 7));
         }
-        public async Task<OrganizeEntity> GetForm(string keyValue)
+        public async Task<OrganizeEntity> GetLookForm(string keyValue)
         {
             var cachedata =await service.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+        }
+        public async Task<OrganizeEntity> GetForm(string keyValue)
+        {
+            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            return cachedata;
         }
         public async Task DeleteForm(string keyValue)
         {
