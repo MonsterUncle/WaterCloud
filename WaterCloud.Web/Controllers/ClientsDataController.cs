@@ -99,7 +99,7 @@ namespace WaterCloud.Web.Controllers
                 return null;
             }
             var userId = currentuser.UserId;
-            var data =await RedisHelper.GetAsync<Dictionary<string,List<QuickModuleExtend>>>(cacheKey + "list");
+            var data =await CacheHelper.Get<Dictionary<string,List<QuickModuleExtend>>>(cacheKey + "list");
             if (data==null)
             {
                 data = new Dictionary<string, List<QuickModuleExtend>>();
@@ -116,8 +116,8 @@ namespace WaterCloud.Web.Controllers
                     data.Add(userId,await _quickModuleService.GetQuickModuleList(userId));
                 }
             }
-            await RedisHelper.DelAsync(cacheKey + "list");
-            await RedisHelper.SetAsync(cacheKey + "list", data);
+            await CacheHelper.Remove(cacheKey + "list");
+            await CacheHelper.Set(cacheKey + "list", data);
             return data[userId];
         }
 
@@ -136,7 +136,7 @@ namespace WaterCloud.Web.Controllers
             {
                 roleId = "admin";
             }
-            Dictionary<string, string > data =await RedisHelper.GetAsync<Dictionary<string, string>>(initcacheKey + "list");
+            Dictionary<string, string > data =await CacheHelper.Get<Dictionary<string, string>>(initcacheKey + "list");
             if (data == null)
             {
                 data =new Dictionary <string, string>();
@@ -154,8 +154,8 @@ namespace WaterCloud.Web.Controllers
                     data.Add(roleId,await this.GetMenuListNew());
                 }
             }
-            await RedisHelper.DelAsync(initcacheKey + "list");
-            await RedisHelper.SetAsync(initcacheKey + "list",data);
+            await CacheHelper.Remove(initcacheKey + "list");
+            await CacheHelper.Set(initcacheKey + "list",data);
             return Content(data[roleId]);
         }
         [HttpGet]
@@ -190,7 +190,7 @@ namespace WaterCloud.Web.Controllers
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
             int usercout =(await _userService.GetUserList("")).Count();
-            var temp = RedisHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + currentuser.UserId);
+            var temp =await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + currentuser.UserId);
             int logincout = temp!=null&&temp.F_LogOnCount!=null? (int)temp.F_LogOnCount : 0;
             int modulecout =(await _moduleService.GetList()).Where(a => a.F_EnabledMark == true && a.F_UrlAddress != null).Count();
             int logcout = (await _logService.GetList()).Count();
@@ -410,7 +410,7 @@ namespace WaterCloud.Web.Controllers
                 roleId = "admin";
             }
             var dataModuleId = data.Distinct(new ExtList<ModuleButtonEntity>("F_ModuleId"));
-            Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>> dictionary =await RedisHelper.GetAsync<Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>>(initcacheKey+ "modulebutton_list");
+            Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>> dictionary =await CacheHelper.Get<Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>>(initcacheKey+ "modulebutton_list");
             var dictionarytemp = new Dictionary<string, List<ModuleButtonEntity>>();
             foreach (ModuleButtonEntity item in dataModuleId)
             {
@@ -433,8 +433,8 @@ namespace WaterCloud.Web.Controllers
                     dictionary.Add(roleId, dictionarytemp);
                 }
             }
-            await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
-            await RedisHelper.SetAsync(initcacheKey + "modulebutton_list", dictionary);
+            await CacheHelper.Remove(initcacheKey + "modulebutton_list");
+            await CacheHelper.Set(initcacheKey + "modulebutton_list", dictionary);
             return dictionary[roleId];
         }
         private async Task<object> GetMenuFieldsListNew()
@@ -447,7 +447,7 @@ namespace WaterCloud.Web.Controllers
                 roleId = "admin";
             }
             var dataModuleId = data.Distinct(new ExtList<ModuleFieldsEntity>("F_ModuleId"));
-            Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>> dictionary = await RedisHelper.GetAsync<Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>>>(initcacheKey + "modulefields_list");
+            Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>> dictionary = await CacheHelper.Get<Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>>>(initcacheKey + "modulefields_list");
             var dictionarytemp = new Dictionary<string, List<ModuleFieldsEntity>>();
             foreach (ModuleFieldsEntity item in dataModuleId)
             {
@@ -470,8 +470,8 @@ namespace WaterCloud.Web.Controllers
                     dictionary.Add(roleId, dictionarytemp);
                 }
             }
-            await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
-            await RedisHelper.SetAsync(initcacheKey + "modulefields_list", dictionary);
+            await CacheHelper.Remove(initcacheKey + "modulefields_list");
+            await CacheHelper.Set(initcacheKey + "modulefields_list", dictionary);
             return dictionary[roleId];
         }
     }

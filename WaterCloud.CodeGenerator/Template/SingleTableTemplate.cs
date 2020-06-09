@@ -310,7 +310,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                entity.Create();");
             }
             sb.AppendLine("                await service.Insert(entity);");
-            sb.AppendLine("                await RedisHelper.DelAsync(cacheKey + \"list\");");
+            sb.AppendLine("                await CacheHelper.Remove(cacheKey + \"list\");");
             sb.AppendLine("            }");
             sb.AppendLine("            else");
             sb.AppendLine("            {");
@@ -324,16 +324,16 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                entity.Modify(keyValue); ");
             }
             sb.AppendLine("                await service.Update(entity);");
-            sb.AppendLine("                await RedisHelper.DelAsync(cacheKey + keyValue);");
-            sb.AppendLine("                await RedisHelper.DelAsync(cacheKey + \"list\");");
+            sb.AppendLine("                await CacheHelper.Remove(cacheKey + keyValue);");
+            sb.AppendLine("                await CacheHelper.Remove(cacheKey + \"list\");");
             sb.AppendLine("            }");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task DeleteForm(string keyValue)");
             sb.AppendLine("        {");
             sb.AppendLine("            await service.Delete(t => t."+ idColumn + " == keyValue);");
-            sb.AppendLine("            await RedisHelper.DelAsync(cacheKey + keyValue);");
-            sb.AppendLine("            await RedisHelper.DelAsync(cacheKey + \"list\");");
+            sb.AppendLine("            await CacheHelper.Remove(cacheKey + keyValue);");
+            sb.AppendLine("            await CacheHelper.Remove(cacheKey + \"list\");");
             sb.AppendLine("        }");
             sb.AppendLine("        #endregion");
             sb.AppendLine();
@@ -1204,14 +1204,14 @@ namespace WaterCloud.CodeGenerator
                     moduleFieldsList.Add(moduleFields);
                 }
                 await moduleRepository.CreateModuleCode(moduleEntity,moduleButtonList, moduleFieldsList);
-                await RedisHelper.DelAsync(fieldscacheKey + "list");
-                await RedisHelper.DelAsync(buttoncacheKey + "list");
-                await RedisHelper.DelAsync(cacheKey + "list");
-                await RedisHelper.DelAsync(quickcacheKey + "list");
-                await RedisHelper.DelAsync(initcacheKey + "list");
-                await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
-                await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
-                await RedisHelper.DelAsync(authorizecacheKey + "list");
+                await CacheHelper.Remove(fieldscacheKey + "list");
+                await CacheHelper.Remove(buttoncacheKey + "list");
+                await CacheHelper.Remove(cacheKey + "list");
+                await CacheHelper.Remove(quickcacheKey + "list");
+                await CacheHelper.Remove(initcacheKey + "list");
+                await CacheHelper.Remove(initcacheKey + "modulebutton_list");
+                await CacheHelper.Remove(initcacheKey + "modulefields_list");
+                await CacheHelper.Remove(authorizecacheKey + "list");
             }
             #endregion
 

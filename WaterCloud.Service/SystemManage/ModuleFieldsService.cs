@@ -66,25 +66,25 @@ namespace WaterCloud.Service.SystemManage
             {
                 entity.Create();
                 await service.Insert(entity);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 entity.Modify(keyValue); 
                 await service.Update(entity);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + "list");
             }
-            await RedisHelper.DelAsync(initcacheKey + "modulefields_" + "list");
+            await CacheHelper.Remove(initcacheKey + "modulefields_" + "list");
         }
 
         public async Task DeleteForm(string keyValue)
         {
             await service.Delete(t => t.F_Id == keyValue);
-            await RedisHelper.DelAsync(cacheKey + keyValue);
-            await RedisHelper.DelAsync(cacheKey + "list");
-            await RedisHelper.DelAsync(initcacheKey + "modulefields_" + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "list");
+            await CacheHelper.Remove(cacheKey + keyValue);
+            await CacheHelper.Remove(cacheKey + "list");
+            await CacheHelper.Remove(initcacheKey + "modulefields_" + "list");
+            await CacheHelper.Remove(authorizecacheKey + "list");
         }
 
         public async Task SubmitCloneFields(string moduleId, string ids)
@@ -105,9 +105,9 @@ namespace WaterCloud.Service.SystemManage
                 entitys.Add(moduleFieldsEntity);
             }
             await service.Insert(entitys);
-            await RedisHelper.DelAsync(cacheKey + "list");
-            await RedisHelper.DelAsync(initcacheKey + "modulefields_" + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "list");
+            await CacheHelper.Remove(cacheKey + "list");
+            await CacheHelper.Remove(initcacheKey + "modulefields_" + "list");
+            await CacheHelper.Remove(authorizecacheKey + "list");
         }
 
         public async Task<List<ModuleFieldsEntity>> GetListByRole(string roleid)

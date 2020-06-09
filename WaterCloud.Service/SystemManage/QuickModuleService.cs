@@ -50,13 +50,13 @@ namespace WaterCloud.Service.SystemManage
                 list.Add(entity);
             }
             await service.SubmitForm(list);
-            var data =await RedisHelper.GetAsync<Dictionary<string, List<QuickModuleExtend>>>(cacheKey + "list");
+            var data =await CacheHelper.Get<Dictionary<string, List<QuickModuleExtend>>>(cacheKey + "list");
             if (data != null&&data.ContainsKey(OperatorProvider.Provider.GetCurrent().UserId))
             {
                 data.Remove(OperatorProvider.Provider.GetCurrent().UserId);
             }
-            await RedisHelper.DelAsync(cacheKey + "list");
-            await RedisHelper.SetAsync(cacheKey + "list",data);
+            await CacheHelper.Remove(cacheKey + "list");
+            await CacheHelper.Set(cacheKey + "list",data);
         }
 
     }

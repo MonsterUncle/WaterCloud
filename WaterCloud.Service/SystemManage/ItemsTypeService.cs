@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WaterCloud.Code;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -63,8 +64,8 @@ namespace WaterCloud.Service.SystemManage
             else
             {
                 await service.Delete(t => t.F_Id == keyValue);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + "list");
             }
         }
         public async Task SubmitForm(ItemsEntity itemsEntity, string keyValue)
@@ -73,14 +74,14 @@ namespace WaterCloud.Service.SystemManage
             {
                 itemsEntity.Modify(keyValue);
                 await service.Update(itemsEntity);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 itemsEntity.Create();
                 await service.Insert(itemsEntity);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + "list");
             }
         }
     }

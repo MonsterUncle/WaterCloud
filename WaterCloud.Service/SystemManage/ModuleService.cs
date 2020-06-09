@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using WaterCloud.Code;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -67,16 +68,16 @@ namespace WaterCloud.Service.SystemManage
             else
             {
                 await service.DeleteForm(keyValue);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
-                await RedisHelper.DelAsync(quickcacheKey + "list");
-                await RedisHelper.DelAsync(initcacheKey + "list");
-                await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
-                await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
-                await RedisHelper.DelAsync(authorizecacheKey + "list");
-                await RedisHelper.DelAsync(authorizecacheKey + "authorize_list");
-                await RedisHelper.DelAsync(modulebuttoncacheKey + "list");
-                await RedisHelper.DelAsync(modulefieldscacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + "list");
+                await CacheHelper.Remove(quickcacheKey + "list");
+                await CacheHelper.Remove(initcacheKey + "list");
+                await CacheHelper.Remove(initcacheKey + "modulebutton_list");
+                await CacheHelper.Remove(initcacheKey + "modulefields_list");
+                await CacheHelper.Remove(authorizecacheKey + "list");
+                await CacheHelper.Remove(authorizecacheKey + "authorize_list");
+                await CacheHelper.Remove(modulebuttoncacheKey + "list");
+                await CacheHelper.Remove(modulefieldscacheKey + "list");
             }
         }
 
@@ -91,23 +92,23 @@ namespace WaterCloud.Service.SystemManage
             {
                 moduleEntity.Modify(keyValue);
                 await service.Update(moduleEntity);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 moduleEntity.Create();
                 await service.Insert(moduleEntity);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + "list");
             }
-            await RedisHelper.DelAsync(quickcacheKey + "list");
-            await RedisHelper.DelAsync(initcacheKey + "list");
-            await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
-            await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
-            await RedisHelper.DelAsync(authorizecacheKey + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "authorize_list");
-            await RedisHelper.DelAsync(modulebuttoncacheKey + "list");
-            await RedisHelper.DelAsync(modulefieldscacheKey + "list");
+            await CacheHelper.Remove(quickcacheKey + "list");
+            await CacheHelper.Remove(initcacheKey + "list");
+            await CacheHelper.Remove(initcacheKey + "modulebutton_list");
+            await CacheHelper.Remove(initcacheKey + "modulefields_list");
+            await CacheHelper.Remove(authorizecacheKey + "list");
+            await CacheHelper.Remove(authorizecacheKey + "authorize_list");
+            await CacheHelper.Remove(modulebuttoncacheKey + "list");
+            await CacheHelper.Remove(modulefieldscacheKey + "list");
         }
     }
 }

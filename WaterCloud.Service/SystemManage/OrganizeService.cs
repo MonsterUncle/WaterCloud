@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using WaterCloud.Code;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -66,8 +67,8 @@ namespace WaterCloud.Service.SystemManage
                     throw new Exception("组织使用中，无法删除");
                 }
                 await service.Delete(t => t.F_Id == keyValue);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await  RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await  CacheHelper.Remove(cacheKey + "list");
             }
         }
         public async Task SubmitForm(OrganizeEntity organizeEntity, string keyValue)
@@ -76,14 +77,14 @@ namespace WaterCloud.Service.SystemManage
             {
                 organizeEntity.Modify(keyValue);
                 await service.Update(organizeEntity);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 organizeEntity.Create();
                 await service.Insert(organizeEntity);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + "list");
             }
         }
     }

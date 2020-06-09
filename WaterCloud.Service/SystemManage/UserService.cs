@@ -53,8 +53,8 @@ namespace WaterCloud.Service.SystemManage
         public async Task SubmitUserForm(UserEntity userEntity)
         {
             await service.Update(userEntity);
-            await RedisHelper.DelAsync(cacheKey + userEntity.F_Id);
-            await RedisHelper.DelAsync(cacheKey + "list");
+            await CacheHelper.Remove(cacheKey + userEntity.F_Id);
+            await CacheHelper.Remove(cacheKey + "list");
         }
 
         public async Task<List<UserEntity>> GetUserList(string keyword)
@@ -80,16 +80,16 @@ namespace WaterCloud.Service.SystemManage
         public async Task DeleteForm(string keyValue)
         {
             await service.DeleteForm(keyValue);
-            await RedisHelper.DelAsync(cacheKey + keyValue);
-            await RedisHelper.DelAsync(cacheKey + "list");
+            await CacheHelper.Remove(cacheKey + keyValue);
+            await CacheHelper.Remove(cacheKey + "list");
         }
         public async Task SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
                 userEntity.Modify(keyValue);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
@@ -99,15 +99,15 @@ namespace WaterCloud.Service.SystemManage
                  userLogOnEntity.F_ErrorNum = 0;
                 userLogOnEntity.F_UserOnLine = false;
                 userLogOnEntity.F_LogOnCount = 0;
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + "list");
             }
             await service.SubmitForm(userEntity, userLogOnEntity, keyValue);
         }
         public async Task UpdateForm(UserEntity userEntity)
         {
             await service.Update(userEntity);
-            await RedisHelper.DelAsync(cacheKey + userEntity.F_Id);
-            await RedisHelper.DelAsync(cacheKey + "list");
+            await CacheHelper.Remove(cacheKey + userEntity.F_Id);
+            await CacheHelper.Remove(cacheKey + "list");
         }
         /// <summary>
         /// 登录判断
@@ -123,7 +123,7 @@ namespace WaterCloud.Service.SystemManage
                 if (userEntity.F_EnabledMark == true)
                 {
                     //缓存用户账户信息
-                    var userLogOnEntity=await RedisHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + userEntity.F_Id);
+                    var userLogOnEntity=await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + userEntity.F_Id);
                     if (userLogOnEntity==null)
                     {
                         userLogOnEntity = new OperatorUserInfo();
@@ -142,7 +142,7 @@ namespace WaterCloud.Service.SystemManage
                         userLogOnEntity.F_PreviousVisitTime = entity.F_PreviousVisitTime;
                         userLogOnEntity.F_Question = entity.F_Question;
                         userLogOnEntity.F_Theme = entity.F_Theme;
-                        await RedisHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
+                        await CacheHelper.Set(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
                     }
                     if (userLogOnEntity == null)
                     {
@@ -168,8 +168,8 @@ namespace WaterCloud.Service.SystemManage
                         userLogOnEntity.F_LastVisitTime = lastVisitTime;
                         userLogOnEntity.F_LogOnCount = LogOnCount;
                         userLogOnEntity.F_UserOnLine = true;
-                        await RedisHelper.DelAsync(cacheKeyOperator + "info_" + userEntity.F_Id);
-                        await RedisHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
+                        await CacheHelper.Remove(cacheKeyOperator + "info_" + userEntity.F_Id);
+                        await CacheHelper.Set(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
                         await OperatorProvider.Provider.ClearCurrentErrorNum(apitoken);
                         return userEntity;
                     }

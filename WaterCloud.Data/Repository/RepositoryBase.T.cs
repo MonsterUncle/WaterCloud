@@ -187,13 +187,13 @@ namespace WaterCloud.DataBase
         }
         public async Task<List<TEntity>> CheckCacheList(string cacheKey, long old = 0)
         {
-            var cachedata =await RedisHelper.GetAsync<List<TEntity>>(cacheKey);
+            var cachedata =await CacheHelper.Get<List<TEntity>>(cacheKey);
             if (cachedata == null || cachedata.Count() == 0)
             {
                 using (var db = new RepositoryBase().BeginTrans())
                 {
                     cachedata = db.IQueryable<TEntity>().ToList();
-                    await RedisHelper.SetAsync(cacheKey, cachedata);
+                    await CacheHelper.Set(cacheKey, cachedata);
                 }
             }
             return cachedata;
@@ -201,13 +201,13 @@ namespace WaterCloud.DataBase
 
         public async Task<TEntity> CheckCache(string cacheKey, string keyValue, long old = 0)
         {
-            var cachedata = await RedisHelper.GetAsync<TEntity>(cacheKey + keyValue);
+            var cachedata = await CacheHelper.Get<TEntity>(cacheKey + keyValue);
             if (cachedata == null)
             {
                 using (var db = new RepositoryBase().BeginTrans())
                 {
                     cachedata =await db.FindEntity<TEntity>(keyValue);
-                    await RedisHelper.SetAsync(cacheKey + keyValue, cachedata);
+                    await CacheHelper.Set(cacheKey + keyValue, cachedata);
                 }
             }
             return cachedata;

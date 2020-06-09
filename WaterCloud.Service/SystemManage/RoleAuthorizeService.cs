@@ -129,7 +129,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 return false;
             }
-            var cachedata =await RedisHelper.GetAsync<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey + "authorize_list");
+            var cachedata =await CacheHelper.Get<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey + "authorize_list");
             if (cachedata == null)
             {
                 cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
@@ -174,8 +174,8 @@ namespace WaterCloud.Service.SystemManage
                     authorizeurldata.AddRange(moduledata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_Id, F_UrlAddress = a.F_UrlAddress }).ToList());
                     authorizeurldata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress }).ToList());
                     cachedata.Add(roleId, authorizeurldata);
-                    await RedisHelper.DelAsync(cacheKey + "authorize_list");
-                    await RedisHelper.SetAsync(cacheKey + "authorize_list", cachedata);
+                    await CacheHelper.Remove(cacheKey + "authorize_list");
+                    await CacheHelper.Set(cacheKey + "authorize_list", cachedata);
                 }
             }
             else
@@ -197,7 +197,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 return false;
             }
-            var cachedata = await RedisHelper.GetAsync<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + "authorize_list");
+            var cachedata = await CacheHelper.Get<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + "authorize_list");
             if (cachedata == null)
             {
                 cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
@@ -242,8 +242,8 @@ namespace WaterCloud.Service.SystemManage
                     authorizeurldata.AddRange(moduledata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_Id, F_UrlAddress = a.F_UrlAddress }).ToList());
                     authorizeurldata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress }).ToList());
                     cachedata.Add(roleId, authorizeurldata);
-                    await RedisHelper.DelAsync(cacheKey + "authorize_list");
-                    await RedisHelper.SetAsync(cacheKey + "authorize_list", cachedata);
+                    await CacheHelper.Remove(cacheKey + "authorize_list");
+                    await CacheHelper.Set(cacheKey + "authorize_list", cachedata);
                 }
             }
             else

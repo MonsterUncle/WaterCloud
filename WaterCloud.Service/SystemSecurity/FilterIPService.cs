@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
+using WaterCloud.Code;
 
 namespace WaterCloud.Service.SystemSecurity
 {
@@ -66,8 +67,8 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task DeleteForm(string keyValue)
         {
             await service.Delete(t => t.F_Id == keyValue);
-            await RedisHelper.DelAsync(cacheKey + keyValue);
-            await RedisHelper.DelAsync(cacheKey + "list");
+            await CacheHelper.Remove(cacheKey + keyValue);
+            await CacheHelper.Remove(cacheKey + "list");
         }
         public async Task<bool> CheckIP(string ip)
         {
@@ -109,14 +110,14 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 filterIPEntity.Modify(keyValue);
                 await service.Update(filterIPEntity);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + keyValue);
             }
             else
             {
                 filterIPEntity.Create();
                 await service.Insert(filterIPEntity);
             }
-            await RedisHelper.DelAsync(cacheKey + "list");
+            await CacheHelper.Remove(cacheKey + "list");
         }
     }
 }

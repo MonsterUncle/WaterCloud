@@ -36,13 +36,24 @@ namespace WaterCloud.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            //redis 注入服务
-            string redisConnectiong = Configuration.GetSection("SystemConfig:RedisConnectionString").Value;
-            // 多客户端
-            var redisDB = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
-            RedisHelper.Initialization(redisDB);
-            //注册服务
-            services.AddSingleton(redisDB);
+            switch (Configuration.GetSection("SystemConfig:CacheProvider").Value)
+            {
+                case Define.CACHEPROVIDER_REDIS:
+                    //redis 注入服务
+                    string redisConnectiong = Configuration.GetSection("SystemConfig:RedisConnectionString").Value;
+                    // 多客户端
+                    var redisDB = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
+                    RedisHelper.Initialization(redisDB);
+                    //注册服务
+                    services.AddSingleton(redisDB);
+                    break;
+                case Define.CACHEPROVIDER_MEMORY:
+                    services.AddMemoryCache();
+                    break;
+                default:
+                    services.AddMemoryCache();
+                    break;
+            }
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
             services.AddSession();
             //代替HttpContext.Current

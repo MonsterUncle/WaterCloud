@@ -27,11 +27,15 @@ namespace WaterCloud.Service
         /// <param name=""parameterName>linq表达式参数的名称，如u=>u.name中的"u"</param>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
-        protected IQuery<T> GetDataPrivilege(string parametername, string moduleName)
+        protected IQuery<T> GetDataPrivilege(string parametername, string moduleName, IQuery<T> query=null)
         {
+            if (query==null)
+            {
+                query = Repository.IQueryable();
+            }
             if (!CheckDataPrivilege(moduleName))
             {
-                return Repository.IQueryable();
+                return query;
             }
             var rule = UnitWork.FindEntity<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).Result;
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
@@ -52,7 +56,7 @@ namespace WaterCloud.Service
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
                     string.Join(',', orgs));
             }
-            return Repository.IQueryable().GenerateFilter(parametername,
+            return query.GenerateFilter(parametername,
                 JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
         }
         /// <summary>

@@ -68,13 +68,13 @@ namespace WaterCloud.Service.SystemManage
                 throw new Exception("角色使用中，无法删除");
             }
             await service.DeleteForm(keyValue);
-            await RedisHelper.DelAsync(cacheKey + keyValue);
-            await RedisHelper.DelAsync(cacheKey + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "authorize_list");
-            await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
-            await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
-            await RedisHelper.DelAsync(initcacheKey + "list");
+            await CacheHelper.Remove(cacheKey + keyValue);
+            await CacheHelper.Remove(cacheKey + "list");
+            await CacheHelper.Remove(authorizecacheKey + "list");
+            await CacheHelper.Remove(authorizecacheKey + "authorize_list");
+            await CacheHelper.Remove(initcacheKey + "modulebutton_list");
+            await CacheHelper.Remove(initcacheKey + "modulefields_list");
+            await CacheHelper.Remove(initcacheKey + "list");
         }
         public async Task SubmitForm(RoleEntity roleEntity, string[] permissionIds,string[] permissionfieldsIds, string keyValue)
         {
@@ -124,13 +124,13 @@ namespace WaterCloud.Service.SystemManage
                 }
             }
             await service.SubmitForm(roleEntity, roleAuthorizeEntitys, keyValue);
-            await RedisHelper.DelAsync(cacheKey + keyValue);
-            await RedisHelper.DelAsync(cacheKey + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "authorize_list");
-            await RedisHelper.DelAsync(initcacheKey + "modulebutton_list");
-            await RedisHelper.DelAsync(initcacheKey + "modulefields_list");
-            await RedisHelper.DelAsync(initcacheKey + "list");
+            await CacheHelper.Remove(cacheKey + keyValue);
+            await CacheHelper.Remove(cacheKey + "list");
+            await CacheHelper.Remove(authorizecacheKey + "list");
+            await CacheHelper.Remove(authorizecacheKey + "authorize_list");
+            await CacheHelper.Remove(initcacheKey + "modulebutton_list");
+            await CacheHelper.Remove(initcacheKey + "modulefields_list");
+            await CacheHelper.Remove(initcacheKey + "list");
         }
     }
 }

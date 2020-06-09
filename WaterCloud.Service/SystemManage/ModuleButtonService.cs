@@ -75,12 +75,12 @@ namespace WaterCloud.Service.SystemManage
             else
             {
                 await service.Delete(t => t.F_Id == keyValue);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + "list");
             }
-            await RedisHelper.DelAsync(initcacheKey + "modulebutton_" + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "authorize_list");
+            await CacheHelper.Remove(initcacheKey + "modulebutton_" + "list");
+            await CacheHelper.Remove(authorizecacheKey + "list");
+            await CacheHelper.Remove(authorizecacheKey + "authorize_list");
         }
 
         public async Task<List<ModuleButtonEntity>> GetListByRole(string roleid)
@@ -94,8 +94,8 @@ namespace WaterCloud.Service.SystemManage
             {
                 moduleButtonEntity.Modify(keyValue);
                 await service.Update(moduleButtonEntity);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
@@ -106,11 +106,11 @@ namespace WaterCloud.Service.SystemManage
                 }
                 moduleButtonEntity.Create();
                 await service.Insert(moduleButtonEntity);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + "list");
             }
-            await RedisHelper.DelAsync(initcacheKey + "modulebutton_" + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "authorize_list");
+            await CacheHelper.Remove(initcacheKey + "modulebutton_" + "list");
+            await CacheHelper.Remove(authorizecacheKey + "list");
+            await CacheHelper.Remove(authorizecacheKey + "authorize_list");
         }
         public async Task SubmitCloneButton(string moduleId, string Ids)
         {
@@ -130,10 +130,10 @@ namespace WaterCloud.Service.SystemManage
                 entitys.Add(moduleButtonEntity);
             }
             await service.Insert(entitys);
-            await RedisHelper.DelAsync(cacheKey + "list");
-            await RedisHelper.DelAsync(initcacheKey + "modulebutton_" + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "list");
-            await RedisHelper.DelAsync(authorizecacheKey + "authorize_list");
+            await CacheHelper.Remove(cacheKey + "list");
+            await CacheHelper.Remove(initcacheKey + "modulebutton_" + "list");
+            await CacheHelper.Remove(authorizecacheKey + "list");
+            await CacheHelper.Remove(authorizecacheKey + "authorize_list");
         }
 
         public async Task<List<ModuleButtonEntity>> GetListNew(string moduleId = "")

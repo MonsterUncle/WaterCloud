@@ -63,8 +63,8 @@ namespace WaterCloud.Service.SystemManage
                 throw new Exception("岗位使用中，无法删除");
             }
             await service.Delete(t => t.F_Id == keyValue);
-            await RedisHelper.DelAsync(cacheKey + keyValue);
-            await RedisHelper.DelAsync(cacheKey + "list");
+            await CacheHelper.Remove(cacheKey + keyValue);
+            await CacheHelper.Remove(cacheKey + "list");
         }
         public async Task SubmitForm(RoleEntity roleEntity, string keyValue)
         {
@@ -72,15 +72,15 @@ namespace WaterCloud.Service.SystemManage
             {
                 roleEntity.Modify(keyValue);
                 await service.Update(roleEntity);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 roleEntity.Create();
                 roleEntity.F_Category = 2;
                 await service.Insert(roleEntity);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + "list");
             }
         }
     }

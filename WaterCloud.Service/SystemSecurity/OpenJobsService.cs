@@ -67,21 +67,21 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 entity.Modify(keyValue);
                 await service.Update(entity);
-                await RedisHelper.DelAsync(cacheKey + keyValue);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + keyValue);
+                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 entity.Create();
                 await service.Insert(entity);
-                await RedisHelper.DelAsync(cacheKey + "list");
+                await CacheHelper.Remove(cacheKey + "list");
             }
         }
         public async Task DeleteForm(string keyValue)
         {
             await service.Delete(t => t.F_Id == keyValue);
-            await RedisHelper.DelAsync(cacheKey + keyValue);
-            await RedisHelper.DelAsync(cacheKey + "list");
+            await CacheHelper.Remove(cacheKey + keyValue);
+            await CacheHelper.Remove(cacheKey + "list");
         }
         #region 定时任务运行相关操作
 
@@ -136,8 +136,8 @@ namespace WaterCloud.Service.SystemSecurity
             }
             job.Modify(job.F_Id);
             await service.Update(job);
-            await RedisHelper.DelAsync(cacheKey + keyValue);
-            await RedisHelper.DelAsync(cacheKey + "list");
+            await CacheHelper.Remove(cacheKey + keyValue);
+            await CacheHelper.Remove(cacheKey + "list");
         }
         #endregion
     }

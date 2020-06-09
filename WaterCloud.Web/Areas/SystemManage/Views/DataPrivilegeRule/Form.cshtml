@@ -187,13 +187,7 @@
                     url: '/SystemManage/DataPrivilegeRule/SubmitForm?keyValue=' + keyValue,
                     param: postData,
                     success: function () {
-                        var iframes = parent.document.getElementsByTagName("iframe");
-                        for (var i = 0; i < iframes.length; i++) {
-                            var doc = iframes[i].contentWindow.document;
-                            if (iframes[i].src) {
-
-                            }
-                        }
+                        common.reloadIframe("/SystemManage/DataPrivilegeRule/Index");
                     }
                 })
                 return false;

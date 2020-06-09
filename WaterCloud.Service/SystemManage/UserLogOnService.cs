@@ -49,7 +49,7 @@ namespace WaterCloud.Service.SystemManage
                 await service.Update(entity);
             }
             //缓存用户账户信息
-            var userLogOnEntity =await  RedisHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
+            var userLogOnEntity =await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
             if (userLogOnEntity == null)
             {
                 userLogOnEntity = new OperatorUserInfo();
@@ -69,8 +69,8 @@ namespace WaterCloud.Service.SystemManage
                 userLogOnEntity.F_Theme = entity.F_Theme;
             }
             userLogOnEntity.F_UserPassword = entity.F_UserPassword;
-            await RedisHelper.DelAsync(cacheKeyOperator + "info_" + keyValue);
-            await RedisHelper.SetAsync(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
+            await CacheHelper.Remove(cacheKeyOperator + "info_" + keyValue);
+            await CacheHelper.Set(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
         }
 
         public async Task ReviseSelfPassword(string userPassword, string keyValue)
@@ -80,10 +80,10 @@ namespace WaterCloud.Service.SystemManage
             entity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
             entity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.F_UserSecretkey).ToLower(), 32).ToLower();
             await service.Update(entity);
-            var userLogOnEntity = await RedisHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
+            var userLogOnEntity = await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
             userLogOnEntity.F_UserPassword = entity.F_UserPassword;
             userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
-            await RedisHelper.SetAsync(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
+            await CacheHelper.Set(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
         }
     }
 }
