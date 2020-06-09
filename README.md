@@ -8,7 +8,7 @@
 - 可完全实现二次开发让开发更多关注业务逻辑。既能快速提高开发效率，帮助公司节省人力成本，同时又不失灵活性。
 - 支持SQLServer、MySQL、Oracle、SQLite、Access 等多数据库类型。模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。
 - 操作权限控制精密细致，对所有管理链接都进行权限验证，可控制到导航菜单、功能按钮，控制到行级，列表级，表单字段级，不同人对同一个页面的操作不同。
-- 数据权限（精细化数据权限控制，实现不同人看不同数据。
+- 数据权限,精细化数据权限控制，实现不同人看不同数据。
 - 提高开发效率及质量。常用类封装，日志、缓存、验证、字典、文件、邮件、,Excel。等等。
 - 页面为响应式设计，支持电脑、平板、智能手机等设备，微信浏览器以及各种常见浏览器。
 - 适用范围：可以开发OA、ERP、BPM、CRM、WMS、TMS、MIS、BI、电商平台后台、物流管理系统、快递管理系统、教务管理系统等各类管理软件。
@@ -28,7 +28,7 @@
 - 上传文件：开源zyupload。
 - 动态页签：LayUI mini miniTab。
 - 数据表格：LayUI table、LayUI 开源 TalbePlug。
-- 下拉选择框：LayUI select、LayUI 开源 TalbePlug(optimizeSelectOption)。
+- 下拉选择框：LayUI select、LayUI 开源 TalbePlug(optimizeSelectOption)、xmselect。
 - 树结构控件：LayUI 开源 dtree。
 - 树状表格：LayUI 开源 treetable-lay。
 - 穿梭框：LayUI transfer。
@@ -46,7 +46,7 @@
 - 持久层框架：Chloe（支持多种数据库，复杂查询操作）
 - 安全支持：过滤器、Sql注入、请求伪造
 - 服务端验证：实体模型验证
-- 缓存框架：Redis（单点登录控制）
+- 缓存框架：Redis/Memory（单点登录控制）
 - 日志管理：Log、登录日志、操作日志
 - 工具类：NPOI、Newtonsoft.Json、验证码、丰富公共类似
 
