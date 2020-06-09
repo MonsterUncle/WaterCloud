@@ -99,9 +99,12 @@
                  if (miniTab.check("/SystemManage/DataPrivilegeRule/Form", true)) {
                      common.modalAlert("数据权限界面已打开,请关闭后重试", "warning");
                  }
-                 miniTab.openNewTabByIframe({
+                 common.modalOpen({
                      title: "新增规则",
-                     href: "/SystemManage/DataPrivilegeRule/Form",
+                     url: "/SystemManage/DataPrivilegeRule/Form",
+                     width: "550px",
+                     height: "620px",
+                     isMax:true,
                  });
              } 
              else if (obj.event === 'delete') {
@@ -123,9 +126,12 @@
                    common.modalMsg("未选中数据", "warning");
                    return false;
                  }
-                 common.openNewTabByIframe({
+                 common.modalOpen({
                      title: "修改规则",
-                     href: "/SystemManage/DataPrivilegeRule/Form?keyValue=" + entity.data.F_Id,
+                     url: "/SystemManage/DataPrivilegeRule/Form?keyValue=" + entity.data.F_Id,
+                     width: "550px",
+                     height: "620px",
+                     isMax: true,
                  });
            }
            return false;

@@ -51,6 +51,17 @@ namespace WaterCloud.Repository.SystemManage
             }
         }
 
+        public async Task<List<ModuleEntity>> GetBesidesList()
+        {
+            using (var db = new RepositoryBase(ConnectStr, providerName))
+            {
+                var moduleList = db.IQueryable<DataPrivilegeRuleEntity>().Select(a => a.F_ModuleId).ToList();
+                var query = db.IQueryable<ModuleEntity>().Where(a => !moduleList.Contains(a.F_Id) && a.F_EnabledMark == true && a.F_Target == "iframe");
+                var result = query.OrderBy(a => a.F_SortCode).ToList();
+                return result;
+            }
+        }
+
         public async Task<List<ModuleEntity>> GetListByRole(string roleid)
         {
             using (var db = new RepositoryBase(ConnectStr, providerName))

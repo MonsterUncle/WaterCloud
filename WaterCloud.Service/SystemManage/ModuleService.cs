@@ -35,6 +35,10 @@ namespace WaterCloud.Service.SystemManage
             var cachedata =await service.CheckCacheList(cacheKey + "list");
             return cachedata.Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
         }
+        public async Task<List<ModuleEntity>> GetBesidesList()
+        {
+            return await service.GetBesidesList() ;
+        }
         public async Task<List<ModuleEntity>> GetLookList()
         {
             var list = new List<ModuleEntity>();

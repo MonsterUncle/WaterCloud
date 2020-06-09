@@ -16,5 +16,6 @@ namespace WaterCloud.Domain.SystemManage
         Task<List<ModuleEntity>> GetListByRole(string roleid);
         Task CreateModuleCode(ModuleEntity entity,List<ModuleButtonEntity> buttonlist, List<ModuleFieldsEntity> moduleFieldsList);
         Task DeleteForm(string keyValue);
+        Task<List<ModuleEntity>> GetBesidesList();
     }
 }
