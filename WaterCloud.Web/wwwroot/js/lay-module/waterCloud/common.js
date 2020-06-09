@@ -279,15 +279,15 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 }
             };
             var options = $.extend(defaults, options);
-            ////ie缓存问题
-            //if (!!options.url) {
-            //    if (options.url.indexOf("?") >= 0) {
-            //        options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-            //    }
-            //    else {
-            //        options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-            //    }
-            //}
+            //ie缓存问题
+            if (!!options.url) {
+                if (options.url.indexOf("?") >= 0) {
+                    options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+                }
+                else {
+                    options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+                }
+            }
             var _width = top.$(window).width() > parseInt(options.width.replace('px', '')) ? options.width : top.$(window).width() - 20 + 'px';
             var _height = top.$(window).height() > parseInt(options.height.replace('px', '')) ? options.height : top.$(window).height() - 20 + 'px';
             var index= layer.open({
