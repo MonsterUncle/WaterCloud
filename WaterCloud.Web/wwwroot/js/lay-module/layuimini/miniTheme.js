@@ -21,7 +21,7 @@ layui.define(["jquery", "layer"], function (exports) {
                     headerRight: '#2D8CF0',
                     headerRightThis: '#0069b7',
                     headerLogo: '#0069b7',
-                    menuLeft: '#1f1f1f',
+                    menuLeft: '#28333E',
                     menuLeftThis: '#2D8CF0',
                     menuLeftHover: '#3b3f4b',
                     tabActive: '#2d8cf0',
