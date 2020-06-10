@@ -1,4 +1,8 @@
-﻿.form-group-bottom {
+﻿body {
+    margin: 5px 5px 5px 5px;
+    background: #f2f2f2;
+}
+.form-group-bottom {
     position: fixed;
     left: 0;
     right: 0;
@@ -88,6 +92,15 @@
     .layui-laypage-default > .layui-laypage-skip {
         display: none;
     }
+}
+.layui-table, .layui-table-view {
+    margin: 0px 0;
+}
+.layui-card .table-search-fieldset {
+    margin: 0;
+    border: 1px solid #e6e6e6;
+    padding: 10px 20px 5px 20px;
+    color: #6b6b6b;
 }
 .scroll-wrapper {
     -webkit-overflow-scrolling: touch;

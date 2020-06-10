@@ -141,12 +141,14 @@ namespace WaterCloud.Service
                 return list;
             }
             DataTable dt = DataTableHelper.ListToDataTable(list);
+            //反射获取主键
             PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
             var idName ="F_Id";
             if (pkProp==null)
             {
                 idName = pkProp.Name;
             }
+            //删除列
             List<string> tempList = new List<string>();
             foreach (var item in dt.Columns)
             {

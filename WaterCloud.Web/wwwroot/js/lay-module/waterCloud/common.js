@@ -26,7 +26,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 method: 'get',//请求方法
                 cellMinWidth: 100,//最小宽度
                 limit: 10,//每页数据 默认
-                height: $(window).height() > 500 ? 'full-150' : 'full-190',
+                height: $(window).height() > 500 ? 'full-130' : 'full-170',
                 loading: false,
                 sqlkey: 'F_Id',//数据库主键
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -108,7 +108,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 treeIdName: 'F_Id',	//id字段的名称
                 treePidName: 'F_ParentId',	//父级节点字段
                 loading: false,
-                height: $(window).height() > 500 ? 'full-150' : 'full-190',
+                height: $(window).height() > 500 ? 'full-130' : 'full-170',
                 method: 'get',//请求方法
                 sqlkey: 'F_Id',//数据库主键
                 cellMinWidth: 100,//最小宽度
