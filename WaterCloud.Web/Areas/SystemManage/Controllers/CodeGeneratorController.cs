@@ -97,38 +97,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTableFieldFilterSelectJson(string keyValue)
-        {
-            List<TableFieldInfo> data =await _service.GetTableFieldList(keyValue);
-            data.RemoveAll(p => BaseField.BaseFieldList.Contains(p.TableColumn) || p.TableIdentity == "Y");
-            List<object> list = new List<object>();
-            foreach (var item in data)
-            {
-                list.Add(new { text = item.TableColumn, id = item.TableColumn });
-            }
-            return Content(list.ToJson());
-        }
-        [HttpGet]
-        [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTableFieldFilterTreeJson(string keyValue)
-        {
-            List<TableFieldInfo> data =await _service.GetTableFieldList(keyValue);
-            data.RemoveAll(p => BaseField.BaseFieldList.Contains(p.TableColumn) || p.TableIdentity == "Y");
-            var treeList = new List<TreeGridModel>();
-            foreach (var item in data)
-            {
-                TreeGridModel treeModel = new TreeGridModel();
-                treeModel.id = item.TableColumn;
-                treeModel.title = item.TableColumn;
-                treeModel.parentId = "0";
-                treeModel.checkArr = "0";
-                //treeModel.self = item;
-                treeList.Add(treeModel);
-            }
-            return ResultDTree(treeList.TreeList());
-        }
-        [HttpGet]
-        [HandlerAjaxOnly]
         public async Task<ActionResult> GetBaseConfigJson(string keyValue)
         {
             BaseConfigModel data = new BaseConfigModel();
@@ -136,10 +104,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             string tableDescription = string.Empty;
             List<TableFieldInfo> tDataTableField =await _service.GetTableFieldList(keyValue);
 
-            List<string> columnList = tDataTableField.Where(p => !BaseField.BaseFieldList.Contains(p.TableColumn)&&p.TableIdentity!="Y").Select(p => p.TableColumn).ToList();
-
+            var columnList = tDataTableField.Where(p => !BaseField.BaseFieldList.Contains(p.TableColumn)&&p.TableIdentity!="Y").Select(p =>new { p.TableColumn,p.Remark }).ToList();
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            foreach (var item in columnList)
+            {
+                dic.Add(item.TableColumn, string.IsNullOrEmpty(item.Remark) ? item.TableColumn : item.Remark);
+            }
             string serverPath = GlobalContext.HostingEnvironment.ContentRootPath;
-            data = new SingleTableTemplate().GetBaseConfig(serverPath, OperatorProvider.Provider.GetCurrent().UserName, keyValue, tableDescription, columnList);
+            data = new SingleTableTemplate().GetBaseConfig(serverPath, OperatorProvider.Provider.GetCurrent().UserName, keyValue, tableDescription, dic);
             return Content(data.ToJson());
         }
         #endregion
@@ -155,17 +127,17 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 SingleTableTemplate template = new SingleTableTemplate();
                 DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
                 string idcolumn = string.Empty;
+                Dictionary<string, string> dic = new Dictionary<string, string>();
+                baseConfig.PageIndex.ButtonList=ExtList.removeNull(baseConfig.PageIndex.ButtonList);
+                baseConfig.PageIndex.ColumnList.Remove("");
+                baseConfig.PageForm.FieldList.Remove("");
                 foreach (DataRow dr in dt.Rows)
                 {
                     if (dr["TableIdentity"].ToString() == "Y")
                     {
                         idcolumn = dr["TableColumn"].ToString();
-                        break;
                     }
                 }
-                baseConfig.PageIndex.ButtonList=ExtList.removeNull(baseConfig.PageIndex.ButtonList);
-                baseConfig.PageIndex.ColumnList=ExtList.removeNull(baseConfig.PageIndex.ColumnList);
-                baseConfig.PageForm.FieldList=ExtList.removeNull(baseConfig.PageForm.FieldList);
                 string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
                 string codeIRepository = template.BuildIRepository(baseConfig);
                 string codeRepository = template.BuildRepository(baseConfig);
@@ -175,7 +147,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 string codeForm = template.BuildForm(baseConfig);
                 string codeDetails = template.BuildDetails(baseConfig);
                 string codeMenu = template.BuildMenu(baseConfig);
-
                 var json = new
                 {
                     CodeEntity = HttpUtility.HtmlEncode(codeEntity),
@@ -197,7 +168,16 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
 
         }
-
+        [HttpGet]
+        public virtual ActionResult AddForm()
+        {
+            return View();
+        }
+        [HttpGet]
+        public virtual ActionResult RuleForm()
+        {
+            return View();
+        }
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]

@@ -270,6 +270,9 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 btnclass: ['layui-btn', 'layui-btn-primary'],
                 isMax:false,//最大化属性 默认不是
                 callBack: null,
+                success: function (layero, index) {
+                    $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
+                },
                 end: null,
                 yes: function (index, layero) {
                     var iframeWindow = window['layui-layer-iframe' + index]
@@ -300,8 +303,10 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 area: [_width, _height],
                 content: options.url,
                 btn: options.btn,
-                success: function (layero) {
-                    $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
+                success: function (layero, index) {
+                    if (!!options.success) {
+                        options.success(layero, index);
+                    }
                 },
                 //btnclass: options.btnclass,
                 yes: function (index, layero) {

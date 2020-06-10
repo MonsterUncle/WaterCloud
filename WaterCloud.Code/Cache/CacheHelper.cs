@@ -117,5 +117,25 @@ namespace WaterCloud.Code
                     return MemoryCacheHelper.Exists(key);
             }
         }
+        /// <summary>
+        /// 清空缓存
+        /// </summary>
+        /// <param name="key">缓存Key</param>
+        /// <returns></returns>
+        public static async Task FlushAll()
+        {
+            switch (cacheProvider)
+            {
+                case Define.CACHEPROVIDER_REDIS:
+                    await RedisHelper.NodesServerManager.FlushAllAsync();
+                    break;
+                case Define.CACHEPROVIDER_MEMORY:
+                    MemoryCacheHelper.RemoveCacheAll();
+                    break;
+                default:
+                    MemoryCacheHelper.RemoveCacheAll();
+                    break;
+            }
+        }
     }
 }

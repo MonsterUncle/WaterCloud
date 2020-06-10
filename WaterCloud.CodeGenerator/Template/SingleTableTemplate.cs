@@ -7,7 +7,6 @@ using System.Data;
 using System.Web;
 using Newtonsoft.Json.Linq;
 using WaterCloud.Code;
-using WaterCloud.Code.Model;
 using WaterCloud.Repository.SystemManage;
 using WaterCloud.Domain.SystemManage;
 using System.Threading.Tasks;
@@ -23,11 +22,9 @@ namespace WaterCloud.CodeGenerator
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         #region GetBaseConfig
-        public BaseConfigModel GetBaseConfig(string path,string username, string tableName, string tableDescription, List<string> tableFieldList)
+        public BaseConfigModel GetBaseConfig(string path,string username, string tableName, string tableDescription, Dictionary<string,string> tableFieldList)
         {
             path = GetProjectRootPath(path);
-
-            int defaultField = 2; // 默认显示2个字段
 
             BaseConfigModel baseConfigModel = new BaseConfigModel();
             baseConfigModel.TableName = tableName;
@@ -70,15 +67,13 @@ namespace WaterCloud.CodeGenerator
             baseConfigModel.PageIndex.IsFields = 0;
             baseConfigModel.PageIndex.IsPublic = 0;
             baseConfigModel.PageIndex.ButtonList = new List<string>();
-            baseConfigModel.PageIndex.ColumnList = new List<string>();
-            baseConfigModel.PageIndex.ColumnList.AddRange(tableFieldList.Take(defaultField));
+            baseConfigModel.PageIndex.ColumnList = tableFieldList;
             #endregion
 
             #region PageFormModel
             baseConfigModel.PageForm = new PageFormModel();
             baseConfigModel.PageForm.ShowMode = 1;
-            baseConfigModel.PageForm.FieldList = new List<string>();
-            baseConfigModel.PageForm.FieldList.AddRange(tableFieldList.Take(defaultField));
+            baseConfigModel.PageForm.FieldList=new Dictionary<string, string>();
             #endregion
 
             return baseConfigModel;
@@ -524,7 +519,7 @@ namespace WaterCloud.CodeGenerator
             }
             if (baseConfigModel.PageIndex.ColumnList == null)
             {
-                baseConfigModel.PageIndex.ColumnList = new List<string>();
+                baseConfigModel.PageIndex.ColumnList = new Dictionary<string, string>();
             }
             #endregion
             List<KeyValue> list = GetButtonAuthorizeList();
@@ -612,11 +607,20 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 { field: '"+ idColumn + "', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");
-                for (int i = 0; i < baseConfigModel.PageIndex.ColumnList.Count-1; i++)
+                int cout = 1;
+                foreach (var item in baseConfigModel.PageIndex.ColumnList)
                 {
-                    sb.AppendLine("                 { field: '" + baseConfigModel.PageIndex.ColumnList[i] + "', title: '" + baseConfigModel.PageIndex.ColumnList[i] + "', width: 120, sort: true },");
+                    if (cout == baseConfigModel.PageIndex.ColumnList.Count)
+                    {
+                        sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', width: 120, sort: true },");
+                    }
+                    else
+                    {
+                        sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', minWidth: 120, sort: true },");
+                    }
+                    cout++;
+
                 }
-                sb.AppendLine("                 { field: '" + baseConfigModel.PageIndex.ColumnList[baseConfigModel.PageIndex.ColumnList.Count-1] + "', title: '" + baseConfigModel.PageIndex.ColumnList[baseConfigModel.PageIndex.ColumnList.Count - 1] + "', width: 120, sort: true }");
                 sb.AppendLine("             ]],");
                 sb.AppendLine("             done: function () {");
                 sb.AppendLine("                 //权限控制");
@@ -648,11 +652,19 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 { field: '" + idColumn + "', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");
-                for (int i = 0; i < baseConfigModel.PageIndex.ColumnList.Count - 1; i++)
+                int cout = 1;
+                foreach (var item in baseConfigModel.PageIndex.ColumnList)
                 {
-                    sb.AppendLine("                 { field: '" + baseConfigModel.PageIndex.ColumnList[i] + "', title: '" + baseConfigModel.PageIndex.ColumnList[i] + "', width: 120 },");
+                    if (cout == baseConfigModel.PageIndex.ColumnList.Count)
+                    {
+                        sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', width: 120, sort: true },");
+                    }
+                    else
+                    {
+                        sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', minWidth: 120, sort: true },");
+                    }
+                    cout++;
                 }
-                sb.AppendLine("                 { field: '" + baseConfigModel.PageIndex.ColumnList[baseConfigModel.PageIndex.ColumnList.Count - 1] + "', title: '" + baseConfigModel.PageIndex.ColumnList[baseConfigModel.PageIndex.ColumnList.Count - 1] + "', minWidth: 120 }");
                 sb.AppendLine("             ]],");
                 sb.AppendLine("             done: function () {");
                 sb.AppendLine("                 //权限控制");
@@ -746,7 +758,7 @@ namespace WaterCloud.CodeGenerator
             #region 初始化集合
             if (baseConfigModel.PageForm.FieldList == null)
             {
-                baseConfigModel.PageForm.FieldList = new List<string>();
+                baseConfigModel.PageForm.FieldList = new Dictionary<string, string>();
             }
             #endregion
             StringBuilder sb = new StringBuilder();
@@ -820,39 +832,33 @@ namespace WaterCloud.CodeGenerator
             #region 表单控件
             if (baseConfigModel.PageForm.FieldList.Count > 0)
             {
-                string field = string.Empty;
-                string fieldLower = string.Empty;
                 switch (baseConfigModel.PageForm.ShowMode)
                 {
                     case 1:
-                        for (int i = 0; i < baseConfigModel.PageForm.FieldList.Count; i++)
+                        foreach (var item in baseConfigModel.PageForm.FieldList)
                         {
-                            field = baseConfigModel.PageForm.FieldList[i];
-                            fieldLower = TableMappingHelper.FirstLetterLowercase(field);
                             sb.AppendLine("                <div class=\"layui-form-item layui-hide\">");
-                            sb.AppendLine( "                   <label class=\"layui-form-label required\">"+ field + "</label>");
+                            sb.AppendLine( "                   <label class=\"layui-form-label required\">"+ item.Value + "</label>");
                             sb.AppendLine( "                   <div class=\"layui-input-block\">");
-                            sb.AppendLine("                        <input type=\"text\" id=\""+ field + "\" name=\"" + field + "\" autocomplete=\"off\" lay-verify=\"required\" class=\"layui-input\">");
+                            sb.AppendLine("                        <input type=\"text\" id=\""+ item.Key + "\" name=\"" + item.Key + "\" autocomplete=\"off\" lay-verify=\"required\" class=\"layui-input\">");
                             sb.AppendLine( "                   </div>");
                             sb.AppendLine( "               </div>");
                         }
                         break;
 
                     case 2:
-                        for (int i = 0; i < baseConfigModel.PageForm.FieldList.Count; i++)
+                        int i = 1;
+                        foreach (var item in baseConfigModel.PageForm.FieldList)
                         {
-                            field = baseConfigModel.PageForm.FieldList[i];
-                            fieldLower = TableMappingHelper.FirstLetterLowercase(field);
-
-                            if (i % 2 == 0)
+                            if (i % 2 != 0)
                             {
                                 sb.AppendLine("                       <div class=\"layui-form-item\">");
                             }
-
+                            i++;
                             sb.AppendLine("                    <div class=\"layui-inline layui-hide\">");
-                            sb.AppendLine("                        <label class=\"layui-form-label required\">" + field + "</label>");
+                            sb.AppendLine("                        <label class=\"layui-form-label required\">" + item.Value + "</label>");
                             sb.AppendLine("                        <div class=\"layui-input-inline\">");
-                            sb.AppendLine("                            <input type=\"text\" id=\"" + field + "\" name=\"" + field + "\" autocomplete=\"off\" lay-verify=\"required\" class=\"layui-input\">");
+                            sb.AppendLine("                            <input type=\"text\" id=\"" + item.Key + "\" name=\"" + item.Key + "\" autocomplete=\"off\" lay-verify=\"required\" class=\"layui-input\">");
                             sb.AppendLine("                        </div>");
                             sb.AppendLine("                    </div>");
                             if (i % 2 == 1)
@@ -882,7 +888,7 @@ namespace WaterCloud.CodeGenerator
             #region 初始化集合
             if (baseConfigModel.PageForm.FieldList == null)
             {
-                baseConfigModel.PageForm.FieldList = new List<string>();
+                baseConfigModel.PageForm.FieldList =new Dictionary<string, string>();
             }
             #endregion
             StringBuilder sb = new StringBuilder();
@@ -938,39 +944,33 @@ namespace WaterCloud.CodeGenerator
             #region 表单控件
             if (baseConfigModel.PageForm.FieldList.Count > 0)
             {
-                string field = string.Empty;
-                string fieldLower = string.Empty;
                 switch (baseConfigModel.PageForm.ShowMode)
                 {
                     case 1:
-                        for (int i = 0; i < baseConfigModel.PageForm.FieldList.Count; i++)
+                        foreach (var item in baseConfigModel.PageForm.FieldList)
                         {
-                            field = baseConfigModel.PageForm.FieldList[i];
-                            fieldLower = TableMappingHelper.FirstLetterLowercase(field);
                             sb.AppendLine("                <div class=\"layui-form-item layui-hide\">");
-                            sb.AppendLine("                   <label class=\"layui-form-label required\">" + field + "</label>");
+                            sb.AppendLine("                   <label class=\"layui-form-label required\">" + item.Value + "</label>");
                             sb.AppendLine("                   <div class=\"layui-input-block\">");
-                            sb.AppendLine("                        <input type=\"text\" id=\"" + field + "\" name=\"" + field + "\" lay-verify=\"required\" class=\"layui-input\">");
+                            sb.AppendLine("                        <input type=\"text\" id=\"" + item.Key + "\" name=\"" + item.Key + "\" lay-verify=\"required\" class=\"layui-input\">");
                             sb.AppendLine("                   </div>");
                             sb.AppendLine("               </div>");
                         }
                         break;
 
                     case 2:
-                        for (int i = 0; i < baseConfigModel.PageForm.FieldList.Count; i++)
+                        int i = 1;
+                        foreach (var item in baseConfigModel.PageForm.FieldList)
                         {
-                            field = baseConfigModel.PageForm.FieldList[i];
-                            fieldLower = TableMappingHelper.FirstLetterLowercase(field);
-
-                            if (i % 2 == 0)
+                            if (i % 2 != 0)
                             {
                                 sb.AppendLine("                       <div class=\"layui-form-item\">");
                             }
-
+                            i++;
                             sb.AppendLine("                    <div class=\"layui-inline layui-hide\">");
-                            sb.AppendLine("                        <label class=\"layui-form-label required\">" + field + "</label>");
+                            sb.AppendLine("                        <label class=\"layui-form-label required\">" + item.Value + "</label>");
                             sb.AppendLine("                        <div class=\"layui-input-inline\">");
-                            sb.AppendLine("                            <input type=\"text\" id=\"" + field + "\" name=\"" + field + "\" lay-verify=\"required\" class=\"layui-input\">");
+                            sb.AppendLine("                            <input type=\"text\" id=\"" + item.Key + "\" name=\"" + item.Key + "\" lay-verify=\"required\" class=\"layui-input\">");
                             sb.AppendLine("                        </div>");
                             sb.AppendLine("                    </div>");
                             if (i % 2 == 1)
@@ -1030,86 +1030,92 @@ namespace WaterCloud.CodeGenerator
             List<KeyValue> result = new List<KeyValue>();
             JObject param = code.ToJObject();
 
-            #region 实体类
+            #region 集中判断
+            string codeIndex = "";
+            string indexPath = "";
+            if (!param["CodeIndex"].IsEmpty())
+            {
+                codeIndex = HttpUtility.HtmlDecode(param["CodeIndex"].ToString());
+                indexPath = Path.Combine(baseConfigModel.OutputConfig.OutputWeb, "Areas", baseConfigModel.OutputConfig.OutputModule, "Views", baseConfigModel.FileConfig.ClassPrefix, baseConfigModel.FileConfig.PageIndexName + ".cshtml");
+                if (File.Exists(indexPath))
+                {
+                    throw new Exception("列表页已存在，列表页生成失败！");
+                }
+            }
+            string codeForm = "";
+            string formPath = "";
+            if (!param["CodeForm"].IsEmpty())
+            {
+                codeForm = HttpUtility.HtmlDecode(param["CodeForm"].ToString());
+                formPath = Path.Combine(baseConfigModel.OutputConfig.OutputWeb, "Areas", baseConfigModel.OutputConfig.OutputModule, "Views", baseConfigModel.FileConfig.ClassPrefix, baseConfigModel.FileConfig.PageFormName + ".cshtml");
+                if (File.Exists(formPath))
+                {
+                    throw new Exception("表单页存在，表单页生成失败！");
+                }
+            }
+            string codeDetails = "";
+            string detailsPath = "";
+            if (!param["CodeDetails"].IsEmpty())
+            {
+                codeDetails = HttpUtility.HtmlDecode(param["CodeDetails"].ToString());
+                detailsPath = Path.Combine(baseConfigModel.OutputConfig.OutputWeb, "Areas", baseConfigModel.OutputConfig.OutputModule, "Views", baseConfigModel.FileConfig.ClassPrefix, baseConfigModel.FileConfig.PageDetailsName + ".cshtml");
+                if (File.Exists(detailsPath))
+                {
+                    throw new Exception("详情页存在，详情页生成失败！");
+                }
+            }
+            string codeEntity = "";
+            string entityPath = "";
             if (!string.IsNullOrEmpty(param["CodeEntity"].ParseToString()))
             {
-                string codeEntity = HttpUtility.HtmlDecode(param["CodeEntity"].ToString());
-                string codePath = Path.Combine(baseConfigModel.OutputConfig.OutputEntity, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.EntityName + ".cs");
-                if (!File.Exists(codePath))
-                {
-                    FileHelper.CreateFile(codePath, codeEntity);
-                    result.Add(new KeyValue { Key = "实体类", Value = codePath, Description = "生成成功！" });
-                }
-                else
+                codeEntity = HttpUtility.HtmlDecode(param["CodeEntity"].ToString());
+                entityPath = Path.Combine(baseConfigModel.OutputConfig.OutputEntity, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.EntityName + ".cs");
+                if (File.Exists(entityPath))
                 {
                     throw new Exception("实体类已存在，实体类生成失败！");
 
                 }
             }
-            #endregion
-
-            #region 业务接口
+            string codeIRes = "";
+            string iResPath = "";
             if (!string.IsNullOrEmpty(param["CodeIRepository"].ParseToString()))
             {
-                string codeEntity = HttpUtility.HtmlDecode(param["CodeIRepository"].ToString());
-                string codePath = Path.Combine(baseConfigModel.OutputConfig.OutputIRepository, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.IRepositoryName + ".cs");
-                if (!File.Exists(codePath))
-                {
-                    FileHelper.CreateFile(codePath, codeEntity);
-                    result.Add(new KeyValue { Key = "业务接口", Value = codePath, Description = "生成成功！" });
-                }
-                else
+                codeIRes = HttpUtility.HtmlDecode(param["CodeIRepository"].ToString());
+                iResPath = Path.Combine(baseConfigModel.OutputConfig.OutputIRepository, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.IRepositoryName + ".cs");
+                if (File.Exists(iResPath))
                 {
                     throw new Exception("业务接口已存在，业务接口生成失败！");
                 }
             }
-            #endregion
-
-            #region 服务类
+            string codeService = "";
+            string servicePath = "";
             if (!param["CodeService"].IsEmpty())
             {
-                string codeService = HttpUtility.HtmlDecode(param["CodeService"].ToString());
-                string codePath = Path.Combine(baseConfigModel.OutputConfig.OutputService, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.ServiceName + ".cs");
-                if (!File.Exists(codePath))
-                {
-                    FileHelper.CreateFile(codePath, codeService);
-                    result.Add(new KeyValue { Key = "服务类", Value = codePath, Description = "生成成功！" });
-                }
-                else
+                codeService = HttpUtility.HtmlDecode(param["CodeService"].ToString());
+                servicePath = Path.Combine(baseConfigModel.OutputConfig.OutputService, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.ServiceName + ".cs");
+                if (File.Exists(servicePath))
                 {
                     throw new Exception("服务类已存在，服务类生成失败！");
                 }
             }
-            #endregion
-
-            #region 业务类
+            string codeBusiness = "";
+            string businessPath = "";
             if (!param["CodeRepository"].IsEmpty())
             {
-                string codeBusiness = HttpUtility.HtmlDecode(param["CodeRepository"].ToString());
-                string codePath = Path.Combine(baseConfigModel.OutputConfig.OutputRepository, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.RepositoryName + ".cs");
-                if (!File.Exists(codePath))
-                {
-                    FileHelper.CreateFile(codePath, codeBusiness);
-                    result.Add(new KeyValue { Key = "业务类", Value = codePath, Description = "生成成功！" });
-                }
-                else
+                codeBusiness = HttpUtility.HtmlDecode(param["CodeRepository"].ToString());
+                businessPath = Path.Combine(baseConfigModel.OutputConfig.OutputRepository, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.RepositoryName + ".cs");
+                if (File.Exists(businessPath))
                 {
                     throw new Exception("业务类已存在，业务类生成失败！");
                 }
             }
-            #endregion
-
-            #region 控制器
+            string codeController = "";
+            string controllerPath = "";
             if (!param["CodeController"].IsEmpty())
             {
-                string codeController = HttpUtility.HtmlDecode(param["CodeController"].ToString());
-                string codePath = Path.Combine(baseConfigModel.OutputConfig.OutputWeb, "Areas", baseConfigModel.OutputConfig.OutputModule, "Controllers", baseConfigModel.FileConfig.ControllerName + ".cs");
-                if (!File.Exists(codePath))
-                {
-                    FileHelper.CreateFile(codePath, codeController);
-                    result.Add(new KeyValue { Key = "控制器", Value = codePath, Description = "生成成功！" });
-                }
-                else
+                codeController = HttpUtility.HtmlDecode(param["CodeController"].ToString());
+                controllerPath = Path.Combine(baseConfigModel.OutputConfig.OutputWeb, "Areas", baseConfigModel.OutputConfig.OutputModule, "Controllers", baseConfigModel.FileConfig.ControllerName + ".cs");
+                if (File.Exists(controllerPath))
                 {
                     throw new Exception("控制器已存在，控制器生成失败！");
                 }
@@ -1119,29 +1125,18 @@ namespace WaterCloud.CodeGenerator
             #region 列表页
             if (!param["CodeIndex"].IsEmpty())
             {
-                string codeIndex = HttpUtility.HtmlDecode(param["CodeIndex"].ToString());
-                string codePath = Path.Combine(baseConfigModel.OutputConfig.OutputWeb, "Areas", baseConfigModel.OutputConfig.OutputModule, "Views", baseConfigModel.FileConfig.ClassPrefix, baseConfigModel.FileConfig.PageIndexName+ ".cshtml");
-                if (!File.Exists(codePath))
-                {
-                    FileHelper.CreateFile(codePath, codeIndex);
-                    result.Add(new KeyValue { Key = "列表页", Value = codePath, Description = "生成成功！" });
-                }
-                else
-                {
-                    throw new Exception("列表页已存在，列表页生成失败！");
-                }
                 ModuleRepository moduleRepository = new ModuleRepository();
                 // 生成菜单，按钮
                 List<KeyValue> buttonAuthorizeList = GetButtonAuthorizeList();
-                string menuUrl ="/"+ baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + baseConfigModel.FileConfig.PageIndexName;
+                string menuUrl = "/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + baseConfigModel.FileConfig.PageIndexName;
                 ModuleEntity moduleEntity = new ModuleEntity();
                 moduleEntity.Create();
-                moduleEntity.F_Layers =(await moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Layers+1; ;
+                moduleEntity.F_Layers = (await moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Layers + 1; ;
                 moduleEntity.F_FullName = baseConfigModel.FileConfig.ClassDescription;
                 moduleEntity.F_UrlAddress = menuUrl;
                 moduleEntity.F_EnCode = baseConfigModel.FileConfig.ClassPrefix;
                 moduleEntity.F_IsExpand = false;
-                moduleEntity.F_IsMenu = baseConfigModel.PageIndex.IsMunu==1?true:false;
+                moduleEntity.F_IsMenu = baseConfigModel.PageIndex.IsMunu == 1 ? true : false;
                 moduleEntity.F_IsFields = baseConfigModel.PageIndex.IsFields == 1 ? true : false;
                 moduleEntity.F_IsPublic = baseConfigModel.PageIndex.IsPublic == 1 ? true : false;
                 moduleEntity.F_Target = "iframe";
@@ -1149,9 +1144,9 @@ namespace WaterCloud.CodeGenerator
                 moduleEntity.F_AllowDelete = false;
                 moduleEntity.F_EnabledMark = true;
                 moduleEntity.F_DeleteMark = false;
-                moduleEntity.F_ParentId =(await moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Id;
-                var parentModule =await moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
-                moduleEntity.F_SortCode = (moduleRepository.IQueryable(a => a.F_ParentId == parentModule.F_Id).Max(a=>a.F_SortCode)??0)+1;
+                moduleEntity.F_ParentId = (await moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Id;
+                var parentModule = await moduleRepository.FindEntity(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
+                moduleEntity.F_SortCode = (moduleRepository.IQueryable(a => a.F_ParentId == parentModule.F_Id).Max(a => a.F_SortCode) ?? 0) + 1;
                 List<ModuleButtonEntity> moduleButtonList = new List<ModuleButtonEntity>();
                 int sort = 0;
                 foreach (var item in baseConfigModel.PageIndex.ButtonList)
@@ -1179,8 +1174,8 @@ namespace WaterCloud.CodeGenerator
                     modulebutton.F_EnCode = button.Value;
                     modulebutton.F_JsEvent = button.Key;
                     modulebutton.F_FullName = button.Description;
-                    modulebutton.F_Location = button.Key=="add"?1:2;
-                    modulebutton.F_SortCode= sort;
+                    modulebutton.F_Location = button.Key == "add" ? 1 : 2;
+                    modulebutton.F_SortCode = sort;
                     sort++;
                     modulebutton.F_EnabledMark = true;
                     modulebutton.F_DeleteMark = false;
@@ -1197,13 +1192,13 @@ namespace WaterCloud.CodeGenerator
                     ModuleFieldsEntity moduleFields = new ModuleFieldsEntity();
                     moduleFields.Create();
                     moduleFields.F_ModuleId = moduleEntity.F_Id;
-                    moduleFields.F_EnCode = item;
-                    moduleFields.F_FullName = item;
+                    moduleFields.F_EnCode = item.Key;
+                    moduleFields.F_FullName = item.Value;
                     moduleFields.F_EnabledMark = true;
                     moduleFields.F_DeleteMark = false;
                     moduleFieldsList.Add(moduleFields);
                 }
-                await moduleRepository.CreateModuleCode(moduleEntity,moduleButtonList, moduleFieldsList);
+                await moduleRepository.CreateModuleCode(moduleEntity, moduleButtonList, moduleFieldsList);
                 await CacheHelper.Remove(fieldscacheKey + "list");
                 await CacheHelper.Remove(buttoncacheKey + "list");
                 await CacheHelper.Remove(cacheKey + "list");
@@ -1212,40 +1207,64 @@ namespace WaterCloud.CodeGenerator
                 await CacheHelper.Remove(initcacheKey + "modulebutton_list");
                 await CacheHelper.Remove(initcacheKey + "modulefields_list");
                 await CacheHelper.Remove(authorizecacheKey + "list");
+                FileHelper.CreateFile(indexPath, codeIndex);
+                result.Add(new KeyValue { Key = "列表页", Value = indexPath, Description = "生成成功！" });
             }
             #endregion
 
             #region 表单页
             if (!param["CodeForm"].IsEmpty())
             {
-                string codeSave = HttpUtility.HtmlDecode(param["CodeForm"].ToString());
-                string codePath = Path.Combine(baseConfigModel.OutputConfig.OutputWeb, "Areas", baseConfigModel.OutputConfig.OutputModule, "Views", baseConfigModel.FileConfig.ClassPrefix, baseConfigModel.FileConfig.PageFormName + ".cshtml");
-                if (!File.Exists(codePath))
-                {
-                    FileHelper.CreateFile(codePath, codeSave);
-                    result.Add(new KeyValue { Key = "表单页", Value = codePath, Description = "生成成功！" });
-                }
-                else
-                {
-                    throw new Exception("表单页存在，表单页生成失败！");
-                }
+                FileHelper.CreateFile(formPath, codeForm);
+                result.Add(new KeyValue { Key = "表单页", Value = formPath, Description = "生成成功！" });
             }
             #endregion
 
             #region 查看页
             if (!param["CodeDetails"].IsEmpty())
             {
-                string codeSave = HttpUtility.HtmlDecode(param["CodeDetails"].ToString());
-                string codePath = Path.Combine(baseConfigModel.OutputConfig.OutputWeb, "Areas", baseConfigModel.OutputConfig.OutputModule, "Views", baseConfigModel.FileConfig.ClassPrefix, baseConfigModel.FileConfig.PageDetailsName + ".cshtml");
-                if (!File.Exists(codePath))
-                {
-                    FileHelper.CreateFile(codePath, codeSave);
-                    result.Add(new KeyValue { Key = "详情页", Value = codePath, Description = "生成成功！" });
-                }
-                else
-                {
-                    throw new Exception("详情页存在，详情页生成失败！");
-                }
+                FileHelper.CreateFile(detailsPath, codeDetails);
+                result.Add(new KeyValue { Key = "详情页", Value = detailsPath, Description = "生成成功！" });
+            }
+            #endregion
+
+            #region 实体类
+            if (!string.IsNullOrEmpty(param["CodeEntity"].ParseToString()))
+            {
+                FileHelper.CreateFile(entityPath, codeEntity);
+                result.Add(new KeyValue { Key = "实体类", Value = entityPath, Description = "生成成功！" });
+            }
+            #endregion
+
+            #region 业务接口
+            if (!string.IsNullOrEmpty(param["CodeIRepository"].ParseToString()))
+            {
+                FileHelper.CreateFile(iResPath, codeIRes);
+                result.Add(new KeyValue { Key = "业务接口", Value = iResPath, Description = "生成成功！" });
+            }
+            #endregion
+
+            #region 服务类
+            if (!param["CodeService"].IsEmpty())
+            {
+                FileHelper.CreateFile(servicePath, codeService);
+                result.Add(new KeyValue { Key = "服务类", Value = servicePath, Description = "生成成功！" });
+            }
+            #endregion
+
+            #region 业务类
+            if (!param["CodeRepository"].IsEmpty())
+            {
+                FileHelper.CreateFile(businessPath, codeBusiness);
+                result.Add(new KeyValue { Key = "业务类", Value = businessPath, Description = "生成成功！" });
+            }
+            #endregion
+
+            #region 控制器
+            if (!param["CodeController"].IsEmpty())
+            {
+                FileHelper.CreateFile(controllerPath, codeController);
+                result.Add(new KeyValue { Key = "控制器", Value = controllerPath, Description = "生成成功！" });
             }
             #endregion
 

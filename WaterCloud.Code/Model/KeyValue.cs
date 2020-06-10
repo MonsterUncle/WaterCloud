@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WaterCloud.Code.Model
+namespace WaterCloud.Code
 {
     public class KeyValue
     {

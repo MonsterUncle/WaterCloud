@@ -76,7 +76,19 @@ namespace WaterCloud.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> ClearCache()
         {
-            return Content(new {code=1,msg= "服务端清理缓存成功" }.ToJson());
+            try
+            {
+                if (OperatorProvider.Provider.GetCurrent().UserCode != Define.SYSTEM_USERNAME)
+                {
+                    return Content(new { code = 0, msg = "此功能需要管理员权限" }.ToJson());
+                }
+                await CacheHelper.FlushAll();
+                return Content(new { code = 1, msg = "服务端清理缓存成功" }.ToJson());
+            }
+            catch (Exception)
+            {
+                return Content(new { code = 0, msg = "此功能需要管理员权限" }.ToJson());
+            }
         }
         private async Task<object> GetMenuFields()
         {

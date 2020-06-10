@@ -60,7 +60,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             return Content(data.ToJson());
         }
         [HttpGet]
-        public ActionResult RuleForm()
+        public virtual ActionResult RuleForm()
         {
             return View();
         }

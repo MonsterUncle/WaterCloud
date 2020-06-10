@@ -79,7 +79,7 @@ namespace WaterCloud.CodeGenerator
         /// </summary>
         public int IsPagination { get; set; }
 
-        public List<string> ColumnList { get; set; }
+        public Dictionary<string, string> ColumnList { get; set; }
 
     }
     public class PageFormModel
@@ -88,6 +88,6 @@ namespace WaterCloud.CodeGenerator
         /// 1表示显示成1列，2表示显示成2列
         /// </summary>
         public int ShowMode { get; set; }
-        public List<string> FieldList { get; set; }
+        public Dictionary<string,string> FieldList { get; set; }
     }
 }

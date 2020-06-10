@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+    <script>
+        layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+            var form = layui.form,
+                $ = layui.$,
+                common = layui.common;
+            var keyValue = $.request("keyValue");
+            //权限字段
+            common.authorizeFields('adminform');
+            if (!!keyValue) {
+                $('#F_EnCode').prop('disabled', true);
+                $('#F_FullName').prop('disabled', true);
+            }
+            else {
+                $('#F_FullName').parent().parent().remove();
+                $('#F_NewName').parent().parent().find("label").html("名称");
+            }
+            //监听提交
+            form.on('submit(saveBtn)', function (data) {
+                var index = parent.layer.load(0, {
+                    shade: [0.5, '#000'], //0.1透明度的背景
+                });
+                var postData = {};
+                postData.TableColumn = data.field.F_EnCode;
+                postData.Remark = data.field.F_NewName;
+                if (!!keyValue) {
+                    postData.F_Id = keyValue;
+                }
+                else {
+                    postData.F_Id = uuid();
+                }
+                var tempdata = parent.layui.table.cache.currentTableId;
+                if (!!keyValue) {
+                    for (var i = 0; i < tempdata.length; i++) {
+                        if (keyValue == tempdata[i].F_Id) {
+                            tempdata[i].TableColumn = postData.TableColumn;
+                            tempdata[i].Remark = postData.Remark;
+                            break;
+                        }
+                    }
+                }
+                else {
+                    for (var i = 0; i < tempdata.length; i++) {
+                        if (tempdata[i].TableColumn == postData.TableColumn) {
+                            common.modalMsg("操作失败,编号重复", "error");
+                            return false;
+                        }
+                    }
+                    tempdata.push(postData);
+                }
+                common.modalMsg("操作成功", "success");
+                parent.layui.table.reload('currentTableId', {
+                    data: tempdata
+                });
+                parent.layer.close(index);
+                common.modalClose();
+                return false;
+            });
+        });
+    </script>
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form " lay-filter="adminform">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_EnCode" name="F_EnCode" class="layui-input ">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_FullName" name="F_FullName" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">新名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_NewName" name="F_NewName" lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -5,10 +5,6 @@
 <script src="~/lib/jquery.ui/1.12.1/jquery-ui.min.js" charset="utf-8"></script>
 <link href="~/lib/jquery.ui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
 <style>
-    .layui-layer-btn- {
-        display: none;
-    }
-
     .layui-form-label {
         float: left;
         display: block;
@@ -26,7 +22,10 @@
         max-width: 100%;
         padding-left: 30px;
     }
-
+    .layui-table-view {
+        margin-left: 30px;
+        margin-right: 10px;
+    }
     .layui-input-block {
         margin-left: 90px;
         min-height: 36px;
@@ -79,12 +78,13 @@
             }
         }).sortable();
     };
-    layui.use(['element', 'form', 'step', 'common', 'dtree', 'laydate', 'xmSelect'], function () {
+    layui.use(['element', 'table', 'form', 'step', 'common', 'dtree', 'laydate', 'xmSelect'], function () {
         var $ = layui.$,
             form = layui.form,
             element = layui.element,
             xmSelect = layui.xmSelect,
             dtree = layui.dtree,
+            table = layui.table,
             laydate = layui.laydate,
             common = layui.common,
             step = layui.step;
@@ -131,6 +131,17 @@
                         common.val('stepForm', data.FileConfig);
                         common.val('stepForm', data.OutputConfig);
                         $("#n_columns").val(data.PageForm.ShowMode);
+                        var datas = [];
+                        for (let i in data.PageIndex.ColumnList) {
+                            let o = {};
+                            o["TableColumn"] =i;
+                            o["Remark"] = data.PageIndex.ColumnList[i];
+                            o["F_Id"] = uuid();
+                            datas.push(o);
+                        }
+                        table.reload('currentTableId', {
+                            data: datas
+                        });
                         form.render();
                     }
                 });
@@ -184,139 +195,139 @@
                 { text: '查看按钮', id: 'details', selected: true },
             ]
         });
-        var templist;
-        //字段选择
-        var columnList = common.multipleSelectRender({
-            el: '#ColumnList',
-            name: 'columnlist',
-            layVerify: 'required',
-            layVerType: 'msg',
-            pageSize: 3,//分页大小
-            //model: {
-            //    label: {
-            //        type: 'setnum', //自定义与下面的对应
-            //        setnum: {
-            //            template(data, sels) {
-            //                return "已选中 " + sels.length + " 项, 共 " + data.length + " 项"
-            //            }
-            //        },
-            //    }
-            //},
-            remoteMethod: function (val, cb, show) {
-                common.ajax({
-                    url: '/SystemManage/CodeGenerator/GetTableFieldFilterSelectJson',
-                    dataType: "json",
-                    data: { keyValue: keyValue, keyword: val },
-                    success: function (data) {
-                        templist = data;
-                        cb(data);
-                    },
-                    error: function () {
-                        cb([]);
+        //var templist;
+        ////字段选择
+        //var columnList = common.multipleSelectRender({
+        //    el: '#ColumnList',
+        //    name: 'columnlist',
+        //    layVerify: 'required',
+        //    layVerType: 'msg',
+        //    pageSize: 3,//分页大小
+        //    //model: {
+        //    //    label: {
+        //    //        type: 'setnum', //自定义与下面的对应
+        //    //        setnum: {
+        //    //            template(data, sels) {
+        //    //                return "已选中 " + sels.length + " 项, 共 " + data.length + " 项"
+        //    //            }
+        //    //        },
+        //    //    }
+        //    //},
+        //    remoteMethod: function (val, cb, show) {
+        //        common.ajax({
+        //            url: '/SystemManage/CodeGenerator/GetTableFieldFilterSelectJson',
+        //            dataType: "json",
+        //            data: { keyValue: keyValue, keyword: val },
+        //            success: function (data) {
+        //                templist = data;
+        //                cb(data);
+        //            },
+        //            error: function () {
+        //                cb([]);
+        //            }
+        //        });
+        //    }
+        //});
+        ////清空沙雕ie存的方法
+        //columnList.setValue([]);
+        ////赋值
+        //for (var i = 0; i < templist.length; i++) {
+        //    columnList.append([templist[i].id]);
+        //}
+        common.rendertable({
+            elem: '#currentTableId',
+            data: [],
+            limit: 9999,//每页数据 默认
+            page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['count'] //自定义分页布局
+                , first: false //不显示首页
+                , last: false //不显示尾页
+            },
+            sqlkey: 'F_Id',//数据库主键
+            height: $(window).height() > 500 ? 'full-220' : 'full-280',
+            defaultToolbar:false,//默认工具栏
+            cols: [[
+                { field: 'F_Id', title: 'ID', hide: true, hideAlways: true },
+                { field: 'TableColumn', title: '字段编号', width: 200 },
+                { field: 'Remark', title: '字段名称', minWidth: 200 },
+            ]],
+            done: function () {
+                //关闭加载
+                layer.closeAll('loading');
+            }
+        });
+        var entity;
+        table.on('row(currentTableFilter)', function (obj) {
+            obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
+            entity = obj;
+        })
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听操作
+                common.modalOpen({
+                    title: "添加字段",
+                    url: "/SystemManage/CodeGenerator/RuleForm",
+                    width: "400px",
+                    height: "400px",
+                });
+            }
+            else if (obj.event === 'delete') {
+                if (entity == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalConfirm("注：您确定要删除该项数据吗？", function (r) {
+                    if (r) {
+                        var index = parent.layer.load(0, {
+                            shade: [0.5, '#000'], //0.1透明度的背景
+                        });
+                        try {
+                            var cachedata = table.cache.currentTableId;
+                            for (var i = 0; i < cachedata.length; i++) {
+                                if (entity.data.F_Id == cachedata[i].F_Id) {
+                                    cachedata.splice(i, 1);
+                                    break;
+                                }
+                            }
+                            var divId = "#" + "div" + entity.data.TableColumn;
+                            if ($(divId).length > 0) {
+                                $(divId).remove();
+                            }
+                            table.reload('currentTableId', {
+                                data: cachedata
+                            });
+                            entity = null;
+                            common.modalMsg("操作成功", "success");
+                        } catch (e) {
+                            alert(e);
+                        }
+                        parent.layer.close(index);
+                    }
+                    else {
+                        return false;
                     }
                 });
             }
-        });
-        //清空沙雕ie存的方法
-        columnList.setValue([]);
-        //赋值
-        for (var i = 0; i < templist.length; i++) {
-            columnList.append([templist[i].id]);
-        }
-        //form字段选择
-        var formColumnList = dtree.render({
-            elem: "#formColumnList",
-            height: 'full-200',
-            width: '180px',
-            checkbar: true,
-            checkbarType: "all", // 默认就是all，其他的值为： no-all  p-casc   self  only
-            method: "GET",
-            scroll: "#toolbarDiv", // 绑定div元素
-            ficon: "-1",
-            icon: "-1",  // 显示非最后一级节点图标，隐藏最后一级节点图标
-            initLevel: 0,
-            url: "/SystemManage/CodeGenerator/GetTableFieldFilterTreeJson?keyValue=" + keyValue + "&v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"), // 使用url加载（可与data加载同时存在）
-            checkbarFun: {
-                chooseBefore: function ($i, node) {
-                    var id = node.nodeId;
-                    var divId = "#" + "div" + node.context;
-                    if (node.checked == "0") {
-                        if ($(divId).length == 0) {
-
-                            var target = null;
-                            if (parseInt($("#n_columns").val()) == 1) {
-                                target = $(".layui-card-body .layui-col-md12");
-                            }
-                            else {
-                                var firstColumnInput = $(".layui-card-body .layui-col-md6").first().find("input").length;
-                                var secondColumnInput = $(".layui-card-body .layui-col-md6").last().find("input").length;
-                                if (firstColumnInput > secondColumnInput) {
-                                    target = $(".layui-card-body .layui-col-md6").last();
-                                }
-                                else {
-                                    target = $(".layui-card-body .layui-col-md6").first();
-                                }
-                            }
-                            var html = $("#divInputTemplate").prop("outerHTML");
-                            html = html.replace("FieldName", node.context);
-                            html = html.replace(/fieldName/g, id); // 替换多个
-                            html = html.replace("divInputTemplate", "div" + node.context);
-                            var obj = $(html);
-                            obj.removeAttr("style");
-                            obj.appendTo(target);
-                            formColumnList.checkStatus($i).check();
-                        }
-                    }
-                    else {
-                        if ($(divId).length > 0) {
-                            $(divId).remove();
-                        }
-                        formColumnList.checkStatus($i).noCheck();  // 恢复选中状态
-                    }
-                },
-                chooseDone: function (checkbarNodesParam) { //复选框点击事件完毕后，返回该树关于复选框操作的全部信息。
-                    return;
+            else if (obj.event === 'edit') {
+                if (entity == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
                 }
-            }
-        });
-        //tree单击节点 监听事件
-        dtree.on("node('formColumnList')", function (obj) {
-            var nodeId = obj.param.nodeId;
-            formColumnList.clickNodeCheckbar(nodeId);// 点击节点选中复选框
-            var id = obj.param.nodeId;
-            var divId = "#" + "div" + obj.param.context;
-            if (obj.param.checked == "0") {
-                if ($(divId).length == 0) {
+                common.modalOpen({
+                    title: "编辑字段",
+                    url: "/SystemManage/CodeGenerator/RuleForm?keyValue=" + entity.data.F_Id,
+                    width: "400px",
+                    height: "400px",
+                    success: function (layero,index) {
+                        var body = layer.getChildFrame('body', index);//少了这个是不能从父页面向子页面传值的
+                        //获取子页面的元素，进行数据渲染
+                        body.contents().find("#F_EnCode").val(entity.data.TableColumn);
+                        body.contents().find('#F_FullName').val(entity.data.Remark);
+                        $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
+                    },
 
-                    var target = null;
-                    if (parseInt($("#n_columns").val()) == 1) {
-                        target = $(".layui-card-body .layui-col-md12");
-                    }
-                    else {
-                        var firstColumnInput = $(".layui-card-body .layui-col-md6").first().find("input").length;
-                        var secondColumnInput = $(".layui-card-body .layui-col-md6").last().find("input").length;
-                        if (firstColumnInput > secondColumnInput) {
-                            target = $(".layui-card-body .layui-col-md6").last();
-                        }
-                        else {
-                            target = $(".layui-card-body .layui-col-md6").first();
-                        }
-                    }
-                    var html = $("#divInputTemplate").prop("outerHTML");
-                    html = html.replace("FieldName", obj.param.context);
-                    html = html.replace(/fieldName/g, id); // 替换多个
-                    html = html.replace("divInputTemplate", "div" + obj.param.context);
-                    var obj = $(html);
-                    obj.removeAttr("style");
-                    obj.appendTo(target);
-                }
+                });
             }
-            else {
-                if ($(divId).length > 0) {
-                    $(divId).remove();
-                }
-            }
-
+            return false;
         });
         form.on('select(n_columns)', function (data) {
             var v = $("select[name=n_columns").val();
@@ -340,11 +351,11 @@
                 return false;
             }
             baseConfig.FileConfig.ClassPrefix = data.field.ClassPrefix;
-            baseConfig.FileConfig.EntityName = data.field.ClassPrefix +"Entity";
-            baseConfig.FileConfig.IRepositoryName =  "I"+data.field.ClassPrefix + "Repository";
-            baseConfig.FileConfig.RepositoryName = data.field.ClassPrefix +"Repository";
-            baseConfig.FileConfig.ServiceName = data.field.ClassPrefix +"Service";
-            baseConfig.FileConfig.ControllerName = data.field.ClassPrefix +"Controller";
+            baseConfig.FileConfig.EntityName = data.field.ClassPrefix + "Entity";
+            baseConfig.FileConfig.IRepositoryName = "I" + data.field.ClassPrefix + "Repository";
+            baseConfig.FileConfig.RepositoryName = data.field.ClassPrefix + "Repository";
+            baseConfig.FileConfig.ServiceName = data.field.ClassPrefix + "Service";
+            baseConfig.FileConfig.ControllerName = data.field.ClassPrefix + "Controller";
             baseConfig.FileConfig.ClassDescription = data.field.ClassDescription;
             baseConfig.FileConfig.CreateUserName = data.field.CreateUserName;
             baseConfig.FileConfig.CreateDate = data.field.CreateDate;
@@ -352,6 +363,7 @@
             step.next('#stepForm');
             return false;
         });
+        var cout = 0;
         form.on('submit(formStep2)', function (data) {
             if (outputOptions.getValue('value').length == 0) {
                 outputOptions.warning();
@@ -361,10 +373,10 @@
                 buttonList.warning();
                 return false;
             }
-            if (columnList.getValue('value').length == 0) {
-                columnList.warning();
-                return false;
-            }
+            //if (columnList.getValue('value').length == 0) {
+            //    columnList.warning();
+            //    return false;
+            //}
             var options = outputOptions.getValue('value');
             if (options.indexOf("IsMunu") > -1) {
                 baseConfig.PageIndex.IsMunu = 1;
@@ -403,7 +415,124 @@
                 baseConfig.PageIndex.IsPublic = 0;
             }
             baseConfig.PageIndex.ButtonList = buttonList.getValue('value');
-            baseConfig.PageIndex.ColumnList = columnList.getValue('value');
+            var cachedata = table.cache.currentTableId
+            if (cachedata.length == 0) {
+                common.modalMsg("未添加字段", "warning");
+                return false;
+            }
+            baseConfig.PageIndex.ColumnList = [];
+            var treelist = [];
+            for (var i = 0; i < cachedata.length; i++) {
+                var temp = {};
+                var treetemp = {};
+                temp["key"] = cachedata[i].TableColumn;
+                temp["value"] = cachedata[i].Remark;
+                baseConfig.PageIndex.ColumnList.push(temp);
+                treetemp["id"] = cachedata[i].TableColumn;
+                treetemp["title"] = cachedata[i].Remark;
+                treetemp["parentId"] = "0";
+                treetemp["checkArr"] = "0";
+                treelist.push(treetemp);
+            }
+            baseConfig.PageIndex.ColumnList = JSON.stringify(cachedata);
+            //form字段选择
+            var formColumnList = dtree.render({
+                elem: "#formColumnList",
+                height: 'full-200',
+                width: '180px',
+                checkbar: true,
+                checkbarType: "all", // 默认就是all，其他的值为： no-all  p-casc   self  only
+                method: "GET",
+                scroll: "#toolbarDiv", // 绑定div元素
+                ficon: "-1",
+                icon: "-1",  // 显示非最后一级节点图标，隐藏最后一级节点图标
+                initLevel: 0,
+                data: treelist,
+                checkbarFun: {
+                    chooseBefore: function ($i, node) {
+                        var id = node.nodeId;
+                        var divId = "#" + "div" + id;
+                        if (node.checked == "0") {
+                            if ($(divId).length == 0) {
+
+                                var target = null;
+                                if (parseInt($("#n_columns").val()) == 1) {
+                                    target = $(".layui-card-body .layui-col-md12");
+                                }
+                                else {
+                                    var firstColumnInput = $(".layui-card-body .layui-col-md6").first().find("input").length;
+                                    var secondColumnInput = $(".layui-card-body .layui-col-md6").last().find("input").length;
+                                    if (firstColumnInput > secondColumnInput) {
+                                        target = $(".layui-card-body .layui-col-md6").last();
+                                    }
+                                    else {
+                                        target = $(".layui-card-body .layui-col-md6").first();
+                                    }
+                                }
+                                var html = $("#divInputTemplate").prop("outerHTML");
+                                html = html.replace("FieldName", node.context);
+                                html = html.replace(/fieldName/g, "fieldName" + cout);
+                                html = html.replace(/fieldCode/g, id); // 替换多个
+                                html = html.replace("divInputTemplate", "div" + id);
+                                var obj = $(html);
+                                obj.removeAttr("style");
+                                obj.appendTo(target);
+                                formColumnList.checkStatus($i).check();
+                                cout++;
+                            }
+                        }
+                        else {
+                            if ($(divId).length > 0) {
+                                $(divId).remove();
+                            }
+                            formColumnList.checkStatus($i).noCheck();  // 恢复选中状态
+                        }
+                    },
+                    chooseDone: function (checkbarNodesParam) { //复选框点击事件完毕后，返回该树关于复选框操作的全部信息。
+                        return;
+                    }
+                }
+            });
+            //tree单击节点 监听事件
+            dtree.on("node('formColumnList')", function (obj) {
+                formColumnList.clickNodeCheckbar(obj.param.nodeId);// 点击节点选中复选框
+                var id = obj.param.nodeId;
+                var divId = "#" + "div" + id;
+                if (obj.param.checked == "0") {
+                    if ($(divId).length == 0) {
+
+                        var target = null;
+                        if (parseInt($("#n_columns").val()) == 1) {
+                            target = $(".layui-card-body .layui-col-md12");
+                        }
+                        else {
+                            var firstColumnInput = $(".layui-card-body .layui-col-md6").first().find("input").length;
+                            var secondColumnInput = $(".layui-card-body .layui-col-md6").last().find("input").length;
+                            if (firstColumnInput > secondColumnInput) {
+                                target = $(".layui-card-body .layui-col-md6").last();
+                            }
+                            else {
+                                target = $(".layui-card-body .layui-col-md6").first();
+                            }
+                        }
+                        var html = $("#divInputTemplate").prop("outerHTML");
+                        html = html.replace(/FieldName/g, obj.param.context);
+                        html = html.replace(/fieldName/g, "fieldName" + cout);
+                        html = html.replace(/fieldCode/g, id); // 替换多个
+                        html = html.replace("divInputTemplate", "div" + id);
+                        var obj = $(html);
+                        obj.removeAttr("style");
+                        obj.appendTo(target);
+                        cout++;
+                    }
+                }
+                else {
+                    if ($(divId).length > 0) {
+                        $(divId).remove();
+                    }
+                }
+
+            });
             step.next('#stepForm');
             return false;
         });
@@ -413,9 +542,17 @@
             baseConfig.PageForm.FieldList = [];
             $("#divForm label:not(.hidden)").each(function (i, ele) {
                 if ($(ele).parent().css("display") != "none") {
-                    baseConfig.PageForm.FieldList.push($(ele).html());
+                    var key = $(ele).parent().find("input")[0].id;
+                    var temp = {};
+                    temp["key"] = key;
+                    temp["value"] = $(ele).html();
+                    baseConfig.PageForm.FieldList.push(temp);
                 }
             });
+            if (baseConfig.PageForm.FieldList.length<=0) {
+                common.modalMsg("未添加表单字段", "warning");
+                return false;
+            }
             $.ajax({
                 url: "/SystemManage/CodeGenerator/CodePreviewJson",
                 type: "post",
@@ -461,6 +598,25 @@
             step.pre('#stepForm');
         });
     })
+    function editName(data) {
+        var key = $('#' + data).parent().find("input")[0].id;
+        var value = $('#' + data).html();
+        layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+            layui.common.modalOpen({
+                title: "修改值",
+                url: "/SystemManage/CodeGenerator/AddForm?event=" + data,
+                width: "400px",
+                height: "400px",
+                success: function (layero, index) {
+                    var body = layer.getChildFrame('body', index);//少了这个是不能从父页面向子页面传值的
+                    //获取子页面的元素，进行数据渲染
+                    body.contents().find("#F_EnCode").val(key);
+                    body.contents().find('#F_FullName').val(value);
+                    $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
+                },
+            });
+        });
+    }
 </script>
 <div class="layuimini-container">
     <div class="layuimini-main">
@@ -523,12 +679,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-form-item">
+                        @*<div class="layui-form-item">
                             <label class="layui-form-label required">字段选择</label>
                             <div class="layui-input-block">
                                 <div id="ColumnList" name="ColumnList" class="xm-select-demo"></div>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="form-group-bottom text-right">
                             <div class="layui-input-block">
                                 <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
@@ -536,6 +692,14 @@
                             </div>
                         </div>
                     </form>
+                    <script type="text/html" id="toolbarDemo">
+                        <div class="layui-btn-container" id="toolbar">
+                            <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
+                            <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                            <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                        </div>
+                    </script>
+                    <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
                 </div>
                 <div>
                     <form class="layui-form layuimini-form ">
@@ -559,10 +723,10 @@
                                     </div>
                                     <div class="layui-card-body" id="divForm">
                                         <div id="divInputTemplate" class="layui-form-item draggable ui-draggable dropped" style="display:none">
-                                            <label class="layui-form-label">FieldName</label>
+                                            <label class="layui-form-label" id="fieldName">FieldName</label>
                                             <div class="layui-input-block" style="padding-right: 70px;">
-                                                <input id="fieldName" col="FieldName" type="text" class="layui-input" readonly>
-                                                <button class="layui-btn layui-btn-normal data-info-btn" style="position: absolute;top: 0;right: 6px;cursor: pointer;" type="button" readonly>编辑</button>
+                                                <input id="fieldCode" col="fieldCode" type="text" class="layui-input" readonly value="fieldCode">
+                                                <button class="layui-btn layui-btn-normal data-info-btn" style="position: absolute;top: 0;right: 6px;cursor: pointer;" type="button" onclick="editName('fieldName')">编辑</button>
                                             </div>
                                         </div>
                                         <div class="layui-col-md12 layui-col-xs12 droppable sortable">

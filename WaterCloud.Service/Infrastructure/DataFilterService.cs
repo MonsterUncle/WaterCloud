@@ -120,7 +120,7 @@ namespace WaterCloud.Service
         ///<param name=""list>数据列表</param>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
-        protected List<T> GetFieldsFilterData(List<T> list, string moduleName)
+        protected List<TEntity> GetFieldsFilterData<TEntity>(List<TEntity> list, string moduleName)
         {
             //管理员跳过
             if (loginUser.RoleId == "admin"||loginUser.IsSystem)
@@ -141,11 +141,16 @@ namespace WaterCloud.Service
                 return list;
             }
             DataTable dt = DataTableHelper.ListToDataTable(list);
-            PropertyInfo pkProp = typeof(T).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
+            PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
+            var idName ="F_Id";
+            if (pkProp==null)
+            {
+                idName = pkProp.Name;
+            }
             List<string> tempList = new List<string>();
             foreach (var item in dt.Columns)
             {
-                if (!fieldsList.Contains(item.ToString()) && pkProp.Name !=item.ToString())
+                if (!fieldsList.Contains(item.ToString()) && idName != item.ToString())
                 {
                     tempList.Add(item.ToString());
                 }
@@ -154,15 +159,15 @@ namespace WaterCloud.Service
             {
                 dt.Columns.Remove(item);
             }       
-            return dt.ToDataList<T>();
+            return dt.ToDataList<TEntity>();
         }
         /// <summary>
         ///  字段权限处理
         /// </summary>
         /// <returns></returns>
-        protected T GetFieldsFilterData(T entity, string moduleName)
+        protected TEntity GetFieldsFilterData<TEntity>(TEntity entity, string moduleName)
         {
-            List<T> list = new List<T>();
+            List<TEntity> list = new List<TEntity>();
             list.Add(entity);
             return GetFieldsFilterData(list, moduleName)[0];
         }

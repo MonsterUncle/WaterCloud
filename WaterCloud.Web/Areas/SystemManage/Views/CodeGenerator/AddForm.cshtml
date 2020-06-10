@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+    <script>
+        layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+            var form = layui.form,
+                $ = layui.$,
+                common = layui.common,
+                laydate = layui.laydate;
+            var event = $.request("event");
+            //权限字段
+            common.authorizeFields('adminform');
+            //监听提交
+            form.on('submit(saveBtn)', function (data) {
+                var valuedata = data.field.F_NewName;
+                parent.$('#' + event).html(valuedata);
+                common.modalMsg("修改成功!", "success");
+                common.modalClose();
+                return false;
+            });
+        });
+    </script>
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form " lay-filter="adminform">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_EnCode" name="F_EnCode"  readonly class="layui-input ">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_FullName" name="F_FullName" readonly class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">新名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_NewName" name="F_NewName" lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
