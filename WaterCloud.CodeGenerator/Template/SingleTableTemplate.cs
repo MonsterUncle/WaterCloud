@@ -1194,6 +1194,7 @@ namespace WaterCloud.CodeGenerator
                     moduleFields.F_ModuleId = moduleEntity.F_Id;
                     moduleFields.F_EnCode = item.Key;
                     moduleFields.F_FullName = item.Value;
+                    moduleFields.F_IsPublic = true;
                     moduleFields.F_EnabledMark = true;
                     moduleFields.F_DeleteMark = false;
                     moduleFieldsList.Add(moduleFields);
