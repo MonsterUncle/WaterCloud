@@ -272,7 +272,7 @@
                                     </tr>
                                     <tr>
                                         <td>当前版本</td>
-                                        <td>v1.0.0</td>
+                                        <td>@WaterCloud.Code.GlobalContext.GetVersion()</td>
                                     </tr>
                                     <tr>
                                         <td>主要特色</td>
@@ -307,8 +307,8 @@
         </div>
     </div>
     <script src="~/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
-    <script src="~/js/lay-config.js?v=@WaterCloud.Code.Ext.ToDateString()" charset="utf-8"></script>
-    <script src="~/js/framework-ui.js?v=@WaterCloud.Code.Ext.ToDateString()"></script>
+    <script src="~/js/lay-config.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
+    <script src="~/js/framework-ui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script>
         // 公告赋值
         $(function () {

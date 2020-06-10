@@ -31,7 +31,7 @@ namespace WaterCloud.Code
         public static string GetVersion()
         {
             Version version = Assembly.GetEntryAssembly().GetName().Version;
-            return version.Major + "." + version.Minor;
+            return version.ToString();
         }
 
         /// <summary>
