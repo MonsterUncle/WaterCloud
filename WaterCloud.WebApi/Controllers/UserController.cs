@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Senparc.CO2NET.Extensions;
+using Serenity;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemManage;
 using WaterCloud.Domain.SystemSecurity;

@@ -10,7 +10,7 @@ using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Senparc.CO2NET.Extensions;
+using Serenity;
 using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers

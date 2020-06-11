@@ -5,7 +5,7 @@
  * Website：
 *********************************************************************************/
 
-using Senparc.CO2NET.Extensions;
+using Serenity;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Service;

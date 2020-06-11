@@ -13,7 +13,7 @@ using System.Text;
 using System;
 using WaterCloud.Domain;
 using WaterCloud.Service.SystemSecurity;
-using Senparc.CO2NET.Extensions;
+using Serenity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CSRedis;

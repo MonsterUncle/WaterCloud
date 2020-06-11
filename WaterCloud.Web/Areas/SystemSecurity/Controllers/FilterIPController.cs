@@ -12,7 +12,7 @@ using WaterCloud.Service;
 using System;
 using WaterCloud.Service.SystemManage;
 using System.Linq;
-using Senparc.CO2NET.Extensions;
+using Serenity;
 using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers

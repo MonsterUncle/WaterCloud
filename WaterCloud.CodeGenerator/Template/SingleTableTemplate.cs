@@ -348,7 +348,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("using System.Threading.Tasks;");
             sb.AppendLine("using System.Collections.Generic;");          
             sb.AppendLine("using Microsoft.AspNetCore.Mvc;");
-            sb.AppendLine("using Senparc.CO2NET.Extensions;");
+            sb.AppendLine("using Serenity;");
             sb.AppendLine("using WaterCloud.Code;");
             sb.AppendLine("using WaterCloud.Domain.SystemSecurity;");
             sb.AppendLine("using WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule + ";");

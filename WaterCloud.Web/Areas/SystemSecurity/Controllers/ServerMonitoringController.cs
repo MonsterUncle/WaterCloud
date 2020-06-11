@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
-using Senparc.CO2NET.Extensions;
+using Serenity;
 using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Code;
 using System.Threading.Tasks;
