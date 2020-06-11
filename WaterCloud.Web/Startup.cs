@@ -71,6 +71,8 @@ namespace WaterCloud.Web
             });
             ////定时任务（已废除）
             //services.AddBackgroundServices();
+            //调试前端可更新
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddOptions();
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(GlobalContext.HostingEnvironment.ContentRootPath + Path.DirectorySeparatorChar + "DataProtection"));
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
