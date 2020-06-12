@@ -177,6 +177,7 @@ namespace WaterCloud.CodeGenerator
         public string BuildRepository(BaseConfigModel baseConfigModel)
         {
             StringBuilder sb = new StringBuilder();
+            sb.AppendLine("using Chloe;");
             sb.AppendLine("using WaterCloud.DataBase;");
             sb.AppendLine("using WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule + ";");
             sb.AppendLine();
@@ -190,14 +191,17 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("    {");
             sb.AppendLine("        private string ConnectStr;");
             sb.AppendLine("        private string providerName;");
+            sb.AppendLine("        private DbContext dbcontext;");
             sb.AppendLine("        public "+ baseConfigModel.FileConfig.RepositoryName + "()");
             sb.AppendLine("        {");
+            sb.AppendLine("            dbcontext = GetDbContext();");
             sb.AppendLine("        }");
             sb.AppendLine("        public " + baseConfigModel.FileConfig.RepositoryName + "(string ConnectStr, string providerName)");
             sb.AppendLine("             : base(ConnectStr, providerName)");
             sb.AppendLine("        {");
-            sb.AppendLine("             this.ConnectStr = ConnectStr;");
-            sb.AppendLine("             this.providerName = providerName;");
+            sb.AppendLine("            this.ConnectStr = ConnectStr;");
+            sb.AppendLine("            this.providerName = providerName;");
+            sb.AppendLine("            dbcontext = GetDbContext();");
             sb.AppendLine("        }");
             sb.AppendLine("    }");
             sb.AppendLine("}");

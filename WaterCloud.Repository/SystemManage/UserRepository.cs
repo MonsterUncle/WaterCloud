@@ -4,6 +4,7 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using Chloe;
 using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
@@ -15,14 +16,17 @@ namespace WaterCloud.Repository.SystemManage
     {
         private string ConnectStr;
         private string providerName;
+        private DbContext dbcontext;
         public UserRepository()
         {
+            dbcontext = GetDbContext();
         }
         public UserRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
+            dbcontext = GetDbContext();
         }
         public async Task DeleteForm(string keyValue)
         {

@@ -7,6 +7,7 @@
 // * history : Created by T4 04/13/2020 11:54:49 
 // </copyright>
 //-----------------------------------------------------------------------
+using Chloe;
 using System.Threading.Tasks;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemSecurity;
@@ -17,14 +18,17 @@ namespace WaterCloud.Repository.SystemSecurity
     {
         private string ConnectStr;
         private string providerName;
+        private DbContext dbcontext;
         public ServerStateRepository()
         {
+            dbcontext = GetDbContext();
         }
         public ServerStateRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
+            dbcontext = GetDbContext();
         }
         public async Task DeleteForm(string keyValue)
         {

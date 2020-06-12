@@ -15,7 +15,8 @@
       "launchUrl": "api-doc",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "nativeDebugging": true
     },
     "WaterCloud.WebApi": {
       "commandName": "Project",

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chloe;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
@@ -14,14 +15,17 @@ namespace WaterCloud.Repository.SystemManage
     {
         private string ConnectStr;
         private string providerName;
+        private DbContext dbcontext;
         public ModuleFieldsRepository()
         {
+            dbcontext = GetDbContext();
         }
         public ModuleFieldsRepository(string ConnectStr, string providerName)
              : base(ConnectStr, providerName)
         {
-             this.ConnectStr = ConnectStr;
-             this.providerName = providerName;
+            this.ConnectStr = ConnectStr;
+            this.providerName = providerName;
+            dbcontext = GetDbContext();
         }
 
         public async Task<List<ModuleFieldsEntity>> GetListByRole(string roleid)

@@ -8,6 +8,7 @@ using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Chloe;
 
 namespace WaterCloud.Repository.SystemManage
 {
@@ -15,25 +16,34 @@ namespace WaterCloud.Repository.SystemManage
     {
         private string ConnectStr;
         private string providerName;
+        private DbContext dbcontext;
         public ModuleButtonRepository()
         {
-
+            dbcontext = GetDbContext();
         }
         public ModuleButtonRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
+            dbcontext = GetDbContext();
         }
         public async Task<List<ModuleButtonEntity>> GetListByRole(string roleid)
         {
-            using (var db =new RepositoryBase(ConnectStr, providerName))
-            {
-                var moduleList = db.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 2).Select(a => a.F_ItemId).ToList();
-                var query = db.IQueryable<ModuleButtonEntity>().Where(a => (moduleList.Contains(a.F_Id)||a.F_IsPublic==true) &&a.F_DeleteMark==false&& a.F_EnabledMark == true);
-                var result = query.OrderBy(a => a.F_SortCode).ToList();
-                return result;
-            }
+            //1、使用框架方法
+            //using (var db =new RepositoryBase(ConnectStr, providerName))
+            //{
+            //    var moduleList = db.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 2).Select(a => a.F_ItemId).ToList();
+            //    var query = db.IQueryable<ModuleButtonEntity>().Where(a => (moduleList.Contains(a.F_Id)||a.F_IsPublic==true) &&a.F_DeleteMark==false&& a.F_EnabledMark == true);
+            //    var result = query.OrderBy(a => a.F_SortCode).ToList();
+            //    return result;
+            //}
+            //2、使用chloe自身方法
+            var moduleList = dbcontext.Query<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 2).Select(a => a.F_ItemId).ToList();
+            var query = dbcontext.Query<ModuleButtonEntity>().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
+            var result = query.OrderBy(a => a.F_SortCode).ToList();
+            return result;
+
         }
 
         public async Task<List<ModuleButtonEntity>> GetListNew(string moduleId)

@@ -17,14 +17,17 @@ namespace WaterCloud.Repository.SystemManage
     {
         private string ConnectStr;
         private string providerName;
+        private DbContext dbcontext;
         public ItemsDetailRepository()
         {
+            dbcontext = GetDbContext();
         }
         public ItemsDetailRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
+            dbcontext = GetDbContext();
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {

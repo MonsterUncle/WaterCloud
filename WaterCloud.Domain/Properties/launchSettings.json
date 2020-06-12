@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WaterCloud.Domain": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

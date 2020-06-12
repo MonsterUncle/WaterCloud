@@ -9,6 +9,7 @@ using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
+using Chloe;
 
 namespace WaterCloud.Repository.SystemManage
 {
@@ -16,14 +17,17 @@ namespace WaterCloud.Repository.SystemManage
     {
         private string ConnectStr;
         private string providerName;
+        private DbContext dbcontext;
         public ModuleRepository()
         {
+            dbcontext = GetDbContext();
         }
         public ModuleRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
+            dbcontext = GetDbContext();
         }
 
         public async Task CreateModuleCode(ModuleEntity entity, List<ModuleButtonEntity> buttonlist, List<ModuleFieldsEntity> fieldsList)

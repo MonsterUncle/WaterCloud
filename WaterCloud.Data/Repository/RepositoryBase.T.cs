@@ -29,6 +29,11 @@ namespace WaterCloud.DataBase
         {
             dbcontext = DBContexHelper.Contex();
         }
+        public DbContext GetDbContext()
+        {
+            return dbcontext;
+        }
+
         public RepositoryBase(string ConnectStr, string providerName)
         {
             dbcontext = DBContexHelper.Contex(ConnectStr, providerName);

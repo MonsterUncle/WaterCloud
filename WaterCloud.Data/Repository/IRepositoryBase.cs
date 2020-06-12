@@ -17,6 +17,7 @@ namespace WaterCloud.DataBase
 {
     public interface IRepositoryBase : IDisposable
     {
+        DbContext GetDbContext();
         IRepositoryBase BeginTrans();
         void Commit();
         /// <summary>

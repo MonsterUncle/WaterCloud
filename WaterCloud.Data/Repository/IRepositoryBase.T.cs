@@ -21,6 +21,7 @@ namespace WaterCloud.DataBase
     /// <typeparam name="TEntity">实体类型</typeparam>
     public interface IRepositoryBase<TEntity> where TEntity : class, new()
     {
+        DbContext GetDbContext();
         Task<TEntity> Insert(TEntity entity);
         Task<int> Insert(List<TEntity> entitys);
         Task<int> Update(TEntity entity);

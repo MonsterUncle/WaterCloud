@@ -4,6 +4,7 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using Chloe;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemSecurity;
 
@@ -13,14 +14,17 @@ namespace WaterCloud.Repository.SystemSecurity
     {
         private string ConnectStr;
         private string providerName;
+        private DbContext dbcontext;
         public OpenJobRepository()
         {
+            dbcontext = GetDbContext();
         }
         public OpenJobRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
             this.ConnectStr = ConnectStr;
             this.providerName = providerName;
+            dbcontext = GetDbContext();
         }
     }
 }
