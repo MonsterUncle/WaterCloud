@@ -614,7 +614,7 @@ namespace WaterCloud.CodeGenerator
                 int cout = 1;
                 foreach (var item in baseConfigModel.PageIndex.ColumnList)
                 {
-                    if (cout == baseConfigModel.PageIndex.ColumnList.Count)
+                    if (cout != baseConfigModel.PageIndex.ColumnList.Count)
                     {
                         sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', width: 120, sort: true },");
                     }
@@ -659,7 +659,7 @@ namespace WaterCloud.CodeGenerator
                 int cout = 1;
                 foreach (var item in baseConfigModel.PageIndex.ColumnList)
                 {
-                    if (cout == baseConfigModel.PageIndex.ColumnList.Count)
+                    if (cout != baseConfigModel.PageIndex.ColumnList.Count)
                     {
                         sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', width: 120, sort: true },");
                     }
