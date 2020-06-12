@@ -195,11 +195,8 @@ namespace WaterCloud.DataBase
             var cachedata =await CacheHelper.Get<List<TEntity>>(cacheKey);
             if (cachedata == null || cachedata.Count() == 0)
             {
-                using (var db = new RepositoryBase().BeginTrans())
-                {
-                    cachedata = db.IQueryable<TEntity>().ToList();
-                    await CacheHelper.Set(cacheKey, cachedata);
-                }
+                cachedata = dbcontext.Query<TEntity>().ToList();
+                await CacheHelper.Set(cacheKey, cachedata);
             }
             return cachedata;
         }
@@ -209,11 +206,8 @@ namespace WaterCloud.DataBase
             var cachedata = await CacheHelper.Get<TEntity>(cacheKey + keyValue);
             if (cachedata == null)
             {
-                using (var db = new RepositoryBase().BeginTrans())
-                {
-                    cachedata =await db.FindEntity<TEntity>(keyValue);
-                    await CacheHelper.Set(cacheKey + keyValue, cachedata);
-                }
+                cachedata = await dbcontext.QueryByKeyAsync<TEntity>(keyValue);
+                await CacheHelper.Set(cacheKey + keyValue, cachedata);
             }
             return cachedata;
         }
