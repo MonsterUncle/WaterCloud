@@ -16,6 +16,7 @@ namespace WaterCloud.Service.CommonService
 {
     public class DatabaseTableMySqlService : RepositoryBase, IDatabaseTableService
     {
+        private DbContext dbcontext;
         #region 获取数据
         public async Task<List<TableInfo>> GetTableList(string tableName)
         {
@@ -105,7 +106,7 @@ namespace WaterCloud.Service.CommonService
         private async Task SyncSqlServerTable<T>() where T : class, new()
         {
             string sqlServerConnectionString = "192.168.1.17;Initial Catalog = WaterCloudNetDb;User ID=sa;Password=admin@12345;MultipleActiveResultSets=true";
-            var list = new RepositoryBase().IQueryable<T>().ToList();
+            var list = this.IQueryable<T>().ToList();
             var context=new RepositoryBase(sqlServerConnectionString, "System.Data.SqlClient");
             await context.Delete<T>(p => true);
             foreach (var item in list)

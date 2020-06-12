@@ -19,8 +19,17 @@ namespace WaterCloud.Service
         /// 用于普通的数据库操作
         /// </summary>
         /// <value>The repository.</value>
-        protected RepositoryBase<T> Repository = new RepositoryBase<T>();
-        protected RepositoryBase UnitWork = new RepositoryBase();
+        protected RepositoryBase<T> Repository;
+        protected DbContext dbcontext;
+        public DataFilterService() {
+            Repository = new RepositoryBase<T>();
+            dbcontext = Repository.GetDbContext();
+        }
+        public DataFilterService(string ConnectStr, string providerName)
+        {
+            Repository = new RepositoryBase<T>(ConnectStr, providerName);
+            dbcontext = Repository.GetDbContext();
+        }
         /// <summary>
         ///  获取当前登录用户的数据访问权限(单表)
         /// </summary>
@@ -37,7 +46,7 @@ namespace WaterCloud.Service
             {
                 return query;
             }
-            var rule = UnitWork.FindEntity<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).Result;
+            var rule = dbcontext.Query<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
@@ -71,7 +80,7 @@ namespace WaterCloud.Service
             {
                 return query;
             }
-            var rule = UnitWork.FindEntity<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).Result;
+            var rule = dbcontext.Query<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
@@ -101,7 +110,7 @@ namespace WaterCloud.Service
         protected bool CheckDataPrivilege(string moduleName)
         {
             if (loginUser.UserCode == Define.SYSTEM_USERNAME) return false;  //超级管理员特权
-            var rule = UnitWork.FindEntity<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).Result;
+            var rule = dbcontext.Query<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             ////系统菜单也不需要数据权限 跟字段重合取消这样处理
             //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).Result;
             if (rule == null)
@@ -128,14 +137,14 @@ namespace WaterCloud.Service
                 return list;
             }
             //系统菜单跳过
-            var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).Result;
+            var module = dbcontext.Query<ModuleEntity>(u => u.F_EnCode == moduleName).FirstOrDefault();
             //判断是否需要字段权限
             if (module.F_IsFields==false)
             {
                 return list;
             }
-            var rule = UnitWork.IQueryable<RoleAuthorizeEntity>(u=>u.F_ObjectId==loginUser.RoleId&&u.F_ItemType==3).Select(a=>a.F_ItemId).ToList();
-            var fieldsList = UnitWork.IQueryable<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id)||u.F_IsPublic==true)&&u.F_ModuleId==module.F_Id).Select(u => u.F_EnCode).ToList();
+            var rule = dbcontext.Query<RoleAuthorizeEntity>(u=>u.F_ObjectId==loginUser.RoleId&&u.F_ItemType==3).Select(a=>a.F_ItemId).ToList();
+            var fieldsList = dbcontext.Query<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id)||u.F_IsPublic==true)&&u.F_ModuleId==module.F_Id).Select(u => u.F_EnCode).ToList();
             if (list.Count==0)
             {
                 return list;
