@@ -14,7 +14,7 @@ namespace WaterCloud.Domain
         {
             title = "WaterCloud";
             href = "";
-            image = "../favicon.ico";
+            image = "../icon/favicon.ico";
         }
     }
 }

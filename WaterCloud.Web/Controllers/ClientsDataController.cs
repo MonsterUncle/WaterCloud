@@ -217,6 +217,10 @@ namespace WaterCloud.Web.Controllers
             InitEntity init = new InitEntity();
             init.homeInfo = new HomeInfoEntity();
             init.logoInfo = new LogoInfoEntity();
+            //修改主页及logo参数
+
+
+
             init.menuInfo = new List<MenuInfoEntity>();
             MenuInfoEntity munu = new MenuInfoEntity();
             init.menuInfo.Add(munu);
