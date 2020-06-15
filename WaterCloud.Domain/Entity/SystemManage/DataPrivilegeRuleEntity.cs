@@ -8,7 +8,7 @@ namespace WaterCloud.Domain.SystemManage
     /// 日 期：2020-06-01 09:44
     /// 描 述：数据权限实体类
     /// </summary>
-    [TableAttribute("Sys_Dataprivilegerule")]
+    [TableAttribute("Sys_DataprivilegeRule")]
     public class DataPrivilegeRuleEntity : IEntity<DataPrivilegeRuleEntity>,ICreationAudited,IModificationAudited,IDeleteAudited
     {
         /// <summary>
