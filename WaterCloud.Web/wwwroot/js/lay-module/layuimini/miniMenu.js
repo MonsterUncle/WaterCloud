@@ -61,7 +61,7 @@ layui.define(["element", "laytpl", "jquery"], function (exports) {
             return laytpl(menuHtml).render(menu);
         },
         compileMenuContainer: function (menu, isSub) {
-            var wrapperHtml = '<ul class="layui-nav layui-nav-tree layui-left-nav-tree {{d.className}}" id="{{d.id}}">{{d.children}}</ul>';
+            var wrapperHtml = '<ul class="layui-nav layui-nav-tree layui-left-nav-tree {{d.className}}" lay-shrink="all" id="{{d.id}}">{{d.children}}</ul>';
             if (isSub) {
                 wrapperHtml = '<dl class="layui-nav-child ">{{d.children}}</dl>';
             }
