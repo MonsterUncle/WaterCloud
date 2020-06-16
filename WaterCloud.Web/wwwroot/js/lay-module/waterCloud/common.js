@@ -70,16 +70,12 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
                 var array = [];
                 $.each(options.cols[0], function (i) {
-                    options.cols[0][i].hideAlways = true;
-                    options.cols[0][i].hide = true;
-                    if (options.cols[0][i].field==options.sqlkey) {
+                    if (options.cols[0][i].field == options.sqlkey) {
                         array.push(options.cols[0][i]);
                     }
                     if (dataJson != undefined) {
                         for (var j = 0; j < dataJson.length; j++) {
                             if (options.cols[0][i].field == dataJson[j].F_EnCode) {
-                                options.cols[0][i].hideAlways = false;
-                                options.cols[0][i].hide = false;
                                 array.push(options.cols[0][i]);
                                 break;
                             }
@@ -136,16 +132,12 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
                 var array = [];
                 $.each(options.cols[0], function (i) {
-                    options.cols[0][i].hideAlways = true;
-                    options.cols[0][i].hide = true;
                     if (options.cols[0][i].field == options.sqlkey) {
                         array.push(options.cols[0][i]);
                     }
                     if (dataJson != undefined) {
                         for (var j = 0; j < dataJson.length; j++) {
                             if (options.cols[0][i].field == dataJson[j].F_EnCode) {
-                                options.cols[0][i].hideAlways = false;
-                                options.cols[0][i].hide = false;
                                 array.push(options.cols[0][i]);
                                 break;
                             }
