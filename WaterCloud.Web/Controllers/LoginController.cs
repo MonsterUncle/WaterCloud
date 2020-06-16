@@ -33,23 +33,33 @@ namespace WaterCloud.Web.Controllers
             _setService = setService;
         }
         [HttpGet]
-        public virtual ActionResult Index()
+        public virtual async Task<ActionResult> Index()
         {
-            //根据域名判断租户
-            var host= HttpContext.Request.Host.ToString();
-            if (GlobalContext.SystemConfig.Debug)
+            try
             {
-                host = "";
+                var systemset = await _setService.GetFormByHost("");
+                if (systemset.F_DBProvider!= GlobalContext.SystemConfig.DBProvider|| systemset.F_DbString != GlobalContext.SystemConfig.DBConnectionString)
+                {
+                    systemset.F_DBProvider = GlobalContext.SystemConfig.DBProvider;
+                    systemset.F_DbString = GlobalContext.SystemConfig.DBConnectionString;
+                    await _setService.SubmitForm(systemset, systemset.F_Id);
+                }
+                if (GlobalContext.SystemConfig.Demo)
+                {
+                    ViewBag.UserName = Define.SYSTEM_USERNAME;
+                    ViewBag.Password = Define.SYSTEM_USERPWD;
+                }
+                ViewBag.ProjectName = systemset.F_ProjectName;
+                ViewBag.LogoIcon = "../icon/" + systemset.F_Logo;
+                return View();
             }
-            var systemset = _setService.GetFormByHost(host).Result;
-            if (GlobalContext.SystemConfig.Demo)
+            catch (Exception)
             {
-                ViewBag.UserName = Define.SYSTEM_USERNAME;
-                ViewBag.Password = Define.SYSTEM_USERPWD;
+                ViewBag.ProjectName = "水之云信息系统";
+                ViewBag.LogoIcon = "../icon/favicon.ico";
+                return View();
             }
-            ViewBag.ProjectName = systemset.F_ProjectName;
-            ViewBag.LogoIcon ="../icon/"+ systemset.F_Logo;
-            return View();
+
         }
         [HttpGet]
         public ActionResult GetAuthCode()
