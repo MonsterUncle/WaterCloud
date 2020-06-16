@@ -101,10 +101,9 @@ namespace WaterCloud.Web.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> CheckLogin(string username, string password)
+        public async Task<ActionResult> CheckLogin(string username, string password,string localurl)
         {
             //根据域名判断租户
-            string localurl = HttpContext.Request.Host.ToString();
             LogEntity logEntity = new LogEntity();
             logEntity.F_ModuleName ="系统登录";
             logEntity.F_Type = DbLogType.Login.ToString();
