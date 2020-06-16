@@ -9,7 +9,7 @@ using System;
 
 namespace WaterCloud.Domain.SystemManage
 {
-    [TableAttribute("Sys_ModuleButton")]
+    [TableAttribute("sys_modulebutton")]
     public class ModuleButtonEntity : IEntity<ModuleButtonEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         [ColumnAttribute("F_Id", IsPrimaryKey = true)]

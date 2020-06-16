@@ -96,7 +96,7 @@ namespace WaterCloud.CodeGenerator
 
             SetClassDescription("实体类", baseConfigModel, sb);
             baseConfigModel.TableNameUpper=TableMappingHelper.ConvertTo_Uppercase(baseConfigModel.TableName);
-            sb.AppendLine("    [TableAttribute(\"" + baseConfigModel.TableNameUpper + "\")]");
+            sb.AppendLine("    [TableAttribute(\"" + baseConfigModel.TableName + "\")]");
             var baseEntity= GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn);
             if (string.IsNullOrEmpty(baseEntity))
             {

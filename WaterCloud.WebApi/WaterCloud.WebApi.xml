@@ -14,7 +14,7 @@
             用户接口
             </summary>
         </member>
-        <member name="M:WaterCloud.WebApi.Controllers.UserController.Login(System.String,System.String,System.String)">
+        <member name="M:WaterCloud.WebApi.Controllers.UserController.Login(System.String,System.String,System.String,System.String)">
             <summary>
             用户登录
             </summary>

@@ -18,13 +18,17 @@ namespace WaterCloud.Service.SystemManage
 {
     public class QuickModuleService: IDenpendency
     {
-		private IQuickModuleRepository service = new QuickModuleRepository();
+		private IQuickModuleRepository service;
         /// <summary>
         /// »º´æ²Ù×÷Àà
         /// </summary>
 
         private string cacheKey = "watercloud_quickmoduledata_";
-
+        public QuickModuleService()
+        {
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            service = currentuser != null ? new QuickModuleRepository(currentuser.DbString, currentuser.DBProvider) : new QuickModuleRepository();
+        }
         public async Task<object> GetTransferList(string userId)
         {
             var data = await service.GetTransferList(userId);

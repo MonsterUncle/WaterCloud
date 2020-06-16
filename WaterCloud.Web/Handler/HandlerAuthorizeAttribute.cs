@@ -8,6 +8,7 @@ using System.Security.Policy;
 using Serenity.Web;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
+using WaterCloud.Service.SystemOrganize;
 /// <summary>
 /// 权限验证
 /// </summary>

@@ -2,6 +2,8 @@
 using System.IO;
 using System.Text;
 using System.Data;
+using System.Drawing;
+using System.Linq;
 
 namespace WaterCloud.Code
 {
@@ -636,6 +638,26 @@ namespace WaterCloud.Code
                 //关闭流读取器
                 reader.Close();
             }
+        }
+        #endregion
+
+        #region 判断文件
+        // 判断文件是否是bai图片
+        public static bool IsPicture(string fileName)
+        {
+            string strFilter = ".jpeg|du.gif|.jpg|.png|.bmp|.pic|.tiff|.ico|.iff|.lbm|.mag|.mac|.mpt|.opt|";
+            char[] separtor = { '|' };
+            string[] tempFileds = StringSplit(strFilter, separtor);
+            foreach (string str in tempFileds)
+            {
+                if (str.ToUpper() == fileName.Substring(fileName.LastIndexOf("."), fileName.Length - fileName.LastIndexOf(".")).ToUpper()) { return true; }
+            }
+            return false;
+        }
+        // 通过字符串，分隔符返回zhistring[]数组 
+        public static string[] StringSplit(string s, char[] separtor)
+        {
+            string[] tempFileds = s.Trim().Split(separtor); return tempFileds;
         }
         #endregion
     }

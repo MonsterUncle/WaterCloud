@@ -6,6 +6,7 @@ $.clientsInit = function () {
     var dataJson = {
         dataItems: [],
         organize: [],
+        company: [],
         role: [],
         duty: [],
         user: [],
@@ -28,6 +29,7 @@ $.clientsInit = function () {
                 dataJson.authorizeButton = data.authorizeButton;
                 dataJson.authorizeFields = data.authorizeFields;
                 dataJson.moduleFields = data.moduleFields;
+                dataJson.company = data.company;
             }
         });
     }

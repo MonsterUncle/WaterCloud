@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Chloe;
+using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Repository.SystemManage
 {

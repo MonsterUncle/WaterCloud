@@ -9,6 +9,7 @@ using System.Text;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
+using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service
 {
@@ -22,12 +23,14 @@ namespace WaterCloud.Service
         protected RepositoryBase<T> Repository;
         protected DbContext dbcontext;
         public DataFilterService() {
-            Repository = new RepositoryBase<T>();
-            dbcontext = Repository.GetDbContext();
-        }
-        public DataFilterService(string ConnectStr, string providerName)
-        {
-            Repository = new RepositoryBase<T>(ConnectStr, providerName);
+            if (loginUser!=null)
+            {
+                Repository = new RepositoryBase<T>(loginUser.DbString, loginUser.DBProvider);
+            }
+            else
+            {
+                Repository = new RepositoryBase<T>();
+            }
             dbcontext = Repository.GetDbContext();
         }
         /// <summary>

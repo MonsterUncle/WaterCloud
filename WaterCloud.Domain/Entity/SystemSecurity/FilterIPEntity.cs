@@ -9,7 +9,7 @@ using System;
 
 namespace WaterCloud.Domain.SystemSecurity
 {
-    [TableAttribute("Sys_FilterIP")]
+    [TableAttribute("sys_filterip")]
 
     public class FilterIPEntity : IEntity<FilterIPEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {

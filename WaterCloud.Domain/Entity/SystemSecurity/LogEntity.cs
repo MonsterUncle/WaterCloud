@@ -9,7 +9,7 @@ using System;
 
 namespace WaterCloud.Domain.SystemSecurity
 {
-    [TableAttribute("Sys_Log")]
+    [TableAttribute("sys_log")]
 
     public class LogEntity : IEntity<LogEntity>, ICreationAudited
     {
@@ -28,6 +28,7 @@ namespace WaterCloud.Domain.SystemSecurity
         public DateTime? F_CreatorTime { get; set; }
         public string F_CreatorUserId { get; set; }
         public string F_KeyValue { get; set; }
+        public string F_CompanyId { get; set; }
         public  LogEntity()
         {
 

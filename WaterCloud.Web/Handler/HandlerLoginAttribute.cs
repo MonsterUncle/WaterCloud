@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Serenity.Web;
 using Microsoft.AspNetCore.Mvc;
 using System.Web;
+using WaterCloud.Service.SystemOrganize;
 /// <summary>
 /// 登录验证
 /// </summary>

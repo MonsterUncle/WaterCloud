@@ -9,7 +9,7 @@ using Chloe.Annotations;
 
 namespace WaterCloud.Domain.SystemManage
 {
-    [TableAttribute("Sys_ItemsDetail")]
+    [TableAttribute("sys_itemsdetail")]
     public class ItemsDetailEntity : IEntity<ItemsDetailEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         [ColumnAttribute("F_Id", IsPrimaryKey = true)]

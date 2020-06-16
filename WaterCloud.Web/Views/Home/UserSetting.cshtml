@@ -69,7 +69,7 @@
                         </div>
                     </div>
 
-                    <div class="layui-form-item">
+                    <div class="layui-form-item" style="text-align:center">
                         <div class="layui-input-block">
                             <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
                         </div>
@@ -86,7 +86,7 @@
                 laydate = layui.laydate;
             $(function () {
                 common.ajax({
-                    url: "/SystemManage/User/GetUserFormJson",
+                    url: "/SystemOrganize/User/GetUserFormJson",
                     dataType: "json",
                     async: false,
                     success: function (data) {
@@ -106,7 +106,7 @@
             form.on('submit(saveBtn)', function (data) {
                 var postData = data.field;
                 common.submitForm({
-                    url: "/SystemManage/User/SubmitUserForm",
+                    url: "/SystemOrganize/User/SubmitUserForm",
                     param: postData,
                     close: false,
                     success: function () {

@@ -9,7 +9,7 @@ using System;
 
 namespace WaterCloud.Domain.SystemSecurity
 {
-    [TableAttribute("Sys_DbBackup")]
+    [TableAttribute("sys_dbbackup")]
 
     public class DbBackupEntity : ICreationAudited, IDeleteAudited, IModificationAudited
     {

@@ -9,12 +9,13 @@ using Serenity;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Service;
-using WaterCloud.Service.SystemManage;
 using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Code;
-using WaterCloud.Domain.SystemManage;
 using WaterCloud.Domain.SystemSecurity;
 using System.Threading.Tasks;
+using WaterCloud.Service.SystemOrganize;
+using WaterCloud.Domain.SystemOrganize;
+using Microsoft.AspNetCore.Http;
 
 namespace WaterCloud.Web.Controllers
 {
@@ -23,22 +24,31 @@ namespace WaterCloud.Web.Controllers
         private readonly FilterIPService _filterIPService;
         private readonly UserService _userService;
         private readonly LogService _logService;
-
-        public LoginController(FilterIPService filterIPService, UserService userService, LogService logService)
+        private readonly SystemSetService _setService;
+        public LoginController(FilterIPService filterIPService, UserService userService, LogService logService, SystemSetService setService)
         {
             _filterIPService = filterIPService;
             _userService = userService;
             _logService = logService;
+            _setService = setService;
         }
         [HttpGet]
         public virtual ActionResult Index()
         {
+            //根据域名判断租户
+            var host= HttpContext.Request.Host.ToString();
+            if (GlobalContext.SystemConfig.Debug)
+            {
+                host = "";
+            }
+            var systemset = _setService.GetFormByHost(host).Result;
             if (GlobalContext.SystemConfig.Demo)
             {
                 ViewBag.UserName = Define.SYSTEM_USERNAME;
                 ViewBag.Password = Define.SYSTEM_USERPWD;
             }
-            var test = string.Format("{0:E2}", 1);
+            ViewBag.ProjectName = systemset.F_ProjectName;
+            ViewBag.LogoIcon ="../icon/"+ systemset.F_Logo;
             return View();
         }
         [HttpGet]
@@ -93,16 +103,22 @@ namespace WaterCloud.Web.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> CheckLogin(string username, string password)
         {
+            //根据域名判断租户
+            string localurl = HttpContext.Request.Host.ToString();
             LogEntity logEntity = new LogEntity();
             logEntity.F_ModuleName ="系统登录";
             logEntity.F_Type = DbLogType.Login.ToString();
+            if (GlobalContext.SystemConfig.Debug)
+            {
+                localurl = "";
+            }
             try
             {
                 if (!await CheckIP())
                 {
                     throw new Exception("IP受限");
                 }
-                UserEntity userEntity =await _userService.CheckLogin(username, password);
+                UserEntity userEntity =await _userService.CheckLogin(username, password, localurl);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
                 operatorModel.UserCode = userEntity.F_Account;
@@ -119,6 +135,9 @@ namespace WaterCloud.Web.Controllers
                 operatorModel.IsBoss = userEntity.F_IsBoss.Value;
                 operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
+                SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
+                operatorModel.DBProvider = setEntity.F_DBProvider;
+                operatorModel.DbString = setEntity.F_DbString;
                 if (userEntity.F_Account == "admin")
                 {
                     operatorModel.IsSystem = true;

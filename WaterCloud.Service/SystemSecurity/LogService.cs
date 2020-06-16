@@ -23,6 +23,11 @@ namespace WaterCloud.Service.SystemSecurity
         private ModuleService moduleservice = new ModuleService();
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        public LogService()
+        {
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            service = currentuser != null ? new LogRepository(currentuser.DbString, currentuser.DBProvider) : new LogRepository();
+        }
         public async Task<List<LogEntity>> GetLookList(Pagination pagination, int timetype, string keyword="")
         {
             //获取数据权限
@@ -84,6 +89,7 @@ namespace WaterCloud.Service.SystemSecurity
             logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
             logEntity.F_IPAddress = OperatorProvider.Provider.GetCurrent().LoginIPAddress;
             logEntity.F_IPAddressName = OperatorProvider.Provider.GetCurrent().LoginIPAddressName;
+            logEntity.F_CompanyId = OperatorProvider.Provider.GetCurrent().CompanyId;
             logEntity.F_Result = result;
             logEntity.F_Description = resultLog;
             logEntity.Create();
@@ -101,11 +107,13 @@ namespace WaterCloud.Service.SystemSecurity
                 {
                     logEntity.F_IPAddress = LoginProvider=="WebApi"? "未连接未知": WebHelper.Ip;
                     logEntity.F_IPAddressName = "本地局域网";
+                    logEntity.F_CompanyId = Define.SYSTEM_MASTERPROJECT;
                 }
                 else
                 {
                     logEntity.F_IPAddress = OperatorProvider.Provider.GetCurrent().LoginIPAddress;
                     logEntity.F_IPAddressName = OperatorProvider.Provider.GetCurrent().LoginIPAddressName;
+                    logEntity.F_CompanyId = OperatorProvider.Provider.GetCurrent().CompanyId;
                 }
                 logEntity.Create();
                 await service.Insert(logEntity);
@@ -114,6 +122,7 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 logEntity.F_IPAddress = LoginProvider == "WebApi" ? "未连接未知" : WebHelper.Ip;
                 logEntity.F_IPAddressName = "本地局域网";
+                logEntity.F_CompanyId = Define.SYSTEM_MASTERPROJECT;
                 logEntity.Create();
                 await service.Insert(logEntity);
             }

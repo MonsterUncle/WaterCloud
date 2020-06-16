@@ -1,0 +1,170 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script>
+    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treetable', "layer"], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            layer = layui.layer,
+            treetable = layui.treetable,
+            common = layui.common;
+        //加载数据
+        var loading = layer.load(0, { shade: false });
+        common.rendertable({
+            elem: '#currentTableId',
+            url: '/SystemOrganize/Role/GetGridJson',
+            sqlkey: 'F_Id',//数据库主键
+            cols: [[
+                { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
+                { field: 'F_FullName', title: '角色名称', width: 120, sort: true },
+                { field: 'F_EnCode', title: '角色编号', width: 120, sort: true },
+                {
+                    field: 'F_Type', title: '角色类型', width: 120, sort: true,
+                    templet: function (d) {
+                        return top.clients.dataItems["RoleType"][d.F_Type] == undefined ? "" : top.clients.dataItems["RoleType"][d.F_Type];
+                    }
+                },
+                {
+                    field: 'F_OrganizeId', title: '归属公司', width: 120, sort: true,
+                    templet: function (d) {
+                        return top.clients.company[d.F_OrganizeId] == undefined ? "" : top.clients.company[d.F_OrganizeId].fullname;
+                    }
+                },
+                {
+                    field: 'F_EnabledMark', title: '状态', width: 120, sort: true,
+                    templet: function (d) {
+                        if (d.F_EnabledMark == true) {
+                            return "<span class=\"layui-bg-green\">正常</span>";
+                        } else {
+                            return "<span class=\"layui-bg-red\">禁用</span>";
+                        }
+                    }
+                },
+                {
+                    field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true,
+                    templet: function (d) {
+                        if (d.F_CreatorTime) {
+                            var time = new Date(d.F_CreatorTime);
+                            return time.Format("yyyy-MM-dd");
+                        }
+                    }
+                },
+                { field: 'F_Description', title: '备注', minWidth: 150, sort: true },
+            ]],
+            done: function () {
+                //权限控制
+                common.authorizeButton("toolbar");
+                //关闭加载
+                layer.closeAll('loading');
+            }
+        });
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            var queryJson = data.field.txt_keyword;
+            //执行搜索重载
+            common.reloadtable({
+                elem: 'currentTableId',
+                //page:false,
+                curr: 1,
+                where: { keyword: data.field.txt_keyword }
+            });
+            return false;
+        });
+        var role;
+        table.on('row(currentTableFilter)', function (obj) {
+            obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
+            role = obj;
+        })
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听操作
+                common.modalOpen({
+                    title: "添加角色",
+                    url: "/SystemOrganize/Role/Form",
+                    width: "550px",
+                    height: "550px",
+                    btn: []
+                });
+            }
+            else if (obj.event === 'delete') {
+                if (role == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.deleteForm({
+                    url: "/SystemOrganize/Role/DeleteForm",
+                    param: { keyValue: role.data.F_Id },
+                    success: function () {
+                        common.reload('data-search-btn');
+                        role = null;
+                    }
+                });
+            }
+            else if (obj.event === 'edit') {
+                if (role == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalOpen({
+                    title: "编辑角色",
+                    url: "/SystemOrganize/Role/Form?keyValue=" + role.data.F_Id,
+                    width: "550px",
+                    height: "550px",
+                    btn: []
+                });
+            }
+            else if (obj.event === 'details') {
+                if (role == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalOpen({
+                    title: "查看角色",
+                    url: "/SystemOrganize/Role/Details?keyValue=" + role.data.F_Id,
+                    width: "550px",
+                    height: "550px",
+                    btn: []
+                });
+            }
+            return false;
+        });
+    });
+</script>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <fieldset class="table-search-fieldset">
+            @*<legend>搜索信息</legend>*@
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">关键字:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="txt_keyword" name="txt_keyword" autocomplete="off" class="layui-input" placeholder="">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container" id="toolbar">
+                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
+                <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+    </div>
+</div>

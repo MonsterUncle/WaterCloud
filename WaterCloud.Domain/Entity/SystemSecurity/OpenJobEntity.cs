@@ -16,7 +16,7 @@ namespace WaterCloud.Domain.SystemSecurity
     /// <summary>
 	/// 定时任务
 	/// </summary>
-    [Table("Sys_OpenJob")]
+    [Table("sys_openjob")]
     public partial class OpenJobEntity : IEntity<OpenJobEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         [ColumnAttribute("F_Id", IsPrimaryKey = true)]

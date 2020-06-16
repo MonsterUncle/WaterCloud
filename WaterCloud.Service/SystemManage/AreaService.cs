@@ -16,7 +16,13 @@ namespace WaterCloud.Service.SystemManage
 {
     public class AreaService : DataFilterService<AreaEntity>, IDenpendency
     {
-        private IAreaRepository service = new AreaRepository();
+        private IAreaRepository service;
+        public AreaService()
+        {
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            service = currentuser != null ? new AreaRepository(currentuser.DbString, currentuser.DBProvider) : new AreaRepository();
+
+        }
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         /// <summary>

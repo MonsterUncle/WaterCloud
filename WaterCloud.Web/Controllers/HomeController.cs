@@ -5,15 +5,31 @@
  * Website：
 *********************************************************************************/
 using Microsoft.AspNetCore.Mvc;
+using WaterCloud.Code;
+using WaterCloud.Service.SystemManage;
+using WaterCloud.Service.SystemOrganize;
 
 namespace WaterCloud.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly SystemSetService _setService;
+        public HomeController(SystemSetService setService)
+        {
+            _setService = setService;
+        }
         [HttpGet]
         [HandlerLogin]
         public ActionResult Index()
         {
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            if (currentuser==null)
+            {
+                return View();
+            }
+            var systemset = _setService.GetForm(currentuser.CompanyId).Result;
+            ViewBag.ProjectName = systemset.F_ProjectName;
+            ViewBag.LogoIcon = "../icon/" + systemset.F_Logo;
             return View();
         }
         [HttpGet]

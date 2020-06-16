@@ -15,7 +15,7 @@ namespace WaterCloud.Domain.SystemSecurity
 	/// <summary>
 	/// ServerState Entity Model
 	/// </summary>
-	[TableAttribute("Sys_ServerState")]
+	[TableAttribute("sys_serverstate")]
     public class ServerStateEntity : IEntity<ServerStateEntity>
     {
 						[ColumnAttribute("F_Id", IsPrimaryKey = true)]

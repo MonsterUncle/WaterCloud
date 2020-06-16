@@ -16,7 +16,7 @@ namespace WaterCloud.Service.SystemManage
 {
     public class ModuleService : DataFilterService<ModuleEntity>, IDenpendency
     {
-        private IModuleRepository service = new ModuleRepository();
+        private IModuleRepository service;
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -29,6 +29,11 @@ namespace WaterCloud.Service.SystemManage
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        public ModuleService()
+        {
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            service = currentuser != null ? new ModuleRepository(currentuser.DbString, currentuser.DBProvider) : new ModuleRepository();
+        }
 
         public async Task<List<ModuleEntity>> GetList()
         {

@@ -32,5 +32,8 @@ namespace WaterCloud.Code
         public string WxOpenId { get; set; }
         public string Avatar { get; set; }
         public string loginMark { get; set; }
+        //扩展字段 数据库，2020-06-15
+        public string DBProvider { get; set; }
+        public string DbString { get; set; }
     }
 }

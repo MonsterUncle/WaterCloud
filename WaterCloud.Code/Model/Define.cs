@@ -13,7 +13,7 @@ namespace WaterCloud.Code
         
         public const string SYSTEM_USERNAME = "admin";    //超级管理员
         public const string SYSTEM_USERPWD = "0000";
-
+        public const string SYSTEM_MASTERPROJECT = "d69fd66a-6a77-4011-8a25-53a79bdf5001";
 
         public const string PROVIDER_COOKIE = "Cookie";
         public const string PROVIDER_SESSION = "Session";

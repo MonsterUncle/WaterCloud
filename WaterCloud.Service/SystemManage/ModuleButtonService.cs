@@ -17,8 +17,8 @@ namespace WaterCloud.Service.SystemManage
 {
     public class ModuleButtonService : DataFilterService<ModuleButtonEntity>, IDenpendency
     {
-        private IModuleButtonRepository service = new ModuleButtonRepository();
-        private IModuleRepository moduleservice = new ModuleRepository();
+        private IModuleButtonRepository service;
+        private IModuleRepository moduleservice;
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         /// <summary>
@@ -28,6 +28,12 @@ namespace WaterCloud.Service.SystemManage
         private string cacheKey = "watercloud_modulebuttondata_";
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
+        public ModuleButtonService()
+        {
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            service = currentuser != null ? new ModuleButtonRepository(currentuser.DbString, currentuser.DBProvider) : new ModuleButtonRepository();
+            moduleservice = currentuser != null ? new ModuleRepository(currentuser.DbString, currentuser.DBProvider) : new ModuleRepository();
+        }
         public async Task<List<ModuleButtonEntity>> GetList(string moduleId = "")
         {
             var list = new List<ModuleButtonEntity>();

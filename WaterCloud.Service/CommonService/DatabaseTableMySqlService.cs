@@ -10,6 +10,7 @@ using WaterCloud.DataBase;
 using WaterCloud.DataBase.Extensions;
 using WaterCloud.Domain;
 using WaterCloud.Domain.SystemManage;
+using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Service.CommonService

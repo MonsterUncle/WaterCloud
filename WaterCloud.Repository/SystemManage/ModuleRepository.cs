@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
 using Chloe;
+using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Repository.SystemManage
 {

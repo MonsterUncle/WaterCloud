@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Serenity;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemManage;
+using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service;
 using WaterCloud.Service.SystemManage;
+using WaterCloud.Service.SystemOrganize;
 using WaterCloud.Service.SystemSecurity;
 
 namespace WaterCloud.WebApi.Controllers
@@ -37,7 +39,7 @@ namespace WaterCloud.WebApi.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Login([FromQuery] string userName, [FromQuery] string password, [FromQuery] string token)
+        public async Task<ActionResult> Login([FromQuery] string userName, [FromQuery] string password, [FromQuery] string localurl, [FromQuery] string token)
         {
             var apitoken = Utils.GuId();
             if (!string.IsNullOrEmpty(token))
@@ -54,7 +56,7 @@ namespace WaterCloud.WebApi.Controllers
                 {
                     throw new Exception("IP受限");
                 }
-                UserEntity userEntity = await _userService.CheckLogin(userName, Md5.md5(password, 32).ToLower(), token);
+                UserEntity userEntity = await _userService.CheckLogin(userName, Md5.md5(password, 32).ToLower(), localurl, token);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
                 operatorModel.UserCode = userEntity.F_Account;

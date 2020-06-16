@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
+using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Repository.SystemManage
 {

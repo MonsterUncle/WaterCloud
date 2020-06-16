@@ -15,13 +15,19 @@ namespace WaterCloud.Service.SystemManage
     /// </summary>
     public class ModuleFieldsService : DataFilterService<ModuleFieldsEntity>, IDenpendency
     {
-        private IModuleFieldsRepository service = new ModuleFieldsRepository();
-        private IModuleRepository moduleservice = new ModuleRepository();
+        private IModuleFieldsRepository service;
+        private IModuleRepository moduleservice;
         private string cacheKey = "watercloud_ modulefieldsdata_";
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        public ModuleFieldsService()
+        {
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            service = currentuser != null ? new ModuleFieldsRepository(currentuser.DbString, currentuser.DBProvider) : new ModuleFieldsRepository();
+            moduleservice = currentuser != null ? new ModuleRepository(currentuser.DbString, currentuser.DBProvider) : new ModuleRepository();
+        }
         #region 获取数据
         public async Task<List<ModuleFieldsEntity>> GetList(string keyword = "")
         {

@@ -15,7 +15,7 @@ namespace WaterCloud.Domain.SystemManage
 	/// <summary>
 	/// QuickModule Entity Model
 	/// </summary>
-	[TableAttribute("Sys_QuickModule")]
+	[TableAttribute("sys_quickmodule")]
     public class QuickModuleEntity : IEntity<QuickModuleEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
 						[ColumnAttribute("F_Id", IsPrimaryKey = true)]

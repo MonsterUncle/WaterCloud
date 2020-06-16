@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CSRedis;
 using WaterCloud.Code.Model;
+using WaterCloud.Service.SystemOrganize;
+using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Web.Controllers
 {
@@ -41,9 +43,11 @@ namespace WaterCloud.Web.Controllers
         private readonly OrganizeService _organizeService;
         private readonly RoleService _roleService;
         private readonly DutyService _dutyService;
+        private readonly SystemSetService _setService;
 
-        public ClientsDataController(QuickModuleService quickModuleService, NoticeService noticeService, UserService userService, ModuleService moduleService, LogService logService, RoleAuthorizeService roleAuthorizeService, ItemsDataService itemsDetailService, ItemsTypeService itemsService, OrganizeService organizeService, RoleService roleService, DutyService dutyService)
+        public ClientsDataController(SystemSetService setService, OrganizeService organizeService, QuickModuleService quickModuleService, NoticeService noticeService, UserService userService, ModuleService moduleService, LogService logService, RoleAuthorizeService roleAuthorizeService, ItemsDataService itemsDetailService, ItemsTypeService itemsService, RoleService roleService, DutyService dutyService)
         {
+            _setService = setService;
             _quickModuleService = quickModuleService;
             _noticeService = noticeService;
             _userService = userService;
@@ -64,6 +68,7 @@ namespace WaterCloud.Web.Controllers
             {
                 dataItems =await this.GetDataItemList(),
                 organize = await this.GetOrganizeList(),
+                company = await this.GetCompanyList(),
                 role = await this.GetRoleList(),
                 duty = await this.GetDutyList(),
                 user = await this.GetUserList(),
@@ -201,6 +206,10 @@ namespace WaterCloud.Web.Controllers
         public async Task<ActionResult> GetCoutData()
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
+            if (currentuser==null)
+            {
+                return null;
+            }
             int usercout =(await _userService.GetUserList("")).Count();
             var temp =await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + currentuser.UserId);
             int logincout = temp!=null&&temp.F_LogOnCount!=null? (int)temp.F_LogOnCount : 0;
@@ -217,9 +226,10 @@ namespace WaterCloud.Web.Controllers
             InitEntity init = new InitEntity();
             init.homeInfo = new HomeInfoEntity();
             init.logoInfo = new LogoInfoEntity();
+            var systemset =await _setService.GetForm(currentuser.CompanyId);
             //修改主页及logo参数
-
-
+            init.logoInfo.title = systemset.F_LogoCode;
+            init.logoInfo.image = "../icon/"+systemset.F_Logo;
 
             init.menuInfo = new List<MenuInfoEntity>();
             MenuInfoEntity munu = new MenuInfoEntity();
@@ -366,6 +376,21 @@ namespace WaterCloud.Web.Controllers
                 {
                     encode = item.F_EnCode,
                     fullname = item.F_FullName
+                };
+                dictionary.Add(item.F_Id, fieldItem);
+            }
+            return dictionary;
+        }
+        private async Task<object> GetCompanyList()
+        {
+            var data = await _setService.GetList();
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            foreach (SystemSetEntity item in data)
+            {
+                var fieldItem = new
+                {
+                    encode = item.F_Id,
+                    fullname = item.F_CompanyName
                 };
                 dictionary.Add(item.F_Id, fieldItem);
             }
