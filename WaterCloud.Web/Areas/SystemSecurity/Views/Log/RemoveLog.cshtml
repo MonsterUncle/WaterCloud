@@ -10,18 +10,21 @@
         //权限字段
         common.authorizeFields('adminform');
         //监听提交
+        var lock = false;
         form.on('submit(clear)', function (data) {
-            common.submitForm({
-                loading: "正在备份数据...",
-                url: "/SystemSecurity/Log/SubmitRemoveLog",
-                param: data.field,
-                success: function () {
-                    //parent.location.reload();//整体刷新
-                    //parent.$('button[lay-filter="data-search-btn"]').click();//按钮刷新
-                    //$(window.parent.document).find('.layui-laypage-btn').click();//当前页刷新
-                    common.parentreload("data-search-btn");
-                }
-            })
+            if (!lock) {
+                common.submitForm({
+                    loading: "正在备份数据...",
+                    url: "/SystemSecurity/Log/SubmitRemoveLog",
+                    param: data.field,
+                    success: function () {
+                        //parent.location.reload();//整体刷新
+                        //parent.$('button[lay-filter="data-search-btn"]').click();//按钮刷新
+                        //$(window.parent.document).find('.layui-laypage-btn').click();//当前页刷新
+                        common.parentreload("data-search-btn");
+                    }
+                })
+            }
             return false;
         });
 

@@ -55,17 +55,21 @@
                 }
             }
         });
+        var lock = false;
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            var postData = data.field;
-            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-            common.submitForm({
-                url: event == "edit" ? "/SystemManage/Area/SubmitForm?keyValue=" + keyValue :"/SystemManage/Area/SubmitForm",
-                param: postData,
-                success: function () {
-                    common.parentreload("data-search-btn");
-                }
-            })
+            if (!lock) {
+                lock = true;
+                var postData = data.field;
+                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+                common.submitForm({
+                    url: event == "edit" ? "/SystemManage/Area/SubmitForm?keyValue=" + keyValue : "/SystemManage/Area/SubmitForm",
+                    param: postData,
+                    success: function () {
+                        common.parentreload("data-search-btn");
+                    }
+                })
+            }
             return false;
         });
     });

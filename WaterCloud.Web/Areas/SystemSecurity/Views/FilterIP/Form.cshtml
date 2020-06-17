@@ -104,33 +104,36 @@
             }
         }
         //监听提交
+        var lock = false;
         form.on('submit(saveBtn)', function (data) {
-            var index = layer.load(1, {
-                shade: [0.5, '#000'] //0.1透明度的背景
-            });
-            var postData = data.field;
-            var StartIP = data.field.F_StartIP;
-            var EndIP = data.field.F_EndIP;
-            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-            if (!!EndIP) {
+            if (!lock) {
+                var index = layer.load(1, {
+                    shade: [0.5, '#000'] //0.1透明度的背景
+                });
+                var postData = data.field;
+                var StartIP = data.field.F_StartIP;
+                var EndIP = data.field.F_EndIP;
+                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+                if (!!EndIP) {
 
-                if (compareIP(StartIP, EndIP) == -1) {
-                    common.modalMsg("不在同一个网段内");
-                    return false;
+                    if (compareIP(StartIP, EndIP) == -1) {
+                        common.modalMsg("不在同一个网段内");
+                        return false;
+                    }
+                    if (compareIP(StartIP, EndIP) == 0) {
+                        common.modalMsg("结束IP不能大于开始IP");
+                        return false;
+                    }
                 }
-                if (compareIP(StartIP, EndIP) == 0) {
-                    common.modalMsg("结束IP不能大于开始IP");
-                    return false;
-                }
+                common.submitForm({
+                    url: "/SystemSecurity/FilterIP/SubmitForm?keyValue=" + keyValue,
+                    param: postData,
+                    success: function () {
+                        common.parentreload("data-search-btn");
+                    }
+                })
+                layer.close(index);
             }
-            common.submitForm({
-                url: "/SystemSecurity/FilterIP/SubmitForm?keyValue=" + keyValue,
-                param: postData,
-                success: function () {
-                    common.parentreload("data-search-btn");
-                }
-            })
-            layer.close(index);
             return false;
         });
     });

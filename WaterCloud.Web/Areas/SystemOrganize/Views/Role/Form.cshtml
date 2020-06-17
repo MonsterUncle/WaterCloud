@@ -133,22 +133,25 @@
             step.next('#stepForm');
             return false;
         });
+        var lock = false;
         form.on('submit(formStep3)', function (data) {
-            var postData = role;
-            var params = dtree.getCheckbarNodesParam("demoTree2");
-            var note = [];
-            for (var i = 0; i < params.length; i++) {
-                note.push(params[i].nodeId);
-            }
-            postData["permissionbuttonIds"] = String(moduleids);
-            postData["permissionfieldsIds"] = String(note);
-            common.submitForm({
-                url: "/SystemOrganize/Role/SubmitForm?keyValue=" + keyValue,
-                param: postData,
-                success: function () {
-                    common.parentreload("data-search-btn");
+            if (!lock) {
+                var postData = role;
+                var params = dtree.getCheckbarNodesParam("demoTree2");
+                var note = [];
+                for (var i = 0; i < params.length; i++) {
+                    note.push(params[i].nodeId);
                 }
-            })
+                postData["permissionbuttonIds"] = String(moduleids);
+                postData["permissionfieldsIds"] = String(note);
+                common.submitForm({
+                    url: "/SystemOrganize/Role/SubmitForm?keyValue=" + keyValue,
+                    param: postData,
+                    success: function () {
+                        common.parentreload("data-search-btn");
+                    }
+                })
+            }
             return false;
         });
 

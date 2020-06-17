@@ -51,19 +51,22 @@
             }
         });
         //监听提交
+        var lock = false;
         form.on('submit(saveBtn)', function (data) {
-            var postData = data.field;
-            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-            //if (!postData["F_Split"]) postData["F_Split"] = false;
-            if (!postData["F_IsPublic"]) postData["F_IsPublic"] = false;
-            postData["F_ModuleId"] = moduleId;
-            common.submitForm({
-                url: "/SystemManage/ModuleButton/SubmitForm?keyValue=" + keyValue,
-                param: postData,
-                success: function () {
-                    common.parentreload("data-search-btn");
-                }
-            })
+            if (!lock) {
+                var postData = data.field;
+                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+                //if (!postData["F_Split"]) postData["F_Split"] = false;
+                if (!postData["F_IsPublic"]) postData["F_IsPublic"] = false;
+                postData["F_ModuleId"] = moduleId;
+                common.submitForm({
+                    url: "/SystemManage/ModuleButton/SubmitForm?keyValue=" + keyValue,
+                    param: postData,
+                    success: function () {
+                        common.parentreload("data-search-btn");
+                    }
+                })
+            }
             return false;
         });
     });

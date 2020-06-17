@@ -111,3 +111,17 @@
     height: 100px;
     margin: 0 10px 10px 0;
 }
+/*轮播*/
+.layui-carousel > [carousel-item] {
+    overflow: visible;
+}
+
+    .layui-carousel > [carousel-item] > * {
+        height: auto;
+    }
+
+.layui-carousel-ind {
+    margin-top: -20px;
+    top: auto;
+    bottom: 10px;
+}

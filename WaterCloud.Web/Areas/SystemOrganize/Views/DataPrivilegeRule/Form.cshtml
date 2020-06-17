@@ -178,21 +178,24 @@
                 return false;
             });
             //监听提交
+            var lock = false;
             form.on('submit(saveBtn)', function (data) {
-                var postData = data.field;
-                var cachedata = table.cache.currentTableId
-                if (cachedata.length == 0) {
-                    common.modalMsg("未添加规则", "warning");
-                    return false;
-                }
-                postData.listData =JSON.stringify(cachedata);
-                common.submitForm({
-                    url: '/SystemOrganize/DataPrivilegeRule/SubmitForm?keyValue=' + keyValue,
-                    param: postData,
-                    success: function () {
-                        common.reloadIframe("/SystemOrganize/DataPrivilegeRule/Index");
+                if (!lock) {
+                    var postData = data.field;
+                    var cachedata = table.cache.currentTableId
+                    if (cachedata.length == 0) {
+                        common.modalMsg("未添加规则", "warning");
+                        return false;
                     }
-                })
+                    postData.listData = JSON.stringify(cachedata);
+                    common.submitForm({
+                        url: '/SystemOrganize/DataPrivilegeRule/SubmitForm?keyValue=' + keyValue,
+                        param: postData,
+                        success: function () {
+                            common.reloadIframe("/SystemOrganize/DataPrivilegeRule/Index");
+                        }
+                    })
+                }
                 return false;
             });
         });

@@ -582,16 +582,19 @@
             });
             return false;
         });
+        var lock = false;
         form.on('submit(formStep4)', function (data) {
-            //$('button[lay-filter="formStep4"]').attr('disabled', 'disabled');
-            var postData = baseConfig;
-            postData.Code = encodeURIComponent(JSON.stringify(codeList));
-            common.submitForm({
-                url: "/SystemManage/CodeGenerator/CodeGenerateJson",
-                param: postData,
-                success: function () {
-                }
-            })
+            if (!lock) {
+                lock = true;
+                var postData = baseConfig;
+                postData.Code = encodeURIComponent(JSON.stringify(codeList));
+                common.submitForm({
+                    url: "/SystemManage/CodeGenerator/CodeGenerateJson",
+                    param: postData,
+                    success: function () {
+                    }
+                })
+            }
             return false;
         });
         $('.pre').click(function () {

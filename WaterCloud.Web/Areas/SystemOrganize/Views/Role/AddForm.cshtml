@@ -54,21 +54,25 @@
             }
         });
         // 监听提交操作
+        var lock = false;
         form.on('submit(saveBtn)', function (data) {
-            var checkStatus = table.checkStatus("currentTableId").data;
-            var pvalue = [];
-            var pname = [];
-            for (var i = 0; i < checkStatus.length; i++) {
-                pvalue.push(checkStatus[i].F_Id);
-                pname.push(checkStatus[i].F_FullName);
+            if (!lock) {
+                var checkStatus = table.checkStatus("currentTableId").data;
+                var pvalue = [];
+                var pname = [];
+                for (var i = 0; i < checkStatus.length; i++) {
+                    pvalue.push(checkStatus[i].F_Id);
+                    pname.push(checkStatus[i].F_FullName);
+                }
+                if (!!pvalue) {
+                    parent.$('#' + value).val(pvalue.join(","));
+                }
+                if (!!pname) {
+                    parent.$('#' + name).val(pname.join(","));
+                }
+                common.modalClose();
+                lock = false;
             }
-            if (!!pvalue) {
-                parent.$('#' + value).val(pvalue.join(","));
-            }
-            if (!!pname) {
-                parent.$('#' + name).val(pname.join(","));
-            }
-            common.modalClose();
             return false;
         });
     });

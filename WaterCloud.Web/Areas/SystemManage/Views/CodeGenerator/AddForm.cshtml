@@ -12,11 +12,16 @@
             //权限字段
             common.authorizeFields('adminform');
             //监听提交
+            var lock = false;
             form.on('submit(saveBtn)', function (data) {
-                var valuedata = data.field.F_NewName;
-                parent.$('#' + event).html(valuedata);
-                common.modalMsg("修改成功!", "success");
-                common.modalClose();
+                if (!lock) {
+                    lock = true;
+                    var valuedata = data.field.F_NewName;
+                    parent.$('#' + event).html(valuedata);
+                    common.modalMsg("修改成功!", "success");
+                    common.modalClose();
+                    lock = false;
+                }
                 return false;
             });
         });
