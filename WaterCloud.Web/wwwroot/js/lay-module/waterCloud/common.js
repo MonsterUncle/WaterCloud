@@ -382,8 +382,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                             }
                         } else {
                             obj.modalAlert(data.message, data.state);
+                            lock = false;
                         }
-                        lock = false;
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         parent.layer.close(index);
