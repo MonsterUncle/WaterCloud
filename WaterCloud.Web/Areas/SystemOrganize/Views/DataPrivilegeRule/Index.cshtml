@@ -32,13 +32,12 @@
      </div>
  </div>
  <script>
-     layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treetable', 'layer','miniTab'], function () {
+     layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'layer','miniTab'], function () {
          var $ = layui.jquery,
              form = layui.form,
              layer = layui.layer,
              table = layui.table,
              miniTab = layui.miniTab,
-             treetable = layui.treetable,
              common = layui.common;
              var loading = layer.load(0, { shade: false });
          common.rendertable({
@@ -96,12 +95,9 @@
          //toolbar监听事件
          table.on('toolbar(currentTableFilter)', function (obj) { 
              if (obj.event === 'add') {  // 监听添加操作
-                 common.modalOpen({
+                 common.openNewTabByIframe({
                      title: "新增规则",
-                     url: "/SystemOrganize/DataPrivilegeRule/Form",
-                     width: "550px",
-                     height: "620px",
-                     isMax:true,
+                     href: "/SystemOrganize/DataPrivilegeRule/Form",
                  });
              } 
              else if (obj.event === 'delete') {
@@ -123,12 +119,9 @@
                    common.modalMsg("未选中数据", "warning");
                    return false;
                  }
-                 common.modalOpen({
+                 common.openNewTabByIframe({
                      title: "修改规则",
-                     url: "/SystemOrganize/DataPrivilegeRule/Form?keyValue=" + entity.data.F_Id,
-                     width: "550px",
-                     height: "620px",
-                     isMax: true,
+                     href: "/SystemOrganize/DataPrivilegeRule/Form?keyValue=" + entity.data.F_Id,
                  });
            }
            return false;

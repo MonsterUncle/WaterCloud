@@ -6,6 +6,7 @@
 *********************************************************************************/
 using System;
 using Chloe.Annotations;
+using WaterCloud.Code.Model;
 
 namespace WaterCloud.Domain.SystemManage
 {
@@ -29,5 +30,9 @@ namespace WaterCloud.Domain.SystemManage
         public string F_LastModifyUserId { get; set; }
         public DateTime? F_DeleteTime { get; set; }
         public string F_DeleteUserId { get; set; }
+
+        [NotMapped]
+        //使用懒加载加此字段
+        public bool haveChild { get; set; }
     }
 }

@@ -190,8 +190,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             LogEntity logEntity;
             var keyValue = OperatorProvider.Provider.GetCurrent().CompanyId;
-            logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
-            logEntity.F_Description += DbLogType.Create.ToDescription();
+            logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+            logEntity.F_Description += DbLogType.Update.ToDescription();
             entity.F_DeleteMark = false;
             try
             {

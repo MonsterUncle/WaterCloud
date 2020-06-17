@@ -583,6 +583,7 @@
             return false;
         });
         form.on('submit(formStep4)', function (data) {
+            //$('button[lay-filter="formStep4"]').attr('disabled', 'disabled');
             var postData = baseConfig;
             postData.Code = encodeURIComponent(JSON.stringify(codeList));
             common.submitForm({

@@ -60,6 +60,31 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
+        public async Task<ActionResult> GetListJson(string keyValue, string keyword)
+        {
+            var data = await _areaService.GetLookList();
+            var result = new List<AreaEntity>();
+            if (string.IsNullOrEmpty(keyValue))
+            {
+                keyValue = "0";
+            }
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                result = data.TreeWhere(t => t.F_FullName.Contains(keyword));
+            }
+            else
+            {
+                result = data;
+            }
+            result = result.Where(t => t.F_ParentId == keyValue).ToList();
+            foreach (var item in result)
+            {
+                item.haveChild = data.Where(a => a.F_ParentId == item.F_Id).Count() > 0 ? true : false;
+            }
+            return Success(data.Count, result);
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
             var data =await _areaService.GetLookForm(keyValue);

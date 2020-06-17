@@ -591,18 +591,17 @@ namespace WaterCloud.CodeGenerator
 
             #region js layui方法
             sb.AppendLine(" <script>");
-            sb.AppendLine("     layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treetable','layer'], function () {");
+            sb.AppendLine("     layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treeTable','layer'], function () {");
             sb.AppendLine("         var $ = layui.jquery,");
             sb.AppendLine("             form = layui.form,");
             sb.AppendLine("             layer = layui.layer,");
             sb.AppendLine("             table = layui.table,");
-            sb.AppendLine("             treetable = layui.treetable,");
+            sb.AppendLine("             treeTable = layui.treeTable,");
             sb.AppendLine("             common = layui.common;");
             sb.AppendLine("             var loading = layer.load(0, { shade: false });");
             if (baseConfigModel.PageIndex.IsTree==1)
             {
-                sb.AppendLine("     var rendertree = function (queryJson) {");
-                sb.AppendLine("         common.rendertreetable({");
+                sb.AppendLine("     var rendertree = common.rendertreetable({");
                 sb.AppendLine("             elem: '#currentTableId',");
                 sb.AppendLine("             treeIdName: '" + idColumn + "',");
                 sb.AppendLine("             //此处需修改 父Id修改");
@@ -614,13 +613,17 @@ namespace WaterCloud.CodeGenerator
                 int cout = 1;
                 foreach (var item in baseConfigModel.PageIndex.ColumnList)
                 {
-                    if (cout != baseConfigModel.PageIndex.ColumnList.Count)
+                    if (cout==1)
                     {
-                        sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', width: 120, sort: true },");
+                        sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', width: 200 },");
+                    }
+                    else if (1 < cout && cout < baseConfigModel.PageIndex.ColumnList.Count)
+                    {
+                        sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', width: 120 },");
                     }
                     else
                     {
-                        sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', minWidth: 120, sort: true },");
+                        sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', minWidth: 120 },");
                     }
                     cout++;
 
@@ -633,13 +636,13 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                 layer.closeAll('loading');");
                 sb.AppendLine("             }");
                 sb.AppendLine("         });");
-                sb.AppendLine("     }");
-                sb.AppendLine("     rendertree();");
                 sb.AppendLine("         // 监听搜索操作");
                 sb.AppendLine("         form.on('submit(data-search-btn)', function (data) {");
                 sb.AppendLine("             var queryJson = data.field.txt_keyword;");
                 sb.AppendLine("             //执行搜索重载");
-                sb.AppendLine("             rendertree(queryJson);");
+                sb.AppendLine("             common.reloadtreetable(rendertree, {");
+                sb.AppendLine("                 where: { keyword: queryJson },");
+                sb.AppendLine("             }); ");
                 sb.AppendLine("             return false;");
                 sb.AppendLine("         });");
             }
@@ -681,11 +684,11 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("         form.on('submit(data-search-btn)', function (data) {");
                 sb.AppendLine("             //执行搜索重载");
                 sb.AppendLine("             common.reloadtable({");
-                sb.AppendLine("                 elem: 'currentTableId',");
-                if (baseConfigModel.PageIndex.IsTree == 1 || baseConfigModel.PageIndex.IsPagination != 1)
+                if (baseConfigModel.PageIndex.IsPagination != 1)
                 {
                     sb.AppendLine("                 page: false,");
                 }
+                sb.AppendLine("                 elem: 'currentTableId',");
                 sb.AppendLine("                 curr: 1,");
                 sb.AppendLine("                 where: { keyword: data.field.txt_keyword}");
                 sb.AppendLine("             });");
@@ -693,12 +696,26 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("         });");
             }
             sb.AppendLine("         var entity;");
-            sb.AppendLine("         table.on('row(currentTableFilter)', function (obj) {");
+            if (baseConfigModel.PageIndex.IsTree == 1)
+            {
+                sb.AppendLine("         treeTable.on('row(currentTableId)', function (obj) {");
+            }
+            else
+            {
+                sb.AppendLine("         table.on('row(currentTableFilter)', function (obj) {");
+            }
             sb.AppendLine("             obj.tr.addClass(\"layui-table-click\").siblings().removeClass(\"layui-table-click\");");
             sb.AppendLine("             entity = obj;");
             sb.AppendLine("         })");
             sb.AppendLine("         //toolbar监听事件");
-            sb.AppendLine("         table.on('toolbar(currentTableFilter)', function (obj) { ");
+            if (baseConfigModel.PageIndex.IsTree == 1)
+            {
+                sb.AppendLine("         treeTable.on('toolbar(currentTableId)', function (obj) { ");
+            }
+            else
+            {
+                sb.AppendLine("         table.on('toolbar(currentTableFilter)', function (obj) { ");
+            }
             sb.AppendLine("             if (obj.event === 'add') {  // 监听添加操作");
             sb.AppendLine("                 common.modalOpen({");
             sb.AppendLine("                     title: \"添加界面\",");

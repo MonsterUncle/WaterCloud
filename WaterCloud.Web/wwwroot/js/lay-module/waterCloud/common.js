@@ -4,12 +4,12 @@
  * version:2.0
  * description:layuimini 主体框架扩展
  */
-layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xmSelect','miniTab'], function (exports) {
+layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','miniTab','treeTable'], function (exports) {
     var $ = layui.jquery,
         form = layui.form,
         miniTab = layui.miniTab,
         layer = layui.layer,
-        treetable = layui.treetable,
+        treeTable = layui.treeTable,
         tablePlug = layui.tablePlug,
         xmSelect = layui.xmSelect,
         table = layui.table;
@@ -99,18 +99,27 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
             var defaults = {
                 elem: '#currentTableId',//主键
                 toolbar: '#toolbarDemo',//工具栏
-                treeColIndex: 1,	//树形图标显示在第几列
-                treeSpid: '0',		//最上级的父级id
-                treeIdName: 'F_Id',	//id字段的名称
-                treePidName: 'F_ParentId',	//父级节点字段
                 loading: false,
+                tree: {
+                    iconIndex: 1,           // 折叠图标显示在第几列
+                    isPidData: true,        // 是否是id、pid形式数据
+                    idName: 'F_Id',  // id字段名称
+                    pidName: 'F_ParentId',     // pid字段名称
+                    arrowType: 'arrow2',
+                    getIcon: 'ew-tree-icon-style2',
+                },
                 height: $(window).height() > 500 ? 'full-130' : 'full-170',
                 method: 'get',//请求方法
                 sqlkey: 'F_Id',//数据库主键
-                cellMinWidth: 100,//最小宽度
-                smartReloadModel: true, // 是否开启智能reload的模式
-                page: false,
-                icon: false,             
+                cellMinWidth: 60,//最小宽度     
+                parseData: function (res) { //res 即为原始返回的数据
+                    return {
+                        "code": res.state, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.count, //解析数据长度
+                        "data": res.data //解析数据列表
+                    };
+                },
                 done: function () {
                     //$(".layui-table-box").find("[data-field='F_Id']").css("display", "none");
                     //关闭加载
@@ -142,17 +151,11 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                                 break;
                             }
                         }
-                        //dataJson.find(item => {
-                        //    if (options.cols[0][i].field == item.F_EnCode) {
-                        //        options.cols[0][i].hideAlways = false;
-                        //        options.cols[0][i].hide = false;
-                        //    }
-                        //});
                     }
                 });
                 options.cols[0] = array;
             };
-            return treetable.render(options);
+            return treeTable.render(options);
         },
         //table刷新
         reloadtable: function (options) {
@@ -185,6 +188,21 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'treetable' , 'xm
                     where: options.where
                 }, 'data');
             }
+            //关闭加载
+            layer.closeAll('loading');
+        },
+        //treetable刷新
+        reloadtreetable: function (tree,options) {
+            var loading = layer.load(0, { shade: false });
+            var defaults = {
+                where: {}
+            };
+            var options = $.extend(defaults, options);
+            options.where.time = new Date().Format("yyyy-MM-dd hh:mm:ss");
+            //执行搜索重载
+            tree.reload({
+                where: options.where
+            });
             //关闭加载
             layer.closeAll('loading');
         },
