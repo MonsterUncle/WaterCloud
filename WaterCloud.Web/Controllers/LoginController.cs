@@ -140,6 +140,8 @@ namespace WaterCloud.Web.Controllers
                 operatorModel.LoginTime = DateTime.Now;
                 operatorModel.DdUserId = userEntity.F_DingTalkUserId;
                 operatorModel.WxOpenId = userEntity.F_WxOpenId;
+                //各租户的管理员也是当前数据库的全部权限
+                operatorModel.IsSystem = userEntity.F_IsAdmin.Value;
                 operatorModel.IsAdmin = userEntity.F_IsAdmin.Value;
                 operatorModel.IsBoss = userEntity.F_IsBoss.Value;
                 operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;

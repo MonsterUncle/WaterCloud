@@ -3,10 +3,11 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'tableSelect', 'common'], function () {
         var form = layui.form,
             $ = layui.$,
             common = layui.common,
+            tableSelect = layui.tableSelect,
             laydate = layui.laydate;
         var keyValue = $.request("keyValue");
         //权限字段
@@ -22,15 +23,7 @@
             $("#F_OrganizeId").bindSelect({
                 url: "/SystemOrganize/SystemSet/GetListJson",
                 id: "F_Id",
-                text:"F_CompanyName"
-            });
-            $("#F_DepartmentId").bindSelect({
-                url: "/SystemOrganize/Organize/GetTreeSelectJson",
-            });
-            $("#F_RoleId").bindSelect({
-                url: "/SystemOrganize/Role/GetListJson",
-                id: "F_Id",
-                text: "F_FullName"
+                text: "F_CompanyName"
             });
             $("#F_DutyId").bindSelect({
                 url: "/SystemOrganize/Duty/GetListJson",
@@ -87,6 +80,33 @@
             return false;
         });
     });
+    function search(fileds) {
+        layui.use(['jquery', 'form', 'common'], function () {
+            var form = layui.form,
+                $ = layui.$,
+                common = layui.common;
+            //不同弹窗
+            if (fileds == '角色') {
+                common.modalOpen({
+                    title: "选择角色",
+                    url: "/SystemOrganize/Role/AddForm?name=" + "F_RoleName" + "&value=" + "F_RoleId" + "&ids=" + $('#F_RoleId').val(),
+                    width: "650px",
+                    height: "500px",
+                });
+            }
+            else if (fileds == '部门') {
+                common.modalOpen({
+                    title: "选择组织",
+                    url: "/SystemOrganize/Organize/AddForm?name=" + "F_DepartmentName" + "&value=" + "F_DepartmentId" + "&ids=" + $('#F_DepartmentId').val(),
+                    width: "650px",
+                    height: "500px",
+                });
+            }
+            else {
+                return false;
+            }
+        });
+    }
 </script>
 <body>
     <div class="layuimini-container ">
@@ -117,9 +137,8 @@
                     <div class="layui-inline layui-hide">
                         <label class="layui-form-label required">部门</label>
                         <div class="layui-input-inline">
-                            <select id="F_DepartmentId" name="F_DepartmentId" lay-verify="required" lay-search="">
-                                <option value="">==请选择==</option>
-                            </select>
+                            <input id="F_DepartmentName" name="F_DepartmentName" type="text" lay-verify="required" autocomplete="off" class="layui-input" onclick="search('部门')" />
+                            <input id="F_DepartmentId" name="F_DepartmentId" type="text" hidden />
                         </div>
                     </div>
                 </div>
@@ -127,9 +146,8 @@
                     <div class="layui-inline layui-hide">
                         <label class="layui-form-label required">角色</label>
                         <div class="layui-input-inline">
-                            <select id="F_RoleId" name="F_RoleId" lay-verify="required" lay-search="">
-                                <option value="">==请选择==</option>
-                            </select>
+                            <input id="F_RoleName" name="F_RoleName" type="text" lay-verify="required" autocomplete="off" class="layui-input" onclick="search('角色')" />
+                            <input id="F_RoleId" name="F_RoleId" type="text" hidden />
                         </div>
                     </div>
                     <div class="layui-inline layui-hide">
@@ -238,6 +256,6 @@
                     <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
                 </div>
             </div>
+        </div>
     </div>
-
 </body>

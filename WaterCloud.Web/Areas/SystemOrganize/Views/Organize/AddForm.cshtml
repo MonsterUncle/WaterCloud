@@ -14,6 +14,7 @@
         var loading = layer.load(0, { shade: false });
         var value = $.request("value");
         var name = $.request("name");
+        var ids = $.request("ids");
         var rendertree = common.rendertreetable({
             elem: '#currentTableId',
             url: '/SystemOrganize/Organize/GetTreeGridJson',
@@ -32,7 +33,7 @@
             cols: [[
                 { type: 'checkbox' },
                 { field: 'F_Id', title: 'ID', fixed: "left", hide: true, hideAlways: true },
-                { field: 'F_FullName', title: '名称', width: 120 },
+                { field: 'F_FullName', title: '名称', width: 200 },
                 { field: 'F_EnCode', title: '编号', width: 120 },
                 {
                     field: 'F_CategoryId', title: '分类', width: 120,
@@ -64,14 +65,18 @@
             done: function () {
                 //关闭加载
                 layer.closeAll('loading');
+                rendertree.expandAll();
+                if (!!ids) {
+                    rendertree.setChecked(ids.split(','));
+                }   
             }
         });
-            
+
         // 监听提交操作
         var lock = false;
         form.on('submit(saveBtn)', function (data) {
             if (!lock) {
-                var checkStatus = table.checkStatus("currentTableId").data;
+                var checkStatus = rendertree.checkStatus(false);;
                 var pvalue = [];
                 var pname = [];
                 for (var i = 0; i < checkStatus.length; i++) {

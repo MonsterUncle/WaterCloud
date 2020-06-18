@@ -13,9 +13,10 @@
         var loading = layer.load(0, { shade: false });
         var value = $.request("value");
         var name = $.request("name");
+        var ids = $.request("ids");
         common.rendertable({
             elem: '#currentTableId',
-            url: '/SystemOrganize/User/GetListJson',
+            url: '/SystemOrganize/User/GetListJson?ids=' + (!!ids ? ids : ""),
             page: false,
             height: 'full-50',
             toolbar: false,//工具栏
@@ -52,7 +53,7 @@
             ]],
             done: function () {
                 //关闭加载
-                layer.closeAll('loading');
+                layer.closeAll('loading');  
             }
         });
         // 监听提交操作

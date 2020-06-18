@@ -39,7 +39,12 @@
                 {
                     field: 'F_DepartmentId', title: '部门', width: 100, sort: true,
                     templet: function (d) {
-                        return top.clients.organize[d.F_DepartmentId] == null ? "" : top.clients.organize[d.F_DepartmentId].fullname;
+                        var list = d.F_DepartmentId.split(',');
+                        var temp = [];
+                        for (var i = 0; i < list.length; i++) {
+                            if (top.clients.organize[list[i]] != null) temp.push(top.clients.organize[list[i]].fullname);
+                        }
+                        return (temp.join(','));
 
                     }
                 },

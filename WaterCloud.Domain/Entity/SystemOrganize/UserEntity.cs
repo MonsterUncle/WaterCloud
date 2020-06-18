@@ -51,5 +51,14 @@ namespace WaterCloud.Domain.SystemOrganize
         public string F_WxOpenId { get; set; }
         public string F_WxNickName { get; set; }
         public string F_HeadImgUrl { get; set; }
+        [NotMapped]
+        //多选显示字段
+        public string F_DepartmentName { get; set; }
+        [NotMapped]
+        //多选显示字段
+        public string F_RoleName { get; set; }
+        [NotMapped]
+        //tablecheck字段
+        public bool LAY_CHECKED { get; set; }
     }
 }

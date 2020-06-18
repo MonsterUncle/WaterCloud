@@ -99,6 +99,10 @@ namespace WaterCloud.Web.Controllers
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
             var roleId = currentuser.RoleId;
+            if (currentuser.UserCode=="admin")
+            {
+                roleId = "admin";
+            }
             Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
             var list= await _roleAuthorizeService.GetMenuList(roleId);
             foreach (ModuleEntity item in list.Where(a=>a.F_UrlAddress!=null))
@@ -445,75 +449,103 @@ namespace WaterCloud.Web.Controllers
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
             var roleId = currentuser.RoleId;
-            var data =await _roleAuthorizeService.GetButtonList(roleId);
             if (roleId==null&& currentuser.IsSystem)
             {
                 roleId = "admin";
             }
-            var dataModuleId = data.Distinct(new ExtList<ModuleButtonEntity>("F_ModuleId"));
-            Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>> dictionary =await CacheHelper.Get<Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>>(initcacheKey+ "modulebutton_list");
-            var dictionarytemp = new Dictionary<string, List<ModuleButtonEntity>>();
-            foreach (ModuleButtonEntity item in dataModuleId)
+            var rolelist = roleId.Split(',');
+            Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>> dictionary = await CacheHelper.Get<Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>>(initcacheKey + "modulebutton_list");
+            var dictionarylist = new Dictionary<string, List<ModuleButtonEntity>>();
+            foreach (var roles in rolelist)
             {
-                var buttonList = data.Where(t => t.F_ModuleId==item.F_ModuleId).ToList();
-                dictionarytemp.Add(item.F_ModuleId, buttonList);
-            }
-            if (dictionary == null)
-            {
-                dictionary = new Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>();
-                dictionary.Add(roleId, dictionarytemp);
-            }
-            else
-            {
-                if (dictionary.ContainsKey(roleId))
+                var dictionarytemp = new Dictionary<string, List<ModuleButtonEntity>>();
+                var data = await _roleAuthorizeService.GetButtonList(roles);
+                var dataModuleId = data.Distinct(new ExtList<ModuleButtonEntity>("F_ModuleId"));
+                foreach (ModuleButtonEntity item in dataModuleId)
                 {
-                    dictionary[roleId] = dictionarytemp;
+                    var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId).ToList();
+                    dictionarytemp.Add(item.F_ModuleId, buttonList);
+                    if (dictionarylist.ContainsKey(item.F_ModuleId))
+                    {
+                        dictionarylist[item.F_ModuleId].AddRange(buttonList);
+                        dictionarylist[item.F_ModuleId]= dictionarylist[item.F_ModuleId].Distinct().ToList();
+                    }
+                    else
+                    {
+                        dictionarylist.Add(item.F_ModuleId, buttonList);
+                    }
+                }
+                if (dictionary == null)
+                {
+                    dictionary = new Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>();
+                    dictionary.Add(roles, dictionarytemp);
                 }
                 else
                 {
-                    dictionary.Add(roleId, dictionarytemp);
+                    if (dictionary.ContainsKey(roles))
+                    {
+                        dictionary[roles] = dictionarytemp;
+                    }
+                    else
+                    {
+                        dictionary.Add(roles, dictionarytemp);
+                    }
                 }
             }
             await CacheHelper.Remove(initcacheKey + "modulebutton_list");
             await CacheHelper.Set(initcacheKey + "modulebutton_list", dictionary);
-            return dictionary[roleId];
+            return dictionarylist;
         }
         private async Task<object> GetMenuFieldsListNew()
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
             var roleId = currentuser.RoleId;
-            var data = await _roleAuthorizeService.GetFieldsList(roleId);
             if (roleId == null && currentuser.IsSystem)
             {
                 roleId = "admin";
             }
-            var dataModuleId = data.Distinct(new ExtList<ModuleFieldsEntity>("F_ModuleId"));
+            var rolelist = roleId.Split(',');
             Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>> dictionary = await CacheHelper.Get<Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>>>(initcacheKey + "modulefields_list");
-            var dictionarytemp = new Dictionary<string, List<ModuleFieldsEntity>>();
-            foreach (ModuleFieldsEntity item in dataModuleId)
+            var dictionarylist = new Dictionary<string, List<ModuleFieldsEntity>>();
+            foreach (var roles in rolelist)
             {
-                var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId).ToList();
-                dictionarytemp.Add(item.F_ModuleId, buttonList);
-            }
-            if (dictionary == null)
-            {
-                dictionary = new Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>>();
-                dictionary.Add(roleId, dictionarytemp);
-            }
-            else
-            {
-                if (dictionary.ContainsKey(roleId))
+                var dictionarytemp = new Dictionary<string, List<ModuleFieldsEntity>>();
+                var data = await _roleAuthorizeService.GetFieldsList(roles);
+                var dataModuleId = data.Distinct(new ExtList<ModuleFieldsEntity>("F_ModuleId"));
+                foreach (ModuleFieldsEntity item in dataModuleId)
                 {
-                    dictionary[roleId] = dictionarytemp;
+                    var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId).ToList();
+                    dictionarytemp.Add(item.F_ModuleId, buttonList);
+                    if (dictionarylist.ContainsKey(item.F_ModuleId))
+                    {
+                        dictionarylist[item.F_ModuleId].AddRange(buttonList);
+                        dictionarylist[item.F_ModuleId] = dictionarylist[item.F_ModuleId].Distinct().ToList();
+                    }
+                    else
+                    {
+                        dictionarylist.Add(item.F_ModuleId, buttonList);
+                    }
+                }
+                if (dictionary == null)
+                {
+                    dictionary = new Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>>();
+                    dictionary.Add(roles, dictionarytemp);
                 }
                 else
                 {
-                    dictionary.Add(roleId, dictionarytemp);
+                    if (dictionary.ContainsKey(roles))
+                    {
+                        dictionary[roles] = dictionarytemp;
+                    }
+                    else
+                    {
+                        dictionary.Add(roles, dictionarytemp);
+                    }
                 }
             }
             await CacheHelper.Remove(initcacheKey + "modulefields_list");
             await CacheHelper.Set(initcacheKey + "modulefields_list", dictionary);
-            return dictionary[roleId];
+            return dictionarylist;
         }
     }
 }

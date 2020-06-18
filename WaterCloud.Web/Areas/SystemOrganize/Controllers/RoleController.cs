@@ -47,9 +47,16 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetSelectJson(string keyword)
+        public async Task<ActionResult> GetSelectJson(string keyword,string ids)
         {
             var data = await _roleService.GetList(keyword);
+            if (!string.IsNullOrEmpty(ids))
+            {
+                foreach (var item in ids.Split(','))
+                {
+                    data.Find(a => a.F_Id == item).LAY_CHECKED = true;
+                }
+            }
             return Success(data.Count, data);
         }
         [HttpGet]

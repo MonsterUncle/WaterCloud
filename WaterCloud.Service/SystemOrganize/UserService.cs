@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Chloe;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -18,6 +19,7 @@ namespace WaterCloud.Service.SystemOrganize
     {
         private IRoleRepository roleservice;
         private IUserRepository service;
+        private IOrganizeRepository orgservice;
         private UserLogOnService userLogOnApp = new UserLogOnService();
 
         /// <summary>
@@ -34,6 +36,7 @@ namespace WaterCloud.Service.SystemOrganize
 
             service = currentuser!=null? new UserRepository(currentuser.DbString, currentuser.DBProvider) : new UserRepository();
             roleservice = currentuser != null ? new RoleRepository(currentuser.DbString, currentuser.DBProvider) : new RoleRepository();
+            orgservice = currentuser != null ? new OrganizeRepository(currentuser.DbString, currentuser.DBProvider) : new OrganizeRepository();
         }
 
         public async Task<List<UserEntity>> GetLookList(Pagination pagination, string keyword)
@@ -45,6 +48,7 @@ namespace WaterCloud.Service.SystemOrganize
                 list = list.Where(u => u.F_Account.Contains(keyword) || u.F_RealName.Contains(keyword)||u.F_MobilePhone.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark == false && u.F_IsAdmin == false);
+            list.Select(a => Sql.Count()).First();
             return GetFieldsFilterData(await service.OrderList(list, pagination), className.Substring(0, className.Length - 7));
         }
         public async Task<List<UserEntity>> GetList(string keyword)
@@ -77,11 +81,34 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<UserEntity> GetForm(string keyValue)
         {
             var cachedata =await service.CheckCache(cacheKey, keyValue);
+            string[] temp;
+            if (cachedata.F_RoleId!=null)
+            {
+                temp = cachedata.F_RoleId.Split(',');
+                cachedata.F_RoleName = string.Join(",", roleservice.IQueryable().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+            }
+            if (cachedata.F_DepartmentId != null)
+            {
+                temp = cachedata.F_OrganizeId.Split(',');
+                cachedata.F_DepartmentName = string.Join(",", orgservice.IQueryable().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+            }
+
             return cachedata;
         }
         public async Task<UserEntity> GetLookForm(string keyValue)
         {
             var cachedata = await service.CheckCache(cacheKey, keyValue);
+            string[] temp;
+            if (cachedata.F_RoleId != null)
+            {
+                temp = cachedata.F_RoleId.Split(',');
+                cachedata.F_RoleName = string.Join(",", roleservice.IQueryable().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+            }
+            if (cachedata.F_DepartmentId != null)
+            {
+                temp = cachedata.F_DepartmentId.Split(',');
+                cachedata.F_DepartmentName = string.Join(",", orgservice.IQueryable().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+            }
             return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
         }
         public async Task DeleteForm(string keyValue)
@@ -177,8 +204,9 @@ namespace WaterCloud.Service.SystemOrganize
                     {
                         if (userEntity.F_Account != "admin")
                         {
-                            var role =await roleservice.FindEntity(userEntity.F_RoleId);
-                            if (role == null || role.F_EnabledMark == false)
+                            var list = userEntity.F_RoleId.Split(',');
+                            var rolelist =roleservice.IQueryable(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
+                            if (rolelist.Count() == 0)
                             {
                                 throw new Exception("账户未设置权限,请联系管理员");
                             }

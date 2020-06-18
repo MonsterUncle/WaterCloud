@@ -42,18 +42,21 @@ namespace WaterCloud.Repository.SystemManage
                 List<QuickModuleEntity> quicks = new List<QuickModuleEntity>();
                 if (quicklist.Count()==0)
                 {
-                    var roleId =(await db.FindEntity<UserEntity>(userId)).F_RoleId;
-                    var modulelist= db.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleId && a.F_ItemType == 1).Select(a=>a.F_ItemId).ToList();
-                    if ((await db.FindEntity<UserEntity>(userId)).F_Account=="admin")
+                    var user = await db.FindEntity<UserEntity>(userId);
+                    var roleId = user.F_RoleId;
+                    if (user.F_Account == "admin" || user.F_IsAdmin == true)
+                    {
+                        roleId = "admin";
+                    }
+                    var rolelist =roleId.Split(',');
+                    var modulelist= db.IQueryable<RoleAuthorizeEntity>(a => rolelist.Contains(a.F_ObjectId) && a.F_ItemType == 1).Select(a=>a.F_ItemId).ToList();
+                    if (roleId == "admin")
                     {
                         modulelist= db.IQueryable<ModuleEntity>(a => a.F_EnabledMark==true).Select(a => a.F_Id).ToList();
                     }
                     var temp= db.IQueryable<ModuleEntity>(a => a.F_IsPublic == true && a.F_IsMenu == true && a.F_EnabledMark == true && a.F_DeleteMark == false).Select(a => a.F_Id).ToList();
-                    foreach (var item in modulelist)
-                    {
-                        if(temp.Where(a => a == item).Count()>0) temp.Remove(item);
-                    }
                     modulelist.AddRange(temp);
+                    modulelist = modulelist.Distinct().ToList();
                     foreach (var item in modulelist)
                     {
                         var module =await db.FindEntity<ModuleEntity>(a => a.F_Id == item&& a.F_EnabledMark == true);
@@ -110,12 +113,19 @@ namespace WaterCloud.Repository.SystemManage
 
                 var quicklist = db.IQueryable<QuickModuleEntity>(t => t.F_CreatorUserId == userId && t.F_EnabledMark == true).ToList();
                 List<ModuleEntity> quicks = new List<ModuleEntity>();
-                var roleId =(await db.FindEntity<UserEntity>(userId)).F_RoleId;
-                var modulelist = db.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleId && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
-                if ((await db.FindEntity<UserEntity>(userId)).F_Account == "admin")
+                var user = await db.FindEntity<UserEntity>(userId);
+                var roleId = user.F_RoleId;
+                if (user.F_Account == "admin"|| user.F_IsAdmin==true)
+                {
+                    roleId = "admin";
+                }
+                var rolelist = roleId.Split(',');
+                var modulelist = db.IQueryable<RoleAuthorizeEntity>(a => roleId.Contains(a.F_ObjectId) && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
+                if (roleId == "admin")
                 {
                     modulelist = db.IQueryable<ModuleEntity>(a => a.F_EnabledMark == true).Select(a => a.F_Id).ToList();
                 }
+                modulelist= modulelist.Distinct().ToList();
                 quicks = db.IQueryable<ModuleEntity>(a => (modulelist.Contains(a.F_Id)||a.F_IsPublic==true)&&a.F_IsMenu==true && a.F_EnabledMark==true && a.F_UrlAddress != null)
                     .Select(a=>new ModuleEntity { 
                     F_Id=a.F_Id,

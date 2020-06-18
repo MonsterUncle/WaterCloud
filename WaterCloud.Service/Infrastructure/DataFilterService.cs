@@ -61,12 +61,12 @@ namespace WaterCloud.Service
                 //var roles = loginUser.Roles.Select(u => u.Id).ToList();//多角色
                 //roles.Sort();
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINROLE,
-                    string.Join(',', roles));
+                    roles);
                 var orgs = loginUser.DepartmentId;
                 //var orgs = loginUser.Orgs.Select(u => u.Id).ToList();//多部门
                 //orgs.Sort();
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
-                    string.Join(',', orgs));
+                    orgs);
             }
             return query.GenerateFilter(parametername,
                 JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
@@ -92,15 +92,11 @@ namespace WaterCloud.Service
                 //即把{loginUser} =='xxxxxxx'换为 loginUser.User.Id =='xxxxxxx'，从而把当前登录的用户名与当时设计规则时选定的用户id对比
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINUSER, loginUser.UserId);
                 var roles = loginUser.RoleId;
-                //var roles = loginUser.Roles.Select(u => u.Id).ToList();//多角色
-                //roles.Sort();
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINROLE,
-                    string.Join(',', roles));
+                    roles);
                 var orgs = loginUser.DepartmentId;
-                //var orgs = loginUser.Orgs.Select(u => u.Id).ToList();//多部门
-                //orgs.Sort();
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
-                    string.Join(',', orgs));
+                    orgs);
             }
             return query.GenerateFilter(parametername,
                 JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
@@ -146,7 +142,8 @@ namespace WaterCloud.Service
             {
                 return list;
             }
-            var rule = dbcontext.Query<RoleAuthorizeEntity>(u=>u.F_ObjectId==loginUser.RoleId&&u.F_ItemType==3).Select(a=>a.F_ItemId).ToList();
+            var rolelist = loginUser.RoleId.Split(',');
+            var rule = dbcontext.Query<RoleAuthorizeEntity>(u=> rolelist.Contains(u.F_ObjectId)&&u.F_ItemType==3).Select(a=>a.F_ItemId).Distinct().ToList();
             var fieldsList = dbcontext.Query<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id)||u.F_IsPublic==true)&&u.F_ModuleId==module.F_Id).Select(u => u.F_EnCode).ToList();
             if (list.Count==0)
             {
