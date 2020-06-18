@@ -108,86 +108,26 @@ namespace WaterCloud.DataBase
         }
         public async Task<List<TEntity>> FindList(Pagination pagination)
         {
-            bool isAsc = pagination.order.ToLower() == "asc" ? true : false;
-            string[] _order = pagination.sort.Split(',');
-            MethodCallExpression resultExp = null;
-            var tempData = dbcontext.Query<TEntity>().AsEnumerable().AsQueryable();
-            foreach (string item in _order)
-            {
-                string _orderPart = item;
-                _orderPart = Regex.Replace(_orderPart, @"\s+", " ");
-                string[] _orderArry = _orderPart.Split(' ');
-                string _orderField = _orderArry[0];
-                bool sort = isAsc;
-                if (_orderArry.Length == 2)
-                {
-                    isAsc = _orderArry[1].ToUpper() == "ASC" ? true : false;
-                }
-                var parameter = Expression.Parameter(typeof(TEntity), "t");
-                var property = typeof(TEntity).GetProperty(_orderField);
-                var propertyAccess = Expression.MakeMemberAccess(parameter, property);
-                var orderByExp = Expression.Lambda(propertyAccess, parameter);
-                resultExp = Expression.Call(typeof(Queryable), isAsc ? "OrderBy" : "OrderByDescending", new Type[] { typeof(TEntity), property.PropertyType }, tempData.Expression, Expression.Quote(orderByExp));
-            }
-            tempData = tempData.Provider.CreateQuery<TEntity>(resultExp);
+            var tempData = dbcontext.Query<TEntity>();
+            tempData = tempData.OrderBy(pagination.sort);
             pagination.records = tempData.Count();
-            tempData = tempData.Skip<TEntity>(pagination.rows * (pagination.page - 1)).Take<TEntity>(pagination.rows).AsQueryable();
+            tempData = tempData.Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows);
             return tempData.ToList();
         }
         public async Task<List<TEntity>> FindList(Expression<Func<TEntity, bool>> predicate, Pagination pagination)
         {
-            bool isAsc = pagination.order.ToLower() == "asc" ? true : false;
-            string[] _order = pagination.sort.Split(',');
-            MethodCallExpression resultExp = null;
-            var tempData = dbcontext.Query<TEntity>().Where(predicate).AsEnumerable().AsQueryable();
-            foreach (string item in _order)
-            {
-                string _orderPart = item;
-                _orderPart = Regex.Replace(_orderPart, @"\s+", " ");
-                string[] _orderArry = _orderPart.Split(' ');
-                string _orderField = _orderArry[0];
-                bool sort = isAsc;
-                if (_orderArry.Length == 2)
-                {
-                    isAsc = _orderArry[1].ToUpper() == "ASC" ? true : false;
-                }
-                var parameter = Expression.Parameter(typeof(TEntity), "t");
-                var property = typeof(TEntity).GetProperty(_orderField);
-                var propertyAccess = Expression.MakeMemberAccess(parameter, property);
-                var orderByExp = Expression.Lambda(propertyAccess, parameter);
-                resultExp = Expression.Call(typeof(Queryable), isAsc ? "OrderBy" : "OrderByDescending", new Type[] { typeof(TEntity), property.PropertyType }, tempData.Expression, Expression.Quote(orderByExp));
-            }
-            tempData = tempData.Provider.CreateQuery<TEntity>(resultExp);
+            var tempData = dbcontext.Query<TEntity>().Where(predicate);
+            tempData = tempData.OrderBy(pagination.sort);
             pagination.records = tempData.Count();
-            tempData = tempData.Skip<TEntity>(pagination.rows * (pagination.page - 1)).Take<TEntity>(pagination.rows).AsQueryable();
+            tempData = tempData.Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows);
             return tempData.ToList();
         }
         public async Task<List<T>> OrderList<T>(IQuery<T> query, Pagination pagination)
         {
-            bool isAsc = pagination.order.ToLower() == "asc" ? true : false;
-            string[] _order = pagination.sort.Split(',');
-            MethodCallExpression resultExp = null;
-            var tempData = query.AsEnumerable().AsQueryable();
-            foreach (string item in _order)
-            {
-                string _orderPart = item;
-                _orderPart = Regex.Replace(_orderPart, @"\s+", " ");
-                string[] _orderArry = _orderPart.Split(' ');
-                string _orderField = _orderArry[0];
-                bool sort = isAsc;
-                if (_orderArry.Length == 2)
-                {
-                    isAsc = _orderArry[1].ToUpper() == "ASC" ? true : false;
-                }
-                var parameter = Expression.Parameter(typeof(T), "t");
-                var property = typeof(T).GetProperty(_orderField);
-                var propertyAccess = Expression.MakeMemberAccess(parameter, property);
-                var orderByExp = Expression.Lambda(propertyAccess, parameter);
-                resultExp = Expression.Call(typeof(Queryable), isAsc ? "OrderBy" : "OrderByDescending", new Type[] { typeof(T), property.PropertyType }, tempData.Expression, Expression.Quote(orderByExp));
-            }
-            tempData = tempData.Provider.CreateQuery<T>(resultExp);
+            var tempData = query;
+            tempData = tempData.OrderBy(pagination.sort);
             pagination.records = tempData.Count();
-            tempData = tempData.Skip<T>(pagination.rows * (pagination.page - 1)).Take<T>(pagination.rows).AsQueryable();
+            tempData = tempData.Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows);
             return tempData.ToList();
         }
         public async Task<List<TEntity>> CheckCacheList(string cacheKey, long old = 0)
