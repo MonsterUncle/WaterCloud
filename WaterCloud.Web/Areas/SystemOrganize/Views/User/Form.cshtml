@@ -3,11 +3,10 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'tableSelect', 'common'], function () {
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
         var form = layui.form,
             $ = layui.$,
             common = layui.common,
-            tableSelect = layui.tableSelect,
             laydate = layui.laydate;
         var keyValue = $.request("keyValue");
         //权限字段
