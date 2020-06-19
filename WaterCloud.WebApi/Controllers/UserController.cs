@@ -23,10 +23,17 @@ namespace WaterCloud.WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private UserService _userService = new UserService();
-        private LogService _logService = new LogService();
-        private FilterIPService _filterIPService = new FilterIPService();
-
+        private readonly FilterIPService _filterIPService;
+        private readonly UserService _userService;
+        private readonly LogService _logService;
+        private readonly SystemSetService _setService;
+        public UserController(FilterIPService filterIPService, UserService userService, LogService logService, SystemSetService setService)
+        {
+            _filterIPService = filterIPService;
+            _userService = userService;
+            _logService = logService;
+            _setService = setService;
+        }
         #region 获取数据       
         #endregion
 
@@ -73,6 +80,9 @@ namespace WaterCloud.WebApi.Controllers
                 operatorModel.IsBoss = userEntity.F_IsBoss.Value;
                 operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
+                SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
+                operatorModel.DbString = setEntity.F_DbString;
+                operatorModel.DBProvider = setEntity.F_DBProvider;
                 if (userEntity.F_Account == "admin")
                 {
                     operatorModel.IsSystem = true;

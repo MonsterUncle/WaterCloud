@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Chloe;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,8 +12,13 @@ namespace WaterCloud.Service.AutoJob
 {
     public class SaveServerStateJob : IJobTask
     {
-        private IWebHostEnvironment _hostingEnvironment = GlobalContext.HostingEnvironment;
-        private ServerStateService stateService = new ServerStateService();
+        private IWebHostEnvironment _hostingEnvironment;
+        private ServerStateService stateService;
+        public SaveServerStateJob(IDbContext context, IWebHostEnvironment hostingEnvironment)
+        {
+            stateService = new ServerStateService(context);
+            _hostingEnvironment = hostingEnvironment;
+        }
         public async Task<AjaxResult> Start()
         {
             AjaxResult obj = new AjaxResult();

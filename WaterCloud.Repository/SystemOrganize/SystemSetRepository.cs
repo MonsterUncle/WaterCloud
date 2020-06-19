@@ -13,24 +13,20 @@ namespace WaterCloud.Repository.SystemOrganize
     /// </summary>
     public class SystemSetRepository : RepositoryBase<SystemSetEntity>,ISystemSetRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public SystemSetRepository()
+        private IDbContext dbcontext;
+        public SystemSetRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public SystemSetRepository(string ConnectStr, string providerName)
              : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
 
         public async Task UpdateForm(SystemSetEntity entity)
         {
-            using(var db=new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using(var db=new RepositoryBase(dbcontext).BeginTrans())
             {
 
                 if (entity.F_Id != Define.SYSTEM_MASTERPROJECT)

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NPOI.SS.Formula.Functions;
+using Chloe;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -28,11 +29,11 @@ namespace WaterCloud.Service.SystemManage
         private string cacheKey = "watercloud_modulebuttondata_";
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
-        public ModuleButtonService()
+        public ModuleButtonService(IDbContext context) : base(context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null ? new ModuleButtonRepository(currentuser.DbString, currentuser.DBProvider) : new ModuleButtonRepository();
-            moduleservice = currentuser != null ? new ModuleRepository(currentuser.DbString, currentuser.DBProvider) : new ModuleRepository();
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ModuleButtonRepository(currentuser.DbString,currentuser.DBProvider) : new ModuleButtonRepository(context);
+            moduleservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ModuleRepository(currentuser.DbString,currentuser.DBProvider) : new ModuleRepository(context);
         }
         public async Task<List<ModuleButtonEntity>> GetList(string moduleId = "")
         {

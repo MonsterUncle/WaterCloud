@@ -16,23 +16,19 @@ namespace WaterCloud.Repository.SystemOrganize
 {
     public class NoticeRepository : RepositoryBase<NoticeEntity>, INoticeRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public NoticeRepository()
+        private IDbContext dbcontext;
+        public NoticeRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public NoticeRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
         public async Task DeleteForm(string keyValue)
         {
-            using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using (var db =new RepositoryBase(dbcontext).BeginTrans())
             {
                 await db.Delete<NoticeEntity>(t => t.F_Id == keyValue);
                 db.Commit();

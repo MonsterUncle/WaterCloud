@@ -11,18 +11,14 @@ namespace WaterCloud.Repository.SystemOrganize
     /// </summary>
     public class DataPrivilegeRuleRepository : RepositoryBase<DataPrivilegeRuleEntity>,IDataPrivilegeRuleRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public DataPrivilegeRuleRepository()
+        private IDbContext dbcontext;
+        public DataPrivilegeRuleRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public DataPrivilegeRuleRepository(string ConnectStr, string providerName)
              : base(ConnectStr, providerName)
         {
-             this.ConnectStr = ConnectStr;
-             this.providerName = providerName;
             dbcontext = GetDbContext();
         }
     }

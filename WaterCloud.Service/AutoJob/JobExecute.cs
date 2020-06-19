@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Chloe;
 using NPOI.HSSF.Record.Chart;
 using Quartz;
 using Quartz.Impl.Triggers;
@@ -14,7 +15,11 @@ namespace WaterCloud.Service.AutoJob
 {
     public class JobExecute : IJob
     {
-        private OpenJobsService autoJobService = new OpenJobsService();
+        private OpenJobsService autoJobService;
+        public JobExecute(IDbContext dbContext)
+        {
+            autoJobService = new OpenJobsService(dbContext);
+        }
 
         public Task Execute(IJobExecutionContext context)
         {

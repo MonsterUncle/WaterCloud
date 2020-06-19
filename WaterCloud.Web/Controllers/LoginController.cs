@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using WaterCloud.Service.SystemOrganize;
 using WaterCloud.Domain.SystemOrganize;
 using Microsoft.AspNetCore.Http;
+using WaterCloud.DataBase;
+using Chloe;
 
 namespace WaterCloud.Web.Controllers
 {
@@ -25,12 +27,14 @@ namespace WaterCloud.Web.Controllers
         private readonly UserService _userService;
         private readonly LogService _logService;
         private readonly SystemSetService _setService;
-        public LoginController(FilterIPService filterIPService, UserService userService, LogService logService, SystemSetService setService)
+        private readonly IDbContext _context;
+        public LoginController(IDbContext context, FilterIPService filterIPService, UserService userService, LogService logService, SystemSetService setService)
         {
             _filterIPService = filterIPService;
             _userService = userService;
             _logService = logService;
             _setService = setService;
+            _context = context;
         }
         [HttpGet]
         public virtual async Task<ActionResult> Index()
@@ -69,7 +73,7 @@ namespace WaterCloud.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> OutLogin()
         {
-            await new LogService().WriteDbLog(new LogEntity
+            await _logService.WriteDbLog(new LogEntity
             {
                 F_ModuleName = "系统登录",
                 F_Type = DbLogType.Exit.ToString(),
@@ -147,8 +151,8 @@ namespace WaterCloud.Web.Controllers
                 operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
                 SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
-                operatorModel.DBProvider = setEntity.F_DBProvider;
                 operatorModel.DbString = setEntity.F_DbString;
+                operatorModel.DBProvider = setEntity.F_DBProvider;
                 if (userEntity.F_Account == "admin")
                 {
                     operatorModel.IsSystem = true;

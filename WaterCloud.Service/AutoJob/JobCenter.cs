@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Chloe;
 using Quartz;
 using WaterCloud.Code;
+using WaterCloud.DataBase;
+using WaterCloud.DataBase.Extensions;
 using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service.SystemSecurity;
 
@@ -11,11 +14,18 @@ namespace WaterCloud.Service.AutoJob
 {
     public class JobCenter
     {
+        private IDbContext context;
+        private OpenJobsService service;
+        public JobCenter() 
+        {
+            context = DBContexHelper.Contex();
+            service = new OpenJobsService(context);
+        }
         public void Start()
         {
             Task.Run(async () =>
             {
-                List<OpenJobEntity> obj = await new OpenJobsService().GetList(null);
+                List<OpenJobEntity> obj = await service.GetList(null);
                 obj = obj.Where(a => a.F_EnabledMark == true).ToList();
                 if (obj.Count > 0)
                 {
@@ -46,8 +56,8 @@ namespace WaterCloud.Service.AutoJob
                     entity.F_StarRunTime = DateTime.Now;
                     entity.F_EndRunTime = DateTime.Now.AddSeconds(-1);
                     DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(entity.F_StarRunTime, 1);
-                    DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(DateTime.MaxValue.AddDays(-1), 1);                    
-                    new OpenJobsService().SubmitForm(entity, entity.F_Id);
+                    DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(DateTime.MaxValue.AddDays(-1), 1);
+                    service.SubmitForm(entity, entity.F_Id);
                     var scheduler = JobScheduler.GetScheduler();
                     IJobDetail job = JobBuilder.Create<JobExecute>().WithIdentity(entity.F_JobName, entity.F_JobGroup).Build();
                     job.JobDataMap.Add("F_Id", entity.F_Id);

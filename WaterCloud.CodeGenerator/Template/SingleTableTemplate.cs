@@ -10,7 +10,7 @@ using WaterCloud.Code;
 using WaterCloud.Repository.SystemManage;
 using WaterCloud.Domain.SystemManage;
 using System.Threading.Tasks;
-
+using Chloe;
 namespace WaterCloud.CodeGenerator
 {
     public class SingleTableTemplate
@@ -21,6 +21,11 @@ namespace WaterCloud.CodeGenerator
         private string quickcacheKey = "watercloud_quickmoduledata_";
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
+        private ModuleRepository moduleRepository;
+        public SingleTableTemplate(IDbContext context)
+        {
+            moduleRepository = new ModuleRepository(context);
+        }
         #region GetBaseConfig
         public BaseConfigModel GetBaseConfig(string path,string username, string tableName, string tableDescription, Dictionary<string,string> tableFieldList)
         {
@@ -1146,7 +1151,6 @@ namespace WaterCloud.CodeGenerator
             #region 列表页
             if (!param["CodeIndex"].IsEmpty())
             {
-                ModuleRepository moduleRepository = new ModuleRepository();
                 // 生成菜单，按钮
                 List<KeyValue> buttonAuthorizeList = GetButtonAuthorizeList();
                 string menuUrl = "/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + baseConfigModel.FileConfig.PageIndexName;

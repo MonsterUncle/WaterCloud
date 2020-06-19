@@ -20,8 +20,9 @@ namespace WaterCloud.Service.SystemOrganize
         private IRoleRepository roleservice;
         private IUserRepository service;
         private IOrganizeRepository orgservice;
-        private UserLogOnService userLogOnApp = new UserLogOnService();
-
+        private UserLogOnService userLogOnApp;
+        private SystemSetService syssetApp;
+        private readonly IDbContext dbcontext;
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -30,13 +31,15 @@ namespace WaterCloud.Service.SystemOrganize
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public UserService()
+        public UserService(IDbContext context) : base(context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-
-            service = currentuser!=null? new UserRepository(currentuser.DbString, currentuser.DBProvider) : new UserRepository();
-            roleservice = currentuser != null ? new RoleRepository(currentuser.DbString, currentuser.DBProvider) : new RoleRepository();
-            orgservice = currentuser != null ? new OrganizeRepository(currentuser.DbString, currentuser.DBProvider) : new OrganizeRepository();
+            dbcontext = context;
+            service = currentuser!=null? new UserRepository(currentuser.DbString,currentuser.DBProvider) : new UserRepository(context);
+            roleservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleRepository(currentuser.DbString,currentuser.DBProvider) : new RoleRepository(context);
+            orgservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new OrganizeRepository(currentuser.DbString,currentuser.DBProvider) : new OrganizeRepository(context);
+            userLogOnApp = new UserLogOnService(context);
+            syssetApp = new SystemSetService(context);
         }
 
         public async Task<List<UserEntity>> GetLookList(Pagination pagination, string keyword)
@@ -154,18 +157,18 @@ namespace WaterCloud.Service.SystemOrganize
             //根据登录公司查找公司
             if (string.IsNullOrEmpty(localurl))
             {
-                service=new UserRepository();
+                service=new UserRepository(dbcontext);
             }
             else
             {
-                var setTemp=(await new SystemSetService().GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).FirstOrDefault();
+                var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).FirstOrDefault();
                 if (setTemp!=null)
                 {
                     service = new UserRepository(setTemp.F_DbString,setTemp.F_DBProvider);
                 }
                 else
                 {
-                    service = new UserRepository();
+                    service = new UserRepository(dbcontext);
                 }
             }
             UserEntity userEntity =await service.FindEntity(t => t.F_Account == username);

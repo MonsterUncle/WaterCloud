@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Repository.SystemOrganize;
+using Chloe;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -15,11 +17,14 @@ namespace WaterCloud.Service.SystemOrganize
     /// </summary>
     public class SystemSetService : DataFilterService<SystemSetEntity>, IDenpendency
     {
-        private ISystemSetRepository service = new SystemSetRepository();
-        private IUserRepository userService = new UserRepository();
+        private ISystemSetRepository service;
         private string cacheKey = "watercloud_systemsetdata_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        public SystemSetService(IDbContext context) : base(context)
+        {
+            service = new SystemSetRepository(context);
+        }
         #region 获取数据
         public async Task<List<SystemSetEntity>> GetList(string keyword = "")
         {
@@ -116,7 +121,8 @@ namespace WaterCloud.Service.SystemOrganize
                 await CacheHelper.Remove(cacheKey + keyValue);
                 await CacheHelper.Remove(cacheKey + "list");
             }
-            var tempkey=userService.IQueryable().Where(a => a.F_IsAdmin == true && a.F_OrganizeId == keyValue).FirstOrDefault().F_Id;
+            var set=await service.FindEntity(entity.F_Id);
+            var tempkey=new UserRepository(DBContexHelper.Contex(set.F_DbString, set.F_DBProvider)).IQueryable().Where(a => a.F_IsAdmin == true && a.F_OrganizeId == keyValue).FirstOrDefault().F_Id;
             await CacheHelper.Remove(cacheKeyOperator + "info_" + tempkey);
         }
 

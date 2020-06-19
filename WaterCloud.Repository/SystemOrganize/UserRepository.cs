@@ -14,23 +14,19 @@ namespace WaterCloud.Repository.SystemOrganize
 {
     public class UserRepository : RepositoryBase<UserEntity>, IUserRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public UserRepository()
+        private IDbContext dbcontext;
+        public UserRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public UserRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
         public async Task DeleteForm(string keyValue)
         {
-            using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using (var db =new RepositoryBase(dbcontext).BeginTrans())
             {
                 await db.Delete<UserEntity>(t => t.F_Id == keyValue);
                 await db.Delete<UserLogOnEntity>(t => t.F_UserId == keyValue);
@@ -39,7 +35,7 @@ namespace WaterCloud.Repository.SystemOrganize
         }
         public async Task SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
-            using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using (var db =new RepositoryBase(dbcontext).BeginTrans())
             {
                 if (!string.IsNullOrEmpty(keyValue))
                 {

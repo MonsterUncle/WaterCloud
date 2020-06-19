@@ -12,18 +12,14 @@ namespace WaterCloud.Repository.SystemManage
 {
     public class AreaRepository : RepositoryBase<AreaEntity>, IAreaRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public AreaRepository()
+        private IDbContext dbcontext;
+        public AreaRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public AreaRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
     }

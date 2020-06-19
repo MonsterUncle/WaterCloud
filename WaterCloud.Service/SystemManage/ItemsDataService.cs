@@ -10,17 +10,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WaterCloud.Code;
+using Chloe;
 
 namespace WaterCloud.Service.SystemManage
 {
     public class ItemsDataService : DataFilterService<ItemsDetailEntity>,IDenpendency
     {
-        private IItemsDetailRepository service = new ItemsDetailRepository();
-        private IItemsRepository itemservice = new ItemsRepository();
+        private IItemsDetailRepository service;
+        private IItemsRepository itemservice;
         /// <summary>
         /// 缓存操作类
         /// </summary>
-
+        public ItemsDataService(IDbContext context) : base(context)
+        {
+            service = new ItemsDetailRepository(context);
+            itemservice = new ItemsRepository(context);
+        }
         private string cacheKey = "watercloud_itemdetaildata_";
         private string itemcacheKey = "watercloud_itemdata_";
         //获取类名

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using WaterCloud.Code;
+using Chloe;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -25,11 +26,11 @@ namespace WaterCloud.Service.SystemOrganize
         private string cacheKey = "watercloud_organizedata_";
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public OrganizeService()
+        public OrganizeService(IDbContext context) : base(context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null ? new OrganizeRepository(currentuser.DbString, currentuser.DBProvider) : new OrganizeRepository();
-            userservice = currentuser != null ? new UserRepository(currentuser.DbString, currentuser.DBProvider) : new UserRepository();
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new OrganizeRepository(currentuser.DbString,currentuser.DBProvider) : new OrganizeRepository(context);
+            userservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new UserRepository(currentuser.DbString,currentuser.DBProvider) : new UserRepository(context);
 
         }
         public async Task<List<OrganizeEntity>> GetList()

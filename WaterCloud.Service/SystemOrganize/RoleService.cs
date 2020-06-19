@@ -12,6 +12,7 @@ using System.Linq;
 using System;
 using System.Threading.Tasks;
 using WaterCloud.Service.SystemManage;
+using Chloe;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -19,9 +20,9 @@ namespace WaterCloud.Service.SystemOrganize
     {
         private IUserRepository userservice;
         private IRoleRepository service;
-        private ModuleService moduleApp = new ModuleService();
-        private ModuleButtonService moduleButtonApp = new ModuleButtonService();
-        private ModuleFieldsService moduleFieldsApp = new ModuleFieldsService();
+        private ModuleService moduleApp;
+        private ModuleButtonService moduleButtonApp;
+        private ModuleFieldsService moduleFieldsApp;
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -31,11 +32,14 @@ namespace WaterCloud.Service.SystemOrganize
         private string initcacheKey = "watercloud_init_";
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public RoleService()
+        public RoleService(IDbContext context) : base(context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null ? new RoleRepository(currentuser.DbString, currentuser.DBProvider) : new RoleRepository();
-            userservice = currentuser != null ? new UserRepository(currentuser.DbString, currentuser.DBProvider) : new UserRepository();
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleRepository(currentuser.DbString,currentuser.DBProvider) : new RoleRepository(context);
+            userservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new UserRepository(currentuser.DbString,currentuser.DBProvider) : new UserRepository(context);
+            moduleApp = new ModuleService(context);
+            moduleButtonApp = new ModuleButtonService(context);
+            moduleFieldsApp = new ModuleFieldsService(context);
         }
 
         public async Task<List<RoleEntity>> GetList( string keyword = "")

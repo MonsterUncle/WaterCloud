@@ -12,18 +12,14 @@ namespace WaterCloud.Repository.SystemOrganize
 {
     public class OrganizeRepository : RepositoryBase<OrganizeEntity>, IOrganizeRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public OrganizeRepository()
+        private IDbContext dbcontext;
+        public OrganizeRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public OrganizeRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
     }

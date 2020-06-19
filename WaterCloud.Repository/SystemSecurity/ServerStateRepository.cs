@@ -16,18 +16,14 @@ namespace WaterCloud.Repository.SystemSecurity
 {
     public class ServerStateRepository : RepositoryBase<ServerStateEntity>, IServerStateRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public ServerStateRepository()
+        private IDbContext dbcontext;
+        public ServerStateRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public ServerStateRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
         public async Task DeleteForm(string keyValue)

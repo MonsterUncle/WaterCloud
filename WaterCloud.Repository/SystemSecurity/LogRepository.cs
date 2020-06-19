@@ -12,18 +12,14 @@ namespace WaterCloud.Repository.SystemSecurity
 {
     public class LogRepository : RepositoryBase<LogEntity>, ILogRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public LogRepository()
+        private IDbContext dbcontext;
+        public LogRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public LogRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
     }

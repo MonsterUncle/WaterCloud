@@ -13,23 +13,19 @@ namespace WaterCloud.Repository.SystemOrganize
 {
     public class UserLogOnRepository : RepositoryBase<UserLogOnEntity>, IUserLogOnRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public UserLogOnRepository()
+        private IDbContext dbcontext;
+        public UserLogOnRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public UserLogOnRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
         public async Task ChangeForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity)
         {
-            using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using (var db =new RepositoryBase(dbcontext).BeginTrans())
             {
                 await db.Update(userEntity);
                 await db.Update(userLogOnEntity);

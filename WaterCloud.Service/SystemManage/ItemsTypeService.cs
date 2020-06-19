@@ -11,19 +11,23 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WaterCloud.Code;
+using Chloe;
 
 namespace WaterCloud.Service.SystemManage
 {
     public class ItemsTypeService : DataFilterService<ItemsEntity>,IDenpendency
     {
-        private IItemsRepository service = new ItemsRepository();
+        private IItemsRepository service;
         /// <summary>
         /// 缓存操作类
         /// </summary>
         private string cacheKey = "watercloud_itemsdata_";// 字典分类
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-
+        public ItemsTypeService(IDbContext context) : base(context)
+        {
+            service = new ItemsRepository(context);
+        }
         public async Task<List<ItemsEntity>> GetList()
         {
             var cachedata =await service.CheckCacheList(cacheKey + "list");

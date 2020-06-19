@@ -19,23 +19,19 @@ namespace WaterCloud.Repository.SystemManage
 {
     public class QuickModuleRepository : RepositoryBase<QuickModuleEntity>, IQuickModuleRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public QuickModuleRepository()
+        private IDbContext dbcontext;
+        public QuickModuleRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public QuickModuleRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
         public async Task<List<QuickModuleExtend>> GetQuickModuleList(string userId)
         {
-            using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using (var db =new RepositoryBase(dbcontext).BeginTrans())
             {
                 var quicklist= db.IQueryable<QuickModuleEntity>(t => t.F_CreatorUserId == userId&&t.F_EnabledMark==true);
                 List<QuickModuleExtend> list = new List<QuickModuleExtend>();
@@ -108,7 +104,7 @@ namespace WaterCloud.Repository.SystemManage
 
         public async Task<List<ModuleEntity>> GetTransferList(string userId)
         {
-            using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using (var db =new RepositoryBase(dbcontext).BeginTrans())
             {
 
                 var quicklist = db.IQueryable<QuickModuleEntity>(t => t.F_CreatorUserId == userId && t.F_EnabledMark == true).ToList();
@@ -147,7 +143,7 @@ namespace WaterCloud.Repository.SystemManage
 
         public async Task SubmitForm(List<QuickModuleEntity> list)
         {
-            using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using (var db =new RepositoryBase(dbcontext).BeginTrans())
             {
                 await db.Delete<QuickModuleEntity>(t => t.F_CreatorUserId == list[0].F_CreatorUserId);
                 await db.Insert(list);

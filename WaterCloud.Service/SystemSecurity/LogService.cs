@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WaterCloud.Service.SystemManage;
 using System.Linq;
+using Chloe;
 
 namespace WaterCloud.Service.SystemSecurity
 {
@@ -19,14 +20,15 @@ namespace WaterCloud.Service.SystemSecurity
     {
         //登录信息保存方式
         private string LoginProvider = GlobalContext.SystemConfig.LoginProvider;
-        private ILogRepository service = new LogRepository();
-        private ModuleService moduleservice = new ModuleService();
+        private ILogRepository service;
+        private ModuleService moduleservice;
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public LogService()
+        public LogService(IDbContext context) : base(context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null ? new LogRepository(currentuser.DbString, currentuser.DBProvider) : new LogRepository();
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new LogRepository(currentuser.DbString,currentuser.DBProvider) : new LogRepository(context);
+            moduleservice = new ModuleService(context);
         }
         public async Task<List<LogEntity>> GetLookList(Pagination pagination, int timetype, string keyword="")
         {

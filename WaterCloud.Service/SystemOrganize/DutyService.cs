@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
+using Chloe;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -18,11 +19,11 @@ namespace WaterCloud.Service.SystemOrganize
     {
         private IUserRepository userservice;
         private IRoleRepository service;
-        public DutyService()
+        public DutyService(IDbContext context):base(context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null ? new RoleRepository(currentuser.DbString, currentuser.DBProvider) : new RoleRepository();
-            userservice = currentuser != null ? new UserRepository(currentuser.DbString, currentuser.DBProvider) : new UserRepository();
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleRepository(currentuser.DbString,currentuser.DBProvider) : new RoleRepository(context);
+            userservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new UserRepository(currentuser.DbString,currentuser.DBProvider) : new UserRepository(context);
         }
         /// <summary>
         /// 缓存操作类

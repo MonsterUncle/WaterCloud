@@ -13,14 +13,18 @@ using System;
 using System.Collections.Generic;
 using WaterCloud.Code;
 using System.Threading.Tasks;
+using Chloe;
 
 namespace WaterCloud.Service.SystemSecurity
 {
     public class ServerStateService:IDenpendency
     {
-		private IServerStateRepository service = new ServerStateRepository();
-
-		public async Task<List<ServerStateEntity>> GetList(int timetype)
+		private IServerStateRepository service;
+        public ServerStateService(IDbContext context)
+        {
+            service = new ServerStateRepository(context);
+        }
+        public async Task<List<ServerStateEntity>> GetList(int timetype)
         {
             var expression = ExtLinq.True<ServerStateEntity>();
             DateTime startTime = DateTime.Now.ToString("yyyy-MM-dd").ToDate();

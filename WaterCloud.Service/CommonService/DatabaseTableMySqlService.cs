@@ -17,7 +17,10 @@ namespace WaterCloud.Service.CommonService
 {
     public class DatabaseTableMySqlService : RepositoryBase, IDatabaseTableService
     {
-        private DbContext dbcontext;
+        public DatabaseTableMySqlService(IDbContext context) : base(context)
+        {
+
+        }
         #region 获取数据
         public async Task<List<TableInfo>> GetTableList(string tableName)
         {

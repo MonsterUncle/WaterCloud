@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Chloe;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
@@ -28,15 +29,17 @@ namespace WaterCloud.Service.TimeService
 
         private readonly ILogger _logger;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IDbContext _context;
         //定时器
         private Timer _timer;
 
         //private Timer _timer;
 
-        public TimedService(ILogger<TimedService> logger,IHostingEnvironment hostingEnvironment)
+        public TimedService(ILogger<TimedService> logger,IHostingEnvironment hostingEnvironment, IDbContext context)
         {
             _logger = logger;
             _hostingEnvironment=hostingEnvironment;
+            _context = context;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -55,7 +58,7 @@ namespace WaterCloud.Service.TimeService
             entity.F_CPU = computer.CPURate;
             entity.F_IIS = "0";
             entity.F_WebSite = _hostingEnvironment.ContentRootPath;
-            new ServerStateService().SubmitForm(entity);
+            new ServerStateService(_context).SubmitForm(entity);
         }
 
         public override void Dispose()

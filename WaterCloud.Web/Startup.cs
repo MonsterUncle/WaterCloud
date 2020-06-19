@@ -13,6 +13,12 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Newtonsoft.Json.Serialization;
 using WaterCloud.Service.AutoJob;
+using WaterCloud.DataBase;
+using Chloe;
+using Autofac;
+using System.Reflection;
+using System.Linq;
+using WaterCloud.Service;
 
 namespace WaterCloud.Web
 {
@@ -69,6 +75,13 @@ namespace WaterCloud.Web
                 // 返回数据首字母不小写，CamelCasePropertyNamesContractResolver是小写
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
+            //注入数据库连接
+            services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
+            {
+                return DBContexHelper.Contex();
+            });
+
+
             ////定时任务（已废除）
             //services.AddBackgroundServices();
             //调试前端可更新
@@ -79,7 +92,6 @@ namespace WaterCloud.Web
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {

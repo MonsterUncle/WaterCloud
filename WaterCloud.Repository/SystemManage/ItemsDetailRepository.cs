@@ -15,18 +15,14 @@ namespace WaterCloud.Repository.SystemManage
 {
     public class ItemsDetailRepository : RepositoryBase<ItemsDetailEntity>, IItemsDetailRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public ItemsDetailRepository()
+        private IDbContext dbcontext;
+        public ItemsDetailRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public ItemsDetailRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)

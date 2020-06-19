@@ -190,7 +190,7 @@ namespace WaterCloud.Web.Controllers
         public async Task<ActionResult> GetUserCode()
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            var data =await new UserService().GetForm(currentuser.UserId);
+            var data =await _userService.GetForm(currentuser.UserId);
             return Content(data.ToJson());
         }
         [HttpGet]

@@ -21,17 +21,17 @@ namespace WaterCloud.Service
         /// </summary>
         /// <value>The repository.</value>
         protected RepositoryBase<T> Repository;
-        protected DbContext dbcontext;
-        public DataFilterService() {
+        protected IDbContext dbcontext;
+        public DataFilterService(IDbContext context) {
             if (loginUser!=null)
             {
-                Repository = new RepositoryBase<T>(loginUser.DbString, loginUser.DBProvider);
+                Repository = new RepositoryBase<T>(loginUser.DbString,loginUser.DBProvider);
+                dbcontext = Repository.GetDbContext();
             }
             else
             {
-                Repository = new RepositoryBase<T>();
+                dbcontext = context;
             }
-            dbcontext = Repository.GetDbContext();
         }
         /// <summary>
         ///  获取当前登录用户的数据访问权限(单表)

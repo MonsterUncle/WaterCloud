@@ -7,6 +7,7 @@ using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Repository.SystemOrganize;
 using WaterCloud.Domain.SystemManage;
 using WaterCloud.Repository.SystemManage;
+using Chloe;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -18,13 +19,13 @@ namespace WaterCloud.Service.SystemOrganize
     public class DataPrivilegeRuleService : DataFilterService<DataPrivilegeRuleEntity>,IDenpendency
     {
         private IDataPrivilegeRuleRepository service;
-        private IModuleRepository moduleservice = new ModuleRepository();
+        private IModuleRepository moduleservice;
         private string cacheKey = "watercloud_dataprivilegeruledata_";
-        public DataPrivilegeRuleService()
+        public DataPrivilegeRuleService(IDbContext context) : base(context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null ? new DataPrivilegeRuleRepository(currentuser.DbString, currentuser.DBProvider) : new DataPrivilegeRuleRepository();
-            moduleservice = currentuser != null ? new ModuleRepository(currentuser.DbString, currentuser.DBProvider) : new ModuleRepository();
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new DataPrivilegeRuleRepository(currentuser.DbString,currentuser.DBProvider) : new DataPrivilegeRuleRepository(context);
+            moduleservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ModuleRepository(currentuser.DbString,currentuser.DBProvider) : new ModuleRepository(context);
         }
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];

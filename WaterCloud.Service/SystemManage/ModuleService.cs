@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using WaterCloud.Code;
+using Chloe;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -29,10 +30,10 @@ namespace WaterCloud.Service.SystemManage
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public ModuleService()
+        public ModuleService(IDbContext context) : base(context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null ? new ModuleRepository(currentuser.DbString, currentuser.DBProvider) : new ModuleRepository();
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ModuleRepository(currentuser.DbString,currentuser.DBProvider) : new ModuleRepository(context);
         }
 
         public async Task<List<ModuleEntity>> GetList()

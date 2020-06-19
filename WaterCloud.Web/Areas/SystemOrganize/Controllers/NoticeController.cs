@@ -63,7 +63,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             if (string.IsNullOrEmpty(keyValue))
             {
                 noticeEntity.F_DeleteMark = false;
-                noticeEntity.F_CreatorUserName =(await new UserService().GetForm(OperatorProvider.Provider.GetCurrent().UserId)).F_RealName;
+                noticeEntity.F_CreatorUserName = OperatorProvider.Provider.GetCurrent().UserName;
                 logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }

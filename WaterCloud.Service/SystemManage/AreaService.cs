@@ -11,16 +11,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WaterCloud.Code;
+using Chloe;
 
 namespace WaterCloud.Service.SystemManage
 {
     public class AreaService : DataFilterService<AreaEntity>, IDenpendency
     {
         private IAreaRepository service;
-        public AreaService()
+        public AreaService(IDbContext context) : base(context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null ? new AreaRepository(currentuser.DbString, currentuser.DBProvider) : new AreaRepository();
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new AreaRepository(currentuser.DbString, currentuser.DBProvider) : new AreaRepository(context);
 
         }
         //获取类名

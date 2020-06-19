@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chloe;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using WaterCloud.Code;
@@ -11,16 +12,16 @@ namespace WaterCloud.Service.AutoJob
         #region  构造函数
         private IDatabaseTableService databaseTableService;
 
-        public DatabasesBackupJob()
+        public DatabasesBackupJob(IDbContext context)
         {
             string dbType = GlobalContext.SystemConfig.DBProvider;
             switch (dbType)
             {
                 case "MySql.Data.MySqlClient":
-                    databaseTableService = new DatabaseTableMySqlService ();
+                    databaseTableService = new DatabaseTableMySqlService (context);
                     break;
                 case "System.Data.SqlClient":
-                    databaseTableService = new DatabaseTableSqlServerService();
+                    databaseTableService = new DatabaseTableSqlServerService(context);
                     break;
                 default:
                     throw new Exception("未找到数据库配置");

@@ -18,7 +18,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class QuickModuleController : Controller
     {
-        private readonly QuickModuleService _moduleService = new QuickModuleService();
+        private readonly QuickModuleService _moduleService;
         public QuickModuleController(QuickModuleService moduleService)
         {
             _moduleService = moduleService;

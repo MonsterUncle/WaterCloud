@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using WaterCloud.Code;
 using System.Threading.Tasks;
 using System.Linq;
+using Chloe;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -24,10 +25,10 @@ namespace WaterCloud.Service.SystemManage
         /// </summary>
 
         private string cacheKey = "watercloud_quickmoduledata_";
-        public QuickModuleService()
+        public QuickModuleService(IDbContext context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null ? new QuickModuleRepository(currentuser.DbString, currentuser.DBProvider) : new QuickModuleRepository();
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new QuickModuleRepository(currentuser.DbString,currentuser.DBProvider) : new QuickModuleRepository(context);
         }
         public async Task<object> GetTransferList(string userId)
         {

@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using Autofac;
 using CSRedis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -12,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using WaterCloud.Code;
 using WaterCloud.Code.Model;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.WebApi
 {
@@ -56,6 +59,11 @@ namespace WaterCloud.WebApi
                     break;
             }
             services.AddOptions();
+            //注入数据库连接
+            services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
+            {
+                return DBContexHelper.Contex();
+            });
             //跨域
             services.AddCors();
             services.AddControllers(options =>
@@ -69,7 +77,6 @@ namespace WaterCloud.WebApi
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

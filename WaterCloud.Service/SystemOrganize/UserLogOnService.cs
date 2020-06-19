@@ -4,6 +4,7 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using Chloe;
 using System;
 using System.Threading.Tasks;
 using WaterCloud.Code;
@@ -20,17 +21,10 @@ namespace WaterCloud.Service.SystemOrganize
         /// </summary>
 
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
-        public UserLogOnService()
+        public UserLogOnService(IDbContext context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            if (currentuser!=null)
-            {
-                service = new UserLogOnRepository(currentuser.DbString, currentuser.DBProvider);
-            }
-            else
-            {
-                service = new UserLogOnRepository();
-            }
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new UserLogOnRepository(currentuser.DbString,currentuser.DBProvider) : new UserLogOnRepository(context);
         }
 
         public async Task<UserLogOnEntity> GetForm(string keyValue)

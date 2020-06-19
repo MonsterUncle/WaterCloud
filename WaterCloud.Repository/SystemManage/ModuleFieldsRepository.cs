@@ -14,24 +14,20 @@ namespace WaterCloud.Repository.SystemManage
     /// </summary>
     public class ModuleFieldsRepository : RepositoryBase<ModuleFieldsEntity>,IModuleFieldsRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public ModuleFieldsRepository()
+        private IDbContext dbcontext;
+        public ModuleFieldsRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public ModuleFieldsRepository(string ConnectStr, string providerName)
              : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
 
         public async Task<List<ModuleFieldsEntity>> GetListByRole(string roleid)
         {
-            using (var db = new RepositoryBase(ConnectStr, providerName))
+            using (var db = new RepositoryBase(dbcontext))
             {
                 var moduleList = db.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 3).Select(a => a.F_ItemId).ToList();
                 var query = db.IQueryable<ModuleFieldsEntity>().Where(a => (moduleList.Contains(a.F_Id)) && a.F_EnabledMark == true);
@@ -42,7 +38,7 @@ namespace WaterCloud.Repository.SystemManage
 
         public async Task<List<ModuleFieldsEntity>> GetListNew(string moduleId)
         {
-            using (var db = new RepositoryBase(ConnectStr, providerName))
+            using (var db = new RepositoryBase(dbcontext))
             {
                 var query = db.IQueryable<ModuleFieldsEntity>(a => a.F_EnabledMark == true)
                     .InnerJoin<ModuleEntity>((a, b) => a.F_ModuleId == b.F_Id && b.F_EnabledMark == true)

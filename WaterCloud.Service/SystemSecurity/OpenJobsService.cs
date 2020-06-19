@@ -14,12 +14,13 @@ using WaterCloud.Service.SystemManage;
 using System.Linq;
 using Quartz;
 using WaterCloud.Service.AutoJob;
+using Chloe;
 
 namespace WaterCloud.Service.SystemSecurity
 {
     public class OpenJobsService : DataFilterService<OpenJobEntity>, IDenpendency
     {
-        private IOpenJobRepository service = new OpenJobRepository();
+        private IOpenJobRepository service;
         private IScheduler _scheduler=JobScheduler.GetScheduler();
         /// <summary>
         /// 缓存操作类
@@ -28,6 +29,10 @@ namespace WaterCloud.Service.SystemSecurity
         private string cacheKey = "watercloud_openjob_";// IP过滤
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        public OpenJobsService(IDbContext context) : base(context)
+        {
+            service = new OpenJobRepository(context);
+        }
         /// <summary>
         /// 加载列表
         /// </summary>

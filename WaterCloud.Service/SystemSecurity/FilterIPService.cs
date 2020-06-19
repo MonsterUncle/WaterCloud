@@ -11,12 +11,13 @@ using System.Linq;
 using System;
 using System.Threading.Tasks;
 using WaterCloud.Code;
+using Chloe;
 
 namespace WaterCloud.Service.SystemSecurity
 {
     public class FilterIPService : DataFilterService<FilterIPEntity>, IDenpendency
     {
-        private IFilterIPRepository service = new FilterIPRepository();
+        private IFilterIPRepository service;
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -24,6 +25,10 @@ namespace WaterCloud.Service.SystemSecurity
         private string cacheKey = "watercloud_filterip_";// IP过滤
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        public FilterIPService(IDbContext context) : base(context)
+        {
+            service =new FilterIPRepository(context);
+        }
         public async Task<List<FilterIPEntity>> GetList(string keyword)
         {
             var list = new List<FilterIPEntity>();

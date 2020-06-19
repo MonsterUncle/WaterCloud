@@ -12,18 +12,14 @@ namespace WaterCloud.Repository.SystemSecurity
 {
     public class OpenJobRepository : RepositoryBase<OpenJobEntity>, IOpenJobRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public OpenJobRepository()
+        private IDbContext dbcontext;
+        public OpenJobRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public OpenJobRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
     }

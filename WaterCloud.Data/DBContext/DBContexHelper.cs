@@ -11,11 +11,11 @@ namespace WaterCloud.DataBase
         private static string dbType = GlobalContext.SystemConfig.DBProvider;
         private static string dbConnectionString = GlobalContext.SystemConfig.DBConnectionString;
 
-        public static DbContext Contex(string ConnectStr = "", string providerName = "")
+        public static IDbContext Contex(string ConnectStr = "", string providerName = "")
         {
             ConnectStr = string.IsNullOrEmpty(ConnectStr) ? dbConnectionString : ConnectStr;
             providerName = string.IsNullOrEmpty(providerName) ? dbType : providerName;
-            DbContext context;
+            IDbContext context;
             switch (providerName)
             {
                 case Define.DBTYPE_SQLSERVER:

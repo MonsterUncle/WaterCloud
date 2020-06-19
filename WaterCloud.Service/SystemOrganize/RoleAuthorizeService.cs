@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Domain.SystemManage;
+using Chloe;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -21,20 +22,25 @@ namespace WaterCloud.Service.SystemOrganize
     {
         private IRoleRepository roleservice;
         private IRoleAuthorizeRepository service;
-        private ModuleService moduleApp = new ModuleService();
-        private ModuleButtonService moduleButtonApp = new ModuleButtonService();
-        private ModuleFieldsService moduleFieldsApp = new ModuleFieldsService();
-        
+        private ModuleService moduleApp;
+        private ModuleButtonService moduleButtonApp;
+        private ModuleFieldsService moduleFieldsApp;
+        private UserService userApp;
+
         /// <summary>
         /// 缓存操作类
         /// </summary>
 
         private string cacheKey = "watercloud_authorizeurldata_";// +权限
-        public RoleAuthorizeService()
+        public RoleAuthorizeService(IDbContext context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null ? new RoleAuthorizeRepository(currentuser.DbString, currentuser.DBProvider) : new RoleAuthorizeRepository();
-            roleservice = currentuser != null ? new RoleRepository(currentuser.DbString, currentuser.DBProvider) : new RoleRepository();
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleAuthorizeRepository(currentuser.DbString,currentuser.DBProvider) : new RoleAuthorizeRepository(context);
+            roleservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleRepository(currentuser.DbString,currentuser.DBProvider) : new RoleRepository(context);
+            moduleApp = new ModuleService(context);
+            moduleButtonApp = new ModuleButtonService(context);
+            moduleFieldsApp = new ModuleFieldsService(context);
+            userApp = new UserService(context);
         }
 
         public async Task<List<RoleAuthorizeEntity>> GetList(string ObjectId)
@@ -134,7 +140,7 @@ namespace WaterCloud.Service.SystemOrganize
         {
             var authorizeurldata = new List<AuthorizeActionModel>();
             var rolelist = roleId.Split(',');
-            var user =await new UserService().GetForm(OperatorProvider.Provider.GetCurrent().UserId);
+            var user =await userApp.GetForm(OperatorProvider.Provider.GetCurrent().UserId);
             if (user == null || user.F_EnabledMark == false)
             {
                 return false;
@@ -206,7 +212,7 @@ namespace WaterCloud.Service.SystemOrganize
         {
             var authorizeurldata = new List<AuthorizeActionModel>();
             var rolelist = roleId.Split(',');
-            var user = await new UserService().GetForm(userId);
+            var user = await userApp.GetForm(userId);
             if (user == null || user.F_EnabledMark == false)
             {
                 return false;

@@ -12,18 +12,14 @@ namespace WaterCloud.Repository.SystemSecurity
 {
     public class FilterIPRepository : RepositoryBase<FilterIPEntity>, IFilterIPRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public FilterIPRepository()
+        private IDbContext dbcontext;
+        public FilterIPRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public FilterIPRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
     }

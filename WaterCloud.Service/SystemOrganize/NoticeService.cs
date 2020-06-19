@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WaterCloud.Code;
 using System.Threading.Tasks;
+using Chloe;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -26,10 +27,10 @@ namespace WaterCloud.Service.SystemOrganize
         /// </summary>
 
         private string cacheKey = "watercloud_noticedata_";
-        public NoticeService()
+        public NoticeService(IDbContext context) : base(context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null ? new NoticeRepository(currentuser.DbString, currentuser.DBProvider) : new NoticeRepository();
+            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new NoticeRepository(currentuser.DbString,currentuser.DBProvider) : new NoticeRepository(context);
         }
         public async Task<List<NoticeEntity>> GetList(string keyword)
         {

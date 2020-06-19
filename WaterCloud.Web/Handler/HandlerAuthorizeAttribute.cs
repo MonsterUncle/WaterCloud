@@ -9,6 +9,7 @@ using Serenity.Web;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Service.SystemOrganize;
+using Chloe;
 /// <summary>
 /// 权限验证
 /// </summary>
@@ -51,7 +52,7 @@ namespace WaterCloud.Web
                 }
                 var roleId = result.userInfo.RoleId;
                 var action = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext.Request.Path;
-                return new RoleAuthorizeService().ActionValidate(roleId, action).Result;
+                return new RoleAuthorizeService((IDbContext)GlobalContext.ServiceProvider.GetService(typeof(IDbContext))).ActionValidate(roleId, action).Result;
             }
             catch (System.Exception)
             {

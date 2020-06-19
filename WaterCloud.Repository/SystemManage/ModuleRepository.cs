@@ -16,24 +16,20 @@ namespace WaterCloud.Repository.SystemManage
 {
     public class ModuleRepository : RepositoryBase<ModuleEntity>, IModuleRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public ModuleRepository()
+        private IDbContext dbcontext;
+        public ModuleRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public ModuleRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
 
         public async Task CreateModuleCode(ModuleEntity entity, List<ModuleButtonEntity> buttonlist, List<ModuleFieldsEntity> fieldsList)
         {
-            using (var db = new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using (var db = new RepositoryBase(dbcontext).BeginTrans())
             {
                 await db.Insert(entity);
                 await db.Insert(buttonlist);
@@ -47,7 +43,7 @@ namespace WaterCloud.Repository.SystemManage
 
         public async Task DeleteForm(string keyValue)
         {
-            using (var db = new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using (var db = new RepositoryBase(dbcontext).BeginTrans())
             {
                 await db.Delete<ModuleEntity>(a=>a.F_Id== keyValue);
                 await db.Delete<ModuleButtonEntity>(a=>a.F_ModuleId== keyValue);
@@ -58,7 +54,7 @@ namespace WaterCloud.Repository.SystemManage
 
         public async Task<List<ModuleEntity>> GetBesidesList()
         {
-            using (var db = new RepositoryBase(ConnectStr, providerName))
+            using (var db = new RepositoryBase(dbcontext))
             {
                 var moduleList = db.IQueryable<DataPrivilegeRuleEntity>().Select(a => a.F_ModuleId).ToList();
                 var query = db.IQueryable<ModuleEntity>().Where(a => !moduleList.Contains(a.F_Id) && a.F_EnabledMark == true && a.F_Target == "iframe");
@@ -69,7 +65,7 @@ namespace WaterCloud.Repository.SystemManage
 
         public async Task<List<ModuleEntity>> GetListByRole(string roleid)
         {
-            using (var db = new RepositoryBase(ConnectStr, providerName))
+            using (var db = new RepositoryBase(dbcontext))
             {
                 var moduleList = db.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
                 var query = db.IQueryable<ModuleEntity>().Where(a => moduleList.Contains(a.F_Id) && a.F_EnabledMark == true);

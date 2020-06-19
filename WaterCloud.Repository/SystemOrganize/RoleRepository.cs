@@ -14,22 +14,19 @@ namespace WaterCloud.Repository.SystemOrganize
 {
     public class RoleRepository : RepositoryBase<RoleEntity>, IRoleRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public RoleRepository()
+        private IDbContext dbcontext;
+        public RoleRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public RoleRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
+            dbcontext = GetDbContext();
         }
         public async Task DeleteForm(string keyValue)
         {
-            using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using (var db =new RepositoryBase(dbcontext).BeginTrans())
             {
                 await db.Delete<RoleEntity>(t => t.F_Id == keyValue);
                 await db.Delete<RoleAuthorizeEntity>(t => t.F_ObjectId == keyValue);
@@ -38,7 +35,7 @@ namespace WaterCloud.Repository.SystemOrganize
         }
         public async Task SubmitForm(RoleEntity roleEntity, List<RoleAuthorizeEntity> roleAuthorizeEntitys, string keyValue)
         {
-            using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
+            using (var db =new RepositoryBase(dbcontext).BeginTrans())
             {
                 if (!string.IsNullOrEmpty(keyValue))
                 {

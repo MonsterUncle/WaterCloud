@@ -15,18 +15,14 @@ namespace WaterCloud.Repository.SystemManage
 {
     public class ModuleButtonRepository : RepositoryBase<ModuleButtonEntity>, IModuleButtonRepository
     {
-        private string ConnectStr;
-        private string providerName;
-        private DbContext dbcontext;
-        public ModuleButtonRepository()
+        private IDbContext dbcontext;
+        public ModuleButtonRepository(IDbContext context) : base(context)
         {
-            dbcontext = GetDbContext();
+            dbcontext = context;
         }
         public ModuleButtonRepository(string ConnectStr, string providerName)
             : base(ConnectStr, providerName)
         {
-            this.ConnectStr = ConnectStr;
-            this.providerName = providerName;
             dbcontext = GetDbContext();
         }
         public async Task<List<ModuleButtonEntity>> GetListByRole(string roleid)
@@ -49,7 +45,7 @@ namespace WaterCloud.Repository.SystemManage
 
         public async Task<List<ModuleButtonEntity>> GetListNew(string moduleId)
         {
-            using (var db = new RepositoryBase(ConnectStr, providerName))
+            using (var db = new RepositoryBase(dbcontext))
             {
                 var query = db.IQueryable<ModuleButtonEntity>(a=>a.F_EnabledMark==true && a.F_DeleteMark == false)
                     .InnerJoin<ModuleEntity>((a, b) => a.F_ModuleId == b.F_Id&& b.F_EnabledMark == true && a.F_DeleteMark == false)

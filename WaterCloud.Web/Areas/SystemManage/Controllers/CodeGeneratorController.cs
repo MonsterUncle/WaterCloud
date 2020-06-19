@@ -14,6 +14,7 @@ using WaterCloud.Service;
 using System.Threading.Tasks;
 using WaterCloud.Code.Extend;
 using Serenity;
+using Chloe;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -24,19 +25,21 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly IDatabaseTableService _service;
         private readonly LogService _logService;
-        public CodeGeneratorController(LogService logService)
+        private readonly IDbContext _context;
+        public CodeGeneratorController(LogService logService, IDbContext context)
         {
             string dbType = GlobalContext.SystemConfig.DBProvider;
+            _context = context;
             switch (dbType)
             {
                 case "System.Data.SqlClient":
-                    _service = new DatabaseTableSqlServerService();
+                    _service = new DatabaseTableSqlServerService(context);
                     break;
                 case "MySql.Data.MySqlClient":
-                    _service = new DatabaseTableMySqlService();
+                    _service = new DatabaseTableMySqlService(context);
                     break;
                 default:
-                    _service = new DatabaseTableMySqlService();
+                    _service = new DatabaseTableMySqlService(context);
                     break;
             }
             _logService = logService;
@@ -111,7 +114,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 dic.Add(item.TableColumn, string.IsNullOrEmpty(item.Remark) ? item.TableColumn : item.Remark);
             }
             string serverPath = GlobalContext.HostingEnvironment.ContentRootPath;
-            data = new SingleTableTemplate().GetBaseConfig(serverPath, OperatorProvider.Provider.GetCurrent().UserName, keyValue, tableDescription, dic);
+            data = new SingleTableTemplate(_context).GetBaseConfig(serverPath, OperatorProvider.Provider.GetCurrent().UserName, keyValue, tableDescription, dic);
             return Content(data.ToJson());
         }
         #endregion
@@ -124,7 +127,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             try
             {
                 List<TableFieldInfo> list =await _service.GetTableFieldList(baseConfig.TableName);
-                SingleTableTemplate template = new SingleTableTemplate();
+                SingleTableTemplate template = new SingleTableTemplate(_context);
                 DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
                 string idcolumn = string.Empty;
                 Dictionary<string, string> dic = new Dictionary<string, string>();
@@ -196,7 +199,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 }
                 else
                 {
-                    SingleTableTemplate template = new SingleTableTemplate();
+                    SingleTableTemplate template = new SingleTableTemplate(_context);
                     await template.CreateCode(baseConfig, HttpUtility.UrlDecode(Code));
                 }
                 logEntity.F_Description += "操作成功";
