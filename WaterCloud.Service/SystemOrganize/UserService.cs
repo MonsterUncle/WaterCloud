@@ -35,7 +35,7 @@ namespace WaterCloud.Service.SystemOrganize
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
             dbcontext = context;
-            service = currentuser!=null? new UserRepository(currentuser.DbString,currentuser.DBProvider) : new UserRepository(context);
+            service = currentuser!=null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new UserRepository(currentuser.DbString,currentuser.DBProvider) : new UserRepository(context);
             roleservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleRepository(currentuser.DbString,currentuser.DBProvider) : new RoleRepository(context);
             orgservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new OrganizeRepository(currentuser.DbString,currentuser.DBProvider) : new OrganizeRepository(context);
             userLogOnApp = new UserLogOnService(context);
