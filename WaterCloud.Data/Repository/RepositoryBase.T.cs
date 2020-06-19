@@ -111,7 +111,7 @@ namespace WaterCloud.DataBase
             var tempData = dbcontext.Query<TEntity>();
             tempData = tempData.OrderBy(pagination.sort);
             pagination.records = tempData.Count();
-            tempData = tempData.Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows);
+            tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
         public async Task<List<TEntity>> FindList(Expression<Func<TEntity, bool>> predicate, Pagination pagination)
@@ -119,7 +119,7 @@ namespace WaterCloud.DataBase
             var tempData = dbcontext.Query<TEntity>().Where(predicate);
             tempData = tempData.OrderBy(pagination.sort);
             pagination.records = tempData.Count();
-            tempData = tempData.Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows);
+            tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
         public async Task<List<T>> OrderList<T>(IQuery<T> query, Pagination pagination)
@@ -127,7 +127,7 @@ namespace WaterCloud.DataBase
             var tempData = query;
             tempData = tempData.OrderBy(pagination.sort);
             pagination.records = tempData.Count();
-            tempData = tempData.Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows);
+            tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
         public async Task<List<TEntity>> CheckCacheList(string cacheKey, long old = 0)
