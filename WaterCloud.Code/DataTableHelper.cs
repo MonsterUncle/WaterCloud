@@ -46,6 +46,42 @@ namespace WaterCloud.Code
             return dt;
         }
         /// <summary>
+        /// List过滤
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entitys"></param>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static List<T> ListFilter<T>(List<T> entitys,List<string> list)
+        {
+            //检查实体集合不能为空
+            if (entitys == null || entitys.Count < 1)
+            {
+                throw new Exception("需转换的集合为空");
+            }
+            //取出第一个实体的所有Propertie
+            Type entityType = entitys[0].GetType();
+            PropertyInfo[] entityProperties = entityType.GetProperties();
+
+            //将所有entity过滤
+            foreach (object entity in entitys)
+            {
+                //检查所有的的实体都为同一类型
+                if (entity.GetType() != entityType)
+                {
+                    throw new Exception("要转换的集合元素类型不一致");
+                }
+                for (int i = 0; i < entityProperties.Length; i++)
+                {
+                    if (!list.Contains(entityProperties[i].Name))
+                    {
+                        entityProperties[i].SetValue(entity, null);
+                    }
+                }
+            }
+            return entitys;
+        }
+        /// <summary>
         /// DataTable转成List
         /// </summary>
         /// <typeparam name="T"></typeparam>

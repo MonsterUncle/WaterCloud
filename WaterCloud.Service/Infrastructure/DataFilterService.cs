@@ -145,32 +145,20 @@ namespace WaterCloud.Service
             var rolelist = loginUser.RoleId.Split(',');
             var rule = dbcontext.Query<RoleAuthorizeEntity>(u=> rolelist.Contains(u.F_ObjectId)&&u.F_ItemType==3).Select(a=>a.F_ItemId).Distinct().ToList();
             var fieldsList = dbcontext.Query<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id)||u.F_IsPublic==true)&&u.F_ModuleId==module.F_Id).Select(u => u.F_EnCode).ToList();
+            //反射获取主键
+            PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
+            var idName = "F_Id";
+            if (pkProp == null)
+            {
+                idName = pkProp.Name;
+            }
+            fieldsList.Add(idName);
+            fieldsList = fieldsList.Distinct().ToList();
             if (list.Count==0)
             {
                 return list;
             }
-            DataTable dt = DataTableHelper.ListToDataTable(list);
-            //反射获取主键
-            PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
-            var idName ="F_Id";
-            if (pkProp==null)
-            {
-                idName = pkProp.Name;
-            }
-            //删除列
-            List<string> tempList = new List<string>();
-            foreach (var item in dt.Columns)
-            {
-                if (!fieldsList.Contains(item.ToString()) && idName != item.ToString())
-                {
-                    tempList.Add(item.ToString());
-                }
-            }
-            foreach (var item in tempList)
-            {
-                dt.Columns.Remove(item);
-            }       
-            return dt.ToDataList<TEntity>();
+            return DataTableHelper.ListFilter(list, fieldsList);
         }
         /// <summary>
         ///  字段权限处理
