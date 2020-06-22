@@ -194,18 +194,15 @@ namespace WaterCloud.CodeGenerator
 
             sb.AppendLine("    public class " + baseConfigModel.FileConfig.RepositoryName + " : RepositoryBase<" + baseConfigModel.FileConfig.EntityName + ">,"+ baseConfigModel.FileConfig.IRepositoryName);
             sb.AppendLine("    {");
-            sb.AppendLine("        private string ConnectStr;");
-            sb.AppendLine("        private string providerName;");
             sb.AppendLine("        private DbContext dbcontext;");
-            sb.AppendLine("        public "+ baseConfigModel.FileConfig.RepositoryName + "()");
+            sb.AppendLine("        public "+ baseConfigModel.FileConfig.RepositoryName + "(IDbContext context)");
+            sb.AppendLine("             : base(context)");
             sb.AppendLine("        {");
-            sb.AppendLine("            dbcontext = GetDbContext();");
+            sb.AppendLine("            dbcontext = context;");
             sb.AppendLine("        }");
             sb.AppendLine("        public " + baseConfigModel.FileConfig.RepositoryName + "(string ConnectStr, string providerName)");
             sb.AppendLine("             : base(ConnectStr, providerName)");
             sb.AppendLine("        {");
-            sb.AppendLine("            this.ConnectStr = ConnectStr;");
-            sb.AppendLine("            this.providerName = providerName;");
             sb.AppendLine("            dbcontext = GetDbContext();");
             sb.AppendLine("        }");
             sb.AppendLine("    }");
@@ -238,9 +235,17 @@ namespace WaterCloud.CodeGenerator
 
             sb.AppendLine("    public class " + baseConfigModel.FileConfig.ServiceName + " : DataFilterService<"+ baseConfigModel.FileConfig.EntityName + ">, IDenpendency");
             sb.AppendLine("    {");                    
-            sb.AppendLine("        private " + baseConfigModel.FileConfig.IRepositoryName + " service = new "+ baseConfigModel.FileConfig.RepositoryName + "();");
+            sb.AppendLine("        private " + baseConfigModel.FileConfig.IRepositoryName + " service;");
             sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
             sb.AppendLine("        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];");
+
+            sb.AppendLine("        public "+ baseConfigModel.FileConfig.ServiceName + "(IDbContext context,string apitoken=\"\") : base(context,apitoken)");
+            sb.AppendLine("        {");
+            sb.AppendLine("            //根据租户选择数据库连接");
+            sb.AppendLine("            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);");
+            sb.AppendLine("            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new "+ baseConfigModel.FileConfig.RepositoryName + "(currentuser.DbString, currentuser.DBProvider) : new "+ baseConfigModel.FileConfig.RepositoryName + "(context);");
+            sb.AppendLine("        }");
+
             sb.AppendLine("        #region 获取数据");
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetList(string keyword = \"\")");
             sb.AppendLine("        {");

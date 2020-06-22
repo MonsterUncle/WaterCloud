@@ -21,9 +21,9 @@ namespace WaterCloud.Service.SystemOrganize
         private IDataPrivilegeRuleRepository service;
         private IModuleRepository moduleservice;
         private string cacheKey = "watercloud_dataprivilegeruledata_";
-        public DataPrivilegeRuleService(IDbContext context) : base(context)
+        public DataPrivilegeRuleService(IDbContext context, string apitoken = "") : base(context, apitoken)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
             service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new DataPrivilegeRuleRepository(currentuser.DbString,currentuser.DBProvider) : new DataPrivilegeRuleRepository(context);
             moduleservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ModuleRepository(currentuser.DbString,currentuser.DBProvider) : new ModuleRepository(context);
         }

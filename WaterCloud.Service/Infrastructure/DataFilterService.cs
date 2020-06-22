@@ -15,17 +15,17 @@ namespace WaterCloud.Service
 {
     public class DataFilterService<T> where T : class, new()
     {
-        protected OperatorModel loginUser = OperatorProvider.Provider.GetCurrent();
-        /// <summary>
-        /// 用于普通的数据库操作
-        /// </summary>
-        /// <value>The repository.</value>
+        // 用户信息
+        protected OperatorModel currentuser;
+        // 用于当前表操作
         protected RepositoryBase<T> Repository;
+        // 用于其他表操作
         protected IDbContext dbcontext;
-        public DataFilterService(IDbContext context) {
-            if (loginUser!=null)
+        public DataFilterService(IDbContext context, string apitoken = "") {
+            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
+            if (currentuser != null&& !(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString))
             {
-                Repository = new RepositoryBase<T>(loginUser.DbString,loginUser.DBProvider);
+                Repository = new RepositoryBase<T>(currentuser.DbString, currentuser.DBProvider);
                 dbcontext = Repository.GetDbContext();
             }
             else
@@ -56,13 +56,13 @@ namespace WaterCloud.Service
             {
 
                 //即把{loginUser} =='xxxxxxx'换为 loginUser.User.Id =='xxxxxxx'，从而把当前登录的用户名与当时设计规则时选定的用户id对比
-                rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINUSER, loginUser.UserId);
-                var roles = loginUser.RoleId;
+                rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINUSER, currentuser.UserId);
+                var roles = currentuser.RoleId;
                 //var roles = loginUser.Roles.Select(u => u.Id).ToList();//多角色
                 //roles.Sort();
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINROLE,
                     roles);
-                var orgs = loginUser.DepartmentId;
+                var orgs = currentuser.DepartmentId;
                 //var orgs = loginUser.Orgs.Select(u => u.Id).ToList();//多部门
                 //orgs.Sort();
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
@@ -90,11 +90,11 @@ namespace WaterCloud.Service
             {
 
                 //即把{loginUser} =='xxxxxxx'换为 loginUser.User.Id =='xxxxxxx'，从而把当前登录的用户名与当时设计规则时选定的用户id对比
-                rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINUSER, loginUser.UserId);
-                var roles = loginUser.RoleId;
+                rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINUSER, currentuser.UserId);
+                var roles = currentuser.RoleId;
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINROLE,
                     roles);
-                var orgs = loginUser.DepartmentId;
+                var orgs = currentuser.DepartmentId;
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
                     orgs);
             }
@@ -108,7 +108,7 @@ namespace WaterCloud.Service
         /// <returns></returns>
         protected bool CheckDataPrivilege(string moduleName)
         {
-            if (loginUser.UserCode == Define.SYSTEM_USERNAME) return false;  //超级管理员特权
+            if (currentuser.UserCode == Define.SYSTEM_USERNAME) return false;  //超级管理员特权
             var rule = dbcontext.Query<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             ////系统菜单也不需要数据权限 跟字段重合取消这样处理
             //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).Result;
@@ -131,7 +131,7 @@ namespace WaterCloud.Service
         protected List<TEntity> GetFieldsFilterData<TEntity>(List<TEntity> list, string moduleName)
         {
             //管理员跳过
-            if (loginUser.RoleId == "admin"||loginUser.IsSystem)
+            if (currentuser.RoleId == "admin"|| currentuser.IsSystem)
             {
                 return list;
             }
@@ -142,7 +142,7 @@ namespace WaterCloud.Service
             {
                 return list;
             }
-            var rolelist = loginUser.RoleId.Split(',');
+            var rolelist = currentuser.RoleId.Split(',');
             var rule = dbcontext.Query<RoleAuthorizeEntity>(u=> rolelist.Contains(u.F_ObjectId)&&u.F_ItemType==3).Select(a=>a.F_ItemId).Distinct().ToList();
             var fieldsList = dbcontext.Query<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id)||u.F_IsPublic==true)&&u.F_ModuleId==module.F_Id).Select(u => u.F_EnCode).ToList();
             //反射获取主键

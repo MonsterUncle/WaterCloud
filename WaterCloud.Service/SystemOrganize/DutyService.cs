@@ -19,9 +19,9 @@ namespace WaterCloud.Service.SystemOrganize
     {
         private IUserRepository userservice;
         private IRoleRepository service;
-        public DutyService(IDbContext context):base(context)
+        public DutyService(IDbContext context, string apitoken = "") :base(context, apitoken)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
             service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleRepository(currentuser.DbString,currentuser.DBProvider) : new RoleRepository(context);
             userservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new UserRepository(currentuser.DbString,currentuser.DBProvider) : new UserRepository(context);
         }

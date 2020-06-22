@@ -21,9 +21,9 @@ namespace WaterCloud.Service.SystemOrganize
         /// </summary>
 
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
-        public UserLogOnService(IDbContext context)
+        public UserLogOnService(IDbContext context, string apitoken = "")
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
             service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new UserLogOnRepository(currentuser.DbString,currentuser.DBProvider) : new UserLogOnRepository(context);
         }
 

@@ -29,7 +29,7 @@ namespace WaterCloud.Service.SystemSecurity
         private string cacheKey = "watercloud_openjob_";// IP过滤
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public OpenJobsService(IDbContext context) : base(context)
+        public OpenJobsService(IDbContext context, string apitoken = "") : base(context, apitoken)
         {
             service = new OpenJobRepository(context);
         }

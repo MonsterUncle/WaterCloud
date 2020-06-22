@@ -21,7 +21,7 @@ namespace WaterCloud.Service.SystemManage
         /// <summary>
         /// 缓存操作类
         /// </summary>
-        public ItemsDataService(IDbContext context) : base(context)
+        public ItemsDataService(IDbContext context, string apitoken = "") : base(context, apitoken)
         {
             service = new ItemsDetailRepository(context);
             itemservice = new ItemsRepository(context);

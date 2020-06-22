@@ -20,7 +20,7 @@ namespace WaterCloud.Service.SystemSecurity
     public class ServerStateService:IDenpendency
     {
 		private IServerStateRepository service;
-        public ServerStateService(IDbContext context)
+        public ServerStateService(IDbContext context, string apitoken = "")
         {
             service = new ServerStateRepository(context);
         }

@@ -24,9 +24,9 @@ namespace WaterCloud.Service.SystemSecurity
         private ModuleService moduleservice;
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public LogService(IDbContext context) : base(context)
+        public LogService(IDbContext context, string apitoken = "") : base(context, apitoken)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
             service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new LogRepository(currentuser.DbString,currentuser.DBProvider) : new LogRepository(context);
             moduleservice = new ModuleService(context);
         }
