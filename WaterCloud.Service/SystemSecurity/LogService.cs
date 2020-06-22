@@ -97,14 +97,13 @@ namespace WaterCloud.Service.SystemSecurity
             logEntity.Create();
             await service.Insert(logEntity);
         }
-        public async Task WriteDbLog(LogEntity logEntity)
+        public async Task WriteDbLog(LogEntity logEntity,string apitoken="")
         {
             logEntity.F_Id = Utils.GuId();
             logEntity.F_Date = DateTime.Now;
             try
             {
-
-                var operatorModel = OperatorProvider.Provider.GetCurrent();
+                var operatorModel = OperatorProvider.Provider.GetCurrent(apitoken);
                 if (operatorModel==null)
                 {
                     logEntity.F_IPAddress = LoginProvider=="WebApi"? "未连接未知": WebHelper.Ip;
@@ -113,11 +112,11 @@ namespace WaterCloud.Service.SystemSecurity
                 }
                 else
                 {
-                    logEntity.F_IPAddress = OperatorProvider.Provider.GetCurrent().LoginIPAddress;
-                    logEntity.F_IPAddressName = OperatorProvider.Provider.GetCurrent().LoginIPAddressName;
-                    logEntity.F_CompanyId = OperatorProvider.Provider.GetCurrent().CompanyId;
+                    logEntity.F_IPAddress = operatorModel.LoginIPAddress;
+                    logEntity.F_IPAddressName = operatorModel.LoginIPAddressName;
+                    logEntity.F_CompanyId = operatorModel.CompanyId;
                 }
-                logEntity.Create();
+                logEntity.Create(apitoken);
                 await service.Insert(logEntity);
             }
             catch (Exception)
@@ -125,7 +124,7 @@ namespace WaterCloud.Service.SystemSecurity
                 logEntity.F_IPAddress = LoginProvider == "WebApi" ? "未连接未知" : WebHelper.Ip;
                 logEntity.F_IPAddressName = "本地局域网";
                 logEntity.F_CompanyId = Define.SYSTEM_MASTERPROJECT;
-                logEntity.Create();
+                logEntity.Create(apitoken);
                 await service.Insert(logEntity);
             }
         }

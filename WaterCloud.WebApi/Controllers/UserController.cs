@@ -96,7 +96,7 @@ namespace WaterCloud.WebApi.Controllers
                 logEntity.F_NickName = userEntity.F_RealName;
                 logEntity.F_Result = true;
                 logEntity.F_Description = "登录成功";
-                await _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity, apitoken);
                 return Content(new AjaxResult<string> { state = ResultType.success.ToString(), message = "登录成功。",data= apitoken }.ToJson());
             }
             catch (Exception ex)
@@ -105,7 +105,7 @@ namespace WaterCloud.WebApi.Controllers
                 logEntity.F_NickName = userName;
                 logEntity.F_Result = false;
                 logEntity.F_Description = "登录失败，" + ex.Message;
-                await _logService.WriteDbLog(logEntity);
+                await _logService.WriteDbLog(logEntity, apitoken);
                 return Content(new AjaxResult<string> { state = ResultType.error.ToString(), message = ex.Message,data= apitoken }.ToJson());
             }
         }
