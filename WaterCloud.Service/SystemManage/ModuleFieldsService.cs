@@ -23,9 +23,9 @@ namespace WaterCloud.Service.SystemManage
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public ModuleFieldsService(IDbContext context, string apitoken = "") : base(context, apitoken)
+        public ModuleFieldsService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
+            var currentuser = OperatorProvider.Provider.GetCurrent();
             service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ModuleFieldsRepository(currentuser.DbString,currentuser.DBProvider) : new ModuleFieldsRepository(context);
             moduleservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ModuleRepository(currentuser.DbString,currentuser.DBProvider) : new ModuleRepository(context);
         }

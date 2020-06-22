@@ -4,9 +4,11 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using System.Web;
 namespace WaterCloud.Code
 {
@@ -37,7 +39,7 @@ namespace WaterCloud.Code
         /// 标记登录的浏览器
         /// </summary>
         private string LoginUserMarkKey = "watercloud_Mark";
-        public string GetProvider(string key,string apitoken="")
+        public string GetProvider(string key)
         {
             switch (LoginProvider)
             {
@@ -46,9 +48,9 @@ namespace WaterCloud.Code
                 case Define.PROVIDER_SESSION:
                     return WebHelper.GetSession(key).ToString();
                 case Define.PROVIDER_WEBAPI:
-                    return apitoken;
+                    return GetToken();
                 default:
-                    return apitoken;
+                    return GetToken();
             }
         }
         public void SetProvider(string key,string value)
@@ -67,6 +69,14 @@ namespace WaterCloud.Code
                     break;
             }
         }
+        private string GetToken()
+        {
+            string token = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Query[Define.TOKEN_NAME];
+            if (!String.IsNullOrEmpty(token)) return token;
+
+            string cookie = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Cookies[Define.TOKEN_NAME];
+            return cookie == null ? string.Empty : cookie;
+        }
         public void RemoveProvider(string key)
         {
             switch (LoginProvider)
@@ -83,12 +93,12 @@ namespace WaterCloud.Code
                     break;
             }
         }
-        public OperatorModel GetCurrent(string apitoken = "")
+        public OperatorModel GetCurrent()
         {
             OperatorModel operatorModel = new OperatorModel();
             try
             {
-                string loginMark = GetProvider(LoginUserMarkKey, apitoken);
+                string loginMark = GetProvider(LoginUserMarkKey);
                 operatorModel =CacheHelper.Get<OperatorModel>(cacheKeyOperator + loginMark).Result;
             }
             catch
@@ -101,9 +111,9 @@ namespace WaterCloud.Code
         /// 获取浏览器设配号
         /// </summary>
         /// <returns></returns>
-        public string GetMark(string apitoken = "")
+        public string GetMark()
         {
-            string cookieMark = GetProvider(LoginUserMarkKey, apitoken);
+            string cookieMark = GetProvider(LoginUserMarkKey);
             if (string.IsNullOrEmpty(cookieMark))
             {
                 cookieMark = Guid.NewGuid().ToString();
@@ -180,12 +190,12 @@ namespace WaterCloud.Code
         /// </summary>
         /// <param name="apitoken">apitoken</param>
         /// <param name="facilityMark">设备类型</param>
-        public async Task EmptyCurrent(string facilityMark, string apitoken = "")
+        public async Task EmptyCurrent(string facilityMark)
         {
             try
             {
-                string token = GetProvider(LoginUserToken, apitoken);
-                string loginMark = GetProvider(LoginUserMarkKey, apitoken);
+                string token = GetProvider(LoginUserToken);
+                string loginMark = GetProvider(LoginUserMarkKey);
                 await EmptyCurrent(token, facilityMark, loginMark);
                 RemoveProvider(LoginUserMarkKey.Trim());
                 RemoveProvider(LoginUserToken.Trim());
@@ -227,12 +237,12 @@ namespace WaterCloud.Code
         /// <param name="facilityMark">登录设备</param>
         /// <param name="apitoken">apitoken</param>
         /// <returns>-1未登录,1登录成功,0登录过期,-2账号被顶</returns>
-        public async Task<OperatorResult> IsOnLine(string facilityMark, string apitoken = "")
+        public async Task<OperatorResult> IsOnLine(string facilityMark)
         {
             try
             {
-                string token = GetProvider(LoginUserToken, apitoken);
-                string loginMark = GetProvider(LoginUserMarkKey, apitoken);
+                string token = GetProvider(LoginUserToken);
+                string loginMark = GetProvider(LoginUserMarkKey);
                 return await IsOnLine(token, facilityMark, loginMark);
             }
             catch (Exception)
@@ -309,12 +319,12 @@ namespace WaterCloud.Code
         /// 获取当前登录错误次数
         /// </summary>
         /// <returns></returns>
-        public async Task<int> GetCurrentErrorNum(string apitoken = "")
+        public async Task<int> GetCurrentErrorNum()
         {
             int res = 0;
             try
             {
-                string cookieMark = GetProvider(LoginUserMarkKey, apitoken);
+                string cookieMark = GetProvider(LoginUserMarkKey);
                 if (string.IsNullOrEmpty(cookieMark))
                 {
                     cookieMark = Guid.NewGuid().ToString();
@@ -335,12 +345,12 @@ namespace WaterCloud.Code
         /// 增加错误次数
         /// </summary>
         /// <returns></returns>
-        public async Task<int> AddCurrentErrorNum(string apitoken = "")
+        public async Task<int> AddCurrentErrorNum()
         {
             int res = 0;
             try
             {
-                string cookieMark = GetProvider(LoginUserMarkKey, apitoken);
+                string cookieMark = GetProvider(LoginUserMarkKey);
                 if (string.IsNullOrEmpty(cookieMark))
                 {
                     cookieMark = Guid.NewGuid().ToString();
@@ -363,11 +373,11 @@ namespace WaterCloud.Code
         /// <summary>
         /// 清除当前登录错误次数
         /// </summary>
-        public async Task ClearCurrentErrorNum(string apitoken="")
+        public async Task ClearCurrentErrorNum()
         {
             try
             {
-                string cookieMark = GetProvider(LoginUserMarkKey,apitoken);
+                string cookieMark = GetProvider(LoginUserMarkKey);
                 if (string.IsNullOrEmpty(cookieMark))
                 {
                     cookieMark = Guid.NewGuid().ToString();

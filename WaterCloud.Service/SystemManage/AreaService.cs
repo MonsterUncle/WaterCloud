@@ -18,10 +18,10 @@ namespace WaterCloud.Service.SystemManage
     public class AreaService : DataFilterService<AreaEntity>, IDenpendency
     {
         private IAreaRepository service;
-        public AreaService(IDbContext context, string apitoken="") : base(context,apitoken)
+        public AreaService(IDbContext context) : base(context)
         {
             //根据租户选择数据库连接
-            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
+            var currentuser = OperatorProvider.Provider.GetCurrent();
             service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new AreaRepository(currentuser.DbString, currentuser.DBProvider) : new AreaRepository(context);
 
         }

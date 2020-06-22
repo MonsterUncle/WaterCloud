@@ -21,8 +21,8 @@ namespace WaterCloud.Service
         protected RepositoryBase<T> Repository;
         // 用于其他表操作
         protected IDbContext dbcontext;
-        public DataFilterService(IDbContext context, string apitoken = "") {
-            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
+        public DataFilterService(IDbContext context) {
+            var currentuser = OperatorProvider.Provider.GetCurrent();
             if (currentuser != null&& !(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString))
             {
                 Repository = new RepositoryBase<T>(currentuser.DbString, currentuser.DBProvider);

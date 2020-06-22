@@ -31,9 +31,9 @@ namespace WaterCloud.Service.SystemOrganize
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public UserService(IDbContext context, string apitoken = "") : base(context, apitoken)
+        public UserService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
+            var currentuser = OperatorProvider.Provider.GetCurrent();
             dbcontext = context;
             service = currentuser!=null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new UserRepository(currentuser.DbString,currentuser.DBProvider) : new UserRepository(context);
             roleservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleRepository(currentuser.DbString,currentuser.DBProvider) : new RoleRepository(context);
@@ -152,7 +152,7 @@ namespace WaterCloud.Service.SystemOrganize
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<UserEntity> CheckLogin(string username, string password,string localurl, string apitoken="")
+        public async Task<UserEntity> CheckLogin(string username, string password,string localurl)
         {
             //根据登录公司查找公司
             if (string.IsNullOrEmpty(localurl))
@@ -225,20 +225,20 @@ namespace WaterCloud.Service.SystemOrganize
                         userLogOnEntity.F_UserOnLine = true;
                         await CacheHelper.Remove(cacheKeyOperator + "info_" + userEntity.F_Id);
                         await CacheHelper.Set(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
-                        await OperatorProvider.Provider.ClearCurrentErrorNum(apitoken);
+                        await OperatorProvider.Provider.ClearCurrentErrorNum();
                         return userEntity;
                     }
                     else
                     {
                         if (userEntity.F_Account != "admin")
                         {
-                            int num =await OperatorProvider.Provider.AddCurrentErrorNum(apitoken);
+                            int num =await OperatorProvider.Provider.AddCurrentErrorNum();
                             string erornum = (5 - num).ToString();
                             if (num == 5)
                             {
                                 userEntity.F_EnabledMark = false;
                                 await service.Update(userEntity);
-                                await OperatorProvider.Provider.ClearCurrentErrorNum(apitoken);
+                                await OperatorProvider.Provider.ClearCurrentErrorNum();
                                 throw new Exception("密码不正确，账户被系统锁定");
                             }
                             else

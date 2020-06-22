@@ -24,9 +24,9 @@ namespace WaterCloud.Service.SystemSecurity
         private ModuleService moduleservice;
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public LogService(IDbContext context, string apitoken = "") : base(context, apitoken)
+        public LogService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
+            var currentuser = OperatorProvider.Provider.GetCurrent();
             service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new LogRepository(currentuser.DbString,currentuser.DBProvider) : new LogRepository(context);
             moduleservice = new ModuleService(context);
         }
@@ -97,13 +97,13 @@ namespace WaterCloud.Service.SystemSecurity
             logEntity.Create();
             await service.Insert(logEntity);
         }
-        public async Task WriteDbLog(LogEntity logEntity,string apitoken="")
+        public async Task WriteDbLog(LogEntity logEntity,string ="")
         {
             logEntity.F_Id = Utils.GuId();
             logEntity.F_Date = DateTime.Now;
             try
             {
-                var operatorModel = OperatorProvider.Provider.GetCurrent(apitoken);
+                var operatorModel = OperatorProvider.Provider.GetCurrent();
                 if (operatorModel==null)
                 {
                     logEntity.F_IPAddress = LoginProvider=="WebApi"? "未连接未知": WebHelper.Ip;
@@ -116,7 +116,7 @@ namespace WaterCloud.Service.SystemSecurity
                     logEntity.F_IPAddressName = operatorModel.LoginIPAddressName;
                     logEntity.F_CompanyId = operatorModel.CompanyId;
                 }
-                logEntity.Create(apitoken);
+                logEntity.Create();
                 await service.Insert(logEntity);
             }
             catch (Exception)
@@ -124,7 +124,7 @@ namespace WaterCloud.Service.SystemSecurity
                 logEntity.F_IPAddress = LoginProvider == "WebApi" ? "未连接未知" : WebHelper.Ip;
                 logEntity.F_IPAddressName = "本地局域网";
                 logEntity.F_CompanyId = Define.SYSTEM_MASTERPROJECT;
-                logEntity.Create(apitoken);
+                logEntity.Create();
                 await service.Insert(logEntity);
             }
         }

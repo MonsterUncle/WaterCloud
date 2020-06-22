@@ -27,6 +27,13 @@ namespace WaterCloud.WebApi.Controllers
         private readonly UserService _userService;
         private readonly LogService _logService;
         private readonly SystemSetService _setService;
+        /// <summary>
+        /// 用户登录模块
+        /// </summary>
+        /// <param name="filterIPService"></param>
+        /// <param name="userService"></param>
+        /// <param name="logService"></param>
+        /// <param name="setService"></param>
         public UserController(FilterIPService filterIPService, UserService userService, LogService logService, SystemSetService setService)
         {
             _filterIPService = filterIPService;
@@ -63,7 +70,7 @@ namespace WaterCloud.WebApi.Controllers
                 {
                     throw new Exception("IP受限");
                 }
-                UserEntity userEntity = await _userService.CheckLogin(userName, Md5.md5(password, 32).ToLower(), localurl, token);
+                UserEntity userEntity = await _userService.CheckLogin(userName, Md5.md5(password, 32).ToLower(), localurl);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
                 operatorModel.UserCode = userEntity.F_Account;
@@ -96,7 +103,7 @@ namespace WaterCloud.WebApi.Controllers
                 logEntity.F_NickName = userEntity.F_RealName;
                 logEntity.F_Result = true;
                 logEntity.F_Description = "登录成功";
-                await _logService.WriteDbLog(logEntity, apitoken);
+                await _logService.WriteDbLog(logEntity);
                 return Content(new AjaxResult<string> { state = ResultType.success.ToString(), message = "登录成功。",data= apitoken }.ToJson());
             }
             catch (Exception ex)
@@ -105,7 +112,7 @@ namespace WaterCloud.WebApi.Controllers
                 logEntity.F_NickName = userName;
                 logEntity.F_Result = false;
                 logEntity.F_Description = "登录失败，" + ex.Message;
-                await _logService.WriteDbLog(logEntity, apitoken);
+                await _logService.WriteDbLog(logEntity);
                 return Content(new AjaxResult<string> { state = ResultType.error.ToString(), message = ex.Message,data= apitoken }.ToJson());
             }
         }
@@ -121,18 +128,18 @@ namespace WaterCloud.WebApi.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> LoginOff([FromQuery] string token)
+        public async Task<ActionResult> LoginOff()
         {
             await _logService.WriteDbLog(new LogEntity
             {
                 F_ModuleName = "用户Api",
                 F_Type = DbLogType.Exit.ToString(),
-                F_Account = OperatorProvider.Provider.GetCurrent(token).UserCode,
-                F_NickName = OperatorProvider.Provider.GetCurrent(token).UserName,
+                F_Account = OperatorProvider.Provider.GetCurrent().UserCode,
+                F_NickName = OperatorProvider.Provider.GetCurrent().UserName,
                 F_Result = true,
                 F_Description = "安全退出系统",
             });
-            await OperatorProvider.Provider.EmptyCurrent("api_",token);
+            await OperatorProvider.Provider.EmptyCurrent("api_");
             return Content(new AjaxResult { state = ResultType.success.ToString() }.ToJson());
         }
         #endregion

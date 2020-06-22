@@ -34,11 +34,11 @@ namespace WaterCloud.WebApi
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            string token = context.HttpContext.Request.Headers["ApiToken"].ParseToString();
+            string token = context.HttpContext.Request.Headers[Define.TOKEN_NAME].ParseToString();
             OperatorModel user = OperatorProvider.Provider.GetCurrent(token);
             if (user != null)
             {
-                // 根据传入的Token，设置CustomerId
+                // 根据传入的Token，添加token和客户参数
                 if (context.ActionArguments != null && context.ActionArguments.Count > 0)
                 {
                     PropertyInfo property = context.ActionArguments.FirstOrDefault().Value.GetType().GetProperty("Token");

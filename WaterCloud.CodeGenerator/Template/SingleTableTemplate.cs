@@ -239,10 +239,10 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
             sb.AppendLine("        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];");
 
-            sb.AppendLine("        public "+ baseConfigModel.FileConfig.ServiceName + "(IDbContext context,string apitoken=\"\") : base(context,apitoken)");
+            sb.AppendLine("        public "+ baseConfigModel.FileConfig.ServiceName + "(IDbContext context) : base(context)");
             sb.AppendLine("        {");
             sb.AppendLine("            //根据租户选择数据库连接");
-            sb.AppendLine("            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);");
+            sb.AppendLine("            var currentuser = OperatorProvider.Provider.GetCurrent();");
             sb.AppendLine("            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new "+ baseConfigModel.FileConfig.RepositoryName + "(currentuser.DbString, currentuser.DBProvider) : new "+ baseConfigModel.FileConfig.RepositoryName + "(context);");
             sb.AppendLine("        }");
 

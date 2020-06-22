@@ -25,9 +25,9 @@ namespace WaterCloud.Service.SystemManage
         /// </summary>
 
         private string cacheKey = "watercloud_quickmoduledata_";
-        public QuickModuleService(IDbContext context, string apitoken = "")
+        public QuickModuleService(IDbContext context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
+            var currentuser = OperatorProvider.Provider.GetCurrent();
             service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new QuickModuleRepository(currentuser.DbString,currentuser.DBProvider) : new QuickModuleRepository(context);
         }
         public async Task<object> GetTransferList(string userId)

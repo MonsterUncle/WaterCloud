@@ -25,7 +25,7 @@ namespace WaterCloud.Service.SystemSecurity
         private string cacheKey = "watercloud_filterip_";// IP过滤
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public FilterIPService(IDbContext context, string apitoken = "") : base(context, apitoken)
+        public FilterIPService(IDbContext context) : base(context)
         {
             service =new FilterIPRepository(context);
         }

@@ -32,9 +32,9 @@ namespace WaterCloud.Service.SystemOrganize
         private string initcacheKey = "watercloud_init_";
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public RoleService(IDbContext context, string apitoken = "") : base(context, apitoken)
+        public RoleService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
+            var currentuser = OperatorProvider.Provider.GetCurrent();
             service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleRepository(currentuser.DbString,currentuser.DBProvider) : new RoleRepository(context);
             userservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new UserRepository(currentuser.DbString,currentuser.DBProvider) : new UserRepository(context);
             moduleApp = new ModuleService(context);

@@ -24,7 +24,7 @@ namespace WaterCloud.Service.SystemManage
         private string cacheKey = "watercloud_itemsdata_";// 字典分类
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public ItemsTypeService(IDbContext context, string apitoken = "") : base(context, apitoken)
+        public ItemsTypeService(IDbContext context) : base(context)
         {
             service = new ItemsRepository(context);
         }

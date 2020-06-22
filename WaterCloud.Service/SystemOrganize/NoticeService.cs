@@ -27,9 +27,9 @@ namespace WaterCloud.Service.SystemOrganize
         /// </summary>
 
         private string cacheKey = "watercloud_noticedata_";
-        public NoticeService(IDbContext context, string apitoken = "") : base(context, apitoken)
+        public NoticeService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
+            var currentuser = OperatorProvider.Provider.GetCurrent();
             service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new NoticeRepository(currentuser.DbString,currentuser.DBProvider) : new NoticeRepository(context);
         }
         public async Task<List<NoticeEntity>> GetList(string keyword)

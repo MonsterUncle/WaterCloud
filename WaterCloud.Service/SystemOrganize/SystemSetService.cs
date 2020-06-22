@@ -21,7 +21,7 @@ namespace WaterCloud.Service.SystemOrganize
         private string cacheKey = "watercloud_systemsetdata_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public SystemSetService(IDbContext context, string apitoken = "") : base(context, apitoken)
+        public SystemSetService(IDbContext context) : base(context)
         {
             service = new SystemSetRepository(context);
         }

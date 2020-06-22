@@ -32,9 +32,9 @@ namespace WaterCloud.Service.SystemOrganize
         /// </summary>
 
         private string cacheKey = "watercloud_authorizeurldata_";// +权限
-        public RoleAuthorizeService(IDbContext context, string apitoken = "")
+        public RoleAuthorizeService(IDbContext context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent(apitoken);
+            var currentuser = OperatorProvider.Provider.GetCurrent();
             service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleAuthorizeRepository(currentuser.DbString,currentuser.DBProvider) : new RoleAuthorizeRepository(context);
             roleservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleRepository(currentuser.DbString,currentuser.DBProvider) : new RoleRepository(context);
             moduleApp = new ModuleService(context);
