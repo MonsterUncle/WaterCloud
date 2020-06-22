@@ -10,6 +10,7 @@ using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Service.SystemOrganize;
 using Chloe;
+using WaterCloud.DataBase;
 /// <summary>
 /// 权限验证
 /// </summary>
@@ -52,7 +53,8 @@ namespace WaterCloud.Web
                 }
                 var roleId = result.userInfo.RoleId;
                 var action = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext.Request.Path;
-                return new RoleAuthorizeService((IDbContext)GlobalContext.ServiceProvider.GetService(typeof(IDbContext))).ActionValidate(roleId, action).Result;
+                var current = OperatorProvider.Provider.GetCurrent();
+                return new RoleAuthorizeService(DBContexHelper.Contex(current.DbString, current.DBProvider)).ActionValidate(roleId, action).Result;
             }
             catch (System.Exception)
             {

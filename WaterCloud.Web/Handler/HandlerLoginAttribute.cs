@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Web;
 using WaterCloud.Service.SystemOrganize;
 using Chloe;
+using WaterCloud.DataBase;
 /// <summary>
 /// 登录验证
 /// </summary>
@@ -88,9 +89,10 @@ namespace WaterCloud.Web
         {
             try
             {
-                var roleId = OperatorProvider.Provider.GetCurrent().RoleId;
-                var userId = OperatorProvider.Provider.GetCurrent().UserId;
-                return new RoleAuthorizeService((IDbContext)GlobalContext.ServiceProvider.GetService(typeof(IDbContext))).RoleValidate(userId, roleId).Result;
+                var current = OperatorProvider.Provider.GetCurrent();
+                var roleId = current.RoleId;
+                var userId = current.UserId;
+                return new RoleAuthorizeService(DBContexHelper.Contex(current.DbString,current.DBProvider)).RoleValidate(userId, roleId).Result;
             }
             catch (System.Exception)
             {
