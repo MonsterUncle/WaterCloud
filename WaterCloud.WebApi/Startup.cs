@@ -59,12 +59,16 @@ namespace WaterCloud.WebApi
                     services.AddMemoryCache();
                     break;
             }
+            //代替HttpContext.Current
+            services.AddHttpContextAccessor();
             services.AddOptions();
             //注入数据库连接
             services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
             {
                 return DBContexHelper.Contex();
             });
+            //注册服务
+            services.AddDataService();
             //跨域
             services.AddCors();
             services.AddControllers(options =>

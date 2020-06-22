@@ -69,11 +69,17 @@ namespace WaterCloud.Code
                     break;
             }
         }
-        private string GetToken()
+        public string GetToken()
         {
-            string token = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Query[Define.TOKEN_NAME];
+            //查请求头
+            string token = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Headers[Define.TOKEN_NAME].ParseToString();
             if (!String.IsNullOrEmpty(token)) return token;
 
+            //查参数
+            token = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Query[Define.TOKEN_NAME];
+            if (!String.IsNullOrEmpty(token)) return token;
+
+            //查cookies
             string cookie = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Cookies[Define.TOKEN_NAME];
             return cookie == null ? string.Empty : cookie;
         }

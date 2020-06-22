@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj" />
     <ProjectReference Include="..\WaterCloud.Service\WaterCloud.Service.csproj" />
+    <ProjectReference Include="..\WaterCloud.Web\WaterCloud.Web.csproj" />
   </ItemGroup>
 
 
