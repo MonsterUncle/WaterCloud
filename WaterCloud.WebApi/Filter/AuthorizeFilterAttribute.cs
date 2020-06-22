@@ -35,7 +35,7 @@ namespace WaterCloud.WebApi
             sw.Start();
 
             string token = context.HttpContext.Request.Headers[Define.TOKEN_NAME].ParseToString();
-            OperatorModel user = OperatorProvider.Provider.GetCurrent(token);
+            OperatorModel user = OperatorProvider.Provider.GetCurrent();
             if (user != null)
             {
                 // 根据传入的Token，添加token和客户参数

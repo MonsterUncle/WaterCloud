@@ -97,7 +97,7 @@ namespace WaterCloud.Service.SystemSecurity
             logEntity.Create();
             await service.Insert(logEntity);
         }
-        public async Task WriteDbLog(LogEntity logEntity,string ="")
+        public async Task WriteDbLog(LogEntity logEntity)
         {
             logEntity.F_Id = Utils.GuId();
             logEntity.F_Date = DateTime.Now;
