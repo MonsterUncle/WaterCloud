@@ -22,6 +22,7 @@ namespace WaterCloud.Web.Controllers
         [HandlerLogin]
         public ActionResult Index()
         {
+            //主页信息获取
             var currentuser = OperatorProvider.Provider.GetCurrent();
             if (currentuser==null)
             {

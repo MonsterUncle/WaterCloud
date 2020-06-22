@@ -13,6 +13,12 @@ namespace WaterCloud.Web
     [HandlerLogin]
     public abstract class ControllerBase : Controller
     {
+        /// <summary>
+        /// 演示模式过滤
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             Stopwatch sw = new Stopwatch();

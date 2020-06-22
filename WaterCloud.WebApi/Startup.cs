@@ -40,6 +40,7 @@ namespace WaterCloud.WebApi
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 config.IncludeXmlComments(xmlPath, true); //添加控制器层注释（true表示显示控制器注释）                
             });
+            //区分缓存
             switch (Configuration.GetSection("SystemConfig:CacheProvider").Value)
             {
                 case Define.CACHEPROVIDER_REDIS:

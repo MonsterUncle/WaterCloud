@@ -39,6 +39,7 @@ namespace WaterCloud.Web.Controllers
         [HttpGet]
         public virtual async Task<ActionResult> Index()
         {
+            //登录页获取logo和项目名称
             try
             {
                 var systemset = await _setService.GetFormByHost("");
@@ -65,6 +66,10 @@ namespace WaterCloud.Web.Controllers
             }
 
         }
+        /// <summary>
+        /// 验证码获取（此接口已弃用）
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult GetAuthCode()
         {
@@ -85,6 +90,10 @@ namespace WaterCloud.Web.Controllers
             await OperatorProvider.Provider.EmptyCurrent("pc_");
             return Redirect("/Login/Index");
         }
+        /// <summary>
+        /// 验证登录状态请求接口
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [HandlerAjaxOnly]
         public async Task<ActionResult> CheckLoginState()
@@ -113,6 +122,13 @@ namespace WaterCloud.Web.Controllers
             }
 
         }
+        /// <summary>
+        /// 登录验证
+        /// </summary>
+        /// <param name="username">用户</param>
+        /// <param name="password">密码</param>
+        /// <param name="localurl">域名</param>
+        /// <returns></returns>
         [HttpPost]
         [HandlerAjaxOnly]
         public async Task<ActionResult> CheckLogin(string username, string password,string localurl)
@@ -161,6 +177,7 @@ namespace WaterCloud.Web.Controllers
                 {
                     operatorModel.IsSystem = false;
                 }
+                //缓存保存用户信息
                 await OperatorProvider.Provider.AddLoginUser(operatorModel, "","pc_");
                 logEntity.F_Account = userEntity.F_Account;
                 logEntity.F_NickName = userEntity.F_RealName;

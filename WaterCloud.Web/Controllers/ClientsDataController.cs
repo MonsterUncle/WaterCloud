@@ -60,6 +60,10 @@ namespace WaterCloud.Web.Controllers
             _roleService = roleService;
             _dutyService = dutyService;
         }
+        /// <summary>
+        /// 初始数据加载请求方法
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetClientsDataJson()
@@ -78,6 +82,10 @@ namespace WaterCloud.Web.Controllers
             };
             return Content(data.ToJson());
         }
+        /// <summary>
+        /// 清空缓存请求方法
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ClearCache()
         {
@@ -95,6 +103,10 @@ namespace WaterCloud.Web.Controllers
                 return Content(new { code = 0, msg = "此功能需要管理员权限" }.ToJson());
             }
         }
+        /// <summary>
+        /// 模块字段权限
+        /// </summary>
+        /// <returns></returns>
         private async Task<object> GetMenuFields()
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
@@ -111,7 +123,10 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
-
+        /// <summary>
+        /// 快捷菜单列表
+        /// </summary>
+        /// <returns></returns>
         private async Task<object> GetQuickModuleList()
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
@@ -141,50 +156,59 @@ namespace WaterCloud.Web.Controllers
             await CacheHelper.Set(cacheKey + "list", data);
             return data[userId];
         }
-
+        /// <summary>
+        /// 获取公告信息
+        /// </summary>
+        /// <returns></returns>
         private async Task<object> GetNoticeList()
         {
-            var data =(await _noticeService.GetList("")).Where(a=>a.F_EnabledMark==true).OrderByDescending(a=>a.F_CreatorTime).Take(6).ToList();
+            var data = (await _noticeService.GetList("")).Where(a => a.F_EnabledMark == true).OrderByDescending(a => a.F_CreatorTime).Take(6).ToList();
             return data;
         }
-
+        /// <summary>
+        /// 初始菜单列表请求方法
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> GetInitDataJson()
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            var roleId = currentuser.RoleId;
-            if (roleId==null&& currentuser.IsSystem)
-            {
-                roleId = "admin";
-            }
+            var userId = currentuser.UserId;
             Dictionary<string, string > data =await CacheHelper.Get<Dictionary<string, string>>(initcacheKey + "list");
             if (data == null)
             {
                 data =new Dictionary <string, string>();
-                data .Add(roleId,await this.GetMenuListNew());
-
+                data.Add(userId, await this.GetMenuListNew());
             }
             else
             {
-                if (data.ContainsKey(roleId))
+                if (data.ContainsKey(userId))
                 {
-                    data[roleId] =await this.GetMenuListNew();
+                    data[userId] = await this.GetMenuListNew();
                 }
                 else
                 {
-                    data.Add(roleId,await this.GetMenuListNew());
+                    data.Add(userId, await this.GetMenuListNew());
                 }
             }
             await CacheHelper.Remove(initcacheKey + "list");
             await CacheHelper.Set(initcacheKey + "list",data);
-            return Content(data[roleId]);
+            return Content(data[userId]);
         }
+        /// <summary>
+        /// 获取公告信息请求方法
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> GetNoticeInfo()
         {
             var data =await this.GetNoticeList();
             return Content(data.ToJson());
         }
+        /// <summary>
+        /// 获取当前用户信息请求方法
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetUserCode()
@@ -193,6 +217,10 @@ namespace WaterCloud.Web.Controllers
             var data =await _userService.GetForm(currentuser.UserId);
             return Content(data.ToJson());
         }
+        /// <summary>
+        /// 获取快捷菜单请求方法
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> GetQuickModule()
         {
@@ -206,6 +234,10 @@ namespace WaterCloud.Web.Controllers
                 return null;
             }
         }
+        /// <summary>
+        /// 获取数据信息接口
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> GetCoutData()
         {
@@ -222,6 +254,10 @@ namespace WaterCloud.Web.Controllers
             var data= new { usercout = usercout, logincout = logincout, modulecout = modulecout, logcout = logcout };
             return Content(data.ToJson());
         }
+        /// <summary>
+        /// 菜单按钮信息
+        /// </summary>
+        /// <returns></returns>
         private async Task<string> GetMenuListNew()
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
@@ -305,7 +341,12 @@ namespace WaterCloud.Web.Controllers
             modelmunu.child.Add(child7);
             menuInfo.Add(modelmunu);
         }
-
+        /// <summary>
+        /// 菜单信息
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="parentId"></param>
+        /// <returns></returns>
         private List<MenuInfoEntity> ToMenuJsonNew(List<ModuleEntity> data, string parentId)
         {
             List<MenuInfoEntity> list = new List<MenuInfoEntity>();
@@ -351,7 +392,10 @@ namespace WaterCloud.Web.Controllers
             }
             return list;
         }
-
+        /// <summary>
+        /// 字段信息
+        /// </summary>
+        /// <returns></returns>
         private async Task<object> GetDataItemList()
         {
             var itemdata =await _itemsDetailService.GetList();
@@ -370,6 +414,10 @@ namespace WaterCloud.Web.Controllers
 
             return dictionaryItem;
         }
+        /// <summary>
+        /// 组织信息
+        /// </summary>
+        /// <returns></returns>
         private async Task<object> GetOrganizeList()
         {
             var data =await _organizeService.GetList();
@@ -385,6 +433,10 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
+        /// <summary>
+        /// 公司信息
+        /// </summary>
+        /// <returns></returns>
         private async Task<object> GetCompanyList()
         {
             var data = await _setService.GetList();
@@ -400,6 +452,10 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
+        /// <summary>
+        /// 角色信息
+        /// </summary>
+        /// <returns></returns>
         private async Task<object> GetRoleList()
         {
             var data =await _roleService.GetList();
@@ -415,6 +471,10 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
+        /// <summary>
+        /// 岗位信息
+        /// </summary>
+        /// <returns></returns>
         private async Task<object> GetDutyList()
         {
             var data =await _dutyService.GetList();
@@ -430,6 +490,10 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
+        /// <summary>
+        /// 用户信息
+        /// </summary>
+        /// <returns></returns>
         private async Task<object> GetUserList()
         {
             var data =await _userService.GetUserList("");
@@ -445,6 +509,10 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
+        /// <summary>
+        /// 菜单按钮信息
+        /// </summary>
+        /// <returns></returns>
         private async Task<object> GetMenuButtonListNew()
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
@@ -496,6 +564,10 @@ namespace WaterCloud.Web.Controllers
             await CacheHelper.Set(initcacheKey + "modulebutton_list", dictionary);
             return dictionarylist;
         }
+        /// <summary>
+        /// 菜单字段信息
+        /// </summary>
+        /// <returns></returns>
         private async Task<object> GetMenuFieldsListNew()
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();

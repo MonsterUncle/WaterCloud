@@ -42,6 +42,7 @@ namespace WaterCloud.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            //Çø·Ö»º´æ
             switch (Configuration.GetSection("SystemConfig:CacheProvider").Value)
             {
                 case Define.CACHEPROVIDER_REDIS:
