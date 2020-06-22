@@ -48,17 +48,17 @@ namespace WaterCloud.WebApi.Controllers
         /// <summary>
         /// 用户登录
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <param name="token"></param>
+        /// <param name="userName">用户</param>
+        /// <param name="password">密码</param>
+        /// <param name="localurl">域名</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Login([FromQuery] string userName, [FromQuery] string password, [FromQuery] string localurl, [FromQuery] string token)
+        public async Task<ActionResult> Login([FromQuery] string userName, [FromQuery] string password, [FromQuery] string localurl)
         {
             var apitoken = Utils.GuId();
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(OperatorProvider.Provider.GetToken()))
             {
-                apitoken = token;
+                apitoken = OperatorProvider.Provider.GetToken();
             }
 
             LogEntity logEntity = new LogEntity();
@@ -125,7 +125,6 @@ namespace WaterCloud.WebApi.Controllers
         /// <summary>
         /// 用户退出登录
         /// </summary>
-        /// <param name="token"></param>
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> LoginOff()
