@@ -30,6 +30,7 @@ namespace WaterCloud.Service
             }
             else
             {
+                Repository = new RepositoryBase<T>(context);
                 dbcontext = context;
             }
         }
