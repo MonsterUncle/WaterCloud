@@ -223,6 +223,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("using System.Threading.Tasks;");          
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using WaterCloud.Code;");
+            sb.AppendLine("using Chloe;");
             sb.AppendLine("using WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule + ";");
             sb.AppendLine("using WaterCloud.Repository." + baseConfigModel.OutputConfig.OutputModule + ";");
 
@@ -493,7 +494,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine();
             sb.AppendLine("        [HttpPost]");
             sb.AppendLine("        [HandlerAjaxOnly]");
-            sb.AppendLine("        [HandlerAuthorize]");
+            sb.AppendLine("        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]");
             sb.AppendLine("        [ValidateAntiForgeryToken]");
             sb.AppendLine("        public async Task<ActionResult> DeleteForm(string keyValue)");
             sb.AppendLine("        {");
