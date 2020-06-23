@@ -194,7 +194,7 @@ namespace WaterCloud.CodeGenerator
 
             sb.AppendLine("    public class " + baseConfigModel.FileConfig.RepositoryName + " : RepositoryBase<" + baseConfigModel.FileConfig.EntityName + ">,"+ baseConfigModel.FileConfig.IRepositoryName);
             sb.AppendLine("    {");
-            sb.AppendLine("        private DbContext dbcontext;");
+            sb.AppendLine("        private IDbContext dbcontext;");
             sb.AppendLine("        public "+ baseConfigModel.FileConfig.RepositoryName + "(IDbContext context)");
             sb.AppendLine("             : base(context)");
             sb.AppendLine("        {");
