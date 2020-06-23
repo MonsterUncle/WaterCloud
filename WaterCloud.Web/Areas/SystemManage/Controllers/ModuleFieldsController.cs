@@ -39,7 +39,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetGridJson(Pagination pagination, string moduleId, string keyword)
         {
             pagination.order = "desc";
-            pagination.sort = "F_CreatorTime";
+            pagination.sort = "F_CreatorTime desc";
             var data = await _service.GetLookList(pagination, moduleId, keyword);
             return Success(pagination.records, data);
         }
@@ -144,7 +144,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetCloneFieldsTreeJson()
         {
             var moduledata = await _moduleService.GetList();
-            moduledata = moduledata.Where(a => a.F_Target == "iframe" || a.F_Layers==1).ToList();
+            moduledata = moduledata.Where(a => a.F_Target == "iframe" || a.F_Layers>1).ToList();
             var fieldsdata = await _service.GetList();
             var treeList = new List<TreeGridModel>();
             foreach (ModuleEntity item in moduledata)

@@ -33,23 +33,30 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HttpGet]
         public async Task<ActionResult> GetPermissionTree(string roleId)
         {
-            string roleid = OperatorProvider.Provider.GetCurrent().RoleId;
+            var current = OperatorProvider.Provider.GetCurrent();
+            string roleid = current.RoleId;
             var moduledata = new List<ModuleEntity>();
             var buttondata = new List<ModuleButtonEntity>();
+            var authorizedata = new List<RoleAuthorizeEntity>();
             //隐藏系统菜单及字典管理
-            if (roleid != null)
+            if (roleid == null&& current.IsAdmin)
             {
-                moduledata =await _moduleService.GetListByRole(roleid);
-                buttondata =await _moduleButtonService.GetListByRole(roleid);
-            }
-            else
-            {
-                moduledata =await _moduleService.GetList();
-                buttondata =await _moduleButtonService.GetList();
+                moduledata = await _moduleService.GetList();
+                buttondata = await _moduleButtonService.GetList();
                 moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
                 buttondata = buttondata.Where(a => a.F_EnabledMark == true).ToList();
             }
-            var authorizedata = new List<RoleAuthorizeEntity>();
+            else
+            {
+                var rolelist = roleid.Split(',');
+                foreach (var item in rolelist)
+                {
+                    moduledata.AddRange(await _moduleService.GetListByRole(item));
+                    buttondata.AddRange(await _moduleButtonService.GetListByRole(item));
+                }
+                moduledata = moduledata.GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
+                buttondata = buttondata.GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
+            }
             if (!string.IsNullOrEmpty(roleId))
             {
                 authorizedata =await _roleAuthorizeService.GetList(roleId);
@@ -94,23 +101,31 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HttpPost]
         public async Task<ActionResult> GetPermissionFieldsTree(string roleId,string moduleids)
         {
-            string roleid = OperatorProvider.Provider.GetCurrent().RoleId;
+            var current = OperatorProvider.Provider.GetCurrent();
+            string roleid = current.RoleId;
             var moduledata = new List<ModuleEntity>();
             var fieldsdata = new List<ModuleFieldsEntity>();
+            var authorizedata = new List<RoleAuthorizeEntity>();
             //隐藏系统菜单及字典管理
-            if (roleid != null)
-            {
-                moduledata = await _moduleService.GetListByRole(roleid);
-                fieldsdata = await _moduleFieldsService.GetListByRole(roleid);
-            }
-            else
+            if (roleid == null && current.IsAdmin)
             {
                 moduledata = await _moduleService.GetList();
                 fieldsdata = await _moduleFieldsService.GetList();
                 moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
                 fieldsdata = fieldsdata.Where(a => a.F_EnabledMark == true).ToList();
             }
-            moduledata = moduledata.Where(a => a.F_IsFields==true||(a.F_Layers==1&&a.F_IsExpand==true)).ToList();
+            else
+            {
+                var rolelist = roleid.Split(',');
+                foreach (var item in rolelist)
+                {
+                    moduledata.AddRange(await _moduleService.GetListByRole(item));
+                    fieldsdata.AddRange(await _moduleFieldsService.GetListByRole(item));
+                }
+                moduledata = moduledata.GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
+                fieldsdata = fieldsdata.GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
+            }
+            moduledata = moduledata.Where(a => a.F_IsFields==true||(a.F_Layers<3&&a.F_IsExpand==true)).ToList();
             if (!string.IsNullOrEmpty(moduleids))
             {
                 var list=moduleids.Split(',');
@@ -120,7 +135,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             {
                 moduledata = moduledata.Where(a =>a.F_IsPublic == true).ToList();
             }
-            var authorizedata = new List<RoleAuthorizeEntity>();
             if (!string.IsNullOrEmpty(roleId))
             {
                 authorizedata = await _roleAuthorizeService.GetList(roleId);

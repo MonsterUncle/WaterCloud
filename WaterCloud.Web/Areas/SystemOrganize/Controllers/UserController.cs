@@ -42,7 +42,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)
         {
             pagination.order = "asc";
-            pagination.sort = "F_DepartmentId";
+            pagination.sort = "F_DepartmentId asc";
             var data =await _userService.GetLookList(pagination, keyword);
             return Success(pagination.records, data);
         }

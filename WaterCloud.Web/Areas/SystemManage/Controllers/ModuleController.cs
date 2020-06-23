@@ -66,7 +66,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetSelectJson(string keyword)
         {
-            var data =(await _moduleService.GetList()).Where(a => a.F_Layers == 1).ToList();
+            var data =(await _moduleService.GetList()).Where(a => a.F_Layers > 1).ToList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.Where(a => a.F_FullName.Contains(keyword)).ToList();

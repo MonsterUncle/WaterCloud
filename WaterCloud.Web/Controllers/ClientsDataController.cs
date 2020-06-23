@@ -270,76 +270,10 @@ namespace WaterCloud.Web.Controllers
             //修改主页及logo参数
             init.logoInfo.title = systemset.F_LogoCode;
             init.logoInfo.image = "../icon/"+systemset.F_Logo;
-
             init.menuInfo = new List<MenuInfoEntity>();
-            MenuInfoEntity munu = new MenuInfoEntity();
-            init.menuInfo.Add(munu);
-            munu.title = "常规管理";
-            munu.icon = "fa fa-address-book";
-            munu.href = "";
-            munu.target = "_self";
-            munu.child = new List<MenuInfoEntity>();
-            munu.child = ToMenuJsonNew(await _roleAuthorizeService.GetMenuList(roleId), "0");
-            CreateMunu(init.menuInfo);
+            init.menuInfo = ToMenuJsonNew(await _roleAuthorizeService.GetMenuList(roleId), "0");
             sbJson.Append(init.ToJson());
             return sbJson.ToString() ;
-        }
-        /// <summary>
-        /// 组件管理
-        /// </summary>
-        /// <param name="menuInfo"></param>
-        private void CreateMunu(List<MenuInfoEntity> menuInfo)
-        {
-
-            MenuInfoEntity modelmunu = new MenuInfoEntity();
-            modelmunu.title = "组件管理";
-            modelmunu.icon = "fa fa-lemon-o";
-            modelmunu.href = "";
-            modelmunu.target = "_self";
-            modelmunu.child = new List<MenuInfoEntity>();
-            MenuInfoEntity child1 = new MenuInfoEntity();
-            child1.title = "图标列表";
-            child1.href = "../page/icon.html";
-            child1.icon = "fa fa-dot-circle-o";
-            child1.target = "_self";
-            modelmunu.child.Add(child1);
-            MenuInfoEntity child2 = new MenuInfoEntity();
-            child2.title = "图标选择";
-            child2.href = "../page/icon-picker.html";
-            child2.icon = "fa fa-adn";
-            child2.target = "_self";
-            modelmunu.child.Add(child2);
-            MenuInfoEntity child3 = new MenuInfoEntity();
-            child3.title = "颜色选择";
-            child3.href = "../page/color-select.html";
-            child3.icon = "fa fa-dashboard";
-            child3.target = "_self";
-            modelmunu.child.Add(child3);
-            MenuInfoEntity child4 = new MenuInfoEntity();
-            child4.title = "下拉选择";
-            child4.href = "../page/table-select.html";
-            child4.icon = "fa fa-angle-double-down";
-            child4.target = "_self";
-            modelmunu.child.Add(child4);
-            MenuInfoEntity child5 = new MenuInfoEntity();
-            child5.title = "文件上传";
-            child5.href = "../page/upload.html";
-            child5.icon = "fa fa-arrow-up";
-            child5.target = "_self";
-            modelmunu.child.Add(child5);
-            MenuInfoEntity child6 = new MenuInfoEntity();
-            child6.title = "富文本编辑器";
-            child6.href = "../page/editor.html";
-            child6.icon = "fa fa-edit";
-            child6.target = "_self";
-            modelmunu.child.Add(child6);
-            MenuInfoEntity child7 = new MenuInfoEntity();
-            child7.title = "省市县区选择器";
-            child7.href = "../page/area.html";
-            child7.icon = "fa fa-rocket";
-            child7.target = "_self";
-            modelmunu.child.Add(child7);
-            menuInfo.Add(modelmunu);
         }
         /// <summary>
         /// 菜单信息
@@ -379,11 +313,7 @@ namespace WaterCloud.Web.Controllers
                         munu.child = new List<MenuInfoEntity>();
                         munu.child = ToMenuJsonNew(data, item.F_Id);
                     }
-                    if (item.F_Layers == 1)
-                    {
-                        list.Add(munu);
-                    }
-                    if (item.F_Layers>1&& item.F_IsMenu ==true)
+                    if (item.F_IsMenu ==true)
                     {
                         list.Add(munu);
                     }
@@ -536,7 +466,7 @@ namespace WaterCloud.Web.Controllers
                     if (dictionarylist.ContainsKey(item.F_ModuleId))
                     {
                         dictionarylist[item.F_ModuleId].AddRange(buttonList);
-                        dictionarylist[item.F_ModuleId]= dictionarylist[item.F_ModuleId].Distinct().ToList();
+                        dictionarylist[item.F_ModuleId]= dictionarylist[item.F_ModuleId].GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
                     }
                     else
                     {
@@ -591,7 +521,7 @@ namespace WaterCloud.Web.Controllers
                     if (dictionarylist.ContainsKey(item.F_ModuleId))
                     {
                         dictionarylist[item.F_ModuleId].AddRange(buttonList);
-                        dictionarylist[item.F_ModuleId] = dictionarylist[item.F_ModuleId].Distinct().ToList();
+                        dictionarylist[item.F_ModuleId] = dictionarylist[item.F_ModuleId].GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
                     }
                     else
                     {

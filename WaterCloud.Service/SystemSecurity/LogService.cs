@@ -131,8 +131,8 @@ namespace WaterCloud.Service.SystemSecurity
 
         public async Task<LogEntity> CreateLog(string moduleName, string className, string type)
         {
-            var module = (await moduleservice.GetList()).Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = (await moduleservice.GetList()).Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = (await moduleservice.GetList()).Where(a => a.F_IsExpand ==true && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false&&a.F_ParentId==module.F_Id && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             return new LogEntity(module.F_FullName, moduleitem.F_FullName, type);
         }
     }
