@@ -18,18 +18,14 @@ namespace WaterCloud.Web
 {
     public class HandlerAuthorizeAttribute : ActionFilterAttribute
     {
-        public bool Ignore { get; set; }
-        public HandlerAuthorizeAttribute(bool ignore = true)
+        private readonly RoleAuthorizeService _service;
+        public HandlerAuthorizeAttribute(RoleAuthorizeService service)
         {
-            Ignore = ignore;
+            _service = service;
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (OperatorProvider.Provider.GetCurrent() != null&& OperatorProvider.Provider.GetCurrent().IsSystem)
-            {
-                return;
-            }
-            if (Ignore == false)
             {
                 return;
             }
@@ -53,8 +49,7 @@ namespace WaterCloud.Web
                 }
                 var roleId = result.userInfo.RoleId;
                 var action = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext.Request.Path;
-                var current = OperatorProvider.Provider.GetCurrent();
-                return new RoleAuthorizeService(DBContexHelper.Contex(current.DbString, current.DBProvider)).ActionValidate(roleId, action).Result;
+                return _service.ActionValidate(roleId, action).Result;
             }
             catch (System.Exception)
             {

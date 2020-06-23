@@ -40,7 +40,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitRemoveLog(string keepTime)
         {

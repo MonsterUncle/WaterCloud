@@ -35,7 +35,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 
         #region 获取数据
         [HttpGet]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult SetForm()
         {
             return View();
@@ -218,7 +218,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {

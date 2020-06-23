@@ -33,7 +33,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             _logService = logService;
         }
         [HttpGet]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult AddForm()
         {
             return View();
@@ -121,7 +121,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {

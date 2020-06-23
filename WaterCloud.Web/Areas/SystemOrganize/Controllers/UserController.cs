@@ -47,7 +47,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             return Success(pagination.records, data);
         }
         [HttpGet]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult AddForm()
         {
             return View();
@@ -151,7 +151,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
         }
         [HttpPost]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
@@ -189,7 +189,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitRevisePassword(string F_UserPassword, string keyValue)
         {
@@ -245,7 +245,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DisabledAccount(string keyValue)
         {
@@ -281,7 +281,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EnabledAccount(string keyValue)
         {

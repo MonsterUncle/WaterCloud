@@ -67,6 +67,14 @@ namespace WaterCloud.Web
             services.AddHttpContextAccessor();
             //注册服务
             services.AddDataService();
+
+            //注册特性
+            services.AddScoped<HandlerLoginAttribute>();
+            services.AddScoped<HandlerAuthorizeAttribute>();
+            //ajax不能使用注入
+            //services.AddScoped<HandlerAjaxOnlyAttribute>();
+            services.AddScoped<HandlerAdminAttribute>();
+
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<GlobalExceptionFilter>();

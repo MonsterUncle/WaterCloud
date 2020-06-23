@@ -65,7 +65,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [HandlerAdmin]
+        [ServiceFilter(typeof(HandlerAdminAttribute))]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
         {
@@ -110,7 +110,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
         }
         [HttpPost]
-        [HandlerAdmin]
+        [ServiceFilter(typeof(HandlerAdminAttribute))]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)

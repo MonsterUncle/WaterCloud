@@ -15,17 +15,13 @@ namespace WaterCloud.Web
 {
     public class HandlerLoginAttribute : ActionFilterAttribute
     {
-        public bool Ignore = true;
-        public HandlerLoginAttribute(bool ignore = true)
+        private readonly RoleAuthorizeService _service;
+        public HandlerLoginAttribute(RoleAuthorizeService service)
         {
-            Ignore = ignore;
+            _service = service;
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (Ignore == false)
-            {
-                return;
-            }
             if (OperatorProvider.Provider.GetCurrent() == null)
             {
                 WebHelper.WriteCookie("WaterCloud_login_error", "overdue");
@@ -92,7 +88,7 @@ namespace WaterCloud.Web
                 var current = OperatorProvider.Provider.GetCurrent();
                 var roleId = current.RoleId;
                 var userId = current.UserId;
-                return new RoleAuthorizeService(DBContexHelper.Contex(current.DbString,current.DBProvider)).RoleValidate(userId, roleId).Result;
+                return _service.RoleValidate(userId, roleId).Result;
             }
             catch (System.Exception)
             {

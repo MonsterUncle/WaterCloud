@@ -23,7 +23,7 @@ using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Web.Controllers
 {
-    [HandlerLogin]
+    [ServiceFilter(typeof(HandlerLoginAttribute))]
     public class ClientsDataController : Controller
     {
         /// <summary>

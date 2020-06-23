@@ -10,7 +10,7 @@ using WaterCloud.Code.Model;
 
 namespace WaterCloud.Web
 {
-    [HandlerLogin]
+    [ServiceFilter(typeof(HandlerLoginAttribute))]
     public abstract class ControllerBase : Controller
     {
         /// <summary>
@@ -54,19 +54,19 @@ namespace WaterCloud.Web
             base.OnActionExecuted(context);
         }
         [HttpGet]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult Index()
         {
             return View();
         }
         [HttpGet]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult Form()
         {
             return View();
         }
         [HttpGet]
-        [HandlerAuthorize]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult Details()
         {
             return View();
