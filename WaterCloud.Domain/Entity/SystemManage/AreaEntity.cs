@@ -20,7 +20,7 @@ namespace WaterCloud.Domain.SystemManage
         public string F_EnCode { get; set; }
         public string F_FullName { get; set; }
         public string F_SimpleSpelling { get; set; }
-        public int? F_SortCode { get; set; }
+        public long? F_SortCode { get; set; }
         public bool? F_DeleteMark { get; set; }
         public bool? F_EnabledMark { get; set; }
         public string F_Description { get; set; }

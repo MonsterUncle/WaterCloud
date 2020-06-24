@@ -36,6 +36,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetTreeSelectJson()
         {
             var data =await _areaService.GetList();
+            //默认三级区域
+            data = data.Where(a => a.F_Layers < 3).ToList();
             var treeList = new List<TreeSelectModel>();
             foreach (AreaEntity item in data)
             {
@@ -46,6 +48,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 treeList.Add(treeModel);
             }
             return Content(treeList.TreeSelectJson());
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public async Task<ActionResult> GetSelectJson(string keyValue)
+        {
+            var data = await _areaService.GetList();
+            data = data.Where(a => a.F_ParentId== keyValue).ToList();
+            return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]

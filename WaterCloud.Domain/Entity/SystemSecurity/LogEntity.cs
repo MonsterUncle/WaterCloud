@@ -36,7 +36,7 @@ namespace WaterCloud.Domain.SystemSecurity
         //重载构造方法
         public LogEntity(string module,string moduleitem,string optiontype)
         {
-            this.F_ModuleName = module;
+            this.F_ModuleName = module+ moduleitem;
             this.F_Description = moduleitem+"操作,";
             this.F_Type = optiontype;
             this.F_Result = true;

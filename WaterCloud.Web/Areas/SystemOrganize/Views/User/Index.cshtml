@@ -90,6 +90,7 @@
                 curr: 1,
                 where: { keyword: data.field.txt_keyword }
             });
+            user = null;
             return false;
         });
         var user;
@@ -123,7 +124,6 @@
                     param: { keyValue: user.data.F_Id },
                     success: function () {
                         common.reload('data-search-btn');
-                        user = null;
                     }
                 });
             }

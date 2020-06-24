@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using WaterCloud.Service.SystemManage;
 using System.Linq;
 using Chloe;
+using WaterCloud.Domain.SystemManage;
 
 namespace WaterCloud.Service.SystemSecurity
 {
@@ -131,9 +132,22 @@ namespace WaterCloud.Service.SystemSecurity
 
         public async Task<LogEntity> CreateLog(string moduleName, string className, string type)
         {
-            var module = (await moduleservice.GetList()).Where(a => a.F_IsExpand ==true && a.F_EnCode == moduleName).FirstOrDefault();
+            var module = (await moduleservice.GetList()).Where(a =>a.F_EnCode == moduleName).FirstOrDefault();
             var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false&&a.F_ParentId==module.F_Id && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
-            return new LogEntity(module.F_FullName, moduleitem.F_FullName, type);
+            return new LogEntity(await CreateModule(module), moduleitem.F_FullName, type);
+        }
+        public async Task<string> CreateModule(ModuleEntity module, string str="")
+        {
+            str = module.F_FullName + "-" + str;
+            if (module.F_ParentId=="0")
+            {
+                return str;
+            }
+            else
+            {
+                var temp= (await moduleservice.GetList()).Where(a =>a.F_Id==module.F_ParentId).FirstOrDefault();
+                return await CreateModule(temp ,str);
+            }
         }
     }
 }

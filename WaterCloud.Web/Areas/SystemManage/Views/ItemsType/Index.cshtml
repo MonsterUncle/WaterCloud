@@ -50,17 +50,17 @@
                     //关闭加载
                     layer.closeAll('loading');
                 }
-            });
+        });
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             queryJson = data.field.txt_keyword;
             common.reloadtreetable(rendertree, {
                 where: { keyword: queryJson },
             }); 
+            item = null;
             return false;
         });
         var item;
-
         treeTable.on('row(currentTableId)', function (obj) {
             obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
             item = obj;
@@ -88,7 +88,6 @@
                     param: { keyValue: item.data.F_Id },
                     success: function () {
                         common.reload('data-search-btn');
-                        item = null;
                     }
                 });
             }

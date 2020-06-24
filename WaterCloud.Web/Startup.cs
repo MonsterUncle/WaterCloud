@@ -13,12 +13,15 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Newtonsoft.Json.Serialization;
 using WaterCloud.Service.AutoJob;
+using UEditor.Core;
+using Microsoft.Extensions.FileProviders;
 using WaterCloud.DataBase;
 using Chloe;
 using Autofac;
 using System.Reflection;
 using System.Linq;
 using WaterCloud.Service;
+
 
 namespace WaterCloud.Web
 {
@@ -67,7 +70,6 @@ namespace WaterCloud.Web
             services.AddHttpContextAccessor();
             //注册服务
             services.AddDataService();
-
             //注册特性
             services.AddScoped<HandlerLoginAttribute>();
             services.AddScoped<HandlerAuthorizeAttribute>();
@@ -89,8 +91,6 @@ namespace WaterCloud.Web
             {
                 return DBContexHelper.Contex();
             });
-
-
             ////定时任务（已废除）
             //services.AddBackgroundServices();
             //调试前端可更新
@@ -100,10 +100,25 @@ namespace WaterCloud.Web
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
+            //百度UEditor
+            services.AddUEditorService();
         }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+            //由于.Net Core默认只会从wwwroot目录加载静态文件，其他文件夹的静态文件无法正常访问。
+            //而我们希望将图片上传到网站根目录的upload文件夹下，所以需要额外在Startup.cs类的Configure方法中
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "upload")),
+                RequestPath = "/upload",
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=36000");
+                }
+            });
             //虚拟目录 
             //如需使用，所有URL修改，例："/Home/Index"改成'@Url.Content("~/Home/Index")'，部署访问首页必须带虚拟目录;
             //if (!string.IsNullOrEmpty(GlobalContext.SystemConfig.VirtualDirectory))

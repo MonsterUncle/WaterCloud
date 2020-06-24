@@ -67,6 +67,7 @@
                 curr: 1,
                 where: { keyword: data.field.txt_keyword }
             });
+            fitlerIP = null;
             return false;
         });
         var fitlerIP;
@@ -96,7 +97,6 @@
                     param: { keyValue: fitlerIP.data.F_Id },
                     success: function () {
                         common.reload('data-search-btn');
-                        fitlerIP = null;
                     }
                 });
             }

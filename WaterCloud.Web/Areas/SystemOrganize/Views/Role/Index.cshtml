@@ -68,6 +68,7 @@
                 curr: 1,
                 where: { keyword: data.field.txt_keyword }
             });
+            role = null;
             return false;
         });
         var role;
@@ -98,7 +99,6 @@
                     param: { keyValue: role.data.F_Id },
                     success: function () {
                         common.reload('data-search-btn');
-                        role = null;
                     }
                 });
             }

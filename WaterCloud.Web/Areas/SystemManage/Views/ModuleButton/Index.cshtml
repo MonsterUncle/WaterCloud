@@ -89,6 +89,7 @@
                 curr: 1,
                 queryJson: queryJson
             });
+            module = null;
             return false;
         });
         var module;
@@ -118,7 +119,6 @@
                     param: { keyValue: module.data.F_Id },
                     success: function () {
                         common.reload('data-search-btn');
-                        module = null;
                     }
                 });
             }

@@ -609,10 +609,11 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("             table = layui.table,");
             sb.AppendLine("             treeTable = layui.treeTable,");
             sb.AppendLine("             common = layui.common;");
-            sb.AppendLine("             var loading = layer.load(0, { shade: false });");
+            sb.AppendLine("         var entity;");
+            sb.AppendLine("         var loading = layer.load(0, { shade: false });");
             if (baseConfigModel.PageIndex.IsTree==1)
             {
-                sb.AppendLine("     var rendertree = common.rendertreetable({");
+                sb.AppendLine("         var rendertree = common.rendertreetable({");
                 sb.AppendLine("             elem: '#currentTableId',");
                 sb.AppendLine("             treeIdName: '" + idColumn + "',");
                 sb.AppendLine("             //此处需修改 父Id修改");
@@ -706,7 +707,6 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             return false;");
                 sb.AppendLine("         });");
             }
-            sb.AppendLine("         var entity;");
             if (baseConfigModel.PageIndex.IsTree == 1)
             {
                 sb.AppendLine("         treeTable.on('row(currentTableId)', function (obj) {");

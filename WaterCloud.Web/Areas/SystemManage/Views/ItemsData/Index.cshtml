@@ -123,6 +123,7 @@
                     keyword: data.field.txt_keyword,
                 },
             });
+            item = null;
             return false;
         });
         var item;
@@ -155,7 +156,6 @@
                     param: { keyValue: item.data.F_Id },
                     success: function () {
                         common.reload('data-search-btn');
-                        item = null;
                     }
                 });
             }

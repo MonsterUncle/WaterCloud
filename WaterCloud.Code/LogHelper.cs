@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace WaterCloud.Code
@@ -49,7 +52,47 @@ namespace WaterCloud.Code
             logContent += GetExceptionMessage(ex);
             Write(logPath, logContent);
         }
-
+        public static void WriteWithTime(ExceptionContext ex)
+        {
+            if (ex == null)
+                return;
+            string logContent = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine;
+            logContent += "程序异常" + Environment.NewLine;
+            string logPath = DateTime.Now.ToString("yyyy-MM");
+            Exception Error = ex.Exception;
+            LogMessage logMessage = new LogMessage();
+            logMessage.OperationTime = DateTime.Now;
+            logMessage.Url = ex.HttpContext.Request.GetDisplayUrl();
+            if (ex.ActionDescriptor!=null)
+            {
+                logMessage.Class = ex.ActionDescriptor.DisplayName;
+            }
+            else
+            {
+                logMessage.Class = "服务器配置问题";
+            }
+            logMessage.Ip = WebHelper.Ip;
+            logMessage.Host = ex.HttpContext.Request.Host.ToString();
+            var current = OperatorProvider.Provider.GetCurrent();
+            if (current != null)
+            {
+                logMessage.UserName = current.UserCode + "（" + current.UserName + "）";
+            }
+            if (Error.InnerException == null)
+            {
+                logMessage.ExceptionInfo = Error.Message;
+                logMessage.ExceptionSource = Error.Source;
+                logMessage.ExceptionRemark = Error.StackTrace;
+            }
+            else
+            {
+                logMessage.ExceptionInfo = Error.InnerException.Message;
+                logMessage.ExceptionSource = Error.InnerException.Source;
+                logMessage.ExceptionRemark = Error.InnerException.StackTrace;
+            }
+            logContent+= ExceptionFormat(logMessage);
+            Write(logPath, logContent);
+        }
         private static string GetExceptionMessage(Exception ex)
         {
             string message = string.Empty;
@@ -129,6 +172,24 @@ namespace WaterCloud.Code
             };
             Task task = new Task(taskAction);
             task.Start();
+        }
+        /// <summary>
+        /// 生成异常信息
+        /// </summary>
+        /// <param name="logMessage">对象</param>
+        /// <returns></returns>
+        public static string ExceptionFormat(LogMessage logMessage)
+        {
+            StringBuilder strInfo = new StringBuilder();
+            strInfo.Append("1. 调试: >> 操作时间: " + logMessage.OperationTime + "   操作人: " + logMessage.UserName + " \r\n");
+            strInfo.Append("2. 地址: " + logMessage.Url + "    \r\n");
+            strInfo.Append("3. 类名: " + logMessage.Class + " \r\n");
+            strInfo.Append("4. 主机: " + logMessage.Host + "   Ip  : " + logMessage.Ip + " \r\n");
+            strInfo.Append("5. 异常: " + logMessage.ExceptionInfo + "\r\n");
+            strInfo.Append("6. 来源: " + logMessage.ExceptionSource + "\r\n");
+            strInfo.Append("7. 实例: " + logMessage.ExceptionRemark + "\r\n");
+            strInfo.Append("-----------------------------------------------------------------------------------------------------------------------------\r\n");
+            return strInfo.ToString();
         }
         #endregion
     }

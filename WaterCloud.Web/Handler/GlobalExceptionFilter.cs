@@ -15,7 +15,7 @@ namespace WaterCloud.Web
     {
         public void OnException(ExceptionContext context)
         {
-            LogHelper.WriteWithTime(context.Exception);
+            LogHelper.WriteWithTime(context);
             if (context.HttpContext.Request.IsAjaxRequest())
             {
                 AjaxResult obj = new AjaxResult();

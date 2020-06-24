@@ -59,6 +59,7 @@
                     curr: 1,
                     where: { keyword: data.field.txt_keyword }
                 });
+                duty = null;
                 return false;
             });
             var duty;
@@ -88,7 +89,6 @@
                         param: { keyValue: duty.data.F_Id },
                         success: function () {
                             common.reload('data-search-btn');
-                            duty = null;
                         }
                     });
                 }
