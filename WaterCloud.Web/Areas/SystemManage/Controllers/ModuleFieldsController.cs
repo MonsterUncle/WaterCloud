@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -144,7 +144,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetCloneFieldsTreeJson()
         {
             var moduledata = await _moduleService.GetList();
-            moduledata = moduledata.Where(a => a.F_Target == "iframe" || a.F_Layers>1).ToList();
+            //moduledata = moduledata.Where(a => a.F_Target == "iframe" || a.F_Layers>1).ToList();
             var fieldsdata = await _service.GetList();
             var treeList = new List<TreeGridModel>();
             foreach (ModuleEntity item in moduledata)
