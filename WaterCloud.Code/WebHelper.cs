@@ -419,7 +419,7 @@ namespace WaterCloud.Code
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.WriteWithTime(ex);
+                    return string.Empty;
                 }
                 return result;
             }
@@ -440,7 +440,7 @@ namespace WaterCloud.Code
             }
             catch (Exception ex)
             {
-                LogHelper.WriteWithTime(ex);
+                return string.Empty;
             }
             return string.Empty;
         }
@@ -459,7 +459,7 @@ namespace WaterCloud.Code
             }
             catch (Exception ex)
             {
-                LogHelper.WriteWithTime(ex);
+                return string.Empty;
             }
             return string.Empty;
         }
@@ -478,7 +478,7 @@ namespace WaterCloud.Code
             }
             catch (Exception ex)
             {
-                LogHelper.WriteWithTime(ex);
+                return string.Empty;
             }
             return ip;
         }
@@ -504,7 +504,7 @@ namespace WaterCloud.Code
             }
             catch (Exception ex)
             {
-                LogHelper.WriteWithTime(ex);
+                return string.Empty;
             }
             return string.Empty;
         }
@@ -626,7 +626,7 @@ namespace WaterCloud.Code
             }
             catch (Exception ex)
             {
-                LogHelper.WriteWithTime(ex);
+                return string.Empty;
             }
             return ipLocation;
         }
@@ -654,7 +654,7 @@ namespace WaterCloud.Code
             }
             catch (Exception)
             {
-                return null;
+                return string.Empty;
             }
 
         }
@@ -677,7 +677,7 @@ namespace WaterCloud.Code
             }
             catch (Exception)
             {
-                return null;
+                return string.Empty;
             }
 
         }
@@ -703,7 +703,7 @@ namespace WaterCloud.Code
             }
             catch (Exception)
             {
-                return null;
+                return string.Empty;
             }    
 
         }
