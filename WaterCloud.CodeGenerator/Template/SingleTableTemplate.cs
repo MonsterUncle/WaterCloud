@@ -369,6 +369,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("using WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule + ";");
             sb.AppendLine("using WaterCloud.Service;");
             sb.AppendLine("using WaterCloud.Service.SystemSecurity;");
+            sb.AppendLine("using Microsoft.AspNetCore.Authorization;");
             sb.AppendLine("using WaterCloud.Service."+ baseConfigModel.OutputConfig.OutputModule + ";");
             sb.AppendLine();
 
