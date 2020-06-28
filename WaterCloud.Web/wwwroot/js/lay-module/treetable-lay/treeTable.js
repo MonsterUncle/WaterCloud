@@ -267,7 +267,9 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
             components.$toolbar.show();
             if (typeof options.toolbar === 'string') {
                 laytpl($(options.toolbar).html()).render({}, function (html) {
-                    components.$toolbar.html('<div style="display: inline-block;">' + html + '</div>');
+                    //按钮遮挡
+                    components.$toolbar.html('<div style="display: inline-block;padding-right: 120px;">' + html + '</div>');
+                    //components.$toolbar.html('<div style="display: inline-block">' + html + '</div>');
                 });
             }
             var tbRights = ['<div class="ew-tree-table-tool-right">'];
@@ -2149,7 +2151,11 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
         '}',
 
         '.ew-tree-table .ew-tree-table-tool .ew-tree-table-tool-right {',
-        '    float: right;',
+        //按钮遮挡
+        //'    float: right;',
+        '    position: absolute;',
+        '    right: 17px;',    
+        '    top: 10px;',    
         '}',
 
         '.ew-tree-table .ew-tree-table-tool .ew-tree-table-tool-item {',
