@@ -10,6 +10,8 @@ using WaterCloud.Service;
 using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Service.ContentManage;
 using Serenity;
+using Microsoft.AspNetCore.Authorization;
+
 namespace WaterCloud.Web.Areas.ContentManage.Controllers
 {
     /// <summary>
@@ -18,6 +20,7 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
     /// 描 述：新闻类别控制器类
     /// </summary>
     [Area("ContentManage")]
+    [AllowAnonymous]
     public class ArticleCategoryController :  ControllerBase
     {
         private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];

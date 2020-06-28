@@ -8,6 +8,8 @@ using System.Web;
 using WaterCloud.Service.SystemOrganize;
 using Chloe;
 using WaterCloud.DataBase;
+using System.Reflection;
+using Microsoft.AspNetCore.Authorization;
 /// <summary>
 /// 登录验证
 /// </summary>
@@ -22,6 +24,17 @@ namespace WaterCloud.Web
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            var description =
+                (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)filterContext.ActionDescriptor;
+
+            //添加有允许匿名的Action，可以不用登录访问，如Login/Index
+            //控制器整体忽略或者单独方法忽略
+            var anonymous = description.ControllerTypeInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
+            var methodanonymous = description.MethodInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
+            if (anonymous != null|| methodanonymous!=null)
+            {
+                return;
+            }
             if (OperatorProvider.Provider.GetCurrent() == null)
             {
                 WebHelper.WriteCookie("WaterCloud_login_error", "overdue");
