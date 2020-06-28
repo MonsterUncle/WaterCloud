@@ -24,6 +24,19 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly LogService _logService;
         private readonly ArticleNewsService _service;
+        [HttpGet]
+        public override ActionResult Form()
+        {
+            //主页信息获取
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            if (currentuser == null)
+            {
+                return View();
+            }
+
+            ViewBag.UserName = currentuser.UserName;
+            return View();
+        }
         public ArticleNewsController(ArticleNewsService service, LogService logService)
         {
             _logService = logService;

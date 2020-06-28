@@ -2,17 +2,55 @@
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
+<style>
+    .layui-form-label {
+        float: left;
+        display: block;
+        padding: 9px 15px;
+        width: 60px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: right;
+    }
 
+    .lay-step {
+        font-size: 0;
+        width: 400px;
+        margin: 0 auto;
+        max-width: 100%;
+        padding-left: 30px;
+    }
+
+    .layui-table-view {
+        margin-left: 30px;
+        margin-right: 10px;
+    }
+
+    .layui-input-block {
+        margin-left: 90px;
+        min-height: 36px;
+        margin-right: 10px;
+    }
+
+    .layui-card > .layui-card-body {
+        position: relative;
+        padding: 10px 15px;
+        line-height: 24px;
+        overflow: auto;
+        height: 300px;
+    }
+</style>
 <script>
-    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common', 'step'], function () {
         var form = layui.form,
             $ = layui.$,
             common = layui.common,
             laydate = layui.laydate;
-            upload = layui.upload;
+        upload = layui.upload,
+            step = layui.step;
         var keyValue = $.request("keyValue");
         //权限字段
-        common.authorizeFields('adminform');
+        common.authorizeFields('stepForm');
         //此处需修改
         //类型为时间时
         //laydate.render({
@@ -21,7 +59,53 @@
         //, trigger: 'click',
         //format: 'yyyy-MM-dd',
         //});
+        var postData = {};//分步骤表单，最终提交只能获取最后一个表单的数据，所以定义全局数组保存表单数据
+        step.render({
+            elem: '#stepForm',
+            filter: 'stepForm',
+            width: '100%', //设置容器宽度
+            stepWidth: '750px',
+            height: '600px',
+            stepItems: [{
+                title: '基本信息'
+            }, {
+                title: '详细描述'
+            }, {
+                title: 'SEO选项'
+            }]
+        });
+        form.on('submit(formStep)', function (data) {
+            postData["F_CategoryId"] = data.field["F_CategoryId"];
+            postData["F_Title"] = data.field["F_Title"];
+            postData["F_LinkUrl"] = data.field["F_LinkUrl"];
+            postData["F_ImgUrl"] = data.field["F_ImgUrl"];
+            postData["F_SortCode"] = data.field["F_SortCode"];
+            postData["F_IsTop"] = data.field["F_IsTop"];
+            postData["F_IsRed"] = data.field["F_IsRed"];
+            postData["F_IsHot"] = data.field["F_IsHot"];
+            postData["F_EnabledMark"] = data.field["F_EnabledMark"];
+            postData["F_Click"] = data.field["F_Click"];
+            //alert(postData["F_CategoryId"]);
+            step.next('#stepForm');
+            return false;
+        });
 
+        form.on('submit(formStep2)', function (data) {
+            postData["F_Zhaiyao"] = data.field["F_Zhaiyao"];
+            postData["F_Source"] = data.field["F_Source"];
+            postData["F_Author"] = data.field["F_Author"];
+            postData["F_Description"] = UE.getEditor('F_Description').getContent();
+            step.next('#stepForm');
+            return false;
+        });
+
+        $('.pre').click(function () {
+            step.pre('#stepForm');
+        });
+
+        $('.next').click(function () {
+            step.next('#stepForm');
+        });
         $(function () {
             initControl();
             if (!!keyValue) {
@@ -31,20 +115,17 @@
                     data: { keyValue: keyValue },
                     async: false,
                     success: function (data) {
-                        common.val('adminform', data);
-
-                        var Description = data.Description;
-
-                        if (!!data.ImgUrl)
-                        {
+                        common.val('stepForm', data);
+                        var Description = data.F_Description;
+                        if (!!data.ImgUrl) {
                             ImgUrlPic.src = data.ImgUrl;
                         }
                         // editor准备好之后才可以使用
-                        var editor = UE.getEditor("Description");
+                        var editor = UE.getEditor("F_Description");
                         editor.ready(function () {
                             editor.setContent(Description);
                         });
-                        
+
                     }
                 });
             }
@@ -63,19 +144,22 @@
         }
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            var postData = data.field;
+            //var postData = data.field;
             if (!postData["F_IsTop"]) postData["F_IsTop"] = false;
             if (!postData["F_IsHot"]) postData["F_IsHot"] = false;
             if (!postData["F_IsRed"]) postData["F_IsRed"] = false;
             if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
 
-            postData["F_Description"] = UE.getEditor('F_Description').getContent();
+            postData["F_SeoTitle"] = data.field["F_SeoTitle"];
+            postData["F_SeoKeywords"] = data.field["F_SeoKeywords"];
+            postData["F_SeoDescription"] = data.field["F_SeoDescription"];
+            postData["F_Tags"] = data.field["F_Tags"];
 
             common.submitForm({
                 url: '/ContentManage/ArticleNews/SubmitForm?keyValue=' + keyValue,
                 param: postData,
                 success: function () {
-                    common.parentreload('data-search-btn');
+                    common.reloadIframe("/ContentManage/ArticleNews/Index");
                 }
             })
             return false;
@@ -84,18 +168,12 @@
 </script>
 
 <body>
-
     <div class="layuimini-container">
         <div class="layuimini-main">
-            <div class="layui-form layuimini-form" lay-filter="adminform">
-                <div class="layui-tab">
-                    <ul class="layui-tab-title">
-                        <li class="layui-this">基本信息</li>
-                        <li>详细描述</li>
-                        <li>SEO选项</li>
-                    </ul>
-                    <div class="layui-tab-content">
-                        <div class="layui-tab-item layui-show">
+            <div class="layui-carousel" id="stepForm" lay-filter="stepForm">
+                <div carousel-item>
+                    <div>
+                        <form class="layui-form layuimini-form">
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">新闻类别</label>
                                 <div class="layui-input-block">
@@ -136,7 +214,7 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">排序数字</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_SortCode" name="F_SortCode" autocomplete="off" lay-verify="required" class="layui-input">
+                                    <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required" class="layui-input ">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
@@ -151,12 +229,27 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">点击次数</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Click" name="F_Click" autocomplete="off" value="0" class="layui-input">
+                                    <input type="number" pattern="[0-9]*" id="F_Click" name="F_Click" lay-verify="required" class="layui-input" value="0">
                                 </div>
                             </div>
-                        </div>
-                        <div class="layui-tab-item">
+                            <div class="form-group-bottom text-right">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="formStep">
+                                        &emsp;下一步&emsp;
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <form class="layui-form layuimini-form">
                             <div class="layui-form-item layui-hide">
+                                <label class="layui-form-label required">内容描述</label>
+                                <div class="layui-input-block">
+                                    <textarea id="F_Description" name="F_Description" type="text/plain" style="width:100%;height:400px;"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
                                 <label class="layui-form-label">摘要</label>
                                 <div class="layui-input-block">
                                     <input type="text" id="F_Zhaiyao" name="F_Zhaiyao" autocomplete="off" class="layui-input" placeholder="不填写则自动截取内容前255字符">
@@ -165,40 +258,43 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">来源</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Source" name="F_Source" autocomplete="off" lay-verify="required" class="layui-input">
+                                    <input type="text" id="F_Source" name="F_Source" autocomplete="off" value="本站" lay-verify="required" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">作者</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Author" name="F_Author" autocomplete="off" lay-verify="required" class="layui-input">
+                                    <input type="text" id="F_Author" name="F_Author" autocomplete="off" value="@ViewBag.UserName" lay-verify="required" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="form-group-bottom text-right">
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                    <button class="layui-btn" lay-submit lay-filter="formStep2">
+                                        &emsp;下一步&emsp;
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <form class="layui-form layuimini-form">
+                            <div class="layui-form-item layui-hide">
+                                <label class="layui-form-label">Seo标题</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="F_SeoTitle" name="F_SeoTitle" autocomplete="off" class="layui-input" placeholder="不填写则默认为网站标题">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
-                                <label class="layui-form-label required">内容描述</label>
+                                <label class="layui-form-label">Seo关键字</label>
                                 <div class="layui-input-block">
-                                    <textarea id="F_Description" name="F_Description" type="text/plain" style="width:100%;height:450px;">
-                                    </textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-tab-item">
-                            <div class="layui-form-item layui-hide">
-                                <label class="layui-form-label required">Seo标题</label>
-                                <div class="layui-input-block">
-                                    <input type="text" id="F_SeoTitle" name="F_SeoTitle" autocomplete="off" lay-verify="required" class="layui-input">
+                                    <input type="text" id="F_SeoKeywords" name="F_SeoKeywords" autocomplete="off" class="layui-input" placeholder="不填写则默认为网站摘要">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
-                                <label class="layui-form-label required">Seo关键字</label>
+                                <label class="layui-form-label">Seo描述</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_SeoKeywords" name="F_SeoKeywords" autocomplete="off" lay-verify="required" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-form-item layui-hide">
-                                <label class="layui-form-label required">Seo描述</label>
-                                <div class="layui-input-block">
-                                    <input type="text" id="F_SeoDescription" name="F_SeoDescription" autocomplete="off" lay-verify="required" class="layui-input">
+                                    <input type="text" id="F_SeoDescription" name="F_SeoDescription" autocomplete="off" class="layui-input" placeholder="不填写则自动截取内容前255字符">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
@@ -207,17 +303,23 @@
                                     <input type="text" id="F_Tags" name="F_Tags" autocomplete="off" class="layui-input" placeholder="多个可用英文逗号分隔开，如：a,b">
                                 </div>
                             </div>
-                            
-
-                        </div>
+                            <div class="form-group-bottom text-right">
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                    <button class="layui-btn" lay-submit lay-filter="saveBtn">
+                                        &emsp;保存&emsp;
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">保存</button>
                 </div>
             </div>
         </div>
     </div>
+
+
+
     <link href="~/lib/ueditor/themes/default/css/ueditor.css" rel="stylesheet" />
     <script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.all.min.js"></script>
@@ -229,9 +331,11 @@
         // 加载 ueditor，传入的初始化参数可以覆盖掉 ueditor.config.js 中的配置
         // 对于同一项目中使用不同的配置的 ueditor 场景非常有用
         var ue = UE.getEditor('F_Description', {
-            initialFrameHeight: 300
+            initialFrameHeight: 250,
+            autoFloatEnabled: false, //取消悬浮
             // , initialFrameWidth:796
-            , wordCount: false
+            zIndex: 0,
+            wordCount: false
         });
 
         // 实例化编辑器，这里注意配置项隐藏编辑器并禁用默认的基础功能。
@@ -276,7 +380,7 @@
             img.src = obj.src;
             var height = img.height + 50; //获取图片高度
             var width = img.width; //获取图片宽度
-            if (height>400) {
+            if (height > 400) {
                 height = 400;
             }
             if (width > 400) {
@@ -291,10 +395,10 @@
                 area: [width + 'px', height + 'px'],
                 shadeClose: true,//点击外围关闭弹窗
                 scrollbar: false,//不现实滚动条
-                title: "图片预览", //不显示标题  
-                content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响  
+                title: "图片预览", //不显示标题
+                content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
                 cancel: function () {
-                    //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });  
+                    //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });
                 }
             });
         }

@@ -66,6 +66,23 @@ namespace WaterCloud.Service.ContentManage
         #region 提交数据
         public async Task SubmitForm(ArticleNewsEntity entity, string keyValue)
         {
+            if (string.IsNullOrEmpty(entity.F_Zhaiyao))
+            {
+                entity.F_Zhaiyao = WaterCloud.Code.TextHelper.GetSubString(WaterCloud.Code.WebHelper.NoHtml(entity.F_Description),255);
+            }
+            if (string.IsNullOrEmpty(entity.F_SeoTitle))
+            {
+                entity.F_SeoTitle = entity.F_Title;
+            }
+            if (string.IsNullOrEmpty(entity.F_SeoKeywords))
+            {
+                entity.F_SeoKeywords = entity.F_Zhaiyao;
+            }
+            if (string.IsNullOrEmpty(entity.F_SeoDescription))
+            {
+                entity.F_SeoDescription = entity.F_Zhaiyao;
+            }
+
             if (string.IsNullOrEmpty(keyValue))
             {
                     //此处需修改

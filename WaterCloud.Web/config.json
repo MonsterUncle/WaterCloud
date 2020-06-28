@@ -11,7 +11,7 @@
   "imageUrlPrefix": "/", /* 图片访问路径前缀 */
   "imageSaveAbsolutePath": "", /* 文件保存路径 */
   "imageFtpUpload": false, /*是否FTP OSS上传*/
-  "imagePathFormat": "upload/image/{yyyy}/{mm}/{dd}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+  "imagePathFormat": "upload/image/{yyyy}/{mm}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
   /* {filename} 会替换成原文件名,配置这项需要注意中文乱码问题 */
   /* {rand:6} 会替换成随机数,后面的数字是随机数的位数 */
   /* {time} 会替换成时间戳 */
@@ -28,7 +28,7 @@
   /* 涂鸦图片上传配置项 */
   "scrawlActionName": "uploadscrawl", /* 执行上传涂鸦的action名称 */
   "scrawlFieldName": "upfile", /* 提交的图片表单名称 */
-  "scrawlPathFormat": "upload/image/{yyyy}/{mm}/{dd}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+  "scrawlPathFormat": "upload/image/{yyyy}/{mm}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
   "scrawlMaxSize": 2048000, /* 上传大小限制，单位B */
   "scrawlUrlPrefix": "/", /* 图片访问路径前缀 */
   "scrawlSaveAbsolutePath": "", /* 文件保存路径 */
@@ -37,7 +37,7 @@
 
   /* 截图工具上传 */
   "snapscreenActionName": "uploadimage", /* 执行上传截图的action名称 */
-  "snapscreenPathFormat": "upload/image/{yyyy}/{mm}/{dd}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+  "snapscreenPathFormat": "upload/image/{yyyy}/{mm}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
   "snapscreenUrlPrefix": "/", /* 图片访问路径前缀 */
   "snapscreenSaveAbsolutePath": "", /* 文件保存路径 */
   "snapscreenFtpUpload": false, /*是否FTP 上传*/
@@ -47,7 +47,7 @@
   "catcherLocalDomain": [ "127.0.0.1", "localhost", "img.baidu.com" ],
   "catcherActionName": "catchimage", /* 执行抓取远程图片的action名称 */
   "catcherFieldName": "source", /* 提交的图片列表表单名称 */
-  "catcherPathFormat": "upload/image/{yyyy}/{mm}/{dd}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+  "catcherPathFormat": "upload/image/{yyyy}/{mm}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
   "catcherUrlPrefix": "/", /* 图片访问路径前缀 */
   "catcherSaveAbsolutePath": "", /* 文件保存路径 */
   "catcherFtpUpload": false, /*是否FTP 上传*/
@@ -57,7 +57,7 @@
   /* 上传视频配置 */
   "videoActionName": "uploadvideo", /* 执行上传视频的action名称 */
   "videoFieldName": "upfile", /* 提交的视频表单名称 */
-  "videoPathFormat": "upload/video/{yyyy}/{mm}/{dd}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+  "videoPathFormat": "upload/video/{yyyy}/{mm}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
   "videoUrlPrefix": "/", /* 视频访问路径前缀 */
   "videoSaveAbsolutePath": "", /* 文件保存路径 */
   "videoFtpUpload": false, /*是否FTP OSS上传*/
@@ -85,7 +85,7 @@
   /* 上传文件配置 */
   "fileActionName": "uploadfile", /* controller里,执行上传视频的action名称 */
   "fileFieldName": "upfile", /* 提交的文件表单名称 */
-  "filePathFormat": "upload/file/{yyyy}/{mm}/{dd}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+  "filePathFormat": "upload/file/{yyyy}/{mm}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
   "fileUrlPrefix": "/", /* 文件访问路径前缀 */
   "fileSaveAbsolutePath": "", /* 文件保存路径 */
   "fileFtpUpload": false, /*是否FTP OSS上传*/
