@@ -56,11 +56,12 @@ namespace WaterCloud.DataBase
             }
             catch (Exception)
             {
-                if (_context.Session.CurrentTransaction != null)
-                {
-                    _context.Session.RollbackTransaction();
-                }
+                this.Rollback();
                 throw;
+            }
+            finally
+            {
+                this.Dispose();
             }
         }
         public void Dispose()
@@ -76,50 +77,100 @@ namespace WaterCloud.DataBase
             {
                 _context.Session.RollbackTransaction();
             }
+            this.Dispose();
         }
         public async Task<TEntity> Insert<TEntity>(TEntity entity) where TEntity : class
         {
-           return await _context.InsertAsync(entity);
+            try
+            {
+                return await _context.InsertAsync(entity);
+            }
+            catch (Exception ex)
+            {
+                this.Rollback();
+                throw;
+            }
         }
         public async Task<int> Insert<TEntity>(List<TEntity> entitys) where TEntity : class
         {
-            int i = 1;
-            await _context.InsertRangeAsync(entitys);
-            return 1;
+            try
+            {
+                int i = 1;
+                await _context.InsertRangeAsync(entitys);
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                this.Rollback();
+                throw;
+            }
         }
         public async Task<int> Update<TEntity>(TEntity entity) where TEntity : class
         {
-
-            TEntity newentity = _context.QueryByKey<TEntity>(entity);
-            _context.TrackEntity(newentity);
-            PropertyInfo[] newprops = newentity.GetType().GetProperties();
-            PropertyInfo[] props = entity.GetType().GetProperties();
-            foreach (PropertyInfo prop in props)
+            try
             {
-                if (prop.GetValue(entity, null) != null)
+                TEntity newentity = _context.QueryByKey<TEntity>(entity);
+                _context.TrackEntity(newentity);
+                PropertyInfo[] newprops = newentity.GetType().GetProperties();
+                PropertyInfo[] props = entity.GetType().GetProperties();
+                foreach (PropertyInfo prop in props)
                 {
-                    PropertyInfo item = newprops.Where(a => a.Name == prop.Name).FirstOrDefault();
-                    if (item != null)
+                    if (prop.GetValue(entity, null) != null)
                     {
-                        item.SetValue(newentity, prop.GetValue(entity, null), null);
-                        if (prop.GetValue(entity, null).ToString() == "&nbsp;")
-                            item.SetValue(newentity, null, null);
+                        PropertyInfo item = newprops.Where(a => a.Name == prop.Name).FirstOrDefault();
+                        if (item != null)
+                        {
+                            item.SetValue(newentity, prop.GetValue(entity, null), null);
+                            if (prop.GetValue(entity, null).ToString() == "&nbsp;")
+                                item.SetValue(newentity, null, null);
+                        }
                     }
                 }
+                return await _context.UpdateAsync(newentity);
             }
-            return await _context.UpdateAsync(newentity);
+            catch (Exception ex)
+            {
+                this.Rollback();
+                throw;
+            }
         }
         public async Task<int> Update<TEntity>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> content) where TEntity : class
         {
-            return await _context.UpdateAsync(predicate, content);
+            try
+            {
+                return await _context.UpdateAsync(predicate, content);
+            }
+            catch (Exception ex)
+            {
+                this.Rollback();
+                throw;
+            }
+
         }
         public async Task<int> Delete<TEntity>(TEntity entity) where TEntity : class
         {
-            return await _context.DeleteAsync(entity);
+            try
+            {
+                return await _context.DeleteAsync(entity);
+            }
+            catch (Exception ex)
+            {
+                this.Rollback();
+                throw;
+            }
+
         }
         public async Task<int> Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
         {
-            return await _context.DeleteAsync(predicate);
+            try
+            {
+                return await _context.DeleteAsync(predicate);
+            }
+            catch (Exception ex)
+            {
+                this.Rollback();
+                throw;
+            }
         }
         public async Task<TEntity> FindEntity<TEntity>(object keyValue) where TEntity : class
         {

@@ -28,7 +28,7 @@ namespace WaterCloud.Repository.SystemOrganize
         {
             if (entity.F_Id != Define.SYSTEM_MASTERPROJECT)
             {
-                var setentity = dbcontext.QueryByKey<SystemSetEntity>(entity.F_Id);
+                var setentity =await FindEntity(entity.F_Id);
                 var newdb = DBContexHelper.Contex(setentity.F_DbString, setentity.F_DBProvider);
                 using (var db=new RepositoryBase(newdb).BeginTrans())
                 {
@@ -48,19 +48,13 @@ namespace WaterCloud.Repository.SystemOrganize
                     await db.Update(entity);
                     db.Commit();
                 }
-                using (var db = new RepositoryBase(dbcontext).BeginTrans())
-                {
-                    await db.Update(entity);
-                    db.Commit();
-                }
             }
-            using (var db = new RepositoryBase(dbcontext).BeginTrans())
+            else
             {
                 entity.F_AdminAccount = null;
                 entity.F_AdminPassword = null;
-                await db.Update(entity);
-                db.Commit();
             }
+            await Update(entity);
 
         }
     }
