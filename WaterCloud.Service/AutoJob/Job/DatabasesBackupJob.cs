@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using WaterCloud.Code;
+using WaterCloud.DataBase;
 using WaterCloud.Service.CommonService;
 
 namespace WaterCloud.Service.AutoJob
@@ -11,9 +12,11 @@ namespace WaterCloud.Service.AutoJob
     {
         #region  构造函数
         private IDatabaseTableService databaseTableService;
+        private IDbContext _context;
 
         public DatabasesBackupJob(IDbContext context)
         {
+            _context = context;
             string dbType = GlobalContext.SystemConfig.DBProvider;
             switch (dbType)
             {

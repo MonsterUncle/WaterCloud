@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using WaterCloud.Code;
+using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service.CommonService;
 using WaterCloud.Service.SystemSecurity;
@@ -13,12 +14,14 @@ namespace WaterCloud.Service.AutoJob
     public class SaveServerStateJob : IJobTask
     {
         private IWebHostEnvironment _hostingEnvironment;
-        private ServerStateService stateService;
-        public SaveServerStateJob(IDbContext context, IWebHostEnvironment hostingEnvironment)
+        private ServerStateService _server;
+        private IDbContext _context;
+        public SaveServerStateJob(IDbContext context)
         {
-            stateService = new ServerStateService(context);
-            _hostingEnvironment = hostingEnvironment;
-        }
+            _hostingEnvironment = GlobalContext.HostingEnvironment;
+            _context = context;
+            _server = new ServerStateService(context);
+         }
         public async Task<AjaxResult> Start()
         {
             AjaxResult obj = new AjaxResult();
@@ -30,7 +33,7 @@ namespace WaterCloud.Service.AutoJob
                 entity.F_CPU = computer.CPURate;
                 entity.F_IIS = "0";
                 entity.F_WebSite = _hostingEnvironment.ContentRootPath;
-                await stateService.SubmitForm(entity);
+                await _server.SubmitForm(entity);
                 obj.state = ResultType.success.ToString();
                 obj.message = "服务器状态更新成功！";
             }

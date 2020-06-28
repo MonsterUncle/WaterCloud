@@ -7,7 +7,9 @@ using Chloe;
 using NPOI.HSSF.Record.Chart;
 using Quartz;
 using Quartz.Impl.Triggers;
+using Serenity;
 using WaterCloud.Code;
+using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service.SystemSecurity;
 
@@ -15,10 +17,12 @@ namespace WaterCloud.Service.AutoJob
 {
     public class JobExecute : IJob
     {
+        private IDbContext _context;
         private OpenJobsService autoJobService;
-        public JobExecute(IDbContext dbContext)
+        public JobExecute()
         {
-            autoJobService = new OpenJobsService(dbContext);
+            _context = DBContexHelper.Contex();
+            autoJobService = new OpenJobsService(_context);
         }
 
         public Task Execute(IJobExecutionContext context)
@@ -66,7 +70,7 @@ namespace WaterCloud.Service.AutoJob
                                     .Contains(typeof(IJobTask)))).ToArray();
                                 string filename = dbJobEntity.F_FileName;
                                 var implementType = types.Where(x => x.IsClass&&x.FullName== filename).FirstOrDefault();
-                                var obj = System.Activator.CreateInstance(implementType);       // 创建实例
+                                var obj = System.Activator.CreateInstance(implementType, _context);       // 创建实例
                                 MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
                                 object[] parameters = null;
                                 method.Invoke(obj, parameters);                           // 调用方法，参数为空
