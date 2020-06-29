@@ -61,8 +61,6 @@ namespace WaterCloud.WebApi
             {
                 return DBContexHelper.Contex();
             });
-            ////注册服务(已废除)
-            //services.AddDataService();
             //代替HttpContext.Current
             services.AddHttpContextAccessor();
             services.AddOptions();
