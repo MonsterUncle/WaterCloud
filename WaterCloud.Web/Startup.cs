@@ -72,8 +72,6 @@ namespace WaterCloud.Web
             services.AddUEditorService();
             ////注册html解析
             //services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
-            ////注册服务(已废除)
-            //services.AddDataService();
             ////注册特性
             //services.AddScoped<HandlerLoginAttribute>();
             //services.AddScoped<HandlerAuthorizeAttribute>();
