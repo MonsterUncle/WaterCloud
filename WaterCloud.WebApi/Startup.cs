@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -7,6 +7,7 @@ using CSRedis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,6 +16,7 @@ using Newtonsoft.Json.Serialization;
 using WaterCloud.Code;
 using WaterCloud.Code.Model;
 using WaterCloud.DataBase;
+using WaterCloud.Service;
 
 namespace WaterCloud.WebApi
 {
@@ -38,38 +40,33 @@ namespace WaterCloud.WebApi
                 config.SwaggerDoc("v1", new OpenApiInfo { Title = "WaterCloud Api", Version = "v1" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                config.IncludeXmlComments(xmlPath, true); //Ìí¼Ó¿ØÖÆÆ÷²ã×¢ÊÍ£¨true±íÊ¾ÏÔÊ¾¿ØÖÆÆ÷×¢ÊÍ£©                
+                config.IncludeXmlComments(xmlPath, true); //æ·»åŠ æ§åˆ¶å™¨å±‚æ³¨é‡Šï¼ˆtrueè¡¨ç¤ºæ˜¾ç¤ºæ§åˆ¶å™¨æ³¨é‡Šï¼‰                
             });
-            //Çø·Ö»º´æ
-            switch (Configuration.GetSection("SystemConfig:CacheProvider").Value)
+            //ç¼“å­˜é€‰æ‹©
+            if (Configuration.GetSection("SystemConfig:CacheProvider").Value != Define.CACHEPROVIDER_REDIS)
             {
-                case Define.CACHEPROVIDER_REDIS:
-                    //redis ×¢Èë·şÎñ
-                    string redisConnectiong = Configuration.GetSection("SystemConfig:RedisConnectionString").Value;
-                    // ¶à¿Í»§¶Ë
-                    var redisDB = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
-                    RedisHelper.Initialization(redisDB);
-                    //×¢²á·şÎñ
-                    services.AddSingleton(redisDB);
-                    break;
-                case Define.CACHEPROVIDER_MEMORY:
-                    services.AddMemoryCache();
-                    break;
-                default:
-                    services.AddMemoryCache();
-                    break;
+                services.AddMemoryCache();
             }
-            //´úÌæHttpContext.Current
-            services.AddHttpContextAccessor();
-            services.AddOptions();
-            //×¢ÈëÊı¾İ¿âÁ¬½Ó
+            else
+            {
+                //redis æ³¨å…¥æœåŠ¡
+                string redisConnectiong = Configuration.GetSection("SystemConfig:RedisConnectionString").Value;
+                // å¤šå®¢æˆ·ç«¯
+                var redisDB = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
+                RedisHelper.Initialization(redisDB);
+                services.AddSingleton(redisDB);
+            }
+            //æ³¨å…¥æ•°æ®åº“è¿æ¥
             services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
             {
                 return DBContexHelper.Contex();
             });
-            //×¢²á·şÎñ
-            services.AddDataService();
-            //¿çÓò
+            ////æ³¨å†ŒæœåŠ¡(å·²åºŸé™¤)
+            //services.AddDataService();
+            //ä»£æ›¿HttpContext.Current
+            services.AddHttpContextAccessor();
+            services.AddOptions();
+            //è·¨åŸŸ
             services.AddCors();
             services.AddControllers(options =>
             {
@@ -83,7 +80,19 @@ namespace WaterCloud.WebApi
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
         }
-
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            var assemblys = Assembly.Load("WaterCloud.Service");//Serviceæ˜¯ç»§æ‰¿æ¥å£çš„å®ç°æ–¹æ³•ç±»åº“åç§°
+Â  Â  Â  Â  Â  Â  var baseType = typeof(IDenpendency);//IDenpendency æ˜¯ä¸€ä¸ªæ¥å£ï¼ˆæ‰€æœ‰è¦å®ç°ä¾èµ–æ³¨å…¥çš„å€Ÿå£éƒ½è¦ç»§æ‰¿è¯¥æ¥å£ï¼‰
+Â  Â  Â  Â  Â  Â  builder.RegisterAssemblyTypes(assemblys).Where(m => baseType.IsAssignableFrom(m) && m != baseType)
+              .InstancePerLifetimeScope()//ç”Ÿå‘½å‘¨æœŸ
+              .PropertiesAutowired();//å±æ€§æ³¨å…¥
+            //ControllerBaseä¸­ä½¿ç”¨å±æ€§æ³¨å…¥
+            var controllerBaseType = typeof(ControllerBase);
+            builder.RegisterAssemblyTypes(typeof(Program).Assembly)
+            .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
+            .PropertiesAutowired();
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -100,7 +109,7 @@ namespace WaterCloud.WebApi
                 OnPrepareResponse = GlobalContext.SetCacheControl
             });
             app.UseMiddleware(typeof(GlobalExceptionMiddleware));
-            //¿çÓòÉèÖÃ
+            //è·¨åŸŸè®¾ç½®
             app.UseCors(builder => builder.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());

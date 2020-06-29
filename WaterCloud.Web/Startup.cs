@@ -1,4 +1,4 @@
-using CSRedis;
+ï»¿using CSRedis;
 using System.IO;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Hosting;
@@ -16,12 +16,11 @@ using WaterCloud.Service.AutoJob;
 using UEditor.Core;
 using Microsoft.Extensions.FileProviders;
 using WaterCloud.DataBase;
-using Chloe;
-using Autofac;
 using System.Reflection;
 using System.Linq;
 using WaterCloud.Service;
-
+using Autofac;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WaterCloud.Web
 {
@@ -45,37 +44,45 @@ namespace WaterCloud.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            //Çø·Ö»º´æ
-            switch (Configuration.GetSection("SystemConfig:CacheProvider").Value)
-            {
-                case Define.CACHEPROVIDER_REDIS:
-                    //redis ×¢Èë·şÎñ
-                    string redisConnectiong = Configuration.GetSection("SystemConfig:RedisConnectionString").Value;
-                    // ¶à¿Í»§¶Ë
-                    var redisDB = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
-                    RedisHelper.Initialization(redisDB);
-                    //×¢²á·şÎñ
-                    services.AddSingleton(redisDB);
-                    break;
-                case Define.CACHEPROVIDER_MEMORY:
-                    services.AddMemoryCache();
-                    break;
-                default:
-                    services.AddMemoryCache();
-                    break;
-            }
-            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
+
             services.AddSession();
-            //´úÌæHttpContext.Current
+            //ä»£æ›¿HttpContext.Current
             services.AddHttpContextAccessor();
-            //×¢²á·şÎñ
-            services.AddDataService();
-            //×¢²áÌØĞÔ
-            services.AddScoped<HandlerLoginAttribute>();
-            services.AddScoped<HandlerAuthorizeAttribute>();
-            //ajax²»ÄÜÊ¹ÓÃ×¢Èë
-            //services.AddScoped<HandlerAjaxOnlyAttribute>();
-            services.AddScoped<HandlerAdminAttribute>();
+            //ç¼“å­˜ç¼“å­˜é€‰æ‹©
+            if (Configuration.GetSection("SystemConfig:CacheProvider").Value!= Define.CACHEPROVIDER_REDIS)
+            {
+                services.AddMemoryCache();
+            }
+            else
+            {
+                //redis æ³¨å…¥æœåŠ¡
+                string redisConnectiong = Configuration.GetSection("SystemConfig:RedisConnectionString").Value;
+                // å¤šå®¢æˆ·ç«¯
+                var redisDB = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
+                RedisHelper.Initialization(redisDB);
+                services.AddSingleton(redisDB);
+            }
+            #region ä¾èµ–æ³¨å…¥
+            //æ³¨å…¥æ•°æ®åº“è¿æ¥
+            services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
+            {
+                return DBContexHelper.Contex();
+            });
+            //ç™¾åº¦UEditor
+            services.AddUEditorService();
+            ////æ³¨å†Œhtmlè§£æ
+            //services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
+            ////æ³¨å†ŒæœåŠ¡(å·²åºŸé™¤)
+            //services.AddDataService();
+            ////æ³¨å†Œç‰¹æ€§
+            //services.AddScoped<HandlerLoginAttribute>();
+            //services.AddScoped<HandlerAuthorizeAttribute>();
+            ////ajaxä¸èƒ½ä½¿ç”¨æ³¨å…¥
+            ////services.AddScoped<HandlerAjaxOnlyAttribute>();
+            //services.AddScoped<HandlerAdminAttribute>();
+            //////å®šæ—¶ä»»åŠ¡ï¼ˆå·²åºŸé™¤ï¼‰
+            ////services.AddBackgroundServices();
+            #endregion
 
             services.AddControllersWithViews(options =>
             {
@@ -83,32 +90,59 @@ namespace WaterCloud.Web
                 options.ModelMetadataDetailsProviders.Add(new ModelBindingMetadataProvider());
             }).AddNewtonsoftJson(options =>
             {
-                // ·µ»ØÊı¾İÊ××ÖÄ¸²»Ğ¡Ğ´£¬CamelCasePropertyNamesContractResolverÊÇĞ¡Ğ´
+                // è¿”å›æ•°æ®é¦–å­—æ¯ä¸å°å†™ï¼ŒCamelCasePropertyNamesContractResolveræ˜¯å°å†™
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
-            //×¢ÈëÊı¾İ¿âÁ¬½Ó
-            services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
-            {
-                return DBContexHelper.Contex();
-            });
-            ////¶¨Ê±ÈÎÎñ£¨ÒÑ·Ï³ı£©
-            //services.AddBackgroundServices();
-            //µ÷ÊÔÇ°¶Ë¿É¸üĞÂ
+            services.AddControllersWithViews().AddControllersAsServices();
+            //è°ƒè¯•å‰ç«¯å¯æ›´æ–°
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddOptions();
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(GlobalContext.HostingEnvironment.ContentRootPath + Path.DirectorySeparatorChar + "DataProtection"));
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
-            //°Ù¶ÈUEditor
-            services.AddUEditorService();
         }
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            var assemblys = Assembly.Load("WaterCloud.Service");//Serviceæ˜¯ç»§æ‰¿æ¥å£çš„å®ç°æ–¹æ³•ç±»åº“åç§°
+Â  Â  Â  Â  Â  Â  var baseType = typeof(IDenpendency);//IDenpendency æ˜¯ä¸€ä¸ªæ¥å£ï¼ˆæ‰€æœ‰è¦å®ç°ä¾èµ–æ³¨å…¥çš„å€Ÿå£éƒ½è¦ç»§æ‰¿è¯¥æ¥å£ï¼‰
+Â  Â  Â  Â  Â  Â  builder.RegisterAssemblyTypes(assemblys).Where(m => baseType.IsAssignableFrom(m) && m != baseType)
+              .InstancePerLifetimeScope()//ç”Ÿå‘½å‘¨æœŸï¼Œè¿™é‡Œæ²¡æœ‰ä½¿ç”¨æ¥å£æ–¹å¼
+              .PropertiesAutowired() ;//å±æ€§æ³¨å…¥
 
+            //Controllerä¸­ä½¿ç”¨å±æ€§æ³¨å…¥
+            var controllerBaseType = typeof(Controller);
+            builder.RegisterAssemblyTypes(typeof(Program).Assembly)
+            .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
+            .PropertiesAutowired();
+            ////æ³¨å…¥redis
+            //if (Configuration.GetSection("SystemConfig:CacheProvider").Value== Define.CACHEPROVIDER_REDIS)
+            //{
+            //    //redis æ³¨å…¥æœåŠ¡
+            //    string redisConnectiong = Configuration.GetSection("SystemConfig:RedisConnectionString").Value;
+            //    // å¤šå®¢æˆ·ç«¯
+            //    var redisDB = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
+            //    RedisHelper.Initialization(redisDB);
+            //    builder.RegisterInstance(redisDB).SingleInstance();//ç”Ÿå‘½å‘¨æœŸåªèƒ½å•ä¾‹
+            //}
+            //æ³¨å†Œhtmlè§£æ
+            builder.RegisterInstance(HtmlEncoder.Create(UnicodeRanges.All)).SingleInstance();
+            //æ³¨å†Œç‰¹æ€§
+            builder.RegisterType(typeof(HandlerLoginAttribute)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(HandlerAuthorizeAttribute)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(HandlerAdminAttribute)).InstancePerLifetimeScope();
+            ////æ³¨å†Œueç¼–è¾‘å™¨
+            //Config.ConfigFile = "config.json";
+            //Config.noCache = true;
+            //var actions = new UEditorActionCollection();
+            //builder.RegisterInstance(actions).SingleInstance();
+            //builder.RegisterInstance(typeof(UEditorService)).SingleInstance();
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-            //ÓÉÓÚ.Net CoreÄ¬ÈÏÖ»»á´ÓwwwrootÄ¿Â¼¼ÓÔØ¾²Ì¬ÎÄ¼ş£¬ÆäËûÎÄ¼ş¼ĞµÄ¾²Ì¬ÎÄ¼şÎŞ·¨Õı³£·ÃÎÊ¡£
-            //¶øÎÒÃÇÏ£Íû½«Í¼Æ¬ÉÏ´«µ½ÍøÕ¾¸ùÄ¿Â¼µÄuploadÎÄ¼ş¼ĞÏÂ£¬ËùÒÔĞèÒª¶îÍâÔÚStartup.csÀàµÄConfigure·½·¨ÖĞ
+            //ç”±äº.Net Coreé»˜è®¤åªä¼šä»wwwrootç›®å½•åŠ è½½é™æ€æ–‡ä»¶ï¼Œå…¶ä»–æ–‡ä»¶å¤¹çš„é™æ€æ–‡ä»¶æ— æ³•æ­£å¸¸è®¿é—®ã€‚
+            //è€Œæˆ‘ä»¬å¸Œæœ›å°†å›¾ç‰‡ä¸Šä¼ åˆ°ç½‘ç«™æ ¹ç›®å½•çš„uploadæ–‡ä»¶å¤¹ä¸‹ï¼Œæ‰€ä»¥éœ€è¦é¢å¤–åœ¨Startup.csç±»çš„Configureæ–¹æ³•ä¸­
             string resource = Path.Combine(Directory.GetCurrentDirectory(), "upload");
             if (!FileHelper.IsExistDirectory(resource))
             {
@@ -123,11 +157,11 @@ namespace WaterCloud.Web
                     ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=36000");
                 }
             });
-            //ĞéÄâÄ¿Â¼ 
-            //ÈçĞèÊ¹ÓÃ£¬ËùÓĞURLĞŞ¸Ä£¬Àı£º"/Home/Index"¸Ä³É'@Url.Content("~/Home/Index")'£¬²¿Êğ·ÃÎÊÊ×Ò³±ØĞë´øĞéÄâÄ¿Â¼;
+            //è™šæ‹Ÿç›®å½• 
+            //å¦‚éœ€ä½¿ç”¨ï¼Œæ‰€æœ‰URLä¿®æ”¹ï¼Œä¾‹ï¼š"/Home/Index"æ”¹æˆ'@Url.Content("~/Home/Index")'ï¼Œéƒ¨ç½²è®¿é—®é¦–é¡µå¿…é¡»å¸¦è™šæ‹Ÿç›®å½•;
             //if (!string.IsNullOrEmpty(GlobalContext.SystemConfig.VirtualDirectory))
             //{
-            //    app.UsePathBase(new PathString(GlobalContext.SystemConfig.VirtualDirectory)); // ÈÃ Pathbase ÖĞ¼ä¼ş³ÉÎªµÚÒ»¸ö´¦ÀíÇëÇóµÄÖĞ¼ä¼ş£¬ ²ÅÄÜÕıÈ·µÄÄ£ÄâĞéÄâÂ·¾¶
+            //    app.UsePathBase(new PathString(GlobalContext.SystemConfig.VirtualDirectory)); // è®© Pathbase ä¸­é—´ä»¶æˆä¸ºç¬¬ä¸€ä¸ªå¤„ç†è¯·æ±‚çš„ä¸­é—´ä»¶ï¼Œ æ‰èƒ½æ­£ç¡®çš„æ¨¡æ‹Ÿè™šæ‹Ÿè·¯å¾„
             //}
             if (WebHostEnvironment.IsDevelopment())
             {
@@ -138,8 +172,8 @@ namespace WaterCloud.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            //ÎÄ¼şµØÖ·Resource
-            //¾²Ì¬×ÊÔ´wwwroot
+            //æ–‡ä»¶åœ°å€Resource
+            //é™æ€èµ„æºwwwroot
             app.UseStaticFiles(new StaticFileOptions
             {
                 ContentTypeProvider = new CustomerFileExtensionContentTypeProvider(),
@@ -147,16 +181,16 @@ namespace WaterCloud.Web
             });
             //session
             app.UseSession();
-            //Â·¾¶
+            //è·¯å¾„
             app.UseRouting();
-            //MVCÂ·ÓÉ
+            //MVCè·¯ç”±
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Login}/{action=Index}/{id?}");
             });
             GlobalContext.ServiceProvider = app.ApplicationServices;
-            new JobCenter().Start(); // Ê¹ÓÃQuartz¶¨Ê±ÈÎÎñ
+            new JobCenter().Start(); // ä½¿ç”¨Quartzå®šæ—¶ä»»åŠ¡
         }
     }
 }

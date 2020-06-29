@@ -12,19 +12,15 @@ namespace WaterCloud.WebApi
     public static class DataServiceExtension
     {
         /// <summary>
-        /// 注入数据
+        /// 注入数据(已废除)
         /// </summary>
         /// <param name="services"></param>
         public static IServiceCollection AddDataService(this IServiceCollection services)
         {
             #region 依赖注入
             var baseType = typeof(IDenpendency);
-            var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
-            var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
-            var types = referencedAssemblies
-                .SelectMany(a => a.DefinedTypes)
-                .Select(type => type.AsType())
-                .Where(x => x != baseType && baseType.IsAssignableFrom(x)).ToArray();
+            var assemblys = Assembly.Load("WaterCloud.Service");
+            var types = assemblys.GetTypes().Where(x => x != baseType && baseType.IsAssignableFrom(x)).ToArray();
             var implementTypes = types.Where(x => x.IsClass).ToArray();
             var interfaceTypes = types.Where(x => x.IsInterface).ToArray();
             foreach (var implementType in implementTypes)
