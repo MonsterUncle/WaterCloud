@@ -45,7 +45,16 @@
              elem: '#currentTableId',
              url: '/ContentManage/ArticleCategory/GetTreeGridJson',
              sqlkey: 'F_Id',//数据库主键
+             tree: {
+                 iconIndex: 2,           // 折叠图标显示在第几列  
+                 isPidData: true,        // 是否是id、pid形式数据
+                 idName: 'F_Id',  // id字段名称
+                 pidName: 'F_ParentId',     // pid字段名称
+                 arrowType: 'arrow2',
+                 getIcon: 'ew-tree-icon-style2',
+             },
              cols: [[
+                 { type: "checkbox", width: 50},
                  { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },
                  //此处需修改
                  { field: 'F_FullName', title: '类别名称', width: 200 },
@@ -106,23 +115,28 @@
                  });
              } 
              else if (obj.event === 'delete') {
-                 if (entity == null) {
+                 var data = rendertree.checkStatus(false);
+                 if (data.length == 0) {
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
+                 var ids = [];
+                 for (var i = 0; i < data.length; i++) {
+                     ids.push(data[i].F_Id);
+                 }
                  common.deleteForm({
                      url: "/ContentManage/ArticleCategory/DeleteForm",
-                     param: { keyValue: entity.data.F_Id },
+                     param: { keyValue: ids.join(',') },
                      success: function () {
                          common.reload('data-search-btn');
                    }
                });
            }
            else if (obj.event === 'edit') {
-               if (entity == null) {
-                   common.modalMsg("未选中数据", "warning");
-                   return false;
-               }
+                 if (entity == null) {
+                     common.modalMsg("未选中数据", "warning");
+                     return false;
+                 }
                common.modalOpen({
                   title: "编辑界面",
                    url: "/ContentManage/ArticleCategory/Form?keyValue=" + entity.data.F_Id,

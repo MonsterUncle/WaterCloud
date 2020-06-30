@@ -449,7 +449,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
         //删除
         deleteForm: function (options) {
             var defaults = {
-                prompt: "注：您确定要删除该项数据吗？",
+                prompt: "注：您确定要删除选中数据吗？",
                 url: "",
                 param: [],
                 success: null,

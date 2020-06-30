@@ -17,10 +17,12 @@ namespace WaterCloud.Service.ContentManage
     public class ArticleCategoryService : DataFilterService<ArticleCategoryEntity>, IDenpendency
     {
         private IArticleCategoryRepository service;
+        private IArticleNewsRepository newsservice;
         public ArticleCategoryService(IDbContext context) : base(context)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
             service = currentuser != null && !(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ArticleCategoryRepository(currentuser.DbString, currentuser.DBProvider) : new ArticleCategoryRepository(context);
+            newsservice = currentuser != null && !(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ArticleNewsRepository(currentuser.DbString, currentuser.DBProvider) : new ArticleNewsRepository(context);
 
         }
 
@@ -106,8 +108,16 @@ namespace WaterCloud.Service.ContentManage
 
         public async Task DeleteForm(string keyValue)
         {
-            await service.Delete(t => t.F_Id == keyValue);
-            await CacheHelper.Remove(cacheKey + keyValue);
+            var ids = keyValue.Split(',');
+            if (newsservice.IQueryable(a=> ids.Contains(a.F_CategoryId)).Count()>0)
+            {
+                throw new Exception("新闻类别使用中，无法删除");
+            }
+            await service.Delete(t => ids.Contains(t.F_Id));
+            foreach (var item in ids)
+            {
+                await CacheHelper.Remove(cacheKey + item);
+            }
             await CacheHelper.Remove(cacheKey + "list");
         }
         #endregion

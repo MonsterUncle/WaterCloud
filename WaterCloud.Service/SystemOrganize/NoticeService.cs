@@ -97,8 +97,12 @@ namespace WaterCloud.Service.SystemOrganize
 
 		public async Task DeleteForm(string keyValue)
         {
-            await service.DeleteForm(keyValue);
-            await CacheHelper.Remove(cacheKey + keyValue);
+            var ids = keyValue.Split(',');
+            await service.Delete(t => ids.Contains(t.F_Id));
+            foreach (var item in ids)
+            {
+                await CacheHelper.Remove(cacheKey + item);
+            }
             await CacheHelper.Remove(cacheKey + "list");
         }
 

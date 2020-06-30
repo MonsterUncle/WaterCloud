@@ -341,8 +341,12 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine();
             sb.AppendLine("        public async Task DeleteForm(string keyValue)");
             sb.AppendLine("        {");
-            sb.AppendLine("            await service.Delete(t => t."+ idColumn + " == keyValue);");
-            sb.AppendLine("            await CacheHelper.Remove(cacheKey + keyValue);");
+            sb.AppendLine("            var ids = keyValue.Split(',');");
+            sb.AppendLine("            await service.Delete(t => ids.Contains(t." + idColumn + "));");
+            sb.AppendLine("            foreach (var item in ids)");
+            sb.AppendLine("            {");
+            sb.AppendLine("            await CacheHelper.Remove(cacheKey + item);");
+            sb.AppendLine("            }");
             sb.AppendLine("            await CacheHelper.Remove(cacheKey + \"list\");");
             sb.AppendLine("        }");
             sb.AppendLine("        #endregion");

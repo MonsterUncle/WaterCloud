@@ -56,6 +56,7 @@
              url: '/ContentManage/ArticleNews/GetGridJson',
              sqlkey: 'F_Id',//数据库主键
              cols: [[
+                 { type: "checkbox", width: 50 },
                  { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },
                  //此处需修改
                  { field: 'F_CategoryName', title: '新闻类别', width: 120 },
@@ -143,13 +144,18 @@
                  });
              }
              else if (obj.event === 'delete') {
-                 if (entity == null) {
+                 var data = table.checkStatus('currentTableId').data;
+                 if (data.length == 0) {
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
+                 var ids = [];
+                 for (var i = 0; i < data.length; i++) {
+                     ids.push(data[i].F_Id);
+                 }
                  common.deleteForm({
                      url: "/ContentManage/ArticleNews/DeleteForm",
-                     param: { keyValue: entity.data.F_Id },
+                     param: { keyValue: ids.join(',') },
                      success: function () {
                          common.reload('data-search-btn');
                    }
