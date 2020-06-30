@@ -28,6 +28,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                 limit: 10,//每页数据 默认
                 height: $(window).height() > 500 ? 'full-130' : 'full-170',
                 loading: false,
+                nuber:true,
                 sqlkey: 'F_Id',//数据库主键
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['skip', 'prev', 'page', 'next','count'] //自定义分页布局
@@ -70,10 +71,14 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
                 var array = [];
                 $.each(options.cols[0], function (i) {
+                    //添加非常规列
+                    if (!!options.cols[0][i].type && options.cols[0][i].type !='normal') {
+                        array.push(options.cols[0][i]);
+                    }
                     if (options.cols[0][i].field == options.sqlkey) {
                         array.push(options.cols[0][i]);
                     }
-                    if (dataJson != undefined) {
+                    if (!!dataJson) {
                         for (var j = 0; j < dataJson.length; j++) {
                             if (options.cols[0][i].field == dataJson[j].F_EnCode) {
                                 array.push(options.cols[0][i]);
@@ -101,7 +106,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                 toolbar: '#toolbarDemo',//工具栏
                 loading: false,
                 tree: {
-                    iconIndex: 1,           // 折叠图标显示在第几列
+                    iconIndex: 1,           // 折叠图标显示在第几列  多选等记得修改
                     isPidData: true,        // 是否是id、pid形式数据
                     idName: 'F_Id',  // id字段名称
                     pidName: 'F_ParentId',     // pid字段名称
@@ -141,10 +146,14 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
                 var array = [];
                 $.each(options.cols[0], function (i) {
+                    //添加非常规列
+                    if (!!options.cols[0][i].type && options.cols[0][i].type != 'normal') {
+                        array.push(options.cols[0][i]);
+                    }
                     if (options.cols[0][i].field == options.sqlkey) {
                         array.push(options.cols[0][i]);
                     }
-                    if (dataJson != undefined) {
+                    if (!!dataJson) {
                         for (var j = 0; j < dataJson.length; j++) {
                             if (options.cols[0][i].field == dataJson[j].F_EnCode) {
                                 array.push(options.cols[0][i]);
