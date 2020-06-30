@@ -4,11 +4,12 @@
  * version:2.0
  * description:layuimini 主体框架扩展
  */
-layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','miniTab','treeTable'], function (exports) {
+layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'miniTab', 'treeTable','laytpl'], function (exports) {
     var $ = layui.jquery,
         form = layui.form,
         miniTab = layui.miniTab,
         layer = layui.layer,
+        laytpl = layui.laytpl,
         treeTable = layui.treeTable,
         tablePlug = layui.tablePlug,
         xmSelect = layui.xmSelect,
@@ -28,10 +29,9 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                 limit: 10,//每页数据 默认
                 height: $(window).height() > 500 ? 'full-130' : 'full-170',
                 loading: false,
-                nuber:true,
                 sqlkey: 'F_Id',//数据库主键
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                    layout: ['skip', 'prev', 'page', 'next','count'] //自定义分页布局
+                    layout: ['skip', 'prev', 'page', 'next', 'count'] //自定义分页布局
                     //,curr: 2 //设定初始在第 5 页
                     , groups: 3 //只显示 1 个连续页码
                     , first: false //不显示首页
@@ -48,8 +48,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                         "msg": res.message, //解析提示文本
                         "count": res.count, //解析数据长度
                         "data": res.data //解析数据列表
-                        };
-                    },
+                    };
+                },
                 done: function (res, curr, count) { // 使用自定义参数hideAlways隐藏
                     //$(".layui-table-box").find("[data-field='F_Id']").css("display", "none");
                     //关闭加载
@@ -72,7 +72,10 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                 var array = [];
                 $.each(options.cols[0], function (i) {
                     //添加非常规列
-                    if (!!options.cols[0][i].type && options.cols[0][i].type !='normal') {
+                    if (!!options.cols[0][i].type && options.cols[0][i].type != 'normal') {
+                        array.push(options.cols[0][i]);
+                    }
+                    else if (!options.cols[0][i].field && options.cols[0][i].title == "操作") {
                         array.push(options.cols[0][i]);
                     }
                     if (options.cols[0][i].field == options.sqlkey) {
@@ -95,7 +98,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                 });
                 options.cols[0] = array;
             };
-           return table.render(options);
+            return table.render(options);
         },
         //tabletree渲染封装里面有字段权限
         rendertreetable: function (options) {
@@ -149,6 +152,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                     //添加非常规列
                     if (!!options.cols[0][i].type && options.cols[0][i].type != 'normal') {
                         array.push(options.cols[0][i]);
+                    } else if (!options.cols[0][i].field && options.cols[0][i].title == "操作") {
+                        array.push(options.cols[0][i]);
                     }
                     if (options.cols[0][i].field == options.sqlkey) {
                         array.push(options.cols[0][i]);
@@ -201,7 +206,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
             layer.closeAll('loading');
         },
         //treetable刷新
-        reloadtreetable: function (tree,options) {
+        reloadtreetable: function (tree, options) {
             var loading = layer.load(0, { shade: false });
             var defaults = {
                 where: {}
@@ -285,10 +290,10 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                 maxmin: true, //开启最大化最小化按钮
                 url: '',
                 shade: 0.3,
-                data:null,
+                data: null,
                 btn: ['确认', '关闭'],
                 btnclass: ['layui-btn', 'layui-btn-primary'],
-                isMax:false,//最大化属性 默认不是
+                isMax: false,//最大化属性 默认不是
                 callBack: null,
                 end: null,
                 yes: function (index, layero) {
@@ -321,7 +326,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
             }
             var _width = top.$(window).width() > parseInt(options.width.replace('px', '')) ? options.width : top.$(window).width() - 20 + 'px';
             var _height = top.$(window).height() > parseInt(options.height.replace('px', '')) ? options.height : top.$(window).height() - 20 + 'px';
-            var index= layer.open({
+            var index = layer.open({
                 type: 2,
                 shade: options.shade,
                 title: options.title,
@@ -392,7 +397,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                                 try {
                                     obj.modalClose();
                                 }
-                                catch(err){
+                                catch (err) {
                                     parent.layer.close(index);
                                     miniTab.deleteCurrentByIframe();
                                 }
@@ -548,7 +553,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                                 } else {
                                     obj.modalAlert(data.message, data.state);
                                 }
-       
+
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
                                 parent.layer.close(index);
@@ -569,7 +574,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
 
         },
         //Form序列化方法
-        val: function (filter, formdate){
+        val: function (filter, formdate) {
             var element = $('div[lay-filter=' + filter + ']');
             if (!!formdate) {
                 for (var key in formdate) {
@@ -625,14 +630,14 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
         },
         //父窗体刷新（按钮刷新）
         parentreload: function (filter) {
-            parent.$('button[lay-filter="' + filter+'"]').click();//按钮刷新
+            parent.$('button[lay-filter="' + filter + '"]').click();//按钮刷新
         },
         //当前页刷新（按钮刷新）
         reload: function (filter) {
             $('button[lay-filter="' + filter + '"]').click();//按钮刷新
         },
         //下载方法
-        download : function (url, data, method) {
+        download: function (url, data, method) {
             if (url && data) {
                 data = typeof data == 'string' ? data : jQuery.param(data);
                 var inputs = '';
@@ -649,11 +654,20 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
             readForm.find('input,textarea,select').prop('disabled', true);
             readForm.find('.layui-layedit iframe').contents().find('body').prop('contenteditable', false);
         },
-        //权限按钮
-        authorizeButton : function (id) {
+        //操作行按钮权限
+        authorizeRowButton: function (innerHTML) {
+            //行操作权限控制
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
-            //var moduleId = top.$("layuiminiTabInfo").attr("id").substr(6);
-            
+            var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
+            var returnhtml;
+            laytpl(innerHTML).render(dataJson, function (html) {
+                returnhtml= html;
+            });
+            return returnhtml;
+        },
+        //权限按钮
+        authorizeButton: function (id) {
+            var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");     
             var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
             var $element = $('#' + id);
             $element.find('button[authorize=yes]').attr('authorize', 'no');

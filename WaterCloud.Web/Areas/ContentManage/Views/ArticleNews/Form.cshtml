@@ -187,19 +187,19 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">内容标题</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Title" name="F_Title" autocomplete="off" lay-verify="required" class="layui-input">
+                                    <input type="text" id="F_Title" name="F_Title" autocomplete="off" maxlength="200" lay-verify="required" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">URL链接</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_LinkUrl" name="F_LinkUrl" autocomplete="off" class="layui-input" placeholder="填写后直接跳转到该网址">
+                                    <input type="text" id="F_LinkUrl" name="F_LinkUrl" autocomplete="off" lay-verify="url" maxlength="255" class="layui-input" placeholder="填写后直接跳转到该网址">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">封面图片</label>
                                 <div class="layui-input-block">
-                                    <input type="text" class="layui-input" name="F_ImgUrl" id="F_ImgUrl" readonly="readonly">
+                                    <input type="text" class="layui-input" name="F_ImgUrl" id="F_ImgUrl" lay-verify="url" maxlength="255" readonly="readonly">
                                     <button type="button" class="layui-btn" id="j_upload_img_btn">
                                         <i class="layui-icon"></i>上传图片
                                     </button>
@@ -216,7 +216,7 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">排序数字</label>
                                 <div class="layui-input-block">
-                                    <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required" class="layui-input ">
+                                    <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" class="layui-input ">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
