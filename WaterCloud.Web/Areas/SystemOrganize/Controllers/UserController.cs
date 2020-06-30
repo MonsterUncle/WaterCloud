@@ -23,7 +23,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     [Area("SystemOrganize")]
     public class UserController : ControllerBase
     {
-        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly UserService _userService;
         private readonly UserLogOnService _userLogOnService;
@@ -84,7 +83,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> SubmitUserForm(UserEntity userEntity)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
             logEntity.F_KeyValue = userEntity.F_Id;
             try
@@ -117,12 +116,12 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 userEntity.F_DeleteMark = false;
                 userEntity.F_IsBoss = false;
                 userEntity.F_OrganizeId = OperatorProvider.Provider.GetCurrent().CompanyId;
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }
             else
             {
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
                 if (OperatorProvider.Provider.GetCurrent().UserId == keyValue)
@@ -156,7 +155,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Delete.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
@@ -193,7 +192,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitRevisePassword(string F_UserPassword, string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
             logEntity.F_KeyValue = keyValue;
             try
@@ -223,7 +222,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitReviseSelfPassword(string F_UserPassword)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
             logEntity.F_KeyValue = OperatorProvider.Provider.GetCurrent().UserId;
             try
@@ -249,7 +248,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DisabledAccount(string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
             logEntity.F_KeyValue = keyValue;
             try
@@ -285,7 +284,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EnabledAccount(string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
             logEntity.F_KeyValue = keyValue;
             try

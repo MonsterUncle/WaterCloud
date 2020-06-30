@@ -2,6 +2,7 @@
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
+
 <style>
     .layui-form-label {
         float: left;
@@ -109,25 +110,26 @@
         $(function () {
             initControl();
             if (!!keyValue) {
-                common.ajax({
-                    url: '/ContentManage/ArticleNews/GetFormJson',
-                    dataType: 'json',
-                    data: { keyValue: keyValue },
-                    async: false,
-                    success: function (data) {
-                        common.val('stepForm', data);
-                        var Description = data.F_Description;
-                        if (!!data.ImgUrl) {
-                            ImgUrlPic.src = data.ImgUrl;
-                        }
-                        // editor准备好之后才可以使用
-                        var editor = UE.getEditor("F_Description");
-                        editor.ready(function () {
-                            editor.setContent(Description);
-                        });
-
-                    }
+                var newsdata = JSON.parse('@Html.Raw(ViewBag.Content)');
+                common.val('stepForm', newsdata);
+                var Description = newsdata.F_Description;
+                if (!!newsdata.ImgUrl) {
+                    ImgUrlPic.src = newsdata.ImgUrl;
+                }
+                // editor准备好之后才可以使用
+                var editor = UE.getEditor("F_Description");
+                editor.ready(function () {
+                    editor.setContent(Description);
                 });
+                //减少请求数
+                //common.ajax({
+                //    url: '/ContentManage/ArticleNews/GetFormJson',
+                //    dataType: 'json',
+                //    data: { keyValue: keyValue },
+                //    async: false,
+                //    success: function (data) {
+                //    }
+                //});
             }
             form.render();
         });

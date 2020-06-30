@@ -3,6 +3,13 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
+    //父传子示例
+    function initForm(data) {
+        layui.use(['common'], function () {
+            var common = layui.common;
+            common.val('adminform',data);
+        });
+    }
     layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
         var form = layui.form,
             $ = layui.$,
@@ -22,18 +29,7 @@
 
         $(function () {
             initControl();
-            if (!!keyValue) {
-                 common.ajax({
-                   url: '/ContentManage/ArticleCategory/GetFormJson',
-                   dataType: 'json',
-                   data: { keyValue: keyValue },
-                   async: false,
-                   success: function (data) {
-                       common.val('adminform', data);
-                    }
-               });
-           }
-           form.render();
+            form.render();
        });
 
        function initControl() {

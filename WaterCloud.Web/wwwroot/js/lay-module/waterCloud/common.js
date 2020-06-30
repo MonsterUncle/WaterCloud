@@ -276,13 +276,11 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                 maxmin: true, //开启最大化最小化按钮
                 url: '',
                 shade: 0.3,
+                data:null,
                 btn: ['确认', '关闭'],
                 btnclass: ['layui-btn', 'layui-btn-primary'],
                 isMax:false,//最大化属性 默认不是
                 callBack: null,
-                success: function (layero, index) {
-                    $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
-                },
                 end: null,
                 yes: function (index, layero) {
                     var iframeWindow = window['layui-layer-iframe' + index]
@@ -291,7 +289,18 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug' , 'xmSelect','mini
                     submit.trigger('click');
                 }
             };
+            var doneCallback = options.success;
             var options = $.extend(defaults, options);
+            options.success = function (layero, index) {
+                //子界面定义一个窗口方法initForm，里面调用common.val给参数赋值
+                if (!!options.data && layero.find('iframe')[0].contentWindow.initForm) {
+                    layero.find('iframe')[0].contentWindow.initForm(options.data);
+                }
+                $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
+                if (doneCallback) {
+                    doneCallback(layero, index);
+                }
+            };
             //ie缓存问题
             if (!!options.url) {
                 if (options.url.indexOf("?") >= 0) {

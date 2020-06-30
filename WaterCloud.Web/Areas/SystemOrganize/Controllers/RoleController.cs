@@ -23,7 +23,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     [Area("SystemOrganize")]
     public class RoleController : ControllerBase
     {
-        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly RoleService _roleService;
         private readonly LogService _logService;
@@ -86,12 +85,12 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 roleEntity.F_DeleteMark = false;
                 roleEntity.F_AllowEdit = false;
                 roleEntity.F_AllowDelete = false;
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }
             else
             {
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
                 if (OperatorProvider.Provider.GetCurrent().RoleId == keyValue)
@@ -125,7 +124,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Delete.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {

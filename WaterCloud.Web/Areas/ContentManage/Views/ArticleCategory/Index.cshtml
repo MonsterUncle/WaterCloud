@@ -128,6 +128,7 @@
                    url: "/ContentManage/ArticleCategory/Form?keyValue=" + entity.data.F_Id,
                    width: "500px",
                    height: "500px",
+                   data: entity.data,
                });
            }
            else if (obj.event === 'details') {
@@ -140,7 +141,8 @@
                    url: "/ContentManage/ArticleCategory/Details?keyValue=" + entity.data.F_Id,
                    width: "500px",
                    height: "500px",
-                  btn: []
+                   data: entity.data,
+                   btn: []
                });
            }
            return false;

@@ -322,7 +322,6 @@
                         //获取子页面的元素，进行数据渲染
                         body.contents().find("#F_EnCode").val(entity.data.TableColumn);
                         body.contents().find('#F_FullName').val(entity.data.Remark);
-                        $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
                     },
 
                 });
@@ -615,7 +614,6 @@
                     //获取子页面的元素，进行数据渲染
                     body.contents().find("#F_EnCode").val(key);
                     body.contents().find('#F_FullName').val(value);
-                    $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
                 },
             });
         });

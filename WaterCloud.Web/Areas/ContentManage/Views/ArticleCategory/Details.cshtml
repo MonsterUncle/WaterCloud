@@ -3,12 +3,18 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
+    //父传子示例
+    function initForm(data) {
+        layui.use(['common'], function () {
+            var common = layui.common;
+            common.val('adminform', data);
+        });
+    }
     layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
         var form = layui.form,
             $ = layui.$,
             common = layui.common,
             laydate = layui.laydate;
-        var keyValue = $.request("keyValue");
         //权限字段
         common.authorizeFields('adminform');
         //此处需修改
@@ -22,17 +28,8 @@
 
         $(function () {
             initControl();
-            common.ajax({
-                url: '/ContentManage/ArticleCategory/GetFormJson',
-                dataType: 'json',
-                data: { keyValue: keyValue },
-                async: false,
-                success: function (data) {
-                    common.val('adminform', data);
-                    common.setReadOnly('adminform');
-                    form.render();
-                 }
-            });
+            common.setReadOnly('adminform');
+            form.render();
        });
 
        function initControl() {

@@ -22,7 +22,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     [Area("SystemOrganize")]
     public class DataPrivilegeRuleController :  ControllerBase
     {
-        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly LogService _logService;
         private readonly DataPrivilegeRuleService _service;
@@ -88,13 +87,13 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             entity.F_PrivilegeRules = filterList.ToJson();
             if (string.IsNullOrEmpty(keyValue))
             {
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
                 entity.F_DeleteMark = false;
             }
             else
             {
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
             }
@@ -122,7 +121,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Delete.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {

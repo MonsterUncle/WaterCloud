@@ -21,7 +21,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class ModuleFieldsController :  ControllerBase
     {
-        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly LogService _logService;
         private readonly ModuleFieldsService _service;
@@ -81,13 +80,13 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
                 entity.F_DeleteMark = false;
             }
             else
             {
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
             }
@@ -115,7 +114,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Delete.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
@@ -174,7 +173,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> SubmitCloneFields(string moduleId, string Ids)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
             logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {

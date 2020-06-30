@@ -21,7 +21,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class CodeGeneratorController : ControllerBase
     {
-        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly IDatabaseTableService _service;
         private readonly LogService _logService;
@@ -187,7 +186,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CodeGenerateJson(BaseConfigModel baseConfig, string Code)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
             logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {

@@ -381,15 +381,9 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("    [Area(\"" + baseConfigModel.OutputConfig.OutputModule + "\")]");
             sb.AppendLine("    public class " + baseConfigModel.FileConfig.ControllerName + " :  ControllerBase");
             sb.AppendLine("    {");
-            sb.AppendLine("        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];");
             sb.AppendLine("        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];");
-            sb.AppendLine("        private readonly LogService _logService;");
-            sb.AppendLine("        private readonly "+ baseConfigModel.FileConfig.ServiceName+ " _service;");
-            sb.AppendLine("        public "+ baseConfigModel.FileConfig.ControllerName + "("+baseConfigModel.FileConfig.ServiceName+" service, LogService logService)");
-            sb.AppendLine("        {");
-            sb.AppendLine("            _logService = logService;");
-            sb.AppendLine("            _service = service;");
-            sb.AppendLine("        }");
+            sb.AppendLine("        public LogService _logService {get;set;}");
+            sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + " _service {get;set;}");
             sb.AppendLine();
             sb.AppendLine("        #region 获取数据");
             if (baseConfigModel.PageIndex.IsTree>0)
@@ -465,13 +459,13 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            LogEntity logEntity;");
             sb.AppendLine("            if (string.IsNullOrEmpty(keyValue))");
             sb.AppendLine("            {");
-            sb.AppendLine("                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());");
+            sb.AppendLine("                logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());");
             sb.AppendLine("                logEntity.F_Description += DbLogType.Create.ToDescription();");
             sb.AppendLine("                entity.F_DeleteMark = false;");
             sb.AppendLine("            }");
             sb.AppendLine("            else");
             sb.AppendLine("            {");
-            sb.AppendLine("                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());");
+            sb.AppendLine("                logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());");
             sb.AppendLine("                logEntity.F_Description += DbLogType.Update.ToDescription();");
             sb.AppendLine("                logEntity.F_KeyValue = keyValue;");
             sb.AppendLine("            }");
@@ -499,7 +493,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        [ValidateAntiForgeryToken]");
             sb.AppendLine("        public async Task<ActionResult> DeleteForm(string keyValue)");
             sb.AppendLine("        {");
-            sb.AppendLine("            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Delete.ToString());");
+            sb.AppendLine("            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString());");
             sb.AppendLine("            logEntity.F_Description += DbLogType.Delete.ToDescription();");
             sb.AppendLine("            try");
             sb.AppendLine("            {");

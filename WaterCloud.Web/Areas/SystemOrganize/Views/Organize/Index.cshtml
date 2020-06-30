@@ -23,17 +23,7 @@
                 {
                     field: 'F_CategoryId', title: '分类', width: 120,
                     templet: function (d) {
-                        if (d.F_CategoryId == "Group") {
-                            return "集团";
-                        } else if (d.F_CategoryId == "Company") {
-                            return "公司";
-                        } else if (d.F_CategoryId == "Department") {
-                            return "部门";
-                        } else if (d.F_CategoryId == "WorkGroup") {
-                            return "小组";
-                        } else {
-                            return d.F_CategoryId;
-                        }
+                        return top.clients.dataItems["OrganizeCategory"][d.F_CategoryId] == null ? "" : top.clients.dataItems["OrganizeCategory"][d.F_CategoryId];
                     }
                 },
                 {

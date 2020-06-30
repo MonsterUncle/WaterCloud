@@ -64,8 +64,8 @@
                 text: "F_CompanyName"
             });
             $("#F_Type").bindSelect({
-                url: "/SystemManage/ItemsData/GetSelectJson",
-                param: { enCode: "RoleType" }
+                data: top.clients.dataItems['RoleType'],
+                id: "",
             });
         }
         var role;

@@ -11,6 +11,7 @@ using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Service.ContentManage;
 using Serenity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace WaterCloud.Web.Areas.ContentManage.Controllers
 {
@@ -23,29 +24,37 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
     [AllowAnonymous]
     public class ArticleNewsController :  ControllerBase
     {
-        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly LogService _logService;
-        private readonly ArticleNewsService _service;
+        //属性注入示例
+        public LogService _logService { get; set; }
+        public ArticleNewsService _service { get; set; }
         [HttpGet]
         public override ActionResult Form()
         {
-            //主页信息获取
+            //控制器视图传值示例
             var currentuser = OperatorProvider.Provider.GetCurrent();
             if (currentuser == null)
             {
                 return View();
             }
-
+            var keyValue=HttpContext.Request.Query["keyValue"].ToString();
             ViewBag.UserName = currentuser.UserName;
+            ViewBag.Content = _service.GetForm(keyValue).Result.ToJson();
             return View();
         }
-        public ArticleNewsController(ArticleNewsService service, LogService logService)
+        [HttpGet]
+        public override ActionResult Details()
         {
-            _logService = logService;
-            _service = service;
+            //控制器视图传值示例
+            var currentuser = OperatorProvider.Provider.GetCurrent();
+            if (currentuser == null)
+            {
+                return View();
+            }
+            var keyValue = HttpContext.Request.Query["keyValue"].ToString();
+            ViewBag.Content = _service.GetForm(keyValue).Result.ToJson();
+            return View();
         }
-
         #region 获取数据
         [HttpGet]
         [HandlerAjaxOnly]
@@ -85,13 +94,13 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
             LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
                 entity.F_DeleteMark = false;
             }
             else
             {
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
             }
@@ -119,7 +128,7 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Delete.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {

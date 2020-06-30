@@ -130,14 +130,18 @@ namespace WaterCloud.Service.SystemSecurity
             }
         }
 
-        public async Task<LogEntity> CreateLog(string moduleName, string className, string type)
+        public async Task<LogEntity> CreateLog(string className, string type)
         {
-            var module = (await moduleservice.GetList()).Where(a =>a.F_EnCode == moduleName).FirstOrDefault();
-            var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false&&a.F_ParentId==module.F_Id && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
-            return new LogEntity(await CreateModule(module), moduleitem.F_FullName, type);
+            var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = (await moduleservice.GetList()).Where(a =>  a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
+            return new LogEntity(await CreateModule(module), moduleitem==null? "": moduleitem.F_FullName, type);
         }
         public async Task<string> CreateModule(ModuleEntity module, string str="")
         {
+            if (module==null)
+            {
+                return str;
+            }
             str = module.F_FullName + "-" + str;
             if (module.F_ParentId=="0")
             {

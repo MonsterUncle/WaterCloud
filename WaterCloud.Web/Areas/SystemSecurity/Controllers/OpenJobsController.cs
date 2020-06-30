@@ -16,7 +16,6 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     [Area("SystemSecurity")]
     public class OpenJobsController : ControllerBase
     {
-        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly OpenJobsService _jobService;
         private readonly LogService _logService;
@@ -43,13 +42,13 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             {
                 entity.F_EnabledMark = false;
                 entity.F_DeleteMark = false;
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }
             else
             {
                 entity.F_EnabledMark = null;
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
             }
@@ -76,7 +75,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Delete.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
@@ -121,7 +120,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         public async Task<ActionResult> ChangeStatus(string keyValue, int status)
         {
             LogEntity logEntity;
-            logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+            logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
             logEntity.F_KeyValue = keyValue;
             try

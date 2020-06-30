@@ -20,7 +20,6 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     [Area("SystemSecurity")]
     public class FilterIPController : ControllerBase
     {
-        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly FilterIPService _filterIPService;
         private readonly LogService _logService;
@@ -54,13 +53,13 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             LogEntity logEntity ;
             if (!string.IsNullOrEmpty(keyValue))
             {
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Update.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
             }
             else
             {
-                logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Create.ToString());
+                logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }
             try
@@ -91,7 +90,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
             var currentuser = OperatorProvider.Provider.GetCurrent();
-            LogEntity logEntity = await _logService.CreateLog(moduleName, className, DbLogType.Delete.ToString());
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
