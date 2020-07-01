@@ -73,6 +73,7 @@ namespace WaterCloud.WebApi
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
+            services.AddControllers().AddControllersAsServices();
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(GlobalContext.HostingEnvironment.ContentRootPath + Path.DirectorySeparatorChar + "DataProtection"));
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             GlobalContext.Services = services;

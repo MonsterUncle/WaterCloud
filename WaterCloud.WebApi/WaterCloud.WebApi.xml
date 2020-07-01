@@ -14,15 +14,6 @@
             用户接口
             </summary>
         </member>
-        <member name="M:WaterCloud.WebApi.Controllers.UserController.#ctor(WaterCloud.Service.SystemSecurity.FilterIPService,WaterCloud.Service.SystemOrganize.UserService,WaterCloud.Service.SystemSecurity.LogService,WaterCloud.Service.SystemOrganize.SystemSetService)">
-            <summary>
-            用户登录模块
-            </summary>
-            <param name="filterIPService"></param>
-            <param name="userService"></param>
-            <param name="logService"></param>
-            <param name="setService"></param>
-        </member>
         <member name="M:WaterCloud.WebApi.Controllers.UserController.Login(System.String,System.String,System.String)">
             <summary>
             用户登录

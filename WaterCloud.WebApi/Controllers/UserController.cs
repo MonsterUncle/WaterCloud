@@ -23,26 +23,11 @@ namespace WaterCloud.WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly FilterIPService _filterIPService;
-        private readonly UserService _userService;
-        private readonly LogService _logService;
-        private readonly SystemSetService _setService;
-        /// <summary>
-        /// 用户登录模块
-        /// </summary>
-        /// <param name="filterIPService"></param>
-        /// <param name="userService"></param>
-        /// <param name="logService"></param>
-        /// <param name="setService"></param>
-        public UserController(FilterIPService filterIPService, UserService userService, LogService logService, SystemSetService setService)
-        {
-            _filterIPService = filterIPService;
-            _userService = userService;
-            _logService = logService;
-            _setService = setService;
-        }
-        #region 获取数据       
-        #endregion
+        //自动注入服务
+        public FilterIPService _filterIPService { get; set; }
+        public UserService _userService { get; set; }
+        public LogService _logService { get; set; }
+        public SystemSetService _setService { get; set; }
 
         #region 提交数据
         /// <summary>
