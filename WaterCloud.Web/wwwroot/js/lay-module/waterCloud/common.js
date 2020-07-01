@@ -27,7 +27,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                 method: 'get',//请求方法
                 cellMinWidth: 100,//最小宽度
                 limit: 10,//每页数据 默认
-                height: $(window).height() > 500 ? 'full-130' : 'full-170',
+                height: 'full-120',
                 loading: false,
                 sqlkey: 'F_Id',//数据库主键
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -118,7 +118,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                     arrowType: 'arrow2',
                     getIcon: 'ew-tree-icon-style2',
                 },
-                height: $(window).height() > 500 ? 'full-130' : 'full-170',
+                height: 'full-130',
                 method: 'get',//请求方法
                 sqlkey: 'F_Id',//数据库主键
                 cellMinWidth: 60,//最小宽度     
