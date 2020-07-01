@@ -39,7 +39,9 @@
              table = layui.table,
              miniTab = layui.miniTab,
              common = layui.common;
-             var loading = layer.load(0, { shade: false });
+         var loading = layer.load(0, { shade: false });
+         //权限控制(js是值传递)
+         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
          common.rendertable({
              elem: '#currentTableId',
              url: '/SystemOrganize/DataPrivilegeRule/GetGridJson',
@@ -69,13 +71,7 @@
                      }
                  },
                  { field: 'F_Description', title: '备注', minWidth: 150 }
-             ]],
-             done: function () {
-                 //权限控制
-                 common.authorizeButton("toolbar");
-                 //关闭加载
-                 layer.closeAll('loading');
-             }
+             ]]
          });
          // 监听搜索操作
          form.on('submit(data-search-btn)', function (data) {

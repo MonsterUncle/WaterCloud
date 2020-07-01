@@ -56,7 +56,15 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                     layer.closeAll('loading');
                 }
             };
+            var doneCallback = options.done;
             var options = $.extend(defaults, options);
+            options.done = function (res, curr, count) {
+                //关闭加载
+                layer.closeAll('loading');
+                if (doneCallback) {
+                    doneCallback(res, curr, count);
+                }
+            };
             if (!!options.url) {
                 //ie缓存问题
                 if (options.url.indexOf("?") >= 0) {
@@ -88,12 +96,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                                 break;
                             }
                         }
-                        //dataJson.find(item => {
-                        //    if (options.cols[0][i].field == item.F_EnCode) {
-                        //        options.cols[0][i].hideAlways = false;
-                        //        options.cols[0][i].hide = false;
-                        //    }
-                        //});
                     }
                 });
                 options.cols[0] = array;
@@ -127,14 +129,17 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                         "count": res.count, //解析数据长度
                         "data": res.data //解析数据列表
                     };
-                },
-                done: function () {
-                    //$(".layui-table-box").find("[data-field='F_Id']").css("display", "none");
-                    //关闭加载
-                    layer.closeAll('loading');
                 }
             };
+            var doneCallback = options.done;
             var options = $.extend(defaults, options);
+            options.done = function (res, curr, count) {
+                //关闭加载
+                layer.closeAll('loading');
+                if (doneCallback) {
+                    doneCallback(res, curr, count);
+                }
+            };
             //ie缓存问题
             if (!!options.url) {
                 if (options.url.indexOf("?") >= 0) {
@@ -654,23 +659,72 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
             readForm.find('input,textarea,select').prop('disabled', true);
             readForm.find('.layui-layedit iframe').contents().find('body').prop('contenteditable', false);
         },
-        //操作行按钮权限
-        authorizeRowButton: function (innerHTML) {
+        //按钮权限(控制js模板)
+        authorizeButtonNew: function (innerHTML) {
             //行操作权限控制
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
-            var returnhtml;
-            laytpl(innerHTML).render(dataJson, function (html) {
-                returnhtml= html;
-            });
-            //二次使用模板的转换
-            returnhtml = returnhtml.replace('<!--!', '{{')
-            returnhtml = returnhtml.replace('!-->', '}}')
+            var strList = [];
+            var isBtn = false;
+            var returnhtml = '';
+            if (innerHTML.indexOf('</button>') > -1) {
+                var tempList = innerHTML.split('</button>');
+                for (var i = 0; i < tempList.length; i++) {
+                    if (tempList[i].indexOf('<button ') > -1) {
+                        var itemList = tempList[i].split('<button ');
+                        returnhtml = returnhtml + itemList[0];
+                        if (itemList[1].indexOf(' authorize') == -1) {
+                            returnhtml = returnhtml + '<button ' + itemList[1] + '</button>';
+                        }
+                        else if (dataJson != undefined) {
+                            $.each(dataJson, function (i) {
+                                if (itemList[1].indexOf('id="' + dataJson[i].F_EnCode + '"') > -1) {
+                                    returnhtml = returnhtml + '<button ' + itemList[1] + '</button>';
+                                    return false;
+                                }
+                            });
+                        }
+                        if (itemList.length>2) {
+                            returnhtml = returnhtml + itemList[2];
+                        }
+                    }
+                    else {
+                        returnhtml = returnhtml + tempList[i];
+                    }
+                }
+            }
+            else if (innerHTML.indexOf('</a>') > -1){
+                var tempList = innerHTML.split('</a>');
+                for (var i = 0; i < tempList.length; i++) {
+                    if (tempList[i].indexOf('<a ') > -1) {
+                        var itemList = tempList[i].split('<a ');
+                        returnhtml = returnhtml + itemList[0];
+                        if (itemList[1].indexOf(' authorize') == -1) {
+                            returnhtml = returnhtml + '<a ' + itemList[1] + '</a>';
+                        }
+                        else if (dataJson != undefined) {
+                            $.each(dataJson, function (i) {
+                                if (itemList[1].indexOf('id="' + dataJson[i].F_EnCode + '"') > -1) {
+                                    returnhtml = returnhtml + '<a ' + itemList[1] + '</a>';
+                                    return false;
+                                }
+                            });
+                        }
+                        if (itemList.length > 2) {
+                            returnhtml = returnhtml + itemList[2];
+                        }
+                    }
+                    else {
+                        returnhtml = returnhtml + tempList[i];
+                    }
+                }
+            }
+            returnhtml = returnhtml.replace(/ layui-hide/g, '');
             return returnhtml;
         },
-        //权限按钮
+        //权限按钮(控制dom)
         authorizeButton: function (id) {
-            var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");     
+            var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
             var $element = $('#' + id);
             $element.find('button[authorize=yes]').attr('authorize', 'no');

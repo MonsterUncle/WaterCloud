@@ -22,7 +22,7 @@
              </div>
          </fieldset>
          <script type="text/html" id="toolbarDemo">
-             <div class="layui-btn-container" id="toolbar">
+             <div class="layui-btn-container">
                  <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
                  <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
                  <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
@@ -31,17 +31,9 @@
          </script>
          <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
          <script type="text/html" id="currentTableBar">
-             {{#  layui.each(d, function(index, item){ }}
-             {{#  if(item.F_EnCode == "NF-edit"){ }}
-             <a id="NF-edit" class="layui-btn layui-btn-sm" lay-event="edit"><!--! d.F_FullName !-->修改</a>@*定义一个html注释，自动转换成laytpl模板*@
-             {{#  } }}
-             {{#  if(item.F_EnCode == "NF-delete"){ }}
-             <a id="NF-delete" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete">删除</a>
-             {{#  } }}
-             {{#  if(item.F_EnCode == "NF-details"){ }}
-             <a id="NF-details" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details">查看</a>
-             {{#  } }}
-             {{#  }); }}
+             <a id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm" lay-event="edit">修改</a>
+             <a id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete">删除</a>
+             <a id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details">查看</a>
          </script>
      </div>
  </div>
@@ -55,8 +47,8 @@
              treeTable = layui.treeTable,
              common = layui.common;
          //行操作权限控制(js是值传递)
-         //多层模板使用，第一次是权限控制，第二次是laytpl模板<!--! !--> 转换成{{ }}
-         currentTableBar.innerHTML=common.authorizeRowButton(currentTableBar.innerHTML);
+         currentTableBar.innerHTML = common.authorizeButtonNew(currentTableBar.innerHTML);
+         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
          var loading = layer.load(0, { shade: false });
          var rendertree = common.rendertreetable({
              elem: '#currentTableId',
@@ -100,12 +92,8 @@
                  { title: '操作', minWidth: 180, toolbar: '#currentTableBar', align: "center", fixed: 'right' }//插件没有fixed参数
              ]],
              done: function () {
-                 //权限控制
-                 common.authorizeButton("toolbar");
                  //展开全部
                  rendertree.expandAll();
-                 //关闭加载
-                 layer.closeAll('loading');
              }
          });
          var entity;

@@ -53,8 +53,6 @@
                 }
             ]],
             done: function () {
-                //关闭加载
-                layer.closeAll('loading');
                 rendertree.expandAll();
                 if (!!ids) {
                     rendertree.setChecked(ids.split(','));

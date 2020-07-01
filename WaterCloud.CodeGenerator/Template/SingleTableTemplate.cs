@@ -574,22 +574,22 @@ namespace WaterCloud.CodeGenerator
             if (baseConfigModel.PageIndex.ButtonList.Contains("add"))
             {
                 KeyValue button = list.Where(p => p.Key == "add").FirstOrDefault();
-                sb.AppendLine("                 <button id=\""+ button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm data-add-btn layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe654;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\""+ button.Value + "\" authorize class=\"layui-btn layui-btn-sm data-add-btn layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe654;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("edit"))
             {
                 KeyValue button = list.Where(p => p.Key == "edit").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe642;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe642;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("delete"))
             {
                 KeyValue button = list.Where(p => p.Key == "delete").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe640;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe640;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("details"))
             {
                 KeyValue button = list.Where(p => p.Key == "details").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize=\"yes\" class=\"layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe60b;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe60b;</i>" + button.Description + "</button>");
             }
             sb.AppendLine("             </div>");
             sb.AppendLine("         </script>");
@@ -610,6 +610,8 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("             common = layui.common;");
             sb.AppendLine("         var entity;");
             sb.AppendLine("         var loading = layer.load(0, { shade: false });");
+            sb.AppendLine("         //权限控制(js是值传递)");
+            sb.AppendLine("         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);");
             if (baseConfigModel.PageIndex.IsTree==1)
             {
                 sb.AppendLine("         var rendertree = common.rendertreetable({");
@@ -639,13 +641,7 @@ namespace WaterCloud.CodeGenerator
                     cout++;
 
                 }
-                sb.AppendLine("             ]],");
-                sb.AppendLine("             done: function () {");
-                sb.AppendLine("                 //权限控制");
-                sb.AppendLine("                 common.authorizeButton(\"toolbar\");");
-                sb.AppendLine("                 //关闭加载");
-                sb.AppendLine("                 layer.closeAll('loading');");
-                sb.AppendLine("             }");
+                sb.AppendLine("             ]]");
                 sb.AppendLine("         });");
                 sb.AppendLine("         // 监听搜索操作");
                 sb.AppendLine("         form.on('submit(data-search-btn)', function (data) {");
@@ -683,13 +679,7 @@ namespace WaterCloud.CodeGenerator
                     }
                     cout++;
                 }
-                sb.AppendLine("             ]],");
-                sb.AppendLine("             done: function () {");
-                sb.AppendLine("                 //权限控制");
-                sb.AppendLine("                 common.authorizeButton(\"toolbar\");");
-                sb.AppendLine("                 //关闭加载");
-                sb.AppendLine("                 layer.closeAll('loading');");
-                sb.AppendLine("             }");
+                sb.AppendLine("             ]]");
                 sb.AppendLine("         });");
                 sb.AppendLine("         // 监听搜索操作");
                 sb.AppendLine("         form.on('submit(data-search-btn)', function (data) {");

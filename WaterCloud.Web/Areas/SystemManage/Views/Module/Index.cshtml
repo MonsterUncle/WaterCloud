@@ -14,6 +14,8 @@
                 common = layui.common;
             //加载数据
             var loading = layer.load(0, { shade: false });
+            //权限控制(js是值传递)
+            toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
             var rendertree =common.rendertreetable({
                 elem: '#currentTableId',
                 url: '/SystemManage/Module/GetTreeGridJson',
@@ -105,12 +107,8 @@
                     { field: 'F_Description', title: '备注', minWidth: 100 },
                 ]],
                 done: function () {
-                    //权限控制
-                    common.authorizeButton("toolbar");
                     //展开全部
                     rendertree.expandAll(); 
-                    //关闭加载
-                    layer.closeAll('loading');
                 }
             });
             // 监听搜索操作
