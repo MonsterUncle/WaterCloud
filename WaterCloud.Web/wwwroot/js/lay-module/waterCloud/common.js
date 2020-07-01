@@ -663,6 +663,9 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
             laytpl(innerHTML).render(dataJson, function (html) {
                 returnhtml= html;
             });
+            //二次使用模板的转换
+            returnhtml = returnhtml.replace('<!--!', '{{')
+            returnhtml = returnhtml.replace('!-->', '}}')
             return returnhtml;
         },
         //权限按钮
