@@ -38,12 +38,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WaterCloud.WebApi.DataServiceExtension.AddDataService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            注入数据
-            </summary>
-            <param name="services"></param>
-        </member>
         <member name="T:WaterCloud.WebApi.AuthorizeFilterAttribute">
             <summary>
             验证token

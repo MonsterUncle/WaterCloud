@@ -14,6 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.4.1" />
@@ -22,7 +24,6 @@
   <ItemGroup>
     <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj" />
     <ProjectReference Include="..\WaterCloud.Service\WaterCloud.Service.csproj" />
-    <ProjectReference Include="..\WaterCloud.Web\WaterCloud.Web.csproj" />
   </ItemGroup>
 
 
