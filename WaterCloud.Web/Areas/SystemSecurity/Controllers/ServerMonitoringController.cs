@@ -19,11 +19,8 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     [Area("SystemSecurity")]
     public class ServerMonitoringController : ControllerBase
     {
-        private readonly ServerStateService _serverStateService;
-        public ServerMonitoringController(ServerStateService serverStateService)
-        {
-            _serverStateService = serverStateService;
-        }
+        public ServerStateService _serverStateService { get; set; }
+
         [HttpGet]
         public async Task<ActionResult> GetServerDataJson()
         {

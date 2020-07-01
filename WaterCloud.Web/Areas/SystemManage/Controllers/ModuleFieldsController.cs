@@ -22,15 +22,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     public class ModuleFieldsController :  ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly LogService _logService;
-        private readonly ModuleFieldsService _service;
-        private readonly ModuleService _moduleService;
-        public ModuleFieldsController(ModuleFieldsService service, LogService logService, ModuleService moduleService)
-        {
-            _logService = logService;
-            _service = service;
-            _moduleService = moduleService;
-        }
+        public LogService _logService { get; set; }
+        public ModuleFieldsService _service { get; set; }
+        public ModuleService _moduleService { get; set; }
 
         #region 获取数据
         [HttpGet]

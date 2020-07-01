@@ -23,13 +23,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     public class OrganizeController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly OrganizeService _organizeService;
-        private readonly LogService _logService;
-        public OrganizeController(OrganizeService organizeService, LogService logService)
-        {
-            _organizeService = organizeService;
-            _logService = logService;
-        }
+        public OrganizeService _organizeService { get; set; }
+        public LogService _logService { get; set; }
+
         [HttpGet]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult AddForm()

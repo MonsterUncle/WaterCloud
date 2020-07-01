@@ -108,11 +108,12 @@ namespace WaterCloud.Web
               .InstancePerLifetimeScope()//生命周期，这里没有使用接口方式
               .PropertiesAutowired() ;//属性注入
 
-            //Controller中使用属性注入(参考内容管理)
+            //Controller中使用属性注入
             var controllerBaseType = typeof(Controller);
             builder.RegisterAssemblyTypes(typeof(Program).Assembly)
             .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
             .PropertiesAutowired();
+
             ////注入redis
             //if (Configuration.GetSection("SystemConfig:CacheProvider").Value== Define.CACHEPROVIDER_REDIS)
             //{

@@ -23,14 +23,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     public class ItemsDataController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly ItemsDataService _itemsDetailService;
-        private readonly LogService _logService;
-        public ItemsDataController(ItemsDataService itemsDetailService, LogService logService)
-        {
-            _itemsDetailService = itemsDetailService;
-            _logService = logService;
-        }
-
+        public ItemsDataService _itemsDetailService { get; set; }
+        public LogService _logService { get; set; }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(string itemId, string keyword)

@@ -23,15 +23,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     public class ModuleController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly ModuleService _moduleService;
-        private readonly ModuleButtonService _moduleButtonService;
-        private readonly LogService _logService;
-        public ModuleController(ModuleButtonService moduleButtonService, LogService logService, ModuleService moduleService)
-        {
-            _moduleButtonService = moduleButtonService;
-            _logService = logService;
-            _moduleService = moduleService;
-        }
+        public ModuleService _moduleService { get; set; }
+        public ModuleButtonService _moduleButtonService { get; set; }
+        public LogService _logService { get; set; }
 
         [HttpGet]
         [HandlerAjaxOnly]

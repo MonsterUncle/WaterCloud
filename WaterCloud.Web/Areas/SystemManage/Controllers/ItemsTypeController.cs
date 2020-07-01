@@ -23,13 +23,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     public class ItemsTypeController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly ItemsTypeService _itemsService;
-        private readonly LogService _logService;
-        public ItemsTypeController(ItemsTypeService itemsService, LogService logService)
-        {
-            _itemsService = itemsService;
-            _logService = logService;
-        }
+        public ItemsTypeService _itemsService { get; set; }
+        public LogService _logService { get; set; }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeSelectJson()

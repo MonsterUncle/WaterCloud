@@ -19,17 +19,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     [Area("SystemOrganize")]
     public class RoleAuthorizeController : ControllerBase
     {
-        private readonly RoleAuthorizeService _roleAuthorizeService;
-        private readonly ModuleService _moduleService;
-        private readonly ModuleButtonService _moduleButtonService;
-        private readonly ModuleFieldsService _moduleFieldsService;
-        public RoleAuthorizeController(RoleAuthorizeService roleAuthorizeService, ModuleButtonService moduleButtonService, ModuleService moduleService, ModuleFieldsService moduleFieldsService)
-        {
-            _roleAuthorizeService = roleAuthorizeService;
-            _moduleService = moduleService;
-            _moduleButtonService = moduleButtonService;
-            _moduleFieldsService = moduleFieldsService;
-        }
+        public RoleAuthorizeService _roleAuthorizeService { get; set; }
+        public ModuleService _moduleService { get; set; }
+        public ModuleButtonService _moduleButtonService { get; set; }
+        public ModuleFieldsService _moduleFieldsService { get; set; }
+
         [HttpGet]
         public async Task<ActionResult> GetPermissionTree(string roleId)
         {

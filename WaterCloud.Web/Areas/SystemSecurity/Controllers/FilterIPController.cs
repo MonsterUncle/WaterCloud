@@ -21,14 +21,8 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     public class FilterIPController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly FilterIPService _filterIPService;
-        private readonly LogService _logService;
-
-        public FilterIPController(FilterIPService filterIPService, LogService logService)
-        {
-            _filterIPService = filterIPService;
-            _logService = logService;
-        }
+        public FilterIPService _filterIPService { get; set; }
+        public LogService _logService { get; set; }
 
         [HttpGet]
         [HandlerAjaxOnly]

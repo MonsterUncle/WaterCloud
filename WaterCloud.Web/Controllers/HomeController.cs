@@ -13,11 +13,7 @@ namespace WaterCloud.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly SystemSetService _setService;
-        public HomeController(SystemSetService setService)
-        {
-            _setService = setService;
-        }
+        public SystemSetService _setService { get; set; }
         [HttpGet]
         [ServiceFilter(typeof(HandlerLoginAttribute))]
         public ActionResult Index()

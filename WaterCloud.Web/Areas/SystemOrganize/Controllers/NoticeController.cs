@@ -23,13 +23,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     public class NoticeController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly NoticeService _noticeService;
-        private readonly LogService _logService;
-        public NoticeController(NoticeService noticeService, LogService logService)
-        {
-            _noticeService = noticeService;
-            _logService = logService;
-        }
+        public NoticeService _noticeService { get; set; }
+        public LogService _logService { get; set; }
+
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)

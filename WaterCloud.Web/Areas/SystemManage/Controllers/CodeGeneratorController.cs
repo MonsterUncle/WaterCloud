@@ -23,9 +23,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly IDatabaseTableService _service;
-        private readonly LogService _logService;
+        public LogService _logService { get; set; }
         private readonly IDbContext _context;
-        public CodeGeneratorController(LogService logService, IDbContext context)
+        public CodeGeneratorController(IDbContext context)
         {
             string dbType = GlobalContext.SystemConfig.DBProvider;
             _context = context;
@@ -41,7 +41,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                     _service = new DatabaseTableMySqlService(context);
                     break;
             }
-            _logService = logService;
         }
         #region 视图功能
 

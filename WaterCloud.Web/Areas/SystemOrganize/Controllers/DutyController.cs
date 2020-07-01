@@ -22,13 +22,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     public class DutyController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly DutyService _dutyService;
-        private readonly LogService _logService;
-        public DutyController(DutyService dutyService, LogService logService)
-        {
-            _dutyService = dutyService;
-            _logService = logService;
-        }
+        public DutyService _dutyService { get; set; }
+        public LogService _logService { get; set; }
+
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)

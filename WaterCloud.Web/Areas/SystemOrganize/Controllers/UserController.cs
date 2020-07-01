@@ -24,17 +24,10 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     public class UserController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly UserService _userService;
-        private readonly UserLogOnService _userLogOnService;
-        private readonly ModuleService _moduleService;
-        private readonly LogService _logService;
-        public UserController(LogService logService, UserService userService, UserLogOnService userLogOnService, ModuleService moduleService)
-        {
-            _moduleService = moduleService;
-            _userService = userService;
-            _logService = logService;
-            _userLogOnService = userLogOnService;
-        }
+        public UserService _userService { get; set; }
+        public UserLogOnService _userLogOnService { get; set; }
+        public ModuleService _moduleService { get; set; }
+        public LogService _logService { get; set; }
 
         [HttpGet]
         [HandlerAjaxOnly]

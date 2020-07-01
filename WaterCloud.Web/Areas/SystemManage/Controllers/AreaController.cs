@@ -23,13 +23,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     public class AreaController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly AreaService _areaService;
-        private readonly LogService _logService;
-        public AreaController(AreaService areaService, LogService logService)
-        {
-            _areaService = areaService;
-            _logService = logService;
-        }
+        public AreaService _areaService { get; set; }
+        public LogService _logService { get; set; }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeSelectJson()

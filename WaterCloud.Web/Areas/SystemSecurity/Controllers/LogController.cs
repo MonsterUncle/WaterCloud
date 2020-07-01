@@ -18,11 +18,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     [Area("SystemSecurity")]
     public class LogController : ControllerBase
     {
-        private readonly LogService _logService;
-        public LogController(LogService logService)
-        {
-            _logService = logService;
-        }
+        public LogService _logService { get; set; }
 
         [HttpGet]
         public ActionResult RemoveLog()

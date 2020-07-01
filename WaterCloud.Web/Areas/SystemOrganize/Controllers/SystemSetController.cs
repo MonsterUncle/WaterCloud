@@ -24,13 +24,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     public class SystemSetController :  ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly LogService _logService;
-        private readonly SystemSetService _service;
-        public SystemSetController(SystemSetService service, LogService logService)
-        {
-            _logService = logService;
-            _service = service;
-        }
+        public LogService _logService { get; set; }
+        public SystemSetService _service { get; set; }
 
         #region 获取数据
         [HttpGet]

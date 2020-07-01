@@ -32,34 +32,18 @@ namespace WaterCloud.Web.Controllers
         private string cacheKey = "watercloud_quickmoduledata_";
         private string initcacheKey = "watercloud_init_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
-        private readonly QuickModuleService _quickModuleService;
-        private readonly NoticeService _noticeService;
-        private readonly UserService _userService;
-        private readonly ModuleService _moduleService;
-        private readonly LogService _logService;
-        private readonly RoleAuthorizeService _roleAuthorizeService;
-        private readonly ItemsDataService _itemsDetailService;
-        private readonly ItemsTypeService _itemsService;
-        private readonly OrganizeService _organizeService;
-        private readonly RoleService _roleService;
-        private readonly DutyService _dutyService;
-        private readonly SystemSetService _setService;
-
-        public ClientsDataController(SystemSetService setService, OrganizeService organizeService, QuickModuleService quickModuleService, NoticeService noticeService, UserService userService, ModuleService moduleService, LogService logService, RoleAuthorizeService roleAuthorizeService, ItemsDataService itemsDetailService, ItemsTypeService itemsService, RoleService roleService, DutyService dutyService)
-        {
-            _setService = setService;
-            _quickModuleService = quickModuleService;
-            _noticeService = noticeService;
-            _userService = userService;
-            _moduleService = moduleService;
-            _logService = logService;
-            _roleAuthorizeService = roleAuthorizeService;
-            _itemsDetailService = itemsDetailService;
-            _itemsService = itemsService;
-            _organizeService = organizeService;
-            _roleService = roleService;
-            _dutyService = dutyService;
-        }
+        public QuickModuleService _quickModuleService { get; set; }
+        public NoticeService _noticeService { get; set; }
+        public UserService _userService { get; set; }
+        public ModuleService _moduleService { get; set; }
+        public LogService _logService { get; set; }
+        public RoleAuthorizeService _roleAuthorizeService { get; set; }
+        public ItemsDataService _itemsDetailService { get; set; }
+        public ItemsTypeService _itemsService { get; set; }
+        public OrganizeService _organizeService { get; set; }
+        public RoleService _roleService { get; set; }
+        public DutyService _dutyService { get; set; }
+        public SystemSetService _setService { get; set; }
         /// <summary>
         /// 初始数据加载请求方法
         /// </summary>

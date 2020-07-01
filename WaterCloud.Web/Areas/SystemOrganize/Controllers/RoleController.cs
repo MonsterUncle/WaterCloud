@@ -24,13 +24,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     public class RoleController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly RoleService _roleService;
-        private readonly LogService _logService;
-        public RoleController(LogService logService,RoleService roleService)
-        {
-            _roleService = roleService;
-            _logService = logService;
-        }
+        public RoleService _roleService { get; set; }
+        public LogService _logService { get; set; }
+
         [HttpGet]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult AddForm()

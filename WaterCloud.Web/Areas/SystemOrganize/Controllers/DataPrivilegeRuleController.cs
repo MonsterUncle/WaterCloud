@@ -23,13 +23,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     public class DataPrivilegeRuleController :  ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly LogService _logService;
-        private readonly DataPrivilegeRuleService _service;
-        public DataPrivilegeRuleController(DataPrivilegeRuleService service, LogService logService)
-        {
-            _logService = logService;
-            _service = service;
-        }
+        public LogService _logService { get; set; }
+        public DataPrivilegeRuleService _service { get; set; }
 
         #region 获取数据
         [HttpGet]

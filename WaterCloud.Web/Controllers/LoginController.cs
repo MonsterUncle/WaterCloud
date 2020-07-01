@@ -23,19 +23,11 @@ namespace WaterCloud.Web.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly FilterIPService _filterIPService;
-        private readonly UserService _userService;
-        private readonly LogService _logService;
-        private readonly SystemSetService _setService;
-        private readonly IDbContext _context;
-        public LoginController(IDbContext context, FilterIPService filterIPService, UserService userService, LogService logService, SystemSetService setService)
-        {
-            _filterIPService = filterIPService;
-            _userService = userService;
-            _logService = logService;
-            _setService = setService;
-            _context = context;
-        }
+        public FilterIPService _filterIPService { get; set; }
+        public UserService _userService { get; set; }
+        public LogService _logService { get; set; }
+        public SystemSetService _setService { get; set; }
+        public IDbContext _context { get; set; }
         [HttpGet]
         public virtual async Task<ActionResult> Index()
         {

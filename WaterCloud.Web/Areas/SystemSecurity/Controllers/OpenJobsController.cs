@@ -17,14 +17,9 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     public class OpenJobsController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        private readonly OpenJobsService _jobService;
-        private readonly LogService _logService;
+        public OpenJobsService _jobService { get; set; }
+        public LogService _logService { get; set; }
 
-        public OpenJobsController(OpenJobsService jobService, LogService logService)
-        {
-            _jobService = jobService;
-            _logService = logService;
-        }
         //获取详情
         [HttpGet]
         public async Task<ActionResult> GetFormJson(string keyValue)
