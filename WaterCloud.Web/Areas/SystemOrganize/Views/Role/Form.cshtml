@@ -176,13 +176,13 @@
                         <div class="layui-form-item layui-hide">
                             <label class="layui-form-label required">角色名称</label>
                             <div class="layui-input-block">
-                                <input type="text" id="F_FullName" name="F_FullName" lay-verify="required" class="layui-input" placeholder="请填写角色名称">
+                                <input type="text" id="F_FullName" name="F_FullName" maxlength="50" lay-verify="required" class="layui-input" placeholder="请填写角色名称">
                             </div>
                         </div>
                         <div class="layui-form-item layui-hide">
                             <label class="layui-form-label required">角色编号</label>
                             <div class="layui-input-block">
-                                <input id="F_EnCode" name="F_EnCode" type="text" lay-verify="required" class="layui-input" placeholder="请输入角色编号" />
+                                <input id="F_EnCode" name="F_EnCode" type="text" maxlength="50" lay-verify="required" class="layui-input" placeholder="请输入角色编号" />
                             </div>
                         </div>
                         <div class="layui-form-item layui-hide">
@@ -195,7 +195,7 @@
                         <div class="layui-form-item layui-hide">
                             <label class="layui-form-label required">显示顺序</label>
                             <div class="layui-input-block">
-                                <input id="F_SortCode" name="F_SortCode" type="number" pattern="[0-9]*" class="layui-input" lay-verify="required" />
+                                <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item layui-hide">

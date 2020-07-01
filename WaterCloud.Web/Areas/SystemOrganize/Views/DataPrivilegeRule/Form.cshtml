@@ -218,7 +218,7 @@
                         <div class="layui-inline layui-hide">
                             <label class="layui-form-label required">排序</label>
                             <div class="layui-input-inline">
-                                <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" autocomplete="off" lay-verify="required" class="layui-input" value="0">
+                                <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline layui-hide">
