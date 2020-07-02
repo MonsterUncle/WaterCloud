@@ -215,10 +215,6 @@ namespace WaterCloud.Code
                 {
                     message="操作对象为空，请联系管理员";
                 }
-                else
-                {
-                    message = "程序执行异常，请联系管理员";
-                }
             }
             return message;
         }
