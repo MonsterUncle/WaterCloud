@@ -169,7 +169,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 }
                 else
                 {
-                    return Content(new { code = 0, msg = "操作成功", data = $@"\" + stemp + $@"\" + fileName }.ToJson());
+                    return Content(new { code = 0, msg = "操作成功", data = $@"/" + stemp + $@"/" + fileName }.ToJson());
                 }
 
             }
