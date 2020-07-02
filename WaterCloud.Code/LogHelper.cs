@@ -78,18 +78,11 @@ namespace WaterCloud.Code
             {
                 logMessage.UserName = current.UserCode + "（" + current.UserName + "）";
             }
+            var err= Error.InnerException.GetOriginalException();
+            logMessage.ExceptionInfo = err.Message;
+            logMessage.ExceptionSource = err.Source;
+            logMessage.ExceptionRemark = err.StackTrace;
             if (Error.InnerException == null)
-            {
-                logMessage.ExceptionInfo = Error.Message;
-                logMessage.ExceptionSource = Error.Source;
-                logMessage.ExceptionRemark = Error.StackTrace;
-            }
-            else
-            {
-                logMessage.ExceptionInfo = Error.InnerException.Message;
-                logMessage.ExceptionSource = Error.InnerException.Source;
-                logMessage.ExceptionRemark = Error.InnerException.StackTrace;
-            }
             logContent+= ExceptionFormat(logMessage);
             Write(logPath, logContent);
         }
@@ -190,6 +183,44 @@ namespace WaterCloud.Code
             strInfo.Append("7. 实例: " + logMessage.ExceptionRemark + "\r\n");
             strInfo.Append("-----------------------------------------------------------------------------------------------------------------------------\r\n");
             return strInfo.ToString();
+        }
+        /// <summary>
+        /// 格式化异常信息
+        /// </summary>
+        /// <param name="logMessage">对象</param>
+        /// <returns></returns>
+        public static string ExMsgFormat(string message)
+        {
+            //数据库异常
+            if (message.Contains("An exception occurred while executing DbCommand."))
+            {
+                if (message.Contains("Duplicate entry '")&& message.Contains("key"))
+                {
+                    message = "数据违反唯一约束，请检查";
+                }
+                else if (message.Contains("Data too long for column"))
+                {
+
+                    message = "数据长度过长，请检查";
+                }
+                else
+                {
+                    message = "数据操作异常，请联系管理员";
+                }
+            }
+            //其他异常
+            else
+            {
+                if (message.Contains("Object reference not set to an instance of an object."))
+                {
+                    message="操作对象为空，请联系管理员";
+                }
+                else
+                {
+                    message = "程序执行异常，请联系管理员";
+                }
+            }
+            return message;
         }
         #endregion
     }

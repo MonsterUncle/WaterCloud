@@ -89,7 +89,7 @@ namespace WaterCloud.Web
         }
         protected virtual ActionResult Error(string message)
         {
-            return Content(new AjaxResult { state = ResultType.error.ToString(), message = message }.ToJson());
+            return Content(new AjaxResult { state = ResultType.error.ToString(), message = LogHelper.ExMsgFormat(message) }.ToJson());
         }
     }
 }
