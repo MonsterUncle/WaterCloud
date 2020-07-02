@@ -119,6 +119,9 @@
         var baseConfig;
         $(function () {
             setup_draggable();
+            $("#OutputModule").bindSelect({
+                url: "/SystemManage/Module/GetSelectJson",
+            });
             if (!!keyValue) {
                 common.ajax({
                     url: "/SystemManage/CodeGenerator/GetBaseConfigJson",
@@ -147,26 +150,26 @@
                 });
             }
         });
-        //渲染多选
-        var outputModule = common.radioSelectRender({
-            el: '#OutputModule',
-            name: 'outputmodule',
-            remoteMethod: function (val, cb, show) {
-                common.ajax({
-                    url: '/SystemManage/Module/GetSelectJson',
-                    data: { keyword: val },
-                    dataType: "json",
-                    success: function (data) {
-                        cb(data);
-                    },
-                    error: function () {
-                        cb([]);
-                    }
-                });
-            }
-        });
-        //清空沙雕ie存的方法
-        outputModule.setValue([]);
+        ////渲染多选
+        //var outputModule = common.radioSelectRender({
+        //    el: '#OutputModule',
+        //    name: 'outputmodule',
+        //    remoteMethod: function (val, cb, show) {
+        //        common.ajax({
+        //            url: '/SystemManage/Module/GetSelectJson',
+        //            data: { keyword: val },
+        //            dataType: "json",
+        //            success: function (data) {
+        //                cb(data);
+        //            },
+        //            error: function () {
+        //                cb([]);
+        //            }
+        //        });
+        //    }
+        //});
+        ////清空沙雕ie存的方法
+        //outputModule.setValue([]);
         //页面选择
         var outputOptions = common.multipleSelectRender({
             el: '#OutputOptions',
@@ -345,10 +348,6 @@
             }
         });
         form.on('submit(formStep1)', function (data) {
-            if (outputModule.getValue('value').length == 0) {
-                outputModule.warning();
-                return false;
-            }
             baseConfig.FileConfig.ClassPrefix = data.field.ClassPrefix;
             baseConfig.FileConfig.EntityName = data.field.ClassPrefix + "Entity";
             baseConfig.FileConfig.IRepositoryName = "I" + data.field.ClassPrefix + "Repository";
@@ -358,7 +357,7 @@
             baseConfig.FileConfig.ClassDescription = data.field.ClassDescription;
             baseConfig.FileConfig.CreateUserName = data.field.CreateUserName;
             baseConfig.FileConfig.CreateDate = data.field.CreateDate;
-            baseConfig.OutputConfig.OutputModule = outputModule.getValue()[0].id;
+            baseConfig.OutputConfig.OutputModule = $("#OutputModule option:selected").text();
             step.next('#stepForm');
             return false;
         });
@@ -640,8 +639,9 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label required">输出模块名</label>
                             <div class="layui-input-block">
-                                <div id="OutputModule" name="OutputModule" class="xm-select-demo">
-                                </div>
+                                <select id="OutputModule" name="OutputModule" lay-filter="OutputModule" lay-verify="required" lay-search>
+                                    <option value="">请选择</option>
+                                </select>
                             </div>
                         </div>
                         <div class="layui-form-item layui-hide">

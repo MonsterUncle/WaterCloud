@@ -57,19 +57,20 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetSelectJson(string keyword)
+        public async Task<ActionResult> GetSelectJson()
         {
-            var data =(await _moduleService.GetList()).Where(a => a.F_Layers > 1).ToList();
-            if (!string.IsNullOrEmpty(keyword))
+            var data = await _moduleService.GetList();
+            data = data.Where(a => a.F_Target == "expand" && a.F_IsExpand == true).ToList();
+            var treeList = new List<TreeSelectModel>();
+            foreach (ModuleEntity item in data)
             {
-                data = data.Where(a => a.F_FullName.Contains(keyword)).ToList();
+                TreeSelectModel treeModel = new TreeSelectModel();
+                treeModel.id = item.F_Id;
+                treeModel.text = item.F_EnCode;
+                treeModel.parentId = item.F_ParentId;
+                treeList.Add(treeModel);
             }
-            List<object> list = new List<object>();
-            foreach (var item in data)
-            {
-                list.Add(new { id = item.F_EnCode, text = item.F_EnCode });
-            }
-            return Content(list.ToJson());
+            return Content(treeList.TreeSelectJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
