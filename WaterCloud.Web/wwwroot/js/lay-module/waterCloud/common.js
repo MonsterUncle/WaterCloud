@@ -68,7 +68,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
             //字段权限
-            options = obj.tableAuthorizeFields(options);
+            options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
             return table.render(options);
         },
         //tabletree渲染封装里面有字段权限
@@ -112,7 +112,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
             //字段权限
-            options = obj.tableAuthorizeFields(options);
+            options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
             return treeTable.render(options);
         },
         //table刷新
@@ -818,33 +818,34 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             }
         },
         //表格权限字段(过滤cols)
-        tableAuthorizeFields: function (options) {
+        tableAuthorizeFields: function (cols, sqlkey) {
+            var keys = !!sqlkey ? sqlkey : 'F_Id';
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             if (!!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == true) {
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
                 var array = [];
-                $.each(options.cols[0], function (i) {
+                $.each(cols[0], function (i) {
                     //添加非常规列
-                    if (!!options.cols[0][i].type && options.cols[0][i].type != 'normal') {
-                        array.push(options.cols[0][i]);
-                    } else if (!options.cols[0][i].field && options.cols[0][i].title == "操作") {
-                        array.push(options.cols[0][i]);
+                    if (!!cols[0][i].type && cols[0][i].type != 'normal') {
+                        array.push(cols[0][i]);
+                    } else if (!cols[0][i].field && cols[0][i].title == "操作") {
+                        array.push(cols[0][i]);
                     }
-                    if (options.cols[0][i].field == options.sqlkey) {
-                        array.push(options.cols[0][i]);
+                    if (cols[0][i].field == keys) {
+                        array.push(cols[0][i]);
                     }
                     if (!!dataJson) {
                         for (var j = 0; j < dataJson.length; j++) {
-                            if (options.cols[0][i].field == dataJson[j].F_EnCode) {
-                                array.push(options.cols[0][i]);
+                            if (cols[0][i].field == dataJson[j].F_EnCode) {
+                                array.push(cols[0][i]);
                                 break;
                             }
                         }
                     }
                 });
-                options.cols[0] = array;
+                cols[0] = array;
             };
-            return options;
+            return cols;
         },
     }
     exports("common", obj);
