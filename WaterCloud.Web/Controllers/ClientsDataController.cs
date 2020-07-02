@@ -215,7 +215,7 @@ namespace WaterCloud.Web.Controllers
             }
             catch (Exception)
             {
-                return null;
+                return Content("");
             }
         }
         /// <summary>
@@ -228,7 +228,7 @@ namespace WaterCloud.Web.Controllers
             var currentuser = OperatorProvider.Provider.GetCurrent();
             if (currentuser==null)
             {
-                return null;
+                return Content("");
             }
             int usercout =(await _userService.GetUserList("")).Count();
             var temp =await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + currentuser.UserId);
