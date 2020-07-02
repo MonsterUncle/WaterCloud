@@ -100,6 +100,7 @@ namespace WaterCloud.Web
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
         }
+        //AutoFac注入
         public void ConfigureContainer(ContainerBuilder builder)
         {
             var assemblys = Assembly.Load("WaterCloud.Service");//Service是继承接口的实现方法类库名称
