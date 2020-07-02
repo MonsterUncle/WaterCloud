@@ -145,10 +145,10 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 {
                     throw new Exception("请上传图片");
                 }
-                string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"\icon\";
+                string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/icon/";
                 if (!string.IsNullOrEmpty(stemp))
                 {
-                    filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"\icon\" + stemp + $@"\";
+                    filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/icon/" + stemp + $@"/";
                 }
                 if (!Directory.Exists(filePath))
                 {
