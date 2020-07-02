@@ -4,7 +4,7 @@
  * version:2.0
  * description:layuimini 主体框架扩展
  */
-layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'miniTab','laytpl'], function (exports) {
+layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSelect', 'miniTab','laytpl'], function (exports) {
     var $ = layui.jquery,
         form = layui.form,
         miniTab = layui.miniTab,
