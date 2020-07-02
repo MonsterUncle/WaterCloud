@@ -4,7 +4,7 @@
  * version:2.0
  * description:layuimini 主体框架扩展
  */
-layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'miniTab', 'treeTable','laytpl'], function (exports) {
+layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'miniTab','laytpl'], function (exports) {
     var $ = layui.jquery,
         form = layui.form,
         miniTab = layui.miniTab,
@@ -65,41 +65,10 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                     doneCallback(res, curr, count);
                 }
             };
-            if (!!options.url) {
-                //ie缓存问题
-                if (options.url.indexOf("?") >= 0) {
-                    options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-                else {
-                    options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-            }
-            var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
-            if (!!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == true) {
-                var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
-                var array = [];
-                $.each(options.cols[0], function (i) {
-                    //添加非常规列
-                    if (!!options.cols[0][i].type && options.cols[0][i].type != 'normal') {
-                        array.push(options.cols[0][i]);
-                    }
-                    else if (!options.cols[0][i].field && options.cols[0][i].title == "操作") {
-                        array.push(options.cols[0][i]);
-                    }
-                    if (options.cols[0][i].field == options.sqlkey) {
-                        array.push(options.cols[0][i]);
-                    }
-                    if (!!dataJson) {
-                        for (var j = 0; j < dataJson.length; j++) {
-                            if (options.cols[0][i].field == dataJson[j].F_EnCode) {
-                                array.push(options.cols[0][i]);
-                                break;
-                            }
-                        }
-                    }
-                });
-                options.cols[0] = array;
-            };
+            //ie缓存问题
+            options.url = obj.urlAddTime(options.url);
+            //字段权限
+            options = obj.tableAuthorizeFields(options);
             return table.render(options);
         },
         //tabletree渲染封装里面有字段权限
@@ -141,39 +110,9 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                 }
             };
             //ie缓存问题
-            if (!!options.url) {
-                if (options.url.indexOf("?") >= 0) {
-                    options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-                else {
-                    options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-            }
-            var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
-            if (!!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == true) {
-                var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
-                var array = [];
-                $.each(options.cols[0], function (i) {
-                    //添加非常规列
-                    if (!!options.cols[0][i].type && options.cols[0][i].type != 'normal') {
-                        array.push(options.cols[0][i]);
-                    } else if (!options.cols[0][i].field && options.cols[0][i].title == "操作") {
-                        array.push(options.cols[0][i]);
-                    }
-                    if (options.cols[0][i].field == options.sqlkey) {
-                        array.push(options.cols[0][i]);
-                    }
-                    if (!!dataJson) {
-                        for (var j = 0; j < dataJson.length; j++) {
-                            if (options.cols[0][i].field == dataJson[j].F_EnCode) {
-                                array.push(options.cols[0][i]);
-                                break;
-                            }
-                        }
-                    }
-                });
-                options.cols[0] = array;
-            };
+            options.url = obj.urlAddTime(options.url);
+            //字段权限
+            options = obj.tableAuthorizeFields(options);
             return treeTable.render(options);
         },
         //table刷新
@@ -321,14 +260,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                 }
             };
             //ie缓存问题
-            if (!!options.url) {
-                if (options.url.indexOf("?") >= 0) {
-                    options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-                else {
-                    options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-            }
+            options.url = obj.urlAddTime(options.url);
             var _width = top.$(window).width() > parseInt(options.width.replace('px', '')) ? options.width : top.$(window).width() - 20 + 'px';
             var _height = top.$(window).height() > parseInt(options.height.replace('px', '')) ? options.height : top.$(window).height() - 20 + 'px';
             var index = layer.open({
@@ -373,15 +305,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                 close: true
             };
             var options = $.extend(defaults, options);
-            //ie缓存
-            if (!!options.url) {
-                if (options.url.indexOf("?") >= 0) {
-                    options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-                else {
-                    options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-            }
+            //ie缓存问题
+            options.url = obj.urlAddTime(options.url);
             window.setTimeout(function () {
                 if ($('[name=__RequestVerificationToken]').length > 0) {
                     options.param["__RequestVerificationToken"] = $('[name=__RequestVerificationToken]').val();
@@ -466,15 +391,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                 close: false
             };
             var options = $.extend(defaults, options);
-            //ie缓存
-            if (!!options.url) {
-                if (options.url.indexOf("?") >= 0) {
-                    options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-                else {
-                    options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-            }
+            //ie缓存问题
+            options.url = obj.urlAddTime(options.url);
             if ($('[name=__RequestVerificationToken]').length > 0) {
                 options.param["__RequestVerificationToken"] = $('[name=__RequestVerificationToken]').val();
             }
@@ -525,15 +443,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                 close: false
             };
             var options = $.extend(defaults, options);
-            //ie缓存
-            if (!!options.url) {
-                if (options.url.indexOf("?") >= 0) {
-                    options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-                else {
-                    options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-            }
+            //ie缓存问题
+            options.url = obj.urlAddTime(options.url);
             if ($('[name=__RequestVerificationToken]').length > 0) {
                 options.param["__RequestVerificationToken"] = $('[name=__RequestVerificationToken]').val();
             }
@@ -738,7 +649,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
             $element.find("[authorize=no]").parents('button').remove();
             $element.find('[authorize=no]').remove();
         },
-        //权限字段
+        //表单权限字段
         authorizeFields: function (filter) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             var element = $('div[lay-filter=' + filter + ']');
@@ -861,14 +772,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
             };
             var options = $.extend(defaults, options);
             //ie缓存问题
-            if (!!options.url) {
-                if (options.url.indexOf("?") >= 0) {
-                    options.url = options.url + '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-                else {
-                    options.url = options.url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
-                }
-            }
+            options.url = obj.urlAddTime(options.url);
             return $.ajax(options);
         },
         //打开新Tab页签
@@ -897,6 +801,50 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug', 'xmSelect', 'mini
                     break;
                 }
             }
+        },
+        //url参数注入(//ie缓存问题)
+        urlAddTime: function (url) {
+            if (!!url) {
+                if (url.indexOf("?") >= 0) {
+                    url = url+ '&v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+                }
+                else {
+                    url = url + '?v=' + new Date().Format("yyyy-MM-dd hh:mm:ss");
+                }
+                return url;
+            }
+            else {
+                return null;
+            }
+        },
+        //表格权限字段(过滤cols)
+        tableAuthorizeFields: function (options) {
+            var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            if (!!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == true) {
+                var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
+                var array = [];
+                $.each(options.cols[0], function (i) {
+                    //添加非常规列
+                    if (!!options.cols[0][i].type && options.cols[0][i].type != 'normal') {
+                        array.push(options.cols[0][i]);
+                    } else if (!options.cols[0][i].field && options.cols[0][i].title == "操作") {
+                        array.push(options.cols[0][i]);
+                    }
+                    if (options.cols[0][i].field == options.sqlkey) {
+                        array.push(options.cols[0][i]);
+                    }
+                    if (!!dataJson) {
+                        for (var j = 0; j < dataJson.length; j++) {
+                            if (options.cols[0][i].field == dataJson[j].F_EnCode) {
+                                array.push(options.cols[0][i]);
+                                break;
+                            }
+                        }
+                    }
+                });
+                options.cols[0] = array;
+            };
+            return options;
         },
     }
     exports("common", obj);
