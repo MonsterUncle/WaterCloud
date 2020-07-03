@@ -1,8 +1,8 @@
 ﻿/**
  * date:2020/02/27
- * author:Mr.Chung
- * version:2.0
- * description:layuimini 主体框架扩展
+ * author:Mr.Q
+ * version:1.6
+ * description:watercloud 主体框架扩展
  */
 layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSelect', 'miniTab'], function (exports) {
     var $ = layui.jquery,
