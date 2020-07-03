@@ -10,6 +10,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
         miniTab = layui.miniTab,
         layer = layui.layer,
         treeTable = layui.treeTable,
+        //tablePlug不可与其他table插件共用
         tablePlug = layui.tablePlug,
         xmSelect = layui.xmSelect,
         table = layui.table;
@@ -37,7 +38,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                     , first: false //不显示首页
                     , last: false //不显示尾页
                 },
-                //smartReloadModel: true, // 是否开启智能reload的模式 tablePlug
+                smartReloadModel: true, // 是否开启智能reload的模式 tablePlug
                 request: {
                     pageName: 'page' //页码的参数名称，默认：page
                     , limitName: 'rows' //每页数据量的参数名，默认：limit
