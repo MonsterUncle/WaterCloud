@@ -30,5 +30,5 @@ layui.config({
     tablePlug: 'tablePlug/tablePlug', //  tabl扩展
     dtree: 'dtree/dtree', //  树形扩展
     xmSelect:'xm-select/xm-select' //select多选扩展
-    //optimizeSelectOption: 'tablePlug/optimizeSelectOption/optimizeSelectOption', //  tabl扩展
+    //optimizeSelectOption: 'tablePlug/optimizeSelectOption/optimizeSelectOption', //  下拉框遮挡
 });

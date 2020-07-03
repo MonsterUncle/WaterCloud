@@ -4,12 +4,11 @@
  * version:2.0
  * description:layuimini 主体框架扩展
  */
-layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSelect', 'miniTab','laytpl'], function (exports) {
+layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSelect', 'miniTab'], function (exports) {
     var $ = layui.jquery,
         form = layui.form,
         miniTab = layui.miniTab,
         layer = layui.layer,
-        laytpl = layui.laytpl,
         treeTable = layui.treeTable,
         tablePlug = layui.tablePlug,
         xmSelect = layui.xmSelect,
@@ -37,7 +36,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                     , first: false //不显示首页
                     , last: false //不显示尾页
                 },
-                smartReloadModel: true, // 是否开启智能reload的模式
+                //smartReloadModel: true, // 是否开启智能reload的模式 tablePlug
                 request: {
                     pageName: 'page' //页码的参数名称，默认：page
                     , limitName: 'rows' //每页数据量的参数名，默认：limit
@@ -58,6 +57,10 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             };
             var doneCallback = options.done;
             var options = $.extend(defaults, options);
+            //ie缓存问题
+            options.url = obj.urlAddTime(options.url);
+            //字段权限
+            options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
             options.done = function (res, curr, count) {
                 //关闭加载
                 layer.closeAll('loading');
@@ -65,10 +68,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                     doneCallback(res, curr, count);
                 }
             };
-            //ie缓存问题
-            options.url = obj.urlAddTime(options.url);
-            //字段权限
-            options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
             return table.render(options);
         },
         //tabletree渲染封装里面有字段权限
@@ -102,6 +101,10 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             };
             var doneCallback = options.done;
             var options = $.extend(defaults, options);
+            //ie缓存问题
+            options.url = obj.urlAddTime(options.url);
+            //字段权限
+            options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
             options.done = function (res, curr, count) {
                 //关闭加载
                 layer.closeAll('loading');
@@ -109,10 +112,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                     doneCallback(res, curr, count);
                 }
             };
-            //ie缓存问题
-            options.url = obj.urlAddTime(options.url);
-            //字段权限
-            options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
             return treeTable.render(options);
         },
         //table刷新
