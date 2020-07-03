@@ -88,8 +88,13 @@
         clear:none;
     }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 550px) {
     .layui-laypage-default > .layui-laypage-skip {
+        display: none;
+    }
+}
+@media screen and (max-width: 380px) {
+    .layui-laypage-default > .layui-laypage-limits {
         display: none;
     }
 }
@@ -124,4 +129,18 @@
     margin-top: -20px;
     top: auto;
     bottom: 10px;
+}
+/*表格单元格高度自适应*/
+.layui-table-cell {
+    height: auto !important;
+    white-space: normal;
+    word-break: break-all;
+}
+.ew-tree-table-cell.single-line > .ew-tree-table-cell-content {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: auto !important;
+    white-space: normal;
+    word-break: break-all;
 }

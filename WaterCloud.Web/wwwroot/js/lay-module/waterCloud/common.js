@@ -26,12 +26,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                 method: 'get',//请求方法
                 cellMinWidth: 100,//最小宽度
                 limit: 10,//每页数据 默认
+                limits: [10, 20, 30, 40, 50],
                 height: 'full-120',
                 loading: false,
                 sqlkey: 'F_Id',//数据库主键
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                    layout: ['skip', 'prev', 'page', 'next', 'count'] //自定义分页布局
-                    //,curr: 2 //设定初始在第 5 页
+                    layout: ['skip', 'prev', 'page', 'next', 'limit', 'count'] //自定义分页布局
+                    ,curr: 1 //设定初始在第 1 页
                     , groups: 3 //只显示 1 个连续页码
                     , first: false //不显示首页
                     , last: false //不显示尾页
