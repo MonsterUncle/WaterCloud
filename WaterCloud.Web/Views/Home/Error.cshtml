@@ -26,11 +26,10 @@
         </div>
     </div>
     <div class="error-page">
-        <img class="error-page-img" src="../images/ic_404.png">
+        <img id="errorimg" class="error-page-img">
         <div class="error-page-info">
-            <h1>Error</h1>
+            <h1 id="errormsg"></h1>
             <div class="error-page-info-desc" id="msg">
-            页面不存在
             </div>
             <div>
                 <button class="layui-btn listen-btn" onclick="returnIndex()">返回首页</button>
@@ -45,15 +44,37 @@
         layui.use(['layer'], function () {
             var $ = layui.$;
             var msg = $.request("msg");
-            if (!!msg) {
-                try {
-                    document.title = decodeURI(escape(msg));
-                    $('#msg').html(decodeURI(escape(msg)));
-                } catch (e) {
-                    document.title = decodeURI(msg);
-                    $('#msg').html(decodeURI(msg));
-                }
-
+            switch (msg) {
+                case "401":
+                    $('#msg').html("帐号已在其它地方登录！");
+                    $('#errormsg').html(msg);
+                    $('#errorimg').attr('src', "../images/403.svg");
+                    break;
+                case "403":
+                    $('#msg').html("权限不足！");
+                    $('#errormsg').html(msg);
+                    $('#errorimg').attr('src', "../images/403.svg");
+                    break;
+                case "404":
+                    $('#msg').html("页面不存在！");
+                    $('#errormsg').html(msg);
+                    $('#errorimg').attr('src', "../images/404.svg");
+                    break;
+                case "408":
+                    $('#msg').html("登录已超时！");
+                    $('#errormsg').html(msg);
+                    $('#errorimg').attr('src', "../images/404.svg");
+                    break;
+                case "500":
+                    $('#msg').html("系统错误！");
+                    $('#errormsg').html(msg);
+                    $('#errorimg').attr('src', "../images/500.svg");
+                    break;
+                default:
+                    $('#msg').html("请求出错！");
+                    $('#errormsg').html("400");
+                    $('#errorimg').attr('src', "../images/404.svg");
+                    break;
             }
             return false;
         })

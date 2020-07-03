@@ -170,7 +170,7 @@ namespace WaterCloud.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error?msg=404");
             }
             //文件地址Resource
             //静态资源wwwroot

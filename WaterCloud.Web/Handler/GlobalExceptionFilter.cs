@@ -31,7 +31,8 @@ namespace WaterCloud.Web
             else
             {
                 string errorMessage = context.Exception.GetOriginalException().Message;
-                context.HttpContext.Response.WriteAsync("<script>top.location.href ='" + context.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode(errorMessage) + "';if(document.all) window.event.returnValue = false;</script>");
+                //context.HttpContext.Response.WriteAsync("<script>top.location.href ='" + context.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode(errorMessage) + "';if(document.all) window.event.returnValue = false;</script>");
+                context.HttpContext.Response.WriteAsync("<script>top.location.href ='" + context.HttpContext.Request.PathBase + "/Home/Error?msg=500" + "';if(document.all) window.event.returnValue = false;</script>");
                 //context.Result = new RedirectResult(context.HttpContext.Request.PathBase + "/Home/Error?msg=" + HttpUtility.UrlEncode(errorMessage));
                 context.ExceptionHandled = true;
             }
