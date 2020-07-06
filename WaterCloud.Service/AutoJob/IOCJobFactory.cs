@@ -6,6 +6,9 @@ using System.Text;
 
 namespace WaterCloud.Service.AutoJob
 {
+    /// <summary>
+    /// 依赖注入必须，代替原本的SimpleJobFactory
+    /// </summary>
     public class IOCJobFactory : IJobFactory
     {
         private readonly IServiceProvider _serviceProvider;
