@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Chloe;
 using Quartz;
+using Quartz.Spi;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.DataBase.Extensions;
@@ -14,22 +15,24 @@ namespace WaterCloud.Service.AutoJob
 {
     public class JobCenter
     {
-        private IDbContext context;
-        private OpenJobsService service;
-        public JobCenter() 
+        private OpenJobsService _service;
+        private IScheduler _scheduler;
+
+        public JobCenter(OpenJobsService service, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory) 
         {
-            context = DBContexHelper.Contex();
-            service = new OpenJobsService(context);
+            _service = service;
+            _scheduler = schedulerFactory.GetScheduler().Result;
+            _scheduler.JobFactory = iocJobfactory;
         }
         public void Start()
         {
             Task.Run(async () =>
             {
-                List<OpenJobEntity> obj = await service.GetList(null);
+                List<OpenJobEntity> obj = await _service.GetList(null);
                 obj = obj.Where(a => a.F_EnabledMark == true).ToList();
                 if (obj.Count > 0)
                 {
-                    AddScheduleJob(obj);
+                    await AddScheduleJob(obj);
                 }
                 //if (!GlobalContext.SystemConfig.Debug)
                 //{
@@ -47,7 +50,7 @@ namespace WaterCloud.Service.AutoJob
         /// 添加任务计划
         /// </summary>
         /// <returns></returns>
-        private void AddScheduleJob(List<OpenJobEntity> entityList)
+        private async Task AddScheduleJob(List<OpenJobEntity> entityList)
         {
             try
             {
@@ -57,8 +60,7 @@ namespace WaterCloud.Service.AutoJob
                     entity.F_EndRunTime = DateTime.Now.AddSeconds(-1);
                     DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(entity.F_StarRunTime, 1);
                     DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(DateTime.MaxValue.AddDays(-1), 1);
-                    service.SubmitForm(entity, entity.F_Id);
-                    var scheduler = JobScheduler.GetScheduler();
+                    await _service.SubmitForm(entity, entity.F_Id);
                     IJobDetail job = JobBuilder.Create<JobExecute>().WithIdentity(entity.F_JobName, entity.F_JobGroup).Build();
                     job.JobDataMap.Add("F_Id", entity.F_Id);
 
@@ -69,8 +71,8 @@ namespace WaterCloud.Service.AutoJob
                                                  .WithCronSchedule(entity.F_CronExpress)
                                                  .Build();
 
-                    scheduler.ScheduleJob(job, trigger);
-                    scheduler.Start();
+                    await _scheduler.ScheduleJob(job, trigger);
+                    await _scheduler.Start();
                 }
             }
             catch (Exception ex)
@@ -85,11 +87,11 @@ namespace WaterCloud.Service.AutoJob
         /// 清除任务计划
         /// </summary>
         /// <returns></returns>
-        public void ClearScheduleJob()
+        public async Task ClearScheduleJob()
         {
             try
             {
-                JobScheduler.GetScheduler().Clear();
+              await _scheduler.Clear();
             }
             catch (Exception ex)
             {

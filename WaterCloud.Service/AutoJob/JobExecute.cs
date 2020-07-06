@@ -7,6 +7,7 @@ using Chloe;
 using NPOI.HSSF.Record.Chart;
 using Quartz;
 using Quartz.Impl.Triggers;
+using Quartz.Spi;
 using Serenity;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
@@ -19,10 +20,13 @@ namespace WaterCloud.Service.AutoJob
     {
         private IDbContext _context;
         private OpenJobsService autoJobService;
-        public JobExecute()
+        private IScheduler _scheduler;
+        public JobExecute(IDbContext context, OpenJobsService service, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory)
         {
-            _context = DBContexHelper.Contex();
-            autoJobService = new OpenJobsService(_context);
+            _context = context;
+            autoJobService = service;
+            _scheduler = schedulerFactory.GetScheduler().Result;
+            _scheduler.JobFactory = iocJobfactory;
         }
 
         public Task Execute(IJobExecutionContext context)
@@ -49,19 +53,9 @@ namespace WaterCloud.Service.AutoJob
                                 {
                                     // 更新任务周期
                                     trigger.CronExpressionString = dbJobEntity.F_CronExpress;
-                                    await JobScheduler.GetScheduler().RescheduleJob(trigger.Key, trigger);
+                                    await _scheduler.RescheduleJob(trigger.Key, trigger);
                                 }
-
                                 #region 执行任务
-                                //switch (context.JobDetail.Key.Name)
-                                //{
-                                //    case "数据库备份":
-                                //        obj = await new DatabasesBackupJob().Start();
-                                //        break;
-                                //    case "服务器状态更新":
-                                //        obj = await new SaveServerStateJob().Start();
-                                //        break;
-                                //}
                                 //反射执行就行
                                 var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
                                 var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
@@ -70,7 +64,7 @@ namespace WaterCloud.Service.AutoJob
                                     .Contains(typeof(IJobTask)))).ToArray();
                                 string filename = dbJobEntity.F_FileName;
                                 var implementType = types.Where(x => x.IsClass&&x.FullName== filename).FirstOrDefault();
-                                var obj = System.Activator.CreateInstance(implementType, _context);       // 创建实例
+                                var obj = System.Activator.CreateInstance(implementType, _context);       // 创建实例(带参数)
                                 MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
                                 object[] parameters = null;
                                 method.Invoke(obj, parameters);                           // 调用方法，参数为空

@@ -21,6 +21,9 @@ using System.Linq;
 using WaterCloud.Service;
 using Autofac;
 using Microsoft.AspNetCore.Mvc;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace WaterCloud.Web
 {
@@ -68,6 +71,14 @@ namespace WaterCloud.Web
             {
                 return DBContexHelper.Contex();
             });
+            #region 注入 Quartz调度类
+            services.AddSingleton<JobCenter>();
+            services.AddSingleton<JobExecute>();
+            //注册ISchedulerFactory的实例。
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            services.AddSingleton<IJobFactory, IOCJobFactory>();
+            #endregion
+
             //百度UEditor
             services.AddUEditorService();
             ////注册html解析
@@ -108,7 +119,6 @@ namespace WaterCloud.Web
             builder.RegisterAssemblyTypes(assemblys).Where(m => baseType.IsAssignableFrom(m) && m != baseType)
               .InstancePerLifetimeScope()//生命周期，这里没有使用接口方式
               .PropertiesAutowired() ;//属性注入
-
             //Controller中使用属性注入
             var controllerBaseType = typeof(Controller);
             builder.RegisterAssemblyTypes(typeof(Program).Assembly)
@@ -190,7 +200,9 @@ namespace WaterCloud.Web
                 endpoints.MapControllerRoute("default", "{controller=Login}/{action=Index}/{id?}");
             });
             GlobalContext.ServiceProvider = app.ApplicationServices;
-            new JobCenter().Start(); // 使用Quartz定时任务
+            //获取前面注入的Quartz调度类
+            var quartz = app.ApplicationServices.GetRequiredService<JobCenter>();
+            quartz.Start();
         }
     }
 }
