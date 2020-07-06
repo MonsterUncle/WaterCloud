@@ -9,6 +9,7 @@
             common = layui.common;
         //权限字段
         common.authorizeFields('adminform');
+        wcLoading.close();
         //监听提交
         var lock = false;
         form.on('submit(clear)', function (data) {

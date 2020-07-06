@@ -15,7 +15,6 @@
             }
             //权限字段
             common.authorizeFields('adminform');
-            var loading = layer.load(0, { shade: false });
             $(function () {
                 initControl();
                 if (!!keyValue) {
@@ -41,6 +40,7 @@
                 }
                 form.render();
             });
+            wcLoading.close();
             common.rendertable({
                 elem: '#currentTableId',
                 data: [],

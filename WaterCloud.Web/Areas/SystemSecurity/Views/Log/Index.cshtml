@@ -61,7 +61,7 @@
                 layer = layui.layer,
                 common = layui.common;
             //加载数据
-            var loading = layer.load(0, { shade: false });
+            wcLoading.close();
             //权限控制(js是值传递)
             toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
             common.rendertable({

@@ -168,6 +168,7 @@
         loadInfo();
         loadChart();
     })
+    wcLoading.close();
     layui.use(['layer', 'miniTab', 'common'], function () {
         common = layui.common,
             common.iframeInterval(function () {

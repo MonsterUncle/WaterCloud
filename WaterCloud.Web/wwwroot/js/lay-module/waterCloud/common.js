@@ -18,7 +18,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
     var obj = {
         //table渲染封装里面有字段权限
         rendertable: function (options) {
-            var loading = layer.load(0, { shade: false });
             var defaults = {
                 elem: '#currentTableId',//主键
                 toolbar: '#toolbarDemo',//工具栏
@@ -50,11 +49,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                         "count": res.count, //解析数据长度
                         "data": res.data //解析数据列表
                     };
-                },
-                done: function (res, curr, count) { // 使用自定义参数hideAlways隐藏
-                    //$(".layui-table-box").find("[data-field='F_Id']").css("display", "none");
-                    //关闭加载
-                    layer.closeAll('loading');
                 }
             };
             var doneCallback = options.done;
@@ -65,7 +59,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
             options.done = function (res, curr, count) {
                 //关闭加载
-                layer.closeAll('loading');
+                //layer.closeAll('loading');
                 if (doneCallback) {
                     doneCallback(res, curr, count);
                 }
@@ -75,7 +69,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
         //tabletree渲染封装里面有字段权限
         rendertreetable: function (options) {
             //样式不协调，先不加
-            var loading = layer.load(0, { shade: false });
             var defaults = {
                 elem: '#currentTableId',//主键
                 toolbar: '#toolbarDemo',//工具栏
@@ -109,7 +102,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
             options.done = function (res, curr, count) {
                 //关闭加载
-                layer.closeAll('loading');
+                //layer.closeAll('loading');
                 if (doneCallback) {
                     doneCallback(res, curr, count);
                 }

@@ -39,6 +39,7 @@
             }
             form.render();
         });
+        wcLoading.close();
         function initControl() {
             $("#fields").bindSelect({
                 url: "/SystemManage/ModuleFields/GetSelectJson?moduleId=" + module,

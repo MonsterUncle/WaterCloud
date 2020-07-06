@@ -11,10 +11,11 @@
             treeTable = layui.treeTable,
             common = layui.common;
         //加载数据
-        var loading = layer.load(0, { shade: false });
+        //var loading = layer.load(0, { shade: false });
         var queryJson = '';
         //权限控制(js是值传递)
         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
+        wcLoading.close();
         var rendertree = common.rendertreetable({
             elem: '#currentTableId',
             sqlkey: 'F_Id',//数据库主键

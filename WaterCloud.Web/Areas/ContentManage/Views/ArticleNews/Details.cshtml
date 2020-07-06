@@ -51,6 +51,7 @@
         var keyValue = $.request("keyValue");
         //权限字段
         common.authorizeFields('stepForm');
+        wcLoading.close();
         //此处需修改
         //类型为时间时
         //laydate.render({

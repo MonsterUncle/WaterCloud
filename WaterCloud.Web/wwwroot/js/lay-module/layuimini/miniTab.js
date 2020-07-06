@@ -11,6 +11,7 @@ layui.define(["element", "layer", "jquery"], function (exports) {
 
 
     var miniTab = {
+        //loading改成 wcloading方法
 
         /**
          * 初始化tab
@@ -91,7 +92,7 @@ layui.define(["element", "layer", "jquery"], function (exports) {
         openNewTabByIframe: function (options) {
             options.href = options.href || null;
             options.title = options.title || null;
-            var loading = parent.layer.load(0, { shade: false, time: 2 * 1000 });
+            //var loading = parent.layer.load(0, { shade: false, time: 2 * 1000 });
             if (options.href === null || options.href === undefined) options.href = new Date().getTime();
             var checkTab = miniTab.check(options.href.split("?")[0], true);
             if (!checkTab) {
@@ -103,7 +104,7 @@ layui.define(["element", "layer", "jquery"], function (exports) {
                 });
             }
             parent.layui.element.tabChange('layuiminiTab', options.href.split("?")[0]);
-            parent.layer.close(loading);
+            //parent.layer.close(loading);
         },
 
         /**
@@ -205,7 +206,7 @@ layui.define(["element", "layer", "jquery"], function (exports) {
              * 打开新窗口
              */
             $('body').on('click', '[layuimini-href]', function () {
-                var loading = layer.load(0, { shade: false, time: 2 * 1000 });
+                //var loading = layer.load(0, { shade: false, time: 2 * 1000 });
                 var tabId = $(this).attr('layuimini-href'),
                     href = $(this).attr('layuimini-href'),
                     title = $(this).text(),
@@ -219,12 +220,12 @@ layui.define(["element", "layer", "jquery"], function (exports) {
                 }
 
                 if (target === '_blank') {
-                    layer.close(loading);
+                    //layer.close(loading);
                     window.open(href, "_blank");
                     return false;
                 }
                 if (target === '_open') {
-                    layer.close(loading);
+                    //layer.close(loading);
                     layer.open({
                         type: 2,
                         title: title,
@@ -251,20 +252,20 @@ layui.define(["element", "layer", "jquery"], function (exports) {
                     });
                 }
                 element.tabChange('layuiminiTab', tabId);
-                layer.close(loading);
+                //layer.close(loading);
             });
 
             /**
              * 在iframe子菜单上打开新窗口
              */
             $('body').on('click', '[layuimini-content-href]', function () {
-                var loading = parent.layer.load(0, { shade: false, time: 2 * 1000 });
+                //var loading = parent.layer.load(0, { shade: false, time: 2 * 1000 });
                 var tabId = $(this).attr('layuimini-content-href'),
                     href = $(this).attr('layuimini-content-href'),
                     title = $(this).attr('data-title'),
                     target = $(this).attr('target');
                 if (target === '_blank') {
-                    parent.layer.close(loading);
+                    //parent.layer.close(loading);
                     window.open(href, "_blank");
                     return false;
                 }
@@ -280,7 +281,7 @@ layui.define(["element", "layer", "jquery"], function (exports) {
                     });
                 }
                 parent.layui.element.tabChange('layuiminiTab', tabId);
-                parent.layer.close(loading);
+                //parent.layer.close(loading);
             });
 
             /**

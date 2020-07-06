@@ -11,7 +11,7 @@
             treeTable = layui.treeTable,
             common = layui.common;
         //加载数据
-        var loading = layer.load(0, { shade: false });
+        wcLoading.close();
         var value = $.request("value");
         var name = $.request("name");
         var ids = $.request("ids");

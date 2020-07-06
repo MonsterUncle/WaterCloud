@@ -9,6 +9,7 @@
             table = layui.table,
             common = layui.common;
         var keyValue = $.request("keyValue");
+        wcLoading.close();
         common.rendertable({
             elem: '#currentTableId',
             url: '/SystemManage/CodeGenerator/GetTableFieldJson?keyValue=' + keyValue,

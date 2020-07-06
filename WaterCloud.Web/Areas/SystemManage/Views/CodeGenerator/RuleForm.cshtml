@@ -10,6 +10,7 @@
             var keyValue = $.request("keyValue");
             //权限字段
             common.authorizeFields('adminform');
+            wcLoading.close();
             if (!!keyValue) {
                 $('#F_EnCode').prop('disabled', true);
                 $('#F_FullName').prop('disabled', true);

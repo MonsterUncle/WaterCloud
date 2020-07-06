@@ -91,6 +91,7 @@
         var keyValue = $.request("keyValue");
         //权限字段
         common.authorizeFields('stepForm');
+        wcLoading.close();
         //执行一个laydate实例
         laydate.render({
             elem: '#CreateDate'
