@@ -355,7 +355,7 @@
             baseConfig.FileConfig.ClassDescription = data.field.ClassDescription;
             baseConfig.FileConfig.CreateUserName = data.field.CreateUserName;
             baseConfig.FileConfig.CreateDate = data.field.CreateDate;
-            baseConfig.OutputConfig.OutputModule = $("#OutputModule option:selected").text();
+            baseConfig.OutputConfig.OutputModule = $("#OutputModule option:selected").text().replace(/^\s+|\s+$/g, "");
             step.next('#stepForm');
             return false;
         });
