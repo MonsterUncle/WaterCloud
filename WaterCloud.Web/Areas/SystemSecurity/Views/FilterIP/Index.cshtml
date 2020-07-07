@@ -14,7 +14,8 @@
         //权限控制(js是值传递)
         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
        common.rendertable({
-            elem: '#currentTableId',
+           elem: '#currentTableId',
+           id: 'currentTableId',
             url: '/SystemSecurity/FilterIP/GetGridJson',
            page: false,
            sqlkey: 'F_Id',//数据库主键

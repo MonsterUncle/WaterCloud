@@ -1,5 +1,5 @@
 var wc_load_options = {
-   time: 1000,
+   time: 0,//初始时间设低
    content: "waterlcloud..."
 };
 

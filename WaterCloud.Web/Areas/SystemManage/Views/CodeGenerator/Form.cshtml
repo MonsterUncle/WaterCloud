@@ -240,6 +240,7 @@
         //}
         common.rendertable({
             elem: '#currentTableId',
+            id: 'currentTableId',
             data: [],
             limit: 9999,//每页数据 默认
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -254,11 +255,7 @@
                 { field: 'F_Id', title: 'ID', hide: true, hideAlways: true },
                 { field: 'TableColumn', title: '字段编号', width: 200 },
                 { field: 'Remark', title: '字段名称', minWidth: 200 },
-            ]],
-            done: function () {
-                //关闭加载
-                layer.closeAll('loading');
-            }
+            ]]
         });
         var entity;
         table.on('row(currentTableFilter)', function (obj) {

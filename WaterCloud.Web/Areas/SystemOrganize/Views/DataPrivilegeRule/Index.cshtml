@@ -44,6 +44,7 @@
          toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
          common.rendertable({
              elem: '#currentTableId',
+             id: 'currentTableId',
              url: '/SystemOrganize/DataPrivilegeRule/GetGridJson',
              sqlkey: 'F_Id',//数据库主键
              cols: [[

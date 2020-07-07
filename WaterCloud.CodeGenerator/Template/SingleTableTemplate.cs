@@ -656,6 +656,7 @@ namespace WaterCloud.CodeGenerator
             {
                 sb.AppendLine("         common.rendertable({");
                 sb.AppendLine("             elem: '#currentTableId',");
+                sb.AppendLine("             id: 'currentTableId',");
                 sb.AppendLine("             url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetGridJson',");
                 if (baseConfigModel.PageIndex.IsPagination != 1)
                 {

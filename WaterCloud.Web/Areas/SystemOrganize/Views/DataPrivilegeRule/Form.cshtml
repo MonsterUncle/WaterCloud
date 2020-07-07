@@ -43,6 +43,7 @@
             wcLoading.close();
             common.rendertable({
                 elem: '#currentTableId',
+                id: 'currentTableId',
                 data: [],
                 limit: 9999,//每页数据 默认
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -57,11 +58,7 @@
                     { field: 'Operation', title: '规则间条件', width: 120 },
                     { field: 'Filters', title: '规则内容', minWidth: 200 },
                     { field: 'Description', title: '规则备注', minWidth: 200 },
-                ]],
-                done: function () {
-                    //关闭加载
-                    layer.closeAll('loading');
-                }
+                ]]
             });
             var entity;
             table.on('row(currentTableFilter)', function (obj) {

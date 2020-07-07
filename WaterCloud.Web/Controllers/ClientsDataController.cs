@@ -397,7 +397,7 @@ namespace WaterCloud.Web.Controllers
             {
                 var fieldItem = new
                 {
-                    encode = item.F_EnCode,
+                    encode = item.F_Id,
                     fullname = item.F_FullName
                 };
                 dictionary.Add(item.F_Id, fieldItem);

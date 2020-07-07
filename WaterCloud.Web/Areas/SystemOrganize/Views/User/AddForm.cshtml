@@ -16,6 +16,7 @@
         var ids = $.request("ids");
         common.rendertable({
             elem: '#currentTableId',
+            id: 'currentTableId',
             url: '/SystemOrganize/User/GetListJson?ids=' + (!!ids ? ids : ""),
             page: false,
             height: 'full-35',

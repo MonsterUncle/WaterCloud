@@ -66,6 +66,7 @@
             toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
             common.rendertable({
                 elem: '#currentTableId',
+                id: 'currentTableId',
                 url: '/SystemSecurity/Log/GetGridJson',
                 sqlkey: 'F_Id',//数据库主键
                 cols: [[
