@@ -69,6 +69,8 @@ namespace WaterCloud.Service.AutoJob
                                 object[] parameters = null;
                                 method.Invoke(obj, parameters);                           // 调用方法，参数为空
                                 #endregion
+                                dbJobEntity.F_LastRunTime = DateTime.Now;
+                                await autoJobService.SubmitForm(dbJobEntity, jobId);
                             }
                         }
                     }

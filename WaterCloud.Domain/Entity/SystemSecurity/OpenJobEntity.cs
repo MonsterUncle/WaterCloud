@@ -47,6 +47,11 @@ namespace WaterCloud.Domain.SystemSecurity
         [Description("结束时间")]
         public System.DateTime? F_EndRunTime { get; set; }
         /// <summary>
+        /// 最近执行时间
+        /// </summary>
+        [Description("最近执行时间")]
+        public System.DateTime? F_LastRunTime { get; set; }
+        /// <summary>
         /// CRON表达式
         /// </summary>
         [Description("CRON表达式")]

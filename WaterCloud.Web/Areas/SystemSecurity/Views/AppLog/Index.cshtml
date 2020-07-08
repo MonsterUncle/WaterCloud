@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script src="~/lib/jquery.ui/1.12.1/jquery-ui.min.js" charset="utf-8"></script>
+<link href="~/lib/jquery.ui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+
+            <fieldset class="table-search-fieldset">
+                @*<legend>搜索信息</legend>*@
+                <div style="margin: 10px 10px 10px 10px">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label required">日期:</label>
+                                <div class="layui-input-block">
+                                    <select id="time_horizon" name="time_horizon" lay-verify="required">
+                                        <option value="1">今天</option>
+                                        <option value="2" selected>近7天</option>
+                                        <option value="3">近1个月</option>
+                                        <option value="4">近2个月</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container" id="toolbar">
+                    <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+                </div>
+            </script>
+            <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+        </div>
+    </div>
+    <script>
+        layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', "layer"], function () {
+            var $ = layui.jquery,
+                form = layui.form,
+                table = layui.table,
+                layer = layui.layer,
+                common = layui.common;
+            //加载数据
+            wcLoading.close();
+            //权限控制(js是值传递)
+            toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
+            common.rendertable({
+                elem: '#currentTableId',
+                id: 'currentTableId',
+                url: '/SystemSecurity/AppLog/GetGridJson',
+                sqlkey: 'FileName',//数据库主键
+                cols: [[
+                    { field: 'FileName', title: '账户', minWidth: 100, sort: true },
+                ]]
+            });
+            //select验证
+            form.verify({
+                required: function (value, item) {
+                    var msg = "必填项不能为空";
+                    value = $.trim(value);
+                    var isEmpty = !value || value.length < 1;
+                    // 当前验证元素是select且为空时,将页面定位至layui渲染的select处，或自定义想定位的位置
+                    if (item.tagName == 'SELECT' && isEmpty) {
+                        $("html").animate({
+                            scrollTop: $(item).siblings(".layui-form-select").offset().top - 74
+                        }, 50);
+                    }
+                    if (isEmpty) {
+                        return msg;
+                    }
+                }
+            });
+            // 监听搜索操作
+            form.on('submit(data-search-btn)', function (data) {
+                common.reloadtable({
+                    elem: 'currentTableId',
+                    curr: 1,
+                    where: { timetype: data.field.time_horizon }
+                });
+                return false;
+            });
+            var entity;
+            table.on('row(currentTableFilter)', function (obj) {
+                obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
+                entity = obj;
+            });
+            /**
+             * toolbar监听事件
+             */
+            table.on('toolbar(currentTableFilter)', function (obj) {
+                if (obj.event === 'details') {  // 监听删除操作
+                    if (entity == null) {
+                        common.modalMsg("未选中数据", "warning");
+                        return false;
+                    }
+                    var html = "";
+                    common.ajax({
+                        url: "/SystemSecurity/AppLog/GetFormJson",
+                        dataType: "json",
+                        data: { keyValue: entity.data.FileName },
+                        async: false,
+                        success: function (data) {
+                            html = "<pre class='no-padding no-margin no-top-border'><code class='html'>" + data.data + "</code></pre>";
+                        }
+                    });
+                    layer.open({
+                        type: 1,
+                        shade: 0.3,
+                        title: '查看日志',
+                        isOutAnim: true,//关闭动画
+                        fix: false,
+                        area: ["500px", "500px"],
+                        content: html,
+                        success: function (layero, index) {
+                            $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
+                        },
+                    });
+                }
+                return false;
+            });
+        });
+    </script>
+
+</body>
+</html>

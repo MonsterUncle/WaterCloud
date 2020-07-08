@@ -44,6 +44,15 @@
                         }
                     },
                     {
+                        field: 'F_LastRunTime', title: '最近执行时间', Width: 180,
+                        templet: function (d) {
+                            if (d.F_LastRunTime) {
+                                var time = new Date(d.F_LastRunTime);
+                                return time.Format("yyyy-MM-dd hh:mm:ss");
+                            }
+                        }
+                    },
+                    {
                         field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
                         templet: function (d) {
                             if (d.F_EnabledMark == true) {
