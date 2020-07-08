@@ -62,6 +62,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                 //关闭加载
                 //layer.closeAll('loading');
                 table.resize(options.id);
+                //固定列引发的问题
+                obj.tableResize(options.id);
                 if (doneCallback) {
                     doneCallback(res, curr, count);
                 }
@@ -841,6 +843,32 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                 cols[0] = array;
             };
             return cols;
+        },
+        //固定列高度自适应问题
+        tableResize: function (id) {
+            //动态监听表头高度变化，冻结行跟着改变高度
+            $("div [lay-id='" + id + "'] .layui-table-header tr").resize(function () {
+                $("div [lay-id='" + id + "'] .layui-table-header tr").each(function (index, val) {
+                    $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-header table tr")[index]).height($(val).height());
+                });
+            });
+            //初始化高度，使得冻结行表头高度一致
+            $("div [lay-id='" + id + "'] .layui-table-header  tr").each(function (index, val) {
+                $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-header table tr")[index]).height($(val).height());
+            });
+            //动态监听表体高度变化，冻结行跟着改变高度
+            $("div [lay-id='" + id + "'] .layui-table-main tr").resize(function () {
+                $("div [lay-id='" + id + "'] .layui-table-body tr").each(function (index, val) {
+                    $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-body table tr")[index]).height($(val).height());
+                });
+            });
+            //初始化高度，使得冻结行表体高度一致
+            $("div [lay-id='" + id + "'] .layui-table-main tr").each(function (index, val) {
+                $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-body table tr")[index]).height($(val).height());
+            });
+
+            //初始化滚动条
+            $("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-body").animate({ scrollTop: $("div [lay-id='" + id + "'] .layui-table-main").scrollTop() }, 0); 
         },
     }
     exports("common", obj);

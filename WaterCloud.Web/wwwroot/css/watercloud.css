@@ -136,11 +136,3 @@
     white-space: normal;
     word-break: break-all;
 }
-.ew-tree-table-cell.single-line > .ew-tree-table-cell-content {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    height: auto !important;
-    white-space: normal;
-    word-break: break-all;
-}
