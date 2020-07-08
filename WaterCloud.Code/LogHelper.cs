@@ -78,11 +78,10 @@ namespace WaterCloud.Code
             {
                 logMessage.UserName = current.UserCode + "（" + current.UserName + "）";
             }
-            var err= Error.InnerException.GetOriginalException();
+            var err= Error.GetOriginalException();
             logMessage.ExceptionInfo = err.Message;
             logMessage.ExceptionSource = err.Source;
             logMessage.ExceptionRemark = err.StackTrace;
-            if (Error.InnerException == null)
             logContent+= ExceptionFormat(logMessage);
             Write(logPath, logContent);
         }
