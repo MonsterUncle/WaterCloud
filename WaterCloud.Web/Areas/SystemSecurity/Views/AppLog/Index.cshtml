@@ -66,7 +66,7 @@
                 url: '/SystemSecurity/AppLog/GetGridJson',
                 sqlkey: 'FileName',//数据库主键
                 cols: [[
-                    { field: 'FileName', title: '账户', minWidth: 100, sort: true },
+                    { field: 'FileName', title: '文件名称', minWidth: 100, sort: true },
                 ]]
             });
             //select验证
@@ -117,19 +117,19 @@
                         async: false,
                         success: function (data) {
                             html = "<pre class='no-padding no-margin no-top-border'><code class='html'>" + data.data + "</code></pre>";
+                            layer.open({
+                                type: 1,
+                                shade: 0.3,
+                                title: '查看日志',
+                                isOutAnim: true,//关闭动画
+                                fix: false,
+                                area: ["500px", "500px"],
+                                content: html,
+                                success: function (layero, index) {
+                                    $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
+                                },
+                            });
                         }
-                    });
-                    layer.open({
-                        type: 1,
-                        shade: 0.3,
-                        title: '查看日志',
-                        isOutAnim: true,//关闭动画
-                        fix: false,
-                        area: ["500px", "500px"],
-                        content: html,
-                        success: function (layero, index) {
-                            $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
-                        },
                     });
                 }
                 return false;
