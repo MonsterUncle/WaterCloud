@@ -449,7 +449,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        [HandlerAjaxOnly]");
             sb.AppendLine("        public async Task<ActionResult> GetFormJson(string keyValue)");
             sb.AppendLine("        {");
-            sb.AppendLine("            var data = await _service.GetForm(keyValue);");
+            sb.AppendLine("            var data = await _service.GetLookForm(keyValue);");
             sb.AppendLine("            return Content(data.ToJson());");
             sb.AppendLine("        }");
             sb.AppendLine("        #endregion");

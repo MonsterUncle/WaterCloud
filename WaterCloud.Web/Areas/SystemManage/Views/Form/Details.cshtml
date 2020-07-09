@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<link href="~/lib/ueditor/formdesign/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<div class="container" style="width: 750px">
+    <div id="content" style="padding:15px"></div>
+</div>
+<script>
+    layui.use(['jquery', 'form', 'common'], function () {
+        var form = layui.form,
+            common = layui.common,
+            $ = layui.jquery;
+        var keyValue = $.request("keyValue");
+        $(function () {
+            if (!!keyValue) {
+                common.ajax({
+                    url: '/SystemManage/Form/GetFormJson',
+                    dataType: 'json',
+                    data: { keyValue: keyValue },
+                    async: false,
+                    success: function (data) {
+                        $(" #content").html(data.Html);
+                    }
+                });
+            }
+        });
+        wcLoading.close();
+    })
+</script>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -16,6 +17,10 @@ namespace WaterCloud.Code
         public static JObject ToJObject(this string Json)
         {
             return Json == null ? JObject.Parse("{}") : JObject.Parse(Json.Replace("&nbsp;", ""));
+        }
+        public static List<T> ToList<T>(this string Json)
+        {
+            return Json == null ? null : JsonConvert.DeserializeObject<List<T>>(Json);
         }
     }
     #endregion

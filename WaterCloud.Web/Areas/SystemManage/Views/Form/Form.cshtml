@@ -1,0 +1,376 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form" lay-filter="adminform">
+                <input type="hidden" name="F_Fields" id="F_Fields" value="0">
+                <div class="layui-row">
+                    <div class="layui-tab layui-tab-brief" lay-filter="tab" style="margin: 0px">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">基本信息</li>
+                            <li>表单设计</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <div class="layui-form-item layui-hide">
+                                    <label class="layui-form-label required">表单名称</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" id="F_Name" name="F_Name" required lay-verify="required"
+                                               placeholder="表单名称" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-hide">
+                                    <label class="layui-form-label required">排序</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-hide">
+                                    <label class="layui-form-label">选项</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text layui-hide">
+                                    <label class="layui-form-label">备注</label>
+                                    <div class="layui-input-block">
+                                        <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入备注"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-row">
+                                    <blockquote class="layui-elem-quote">
+                                        提醒：单选框和复选框，如：{|-选项-|}两边边界是防止误删除控件，程序会把它们替换为空，请不要手动删除！
+                                    </blockquote>
+                                </div>
+                                <div class="layui-row">
+                                    <div class="layui-col-xs2 layui-btn-container">
+                                        <button class="layui-btn layui-btn-primary layui-btn-fluid" onclick="leipiFormDesign.exec('text');">文本框</button>
+                                        <button class="layui-btn layui-btn-primary layui-btn-fluid" onclick="leipiFormDesign.exec('textarea');">多行文本</button>
+                                        <button class="layui-btn layui-btn-primary layui-btn-fluid" onclick="leipiFormDesign.exec('select');">下拉菜单</button>
+                                        <button class="layui-btn layui-btn-primary layui-btn-fluid" onclick="leipiFormDesign.exec('radios');">单选框</button>
+                                        <button class="layui-btn layui-btn-primary layui-btn-fluid" onclick="leipiFormDesign.exec('checkboxs');">复选框</button>
+                                        <button class="layui-btn layui-btn-primary layui-btn-fluid" onclick="leipiFormDesign.exec('macros');">宏控件</button>
+                                        <button class="layui-btn layui-btn-primary layui-btn-fluid" onclick="leipiFormDesign.exec('progressbar');">进度条</button>
+                                        <button class="layui-btn layui-btn-primary layui-btn-fluid" onclick="leipiFormDesign.exec('qrcode');">二维码</button>
+                                        <button class="layui-btn layui-btn-primary layui-btn-fluid" onclick="leipiFormDesign.exec('listctrl');">列表控件</button>
+                                    </div>
+                                    <div class="layui-col-xs10">
+                                        <script id="myFormDesign" type="text/plain" style="width: 100%;">
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group-bottom text-right">
+                    <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<link href="~/lib/ueditor/themes/default/css/ueditor.css" rel="stylesheet" />
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/ueditor.all.js"></script>
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="~/lib/ueditor/formdesign/leipi.formdesign.v4.js"></script>
+<script>
+    layui.use(['jquery', 'form', 'common', 'element'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            common = layui.common,
+            element = layui.element;
+        var keyValue = $.request("keyValue");
+        //表单设计器
+        var ue = UE.getEditor('myFormDesign', {
+            //allowDivTransToP: false,//阻止转换div 为p
+            toolleipi: true,//是否显示，设计器的 toolbars
+            zIndex: 0,
+            textarea: 'design_content',
+            xssFilterRules: false,
+            //input xss过滤
+            inputXssFilter: false,
+            //output xss过滤
+            outputXssFilter: false,
+            //这里可以选择自己需要的工具按钮名称,此处仅选择如下五个
+            toolbars: [[
+                'fullscreen', 'source'
+                , '|', 'undo', 'redo'
+                , '|', 'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'removeformat'
+                , '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist'
+                , '|', 'fontfamily', 'fontsize'
+                , '|', 'indent'
+                , '|', 'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify'
+                , '|', 'link', 'unlink'
+                , '|', 'horizontal', 'spechars', 'wordimage'
+                , '|', 'inserttable', 'deletetable', 'mergecells', 'splittocells']],
+            //关闭字数统计
+            wordCount: false,
+            //关闭elementPath
+            elementPathEnabled: false,
+            autoHeightEnabled: false
+            //默认的编辑区域高度
+            , initialFrameHeight: 400
+            , iframeCssUrl: "/lib/ueditor/formdesign/bootstrap/css/bootstrap.min.css" //引入自身 css使编辑器兼容你网站css
+            //更多其他参数，请参考ueditor.config.js中的配置项
+        });
+
+        leipiFormDesign = {
+            /*执行控件*/
+            exec: function (method) {
+                ue.execCommand(method);
+            },
+            /*
+                Javascript 解析表单
+                template 表单设计器里的Html内容
+                fields 字段总数
+            */
+            parse_form: function (template, fields) {
+                //正则  radios|checkboxs|select 匹配的边界 |--|  因为当使用 {} 时js报错
+                var preg = /(\|-<span(((?!<span).)*leipiplugins=\"(radios|checkboxs|select)\".*?)>(.*?)<\/span>-\||<(img|input|textarea|select).*?(<\/select>|<\/textarea>|\/>))/gi, preg_attr = /(\w+)=\"(.?|.+?)\"/gi, preg_group = /<input.*?\/>/gi;
+                if (!fields) fields = 0;
+
+                var template_parse = template, template_data = new Array(), add_fields = new Object(), checkboxs = 0;
+
+                var pno = 0;
+                template.replace(preg, function (plugin, p1, p2, p3, p4, p5, p6) {
+                    var parse_attr = new Array(), attr_arr_all = new Object(), name = '', select_dot = '', is_new = false;
+                    var p0 = plugin;
+                    var tag = p6 ? p6 : p4;
+                    //alert(tag + " \n- t1 - "+p1 +" \n-2- " +p2+" \n-3- " +p3+" \n-4- " +p4+" \n-5- " +p5+" \n-6- " +p6);
+
+                    if (tag == 'radios' || tag == 'checkboxs') {
+                        plugin = p2;
+                    } else if (tag == 'select') {
+                        plugin = plugin.replace('|-', '');
+                        plugin = plugin.replace('-|', '');
+                    }
+                    plugin.replace(preg_attr, function (str0, attr, val) {
+                        if (attr == 'name') {
+                            return;
+                        }
+                        if (attr == 'title') {  //如果是title，强制转成name
+                            if (!attr_arr_all['name']) attr_arr_all['name'] = val;
+                            parse_attr.push({ name: val });
+                            name = val;
+                        }
+
+                        if (tag == 'select' && attr == 'value') {
+                            if (!attr_arr_all[attr]) attr_arr_all[attr] = '';
+                            attr_arr_all[attr] += select_dot + val;
+                            select_dot = ',';
+                        } else {
+                            attr_arr_all[attr] = val;
+                        }
+                        var oField = new Object();
+                        oField[attr] = val;
+                        parse_attr.push(oField);
+                    })
+                    /*alert(JSON.stringify(parse_attr));return;*/
+                    if (tag == 'checkboxs') /*复选组  多个字段 */ {
+                        plugin = p0;
+                        plugin = plugin.replace('|-', '');
+                        plugin = plugin.replace('-|', '');
+                        var name = 'checkboxs_' + checkboxs;
+                        attr_arr_all['parse_name'] = name;
+                        attr_arr_all['name'] = '';
+                        attr_arr_all['value'] = '';
+
+                        attr_arr_all['content'] = '<span leipiplugins="checkboxs"  title="' + attr_arr_all['title'] + '">';
+                        var dot_name = '', dot_value = '';
+                        p5.replace(preg_group, function (parse_group) {
+                            var is_new = false, option = new Object();
+                            parse_group.replace(preg_attr, function (str0, k, val) {
+                                if (k == 'name') {
+                                    if (val == 'leipiNewField') {
+                                        is_new = true;
+                                        fields++;
+                                        val = 'data_' + fields;
+                                    }
+
+                                    attr_arr_all['name'] += dot_name + val;
+                                    dot_name = ',';
+
+                                }
+                                else if (k == 'value') {
+                                    attr_arr_all['value'] += dot_value + val;
+                                    dot_value = ',';
+
+                                }
+                                option[k] = val;
+                            });
+
+                            if (!attr_arr_all['options']) attr_arr_all['options'] = new Array();
+                            attr_arr_all['options'].push(option);
+                            //if(!option['checked']) option['checked'] = '';
+                            var checked = option['checked'] != undefined ? 'checked="checked"' : '';
+                            attr_arr_all['content'] += '<input type="checkbox" name="' + option['name'] + '" value="' + option['value'] + '"  ' + checked + '/>' + option['value'] + '&nbsp;';
+
+                            if (is_new) {
+                                var arr = new Object();
+                                arr['name'] = option['name'];
+                                arr['leipiplugins'] = attr_arr_all['leipiplugins'];
+                                add_fields[option['name']] = arr;
+
+                            }
+
+                        });
+                        attr_arr_all['content'] += '</span>';
+
+                        //parse
+                        template = template.replace(plugin, attr_arr_all['content']);
+                        template_parse = template_parse.replace(plugin, '{' + name + '}');
+                        template_parse = template_parse.replace('{|-', '');
+                        template_parse = template_parse.replace('-|}', '');
+                        template_data[pno] = attr_arr_all;
+                        checkboxs++;
+
+                    } else if (name) {
+                        if (tag == 'radios') /*单选组  一个字段*/ {
+                            plugin = p0;
+                            plugin = plugin.replace('|-', '');
+                            plugin = plugin.replace('-|', '');
+                            attr_arr_all['value'] = '';
+                            attr_arr_all['content'] = '<span leipiplugins="radios" name="' + attr_arr_all['name'] + '" title="' + attr_arr_all['title'] + '">';
+                            var dot = '';
+                            p5.replace(preg_group, function (parse_group) {
+                                var option = new Object();
+                                parse_group.replace(preg_attr, function (str0, k, val) {
+                                    if (k == 'value') {
+                                        attr_arr_all['value'] += dot + val;
+                                        dot = ',';
+                                    }
+                                    option[k] = val;
+                                });
+                                option['name'] = attr_arr_all['name'];
+                                if (!attr_arr_all['options']) attr_arr_all['options'] = new Array();
+                                attr_arr_all['options'].push(option);
+                                //if(!option['checked']) option['checked'] = '';
+                                var checked = option['checked'] != undefined ? 'checked="checked"' : '';
+                                attr_arr_all['content'] += '<input type="radio" name="' + attr_arr_all['name'] + '" value="' + option['value'] + '"  ' + checked + '/>' + option['value'] + '&nbsp;';
+
+                            });
+                            attr_arr_all['content'] += '</span>';
+
+                        } else {
+                            attr_arr_all['content'] = is_new ? plugin.replace(/leipiNewField/, name) : plugin;
+                        }
+                        //attr_arr_all['itemid'] = fields;
+                        //attr_arr_all['tag'] = tag;
+                        template = template.replace(plugin, attr_arr_all['content']);
+                        template_parse = template_parse.replace(plugin, '{' + name + '}');
+                        template_parse = template_parse.replace('{|-', '');
+                        template_parse = template_parse.replace('-|}', '');
+                        if (is_new) {
+                            var arr = new Object();
+                            arr['name'] = name;
+                            arr['leipiplugins'] = attr_arr_all['leipiplugins'];
+                            add_fields[arr['name']] = arr;
+                        }
+                        template_data[pno] = attr_arr_all;
+
+
+                    }
+                    pno++;
+                })
+                var parse_form = new Object({
+                    'F_Fields': fields,//总字段数
+                    'F_Content': template,//完整html
+                    'F_ContentParse': template_parse,//控件替换为{data_1}的html
+                    'F_ContentData': JSON.stringify(template_data),//控件属性
+                    'add_fields': add_fields//新增控件
+                });
+                return parse_form;
+            },
+            /*type  =  save 保存设计 versions 保存版本  close关闭 */
+            fnCheckForm: function (type) {
+                if (ue.queryCommandState('source'))
+                    ue.execCommand('source');//切换到编辑模式才提交，否则有bug
+
+                if (ue.hasContents()) {
+                    ue.sync();/*同步内容*/
+
+                    return false;
+
+                } else {
+                    layer.msg('表单内容不能为空！');
+                    $('#submitbtn').button('reset');
+                    return false;
+                }
+            },
+            /*预览表单*/
+            fnReview: function () {
+                if (ue.queryCommandState('source'))
+                    ue.execCommand('source');/*切换到编辑模式才提交，否则部分浏览器有bug*/
+                if (ue.hasContents()) {
+                    ue.sync();       /*同步内容*/
+                    //--------------以下仅参考-------------------------------------------------------------------
+                    /*设计form的target 然后提交至一个新的窗口进行预览*/
+                    var fields = $("#F_Fields").val(), formeditor = '';
+
+                    //获取表单设计器里的内容
+                    formeditor = ue.getContent();
+                    //解析表单设计器控件
+                    var parse_form = this.parse_form(formeditor, fields);
+                    var forms1 = parse_form.F_Content;
+                    win_parse = window.open('', '', 'width=800,height=400,alwaysRaised=yes,top=100,left=200');
+                    win_parse.document.write(forms1);
+                    win_parse.focus();
+                } else {
+                    alert('表单内容不能为空！');
+                    return false;
+                }
+            }
+        };
+        //权限字段
+        common.authorizeFields('adminform');
+        $(function () {
+            if (!!keyValue) {
+                common.ajax({
+                    url: '/SystemManage/Form/GetFormJson',
+                    dataType: 'json',
+                    data: { keyValue: keyValue },
+                    async: false,
+                    success: function (data) {
+                        common.val('adminform', data);
+                        // editor准备好之后才可以使用
+                        var editor = UE.getEditor("myFormDesign");
+                        editor.ready(function () {
+                            editor.setContent(data.F_Content);
+                        });
+                    }
+                });
+            }
+            form.render();
+        });
+        wcLoading.close();
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            //解析表单数据
+            var fields = $("#Fields").val(), formeditor = '';
+            //获取表单设计器里的内容
+            formeditor = ue.getContent();
+            //解析表单设计器控件
+            var parseForm = leipiFormDesign.parse_form(formeditor, fields);
+            data.field= $.extend(data.field, parseForm);
+            common.submitForm({
+                url: '/SystemManage/Form/SubmitForm?keyValue=' + keyValue,
+                param: data.field,
+                success: function () {
+                    common.parentreload('data-search-btn');
+                }
+            })
+            return false;
+        });
+    });
+</script>
+

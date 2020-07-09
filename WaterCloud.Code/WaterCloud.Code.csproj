@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Extend\AutoMapperExt.cs" />
     <Compile Include="Extend\Ext.Convert.cs" />
     <Compile Include="Extend\Ext.DateTime.cs" />
     <Compile Include="Extend\Ext.Enum.cs" />
@@ -32,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="Chloe" Version="4.7.0" />
     <PackageReference Include="CSRedisCore" Version="3.6.5" />
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
