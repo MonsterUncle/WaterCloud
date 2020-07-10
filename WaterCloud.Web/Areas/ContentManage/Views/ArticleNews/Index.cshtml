@@ -121,7 +121,6 @@
                 search: true,
             });
         }
-        var entity;
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             //执行搜索重载
@@ -130,12 +129,11 @@
                 curr: 1,
                 where: { CategoryId: data.field.CategoryId, keyword: data.field.txt_keyword }
             });
-            entity = null;
             return false;
         });
         table.on('row(currentTableFilter)', function (obj) {
             obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
-            entity = obj;
+            obj.tr.find("div.layui-unselect.layui-form-checkbox")[0].click();
         })
         //toolbar监听事件
         table.on('toolbar(currentTableFilter)', function (obj) {

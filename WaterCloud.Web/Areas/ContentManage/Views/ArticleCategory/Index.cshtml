@@ -94,19 +94,17 @@
                  rendertree.expandAll();
              }
          });
-         var entity;
          // 监听搜索操作
          form.on('submit(data-search-btn)', function (data) {
              queryJson = data.field.txt_keyword;
              common.reloadtreetable(rendertree, {
                  where: { keyword: queryJson },
              });
-             entity = null;
              return false;
          });
          treeTable.on('row(currentTableId)', function (obj) {
              obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
-             entity = obj;
+             obj.tr.find("div.layui-unselect.layui-form-checkbox")[0].click();
          })
          //toolbar监听事件
          treeTable.on('toolbar(currentTableId)', function (obj) {
