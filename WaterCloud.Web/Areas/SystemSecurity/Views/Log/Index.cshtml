@@ -73,7 +73,7 @@
                     { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },
                     { field: 'F_Account', title: '账户', width: 100, sort: true},
                     { field: 'F_NickName', title: '姓名', width: 100, sort: true,filter:true },
-                    { field: 'F_ModuleName', title: '操作菜单', width: 120, sort: true },
+                    { field: 'F_ModuleName', title: '操作菜单', width: 220, sort: true },
                     {
                         field: 'F_Type', title: '操作类型', width: 120, sort: true, filter: true,
                         templet: function (d) {
@@ -81,12 +81,12 @@
                         }
                     },
                     {
-                        field: 'F_IPAddress', title: 'IP地址', width: 150,
+                        field: 'F_IPAddress', title: 'IP地址', width: 200,
                         templet: function (d) {
                             return d.F_IPAddress + ";" + d.F_IPAddressName;
                         }, sort: true
                     },
-                    { field: 'F_KeyValue', title: '操作对象', width: 100},
+                    { field: 'F_KeyValue', title: '操作对象', width: 300, hide: true},
                     {
                         field: 'F_CreatorTime', title: '创建时间', width: 180,
                         templet: function (d) {
@@ -96,7 +96,7 @@
                             }
                         }
                     },
-                    { field: 'F_Description', title: '备注', minWidth: 150 },
+                    { field: 'F_Description', title: '备注', minWidth: 250 },
                 ]]
             });
             //select验证
