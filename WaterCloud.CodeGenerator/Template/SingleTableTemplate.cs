@@ -649,6 +649,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             common.reloadtreetable(rendertree, {");
                 sb.AppendLine("                 where: { keyword: queryJson },");
                 sb.AppendLine("             }); ");
+                sb.AppendLine("             entity = null;");
                 sb.AppendLine("             return false;");
                 sb.AppendLine("         });");
             }
@@ -693,6 +694,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                 curr: 1,");
                 sb.AppendLine("                 where: { keyword: data.field.txt_keyword}");
                 sb.AppendLine("             });");
+                sb.AppendLine("             entity = null;");
                 sb.AppendLine("             return false;");
                 sb.AppendLine("         });");
             }
