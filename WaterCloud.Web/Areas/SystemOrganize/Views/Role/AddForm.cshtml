@@ -26,15 +26,15 @@
                 cols: [[
                     { type: 'checkbox' },
                     { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
-                    { field: 'F_FullName', title: '角色名称', width: 120, sort: true },
+                    { field: 'F_FullName', title: '角色名称', width: 200, sort: true },
                     {
-                        field: 'F_Type', title: '角色类型', width: 120, sort: true,
+                        field: 'F_Type', title: '角色类型', width: 200, sort: true,
                         templet: function (d) {
                             return top.clients.dataItems["RoleType"][d.F_Type] == undefined ? "" : top.clients.dataItems["RoleType"][d.F_Type];
                         }
                     },
                     {
-                        field: 'F_OrganizeId', title: '归属公司', width: 120, sort: true,
+                        field: 'F_OrganizeId', title: '归属公司', width: 200, sort: true,
                         templet: function (d) {
                             return top.clients.organize[d.F_OrganizeId] == undefined ? "" : top.clients.organize[d.F_OrganizeId].fullname;
                         }
