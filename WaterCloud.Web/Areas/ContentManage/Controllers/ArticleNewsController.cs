@@ -62,7 +62,7 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
         {
             //此处需修改
             pagination.order = "desc";
-            pagination.sort = "F_CreatorTime";
+            pagination.sort = "F_CreatorTime desc";
             
             var data = await _service.GetLookList(pagination,keyword,CategoryId);
             return Success(pagination.records, data);
