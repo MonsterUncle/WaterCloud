@@ -132,7 +132,6 @@
             return false;
         });
         table.on('row(currentTableFilter)', function (obj) {
-            obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
             obj.tr.find("div.layui-unselect.layui-form-checkbox")[0].click();
         })
         //toolbar监听事件
