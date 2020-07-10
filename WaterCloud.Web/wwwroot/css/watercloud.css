@@ -130,9 +130,31 @@
     top: auto;
     bottom: 10px;
 }
-/*表格单元格高度自适应*/
-.layui-table-cell {
+/*表格单元格自动换行*/
+/*.layui-table-cell {
     height: auto !important;
     white-space: normal;
     word-break: break-all;
+}*/
+/**必填红点 */
+.layui-tab-item > .layui-form-item > .required:after {
+    content: '*';
+    color: red;
+    position: absolute;
+    margin-left: 4px;
+    font-weight: bold;
+    line-height: 1.8em;
+    top: 6px;
+    right: 5px;
+}
+/**必填红点 */
+.layui-tab-item > .layui-form-item > .layui-inline > .required:after {
+    content: '*';
+    color: red;
+    position: absolute;
+    margin-left: 4px;
+    font-weight: bold;
+    line-height: 1.8em;
+    top: 6px;
+    right: 5px;
 }

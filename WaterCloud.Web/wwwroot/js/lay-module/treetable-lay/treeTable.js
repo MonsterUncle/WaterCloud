@@ -1955,10 +1955,10 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
         '    overflow: hidden;',
         '    white-space: nowrap;',
         '    text-overflow: ellipsis;',
-        //增加样式
-        '    height: auto!important;',
-        '    white-space: normal;',
-        '    word-break: break-all;',
+        //表格单元格自动换行
+        //'    height: auto!important;',
+        //'    white-space: normal;',
+        //'    word-break: break-all;',
         '}',
 
         '.ew-tree-table-cell.ew-tree-tips-open > .ew-tree-table-cell-content {',
