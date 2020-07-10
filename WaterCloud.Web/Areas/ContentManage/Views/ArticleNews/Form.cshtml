@@ -77,25 +77,13 @@
             }]
         });
         form.on('submit(formStep)', function (data) {
-            postData["F_CategoryId"] = data.field["F_CategoryId"];
-            postData["F_Title"] = data.field["F_Title"];
-            postData["F_LinkUrl"] = data.field["F_LinkUrl"];
-            postData["F_ImgUrl"] = data.field["F_ImgUrl"];
-            postData["F_SortCode"] = data.field["F_SortCode"];
-            postData["F_IsTop"] = data.field["F_IsTop"];
-            postData["F_IsRed"] = data.field["F_IsRed"];
-            postData["F_IsHot"] = data.field["F_IsHot"];
-            postData["F_EnabledMark"] = data.field["F_EnabledMark"];
-            postData["F_Click"] = data.field["F_Click"];
-            //alert(postData["F_CategoryId"]);
+            postData = $.extend(postData, data.field);
             step.next('#stepForm');
             return false;
         });
 
         form.on('submit(formStep2)', function (data) {
-            postData["F_Zhaiyao"] = data.field["F_Zhaiyao"];
-            postData["F_Source"] = data.field["F_Source"];
-            postData["F_Author"] = data.field["F_Author"];
+            postData = $.extend(postData, data.field);
             postData["F_Description"] = UE.getEditor('F_Description').getContent();
             step.next('#stepForm');
             return false;
@@ -112,6 +100,7 @@
             initControl();
             if (!!keyValue) {
                 var newsdata = JSON.parse('@Html.Raw(ViewBag.Content)');
+                postData = newsdata;
                 common.val('stepForm', newsdata);
                 var Description = newsdata.F_Description;
                 if (!!newsdata.ImgUrl) {
@@ -147,17 +136,11 @@
         }
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            //var postData = data.field;
+            postData = $.extend(postData, data.field);
             if (!postData["F_IsTop"]) postData["F_IsTop"] = false;
             if (!postData["F_IsHot"]) postData["F_IsHot"] = false;
             if (!postData["F_IsRed"]) postData["F_IsRed"] = false;
             if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-
-            postData["F_SeoTitle"] = data.field["F_SeoTitle"];
-            postData["F_SeoKeywords"] = data.field["F_SeoKeywords"];
-            postData["F_SeoDescription"] = data.field["F_SeoDescription"];
-            postData["F_Tags"] = data.field["F_Tags"];
-
             common.submitForm({
                 url: '/ContentManage/ArticleNews/SubmitForm?keyValue=' + keyValue,
                 param: postData,
