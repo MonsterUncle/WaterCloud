@@ -431,7 +431,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("        {");
                 sb.AppendLine("            //此处需修改");
                 sb.AppendLine("            pagination.order = \"desc\";");
-                sb.AppendLine("            pagination.sort = \"F_CreatorTime\";");
+                sb.AppendLine("            pagination.sort = \"F_CreatorTime desc\";");
                 sb.AppendLine("            var data = await _service.GetLookList(pagination,keyword);");
                 sb.AppendLine("            return Success(pagination.records, data);");
                 sb.AppendLine("        }");
