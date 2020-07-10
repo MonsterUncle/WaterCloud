@@ -21,7 +21,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             var defaults = {
                 elem: '#currentTableId',//主键
                 toolbar: '#toolbarDemo',//工具栏
-                cellMinWidth: 80,  //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 defaultToolbar: ['filter', 'exports', 'print'],//默认工具栏
                 method: 'get',//请求方法
                 cellMinWidth: 100,//最小宽度
@@ -61,9 +60,9 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             options.done = function (res, curr, count) {
                 //关闭加载
                 //layer.closeAll('loading');
-                table.resize(options.id);
                 //固定列引发的问题
-                obj.tableResize(options.id);
+                //table.resize(options.id);
+                //obj.tableResize(options.id);
                 if (doneCallback) {
                     doneCallback(res, curr, count);
                 }
@@ -844,32 +843,32 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             };
             return cols;
         },
-        //固定列高度自适应问题
-        tableResize: function (id) {
-            //动态监听表头高度变化，冻结行跟着改变高度
-            $("div [lay-id='" + id + "'] .layui-table-header tr").resize(function () {
-                $("div [lay-id='" + id + "'] .layui-table-header tr").each(function (index, val) {
-                    $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-header table tr")[index]).height($(val).height());
-                });
-            });
-            //初始化高度，使得冻结行表头高度一致
-            $("div [lay-id='" + id + "'] .layui-table-header  tr").each(function (index, val) {
-                $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-header table tr")[index]).height($(val).height());
-            });
-            //动态监听表体高度变化，冻结行跟着改变高度
-            $("div [lay-id='" + id + "'] .layui-table-main tr").resize(function () {
-                $("div [lay-id='" + id + "'] .layui-table-body tr").each(function (index, val) {
-                    $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-body table tr")[index]).height($(val).height());
-                });
-            });
-            //初始化高度，使得冻结行表体高度一致
-            $("div [lay-id='" + id + "'] .layui-table-main tr").each(function (index, val) {
-                $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-body table tr")[index]).height($(val).height());
-            });
+        //表格单元格自动列宽
+        //tableResize: function (id) {
+        //    //动态监听表头高度变化，冻结行跟着改变高度
+        //    $("div [lay-id='" + id + "'] .layui-table-header tr").resize(function () {
+        //        $("div [lay-id='" + id + "'] .layui-table-header tr").each(function (index, val) {
+        //            $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-header table tr")[index]).height($(val).height());
+        //        });
+        //    });
+        //    //初始化高度，使得冻结行表头高度一致
+        //    $("div [lay-id='" + id + "'] .layui-table-header  tr").each(function (index, val) {
+        //        $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-header table tr")[index]).height($(val).height());
+        //    });
+        //    //动态监听表体高度变化，冻结行跟着改变高度
+        //    $("div [lay-id='" + id + "'] .layui-table-main tr").resize(function () {
+        //        $("div [lay-id='" + id + "'] .layui-table-body tr").each(function (index, val) {
+        //            $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-body table tr")[index]).height($(val).height());
+        //        });
+        //    });
+        //    //初始化高度，使得冻结行表体高度一致
+        //    $("div [lay-id='" + id + "'] .layui-table-main tr").each(function (index, val) {
+        //        $($("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-body table tr")[index]).height($(val).height());
+        //    });
 
-            //初始化滚动条
-            $("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-body").animate({ scrollTop: $("div [lay-id='" + id + "'] .layui-table-main").scrollTop() }, 0); 
-        },
+        //    //初始化滚动条
+        //    $("div [lay-id='" + id + "'] .layui-table-fixed .layui-table-body").animate({ scrollTop: $("div [lay-id='" + id + "'] .layui-table-main").scrollTop() }, 0); 
+        //},
     }
     exports("common", obj);
 });
