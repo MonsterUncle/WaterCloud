@@ -51,22 +51,21 @@
             }
         });
         //监听提交
-        var lock = false;
         form.on('submit(saveBtn)', function (data) {
-            if (!lock) {
-                lock = true;
-                var postData = data.field;
-                if (!postData["F_IsDefault"]) postData["F_IsDefault"] = false;
-                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-                postData["F_ItemId"] = itemId;
-                common.submitForm({
-                    url: "/SystemManage/ItemsData/SubmitForm?keyValue=" + keyValue,
-                    param: postData,
-                    success: function () {
-                        common.parentreload("data-search-btn");
-                    }
-                })
-            }
+            // 单击之后提交按钮不可选,防止重复提交
+            $('.site-demo-active').addClass('layui-btn-disabled');
+            $('.site-demo-active').attr('disabled', 'disabled');
+            var postData = data.field;
+            if (!postData["F_IsDefault"]) postData["F_IsDefault"] = false;
+            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+            postData["F_ItemId"] = itemId;
+            common.submitForm({
+                url: "/SystemManage/ItemsData/SubmitForm?keyValue=" + keyValue,
+                param: postData,
+                success: function () {
+                    common.parentreload("data-search-btn");
+                }
+            })
             return false;
         });
     });
@@ -107,7 +106,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
-                    <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                    <button class="layui-btn site-demo-active" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
                 </div>
             </div>
         </div>

@@ -49,23 +49,23 @@
             });
         }
         //监听提交
-        var lock = false;
         form.on('submit(saveBtn)', function (data) {
-            if (!lock) {
-                var postData = data.field;
-                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-                if (!postData["F_IsMenu"]) postData["F_IsMenu"] = false;
-                if (!postData["F_IsFields"]) postData["F_IsFields"] = false;
-                if (!postData["F_IsPublic"]) postData["F_IsPublic"] = false;
-                if (!postData["F_IsExpand"]) postData["F_IsExpand"] = false;
-                common.submitForm({
-                    url: event == "edit" ? "/SystemManage/Module/SubmitForm?keyValue=" + keyValue : "/SystemManage/Module/SubmitForm",
-                    param: postData,
-                    success: function () {
-                        common.parentreload("data-search-btn");
-                    }
-                })
-            }
+            // 单击之后提交按钮不可选,防止重复提交
+            $('.site-demo-active').addClass('layui-btn-disabled');
+            $('.site-demo-active').attr('disabled', 'disabled');
+            var postData = data.field;
+            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+            if (!postData["F_IsMenu"]) postData["F_IsMenu"] = false;
+            if (!postData["F_IsFields"]) postData["F_IsFields"] = false;
+            if (!postData["F_IsPublic"]) postData["F_IsPublic"] = false;
+            if (!postData["F_IsExpand"]) postData["F_IsExpand"] = false;
+            common.submitForm({
+                url: event == "edit" ? "/SystemManage/Module/SubmitForm?keyValue=" + keyValue : "/SystemManage/Module/SubmitForm",
+                param: postData,
+                success: function () {
+                    common.parentreload("data-search-btn");
+                }
+            })
             return false;
         });
         //select验证
@@ -187,7 +187,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
-                    <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                    <button class="layui-btn site-demo-active" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
                 </div>
             </div>
         </div>
