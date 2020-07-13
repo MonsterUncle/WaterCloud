@@ -11,9 +11,10 @@
         common.authorizeFields('adminform');
         wcLoading.close();
         //监听提交
-        var lock = false;
         form.on('submit(clear)', function (data) {
-            if (!lock) {
+            // 单击之后提交按钮不可选,防止重复提交
+            $('.site-demo-active').addClass('layui-btn-disabled');
+            $('.site-demo-active').attr('disabled', 'disabled');
                 common.submitForm({
                     loading: "正在备份数据...",
                     url: "/SystemSecurity/Log/SubmitRemoveLog",
@@ -25,7 +26,6 @@
                         common.parentreload("data-search-btn");
                     }
                 })
-            }
             return false;
         });
 
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="layui-form-item layui-hide">
-            <button style="float:right" class="layui-btn" id="submit" lay-submit lay-filter="clear">确认清空</button>
+            <button style="float:right" class="layui-btn site-demo-active" id="submit" lay-submit lay-filter="clear">确认清空</button>
         </div>
     </div>
 </div>
