@@ -2,24 +2,7 @@
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
-<style>
-    .layui-layer-btn- {
-        display: none;
-    }
-    .layui-form-label {
-        float: left;
-        display: block;
-        padding: 9px 15px;
-        width: 60px;
-        font-weight: 400;
-        line-height: 20px;
-        text-align: right;
-    }
-    .layui-input-block {
-        margin-left: 90px;
-        min-height: 36px;
-    }
-</style>
+<link href="~/css/stepcss.css" rel="stylesheet" />
 <script>
     layui.use(['form', 'step', 'common', 'dtree'], function () {
         var $ = layui.$,
@@ -134,9 +117,10 @@
             step.next('#stepForm');
             return false;
         });
-        var lock = false;
         form.on('submit(formStep3)', function (data) {
-            if (!lock) {
+            // 单击之后提交按钮不可选,防止重复提交
+            $('.site-demo-active').addClass('layui-btn-disabled');
+            $('.site-demo-active').attr('disabled', 'disabled');
                 var postData = role;
                 var params = dtree.getCheckbarNodesParam("demoTree2");
                 var note = [];
@@ -152,7 +136,6 @@
                         common.parentreload("data-search-btn");
                     }
                 })
-            }
             return false;
         });
 
@@ -247,7 +230,7 @@
                         <div class="form-group-bottom text-right">
                             <div class="layui-input-block">
                                 <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
-                                <button class="layui-btn" lay-submit lay-filter="formStep3">
+                                <button class="layui-btn site-demo-active" lay-submit lay-filter="formStep3">
                                     确认保存
                                 </button>
                             </div>
