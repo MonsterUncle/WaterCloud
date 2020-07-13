@@ -1,0 +1,36 @@
+﻿.layui-form-label {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 60px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+}
+
+.lay-step {
+    font-size: 0;
+    width: 400px;
+    margin: 0 auto;
+    max-width: 100%;
+    padding-left: 30px;
+}
+
+.layui-table-view {
+    margin-left: 30px;
+    margin-right: 10px;
+}
+
+.layui-input-block {
+    margin-left: 90px;
+    min-height: 36px;
+    margin-right: 10px;
+}
+
+.layui-card > .layui-card-body {
+    position: relative;
+    padding: 10px 15px;
+    line-height: 24px;
+    overflow: auto;
+    height: 300px;
+}
