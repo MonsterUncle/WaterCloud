@@ -76,7 +76,8 @@
     margin-bottom: 5px;
 }
 .layui-table-tool > .layui-table-tool-temp {
-    padding-right: 100px;
+    padding-right: 120px;
+    display: inline-block;
 }
 .layui-table-tool .layui-table-tool-self > div:not(.layui-inline) .layui-table-tool-temp {
     padding-right: 0px;
@@ -161,4 +162,7 @@
 .layui-form-selectup dl {
     top: 42px;
     bottom: unset;
+}
+.layui-table-tool .layui-btn-container {
+    margin-bottom:0px;
 }
