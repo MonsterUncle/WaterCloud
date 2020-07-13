@@ -331,13 +331,15 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                             }
                         } else {
                             obj.modalAlert(data.message, data.state);
-                            lock = false;
+                            $('.site-demo-active').removeClass('layui-btn-disabled');
+                            $('.site-demo-active').removeAttr('disabled');
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         parent.layer.close(index);
                         obj.modalAlert(errorThrown, "error");
-                        lock = false;
+                        $('.site-demo-active').removeClass('layui-btn-disabled');
+                        $('.site-demo-active').removeAttr('disabled');
                     },
                     beforeSend: function () {
                     },
