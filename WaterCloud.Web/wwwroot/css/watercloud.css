@@ -99,9 +99,6 @@
         display: none;
     }
 }
-.layui-table, .layui-table-view {
-    margin: 0px 0;
-}
 .layui-card .table-search-fieldset {
     margin: 0;
     border: 1px solid #e6e6e6;
