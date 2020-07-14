@@ -35,7 +35,7 @@
                     {
                         field: 'F_OrganizeId', title: '归属公司', width: 200, sort: true,
                         templet: function (d) {
-                            return top.clients.organize[d.F_OrganizeId] == undefined ? "" : top.clients.organize[d.F_OrganizeId].fullname;
+                            return top.clients.company[d.F_OrganizeId] == undefined ? "" : top.clients.company[d.F_OrganizeId].fullname;
                         }
                     },
                     {
