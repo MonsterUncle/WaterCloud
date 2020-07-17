@@ -140,8 +140,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                     }
                 }
                 string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
-                string codeIRepository = template.BuildIRepository(baseConfig);
-                string codeRepository = template.BuildRepository(baseConfig);
                 string codeService = template.BuildService(baseConfig,dt, idcolumn);
                 string codeController = template.BuildController(baseConfig, idcolumn);
                 string codeIndex = template.BuildIndex(baseConfig, idcolumn);
@@ -151,8 +149,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 var json = new
                 {
                     CodeEntity = HttpUtility.HtmlEncode(codeEntity),
-                    CodeIRepository = HttpUtility.HtmlEncode(codeIRepository),
-                    CodeRepository = HttpUtility.HtmlEncode(codeRepository),
                     CodeService = HttpUtility.HtmlEncode(codeService),
                     CodeController = HttpUtility.HtmlEncode(codeController),
                     CodeIndex = HttpUtility.HtmlEncode(codeIndex),
