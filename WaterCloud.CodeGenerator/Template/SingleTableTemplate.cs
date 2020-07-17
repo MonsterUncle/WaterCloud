@@ -7,7 +7,6 @@ using System.Data;
 using System.Web;
 using Newtonsoft.Json.Linq;
 using WaterCloud.Code;
-using WaterCloud.Repository.SystemManage;
 using WaterCloud.Domain.SystemManage;
 using System.Threading.Tasks;
 using Chloe;
@@ -168,8 +167,6 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("using WaterCloud.Code;");
             sb.AppendLine("using Chloe;");
             sb.AppendLine("using WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule + ";");
-            sb.AppendLine("using WaterCloud.Repository." + baseConfigModel.OutputConfig.OutputModule + ";");
-
             sb.AppendLine();
 
             sb.AppendLine("namespace WaterCloud.Service." + baseConfigModel.OutputConfig.OutputModule);
