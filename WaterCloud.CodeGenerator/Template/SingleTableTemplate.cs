@@ -43,8 +43,6 @@ namespace WaterCloud.CodeGenerator
             baseConfigModel.FileConfig.CreateDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
             baseConfigModel.FileConfig.EntityName = string.Format("{0}Entity", baseConfigModel.FileConfig.ClassPrefix);
-            baseConfigModel.FileConfig.IRepositoryName = string.Format("I{0}Repository", baseConfigModel.FileConfig.ClassPrefix);
-            baseConfigModel.FileConfig.RepositoryName = string.Format("{0}Repository", baseConfigModel.FileConfig.ClassPrefix);
             baseConfigModel.FileConfig.ServiceName = string.Format("{0}Service", baseConfigModel.FileConfig.ClassPrefix);
             baseConfigModel.FileConfig.ControllerName = string.Format("{0}Controller", baseConfigModel.FileConfig.ClassPrefix);
             baseConfigModel.FileConfig.PageIndexName = "Index";
@@ -56,8 +54,6 @@ namespace WaterCloud.CodeGenerator
             baseConfigModel.OutputConfig = new OutputConfigModel();
             baseConfigModel.OutputConfig.OutputModule = string.Empty;
             baseConfigModel.OutputConfig.OutputEntity = Path.Combine(path, "WaterCloud.Domain\\Entity");
-            baseConfigModel.OutputConfig.OutputIRepository = Path.Combine(path, "WaterCloud.Domain\\IRepository");
-            baseConfigModel.OutputConfig.OutputRepository = Path.Combine(path, "WaterCloud.Repository");
             baseConfigModel.OutputConfig.OutputService = Path.Combine(path, "WaterCloud.Service");
             baseConfigModel.OutputConfig.OutputWeb = Path.Combine(path, "WaterCloud.Web");
             #endregion
@@ -157,61 +153,6 @@ namespace WaterCloud.CodeGenerator
         }
         #endregion
 
-        #region BuildIRepository
-        public string BuildIRepository(BaseConfigModel baseConfigModel)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("using WaterCloud.DataBase;");
-            sb.AppendLine();
-
-            sb.AppendLine("namespace WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule);
-            sb.AppendLine("{");
-
-            SetClassDescription("数据映射接口", baseConfigModel, sb);
-
-            sb.AppendLine("    public interface " + baseConfigModel.FileConfig.IRepositoryName + " : IRepositoryBase<"+ baseConfigModel.FileConfig.EntityName + ">");
-            sb.AppendLine("    {");
-            sb.AppendLine("    }");
-            sb.AppendLine("}");
-
-            return sb.ToString();
-        }
-        #endregion
-
-        #region BuildRepository
-        public string BuildRepository(BaseConfigModel baseConfigModel)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("using Chloe;");
-            sb.AppendLine("using WaterCloud.DataBase;");
-            sb.AppendLine("using WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule + ";");
-            sb.AppendLine();
-
-            sb.AppendLine("namespace WaterCloud.Repository." + baseConfigModel.OutputConfig.OutputModule);
-            sb.AppendLine("{");
-
-            SetClassDescription("数据实现类", baseConfigModel, sb);
-
-            sb.AppendLine("    public class " + baseConfigModel.FileConfig.RepositoryName + " : RepositoryBase<" + baseConfigModel.FileConfig.EntityName + ">,"+ baseConfigModel.FileConfig.IRepositoryName);
-            sb.AppendLine("    {");
-            sb.AppendLine("        private IDbContext dbcontext;");
-            sb.AppendLine("        public "+ baseConfigModel.FileConfig.RepositoryName + "(IDbContext context)");
-            sb.AppendLine("             : base(context)");
-            sb.AppendLine("        {");
-            sb.AppendLine("            dbcontext = context;");
-            sb.AppendLine("        }");
-            sb.AppendLine("        public " + baseConfigModel.FileConfig.RepositoryName + "(string ConnectStr, string providerName)");
-            sb.AppendLine("             : base(ConnectStr, providerName)");
-            sb.AppendLine("        {");
-            sb.AppendLine("            dbcontext = GetDbContext();");
-            sb.AppendLine("        }");
-            sb.AppendLine("    }");
-            sb.AppendLine("}");
-
-            return sb.ToString();
-        }
-        #endregion
-
         #region BuildService
         public string BuildService(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id")
         {
@@ -236,15 +177,11 @@ namespace WaterCloud.CodeGenerator
 
             sb.AppendLine("    public class " + baseConfigModel.FileConfig.ServiceName + " : DataFilterService<"+ baseConfigModel.FileConfig.EntityName + ">, IDenpendency");
             sb.AppendLine("    {");                    
-            sb.AppendLine("        private " + baseConfigModel.FileConfig.IRepositoryName + " service;");
             sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
             sb.AppendLine("        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];");
 
             sb.AppendLine("        public "+ baseConfigModel.FileConfig.ServiceName + "(IDbContext context) : base(context)");
             sb.AppendLine("        {");
-            sb.AppendLine("            //根据租户选择数据库连接");
-            sb.AppendLine("            var currentuser = OperatorProvider.Provider.GetCurrent();");
-            sb.AppendLine("            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new "+ baseConfigModel.FileConfig.RepositoryName + "(currentuser.DbString, currentuser.DBProvider) : new "+ baseConfigModel.FileConfig.RepositoryName + "(context);");
             sb.AppendLine("        }");
 
             sb.AppendLine("        #region 获取数据");
@@ -264,7 +201,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            var list =new List<" + baseConfigModel.FileConfig.EntityName + ">();");
             sb.AppendLine("            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))");
             sb.AppendLine("            {");
-            sb.AppendLine("                list = await service.CheckCacheList(cacheKey + \"list\");");
+            sb.AppendLine("                list = await repository.CheckCacheList(cacheKey + \"list\");");
             sb.AppendLine("            }");
             sb.AppendLine("            else");
             sb.AppendLine("            {");
@@ -289,19 +226,19 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));");
             sb.AppendLine("            }");
             sb.AppendLine("            list = list.Where(u => u.F_DeleteMark==false);");
-            sb.AppendLine("            return GetFieldsFilterData(await service.OrderList(list, pagination),className.Substring(0, className.Length - 7));");
+            sb.AppendLine("            return GetFieldsFilterData(await repository.OrderList(list, pagination),className.Substring(0, className.Length - 7));");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetForm(string keyValue)");
             sb.AppendLine("        {");
-            sb.AppendLine("            var cachedata = await service.CheckCache(cacheKey, keyValue);");
+            sb.AppendLine("            var cachedata = await repository.CheckCache(cacheKey, keyValue);");
             sb.AppendLine("            return cachedata;");
             sb.AppendLine("        }");
             sb.AppendLine("        #endregion");
             sb.AppendLine();
             sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetLookForm(string keyValue)");
             sb.AppendLine("        {");
-            sb.AppendLine("            var cachedata = await service.CheckCache(cacheKey, keyValue);");
+            sb.AppendLine("            var cachedata = await repository.CheckCache(cacheKey, keyValue);");
             sb.AppendLine("            return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));");
             sb.AppendLine("        }");
             sb.AppendLine();
@@ -319,7 +256,7 @@ namespace WaterCloud.CodeGenerator
             {
                 sb.AppendLine("                entity.Create();");
             }
-            sb.AppendLine("                await service.Insert(entity);");
+            sb.AppendLine("                await repository.Insert(entity);");
             sb.AppendLine("                await CacheHelper.Remove(cacheKey + \"list\");");
             sb.AppendLine("            }");
             sb.AppendLine("            else");
@@ -333,7 +270,7 @@ namespace WaterCloud.CodeGenerator
             {
                 sb.AppendLine("                entity.Modify(keyValue); ");
             }
-            sb.AppendLine("                await service.Update(entity);");
+            sb.AppendLine("                await repository.Update(entity);");
             sb.AppendLine("                await CacheHelper.Remove(cacheKey + keyValue);");
             sb.AppendLine("                await CacheHelper.Remove(cacheKey + \"list\");");
             sb.AppendLine("            }");
@@ -342,7 +279,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        public async Task DeleteForm(string keyValue)");
             sb.AppendLine("        {");
             sb.AppendLine("            var ids = keyValue.Split(',');");
-            sb.AppendLine("            await service.Delete(t => ids.Contains(t." + idColumn + "));");
+            sb.AppendLine("            await repository.Delete(t => ids.Contains(t." + idColumn + "));");
             sb.AppendLine("            foreach (var item in ids)");
             sb.AppendLine("            {");
             sb.AppendLine("            await CacheHelper.Remove(cacheKey + item);");
@@ -1105,17 +1042,6 @@ namespace WaterCloud.CodeGenerator
 
                 }
             }
-            string codeIRes = "";
-            string iResPath = "";
-            if (!string.IsNullOrEmpty(param["CodeIRepository"].ParseToString()))
-            {
-                codeIRes = HttpUtility.HtmlDecode(param["CodeIRepository"].ToString());
-                iResPath = Path.Combine(baseConfigModel.OutputConfig.OutputIRepository, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.IRepositoryName + ".cs");
-                if (File.Exists(iResPath))
-                {
-                    throw new Exception("业务接口已存在，业务接口生成失败！");
-                }
-            }
             string codeService = "";
             string servicePath = "";
             if (!param["CodeService"].IsEmpty())
@@ -1125,17 +1051,6 @@ namespace WaterCloud.CodeGenerator
                 if (File.Exists(servicePath))
                 {
                     throw new Exception("服务类已存在，服务类生成失败！");
-                }
-            }
-            string codeBusiness = "";
-            string businessPath = "";
-            if (!param["CodeRepository"].IsEmpty())
-            {
-                codeBusiness = HttpUtility.HtmlDecode(param["CodeRepository"].ToString());
-                businessPath = Path.Combine(baseConfigModel.OutputConfig.OutputRepository, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.RepositoryName + ".cs");
-                if (File.Exists(businessPath))
-                {
-                    throw new Exception("业务类已存在，业务类生成失败！");
                 }
             }
             string codeController = "";
@@ -1265,27 +1180,11 @@ namespace WaterCloud.CodeGenerator
             }
             #endregion
 
-            #region 业务接口
-            if (!string.IsNullOrEmpty(param["CodeIRepository"].ParseToString()))
-            {
-                FileHelper.CreateFile(iResPath, codeIRes);
-                result.Add(new KeyValue { Key = "业务接口", Value = iResPath, Description = "生成成功！" });
-            }
-            #endregion
-
             #region 服务类
             if (!param["CodeService"].IsEmpty())
             {
                 FileHelper.CreateFile(servicePath, codeService);
                 result.Add(new KeyValue { Key = "服务类", Value = servicePath, Description = "生成成功！" });
-            }
-            #endregion
-
-            #region 业务类
-            if (!param["CodeRepository"].IsEmpty())
-            {
-                FileHelper.CreateFile(businessPath, codeBusiness);
-                result.Add(new KeyValue { Key = "业务类", Value = businessPath, Description = "生成成功！" });
             }
             #endregion
 

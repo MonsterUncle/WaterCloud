@@ -29,8 +29,6 @@ namespace WaterCloud.CodeGenerator
         public string CreateUserName { get; set; }
         public string CreateDate { get; set; }
         public string EntityName { get; set; }
-        public string IRepositoryName { get; set; }
-        public string RepositoryName { get; set; }
         public string ServiceName { get; set; }
         public string ControllerName { get; set; }
         public string PageIndexName { get; set; }
@@ -41,10 +39,8 @@ namespace WaterCloud.CodeGenerator
     {
         public string OutputModule { get; set; }
         public string OutputEntity { get; set; }
-        public string OutputRepository { get; set; }
         public string OutputService { get; set; }
         public string OutputWeb { get; set; }
-        public string OutputIRepository { get; set; }
     }
     public class PageIndexModel
     {
