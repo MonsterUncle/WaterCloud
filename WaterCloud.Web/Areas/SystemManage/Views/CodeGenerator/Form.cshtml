@@ -306,8 +306,6 @@
         form.on('submit(formStep1)', function (data) {
             baseConfig.FileConfig.ClassPrefix = data.field.ClassPrefix;
             baseConfig.FileConfig.EntityName = data.field.ClassPrefix + "Entity";
-            baseConfig.FileConfig.IRepositoryName = "I" + data.field.ClassPrefix + "Repository";
-            baseConfig.FileConfig.RepositoryName = data.field.ClassPrefix + "Repository";
             baseConfig.FileConfig.ServiceName = data.field.ClassPrefix + "Service";
             baseConfig.FileConfig.ControllerName = data.field.ClassPrefix + "Controller";
             baseConfig.FileConfig.ClassDescription = data.field.ClassDescription;
