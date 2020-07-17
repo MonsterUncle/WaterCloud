@@ -18,20 +18,20 @@ namespace WaterCloud.Service
         // 用户信息
         protected OperatorModel currentuser;
         // 用于当前表操作
-        protected RepositoryBase<T> Repository;
+        protected IRepositoryBase<T> repository;
         // 用于其他表操作
-        protected IDbContext dbcontext;
+        protected IRepositoryBase uniwork;
         public DataFilterService(IDbContext context) {
             currentuser = OperatorProvider.Provider.GetCurrent();
             if (currentuser != null&& !(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString))
             {
-                Repository = new RepositoryBase<T>(currentuser.DbString, currentuser.DBProvider);
-                dbcontext = Repository.GetDbContext();
+                repository = new RepositoryBase<T>(currentuser.DbString, currentuser.DBProvider);
+                uniwork = new RepositoryBase(currentuser.DbString, currentuser.DBProvider);
             }
             else
             {
-                Repository = new RepositoryBase<T>(context);
-                dbcontext = context;
+                repository = new RepositoryBase<T>(context);
+                uniwork = new RepositoryBase(context);
             }
         }
         /// <summary>
@@ -44,13 +44,13 @@ namespace WaterCloud.Service
         {
             if (query==null)
             {
-                query = Repository.IQueryable();
+                query = repository.IQueryable();
             }
             if (!CheckDataPrivilege(moduleName))
             {
                 return query;
             }
-            var rule = dbcontext.Query<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
+            var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
@@ -84,7 +84,7 @@ namespace WaterCloud.Service
             {
                 return query;
             }
-            var rule = dbcontext.Query<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
+            var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
@@ -110,7 +110,7 @@ namespace WaterCloud.Service
         protected bool CheckDataPrivilege(string moduleName)
         {
             if (currentuser.UserCode == Define.SYSTEM_USERNAME) return false;  //超级管理员特权
-            var rule = dbcontext.Query<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
+            var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             ////系统菜单也不需要数据权限 跟字段重合取消这样处理
             //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).Result;
             if (rule == null)
@@ -137,15 +137,15 @@ namespace WaterCloud.Service
                 return list;
             }
             //系统菜单跳过
-            var module = dbcontext.Query<ModuleEntity>(u => u.F_EnCode == moduleName).FirstOrDefault();
+            var module = uniwork.IQueryable<ModuleEntity>(u => u.F_EnCode == moduleName).FirstOrDefault();
             //判断是否需要字段权限
             if (module.F_IsFields==false)
             {
                 return list;
             }
             var rolelist = currentuser.RoleId.Split(',');
-            var rule = dbcontext.Query<RoleAuthorizeEntity>(u=> rolelist.Contains(u.F_ObjectId)&&u.F_ItemType==3).Select(a=>a.F_ItemId).Distinct().ToList();
-            var fieldsList = dbcontext.Query<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id)||u.F_IsPublic==true)&&u.F_ModuleId==module.F_Id).Select(u => u.F_EnCode).ToList();
+            var rule = uniwork.IQueryable<RoleAuthorizeEntity>(u=> rolelist.Contains(u.F_ObjectId)&&u.F_ItemType==3).Select(a=>a.F_ItemId).Distinct().ToList();
+            var fieldsList = uniwork.IQueryable<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id)||u.F_IsPublic==true)&&u.F_ModuleId==module.F_Id).Select(u => u.F_EnCode).ToList();
             //反射获取主键
             PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
             var idName = "F_Id";
