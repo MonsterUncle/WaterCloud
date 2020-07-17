@@ -22,10 +22,10 @@ namespace WaterCloud.CodeGenerator
         private string quickcacheKey = "watercloud_quickmoduledata_";
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
-        private IRepositoryBase repository;
+        private IRepositoryBase uniwork;
         public SingleTableTemplate(IDbContext context)
         {
-            repository = new RepositoryBase(context);
+            uniwork = new RepositoryBase(context);
         }
         #region GetBaseConfig
         public BaseConfigModel GetBaseConfig(string path,string username, string tableName, string tableDescription, Dictionary<string,string> tableFieldList)
@@ -1073,7 +1073,7 @@ namespace WaterCloud.CodeGenerator
                 string menuUrl = "/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + baseConfigModel.FileConfig.PageIndexName;
                 ModuleEntity moduleEntity = new ModuleEntity();
                 moduleEntity.Create();
-                moduleEntity.F_Layers = (await repository.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Layers + 1; ;
+                moduleEntity.F_Layers = (await uniwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Layers + 1; ;
                 moduleEntity.F_FullName = baseConfigModel.FileConfig.ClassDescription;
                 moduleEntity.F_UrlAddress = menuUrl;
                 moduleEntity.F_EnCode = baseConfigModel.FileConfig.ClassPrefix;
@@ -1086,9 +1086,9 @@ namespace WaterCloud.CodeGenerator
                 moduleEntity.F_AllowDelete = false;
                 moduleEntity.F_EnabledMark = true;
                 moduleEntity.F_DeleteMark = false;
-                moduleEntity.F_ParentId = (await repository.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Id;
-                var parentModule = await repository.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
-                moduleEntity.F_SortCode = (repository.IQueryable<ModuleEntity>(a => a.F_ParentId == parentModule.F_Id).Max(a => a.F_SortCode) ?? 0) + 1;
+                moduleEntity.F_ParentId = (await uniwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Id;
+                var parentModule = await uniwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
+                moduleEntity.F_SortCode = (uniwork.IQueryable<ModuleEntity>(a => a.F_ParentId == parentModule.F_Id).Max(a => a.F_SortCode) ?? 0) + 1;
                 List<ModuleButtonEntity> moduleButtonList = new List<ModuleButtonEntity>();
                 int sort = 0;
                 foreach (var item in baseConfigModel.PageIndex.ButtonList)
@@ -1141,14 +1141,14 @@ namespace WaterCloud.CodeGenerator
                     moduleFields.F_DeleteMark = false;
                     moduleFieldsList.Add(moduleFields);
                 }
-                repository.BeginTrans();
-                await repository.Insert(moduleEntity);
-                await repository.Insert(moduleButtonList);
+                uniwork.BeginTrans();
+                await uniwork.Insert(moduleEntity);
+                await uniwork.Insert(moduleButtonList);
                 if (moduleFieldsList.Count > 0)
                 {
-                    await repository.Insert(moduleFieldsList);
+                    await uniwork.Insert(moduleFieldsList);
                 }
-                repository.Commit();
+                uniwork.Commit();
                 await CacheHelper.Remove(fieldscacheKey + "list");
                 await CacheHelper.Remove(buttoncacheKey + "list");
                 await CacheHelper.Remove(cacheKey + "list");
