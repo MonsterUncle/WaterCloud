@@ -186,7 +186,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        #region 获取数据");
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetList(string keyword = \"\")");
             sb.AppendLine("        {");
-            sb.AppendLine("            var cachedata = await service.CheckCacheList(cacheKey + \"list\");");
+            sb.AppendLine("            var cachedata = await repository.CheckCacheList(cacheKey + \"list\");");
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
             sb.AppendLine("            {");
             sb.AppendLine("                //此处需修改");
