@@ -587,6 +587,12 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _readonly = json.readonly ? 'readonly=""' : '';
                     var _required = json.required ? 'required=""' : '';
                     $('#' + json.id + ' .layui-input-block').empty();
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    }
+                    else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                     var _html = '';
                     //重绘设计区改id下的所有元素
                     _html += '<input name="{0}" value="{1}" placeholder="{3}" class="layui-input" lay-verify="required" {4} {5} {6} style="width:{2}">'
@@ -639,6 +645,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _readonly = json.readonly ? 'readonly=""' : '';
                     var _required = json.required ? 'required=""' : '';
                     $('#' + json.id + ' .layui-input-block').empty();
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                     var _html = '';
                     //重绘设计区改id下的所有元素
                     _html += '<input type="password" name="{0}" lay-verify="pass" placeholder="{3}" value="{1}" autocomplete="off" style="width:{2}" {4} {5} {6} class="layui-input">'
@@ -698,6 +709,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 update: function (json) {
                     var _disabled = json.disabled ? 'disabled=""' : '';
                     var _required = json.required ? 'required=""' : '';
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                     $('#' + json.id + ' .layui-input-block').empty();
                     $('#' + json.id + ' .layui-input-block').css({ width: 'calc({0} - 110px'.format(json.width) });
                     var _html = '';
@@ -766,6 +782,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _disabled = json.disabled ? 'disabled=""' : '';
                     var _required = json.required ? 'required=""' : '';
                     $('#' + json.id + ' .layui-input-block').empty();
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                     var _html = '';
                     //重绘设计区改id下的所有元素
                     for (var i = 0; i < json.options.length; i++) {
@@ -827,6 +848,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 update: function (json) {
                     var _disabled = json.disabled ? 'disabled=""' : '';
                     var _required = json.required ? 'required=""' : '';
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                     $('#' + json.id + ' .layui-input-block').empty();
                     var _html = '';
                     //重绘设计区改id下的所有元素
@@ -881,6 +907,13 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     return _html;
                 },
                 update: function (json) {
+                    var _disabled = json.disabled ? 'disabled=""' : '';
+                    var _required = json.required ? 'required=""' : '';
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                     $('#' + json.id + ' .layui-input-block').empty();
                     var _html = '';
                     _html += '<input type="checkbox" name="{0}" lay-skin="switch" lay-text="ON|OFF" {1}>'.format(json.tag, _disabled);
@@ -927,6 +960,13 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     return _html;
                 },
                 update: function (json) {
+                    var _disabled = json.disabled ? 'disabled=""' : '';
+                    var _required = json.required ? 'required=""' : '';
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                     $('#' + json.id + ' .layui-input-block').css({ width: 'calc({0} - 110px'.format(json.width) });
                     slider.render({
                         elem: '#' + json.tag + json.id,
@@ -975,6 +1015,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     return _html;
                 },
                 update: function (json) {
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                     $('#' + json.id + ' .layui-input-block').css({ width: 'calc({0} - 110px'.format(json.width) });
                     laydate.render({
                         elem: '#' + json.tag + json.id,
@@ -1032,6 +1077,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     return _html;
                 },
                 update: function (json) {
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                     rate.render({
                         elem: '#' + json.tag + json.id,
                         value: json.defaultValue,
@@ -1145,6 +1195,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     return _html;
                 },
                 update: function (json) {
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                     colorpicker.render({
                         elem: '#' + json.tag + json.id,
                         colorformat: json.colorformat,
@@ -1203,6 +1258,13 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     _html += '</div>';
                     return _html;
                 },
+                update: function (json) {
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
+                },
                 /* 获取对象 */
                 jsonData: function (id, index, columncount) {
                     //分配一个新的ID 
@@ -1247,6 +1309,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 update: function (json) {
                     var _disabled = json.disabled ? 'disabled=""' : '';
                     var _required = json.required ? 'required=""' : '';
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                     $('#' + json.id + ' .layui-input-block').empty();
                     $('#' + json.id + ' .layui-input-block').css({ width: '{0}'.format(json.width) });
                     var _html = '';
@@ -1294,6 +1361,13 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     // }
                     _html += '</div>';
                     return _html;
+                },
+                update: function (json) {
+                    if (!json.required) {
+                        $('#' + json.id).find('.layui-form-label').removeClass('required');
+                    } else {
+                        $('#' + json.id).find('.layui-form-label').addClass('required');
+                    }
                 },
                 /* 获取对象 */
                 jsonData: function (id, index, columncount) {
