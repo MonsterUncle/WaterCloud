@@ -107,11 +107,11 @@
                      return false;
                  }
                  if (entity.data.F_IsFinish != 0) {
-                     common.modalMsg("申请已处理，无法修改", "warning");
+                     common.modalMsg("申请已处理，无法处理", "warning");
                      return false;
                  }
                  common.modalOpen({
-                     title: "查看进度",
+                     title: "处理流程",
                      url: "/FlowManage/Flowinstance/Verification?keyValue=" + entity.data.F_Id,
                      width: "700px",
                      height: "600px",
