@@ -53,8 +53,20 @@
                     return false;
                 }
                 common.openNewTabByIframe({
-                    title: "代码生成器",
+                    title: "模板代码生成",
                     href: "/SystemManage/CodeGenerator/Form?keyValue=" + entity.data.TableName,
+                });
+            }
+            else if (obj.event === 'entitycode') {
+                if (entity == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalOpen({
+                    title: "实体类生成",
+                    url: "/SystemManage/CodeGenerator/EntityCode?keyValue=" + entity.data.TableName,
+                    width: "700px",
+                    height: "600px",
                 });
             }
             else if (obj.event === 'details') {
@@ -97,7 +109,8 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
-                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="add"><i class="layui-icon">&#xe654;</i>生成</button>
+                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="add"><i class="layui-icon">&#xe654;</i>模板生成</button>
+                <button id="NF-entitycode" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="entitycode"><i class="layui-icon">&#xe654;</i>实体生成</button>
                 <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
             </div>
         </script>

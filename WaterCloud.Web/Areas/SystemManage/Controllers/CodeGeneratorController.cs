@@ -175,6 +175,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public virtual ActionResult EntityCode()
+        {
+            return View();
+        }   
         [HttpPost]
         [HandlerAjaxOnly]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
@@ -195,6 +200,50 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 {
                     SingleTableTemplate template = new SingleTableTemplate(_context);
                     await template.CreateCode(baseConfig, HttpUtility.UrlDecode(Code));
+                }
+                logEntity.F_Description += "操作成功";
+                await _logService.WriteDbLog(logEntity);
+                return Success("操作成功。");
+            }
+            catch (System.Exception ex)
+            {
+                logEntity.F_Result = false;
+                logEntity.F_Description += "操作失败，" + ex.Message;
+                await _logService.WriteDbLog(logEntity);
+                return Error(ex.Message);
+            }
+        }
+        [HttpPost]
+        [HandlerAjaxOnly]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EntityCodeGenerateJson(BaseConfigModel baseConfig, string keyValue)
+        {
+            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
+            logEntity.F_Description += DbLogType.Create.ToDescription();
+            try
+            {
+                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
+                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                if (!GlobalContext.SystemConfig.Debug)
+                {
+                    throw new System.Exception("请在本地开发模式时使用代码生成");
+                }
+                else
+                {
+                    List<TableFieldInfo> list = await _service.GetTableFieldList(baseConfig.TableName);
+                    SingleTableTemplate template = new SingleTableTemplate(_context);
+                    DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
+                    string idcolumn = string.Empty;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        if (dr["TableIdentity"].ToString() == "Y")
+                        {
+                            idcolumn = dr["TableColumn"].ToString();
+                        }
+                    }
+                    string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
+                    await template.EntityCreateCode(baseConfig, codeEntity);
                 }
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
