@@ -256,7 +256,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                 }
             };
             //ie缓存问题
-            //options.url = obj.urlAddTime(options.url);
+            options.url = obj.urlAddTime(options.url);
             var _width = top.$(window).width() > parseInt(options.width.replace('px', '')) ? options.width : top.$(window).width() - 20 + 'px';
             var _height = top.$(window).height() > parseInt(options.height.replace('px', '')) ? options.height : top.$(window).height() - 20 + 'px';
             var index = layer.open({
@@ -574,8 +574,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             //行操作权限控制
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
-            var strList = [];
-            var isBtn = false;
             var returnhtml = '';
             if (innerHTML.indexOf('</button>') > -1) {
                 var tempList = innerHTML.split('</button>');
@@ -791,12 +789,12 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             });
         },
         //刷新tab Iframe
-        reloadIframe: function (src) {
+        reloadIframe: function (src,filter) {
             var iframes = parent.document.getElementsByTagName("iframe");
             for (var i = 0; i < iframes.length; i++) {
                 var doc = iframes[i].contentWindow.document;
                 if (iframes[i].src.indexOf(src) != -1) {
-                    doc.location.reload();
+                   $(doc).find('button[lay-filter="' + filter + '"]').click();
                     break;
                 }
             }

@@ -288,7 +288,7 @@
                 url: '/FlowManage/Flowinstance/SubmitForm?keyValue=' + keyValue,
                 param: postData,
                 success: function () {
-                    common.reloadIframe("/FlowManage/Flowinstance/Index");
+                    common.reloadIframe("/FlowManage/Flowinstance/Index", 'data-search-btn');
                 }
             })
             return false;

@@ -255,7 +255,7 @@
                 url: "/SystemManage/Flowscheme/SubmitForm?keyValue=" + keyValue,
                 param: postData,
                 success: function () {
-                    common.reloadIframe("/SystemManage/Flowscheme/Index");
+                    common.reloadIframe("/SystemManage/Flowscheme/Index", 'data-search-btn');
                 }
             })
             return false;

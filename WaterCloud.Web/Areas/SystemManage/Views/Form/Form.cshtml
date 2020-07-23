@@ -237,7 +237,7 @@
                 url: '/SystemManage/Form/SubmitForm?keyValue=' + keyValue,
                 param: postData,
                 success: function () {
-                    common.reloadIframe("/SystemManage/Form/Index");
+                    common.reloadIframe("/SystemManage/Form/Index", 'data-search-btn');
                 }
             })
             return false;

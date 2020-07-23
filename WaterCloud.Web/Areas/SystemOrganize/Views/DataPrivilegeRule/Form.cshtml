@@ -190,7 +190,7 @@
                     url: '/SystemOrganize/DataPrivilegeRule/SubmitForm?keyValue=' + keyValue,
                     param: postData,
                     success: function () {
-                        common.reloadIframe("/SystemOrganize/DataPrivilegeRule/Index");
+                        common.reloadIframe("/SystemOrganize/DataPrivilegeRule/Index", 'data-search-btn');
                     }
                 })
                 return false;

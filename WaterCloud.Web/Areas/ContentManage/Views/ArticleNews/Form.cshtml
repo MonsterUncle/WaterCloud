@@ -110,7 +110,7 @@
                 url: '/ContentManage/ArticleNews/SubmitForm?keyValue=' + keyValue,
                 param: postData,
                 success: function () {
-                    common.reloadIframe("/ContentManage/ArticleNews/Index");
+                    common.reloadIframe("/ContentManage/ArticleNews/Index", 'data-search-btn');
                 }
             })
             return false;
