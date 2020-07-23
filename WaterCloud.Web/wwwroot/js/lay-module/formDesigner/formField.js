@@ -333,7 +333,7 @@ layui.define(['layer'], function (exports) {
         }
         ,c1:{
             name:"输入型组件",
-            list:['input','password','textarea']
+            list: ['input', 'password', 'textarea','editor']
         }
         ,c2:{
             name:"选择型组件",
