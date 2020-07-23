@@ -10,6 +10,10 @@
 - 操作权限基于RBAC，权限控制精密细致，对所有管理链接都进行权限验证，可控制到导航菜单、功能按钮，控制到行级，列表级，表单字段级，不同人对同一个页面的操作不同。
 - 数据权限,精细化数据权限控制，实现不同人看不同数据。
 - 代码生成功能，简单前后端代码生成。
+- 表单设计器，提供多种方式设计表单，动态表单拖拉式设计以及自定义表单。
+- 流程设计器，动态设计流程，节点及连线条件设计。
+- 内容管理，已配置好UEditor编辑器，可以使用。
+- 文件管理，提供文件上传及下载功能。
 - 提高开发效率及质量。常用类封装，日志、缓存、验证、字典、文件、邮件、Excel。等等。
 - 页面为响应式设计，支持电脑、平板、智能手机等设备，微信浏览器以及各种常见浏览器。
 - 适用范围：可以开发OA、ERP、BPM、CRM、WMS、TMS、MIS、BI、电商平台后台、物流管理系统、快递管理系统、教务管理系统等各类管理软件。
@@ -27,8 +31,8 @@
 - js框架：jquery-3.4.1、LayUI、LayUI mini（开源）。
 - 图标：Font Awesome 4.7.0。
 - 客户端验证：LayUI verify。
-- 富文本编辑器：开源wangEditor。
-- 上传文件：开源zyupload。
+- 富文本编辑器：开源wangEditor、百度UEditor、layui edit。
+- 上传文件：开源zyupload、layui upoload。
 - 动态页签：LayUI mini miniTab。
 - 数据表格：LayUI table、LayUI 开源 TalbePlug。
 - 下拉选择框：LayUI select、LayUI 开源 TalbePlug(optimizeSelectOption)、xmselect。
