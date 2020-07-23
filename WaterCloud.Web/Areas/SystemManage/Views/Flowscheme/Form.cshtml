@@ -1,0 +1,371 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<link href="~/js/lay-module/flow/GooFlow.css" rel="stylesheet" />
+@*<link href="/css/formpreview.css" rel="stylesheet" />*@
+<link href="~/css/stepcss.css" rel="stylesheet" />
+<style>
+
+    /* 图片上传 */
+    .uploader-list {
+        margin-left: -15px;
+    }
+
+        .uploader-list .info {
+            position: relative;
+            margin-top: -25px;
+            background-color: black;
+            color: white;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            width: 100px;
+            height: 25px;
+            text-align: center;
+            display: none;
+        }
+
+        .uploader-list .handle {
+            position: relative;
+            background-color: black;
+            color: white;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            width: 100px;
+            text-align: right;
+            height: 18px;
+            margin-bottom: -18px;
+            display: none;
+        }
+
+            .uploader-list .handle i {
+                margin-right: 5px;
+            }
+
+                .uploader-list .handle i:hover {
+                    cursor: pointer;
+                }
+
+        .uploader-list .file-iteme {
+            margin: 12px 0 0 15px;
+            padding: 1px;
+            float: left;
+        }
+</style>
+<script>
+    //只读参数
+    var readonly = true;
+    layui.use(['form', 'layer', 'element', 'jquery', 'table', 'tablePlug', 'gooflow', 'flowlayout', 'common', 'step', 'formPreview'], function () {
+        var form = layui.form,
+            element = layui.element,
+            layer = layui.layer,
+            $ = layui.jquery,
+            step = layui.step,
+            common = layui.common,
+            formPreview = layui.formPreview,
+            table = layui.table;
+
+        var keyValue = $.request("keyValue");
+        //提交的URL
+        //权限字段
+        common.authorizeFields('stepForm');
+        var postData = {};//分步骤表单，最终提交只能获取最后一个表单的数据，所以定义全局数组保存表单数据
+        step.render({
+            elem: '#stepForm',
+            filter: 'stepForm',
+            width: '100%', //设置容器宽度
+            stepWidth: '750px',
+            height: '600px',
+            stepItems: [{
+                title: '基本信息'
+            }, {
+                title: '选择表单'
+            }, {
+                title: '流程设计'
+            }]
+        });
+        $(function () {
+            $('#F_SchemeCode').val(new Date().getTime());
+            initControl();
+            if (!!keyValue) {
+                common.ajax({
+                    url: "/SystemManage/Flowscheme/GetFormJson",
+                    dataType: "json",
+                    data: { keyValue: keyValue },
+                    async: false,
+                    success: function (data) {
+                        common.val('adminform', data);
+                        form.render();
+                        changeForm(data.F_FrmId)
+                        flowDesignPanel.loadData(JSON.parse(data.F_SchemeContent));
+                    }
+                });
+            }
+        });
+        wcLoading.close();
+        function initControl() {
+            $("#F_FrmId").bindSelect({
+                url: "/SystemManage/Form/GetListJson",
+                id: 'F_Id',
+                text: 'F_Name'
+            });
+            form.render();
+        }
+
+        var changeForm = function (id) { //切换表单
+            $('#F_FrmId').val(id);
+            common.ajax({
+                url: '/SystemManage/Form/GetFormJson',
+                dataType: 'json',
+                data: { keyValue: id },
+                async: false,
+                success: function (data) {
+                    postData.F_FrmType = data.F_FrmType;
+                    if (data.F_FrmType == 0) {
+                        //表单设计器
+                        formPreview.render({
+                            data: JSON.parse(data.F_Content),
+                            elem: '#frmPreview'
+                        });
+                    }
+                    else {
+                        $("#frmPreview").load(document.location.origin + '/form/' + data.F_WebId + '.html');
+                    }
+                    if (!!data.F_ContentData) {
+                        $("#valueList").val(data.F_ContentData);
+                    }
+                }
+            });
+            form.render();
+        }
+
+
+        /*=========流程设计（begin）======================*/
+        var flowDesignPanel = $('#flowPanel').flowdesign({
+            height: 300,
+            widht: 300,
+            OpenNode: function (object) {
+                FlowDesignObject = object; //为NodeInfo窗口提供调用
+
+                if (object.type == 'start round mix' || object.type == 'end round') {
+                    layer.msg("开始节点与结束节点不能设置");
+                    return false;
+                }
+
+                layer.open({
+                    type: 2,
+                    area: ['550px', '450px'], //宽高
+                    maxmin: true, //开启最大化最小化按钮
+                    title: '节点设置【' + object.name + '】',
+                    content: '/SystemManage/Flowscheme/NodeInfo',
+                    btn: ['确定', '取消'],
+                    yes: function (index, layero) {
+                        var body = layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                        var nodedata = iframeWin.getVal();
+                        flowDesignPanel.SetNodeEx(object.id, nodedata);
+                        layer.close(index);
+                    },
+                    cancel: function (index) {
+                        layer.close(index);
+                    }
+                });
+            },
+            OpenLine: function (object) {
+                FlowDesignObject = object; //为NodeInfo窗口提供调用
+                valueList = $("#valueList").val().split(',');
+                layer.open({
+                    type: 2,
+                    area: ['550px', '450px'], //宽高
+                    maxmin: true, //开启最大化最小化按钮
+                    title: '连线设置【' + object.name + '】',
+                    content: '/SystemManage/Flowscheme/LineInfo',
+                    btn: ['确定', '取消'],
+                    yes: function (index, layero) {
+                        var body = layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                        var linedata = iframeWin.getVal();
+                        flowDesignPanel.SetLineEx(object.id, linedata);
+                        layer.close(index);
+                    },
+                    cancel: function (index) {
+                        layer.close(index);
+                    }
+                });
+                return;
+            }
+        });
+
+        /*=========流程设计（end）=====================*/
+        //提交数据
+        form.on('submit(saveBtn)',
+            function (data) {
+                var content = flowDesignPanel.exportDataEx();
+                if (content == -1) {
+                    return false; //阻止表单跳转。
+                }
+                var schemecontent = {
+                    F_SchemeContent: JSON.stringify(content)
+                }
+                $.extend(data.field, schemecontent);
+
+                return false; //阻止表单跳转。
+            });
+        $('.pre').click(function () {
+            step.pre('#stepForm');
+        });
+
+        $('.next').click(function () {
+            step.next('#stepForm');
+        });
+        form.on('submit(formStep)', function (data) {
+            postData = $.extend(postData, data.field);
+            step.next('#stepForm');
+            return false;
+        });
+
+        form.on('submit(formStep2)', function (data) {
+            if (!data.field.F_FrmId) {
+                common.modalMsg("请选择表单", "warning");
+                return false;
+            }
+            postData = $.extend(postData, data.field);
+            step.next('#stepForm');
+            return false;
+        });
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var content = flowDesignPanel.exportDataEx();
+            if (content == -1) {
+                return false; //阻止表单跳转。
+            }
+            // 单击之后提交按钮不可选,防止重复提交
+            $('.site-demo-active').addClass('layui-btn-disabled');
+            $('.site-demo-active').attr('disabled', 'disabled');
+            var schemecontent = {
+                F_SchemeContent: JSON.stringify(content)
+            }
+            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+            $.extend(data.field, schemecontent);
+            $.extend(postData, data.field);
+            postData.F_AuthorizeType = 0;
+            common.submitForm({
+                url: "/SystemManage/Flowscheme/SubmitForm?keyValue=" + keyValue,
+                param: postData,
+                success: function () {
+                    common.reloadIframe("/SystemManage/Flowscheme/Index");
+                }
+            })
+            return false;
+        });
+        form.on('select(formChangeFilter)', function (obj) {
+            if (!!obj.value) {
+                changeForm(obj.value);
+            }
+            else {
+                $("#frmPreview").html('');
+                $("#valueList").val('');
+            }    
+        });
+
+        flowDesignPanel.reinitSize($(window).width() - 50, $(window).height() - 100);
+        $(window).resize(function () {
+            flowDesignPanel.reinitSize($(window).width() - 50, $(window).height() - 100);
+        });
+    });
+</script>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form" lay-filter="adminform">
+                <div class="layui-carousel" id="stepForm" lay-filter="stepForm">
+                    <div carousel-item>
+                        <div>
+                            <form class="layui-form layuimini-form">
+                                <div class="layui-form-item layui-hide">
+                                    <label class="layui-form-label required">流程编号</label>
+                                    <input type="text" name="valueList" id="valueList" class="layui-hide" hidden>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="F_SchemeCode" id="F_SchemeCode" required lay-verify="required"
+                                               placeholder="流程编号" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-hide">
+                                    <label class="layui-form-label required">流程名称</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="F_SchemeName" id="F_SchemeName" required lay-verify="required"
+                                               placeholder="流程名称" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-hide">
+                                    <label class="layui-form-label required">排序</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-hide">
+                                    <label class="layui-form-label">选项</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text layui-hide">
+                                    <label class="layui-form-label">备注</label>
+                                    <div class="layui-input-block">
+                                        <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入备注"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group-bottom text-right">
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn" lay-submit lay-filter="formStep">
+                                            &emsp;下一步&emsp;
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div>
+                            <form class="layui-form layuimini-form">
+                                <div class="layui-form-item">
+                                    <select id="F_FrmId" name="F_FrmId" lay-filter='formChangeFilter' lay-search>
+                                        <option value="" selected>请选择</option>
+                                    </select>
+                                </div>
+                                <fieldset class="layui-elem-field">
+                                    <div id="frmPreview"></div>
+                                </fieldset>
+                                <div class="form-group-bottom text-right">
+                                    <div class="layui-input-block">
+                                        <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                        <button class="layui-btn" lay-submit lay-filter="formStep2">
+                                            &emsp;下一步&emsp;
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div>
+                            <form class="layui-form layuimini-form">
+                                <div class="layui-form-item">
+                                    <div id="flowPanel" style=""></div>
+                                </div>
+                                <div class="form-group-bottom text-right">
+                                    <div class="layui-input-block">
+                                        <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                        <button class="layui-btn site-demo-active" lay-submit lay-filter="saveBtn">
+                                            &emsp;保存&emsp;
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+

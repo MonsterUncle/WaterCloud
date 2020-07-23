@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>c1fb91bb-fd9e-4a3a-8c93-b84e89a0941a</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <Version>1.8.0.0</Version>
+    <Version>1.0.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -40,6 +40,7 @@
     <None Include="Areas\SystemManage\Views\Area\Form.cshtml" />
     <None Include="Areas\SystemManage\Views\Area\Index.cshtml" />
     <None Include="Views\Home\Message.cshtml" />
+    <None Include="wwwroot\js\lay-module\formDesigner\Sortable\.circleci\config.yml" />
   </ItemGroup>
 
   <ItemGroup>

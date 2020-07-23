@@ -38,17 +38,17 @@ namespace WaterCloud.Domain.SystemManage
         /// <returns></returns>
         public int? F_Fields { get; set; }
         /// <summary>
-        /// 表单中的控件属性描述
+        /// 表单中的字段
         /// </summary>
         /// <returns></returns>
         public string F_ContentData { get; set; }
         /// <summary>
-        /// 表单控件位置模板
+        /// 表单参数（冗余）
         /// </summary>
         /// <returns></returns>
         public string F_ContentParse { get; set; }
         /// <summary>
-        /// 表单原html模板未经处理的
+        /// 表单参数Json
         /// </summary>
         /// <returns></returns>
         public string F_Content { get; set; }
@@ -102,5 +102,15 @@ namespace WaterCloud.Domain.SystemManage
         /// </summary>
         /// <returns></returns>
         public string F_Description { get; set; }
+        /// <summary>
+        /// 所属组织
+        /// </summary>
+        /// <returns></returns>
+        public string F_OrganizeId { get; set; }
+        /// <summary>
+        /// 数据库名称
+        /// </summary>
+        /// <returns></returns>
+        public string F_DbName { get; set; }
     }
 }

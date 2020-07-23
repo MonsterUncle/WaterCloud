@@ -92,6 +92,7 @@ namespace WaterCloud.Web
             //////定时任务（已废除）
             ////services.AddBackgroundServices();
             #endregion
+            services.AddHttpClient();
 
             services.AddControllersWithViews(options =>
             {

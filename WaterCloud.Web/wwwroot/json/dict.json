@@ -1,0 +1,37 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 6,
+  "data": [
+    {
+      "dictId": 1,
+      "dictName": "专业",
+      "dictCode": "majors"
+    },
+    {
+      "dictId": 2,
+      "dictName": "性别",
+      "dictCode": "sex"
+    },
+    {
+      "dictId": 3,
+      "dictName": "民族",
+      "dictCode": "nation"
+    },
+    {
+      "dictId": 4,
+      "dictName": "政治面貌",
+      "dictCode": "political_landscape"
+    },
+    {
+      "dictId": 5,
+      "dictName": "保管期限",
+      "dictCode": "retention"
+    },
+    {
+      "dictId": 6,
+      "dictName": "密级",
+      "dictCode": "secret"
+    }
+  ]
+}

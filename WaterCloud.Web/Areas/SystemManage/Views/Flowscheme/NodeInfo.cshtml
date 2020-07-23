@@ -1,0 +1,278 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<div class="layuimini-container ">
+    <div class="layuimini-main">
+        <div class="layui-form layuimini-form" lay-filter="adminform">
+            <div class="layui-tab layui-tab-brief" lay-filter="tab" style="margin: 0px">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">基本信息</li>
+                    <li>执行人</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">节点标识</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="NodeCode" id="NodeCode" readonly lay-verify="required"
+                                       placeholder="流程编号" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">节点名称</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="NodeName" id="NodeName" required lay-verify="required"
+                                       placeholder="节点名称" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">驳回类型</label>
+                            <div class="layui-input-block">
+                                <select id="NodeRejectType" lay-filter="NodeRejectType" name="NodeRejectType" required lay-verify="required">
+                                    <option value="0">上一步</option>
+                                    <option value="1">第一步</option>
+                                    <option value="2">指定步骤</option>
+                                    <option value="3">不处理</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item" v-if="isFork()">
+                            <label class="layui-form-label">会签方式</label>
+                            <div class="layui-input-block">
+                                <select id="NodeConfluenceType" lay-filter="NodeConfluenceType" name="NodeConfluenceType">
+                                    <option value="all">全部分支都同意</option>
+                                    <option value="one">至少一个分支同意</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">三方系统回调URL</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="ThirdPartyUrl" id="ThirdPartyUrl"
+                                       placeholder="http://www.xxxxxx.com/api/workflow/execute_callback" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="margin-left: 0px;">
+                                <input type="radio" name="NodeDesignate" lay-filter="NodeDesignate" value="ALL_USER" title="所有用户" checked>
+                                <input type="radio" name="NodeDesignate" lay-filter="NodeDesignate" value="SPECIAL_USER" title="指定用户">
+                                <input type="radio" name="NodeDesignate" lay-filter="NodeDesignate" value="SPECIAL_ROLE" title="指定角色">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-hide" id="specialrole">
+                                <div class="layui-input-block" style="margin-left: 0px;">
+                                    <table class="layui-hide" id="RoleId" lay-filter="RoleTableFilter"></table>
+                                </div>
+                            </div>
+                            <div class="layui-hide" id="specialuser">
+                                <div class="layui-input-block" style="margin-left: 0px;">
+                                    <table class="layui-hide" id="UserId" lay-filter="UserTableFilter"></table>
+                                </div>
+                            </div>
+                            <div class="layui-hide" id="alluser">
+                                <div class="layui-input-block" style="margin-left: 0px;">
+                                    <h3>所有人都可以审核</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'layer', 'element', 'table', 'tablePlug', 'jquery', 'common'], function () {
+        var layer = layui.layer,
+            $ = layui.jquery,
+            table = layui.table,
+            common = layui.common;
+        var form = layui.form;
+        var Method = $.request("Method");
+        //从flowschemes.js进入的节点信息
+        var node = parent.FlowDesignObject;
+        var tmp = {
+            NodeName: node.name,
+            NodeCode: node.id,//默认的code
+            NodeRejectType: "0",
+            NodeDesignate: "ALL_USER",
+            NodeConfluenceType: "all",
+            ThirdPartyUrl: ""
+        };
+        $('#specialrole').addClass("layui-hide");
+        $('#specialuser').addClass("layui-hide");
+        $('#alluser').removeClass("layui-hide");
+        var userids = '';
+        var roleids = '';
+        //初始化节点设置信息
+        if (node.setInfo != null) {
+            tmp = Object.assign({}, tmp, node.setInfo);
+            if (tmp.NodeDesignate === "SPECIAL_USER" && tmp.NodeDesignateData.users.length > 0) {
+                form.val("adminform", {
+                    "NodeDesignate": 'SPECIAL_USER' //对应radio的value
+                });
+                userids = tmp.NodeDesignateData.users;
+                $('#specialrole').addClass("layui-hide");
+                $('#specialuser').removeClass("layui-hide");
+                $('#alluser').addClass("layui-hide");
+
+
+            } else if (tmp.NodeDesignate === "SPECIAL_ROLE" && tmp.NodeDesignateData.roles.length > 0) {
+                form.val("adminform", {
+                    "NodeDesignate": 'SPECIAL_ROLE' //对应radio的value
+                });
+                roleids = tmp.NodeDesignateData.roles;
+                $('#specialrole').removeClass("layui-hide");
+                $('#specialuser').addClass("layui-hide");
+                $('#alluser').addClass("layui-hide");
+
+            }
+        }
+        common.rendertable({
+            elem: '#UserId',
+            id: 'UserId',
+            url: '/SystemOrganize/User/GetListJson?ids=' + (!!userids ? userids : ""),
+            page: false,
+            height: 'full-120',
+            toolbar: false,//工具栏
+            sqlkey: 'F_Id',//数据库主键
+            cols: [[
+                { type: 'checkbox' },
+                { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
+                { field: 'F_Account', title: '账户', width: 120, sort: true },
+                { field: 'F_RealName', title: '姓名', width: 120, sort: true },
+                {
+                    field: 'F_OrganizeId', title: '公司', width: 120, sort: true,
+                    templet: function (d) {
+                        return top.clients.organize[d.F_OrganizeId] == null ? "" : top.clients.organize[d.F_OrganizeId].fullname;
+                    }
+                },
+                {
+                    field: 'F_DepartmentId', title: '部门', width: 120, sort: true,
+                    templet: function (d) {
+                        return top.clients.organize[d.F_DepartmentId] == null ? "" : top.clients.organize[d.F_DepartmentId].fullname;
+
+                    }
+                },
+                {
+                    field: 'F_EnabledMark', title: '状态', width: 100, sort: true,
+                    templet: function (d) {
+                        if (d.F_EnabledMark == true) {
+                            return "<span class=\"layui-bg-green\">正常</span>";
+                        } else {
+                            return "<span class=\"layui-bg-red\">禁用</span>";
+                        }
+                    }
+                }
+            ]]
+        });
+        common.rendertable({
+            elem: '#RoleId',
+            id: 'RoleId',
+            url: '/SystemOrganize/Role/GetSelectJson?ids=' + (!!roleids ? roleids : ""),
+            page: false,
+            height: 'full-120',
+            toolbar: false,//工具栏
+            sqlkey: 'F_Id',//数据库主键
+            cols: [[
+                { type: 'checkbox' },
+                { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
+                { field: 'F_FullName', title: '角色名称', width: 120, sort: true },
+                {
+                    field: 'F_Type', title: '角色类型', width: 120, sort: true,
+                    templet: function (d) {
+                        return top.clients.dataItems["RoleType"][d.F_Type] == undefined ? "" : top.clients.dataItems["RoleType"][d.F_Type];
+                    }
+                },
+                {
+                    field: 'F_OrganizeId', title: '归属公司', width: 120, sort: true,
+                    templet: function (d) {
+                        return top.clients.organize[d.F_OrganizeId] == undefined ? "" : top.clients.organize[d.F_OrganizeId].fullname;
+                    }
+                },
+                {
+                    field: 'F_EnabledMark', title: '状态', width: 100, sort: true,
+                    templet: function (d) {
+                        if (d.F_EnabledMark == true) {
+                            return "<span class=\"layui-bg-green\">正常</span>";
+                        } else {
+                            return "<span class=\"layui-bg-red\">禁用</span>";
+                        }
+                    }
+                }
+            ]]
+        });
+        common.val('adminform', tmp);
+        if (Method == "Details") {
+            common.setReadOnly('adminform');
+        }
+        form.render(); //重新渲染，防止radio/select等失效
+        wcLoading.close();
+        form.on('select(NodeRejectType)',
+            function (data) {
+                tmp.NodeRejectType = data.value;
+            });
+
+        form.on('select(NodeConfluenceType)',
+            function (data) {
+                tmp.NodeConfluenceType = data.value;
+            });
+
+        form.on('radio(NodeDesignate)',
+            function (data) {
+                tmp.NodeDesignate = data.value;
+                if (data.value === "SPECIAL_USER") {
+                    $('#specialrole').addClass("layui-hide");
+                    $('#specialuser').removeClass("layui-hide");
+                    $('#alluser').addClass("layui-hide");
+                } else if (data.value === "SPECIAL_ROLE") {
+                    $('#specialrole').removeClass("layui-hide");
+                    $('#specialuser').addClass("layui-hide");
+                    $('#alluser').addClass("layui-hide");
+                }
+                else {
+                    $('#specialrole').addClass("layui-hide");
+                    $('#specialuser').addClass("layui-hide");
+                    $('#alluser').removeClass("layui-hide");
+                }
+            });
+
+        //提供给上父页面调用
+        getVal = function () {
+            var users = [];
+            var roles = [];
+            if (tmp.NodeDesignate === "SPECIAL_USER") {
+                var checkStatus = table.checkStatus("UserId").data;
+                for (var i = 0; i < checkStatus.length; i++) {
+                    users.push(checkStatus[i].F_Id);
+                }
+            } else if (tmp.NodeDesignate === "SPECIAL_ROLE") {
+                var checkStatus = table.checkStatus("RoleId").data;
+                for (var i = 0; i < checkStatus.length; i++) {
+                    roles.push(checkStatus[i].F_Id);
+                }
+            }
+            tmp.NodeRejectType = $('#NodeRejectType').val();
+            tmp.NodeConfluenceType = $('#NodeConfluenceType').val();
+            tmp.ThirdPartyUrl = $('#ThirdPartyUrl').val();
+            tmp.NodeName = $('#NodeName').val();
+            var result = {
+                NodeDesignateData: { //节点指定操作人
+                    users: users,
+                    roles: roles,
+                    orgs: [],
+                }
+            };
+            //  $.extend(result, vm.tmp);
+            result = $.extend(tmp, result);
+            return result;
+        }
+    })
+</script>

@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-form layuimini-form" lay-filter="adminform">
+            <div class="layui-form-item">
+                <label class="layui-form-label">连线标识</label>
+                <div class="layui-input-block">
+                    <input type="text" name="LineCode" id="LineCode" readonly lay-verify="required"
+                           placeholder="连线编号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">连线名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="LineName" id="LineName" required lay-verify="required"
+                           placeholder="连线名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">源节点</label>
+                <div class="layui-input-block">
+                    <input type="text" name="NodeForm" id="NodeForm" readonly lay-verify="required"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">目标节点</label>
+                <div class="layui-input-block">
+                    <input type="text" name="NodeTo" id="NodeTo" readonly lay-verify="required"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">表单字段</label>
+                <div class="layui-input-block">
+                    <select id="ComparesFieldName" name="ComparesFieldName" lay-filter="ComparesField" lay-search>
+                        <option value="" selected>请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">比较</label>
+                <div class="layui-input-block">
+                    <select id="ComparesOperation" name="ComparesOperation" lay-search>
+                        <option value="" selected>请选择</option>
+                        <option value=">" selected>></option>
+                        <option value=">=" selected>>=</option>
+                        <option value="<" selected><</option>
+                        <option value="<=" selected><=</option>
+                        <option value="=" selected>=</option>
+                        <option value="!=" selected>!=</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">值</label>
+                <div class="layui-input-block">
+                    <input type="text" name="ComparesValue" id="ComparesValue"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'layer', 'element', 'tablePlug','jquery', 'common'], function () {
+        var layer = layui.layer,
+            $ = layui.jquery,
+            common = layui.common;
+        var form = layui.form;
+        var Method = $.request("Method");
+        //从flowschemes.js进入的节点信息
+        var line = parent.FlowDesignObject;
+        var valuelist = parent.valueList;
+        for (var i = 0; i < valuelist.length; i++) {
+            $('#ComparesFieldName').append($("<option></option>").val(valuelist[i]).html(valuelist[i]));
+        }
+        var tmp = {
+            LineName: line.name,
+            LineCode: line.id,//默认的code
+            NodeForm: line.from,
+            NodeTo: line.to,
+            ComparesOperation: "",
+            ComparesFieldName: "",
+            ComparesValue: "",
+        };
+        //初始化节点设置信息
+        if (line.Compares != null) {
+            tmp.ComparesOperation = line.Compares[0].Operation;
+            tmp.ComparesFieldName = line.Compares[0].FieldName;
+            tmp.ComparesValue = line.Compares[0].Value;
+        }
+        common.val('adminform', tmp);
+        if (Method == "Details") {
+            common.setReadOnly('adminform');
+        }
+        form.render(); //重新渲染，防止radio/select等失效
+        wcLoading.close();
+        form.on('select(ComparesField)',
+            function (data) {
+                if (!data.value) {
+                    $('#ComparesOperation').val(null);
+                    $('#ComparesValue').val(null);
+                };
+            });
+
+        //提供给上父页面调用
+        getVal = function () {
+            var FieldName = $('#ComparesFieldName').val();
+            var Operation = $('#ComparesOperation').val();
+            var Value = $('#ComparesValue').val();
+            tmp.LineName = $('#LineName').val();
+            var result = {
+                LineName: tmp.LineName,
+                LineCode: tmp.LineCode,
+                Compares: [],
+            };
+            var temp = { //节点指定操作人
+                FieldName: FieldName,
+                Operation: Operation,
+                Value: Value,
+            };
+            result.Compares.push(temp);
+            return result;
+        }
+    })
+</script>

@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<style>
+    .layui-upload-img {
+        width: 350px;
+        height: 350px;
+        margin: 0 10px 10px 0;
+    }
+</style>
+<script>
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            common = layui.common,
+            laydate = layui.laydate;
+        var keyValue = $.request("keyValue");
+        //权限字段
+        common.authorizeFields('adminform');
+        $(function () {
+            if (!!keyValue) {
+                common.ajax({
+                    url: "/FileManage/Uploadfile/GetFormJson",
+                    dataType: "json",
+                    data: { keyValue: keyValue },
+                    async: false,
+                    success: function (data) {
+                        common.val('adminform', data);
+                        if (data.F_FileType!=1) {
+                            common.modalMsg("文件不是图片,无法查看", "warning");
+                        }
+                        else {
+                            if (data.F_FileBy=="公司logo") {
+                                $('#demo1').attr('src', document.location.origin + "/icon/" + data.F_FilePath); //图片链接
+                            }
+                            else {
+                                $('#demo1').attr('src', document.location.origin + "/file/" + data.F_FilePath); //图片链接
+                            }
+                        }
+                        common.setReadOnly('adminform');
+                    }
+                });
+            }
+            form.render();
+        });
+        wcLoading.close();
+    });
+</script>
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">预览图片:</label>
+                    <div class="layui-input-block">
+                        <img class="layui-upload-img" id="demo1">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

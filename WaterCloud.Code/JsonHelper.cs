@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
 namespace WaterCloud.Code
@@ -8,6 +9,38 @@ namespace WaterCloud.Code
     #region JsonHelper
     public static class JsonHelper
     {
+        /// <summary>
+        /// 把数组转为逗号连接的字符串
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="Str"></param>
+        /// <returns></returns>
+        public static string ArrayToString(dynamic data, string Str)
+        {
+            string resStr = Str;
+            foreach (var item in data)
+            {
+                if (resStr != "")
+                {
+                    resStr += ",";
+                }
+
+                if (item is string)
+                {
+                    resStr += item;
+                }
+                else
+                {
+                    resStr += item.Value;
+
+                }
+            }
+            return resStr;
+        }
+        public static object ToJson(this string Json)
+        {
+            return Json == null ? null : JsonConvert.DeserializeObject(Json);
+        }
         public static T ToObject<T>(this string Json)
         {
             Json = Json.Replace("&nbsp;", "");
@@ -21,6 +54,10 @@ namespace WaterCloud.Code
         public static List<T> ToList<T>(this string Json)
         {
             return Json == null ? null : JsonConvert.DeserializeObject<List<T>>(Json);
+        }
+        public static string Serialize(object obj)
+        {
+            return JsonConvert.SerializeObject(obj, new IsoDateTimeConverter { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" });
         }
     }
     #endregion

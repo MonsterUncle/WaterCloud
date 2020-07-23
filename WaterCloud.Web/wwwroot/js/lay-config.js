@@ -29,6 +29,11 @@ layui.config({
     common: 'waterCloud/common', //  工具类
     tablePlug: 'tablePlug/tablePlug', //  tabl扩展
     dtree: 'dtree/dtree', //  树形扩展
-    xmSelect:'xm-select/xm-select' //select多选扩展
+    xmSelect:'xm-select/xm-select', //select多选扩展
+    flowlayout:'flowlayout', //flow流程插件
+    gooflow: 'flow/gooflow' ,//flow流程插件
+    formDesigner: 'formDesigner/formDesigner', //表单设计器
+    formField: 'formDesigner/formField', //表单设计器
+    formPreview: 'formDesigner/formPreview', //表单设计器
     //optimizeSelectOption: 'tablePlug/optimizeSelectOption/optimizeSelectOption', //  下拉框遮挡
 });

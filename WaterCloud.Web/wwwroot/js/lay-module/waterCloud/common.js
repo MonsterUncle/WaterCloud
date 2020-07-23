@@ -256,7 +256,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                 }
             };
             //ie缓存问题
-            options.url = obj.urlAddTime(options.url);
+            //options.url = obj.urlAddTime(options.url);
             var _width = top.$(window).width() > parseInt(options.width.replace('px', '')) ? options.width : top.$(window).width() - 20 + 'px';
             var _height = top.$(window).height() > parseInt(options.height.replace('px', '')) ? options.height : top.$(window).height() - 20 + 'px';
             var index = layer.open({
@@ -566,6 +566,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
         setReadOnly: function (filter) {
             var readForm = layui.$('[lay-filter="' + filter + '"]');
             readForm.find('input,textarea,select').prop('disabled', true);
+            readForm.find('input,textarea,select').removeAttr('lay-verify');
             readForm.find('.layui-layedit iframe').contents().find('body').prop('contenteditable', false);
         },
         //按钮权限(控制js模板)

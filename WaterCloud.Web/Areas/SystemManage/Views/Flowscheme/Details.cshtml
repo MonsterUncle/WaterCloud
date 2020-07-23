@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<link href="~/js/lay-module/flow/GooFlow.css" rel="stylesheet" />
+@*<link href="~/lib/ueditor/formdesign/bootstrap/css/bootstrap.css" rel="stylesheet" />*@
+<style>
+
+    /* 图片上传 */
+    .uploader-list {
+        margin-left: -15px;
+    }
+
+        .uploader-list .info {
+            position: relative;
+            margin-top: -25px;
+            background-color: black;
+            color: white;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            width: 100px;
+            height: 25px;
+            text-align: center;
+            display: none;
+        }
+
+        .uploader-list .handle {
+            position: relative;
+            background-color: black;
+            color: white;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            width: 100px;
+            text-align: right;
+            height: 18px;
+            margin-bottom: -18px;
+            display: none;
+        }
+
+            .uploader-list .handle i {
+                margin-right: 5px;
+            }
+
+                .uploader-list .handle i:hover {
+                    cursor: pointer;
+                }
+
+        .uploader-list .file-iteme {
+            margin: 12px 0 0 15px;
+            padding: 1px;
+            float: left;
+        }
+</style>
+<script>
+    //只读参数
+    var readonly = true;
+    layui.use(['form', 'layer', 'jquery', 'tablePlug', 'gooflow', 'flowlayout', 'common', 'element', 'formPreview'], function () {
+        var form = layui.form, element = layui.element,
+            layer = layui.layer,
+            common = layui.common,
+            formPreview = layui.formPreview,
+            $ = layui.jquery;
+
+        //var index = layer.getFrameIndex(window.name); //获取窗口索引
+        var keyValue = $.request("keyValue");
+        /*=========流程设计（begin）======================*/
+        var flowDesignPanel = $('#flowPanel').flowdesign({
+            height: 300,
+            widht: 300,
+            OpenNode: function (object) {
+                FlowDesignObject = object; //为NodeInfo窗口提供调用
+
+                if (object.type == 'start round mix' || object.type == 'end round') {
+                    layer.msg("开始节点与结束节点不能设置");
+                    return false;
+                }
+
+                layer.open({
+                    type: 2,
+                    area: ['550px', '450px'], //宽高
+                    maxmin: true, //开启最大化最小化按钮
+                    title: '节点设置【' + object.name + '】',
+                    content: '/SystemManage/Flowscheme/NodeInfo?Method=' + 'Details',
+                    btn: [],
+                });
+            },
+            OpenLine: function (object) {
+                FlowDesignObject = object; //为NodeInfo窗口提供调用
+                valueList = $("#valueList").val().split(',');
+                layer.open({
+                    type: 2,
+                    area: ['550px', '450px'], //宽高
+                    maxmin: true, //开启最大化最小化按钮
+                    title: '连线设置【' + object.name + '】',
+                    content: '/SystemManage/Flowscheme/LineInfo?Method=' + 'Details',
+                    btn: [],
+                });
+                return;
+            }
+        });
+        /*=========流程设计（end）=====================*/
+        common.ajax({
+            url: '/SystemManage/Flowscheme/GetFormJson',
+            dataType: 'json',
+            data: { keyValue: keyValue },
+            async: false,
+            success: function (data) {
+                var obj = data;
+                flowDesignPanel.loadData(JSON.parse(obj.F_SchemeContent));
+                common.ajax({
+                    url: '/SystemManage/Form/GetFormJson',
+                    dataType: 'json',
+                    data: { keyValue: obj.F_FrmId },
+                    async: false,
+                    success: function (data) {
+                        if (data.F_FrmType == 0) {
+                            //表单设计器
+                            formPreview.render({
+                                data: JSON.parse(data.F_Content),
+                                elem: '#frmPreview'
+                            });
+                        }
+                        else {
+                            $("#frmPreview").load(document.location.origin + '/form/' + data.F_WebId + '.html');
+                        }
+                        if (!!data.F_ContentData) {
+                            $("#valueList").val(data.F_ContentData);
+                        }
+                    }
+                });
+            }
+        });
+        form.render();
+        flowDesignPanel.reinitSize($(window).width() - 50, $(window).height() - 200);
+        $(window).resize(function () {
+            flowDesignPanel.reinitSize($(window).width() - 50, $(window).height() - 200);
+        });
+        wcLoading.close();
+        //让层自适应iframe
+        //layer.iframeAuto(index);
+    })
+</script>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-tab layui-tab-brief" lay-filter="tab" style="margin: 0px">
+            <ul class="layui-tab-title">
+                <li class="layui-this">表单预览</li>
+                <li>流程预览</li>
+            </ul>
+            <div class="layui-tab-content">
+                <input type="text" name="valueList" id="valueList" class="layui-hide" hidden>
+                <div class="layui-tab-item layui-fluid layui-show">
+                    <div id="frmPreview"></div>
+                </div>
+
+                <div class="layui-tab-item">
+                    <div id="flowPanel" style=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

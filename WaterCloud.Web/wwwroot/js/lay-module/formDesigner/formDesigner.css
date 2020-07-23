@@ -1,0 +1,336 @@
+.layui-layout-admin .layui-logo {
+    color    : #fff;
+    font-size: 20px;
+}
+
+.layui-side-right {
+    position  : fixed;
+    right     : 0;
+    top       : 0;
+    bottom    : 0;
+    z-index   : 999;
+    width     : 350px;
+    overflow-x: hidden
+}
+
+.layui-layout-admin .layui-side {
+    top       : 60px;
+    width     : 260px;
+    overflow-x: hidden
+}
+
+.layui-layout-admin .layui-side-right {
+    top       : 60px;
+    width     : 350px;
+    overflow-x: hidden
+}
+
+.layui-body {
+    position    : absolute;
+    left        : 260px;
+    right       : 350px;
+    top         : 0;
+    bottom      : 0;
+    z-index     : 998;
+    width       : auto;
+    overflow-y  : auto;
+    box-sizing  : border-box;
+    min-width   : 760px;
+    border-left : 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+}
+
+.layui-layout-admin .layui-body {
+    bottom: 0;
+}
+
+/* components-list*/
+
+.components-list {
+    padding           : 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing        : border-box;
+    height            : 100%
+}
+
+.components-list .components-item {
+    display           : inline-block;
+    width             : 49%;
+    margin            : 0.5%;
+    margin-top        : 5px;
+    -webkit-transition: -webkit-transform 0ms !important;
+    transition        : -webkit-transform 0ms !important;
+    transition        : transform 0ms !important;
+    transition        : transform 0ms, -webkit-transform 0ms !important
+}
+
+.components-draggable {
+    padding-bottom: 20px
+}
+
+.components-title {
+    font-size: 14px;
+    color    : #222;
+    margin   : 6px 2px
+}
+
+.components-title .svg-icon {
+    color    : #666;
+    font-size: 18px
+}
+
+.components-body {
+    padding      : 8px 10px;
+    background   : #f6f7ff;
+    font-size    : 12px;
+    cursor       : move;
+    border       : 1px dashed #f6f7ff;
+    border-radius: 3px
+}
+
+.components-body .svg-icon {
+    color    : #777;
+    font-size: 15px
+}
+
+.components-body:hover {
+    border: 1px dashed #787be8;
+    color : #787be8
+}
+
+.components-body:hover .svg-icon {
+    color: #787be8
+}
+
+.ghost {
+ 
+    border       : 1px dashed #e06c1d;
+    outline-width: 0;
+    height       : 39px;
+    box-sizing   : border-box;
+    font-size    : 0;
+    content      : '';
+    overflow     : hidden;
+    padding      : 0;
+}
+.ghost div {
+    background-color:#fff;
+    color:#fff;
+}
+
+.layui-body .active {
+    outline       : 2px solid #409EFF;
+    border        : 1px solid #409EFF;
+    outline-offset: 0;
+}
+
+#formDesignerForm .layui-form-item {
+    position: relative;
+}
+
+#formDesignerForm .grid {
+    padding: 5px 5px;
+}
+
+#formDesignerForm .layui-form-item:hover {
+    border          : 1px solid #409EFF;
+    background-color: #e9f4fd !important;
+}
+
+.widget-view-drag {
+    position   : absolute;
+    left       : -2px;
+    top        : -2px;
+    bottom     : -18px;
+    height     : 28px;
+    line-height: 28px;
+    background : #409EFF;
+    z-index    : 9;
+}
+
+.widget-view-drag i {
+    font-size: 14px;
+    color    : #fff;
+    margin   : 0 5px;
+    cursor   : move;
+}
+
+.select-option-drag {
+    cursor: move;
+}
+
+.select-option-delete {
+    cursor: pointer;
+}
+
+.widget-view-action {
+    position   : absolute;
+    right      : 0;
+    bottom     : 0;
+    height     : 28px;
+    line-height: 28px;
+    background : #409EFF;
+    z-index    : 9;
+}
+
+.widget-view-action i {
+    font-size: 14px;
+    color    : #fff;
+    margin   : 0 5px;
+    cursor   : pointer;
+
+}
+
+#formDesignerForm {
+    background: #fff;
+    border    : 1px dashed #999;
+    min-height: 94%;
+    margin    : 10px;
+    padding   : 10px 10px;
+}
+
+#formDesignerForm .widget-col-list {
+    min-height: 50px;
+    border    : 1px dashed #ccc;
+    background: #fff;
+}
+
+#formDesignerForm .widget-slider {
+    margin: 18px 10px;
+    width : 90%;
+}
+
+.layui-empty {
+    margin    : 10px 60px;
+    color     : #9e9e9e;
+    font-size : 16px;
+    text-align: center;
+
+}
+
+#columnProperty .layui-form-item.option {
+    margin-bottom: 2px;
+}
+
+#columnProperty .layui-form-item.option .layui-inline {
+    margin-bottom: 2px;
+}
+
+/* 图片上传 */
+.uploader-list {
+    margin-left: -15px;
+}
+
+.uploader-list .info {
+    position        : relative;
+    margin-top      : -25px;
+    background-color: black;
+    color           : white;
+    filter          : alpha(Opacity=80);
+    -moz-opacity    : 0.5;
+    opacity         : 0.5;
+    width           : 100px;
+    height          : 25px;
+    text-align      : center;
+    display         : none;
+}
+
+.uploader-list .handle {
+    position        : relative;
+    background-color: black;
+    color           : white;
+    filter          : alpha(Opacity=80);
+    -moz-opacity    : 0.5;
+    opacity         : 0.5;
+    width           : 100px;
+    text-align      : right;
+    height          : 18px;
+    margin-bottom   : -18px;
+    display         : none;
+}
+
+.uploader-list .handle i {
+    margin-right: 5px;
+}
+
+.uploader-list .handle i:hover {
+    cursor: pointer;
+}
+
+.uploader-list .file-iteme {
+    margin : 12px 0 0 15px;
+    padding: 1px;
+    float  : left;
+}
+
+
+/*自定义layer颜色*/
+body .cool-black .layui-layer-title {
+    color           : #fff;
+    height          : 50px;
+    line-height     : 50px;
+    background-color: #191a23;
+    border          : none;
+}
+
+body .cool-black .layui-layer-setwin a {
+    color                  : #fff;
+    font-size              : 16px;
+    font-style             : normal;
+    font-family            : layui-icon !important;
+    -webkit-font-smoothing : antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body .cool-black .layui-layer-btn a {
+    background: #333;
+}
+
+
+
+.htmlcodeview,
+.importjsoncodeview {
+    position: relative;
+    display : none;
+}
+
+.htmlcodeview textarea,
+.importjsoncodeview textarea {
+    display         : block;
+    width           : 760px;
+    height          : 560px;
+    border          : 10px solid #F8F8F8;
+    border-top-width: 0;
+    padding         : 10px;
+    line-height     : 20px;
+    overflow        : auto;
+    background-color: #3F3F3F;
+    color           : #eee;
+    font-size       : 12px;
+    font-family     : Courier New;
+}
+
+.htmlcodeview a,
+.importjsoncodeview a {
+    position: absolute;
+    right   : 20px;
+    bottom  : 20px;
+}
+
+.aboutusview .about {
+    display         : block;
+    width           : 760px;
+    height          : 554px;
+    padding         : 20px 20px;
+    overflow        : hidden;
+    background-color: #191a23;
+    color           : #ccc;
+}
+.aboutusview .about p{
+    line-height: 30px;
+    
+}
+
+.aboutusview .about .yellow{
+    color:#e6ec8d;
+}

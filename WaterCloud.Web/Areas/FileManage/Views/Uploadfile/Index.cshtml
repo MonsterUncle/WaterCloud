@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+ }
+ <div class="layuimini-container">
+     <div class="layuimini-main">
+         <fieldset class="table-search-fieldset">
+             <div style="margin: 10px 10px 10px 10px">
+                 <form class="layui-form layui-form-pane" >
+                     <div class="layui-form-item">
+                         <div class="layui-inline">
+                             <label class="layui-form-label">关键字:</label>
+                             <div class="layui-input-inline">
+                                 <input type="text" id="txt_keyword" name="txt_keyword" autocomplete="off" class="layui-input" >
+                             </div>
+                         </div>
+                        <div class="layui-inline"> 
+                             <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                         </div>
+                     </div>
+                 </form>
+             </div>
+         </fieldset>
+         <script type="text/html" id="toolbarDemo">
+             <div class="layui-btn-container" id="toolbar">
+                 <button id="NF-download" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="download"><i class="layui-icon">&#xe601;</i>下载</button>
+                 <button id="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+             </div>
+         </script>
+         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+     </div>
+ </div>
+ <script>
+     layui.use(['jquery', 'form','table', 'tablePlug', 'common','layer'], function () {
+         var $ = layui.jquery,
+             form = layui.form,
+             layer = layui.layer,
+             table = layui.table,
+             treeTable = layui.treeTable,
+             common = layui.common;
+         var entity;
+         //权限控制(js是值传递)
+         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
+         common.rendertable({
+             elem: '#currentTableId',
+             id: 'currentTableId',
+             url: '/FileManage/Uploadfile/GetGridJson',
+             sqlkey: 'F_Id',//数据库主键
+             cols: [[
+                 { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },
+                 //此处需修改
+                 { field: 'F_FilePath', title: '文件路径', width: 120, sort: true, hide: true },
+                 { field: 'F_FileName', title: '文件名称', width: 180, sort: true },
+                 {
+                     field: 'F_FileType', title: '文件类型', width: 120, sort: true,
+                     templet: function (d) {
+                         if (d.F_FileType == 0) {
+                             return "文件";
+                         } else if (d.F_FileType == 1) {
+                             return "图片";
+                         }
+                     }
+                 },
+                 { field: 'F_FileSize', title: '文件大小', width: 100, sort: true, hide: true },
+                 { field: 'F_FileExtension', title: '文件扩展名', width: 120, sort: true, hide: true },
+                 { field: 'F_FileBy', title: '文件所属', width: 120, sort: true },
+                 {
+                     field: 'F_OrganizeId', title: '所属部门', width: 120, sort: true,
+                     templet: function (d) {
+                         return top.clients.organize[d.F_OrganizeId] == null ? "" : top.clients.organize[d.F_OrganizeId].fullname;
+                     }
+                 },
+                 {
+                     field: 'F_EnabledMark', title: '有效', width: 80, sort: true,
+                     templet: function (d) {
+                         if (d.F_EnabledMark == true) {
+                             return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                         } else {
+                             return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                         }
+                     }
+                 },
+                 {
+                     field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true,
+                     templet: function (d) {
+                         if (d.F_CreatorTime) {
+                             var time = new Date(d.F_CreatorTime);
+                             return time.Format("yyyy-MM-dd");
+                         }
+                     }
+                 },
+                 { field: 'F_CreatorUserName', title: '创建用户', width: 120, sort: true },
+                 { field: 'F_Description', title: '文件备注', minWidth: 150, sort: true },
+             ]]
+         });
+         // 监听搜索操作
+         form.on('submit(data-search-btn)', function (data) {
+             //执行搜索重载
+             common.reloadtable({
+                 elem: 'currentTableId',
+                 curr: 1,
+                 where: { keyword: data.field.txt_keyword}
+             });
+             entity = null;
+             return false;
+         });
+         wcLoading.close();
+         table.on('row(currentTableFilter)', function (obj) {
+             obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
+             entity = obj;
+         })
+         //toolbar监听事件
+         table.on('toolbar(currentTableFilter)', function (obj) {
+             if (obj.event === 'download') {
+                 if (entity == null) {
+                     common.modalMsg("未选中数据", "warning");
+                     return false;
+                 }
+                 window.open('/FileManage/Uploadfile/Download?keyValue=' + entity.data.F_Id);
+             }
+             else if (obj.event === 'details') {
+               if (entity == null) {
+                   common.modalMsg("未选中数据", "warning");
+                   return false;
+               }
+               common.modalOpen({
+                  title: "查看文件",
+                   url: "/FileManage/Uploadfile/Details?keyValue=" + entity.data.F_Id,
+                   width: "500px",
+                   height: "500px",
+                  btn: []
+               });
+           }
+           return false;
+       });
+   });
+</script>

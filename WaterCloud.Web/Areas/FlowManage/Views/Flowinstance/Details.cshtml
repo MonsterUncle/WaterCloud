@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<link href="~/js/lay-module/flow/GooFlow.css" rel="stylesheet" />
+@*<link href="/css/formpreview.css" rel="stylesheet" />*@
+<style type="text/css">
+    div.layui-table-cell {
+        color: rgb(102, 102, 102) !important;
+    }
+    /* 图片上传 */
+    .uploader-list {
+        margin-left: -15px;
+    }
+
+        .uploader-list .info {
+            position: relative;
+            margin-top: -25px;
+            background-color: black;
+            color: white;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            width: 100px;
+            height: 25px;
+            text-align: center;
+            display: none;
+        }
+
+        .uploader-list .handle {
+            position: relative;
+            background-color: black;
+            color: white;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            width: 100px;
+            text-align: right;
+            height: 18px;
+            margin-bottom: -18px;
+            display: none;
+        }
+
+            .uploader-list .handle i {
+                margin-right: 5px;
+            }
+
+                .uploader-list .handle i:hover {
+                    cursor: pointer;
+                }
+
+        .uploader-list .file-iteme {
+            margin: 12px 0 0 15px;
+            padding: 1px;
+            float: left;
+        }
+</style>
+<script>
+    //参数传递到表单页
+    //表单数据
+    var formtext;
+    //只读参数
+    var readonly = true;
+    layui.use(['form', 'table', 'layer', 'element', 'jquery', 'gooflow', 'flowlayout', 'common', 'formPreview', 'layedit'], function () {
+        var form = layui.form, element = layui.element,
+            table = layui.table,
+            layer = layui.layer,
+            layedit = layui.layedit,
+            common = layui.common,
+            formPreview = layui.formPreview,
+            $ = layui.jquery;
+        var keyValue = $.request("keyValue");
+        var flowDesignPanel;
+        table.render({
+            elem: '#mainList',
+            page: false,
+            url: '/FlowManage/Flowinstance/QueryHistories',
+            cols: [[ //标题栏
+                { field: 'F_Content', title: '流转记录', minWidth: 150 }
+                , { field: 'F_CreatorUserName', title: '操作人', width: 150 }
+                , {
+                    field: 'F_CreatorTime', title: '创建时间', width: 180,
+                    templet: function (d) {
+                        if (d.F_CreatorTime) {
+                            var time = new Date(d.F_CreatorTime);
+                            return time.Format("yyyy-MM-dd hh:mm:ss");
+                        }
+                    }
+                },
+            ]]
+            , where: {
+                keyValue: keyValue
+            }
+            , parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": res.state, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            }
+        });
+        $(function () {
+            common.ajax({
+                url: '/FlowManage/Flowinstance/GetFormJson',
+                dataType: 'json',
+                data: { keyValue: keyValue },
+                async: false,
+                success: function (data) {
+                    var schemeContent = JSON.parse(data.F_SchemeContent);
+                    flowDesignPanel = $('#flowPanel').flowdesign({
+                        haveTool: false
+                        , isprocessing: true
+                        , activityId: data.F_ActivityId
+                        , nodeData: schemeContent.nodes
+                        , flowcontent: schemeContent
+                    });
+                    if (data.F_FrmType == 0) {
+                        var temp = JSON.parse(data.F_FrmData);
+                        var arr = JSON.parse(data.F_FrmContent);
+                        arr = setFormValue(arr, temp);
+                        //表单设计器
+                        formPreview.render({
+                            data: arr,
+                            elem: '#frmPreview'
+                        });
+                    }
+                    else {
+                        formtext = data.F_FrmData;
+                        $("#frmPreview").load(document.location.origin + '/form/' + data.F_DbName + '.html');
+                        form.render();
+                    }
+                }
+            });
+        });
+        $(window).resize(function () {
+            flowDesignPanel.reinitSize($(window).width() - 50, $(window).height() - 100);
+        });
+        function setFormValue(arr, temp) {
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].tag == "grid") {
+                    for (var j = 0; j < arr[i].columns.length; j++) {
+                        arr[i].columns[j].list = setFormValue(arr[i].columns[j].list, temp);
+                    }
+                }
+                else {
+                    if (!!temp[arr[i].id]) {
+                        arr[i].defaultValue = temp[arr[i].id];
+                    }
+                }
+            }
+            return arr;
+        };
+        wcLoading.close();
+        //让层自适应iframe
+        //layer.iframeAuto(index);
+    });
+</script>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form" lay-filter="adminform">
+                <div class="layui-tab layui-tab-brief" lay-filter="tab" style="margin: 0px">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">流程信息</li>
+                        <li>表单信息</li>
+                    </ul>
+
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <table class="layui-table" id="mainList">
+                            </table>
+                            <div id="flowPanel"></div>
+                        </div>
+
+                        <div class="layui-tab-item">
+                            <div id="frmPreview" style="min-height: 600px"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+

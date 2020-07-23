@@ -1,0 +1,233 @@
+[
+    {
+        "id": "grid_1",
+        "index": 0,
+        "tag": "grid",
+        "span": 2,
+        "columns": [
+            {
+                "span": 12,
+                "list": [
+                    {
+                        "id": "input_2",
+                        "index": 0,
+                        "label": "用户名",
+                        "tag": "input",
+                        "tagIcon": "input",
+                        "placeholder": "请输入",
+                        "defaultValue": null,
+                        "labelWidth": null,
+                        "width": "100%",
+                        "clearable": true,
+                        "maxlength": null,
+                        "showWordLimit": false,
+                        "readonly": false,
+                        "disabled": false,
+                        "required": true,
+                        "expression": "string",
+                        "document": ""
+                    }
+                ]
+            },
+            {
+                "span": 12,
+                "list": [
+                    {
+                        "id": "password_3",
+                        "index": 0,
+                        "label": "密码",
+                        "tag": "password",
+                        "tagIcon": "password",
+                        "placeholder": "请输入",
+                        "defaultValue": null,
+                        "labelWidth": null,
+                        "width": "100%",
+                        "clearable": true,
+                        "maxlength": null,
+                        "showWordLimit": false,
+                        "readonly": false,
+                        "disabled": false,
+                        "required": true,
+                        "document": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "grid_4",
+        "index": 1,
+        "tag": "grid",
+        "span": 2,
+        "columns": [
+            {
+                "span": 12,
+                "list": [
+                    {
+                        "id": "radio_6",
+                        "index": 0,
+                        "label": "性别",
+                        "tag": "radio",
+                        "tagIcon": "radio",
+                        "labelWidth": null,
+                        "width": "100%",
+                        "disabled": false,
+                        "required": true,
+                        "document": "",
+                        "options": [
+                            {
+                                "text": "男",
+                                "value": "value1"
+                            },
+                            {
+                                "text": "女",
+                                "value": "value2"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "span": 12,
+                "list": [
+                    {
+                        "id": "select_7",
+                        "index": 0,
+                        "label": "类型",
+                        "tag": "select",
+                        "tagIcon": "select",
+                        "labelWidth": null,
+                        "width": "100%",
+                        "disabled": false,
+                        "required": true,
+                        "document": "",
+                        "optionType": "local",
+                        "remoteUrl": "http://www.fishpro.com.cn/demo1/",
+                        "remoteMethod": "post",
+                        "remoteOptionText": "options.data.dictName",
+                        "remoteOptionValue": "options.data.dictId",
+                        "remoteDefaultValue": "12",
+                        "options": [
+                            {
+                                "text": "管理员",
+                                "value": "value1"
+                            },
+                            {
+                                "text": "供应商",
+                                "value": "value2"
+                            },
+                            {
+                                "text": "经销商",
+                                "value": "value3"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "grid_12",
+        "index": 2,
+        "tag": "grid",
+        "span": 2,
+        "columns": [
+            {
+                "span": 12,
+                "list": [
+                    {
+                        "id": "date_14",
+                        "index": 0,
+                        "label": "出生日期",
+                        "tag": "date",
+                        "tagIcon": "date",
+                        "labelWidth": null,
+                        "width": "100%",
+                        "clearable": true,
+                        "maxlength": null,
+                        "defaultValue": null,
+                        "datetype": "date",
+                        "range": false,
+                        "dateformat": "yyyy-MM-dd",
+                        "isInitValue": false,
+                        "maxValue": "9999-12-31",
+                        "minValue": "1900-1-1",
+                        "trigger": null,
+                        "position": "absolute",
+                        "theme": "default",
+                        "mark": null,
+                        "showBottom": true,
+                        "zindex": 66666666,
+                        "readonly": false,
+                        "disabled": false,
+                        "required": true,
+                        "document": ""
+                    }
+                ]
+            },
+            {
+                "span": 12,
+                "list": [
+                    {
+                        "id": "input_15",
+                        "index": 0,
+                        "label": "身份证号",
+                        "tag": "input",
+                        "tagIcon": "input",
+                        "placeholder": "输入身份证号",
+                        "defaultValue": null,
+                        "labelWidth": null,
+                        "width": "100%",
+                        "clearable": true,
+                        "maxlength": null,
+                        "showWordLimit": false,
+                        "readonly": false,
+                        "disabled": false,
+                        "required": true,
+                        "expression": "string",
+                        "document": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "rate_11",
+        "index": 3,
+        "label": "用户评价",
+        "tag": "rate",
+        "tagIcon": "rate",
+        "labelWidth": null,
+        "defaultValue": 0,
+        "rateLength": 5,
+        "half": false,
+        "text": false,
+        "theme": "default",
+        "showBottom": true,
+        "readonly": false,
+        "required": true,
+        "document": ""
+    },
+    {
+        "id": "editor_16",
+        "index": 4,
+        "label": "备注",
+        "tag": "editor",
+        "tagIcon": "editor",
+        "placeholder": "请输入",
+        "defaultValue": null,
+        "labelWidth": null,
+        "width": "100%",
+        "clearable": true,
+        "maxlength": null,
+        "showWordLimit": false,
+        "tool": [],
+        "hideTool": [],
+        "height": "120px",
+        "uploadImage": {},
+        "readonly": false,
+        "disabled": false,
+        "required": true,
+        "document": ""
+    }
+]

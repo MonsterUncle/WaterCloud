@@ -1,0 +1,49 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 6,
+  "data": [
+    {
+      "dictDataId": 1,
+      "dictDataName": "软件工程",
+      "dictDataCode": "software",
+      "sortNumber": 1,
+      "comments": "软件工程"
+    },
+    {
+      "dictDataId": 2,
+      "dictDataName": "计算机网络技术",
+      "dictDataCode": "network",
+      "sortNumber": 2,
+      "comments": "计算机网络技术"
+    },
+    {
+      "dictDataId": 3,
+      "dictDataName": "计算机信息管理",
+      "dictDataCode": "information",
+      "sortNumber": 3,
+      "comments": "计算机信息管理"
+    },
+    {
+      "dictDataId": 4,
+      "dictDataName": "物联网应用技术",
+      "dictDataCode": "things_internet",
+      "sortNumber": 4,
+      "comments": "物联网应用技术"
+    },
+    {
+      "dictDataId": 5,
+      "dictDataName": "数字媒体应用技术",
+      "dictDataCode": "multimedia",
+      "sortNumber": 5,
+      "comments": "数字媒体应用技术"
+    },
+    {
+      "dictDataId": 6,
+      "dictDataName": "移动互联网应用技术",
+      "dictDataCode": "mobile_internet",
+      "sortNumber": 6,
+      "comments": "移动互联网应用技术"
+    }
+  ]
+}

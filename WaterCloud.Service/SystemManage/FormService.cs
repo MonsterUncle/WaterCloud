@@ -6,6 +6,9 @@ using WaterCloud.Code;
 using Chloe;
 using WaterCloud.Domain.SystemManage;
 using WaterCloud.Repository.SystemManage;
+using System.Reflection;
+using System.IO;
+using Serenity.Data;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -86,6 +89,18 @@ namespace WaterCloud.Service.SystemManage
         #region 提交数据
         public async Task SubmitForm(FormEntity entity, string keyValue)
         {
+            if (entity.F_FrmType!=1)
+            {
+                var temp = FormUtil.SetValue(entity.F_Content);
+                entity.F_ContentData =string.Join(',', temp.ToArray()) ;
+                entity.F_Fields = temp.Count();
+            }
+            else
+            {
+                var temp = FormUtil.SetValueByWeb(entity.F_WebId);
+                entity.F_ContentData = string.Join(',', temp.ToArray());
+                entity.F_Fields = temp.Count();
+            }
             if (string.IsNullOrEmpty(keyValue))
             {
                     //此处需修改

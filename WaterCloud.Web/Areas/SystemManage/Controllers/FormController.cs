@@ -9,9 +9,10 @@ using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Domain.SystemManage;
 using WaterCloud.Service;
 using WaterCloud.Service.SystemSecurity;
-using Microsoft.AspNetCore.Authorization;
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Service.CommonService;
+using System.IO;
+using WaterCloud.Code.Model;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -34,7 +35,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         {
             //此处需修改
             pagination.order = "desc";
-            pagination.sort = "F_CreatorTime";
+            pagination.sort = "F_CreatorTime desc";
             var data = await _service.GetLookList(pagination,keyword);
             return Success(pagination.records, data);
         }
@@ -46,15 +47,27 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             var data = await _service.GetList(keyword);
             return Content(data.ToJson());
         }
-
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public async Task<ActionResult> GetExtendForm(string keyword)
+        {
+            string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/form/";
+            DirectoryInfo root = new DirectoryInfo(filePath);
+            List<AppLogEntity> list = new List<AppLogEntity>();
+            foreach (FileInfo f in root.GetFiles())
+            {
+                AppLogEntity app = new AppLogEntity();
+                app.FileName = f.Name.Remove(f.Name.Length - 5, 5); ;
+                list.Add(app);
+            }
+            return Content(list.ToJson());
+        }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
             var data = await _service.GetLookForm(keyValue);
-            var temp = data.MapTo<FormExtend>();
-            temp.Html = FormUtil.GetHtml(data);
-            return Content(temp.ToJson());
+            return Content(data.ToJson());
         }
         #endregion
 

@@ -15,11 +15,9 @@ namespace WaterCloud.Service.AutoJob
     {
         private IWebHostEnvironment _hostingEnvironment;
         private ServerStateService _server;
-        private IDbContext _context;
         public SaveServerStateJob(IDbContext context)
         {
             _hostingEnvironment = GlobalContext.HostingEnvironment;
-            _context = context;
             _server = new ServerStateService(context);
          }
         public async Task<AjaxResult> Start()

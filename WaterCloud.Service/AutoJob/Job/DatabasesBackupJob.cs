@@ -12,11 +12,9 @@ namespace WaterCloud.Service.AutoJob
     {
         #region  构造函数
         private IDatabaseTableService databaseTableService;
-        private IDbContext _context;
 
         public DatabasesBackupJob(IDbContext context)
         {
-            _context = context;
             string dbType = GlobalContext.SystemConfig.DBProvider;
             switch (dbType)
             {

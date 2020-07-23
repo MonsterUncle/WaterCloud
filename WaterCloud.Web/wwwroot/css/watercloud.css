@@ -156,6 +156,17 @@
     top: 6px;
     right: 5px;
 }
+/**必填红点 */
+.layui-form-item > .required:after {
+    content: '*';
+    color: red;
+    position: absolute;
+    margin-left: 4px;
+    font-weight: bold;
+    line-height: 1.8em;
+    top: 6px;
+    right: 5px;
+}
 .layui-form-selectup dl {
     top: 42px;
     bottom: unset;
