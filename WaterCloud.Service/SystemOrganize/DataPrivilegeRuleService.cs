@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemOrganize;
-using WaterCloud.Repository.SystemOrganize;
 using WaterCloud.Domain.SystemManage;
-using WaterCloud.Repository.SystemManage;
 using Chloe;
 
 namespace WaterCloud.Service.SystemOrganize
@@ -18,14 +15,9 @@ namespace WaterCloud.Service.SystemOrganize
     /// </summary>
     public class DataPrivilegeRuleService : DataFilterService<DataPrivilegeRuleEntity>,IDenpendency
     {
-        private IDataPrivilegeRuleRepository service;
-        private IModuleRepository moduleservice;
         private string cacheKey = "watercloud_dataprivilegeruledata_";
         public DataPrivilegeRuleService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new DataPrivilegeRuleRepository(currentuser.DbString,currentuser.DBProvider) : new DataPrivilegeRuleRepository(context);
-            moduleservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ModuleRepository(currentuser.DbString,currentuser.DBProvider) : new ModuleRepository(context);
         }
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
@@ -33,7 +25,7 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<DataPrivilegeRuleEntity>> GetList(string keyword = "")
         {
             var list = new List<DataPrivilegeRuleEntity>();
-            list = await service.CheckCacheList(cacheKey + "list");
+            list = await repository.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(keyword))
             {
                 list = list.Where(t => t.F_ModuleCode.Contains(keyword) || t.F_Description.Contains(keyword)).ToList();
@@ -50,17 +42,17 @@ namespace WaterCloud.Service.SystemOrganize
                 list = list.Where(u => u.F_ModuleCode.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark == false);
-            return GetFieldsFilterData(await service.OrderList(list, pagination), className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list, pagination), className.Substring(0, className.Length - 7));
         }
 
         public async Task<DataPrivilegeRuleEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
         }
         public async Task<DataPrivilegeRuleEntity> GetForm(string keyValue)
         {
-            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
         #endregion
@@ -68,17 +60,17 @@ namespace WaterCloud.Service.SystemOrganize
         #region 提交数据
         public async Task SubmitForm(DataPrivilegeRuleEntity entity, string keyValue)
         {
-            entity.F_ModuleCode = (await moduleservice.FindEntity(entity.F_ModuleId)).F_EnCode;
+            entity.F_ModuleCode = (await uniwork.FindEntity<ModuleEntity>(entity.F_ModuleId)).F_EnCode;
             if (string.IsNullOrEmpty(keyValue))
             {
                 entity.Create();
-                await service.Insert(entity);
+                await repository.Insert(entity);
                 await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 entity.Modify(keyValue); 
-                await service.Update(entity);
+                await repository.Update(entity);
                 await CacheHelper.Remove(cacheKey + keyValue);
                 await CacheHelper.Remove(cacheKey + "list");
             }
@@ -86,7 +78,7 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task DeleteForm(string keyValue)
         {
-            await service.Delete(t => t.F_Id == keyValue);
+            await repository.Delete(t => t.F_Id == keyValue);
             await CacheHelper.Remove(cacheKey + keyValue);
             await CacheHelper.Remove(cacheKey + "list");
         }

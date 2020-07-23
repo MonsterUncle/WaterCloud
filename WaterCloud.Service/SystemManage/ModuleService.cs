@@ -5,19 +5,18 @@
  * Website：
 *********************************************************************************/
 using WaterCloud.Domain.SystemManage;
-using WaterCloud.Repository.SystemManage;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using WaterCloud.Code;
 using Chloe;
+using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service.SystemManage
 {
     public class ModuleService : DataFilterService<ModuleEntity>, IDenpendency
     {
-        private IModuleRepository service;
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -32,25 +31,25 @@ namespace WaterCloud.Service.SystemManage
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         public ModuleService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ModuleRepository(currentuser.DbString,currentuser.DBProvider) : new ModuleRepository(context);
         }
 
         public async Task<List<ModuleEntity>> GetList()
         {
-            var cachedata =await service.CheckCacheList(cacheKey + "list");
+            var cachedata =await repository.CheckCacheList(cacheKey + "list");
             return cachedata.Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<List<ModuleEntity>> GetBesidesList()
         {
-            return await service.GetBesidesList() ;
+            var moduleList = uniwork.IQueryable<DataPrivilegeRuleEntity>().Select(a => a.F_ModuleId).ToList();
+            var query = repository.IQueryable().Where(a => !moduleList.Contains(a.F_Id) && a.F_EnabledMark == true && a.F_Target == "iframe");
+            return query.OrderBy(a => a.F_SortCode).ToList();
         }
         public async Task<List<ModuleEntity>> GetLookList()
         {
             var list = new List<ModuleEntity>();
             if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
             {
-                list = await service.CheckCacheList(cacheKey + "list");
+                list = await repository.CheckCacheList(cacheKey + "list");
             }
             else
             {
@@ -61,23 +60,27 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<ModuleEntity> GetLookForm(string keyValue)
         {
-            var cachedata =await service.CheckCache(cacheKey, keyValue);
+            var cachedata =await repository.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
         }
         public async Task<ModuleEntity> GetForm(string keyValue)
         {
-            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (service.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
+            if (repository.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }
             else
             {
-                await service.DeleteForm(keyValue);
+                uniwork.BeginTrans();
+                await repository.Delete(a => a.F_Id == keyValue);
+                await uniwork.Delete<ModuleButtonEntity>(a => a.F_ModuleId == keyValue);
+                await uniwork.Delete<ModuleFieldsEntity>(a => a.F_ModuleId == keyValue);
+                uniwork.Commit();
                 await CacheHelper.Remove(cacheKey + keyValue);
                 await CacheHelper.Remove(cacheKey + "list");
                 await CacheHelper.Remove(quickcacheKey + "list");
@@ -93,7 +96,9 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<ModuleEntity>> GetListByRole(string roleid)
         {
-            return await service.GetListByRole(roleid);
+            var moduleList = uniwork.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
+            var query = repository.IQueryable().Where(a => moduleList.Contains(a.F_Id) && a.F_EnabledMark == true);
+            return query.OrderBy(a => a.F_SortCode).ToList();
         }
 
         public async Task SubmitForm(ModuleEntity moduleEntity, string keyValue)
@@ -101,14 +106,14 @@ namespace WaterCloud.Service.SystemManage
             if (!string.IsNullOrEmpty(keyValue))
             {
                 moduleEntity.Modify(keyValue);
-                await service.Update(moduleEntity);
+                await repository.Update(moduleEntity);
                 await CacheHelper.Remove(cacheKey + keyValue);
                 await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 moduleEntity.Create();
-                await service.Insert(moduleEntity);
+                await repository.Insert(moduleEntity);
                 await CacheHelper.Remove(cacheKey + "list");
             }
             await CacheHelper.Remove(quickcacheKey + "list");

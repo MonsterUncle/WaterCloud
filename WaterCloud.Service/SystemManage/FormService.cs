@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using WaterCloud.Code;
 using Chloe;
 using WaterCloud.Domain.SystemManage;
-using WaterCloud.Repository.SystemManage;
-using System.Reflection;
-using System.IO;
 using Serenity.Data;
 
 namespace WaterCloud.Service.SystemManage
@@ -19,19 +16,15 @@ namespace WaterCloud.Service.SystemManage
     /// </summary>
     public class FormService : DataFilterService<FormEntity>, IDenpendency
     {
-        private IFormRepository service;
         private string cacheKey = "watercloud_formdata_";
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         public FormService(IDbContext context) : base(context)
         {
-            //根据租户选择数据库连接
-            var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new FormRepository(currentuser.DbString, currentuser.DBProvider) : new FormRepository(context);
         }
         #region 获取数据
         public async Task<List<FormEntity>> GetList(string keyword = "")
         {
-            var cachedata = await service.CheckCacheList(cacheKey + "list");
+            var cachedata = await repository.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
@@ -45,7 +38,7 @@ namespace WaterCloud.Service.SystemManage
             var list =new List<FormEntity>();
             if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
             {
-                list = await service.CheckCacheList(cacheKey + "list");
+                list = await repository.CheckCacheList(cacheKey + "list");
             }
             else
             {
@@ -70,19 +63,19 @@ namespace WaterCloud.Service.SystemManage
                 list = list.Where(u => u.F_Name.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark==false);
-            return GetFieldsFilterData(await service.OrderList(list, pagination),className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list, pagination),className.Substring(0, className.Length - 7));
         }
 
         public async Task<FormEntity> GetForm(string keyValue)
         {
-            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
         #endregion
 
         public async Task<FormEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));
         }
 
@@ -105,14 +98,14 @@ namespace WaterCloud.Service.SystemManage
             {
                     //此处需修改
                 entity.Create();
-                await service.Insert(entity);
+                await repository.Insert(entity);
                 await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                     //此处需修改
                 entity.Modify(keyValue); 
-                await service.Update(entity);
+                await repository.Update(entity);
                 await CacheHelper.Remove(cacheKey + keyValue);
                 await CacheHelper.Remove(cacheKey + "list");
             }
@@ -121,7 +114,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await service.Delete(t => ids.Contains(t.F_Id));
+            await repository.Delete(t => ids.Contains(t.F_Id));
             foreach (var item in ids)
             {
             await CacheHelper.Remove(cacheKey + item);

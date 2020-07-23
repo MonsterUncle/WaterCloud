@@ -7,7 +7,6 @@
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Domain.ViewModel;
-using WaterCloud.Repository.SystemOrganize;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +17,8 @@ using Chloe;
 
 namespace WaterCloud.Service.SystemOrganize
 {
-    public class RoleAuthorizeService:IDenpendency
+    public class RoleAuthorizeService : DataFilterService<RoleAuthorizeEntity>, IDenpendency
     {
-        private IRoleRepository roleservice;
-        private IRoleAuthorizeRepository service;
         private ModuleService moduleApp;
         private ModuleButtonService moduleButtonApp;
         private ModuleFieldsService moduleFieldsApp;
@@ -32,11 +29,8 @@ namespace WaterCloud.Service.SystemOrganize
         /// </summary>
 
         private string cacheKey = "watercloud_authorizeurldata_";// +权限
-        public RoleAuthorizeService(IDbContext context)
+        public RoleAuthorizeService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleAuthorizeRepository(currentuser.DbString,currentuser.DBProvider) : new RoleAuthorizeRepository(context);
-            roleservice = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new RoleRepository(currentuser.DbString,currentuser.DBProvider) : new RoleRepository(context);
             moduleApp = new ModuleService(context);
             moduleButtonApp = new ModuleButtonService(context);
             moduleFieldsApp = new ModuleFieldsService(context);
@@ -45,7 +39,7 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<List<RoleAuthorizeEntity>> GetList(string ObjectId)
         {
-            var cachedata =await service.CheckCacheList(cacheKey + "list");
+            var cachedata =await repository.CheckCacheList(cacheKey + "list");
             cachedata = cachedata.Where(t => t.F_ObjectId == ObjectId).ToList();
             return cachedata.ToList();
         }
@@ -62,12 +56,12 @@ namespace WaterCloud.Service.SystemOrganize
                 var rolelist = roleId.Split(',');
                 var moduledata =await moduleApp.GetList();
                 moduledata = moduledata.Where(a => a.F_IsMenu == true && a.F_EnabledMark == true).ToList();
-                var role =roleservice.IQueryable (a=>rolelist.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
+                var role =uniwork.IQueryable<RoleEntity>(a=>rolelist.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
                 if (role.Count==0)
                 {
                     return data;
                 }
-                var authorizedata =(await service.CheckCacheList(cacheKey + "list")).Where(t => rolelist.Contains(t.F_ObjectId) && t.F_ItemType == 1).GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
+                var authorizedata =(await repository.CheckCacheList(cacheKey + "list")).Where(t => rolelist.Contains(t.F_ObjectId) && t.F_ItemType == 1).GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
                 foreach (var item in authorizedata)
                 {
                     ModuleEntity moduleEntity = moduledata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic==false);
@@ -90,12 +84,12 @@ namespace WaterCloud.Service.SystemOrganize
             else
             {
                 var buttondata = await moduleButtonApp.GetListNew();
-                var role = await roleservice.FindEntity(roleId);
+                var role = await uniwork.FindEntity<RoleEntity>(roleId);
                 if (role == null || role.F_EnabledMark == false)
                 {
                     return data;
                 }
-                var authorizedata = (await service.CheckCacheList(cacheKey + "list")).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 2).ToList();
+                var authorizedata = (await repository.CheckCacheList(cacheKey + "list")).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 2).ToList();
                 foreach (var item in authorizedata)
                 {
                     ModuleButtonEntity moduleButtonEntity = buttondata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false);
@@ -118,12 +112,12 @@ namespace WaterCloud.Service.SystemOrganize
             else
             {
                 var fieldsdata = await moduleFieldsApp.GetListNew();
-                var role = await roleservice.FindEntity(roleId);
+                var role = await uniwork.FindEntity<RoleEntity>(roleId);
                 if (role == null || role.F_EnabledMark == false)
                 {
                     return data;
                 }
-                var authorizedata = (await service.CheckCacheList(cacheKey + "list")).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 3).ToList();
+                var authorizedata = (await repository.CheckCacheList(cacheKey + "list")).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 3).ToList();
                 foreach (var item in authorizedata)
                 {
                     ModuleFieldsEntity moduleFieldsEntity = fieldsdata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false);
@@ -158,7 +152,7 @@ namespace WaterCloud.Service.SystemOrganize
                     moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
                     var buttondata = await moduleButtonApp.GetList();
                     buttondata = buttondata.Where(a => a.F_EnabledMark == true).ToList();
-                    var role = roleservice.IQueryable(a =>a.F_Id== roles && a.F_EnabledMark == true).ToList();
+                    var role = uniwork.IQueryable<RoleEntity>(a =>a.F_Id== roles && a.F_EnabledMark == true).ToList();
                     if (role!=null)
                     {
                         var authorizedata = await GetList(roles);
@@ -230,7 +224,7 @@ namespace WaterCloud.Service.SystemOrganize
                     moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
                     var buttondata = await moduleButtonApp.GetList();
                     buttondata = buttondata.Where(a => a.F_EnabledMark == true).ToList();
-                    var role = await roleservice.FindEntity(roles);
+                    var role = await uniwork.FindEntity<RoleEntity>(roles);
                     if (role != null && role.F_EnabledMark != false)
                     {
                         var authorizedata = await GetList(roles);

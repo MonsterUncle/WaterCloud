@@ -9,32 +9,28 @@ using System;
 using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemOrganize;
-using WaterCloud.Repository.SystemOrganize;
 
 namespace WaterCloud.Service.SystemOrganize
 {
-    public class UserLogOnService: IDenpendency
+    public class UserLogOnService : DataFilterService<UserLogOnEntity>, IDenpendency
     {
-        private IUserLogOnRepository service;
         /// <summary>
         /// 缓存操作类
         /// </summary>
 
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
-        public UserLogOnService(IDbContext context)
+        public UserLogOnService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new UserLogOnRepository(currentuser.DbString,currentuser.DBProvider) : new UserLogOnRepository(context);
         }
 
         public async Task<UserLogOnEntity> GetForm(string keyValue)
         {
-            return await service.FindEntity(keyValue);
+            return await repository.FindEntity(keyValue);
         }
         public async Task RevisePassword(string userPassword,string keyValue)
         {
             UserLogOnEntity entity = new UserLogOnEntity();
-            entity = service.IQueryable(a => a.F_UserId == keyValue).FirstOrDefault() ;
+            entity = repository.IQueryable(a => a.F_UserId == keyValue).FirstOrDefault() ;
             if (entity == null)
             {
                 entity = new UserLogOnEntity();
@@ -44,7 +40,7 @@ namespace WaterCloud.Service.SystemOrganize
                 entity.F_UserOnLine = false;
                 entity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                 entity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.F_UserSecretkey).ToLower(), 32).ToLower();
-                await service.Insert(entity);
+                await repository.Insert(entity);
             }
             else
             {
@@ -52,7 +48,7 @@ namespace WaterCloud.Service.SystemOrganize
                 //userLogOnEntity.F_Id = keyValue;
                 entity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                 entity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.F_UserSecretkey).ToLower(), 32).ToLower();
-                await service.Update(entity);
+                await repository.Update(entity);
             }
             //缓存用户账户信息
             var userLogOnEntity =await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
@@ -82,10 +78,10 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task ReviseSelfPassword(string userPassword, string keyValue)
         {
             UserLogOnEntity entity = new UserLogOnEntity();
-            entity = service.IQueryable(a => a.F_UserId == keyValue).FirstOrDefault();
+            entity = repository.IQueryable(a => a.F_UserId == keyValue).FirstOrDefault();
             entity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
             entity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.F_UserSecretkey).ToLower(), 32).ToLower();
-            await service.Update(entity);
+            await repository.Update(entity);
             var userLogOnEntity = await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
             userLogOnEntity.F_UserPassword = entity.F_UserPassword;
             userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;

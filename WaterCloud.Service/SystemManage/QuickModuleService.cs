@@ -8,38 +8,128 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using WaterCloud.Domain.SystemManage;
-using WaterCloud.Repository.SystemManage;
 using System.Collections.Generic;
 using WaterCloud.Code;
 using System.Threading.Tasks;
 using System.Linq;
 using Chloe;
+using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class QuickModuleService: IDenpendency
+    public class QuickModuleService:DataFilterService<QuickModuleEntity> ,IDenpendency
     {
-		private IQuickModuleRepository service;
         /// <summary>
         /// »º´æ²Ù×÷Àà
         /// </summary>
 
         private string cacheKey = "watercloud_quickmoduledata_";
-        public QuickModuleService(IDbContext context)
+        public QuickModuleService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new QuickModuleRepository(currentuser.DbString,currentuser.DBProvider) : new QuickModuleRepository(context);
         }
         public async Task<object> GetTransferList(string userId)
         {
-            var data = await service.GetTransferList(userId);
-            return data;
+            var quicklist = repository.IQueryable(t => t.F_CreatorUserId == userId && t.F_EnabledMark == true).ToList();
+            List<ModuleEntity> quicks = new List<ModuleEntity>();
+            var user = await uniwork.FindEntity<UserEntity>(userId);
+            var roleId = user.F_RoleId;
+            if (user.F_Account == "admin" || user.F_IsAdmin == true)
+            {
+                roleId = "admin";
+            }
+            var rolelist = roleId.Split(',');
+            var modulelist = uniwork.IQueryable<RoleAuthorizeEntity>(a => roleId.Contains(a.F_ObjectId) && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
+            if (roleId == "admin")
+            {
+                modulelist = uniwork.IQueryable<ModuleEntity>(a => a.F_EnabledMark == true).Select(a => a.F_Id).ToList();
+            }
+            modulelist = modulelist.Distinct().ToList();
+            quicks = uniwork.IQueryable<ModuleEntity>(a => (modulelist.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_IsMenu == true && a.F_EnabledMark == true && a.F_UrlAddress != null)
+                .Select(a => new ModuleEntity
+                {
+                    F_Id = a.F_Id,
+                    F_EnabledMark = false,
+                    F_FullName = a.F_FullName
+                }).ToList();
+            foreach (var item in quicklist)
+            {
+                var temp = quicks.Find(a => a.F_Id == item.F_ModuleId);
+                if (temp != null)
+                {
+                    temp.F_EnabledMark = true;
+                }
+            }
+            return quicks;
         }
 
         public async Task<List<QuickModuleExtend>> GetQuickModuleList(string userId)
         {
-            var data= await service.GetQuickModuleList(userId);
-            return data;
+            var quicklist = repository.IQueryable(t => t.F_CreatorUserId == userId && t.F_EnabledMark == true);
+            List<QuickModuleExtend> list = new List<QuickModuleExtend>();
+            List<QuickModuleEntity> quicks = new List<QuickModuleEntity>();
+            uniwork.BeginTrans();
+            if (quicklist.Count() == 0)
+            {
+                var user = await uniwork.FindEntity<UserEntity>(userId);
+                var roleId = user.F_RoleId;
+                if (user.F_Account == "admin" || user.F_IsAdmin == true)
+                {
+                    roleId = "admin";
+                }
+                var rolelist = roleId.Split(',');
+                var modulelist = uniwork.IQueryable<RoleAuthorizeEntity>(a => rolelist.Contains(a.F_ObjectId) && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
+                if (roleId == "admin")
+                {
+                    modulelist = uniwork.IQueryable<ModuleEntity>(a => a.F_EnabledMark == true).Select(a => a.F_Id).ToList();
+                }
+                var temp = uniwork.IQueryable<ModuleEntity>(a => a.F_IsPublic == true && a.F_IsMenu == true && a.F_EnabledMark == true && a.F_DeleteMark == false).Select(a => a.F_Id).ToList();
+                modulelist.AddRange(temp);
+                modulelist = modulelist.Distinct().ToList();
+                foreach (var item in modulelist)
+                {
+                    var module = await uniwork.FindEntity<ModuleEntity>(a => a.F_Id == item && a.F_EnabledMark == true);
+                    if (module != null && module.F_UrlAddress != null && list.Count < 8)
+                    {
+                        list.Add(new QuickModuleExtend
+                        {
+                            id = module.F_Id,
+                            title = module.F_FullName,
+                            href = module.F_UrlAddress,
+                            icon = module.F_Icon
+                        });
+                        QuickModuleEntity quick = new QuickModuleEntity();
+                        quick.Create();
+                        quick.F_DeleteMark = false;
+                        quick.F_EnabledMark = true;
+                        quick.F_ModuleId = module.F_Id;
+                        quicks.Add(quick);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in quicklist.ToList())
+                {
+                    var module = await uniwork.FindEntity<ModuleEntity>(a => a.F_Id == item.F_ModuleId && a.F_EnabledMark == true);
+                    if (module != null)
+                    {
+                        list.Add(new QuickModuleExtend
+                        {
+                            id = module.F_Id,
+                            title = module.F_FullName,
+                            href = module.F_UrlAddress,
+                            icon = module.F_Icon
+                        });
+                    }
+
+                }
+            }
+            if (quicks.Count > 0)
+            {
+                await uniwork.Insert(quicks);
+            }
+            uniwork.Commit();
+            return list;
         }
 
         public async Task SubmitForm(string[] permissionIds)
@@ -54,7 +144,10 @@ namespace WaterCloud.Service.SystemManage
                 entity.F_DeleteMark = false;
                 list.Add(entity);
             }
-            await service.SubmitForm(list);
+            uniwork.BeginTrans();
+            await repository.Delete(t => t.F_CreatorUserId == list[0].F_CreatorUserId);
+            await repository.Insert(list);
+            uniwork.Commit();
             var data =await CacheHelper.Get<Dictionary<string, List<QuickModuleExtend>>>(cacheKey + "list");
             if (data != null&&data.ContainsKey(OperatorProvider.Provider.GetCurrent().UserId))
             {

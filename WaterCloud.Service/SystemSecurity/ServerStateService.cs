@@ -8,21 +8,23 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using WaterCloud.Domain.SystemSecurity;
-using WaterCloud.Repository.SystemSecurity;
 using System;
 using System.Collections.Generic;
 using WaterCloud.Code;
 using System.Threading.Tasks;
 using Chloe;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemSecurity
 {
     public class ServerStateService:IDenpendency
     {
-		private IServerStateRepository service;
+        private IRepositoryBase<ServerStateEntity> repository;
+        private IRepositoryBase uniwork;
         public ServerStateService(IDbContext context)
         {
-            service = new ServerStateRepository(context);
+            repository = new RepositoryBase<ServerStateEntity>(context);
+            uniwork = new RepositoryBase(context);
         }
         public async Task<List<ServerStateEntity>> GetList(int timetype)
         {
@@ -46,17 +48,12 @@ namespace WaterCloud.Service.SystemSecurity
                     break;
             }
             expression = expression.And(t => t.F_Date >= startTime && t.F_Date <= endTime);
-            return service.IQueryable(expression).ToList();
-        }
-
-	    public async Task<ServerStateEntity> GetForm(string keyValue)
-        {
-            return await service.FindEntity(keyValue);
+            return repository.IQueryable(expression).ToList();
         }
 
 		public async Task SubmitForm(ServerStateEntity entity)
         {
-            var old = service.IQueryable(a => a.F_WebSite == entity.F_WebSite && a.F_Date == DateTime.Now.Date).FirstOrDefault();
+            var old = repository.IQueryable(a => a.F_WebSite == entity.F_WebSite && a.F_Date == DateTime.Now.Date).FirstOrDefault();
             if (old != null)
             {
                 entity.F_Id = old.F_Id;
@@ -65,21 +62,15 @@ namespace WaterCloud.Service.SystemSecurity
                 entity.F_ARM = Math.Round(((old.F_ARM).ToDouble() * old.F_Cout + entity.F_ARM.ToDouble()) / entity.F_Cout, 2).ToString();
                 entity.F_CPU = Math.Round(((old.F_CPU).ToDouble() * old.F_Cout + entity.F_CPU.ToDouble()) / entity.F_Cout, 2).ToString();
                 entity.F_IIS = Math.Round(((old.F_IIS).ToDouble() * old.F_Cout + entity.F_IIS.ToDouble()) / entity.F_Cout, 0).ToString();
-                await service.Update(entity);
+                await repository.Update(entity);
             }
             else
             {
                 entity.F_Id = Utils.GuId();
                 entity.F_Cout = 1;
                 entity.F_Date = DateTime.Now.Date;
-                await service.Insert(entity);
+                await repository.Insert(entity);
             }
         }
-
-        public async Task DeleteForm(string keyValue)
-        {
-            await service.DeleteForm(keyValue);
-        }
-
     }
 }

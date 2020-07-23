@@ -8,7 +8,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using WaterCloud.Domain.SystemOrganize;
-using WaterCloud.Repository.SystemOrganize;
 using System.Collections.Generic;
 using System.Linq;
 using WaterCloud.Code;
@@ -19,7 +18,6 @@ namespace WaterCloud.Service.SystemOrganize
 {
     public class NoticeService: DataFilterService<NoticeEntity>,IDenpendency
     {
-		private INoticeRepository service;
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         /// <summary>
@@ -29,13 +27,11 @@ namespace WaterCloud.Service.SystemOrganize
         private string cacheKey = "watercloud_noticedata_";
         public NoticeService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new NoticeRepository(currentuser.DbString,currentuser.DBProvider) : new NoticeRepository(context);
         }
         public async Task<List<NoticeEntity>> GetList(string keyword)
         {
             List<NoticeEntity> list = new List<NoticeEntity>();
-            list = await service.CheckCacheList(cacheKey + "list");
+            list = await repository.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(keyword))
             {
                 list = list.Where(t => t.F_Title.Contains(keyword) || t.F_Content.Contains(keyword)).ToList();
@@ -66,16 +62,16 @@ namespace WaterCloud.Service.SystemOrganize
                 list = list.Where(u => u.F_Title.Contains(keyword) || u.F_Content.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark==false);
-            return GetFieldsFilterData(await service.OrderList(list, pagination), className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list, pagination), className.Substring(0, className.Length - 7));
         }
         public async Task<NoticeEntity> GetLookForm(string keyValue)
         {
-            var cachedata =await service.CheckCache(cacheKey, keyValue);
+            var cachedata =await repository.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));
         }
         public async Task<NoticeEntity> GetForm(string keyValue)
         {
-            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
         public async Task SubmitForm(NoticeEntity entity, string keyValue)
@@ -83,14 +79,14 @@ namespace WaterCloud.Service.SystemOrganize
             if (!string.IsNullOrEmpty(keyValue))
             {
                 entity.Modify(keyValue);
-                await service.Update(entity);
+                await repository.Update(entity);
                 await CacheHelper.Remove(cacheKey + keyValue);
                 await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 entity.Create();
-                await service.Insert(entity);
+                await repository.Insert(entity);
                 await CacheHelper.Remove(cacheKey + "list");
             }
         }
@@ -98,7 +94,7 @@ namespace WaterCloud.Service.SystemOrganize
 		public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await service.Delete(t => ids.Contains(t.F_Id));
+            await repository.Delete(t => ids.Contains(t.F_Id));
             foreach (var item in ids)
             {
                 await CacheHelper.Remove(cacheKey + item);

@@ -5,7 +5,6 @@
  * Website：
 *********************************************************************************/
 using WaterCloud.Domain.SystemManage;
-using WaterCloud.Repository.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,15 +15,11 @@ namespace WaterCloud.Service.SystemManage
 {
     public class ItemsDataService : DataFilterService<ItemsDetailEntity>,IDenpendency
     {
-        private IItemsDetailRepository service;
-        private IItemsRepository itemservice;
         /// <summary>
         /// 缓存操作类
         /// </summary>
         public ItemsDataService(IDbContext context) : base(context)
         {
-            service = new ItemsDetailRepository(context);
-            itemservice = new ItemsRepository(context);
         }
         private string cacheKey = "watercloud_itemdetaildata_";
         private string itemcacheKey = "watercloud_itemdata_";
@@ -33,7 +28,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ItemsDetailEntity>> GetList(string itemId = "", string keyword = "")
         {
             var list = new List<ItemsDetailEntity>();
-            list = await service.CheckCacheList(cacheKey + "list");
+            list = await repository.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(itemId))
             {
                 list = list.Where(t => t.F_ItemId == itemId).ToList();
@@ -49,7 +44,7 @@ namespace WaterCloud.Service.SystemManage
             var list = new List<ItemsDetailEntity>();
             if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
             {
-                list = await service.CheckCacheList(cacheKey + "list");
+                list = await repository.CheckCacheList(cacheKey + "list");
             }
             else
             {
@@ -68,25 +63,25 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {
-            var itemcachedata =await itemservice.CheckCacheList(itemcacheKey + "list");
+            var itemcachedata =await uniwork.CheckCacheList<ItemsEntity>(itemcacheKey + "list");
             var item = itemcachedata.Find(a => a.F_EnCode == enCode);
-            var cachedata =await service.CheckCacheList(cacheKey + "list");
+            var cachedata =await repository.CheckCacheList(cacheKey + "list");
             cachedata = cachedata.Where(a => a.F_DeleteMark == false && a.F_EnabledMark == true && a.F_ItemId == item.F_Id).OrderBy(a => a.F_SortCode).ToList();
             return cachedata;
         }
         public async Task<ItemsDetailEntity> GetLookForm(string keyValue)
         {
-            var cachedata =await service.CheckCache(cacheKey, keyValue);
+            var cachedata =await repository.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
         }
         public async Task<ItemsDetailEntity> GetForm(string keyValue)
         {
-            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
         public async Task DeleteForm(string keyValue)
         {
-            await service.Delete(t => t.F_Id == keyValue);
+            await repository.Delete(t => t.F_Id == keyValue);
             await CacheHelper.Remove(cacheKey + keyValue);
             await CacheHelper.Remove(cacheKey + "list");
         }
@@ -95,14 +90,14 @@ namespace WaterCloud.Service.SystemManage
             if (!string.IsNullOrEmpty(keyValue))
             {
                 itemsDetailEntity.Modify(keyValue);
-                await service.Update(itemsDetailEntity);
+                await repository.Update(itemsDetailEntity);
                 await CacheHelper.Remove(cacheKey + keyValue);
                 await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 itemsDetailEntity.Create();
-                await service.Insert(itemsDetailEntity);
+                await repository.Insert(itemsDetailEntity);
                 await CacheHelper.Remove(cacheKey + "list");
             }
         }

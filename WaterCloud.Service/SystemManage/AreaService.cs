@@ -5,7 +5,6 @@
  * Website：
 *********************************************************************************/
 using WaterCloud.Domain.SystemManage;
-using WaterCloud.Repository.SystemManage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +16,8 @@ namespace WaterCloud.Service.SystemManage
 {
     public class AreaService : DataFilterService<AreaEntity>, IDenpendency
     {
-        private IAreaRepository service;
         public AreaService(IDbContext context) : base(context)
         {
-            //根据租户选择数据库连接
-            var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null&&!(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider&&currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new AreaRepository(currentuser.DbString, currentuser.DBProvider) : new AreaRepository(context);
-
         }
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
@@ -34,7 +28,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<AreaEntity>> GetList(int layers = 0)
         {
             var list = new List<AreaEntity>();
-            list = await service.CheckCacheList(cacheKey + "list");
+            list = await repository.CheckCacheList(cacheKey + "list");
             if (layers != 0)
             {
                 list = list.Where(t => t.F_Layers == layers).ToList();
@@ -46,7 +40,7 @@ namespace WaterCloud.Service.SystemManage
             var list =new List<AreaEntity>();
             if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
             {
-                list = await service.CheckCacheList(cacheKey + "list");
+                list = await repository.CheckCacheList(cacheKey + "list");
             }
             else
             {
@@ -61,23 +55,23 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<AreaEntity> GetLookForm(string keyValue)
         {
-            var cachedata =await service.CheckCache(cacheKey, keyValue);
+            var cachedata =await repository.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
         }
         public async Task<AreaEntity> GetForm(string keyValue)
         {
-            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (service.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
+            if (repository.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }
             else
             {
-               await service.Delete(t => t.F_Id == keyValue);
+               await repository.Delete(t => t.F_Id == keyValue);
             }
             await CacheHelper.Remove(cacheKey + keyValue);
             await CacheHelper.Remove(cacheKey + "list");
@@ -87,14 +81,14 @@ namespace WaterCloud.Service.SystemManage
             if (!string.IsNullOrEmpty(keyValue))
             {
                 mEntity.Modify(keyValue);
-                await service.Update(mEntity);
+                await repository.Update(mEntity);
                 await CacheHelper.Remove(cacheKey + keyValue);
                 await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 mEntity.Create();
-                await service.Insert(mEntity);
+                await repository.Insert(mEntity);
                 await CacheHelper.Remove(cacheKey + "list");
             }
         }

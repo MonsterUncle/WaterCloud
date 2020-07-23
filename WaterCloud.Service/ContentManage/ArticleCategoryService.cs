@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using WaterCloud.Code;
 using WaterCloud.Domain.ContentManage;
-using WaterCloud.Repository.ContentManage;
 using Chloe;
 
 namespace WaterCloud.Service.ContentManage
@@ -16,22 +15,16 @@ namespace WaterCloud.Service.ContentManage
     /// </summary>
     public class ArticleCategoryService : DataFilterService<ArticleCategoryEntity>, IDenpendency
     {
-        private IArticleCategoryRepository service;
-        private IArticleNewsRepository newsservice;
         public ArticleCategoryService(IDbContext context) : base(context)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
-            service = currentuser != null && !(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ArticleCategoryRepository(currentuser.DbString, currentuser.DBProvider) : new ArticleCategoryRepository(context);
-            newsservice = currentuser != null && !(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString) ? new ArticleNewsRepository(currentuser.DbString, currentuser.DBProvider) : new ArticleNewsRepository(context);
 
         }
-
         private string cacheKey = "watercloud_cms_articlecategorydata_";
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         #region 获取数据
         public async Task<List<ArticleCategoryEntity>> GetList(string keyword = "")
         {
-            var cachedata = await service.CheckCacheList(cacheKey + "list");
+            var cachedata = await repository.CheckCacheList(cacheKey + "list");
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
@@ -45,7 +38,7 @@ namespace WaterCloud.Service.ContentManage
             var list =new List<ArticleCategoryEntity>();
             if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
             {
-                list = await service.CheckCacheList(cacheKey + "list");
+                list = await repository.CheckCacheList(cacheKey + "list");
             }
             else
             {
@@ -70,19 +63,19 @@ namespace WaterCloud.Service.ContentManage
                 list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark==false);
-            return GetFieldsFilterData(await service.OrderList(list, pagination),className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list, pagination),className.Substring(0, className.Length - 7));
         }
 
         public async Task<ArticleCategoryEntity> GetForm(string keyValue)
         {
-            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
         #endregion
 
         public async Task<ArticleCategoryEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await service.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));
         }
 
@@ -93,14 +86,14 @@ namespace WaterCloud.Service.ContentManage
             {
                     //此处需修改
                 entity.Create();
-                await service.Insert(entity);
+                await repository.Insert(entity);
                 await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                     //此处需修改
                 entity.Modify(keyValue); 
-                await service.Update(entity);
+                await repository.Update(entity);
                 await CacheHelper.Remove(cacheKey + keyValue);
                 await CacheHelper.Remove(cacheKey + "list");
             }
@@ -109,11 +102,11 @@ namespace WaterCloud.Service.ContentManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            if (newsservice.IQueryable(a=> ids.Contains(a.F_CategoryId)).Count()>0)
+            if (uniwork.IQueryable<ArticleNewsEntity>(a=> ids.Contains(a.F_CategoryId)).Count()>0)
             {
                 throw new Exception("新闻类别使用中，无法删除");
             }
-            await service.Delete(t => ids.Contains(t.F_Id));
+            await repository.Delete(t => ids.Contains(t.F_Id));
             foreach (var item in ids)
             {
                 await CacheHelper.Remove(cacheKey + item);
