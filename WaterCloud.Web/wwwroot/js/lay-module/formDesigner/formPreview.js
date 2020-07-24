@@ -250,7 +250,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'required' : '', json.label);
                     _html += '<div class="layui-input-block">';
                     _html += '<input type="password" name="{0}" lay-verify="pass" placeholder="{1}" autocomplete="off" value="{2}" autocomplete="off" style="width:{3}" {4} {5} {6} class="layui-input">'
-                    .format(json.id,json.defaultValue ? json.defaultValue : '', json.width,json.placeholder,_readonly,_disabled,_required);
+                        .format(json.id, json.placeholder,json.defaultValue ? json.defaultValue : '', json.width,_readonly,_disabled,_required);
                     _html += '</div>';
                     _html += '</div>';
                     return _html;
