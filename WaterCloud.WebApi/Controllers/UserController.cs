@@ -119,8 +119,8 @@ namespace WaterCloud.WebApi.Controllers
             {
                 F_ModuleName = "用户Api",
                 F_Type = DbLogType.Exit.ToString(),
-                F_Account = OperatorProvider.Provider.GetCurrent().UserCode,
-                F_NickName = OperatorProvider.Provider.GetCurrent().UserName,
+                F_Account = _userService.currentuser.UserCode,
+                F_NickName = _userService.currentuser.UserName,
                 F_Result = true,
                 F_Description = "安全退出系统",
             });

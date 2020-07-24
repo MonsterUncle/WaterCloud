@@ -74,7 +74,7 @@ namespace WaterCloud.Service.FlowManage
                 //此处需修改
                 list = list.Where(u => u.F_Code.Contains(keyword) || u.F_CustomName.Contains(keyword));
             }
-            var user = OperatorProvider.Provider.GetCurrent();
+            var user = currentuser;
 
             if (type == "todo")   //待办事项
             {
@@ -114,9 +114,9 @@ namespace WaterCloud.Service.FlowManage
         /// <returns></returns>
         public async Task<bool> NodeReject(VerificationExtend reqest)
         {
-            var user = OperatorProvider.Provider.GetCurrent();
+            var user = currentuser;
 
-            FlowinstanceEntity flowInstance = GetForm(reqest.F_FlowInstanceId).Result;
+            FlowinstanceEntity flowInstance =await GetForm(reqest.F_FlowInstanceId);
 
             FlowRuntime wfruntime = new FlowRuntime(flowInstance);
 
@@ -423,7 +423,7 @@ namespace WaterCloud.Service.FlowManage
         /// </summary>
         private async Task AddTransHistory(FlowRuntime wfruntime)
         {
-            var tag = OperatorProvider.Provider.GetCurrent();
+            var tag = currentuser;
             await uniwork.Insert(new FlowInstanceTransitionHistory
             {
                 F_Id = Utils.GuId(),
@@ -443,7 +443,7 @@ namespace WaterCloud.Service.FlowManage
         }
         public async Task Verification(VerificationExtend entity)
         {
-            var user = OperatorProvider.Provider.GetCurrent();
+            var user = currentuser;
             var tag = new Tag
             {
                 UserName = user.UserName,
@@ -492,7 +492,7 @@ namespace WaterCloud.Service.FlowManage
             entity.Create();
             //创建运行实例
             var wfruntime = new FlowRuntime(entity);
-            var user = OperatorProvider.Provider.GetCurrent();
+            var user = currentuser;
 
             #region 根据运行实例改变当前节点状态
             entity.F_ActivityId = wfruntime.nextNodeId;
@@ -568,7 +568,7 @@ namespace WaterCloud.Service.FlowManage
             entity.F_FlowLevel = 0;
             //创建运行实例
             var wfruntime = new FlowRuntime(entity);
-            var user = OperatorProvider.Provider.GetCurrent();
+            var user = currentuser;
 
             #region 根据运行实例改变当前节点状态
             entity.F_ActivityId = wfruntime.nextNodeId;

@@ -149,9 +149,9 @@ namespace WaterCloud.Service.SystemManage
             await repository.Insert(list);
             uniwork.Commit();
             var data =await CacheHelper.Get<Dictionary<string, List<QuickModuleExtend>>>(cacheKey + "list");
-            if (data != null&&data.ContainsKey(OperatorProvider.Provider.GetCurrent().UserId))
+            if (data != null&&data.ContainsKey(currentuser.UserId))
             {
-                data.Remove(OperatorProvider.Provider.GetCurrent().UserId);
+                data.Remove(currentuser.UserId);
             }
             await CacheHelper.Remove(cacheKey + "list");
             await CacheHelper.Set(cacheKey + "list",data);
