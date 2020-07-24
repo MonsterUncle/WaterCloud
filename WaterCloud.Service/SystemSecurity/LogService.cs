@@ -84,11 +84,11 @@ namespace WaterCloud.Service.SystemSecurity
             LogEntity logEntity = new LogEntity();
             logEntity.F_Id = Utils.GuId();
             logEntity.F_Date = DateTime.Now;
-            logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-            logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-            logEntity.F_IPAddress = OperatorProvider.Provider.GetCurrent().LoginIPAddress;
-            logEntity.F_IPAddressName = OperatorProvider.Provider.GetCurrent().LoginIPAddressName;
-            logEntity.F_CompanyId = OperatorProvider.Provider.GetCurrent().CompanyId;
+            logEntity.F_Account = currentuser.UserCode;
+            logEntity.F_NickName = currentuser.UserName;
+            logEntity.F_IPAddress = currentuser.LoginIPAddress;
+            logEntity.F_IPAddressName = currentuser.LoginIPAddressName;
+            logEntity.F_CompanyId = currentuser.CompanyId;
             logEntity.F_Result = result;
             logEntity.F_Description = resultLog;
             logEntity.Create();
@@ -100,8 +100,7 @@ namespace WaterCloud.Service.SystemSecurity
             logEntity.F_Date = DateTime.Now;
             try
             {
-                var operatorModel = OperatorProvider.Provider.GetCurrent();
-                if (operatorModel==null)
+                if (currentuser == null)
                 {
                     logEntity.F_IPAddress = LoginProvider=="WebApi"? "未连接未知": WebHelper.Ip;
                     logEntity.F_IPAddressName = "本地局域网";
@@ -109,9 +108,9 @@ namespace WaterCloud.Service.SystemSecurity
                 }
                 else
                 {
-                    logEntity.F_IPAddress = operatorModel.LoginIPAddress;
-                    logEntity.F_IPAddressName = operatorModel.LoginIPAddressName;
-                    logEntity.F_CompanyId = operatorModel.CompanyId;
+                    logEntity.F_IPAddress = currentuser.LoginIPAddress;
+                    logEntity.F_IPAddressName = currentuser.LoginIPAddressName;
+                    logEntity.F_CompanyId = currentuser.CompanyId;
                 }
                 logEntity.Create();
                 await repository.Insert(logEntity);

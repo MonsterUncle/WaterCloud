@@ -86,8 +86,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
                 await _service.SubmitForm(entity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
@@ -112,8 +112,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
                 await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
@@ -171,8 +171,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
                 await _service.SubmitCloneFields(moduleId, Ids);
                 logEntity.F_Description += "克隆成功";
                 await _logService.WriteDbLog(logEntity);

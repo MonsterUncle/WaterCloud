@@ -6,7 +6,6 @@
 *********************************************************************************/
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Code;
-using WaterCloud.Service.SystemManage;
 using WaterCloud.Service.SystemOrganize;
 
 namespace WaterCloud.Web.Controllers
@@ -19,12 +18,11 @@ namespace WaterCloud.Web.Controllers
         public ActionResult Index()
         {
             //主页信息获取
-            var currentuser = OperatorProvider.Provider.GetCurrent();
-            if (currentuser==null)
+            if (_setService.currentuser== null)
             {
                 return View();
             }
-            var systemset = _setService.GetForm(currentuser.CompanyId).Result;
+            var systemset = _setService.GetForm(_setService.currentuser.CompanyId).Result;
             ViewBag.ProjectName = systemset.F_ProjectName;
             ViewBag.LogoIcon = "../icon/" + systemset.F_Logo;
             return View();

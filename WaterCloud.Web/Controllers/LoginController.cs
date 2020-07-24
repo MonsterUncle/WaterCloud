@@ -15,8 +15,6 @@ using WaterCloud.Domain.SystemSecurity;
 using System.Threading.Tasks;
 using WaterCloud.Service.SystemOrganize;
 using WaterCloud.Domain.SystemOrganize;
-using Microsoft.AspNetCore.Http;
-using WaterCloud.DataBase;
 using Chloe;
 
 namespace WaterCloud.Web.Controllers
@@ -74,8 +72,8 @@ namespace WaterCloud.Web.Controllers
             {
                 F_ModuleName = "系统登录",
                 F_Type = DbLogType.Exit.ToString(),
-                F_Account = OperatorProvider.Provider.GetCurrent().UserCode,
-                F_NickName = OperatorProvider.Provider.GetCurrent().UserName,
+                F_Account = _setService.currentuser.UserCode,
+                F_NickName = _setService.currentuser.UserName,
                 F_Result = true,
                 F_Description = "安全退出系统",
             });
@@ -92,8 +90,7 @@ namespace WaterCloud.Web.Controllers
         {
             try
             {
-                var operatorProvider = OperatorProvider.Provider.GetCurrent();
-                if (operatorProvider==null)
+                if (_setService.currentuser == null)
                 {
                     return Content(new AjaxResult { state = ResultType.error.ToString() }.ToJson());
                 }

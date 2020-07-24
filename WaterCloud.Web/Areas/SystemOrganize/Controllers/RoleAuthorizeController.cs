@@ -27,7 +27,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HttpGet]
         public async Task<ActionResult> GetPermissionTree(string roleId)
         {
-            var current = OperatorProvider.Provider.GetCurrent();
+            var current = _moduleService.currentuser;
             string roleid = current.RoleId;
             var moduledata = new List<ModuleEntity>();
             var buttondata = new List<ModuleButtonEntity>();
@@ -95,7 +95,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HttpPost]
         public async Task<ActionResult> GetPermissionFieldsTree(string roleId,string moduleids)
         {
-            var current = OperatorProvider.Provider.GetCurrent();
+            var current = _moduleService.currentuser;
             string roleid = current.RoleId;
             var moduledata = new List<ModuleEntity>();
             var fieldsdata = new List<ModuleFieldsEntity>();

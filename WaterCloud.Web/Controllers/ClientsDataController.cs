@@ -75,7 +75,7 @@ namespace WaterCloud.Web.Controllers
         {
             try
             {
-                if (OperatorProvider.Provider.GetCurrent().UserCode != Define.SYSTEM_USERNAME)
+                if (_setService.currentuser.UserCode != Define.SYSTEM_USERNAME)
                 {
                     return Content(new { code = 0, msg = "此功能需要管理员权限" }.ToJson());
                 }
@@ -93,9 +93,8 @@ namespace WaterCloud.Web.Controllers
         /// <returns></returns>
         private async Task<object> GetMenuFields()
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
-            var roleId = currentuser.RoleId;
-            if (currentuser.UserCode=="admin")
+            var roleId = _userService.currentuser.RoleId;
+            if (_userService.currentuser.UserCode=="admin")
             {
                 roleId = "admin";
             }
@@ -113,7 +112,7 @@ namespace WaterCloud.Web.Controllers
         /// <returns></returns>
         private async Task<object> GetQuickModuleList()
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = _userService.currentuser;
             if (currentuser == null)
             {
                 return null;
@@ -156,7 +155,7 @@ namespace WaterCloud.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> GetInitDataJson()
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = _userService.currentuser;
             var userId = currentuser.UserId;
             Dictionary<string, string > data =await CacheHelper.Get<Dictionary<string, string>>(initcacheKey + "list");
             if (data == null)
@@ -197,7 +196,7 @@ namespace WaterCloud.Web.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetUserCode()
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = _userService.currentuser;
             var data =await _userService.GetForm(currentuser.UserId);
             return Content(data.ToJson());
         }
@@ -225,7 +224,7 @@ namespace WaterCloud.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> GetCoutData()
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = _userService.currentuser;
             if (currentuser==null)
             {
                 return Content("");
@@ -244,7 +243,7 @@ namespace WaterCloud.Web.Controllers
         /// <returns></returns>
         private async Task<string> GetMenuListNew()
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = _userService.currentuser;
             var roleId = currentuser.RoleId;
             StringBuilder sbJson = new StringBuilder();
             InitEntity init = new InitEntity();
@@ -429,7 +428,7 @@ namespace WaterCloud.Web.Controllers
         /// <returns></returns>
         private async Task<object> GetMenuButtonListNew()
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = _userService.currentuser;
             var roleId = currentuser.RoleId;
             if (roleId==null&& currentuser.IsSystem)
             {
@@ -484,7 +483,7 @@ namespace WaterCloud.Web.Controllers
         /// <returns></returns>
         private async Task<object> GetMenuFieldsListNew()
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = _userService.currentuser;
             var roleId = currentuser.RoleId;
             if (roleId == null && currentuser.IsSystem)
             {

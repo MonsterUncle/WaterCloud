@@ -49,14 +49,14 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> GetListJson(string keyword)
         {
             var data = await _service.GetList(keyword);
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = _logService.currentuser;
             if (currentuser == null)
             {
                 return null;
             }
             else
             {
-                return Content(data.Where(a => a.F_Id == OperatorProvider.Provider.GetCurrent().CompanyId).ToJson());
+                return Content(data.Where(a => a.F_Id == _logService.currentuser.CompanyId).ToJson());
             }
         }
 
@@ -71,7 +71,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetSetFormJson()
         {
-            var data = await _service.GetForm(OperatorProvider.Provider.GetCurrent().CompanyId);
+            var data = await _service.GetForm(_logService.currentuser.CompanyId);
             return Content(data.ToJson());
         }
         #endregion
@@ -97,8 +97,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
                 await _service.SubmitForm(entity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
@@ -118,7 +118,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> SetSubmitForm(SystemSetEntity entity)
         {
             LogEntity logEntity;
-            var keyValue = OperatorProvider.Provider.GetCurrent().CompanyId;
+            var keyValue = _logService.currentuser.CompanyId;
             logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
             logEntity.F_KeyValue = keyValue;
@@ -127,8 +127,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 entity.F_DeleteMark = false;
                 entity.F_EnabledMark = null;
                 entity.F_EndTime = null;
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
                 await _service.SubmitForm(entity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
@@ -152,8 +152,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
                 await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);

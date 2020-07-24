@@ -58,7 +58,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             if (string.IsNullOrEmpty(keyValue))
             {
                 noticeEntity.F_DeleteMark = false;
-                noticeEntity.F_CreatorUserName = OperatorProvider.Provider.GetCurrent().UserName;
+                noticeEntity.F_CreatorUserName = _logService.currentuser.UserName;
                 logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }
@@ -70,8 +70,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
                 await _noticeService.SubmitForm(noticeEntity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
@@ -95,8 +95,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
                 await _noticeService.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);

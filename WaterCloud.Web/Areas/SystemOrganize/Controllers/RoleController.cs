@@ -89,7 +89,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
-                if (OperatorProvider.Provider.GetCurrent().RoleId == keyValue)
+                if (_logService.currentuser.RoleId == keyValue)
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能修改用户当前角色" ;
@@ -99,8 +99,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
                 await _roleService.SubmitForm(roleEntity,string.IsNullOrEmpty(permissionbuttonIds) ?new string[0]: permissionbuttonIds.Split(','), string.IsNullOrEmpty(permissionfieldsIds) ? new string[0] : permissionfieldsIds.Split(','), keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
@@ -124,9 +124,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
-                if (OperatorProvider.Provider.GetCurrent().RoleId == keyValue)
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
+                if (_logService.currentuser.RoleId == keyValue)
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能删除用户当前角色";

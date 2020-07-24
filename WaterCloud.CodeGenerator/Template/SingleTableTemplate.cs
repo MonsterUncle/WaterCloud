@@ -411,8 +411,8 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            }");
             sb.AppendLine("            try");
             sb.AppendLine("            {");
-            sb.AppendLine("                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;");
-            sb.AppendLine("                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;");
+            sb.AppendLine("                logEntity.F_Account = _service.currentuser.UserCode;");
+            sb.AppendLine("                logEntity.F_NickName = _service.currentuser.UserName;");
             sb.AppendLine("                await _service.SubmitForm(entity, keyValue);");
             sb.AppendLine("                logEntity.F_Description += \"操作成功\";");
             sb.AppendLine("                await _logService.WriteDbLog(logEntity);");
@@ -437,8 +437,8 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            logEntity.F_Description += DbLogType.Delete.ToDescription();");
             sb.AppendLine("            try");
             sb.AppendLine("            {");
-            sb.AppendLine("                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;");
-            sb.AppendLine("                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;");
+            sb.AppendLine("                logEntity.F_Account = _service.currentuser.UserCode;");
+            sb.AppendLine("                logEntity.F_NickName = _service.currentuser.UserName;");
             sb.AppendLine("                await _service.DeleteForm(keyValue);");
             sb.AppendLine("                logEntity.F_Description += \"操作成功\";");
             sb.AppendLine("                await _logService.WriteDbLog(logEntity);");

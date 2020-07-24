@@ -43,7 +43,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = _logService.currentuser;
             LogEntity logEntity ;
             if (!string.IsNullOrEmpty(keyValue))
             {
@@ -83,7 +83,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            var currentuser = OperatorProvider.Provider.GetCurrent();
+            var currentuser = _logService.currentuser;
             LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try

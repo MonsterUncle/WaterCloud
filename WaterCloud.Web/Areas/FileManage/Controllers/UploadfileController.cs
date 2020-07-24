@@ -70,14 +70,13 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
             logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
-                var currentuser = OperatorProvider.Provider.GetCurrent();
                 string stemp = "";
-                if (currentuser.CompanyId != Define.SYSTEM_MASTERPROJECT)
+                if (_service.currentuser.CompanyId != Define.SYSTEM_MASTERPROJECT)
                 {
-                    stemp = (await _setService.GetForm(currentuser.CompanyId)).F_CompanyName;
+                    stemp = (await _setService.GetForm(_service.currentuser.CompanyId)).F_CompanyName;
                 }
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
                 var files = HttpContext.Request.Form.Files;
                 long size = files.Sum(f => f.Length);
                 if (size > 104857600)
@@ -118,11 +117,11 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
                 entity.F_EnabledMark = true;
                 entity.F_FileBy = fileby;
                 entity.F_FileType = filetype;
-                entity.F_CreatorUserName = currentuser.UserName;
+                entity.F_CreatorUserName = _service.currentuser.UserName;
                 entity.F_FileSize = size.ToIntOrNull();
 
                 entity.F_FileName = fileName;
-                entity.F_OrganizeId = currentuser.DepartmentId.Split(',')[0];
+                entity.F_OrganizeId = _service.currentuser.DepartmentId.Split(',')[0];
                 if (fileName.LastIndexOf(".") >= 0)
                 {
                     entity.F_FileExtension = fileName.Substring(fileName.LastIndexOf("."));
@@ -204,8 +203,8 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
             }
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
                 await _service.SubmitForm(entity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
@@ -230,8 +229,8 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
                 await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);

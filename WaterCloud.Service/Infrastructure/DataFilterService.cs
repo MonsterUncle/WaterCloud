@@ -16,7 +16,7 @@ namespace WaterCloud.Service
     public class DataFilterService<T> where T : class, new()
     {
         // 用户信息
-        protected OperatorModel currentuser;
+        public OperatorModel currentuser;
         // 用于当前表操作
         protected IRepositoryBase<T> repository;
         // 用于其他表操作

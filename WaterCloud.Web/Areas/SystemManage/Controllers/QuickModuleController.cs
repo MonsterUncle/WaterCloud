@@ -29,7 +29,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTransferJson()
         {
-            var userId = OperatorProvider.Provider.GetCurrent().UserId;
+            var userId = _moduleService.currentuser.UserId;
             var data =await _moduleService.GetTransferList(userId);
             return Content(data.ToJson());
         }

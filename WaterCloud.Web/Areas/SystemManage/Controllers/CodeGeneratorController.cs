@@ -112,7 +112,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 dic.Add(item.TableColumn, string.IsNullOrEmpty(item.Remark) ? item.TableColumn : item.Remark);
             }
             string serverPath = GlobalContext.HostingEnvironment.ContentRootPath;
-            data = new SingleTableTemplate(_context).GetBaseConfig(serverPath, OperatorProvider.Provider.GetCurrent().UserName, keyValue, tableDescription, dic);
+            data = new SingleTableTemplate(_context).GetBaseConfig(serverPath, _logService.currentuser.UserName, keyValue, tableDescription, dic);
             return Content(data.ToJson());
         }
         #endregion
@@ -190,8 +190,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
                 if (!GlobalContext.SystemConfig.Debug)
                 {
                     throw new System.Exception("请在本地开发模式时使用代码生成");
@@ -223,8 +223,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
-                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                logEntity.F_Account = _logService.currentuser.UserCode;
+                logEntity.F_NickName = _logService.currentuser.UserName;
                 if (!GlobalContext.SystemConfig.Debug)
                 {
                     throw new System.Exception("请在本地开发模式时使用代码生成");
