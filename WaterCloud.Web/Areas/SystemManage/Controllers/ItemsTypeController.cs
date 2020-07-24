@@ -23,13 +23,13 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     public class ItemsTypeController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public ItemsTypeService _itemsService { get; set; }
+        public ItemsTypeService _service { get; set; }
         public LogService _logService { get; set; }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeSelectJson()
         {
-            var data =await _itemsService.GetList();
+            var data =await _service.GetList();
             data = data.Where(a => a.F_Layers == 1).ToList();
             var treeList = new List<TreeSelectModel>();
             foreach (ItemsEntity item in data)
@@ -46,7 +46,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeJson()
         {
-            var data =await _itemsService.GetList();
+            var data =await _service.GetList();
             var treeList = new List<TreeViewModel>();
             foreach (ItemsEntity item in data)
             {
@@ -67,7 +67,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeGridJson(string keyword)
         {
-            var data =await _itemsService.GetLookList();
+            var data =await _service.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
@@ -88,7 +88,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(string keyword)
         {
-            var data =await _itemsService.GetLookList();
+            var data =await _service.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
@@ -99,7 +99,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _itemsService.GetLookForm(keyValue);
+            var data =await _service.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -123,8 +123,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
                 if (string.IsNullOrEmpty(keyValue))
                 {
 
@@ -135,9 +135,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 }
                 else
                 {
-                    itemsEntity.F_Layers =(await _itemsService.GetForm(itemsEntity.F_ParentId)).F_Layers + 1;
+                    itemsEntity.F_Layers =(await _service.GetForm(itemsEntity.F_ParentId)).F_Layers + 1;
                 }
-                await _itemsService.SubmitForm(itemsEntity, keyValue);
+                await _service.SubmitForm(itemsEntity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -159,9 +159,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                await _itemsService.DeleteForm(keyValue);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");

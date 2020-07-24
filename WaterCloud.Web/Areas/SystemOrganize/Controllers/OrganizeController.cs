@@ -23,7 +23,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     public class OrganizeController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public OrganizeService _organizeService { get; set; }
+        public OrganizeService _service { get; set; }
         public LogService _logService { get; set; }
 
         [HttpGet]
@@ -36,7 +36,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeSelectJson()
         {
-            var data =await _organizeService.GetList();
+            var data =await _service.GetList();
             var treeList = new List<TreeSelectModel>();
             foreach (OrganizeEntity item in data)
             {
@@ -53,7 +53,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeJson()
         {
-            var data =await _organizeService.GetList();
+            var data =await _service.GetList();
             var treeList = new List<TreeViewModel>();
             foreach (OrganizeEntity item in data)
             {
@@ -74,7 +74,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeGridJson(string keyword)
         {
-            var data =await _organizeService.GetLookList();
+            var data =await _service.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
@@ -85,7 +85,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _organizeService.GetLookForm(keyValue);
+            var data =await _service.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -110,17 +110,17 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
                 if (organizeEntity.F_ParentId=="0")
                 {
                     organizeEntity.F_Layers = 1;
                 }
                 else
                 {
-                    organizeEntity.F_Layers =(await _organizeService.GetForm(organizeEntity.F_ParentId)).F_Layers + 1;
+                    organizeEntity.F_Layers =(await _service.GetForm(organizeEntity.F_ParentId)).F_Layers + 1;
                 }
-                await _organizeService.SubmitForm(organizeEntity, keyValue);
+                await _service.SubmitForm(organizeEntity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -143,9 +143,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                await _organizeService.DeleteForm(keyValue);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");

@@ -23,20 +23,20 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     public class ItemsDataController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public ItemsDataService _itemsDetailService { get; set; }
+        public ItemsDataService _service { get; set; }
         public LogService _logService { get; set; }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(string itemId, string keyword)
         {
-            var data =await _itemsDetailService.GetLookList(itemId, keyword);
+            var data =await _service.GetLookList(itemId, keyword);
             return Success(data.Count, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetSelectJson(string enCode)
         {
-            var data =await _itemsDetailService.GetItemList(enCode);
+            var data =await _service.GetItemList(enCode);
             List<object> list = new List<object>();
             foreach (ItemsDetailEntity item in data)
             {
@@ -48,7 +48,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _itemsDetailService.GetLookForm(keyValue);
+            var data =await _service.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -71,9 +71,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                await _itemsDetailService.SubmitForm(itemsDetailEntity, keyValue);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                await _service.SubmitForm(itemsDetailEntity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -96,9 +96,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                await _itemsDetailService.DeleteForm(keyValue);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");

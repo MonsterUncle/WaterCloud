@@ -24,7 +24,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     public class RoleController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public RoleService _roleService { get; set; }
+        public RoleService _service { get; set; }
         public LogService _logService { get; set; }
 
         [HttpGet]
@@ -37,14 +37,14 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetListJson(string keyword)
         {
-            var data =await _roleService.GetList(keyword);
+            var data =await _service.GetList(keyword);
             return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetSelectJson(string keyword,string ids)
         {
-            var data = await _roleService.GetList(keyword);
+            var data = await _service.GetList(keyword);
             if (!string.IsNullOrEmpty(ids))
             {
                 foreach (var item in ids.Split(','))
@@ -60,14 +60,14 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             pagination.order = "asc";
             pagination.sort = "F_EnCode";
-            var data =await _roleService.GetLookList(pagination,keyword);
+            var data =await _service.GetLookList(pagination,keyword);
             return Success(pagination.records,data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _roleService.GetLookForm(keyValue);
+            var data =await _service.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -89,7 +89,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
-                if (_logService.currentuser.RoleId == keyValue)
+                if (_service.currentuser.RoleId == keyValue)
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能修改用户当前角色" ;
@@ -99,9 +99,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                await _roleService.SubmitForm(roleEntity,string.IsNullOrEmpty(permissionbuttonIds) ?new string[0]: permissionbuttonIds.Split(','), string.IsNullOrEmpty(permissionfieldsIds) ? new string[0] : permissionfieldsIds.Split(','), keyValue);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                await _service.SubmitForm(roleEntity,string.IsNullOrEmpty(permissionbuttonIds) ?new string[0]: permissionbuttonIds.Split(','), string.IsNullOrEmpty(permissionfieldsIds) ? new string[0] : permissionfieldsIds.Split(','), keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -124,16 +124,16 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                if (_logService.currentuser.RoleId == keyValue)
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                if (_service.currentuser.RoleId == keyValue)
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能删除用户当前角色";
                     await _logService.WriteDbLog(logEntity);
                     return Error(logEntity.F_Description);
                 }
-                await _roleService.DeleteForm(keyValue);
+                await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");

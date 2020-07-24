@@ -24,7 +24,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     public class UserController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public UserService _userService { get; set; }
+        public UserService _service { get; set; }
         public UserLogOnService _userLogOnService { get; set; }
         public ModuleService _moduleService { get; set; }
         public LogService _logService { get; set; }
@@ -35,7 +35,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             pagination.order = "asc";
             pagination.sort = "F_DepartmentId asc";
-            var data =await _userService.GetLookList(pagination, keyword);
+            var data =await _service.GetLookList(pagination, keyword);
             return Success(pagination.records, data);
         }
         [HttpGet]
@@ -48,7 +48,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetListJson(string keyword,string ids)
         {
-            var data = await _userService.GetList(keyword);
+            var data = await _service.GetList(keyword);
             if (!string.IsNullOrEmpty(ids))
             {
                 foreach (var item in ids.Split(','))
@@ -62,14 +62,14 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _userService.GetLookForm(keyValue);
+            var data =await _service.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetUserFormJson()
         {
-            var data =await _userService.GetForm(_logService.currentuser.UserId);
+            var data =await _service.GetForm(_service.currentuser.UserId);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -81,10 +81,10 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             logEntity.F_KeyValue = userEntity.F_Id;
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                userEntity.F_Id = _logService.currentuser.UserId;
-                await _userService.SubmitUserForm(userEntity);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                userEntity.F_Id = _service.currentuser.UserId;
+                await _service.SubmitUserForm(userEntity);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -108,7 +108,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 userEntity.F_IsAdmin = false;
                 userEntity.F_DeleteMark = false;
                 userEntity.F_IsBoss = false;
-                userEntity.F_OrganizeId = _logService.currentuser.CompanyId;
+                userEntity.F_OrganizeId = _service.currentuser.CompanyId;
                 logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
             }
@@ -117,7 +117,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
                 logEntity.F_Description += DbLogType.Update.ToDescription();
                 logEntity.F_KeyValue = keyValue;
-                if (_logService.currentuser.UserId == keyValue)
+                if (_service.currentuser.UserId == keyValue)
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能修改用户自身";
@@ -127,9 +127,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                await _userService.SubmitForm(userEntity, userLogOnEntity, keyValue);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                await _service.SubmitForm(userEntity, userLogOnEntity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -152,16 +152,16 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                if (_logService.currentuser.UserId == keyValue)
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                if (_service.currentuser.UserId == keyValue)
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能删除用户自身";
                     await _logService.WriteDbLog(logEntity);
                     return Error(logEntity.F_Description);
                 }
-                await _userService.DeleteForm(keyValue);
+                await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -190,8 +190,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             logEntity.F_KeyValue = keyValue;
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
                 await _userLogOnService.RevisePassword(F_UserPassword, keyValue);
                 logEntity.F_Description += "重置密码成功";
                 await _logService.WriteDbLog(logEntity);
@@ -217,11 +217,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
             logEntity.F_Description += DbLogType.Update.ToDescription();
-            logEntity.F_KeyValue = _logService.currentuser.UserId;
+            logEntity.F_KeyValue = _service.currentuser.UserId;
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
                 await _userLogOnService.ReviseSelfPassword(F_UserPassword, logEntity.F_KeyValue);
                 logEntity.F_Description += "重置密码成功";
                 await _logService.WriteDbLog(logEntity);
@@ -246,19 +246,19 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             logEntity.F_KeyValue = keyValue;
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
                 UserEntity userEntity = new UserEntity();
                 userEntity.F_Id = keyValue;
                 userEntity.F_EnabledMark = false;
-                if (_logService.currentuser.UserId == keyValue)
+                if (_service.currentuser.UserId == keyValue)
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能修改用户自身";
                     await _logService.WriteDbLog(logEntity);
                     return Error(logEntity.F_Description);
                 }
-                await _userService.UpdateForm(userEntity);
+                await _service.UpdateForm(userEntity);
                 logEntity.F_Description += "账户禁用成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("账户禁用成功。");
@@ -282,19 +282,19 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             logEntity.F_KeyValue = keyValue;
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
                 UserEntity userEntity = new UserEntity();
                 userEntity.F_Id = keyValue;
                 userEntity.F_EnabledMark = true;
-                if (_logService.currentuser.UserId == keyValue)
+                if (_service.currentuser.UserId == keyValue)
                 {
                     logEntity.F_Result = false;
                     logEntity.F_Description += "操作失败，不能修改用户自身";
                     await _logService.WriteDbLog(logEntity);
                     return Error(logEntity.F_Description);
                 }
-                await _userService.UpdateForm(userEntity);
+                await _service.UpdateForm(userEntity);
                 logEntity.F_Description += "账户启用成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("账户启用成功。");

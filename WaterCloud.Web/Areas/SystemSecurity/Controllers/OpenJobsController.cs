@@ -17,14 +17,14 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     public class OpenJobsController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public OpenJobsService _jobService { get; set; }
+        public OpenJobsService _service { get; set; }
         public LogService _logService { get; set; }
 
         //获取详情
         [HttpGet]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data = await _jobService.GetLookForm(keyValue);
+            var data = await _service.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -51,7 +51,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             {
                 logEntity.F_Account = _logService.currentuser.UserCode;
                 logEntity.F_NickName = _logService.currentuser.UserName;
-                await _jobService.SubmitForm(entity, keyValue);
+                await _service.SubmitForm(entity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -76,7 +76,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             {
                 logEntity.F_Account = _logService.currentuser.UserCode;
                 logEntity.F_NickName = _logService.currentuser.UserName;
-                await _jobService.DeleteForm(keyValue);
+                await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -96,7 +96,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HttpGet]
         public async Task<ActionResult> QueryLocalHandlers()
         {
-            var data = _jobService.QueryLocalHandlers();
+            var data = _service.QueryLocalHandlers();
             return Content(data.ToJson());
         }
         [HttpGet]
@@ -105,7 +105,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         {
             pagination.order = "desc";
             pagination.sort = "F_EnabledMark";
-            var data = await _jobService.GetLookList(pagination, keyword);
+            var data = await _service.GetLookList(pagination, keyword);
             return Success(pagination.records, data);
         }
         /// <summary>
@@ -122,7 +122,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             {
                 logEntity.F_Account = _logService.currentuser.UserCode;
                 logEntity.F_NickName = _logService.currentuser.UserName;
-                await _jobService.ChangeJobStatus(keyValue, status);
+                await _service.ChangeJobStatus(keyValue, status);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");

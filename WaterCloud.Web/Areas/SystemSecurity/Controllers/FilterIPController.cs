@@ -10,8 +10,6 @@ using WaterCloud.Domain.SystemSecurity;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Service;
 using System;
-using WaterCloud.Service.SystemManage;
-using System.Linq;
 using Serenity;
 using System.Threading.Tasks;
 
@@ -21,21 +19,21 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     public class FilterIPController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public FilterIPService _filterIPService { get; set; }
+        public FilterIPService _service { get; set; }
         public LogService _logService { get; set; }
 
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(string keyword)
         {
-            var data =await _filterIPService.GetLookList(keyword);
+            var data =await _service.GetLookList(keyword);
             return Success(data.Count,data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _filterIPService.GetLookForm(keyValue);
+            var data =await _service.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -43,7 +41,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
         {
-            var currentuser = _logService.currentuser;
+            var currentuser = _service.currentuser;
             LogEntity logEntity ;
             if (!string.IsNullOrEmpty(keyValue))
             {
@@ -64,7 +62,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
                 {
                     filterIPEntity.F_DeleteMark = false;
                 }
-                await _filterIPService.SubmitForm(filterIPEntity, keyValue);
+                await _service.SubmitForm(filterIPEntity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -83,14 +81,14 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            var currentuser = _logService.currentuser;
+            var currentuser = _service.currentuser;
             LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString());
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
                 logEntity.F_Account = currentuser.UserCode;
                 logEntity.F_NickName = currentuser.UserName;
-                await _filterIPService.DeleteForm(keyValue);
+                await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");

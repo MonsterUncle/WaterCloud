@@ -22,7 +22,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     public class DutyController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public DutyService _dutyService { get; set; }
+        public DutyService _service { get; set; }
         public LogService _logService { get; set; }
 
         [HttpGet]
@@ -31,21 +31,21 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             pagination.order = "asc";
             pagination.sort = "F_EnCode asc";
-            var data =await _dutyService.GetLookList(pagination,keyword);
+            var data =await _service.GetLookList(pagination,keyword);
             return Success(pagination.records, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetListJson(string keyword)
         {
-            var data =await _dutyService.GetList(keyword);
+            var data =await _service.GetList(keyword);
             return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _dutyService.GetLookForm(keyValue);
+            var data =await _service.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -70,9 +70,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                await _dutyService.SubmitForm(roleEntity, keyValue);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                await _service.SubmitForm(roleEntity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -95,9 +95,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                await _dutyService.DeleteForm(keyValue);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");

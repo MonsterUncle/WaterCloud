@@ -23,7 +23,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     public class ModuleController : ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public ModuleService _moduleService { get; set; }
+        public ModuleService _service { get; set; }
         public ModuleButtonService _moduleButtonService { get; set; }
         public LogService _logService { get; set; }
 
@@ -31,7 +31,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeSelectJson()
         {
-            var data =await _moduleService.GetList();
+            var data =await _service.GetList();
             data = data.Where(a => a.F_Target == "expand"&&a.F_IsExpand==true).ToList();
             var treeList = new List<TreeSelectModel>();
             foreach (ModuleEntity item in data)
@@ -48,7 +48,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeGridJson(string keyword)
         {
-            var data =await _moduleService.GetLookList();
+            var data =await _service.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
@@ -59,7 +59,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetSelectJson()
         {
-            var data = await _moduleService.GetList();
+            var data = await _service.GetList();
             data = data.Where(a => a.F_Target == "expand" && a.F_IsExpand == true).ToList();
             var treeList = new List<TreeSelectModel>();
             foreach (ModuleEntity item in data)
@@ -76,7 +76,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetSelectMunuJson(string keyword)
         {
-            var data = (await _moduleService.GetList()).Where(a => a.F_Target=="iframe").ToList();
+            var data = (await _service.GetList()).Where(a => a.F_Target=="iframe").ToList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.Where(a => a.F_FullName.Contains(keyword)).ToList();
@@ -92,7 +92,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetSelectMunuBesidesJson(string keyword)
         {
-            var data = await _moduleService.GetBesidesList();
+            var data = await _service.GetBesidesList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.Where(a => a.F_FullName.Contains(keyword)).ToList();
@@ -108,7 +108,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _moduleService.GetLookForm(keyValue);
+            var data =await _service.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -144,19 +144,19 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
                 if (moduleEntity.F_ParentId == "0")
                 {
                     moduleEntity.F_Layers = 1;
                 }
                 else
                 {
-                    moduleEntity.F_Layers =(await _moduleService.GetForm(moduleEntity.F_ParentId)).F_Layers + 1;
+                    moduleEntity.F_Layers =(await _service.GetForm(moduleEntity.F_ParentId)).F_Layers + 1;
                 }
                 if (!string.IsNullOrEmpty(moduleEntity.F_UrlAddress))
                 {
-                    var templist = await _moduleService.GetList();
+                    var templist = await _service.GetList();
                     if (!string.IsNullOrEmpty(keyValue))
                     {
                         templist = templist.Where(a => a.F_Id != keyValue).ToList();
@@ -168,7 +168,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 {
                     moduleEntity.F_UrlAddress = null;
                 }
-                await _moduleService.SubmitForm(moduleEntity, keyValue);
+                await _service.SubmitForm(moduleEntity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -192,9 +192,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                await _moduleService.DeleteForm(keyValue);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");

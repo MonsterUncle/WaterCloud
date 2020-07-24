@@ -24,14 +24,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         public ModuleService _moduleService { get; set; }
-        public ModuleButtonService _moduleButtonService { get; set; }
+        public ModuleButtonService _service { get; set; }
         public LogService _logService { get; set; }
 
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeSelectJson(string moduleId)
         {
-            var data =await _moduleButtonService.GetList(moduleId);
+            var data =await _service.GetList(moduleId);
             var treeList = new List<TreeSelectModel>();
             foreach (ModuleButtonEntity item in data)
             {
@@ -47,14 +47,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeGridJson(string moduleId)
         {
-            var data =await _moduleButtonService.GetLookList(moduleId);
+            var data =await _service.GetLookList(moduleId);
             return Success(data.Count, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
-            var data =await _moduleButtonService.GetLookForm(keyValue);
+            var data =await _service.GetLookForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
@@ -80,17 +80,17 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
                 if (moduleButtonEntity.F_ParentId == "0")
                 {
                     moduleButtonEntity.F_Layers = 1;
                 }
                 else
                 {
-                    moduleButtonEntity.F_Layers =(await _moduleButtonService.GetForm(moduleButtonEntity.F_ParentId)).F_Layers + 1;
+                    moduleButtonEntity.F_Layers =(await _service.GetForm(moduleButtonEntity.F_ParentId)).F_Layers + 1;
                 }
-                await _moduleButtonService.SubmitForm(moduleButtonEntity, keyValue);
+                await _service.SubmitForm(moduleButtonEntity, keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -113,9 +113,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                await _moduleButtonService.DeleteForm(keyValue);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                await _service.DeleteForm(keyValue);
                 logEntity.F_Description += "操作成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("操作成功。");
@@ -138,7 +138,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetCloneButtonTreeJson()
         {
             var moduledata =await _moduleService.GetList();
-            var buttondata =await _moduleButtonService.GetList();
+            var buttondata =await _service.GetList();
             var treeList = new List<TreeGridModel>();
             foreach (ModuleEntity item in moduledata)
             {
@@ -171,9 +171,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
-                await _moduleButtonService.SubmitCloneButton(moduleId, Ids);
+                logEntity.F_Account = _service.currentuser.UserCode;
+                logEntity.F_NickName = _service.currentuser.UserName;
+                await _service.SubmitCloneButton(moduleId, Ids);
                 logEntity.F_Description += "克隆成功";
                 await _logService.WriteDbLog(logEntity);
                 return Success("克隆成功。");
