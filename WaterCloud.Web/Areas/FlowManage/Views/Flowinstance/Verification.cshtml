@@ -164,7 +164,9 @@
                 url: "/FlowManage/Flowinstance/Verification?keyValue=" + keyValue,
                 param: postData,
                 success: function () {
-                    common.parentreload("data-search-btn",'data-search-btn');
+                    common.parentreload("data-search-btn");
+                    common.reloadIframe("/FlowManage/Flowinstance/Index", 'data-search-btn');
+                    common.reloadIframe("/FlowManage/Flowinstance/DoneFlow", 'data-search-btn');
                 }
             })
             return false;

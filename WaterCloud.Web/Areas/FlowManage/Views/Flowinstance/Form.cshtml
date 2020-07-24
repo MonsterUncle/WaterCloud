@@ -214,7 +214,7 @@
                         arr[i].columns[j].list = setFormValue(arr[i].columns[j].list, temp);
                     }
                 }
-                else if(!!temp){
+                else if (!!temp) {
                     if (!!temp[arr[i].id]) {
                         arr[i].defaultValue = temp[arr[i].id];
                     }
@@ -222,7 +222,7 @@
                 if (arr[i].tag == "image") {
                     editor = arr[i];
                 }
-                if (arr[i].tag=="editor") {
+                if (arr[i].tag == "editor") {
                     editor = arr[i];
                 }
             }
@@ -289,6 +289,8 @@
                 param: postData,
                 success: function () {
                     common.reloadIframe("/FlowManage/Flowinstance/Index", 'data-search-btn');
+                    common.reloadIframe("/FlowManage/Flowinstance/ToDoFlow", 'data-search-btn');
+                    common.reloadIframe("/FlowManage/Flowinstance/DoneFlow", 'data-search-btn');
                 }
             })
             return false;
