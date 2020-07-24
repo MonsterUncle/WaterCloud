@@ -11,6 +11,7 @@ using WaterCloud.Domain.SystemOrganize;
 using System.Net.Http;
 using System.IO;
 using System.Reflection;
+using Serenity;
 
 namespace WaterCloud.Service.FlowManage
 {
@@ -486,6 +487,17 @@ namespace WaterCloud.Service.FlowManage
             entity.F_FrmContentParse = form.F_ContentParse;
             entity.F_FrmType = form.F_FrmType;
             entity.F_FrmId = form.F_Id;
+            Dictionary<string, string> dic = JsonHelper.ToObject<Dictionary<string, string>>(entity.F_FrmData);
+            if (!dic.ContainsKey("申请人"))
+            {
+                dic.Add("申请人", currentuser.UserId);
+
+            }
+            if (!dic.ContainsKey("所属部门"))
+            {
+                dic.Add("所属部门", currentuser.DepartmentId);
+            }
+            entity.F_FrmData = dic.ToJson();
             entity.F_InstanceSchemeId = "";
             entity.F_DbName = form.F_WebId;
             entity.F_FlowLevel = 0;

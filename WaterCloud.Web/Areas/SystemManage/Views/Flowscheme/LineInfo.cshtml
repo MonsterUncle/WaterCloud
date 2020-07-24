@@ -5,10 +5,10 @@
 <div class="layui-input-item layui-hide" id="divInputTemplate">
     <label class="layui-form-label required">条件规则</label>
     <div class="layui-input-block" style="padding-right: 70px;">
-        <select id="ComparesFieldName" name="ComparesFieldName" lay-search>
+        <select id="ComparesFieldName" name="ComparesFieldName" lay-verify="required" lay-search>
             <option value="" selected>请选择</option>
         </select>
-        <select id="ComparesOperation" name="ComparesOperation" lay-search>
+        <select id="ComparesOperation" name="ComparesOperation" lay-verify="required" lay-search>
             <option value="" selected>请选择</option>
             <option value=">">></option>
             <option value=">=">>=</option>
@@ -17,8 +17,10 @@
             <option value="=">=</option>
             <option value="!=">!=</option>
         </select>
-        <input type="text" name="ComparesValue" id="ComparesValue" class="layui-input">
+        <input type="text" id="ComparesName" name="ComparesName" class="layui-input" lay-verify="required" value="" placeholder="请输入值">
+        <input type="text" id="ComparesValue" name="ComparesValue" lay-verify="required" class="layui-input layui-hide">
         <button class="layui-btn layui-btn-danger" style="position: absolute;top: 0;right: 6px;cursor: pointer;" onclick="deleteRule('divInputTemplate')"><i class="layui-icon">&#xe67e;</i></button>
+        <button class="layui-btn layui-btn-primary" style="position: absolute;top: 0;right: 6px;cursor: pointer;margin-top:75px" onclick="search(searchCout)">...</button>
     </div>
 </div>
 <div class="layuimini-container">
@@ -73,6 +75,8 @@
         //从flowschemes.js进入的节点信息
         var line = parent.FlowDesignObject;
         var valuelist = parent.valueList;
+        $('#ComparesFieldName').append($("<option></option>").val("申请人").html("申请人"));
+        $('#ComparesFieldName').append($("<option></option>").val("所属部门").html("所属部门"));
         for (var i = 0; i < valuelist.length; i++) {
             $('#ComparesFieldName').append($("<option></option>").val(valuelist[i]).html(valuelist[i]));
         }
@@ -84,6 +88,7 @@
             ComparesOperation0: "",
             ComparesFieldName0: "",
             ComparesValue0: "",
+            ComparesName0: "",
         };
         var cout = 0;
         $(document).on('click', '#NF-add', function () {
@@ -93,28 +98,34 @@
             html = html.replace(/条件规则/g, "条件规则" + (cout + 1)); // 替换多个
             html = html.replace(/ComparesOperation/g, "ComparesOperation" + cout); // 替换多个
             html = html.replace(/ComparesValue/g, "ComparesValue" + cout); // 替换多个
+            html = html.replace(/ComparesName/g, "ComparesName" + cout); // 替换多个
             html = html.replace(/divInputTemplate/g, "divInput" + cout);
+            html = html.replace(/searchCout/g, cout);
             var obj = $(html);
             obj.removeClass("layui-hide");
             obj.appendTo(target);
             cout++;
             form.render();
         });
-        if (Method == "Details") {
-            common.setReadOnly('adminform');
-            $('#NF-add').prop('disabled', true);
-        }
         //初始化节点设置信息
-        if (line.Compares != null) {
+        if (!!line.Compares) {
             for (var i = 0; i < line.Compares.length; i++) {
-                tem['ComparesOperation' + i] = line.Compares[i].Operation;
+                $('#NF-add').click();
+                tmp['ComparesOperation' + i] = line.Compares[i].Operation;
                 tmp['ComparesFieldName' + i] = line.Compares[i].FieldName;
                 tmp['ComparesValue' + i] = line.Compares[i].Value;
-                $('#NF-add').click();
+                tmp['ComparesName' + i] = line.Compares[i].Name;
             }
         }
         else {
-            $('#NF-add').click();
+            if (Method != "Details") {
+                $('#NF-add').click();
+            }
+        }
+        if (Method == "Details") {
+            var readForm = layui.$('[lay-filter="adminform"]');
+            readForm.find('button').prop('disabled', true);
+            common.setReadOnly('adminform');
         }
         common.val('adminform', tmp);
         form.render(); //重新渲染，防止radio/select等失效
@@ -144,14 +155,22 @@
                 LineCode: tmp.LineCode,
                 Compares: [],
             };
-            for (var i = 0; i <= cout; i++) {
+            for (var i = 0; i < cout; i++) {
                 var FieldName = $('#ComparesFieldName' + i).val();
+                if (!FieldName) {
+                    continue;
+                }
                 var Operation = $('#ComparesOperation' + i).val();
                 var Value = $('#ComparesValue' + i).val();
+                var Name = $('#ComparesName' + i).val();
+                if (!Value) {
+                    Value = Name;
+                }
                 var temp = { //节点指定操作人
                     FieldName: FieldName,
                     Operation: Operation,
                     Value: Value,
+                    Name: Name,
                 };
                 result.Compares.push(temp);
             }
@@ -165,6 +184,39 @@
         }
         layui.use(['jquery', 'form'], function () {
             layui.form.render();
+        });
+    }
+    function search(data) {
+        var fields = $('#ComparesFieldName' + data).val();
+        if (fields != '申请人' && fields != '所属部门') {
+            return false;
+        }
+        $('#ComparesName' + data).val(null);
+        $('#ComparesValue' + data).val(null);
+        layui.use(['jquery', 'form', 'common'], function () {
+            var form = layui.form,
+                $ = layui.$,
+                common = layui.common;
+            //不同弹窗
+            if (fields == '申请人') {
+                common.modalOpen({
+                    title: "选择用户",
+                    url: "/SystemOrganize/User/AddForm?name=" + "ComparesName" + data + "&value=" + "ComparesValue" + data,
+                    width: "650px",
+                    height: "500px",
+                });
+            }
+            else if (fields == '所属部门') {
+                common.modalOpen({
+                    title: "选择组织",
+                    url: "/SystemOrganize/Organize/AddForm?name=" + "ComparesName" + data + "&value=" + "ComparesValue" + data,
+                    width: "650px",
+                    height: "500px",
+                });
+            }
+            else {
+                return false;
+            }
         });
     }
 </script>

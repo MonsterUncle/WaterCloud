@@ -1456,7 +1456,8 @@ GooFlow.prototype={
 			this.resetLines(id,this.$nodeData[id]);
 		}
 		else if (type === "line") {//如果是线
-		    this.$lineData[id].setInfo = setInfo;
+			this.$lineData[id].Compares = setInfo.Compares;
+			delete this.$lineData[id].setInfo;
 			if(!this.$lineData[id])	return;
 			if(this.$lineData[id].name===name)	return;
 			if(typeof this.onItemRename==='function' && this.onItemRename(id,name,"node")===false)	return;

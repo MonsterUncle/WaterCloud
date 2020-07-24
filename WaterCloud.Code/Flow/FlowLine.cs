@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace WaterCloud.Code
@@ -24,13 +25,50 @@ namespace WaterCloud.Code
             bool result = true;
             foreach (var compare in Compares)
             {
-                decimal value = decimal.Parse(compare.Value);  //参考值
-                decimal frmvalue = decimal.Parse(frmDataJson.GetValue(compare.FieldName.ToLower()).ToString()); //表单中填写的值
-
+                decimal value=0;  //参考值
+                decimal frmvalue=0; //表单中填写的值
+                if (compare.Operation!= DataCompare.Equal&& compare.Operation != DataCompare.NotEqual)
+                {
+                    value = decimal.Parse(compare.Value);
+                    frmvalue = decimal.Parse(frmDataJson.GetValue(compare.FieldName.ToLower()).ToString()); //表单中填写的值
+                }
                 switch (compare.Operation)
                 {
                     case DataCompare.Equal:
+                        if (compare.FieldName == "申请人"|| compare.FieldName == "所属部门")
+                        {
+                            bool res = false;
+                            var arr= compare.Value.Split(',');
+                            foreach (var item in frmDataJson.GetValue(compare.FieldName).ToString().Split(','))
+                            {
+                                if (arr.Contains(item))
+                                {
+                                    res = true;
+                                    break;
+                                }
+                            }
+                            result &= res;
+                            break;
+                        }
                         result &= compare.Value == frmDataJson.GetValue(compare.FieldName).ToString();
+                        break;
+                    case DataCompare.NotEqual:
+                        if (compare.FieldName == "申请人" || compare.FieldName == "所属部门")
+                        {
+                            bool res = true;
+                            var arr = compare.Value.Split(',');
+                            foreach (var item in frmDataJson.GetValue(compare.FieldName).ToString().Split(','))
+                            {
+                                if (arr.Contains(item))
+                                {
+                                    res = false;
+                                    break;
+                                }
+                            }
+                            result &= res;
+                            break;
+                        }
+                        result &= compare.Value != frmDataJson.GetValue(compare.FieldName).ToString();
                         break;
                     case DataCompare.Larger:
                         result &= frmvalue > value;
@@ -72,7 +110,11 @@ namespace WaterCloud.Code
         /// <summary> 字段类型："form"：为表单中的字段，后期扩展系统表等. </summary>
         public string FieldType { get; set; }
 
-        /// <summary>比较的值</summary>
+        /// <summary>实际的值</summary>
         public string Value { get; set; }
+        /// <summary>
+        /// 显示值
+        /// </summary>
+        public string Name { get; set; }
     }
 }
