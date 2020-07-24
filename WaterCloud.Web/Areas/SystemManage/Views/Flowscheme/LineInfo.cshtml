@@ -2,6 +2,25 @@
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
+<div class="layui-input-item layui-hide" id="divInputTemplate">
+    <label class="layui-form-label required">条件规则</label>
+    <div class="layui-input-block" style="padding-right: 70px;">
+        <select id="ComparesFieldName" name="ComparesFieldName" lay-search>
+            <option value="" selected>请选择</option>
+        </select>
+        <select id="ComparesOperation" name="ComparesOperation" lay-search>
+            <option value="" selected>请选择</option>
+            <option value=">">></option>
+            <option value=">=">>=</option>
+            <option value="<"><</option>
+            <option value="<="><=</option>
+            <option value="=">=</option>
+            <option value="!=">!=</option>
+        </select>
+        <input type="text" name="ComparesValue" id="ComparesValue" class="layui-input">
+        <button class="layui-btn layui-btn-danger" style="position: absolute;top: 0;right: 6px;cursor: pointer;" onclick="deleteRule('divInputTemplate')"><i class="layui-icon">&#xe67e;</i></button>
+    </div>
+</div>
 <div class="layuimini-container">
     <div class="layuimini-main">
         <div class="layui-form layuimini-form" lay-filter="adminform">
@@ -34,39 +53,18 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">表单字段</label>
-                <div class="layui-input-block">
-                    <select id="ComparesFieldName" name="ComparesFieldName" lay-filter="ComparesField" lay-search>
-                        <option value="" selected>请选择</option>
-                    </select>
+                <label class="layui-form-label">连线条件</label>
+                <div class="layui-input-block" style="padding-right: 70px;">
+                    <button id="NF-add" class="layui-btn" ><i class="layui-icon">&#xe654;</i></button>
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">比较</label>
-                <div class="layui-input-block">
-                    <select id="ComparesOperation" name="ComparesOperation" lay-search>
-                        <option value="" selected>请选择</option>
-                        <option value=">" selected>></option>
-                        <option value=">=" selected>>=</option>
-                        <option value="<" selected><</option>
-                        <option value="<=" selected><=</option>
-                        <option value="=" selected>=</option>
-                        <option value="!=" selected>!=</option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">值</label>
-                <div class="layui-input-block">
-                    <input type="text" name="ComparesValue" id="ComparesValue"
-                           class="layui-input">
-                </div>
+            <div id="ruledata">
             </div>
         </div>
     </div>
 </div>
 <script>
-    layui.use(['form', 'layer', 'element', 'tablePlug','jquery', 'common'], function () {
+    layui.use(['form', 'layer', 'element', 'tablePlug', 'jquery', 'common'], function () {
         var layer = layui.layer,
             $ = layui.jquery,
             common = layui.common;
@@ -83,48 +81,90 @@
             LineCode: line.id,//默认的code
             NodeForm: line.from,
             NodeTo: line.to,
-            ComparesOperation: "",
-            ComparesFieldName: "",
-            ComparesValue: "",
+            ComparesOperation0: "",
+            ComparesFieldName0: "",
+            ComparesValue0: "",
         };
-        //初始化节点设置信息
-        if (line.Compares != null) {
-            tmp.ComparesOperation = line.Compares[0].Operation;
-            tmp.ComparesFieldName = line.Compares[0].FieldName;
-            tmp.ComparesValue = line.Compares[0].Value;
-        }
-        common.val('adminform', tmp);
+        var cout = 0;
+        $(document).on('click', '#NF-add', function () {
+            var target = $('#ruledata');
+            var html = $("#divInputTemplate").prop("outerHTML");
+            html = html.replace(/ComparesFieldName/g, "ComparesFieldName" + cout); // 替换多个
+            html = html.replace(/条件规则/g, "条件规则" + (cout + 1)); // 替换多个
+            html = html.replace(/ComparesOperation/g, "ComparesOperation" + cout); // 替换多个
+            html = html.replace(/ComparesValue/g, "ComparesValue" + cout); // 替换多个
+            html = html.replace(/divInputTemplate/g, "divInput" + cout);
+            var obj = $(html);
+            obj.removeClass("layui-hide");
+            obj.appendTo(target);
+            cout++;
+            form.render();
+        });
         if (Method == "Details") {
             common.setReadOnly('adminform');
+            $('#NF-add').prop('disabled', true);
         }
+        //初始化节点设置信息
+        if (line.Compares != null) {
+            for (var i = 0; i < line.Compares.length; i++) {
+                tem['ComparesOperation' + i] = line.Compares[i].Operation;
+                tmp['ComparesFieldName' + i] = line.Compares[i].FieldName;
+                tmp['ComparesValue' + i] = line.Compares[i].Value;
+                $('#NF-add').click();
+            }
+        }
+        else {
+            $('#NF-add').click();
+        }
+        common.val('adminform', tmp);
         form.render(); //重新渲染，防止radio/select等失效
         wcLoading.close();
-        form.on('select(ComparesField)',
-            function (data) {
-                if (!data.value) {
-                    $('#ComparesOperation').val(null);
-                    $('#ComparesValue').val(null);
-                };
-            });
-
+        //select验证
+        form.verify({
+            required: function (value, item) {
+                var msg = "必填项不能为空";
+                value = $.trim(value);
+                var isEmpty = !value || value.length < 1;
+                // 当前验证元素是select且为空时,将页面定位至layui渲染的select处，或自定义想定位的位置
+                if (item.tagName == 'SELECT' && isEmpty) {
+                    $("html").animate({
+                        scrollTop: $(item).siblings(".layui-form-select").offset().top - 74
+                    }, 50);
+                }
+                if (isEmpty) {
+                    return msg;
+                }
+            }
+        });
         //提供给上父页面调用
         getVal = function () {
-            var FieldName = $('#ComparesFieldName').val();
-            var Operation = $('#ComparesOperation').val();
-            var Value = $('#ComparesValue').val();
             tmp.LineName = $('#LineName').val();
             var result = {
                 LineName: tmp.LineName,
                 LineCode: tmp.LineCode,
                 Compares: [],
             };
-            var temp = { //节点指定操作人
-                FieldName: FieldName,
-                Operation: Operation,
-                Value: Value,
-            };
-            result.Compares.push(temp);
+            for (var i = 0; i <= cout; i++) {
+                var FieldName = $('#ComparesFieldName' + i).val();
+                var Operation = $('#ComparesOperation' + i).val();
+                var Value = $('#ComparesValue' + i).val();
+                var temp = { //节点指定操作人
+                    FieldName: FieldName,
+                    Operation: Operation,
+                    Value: Value,
+                };
+                result.Compares.push(temp);
+            }
             return result;
         }
     })
+    function deleteRule(data) {
+        var obj = document.getElementById(data);//建议使用ID
+        if (obj != null) {
+            obj.parentNode.removeChild(obj);
+        }
+        layui.use(['jquery', 'form'], function () {
+            layui.form.render();
+        });
+    }
 </script>
