@@ -62,8 +62,8 @@ namespace WaterCloud.Service.CommonService
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT  
-                 rtrim(b.column_name) TableColumn,  
-                                  (CASE WHEN c.COLUMN_NAME IS NOT NULL  THEN 'Y' ELSE '' END) TableIdentity ,  
+                                  b.column_name TableColumn,  
+                                  (CASE WHEN c.COLUMN_NAME=b.column_name THEN 'Y' ELSE '' END) TableIdentity,  
                                    b.data_type Datatype,  
                                    b.data_length FieldLength,   
                                    b.NULLABLE IsNullable,   
