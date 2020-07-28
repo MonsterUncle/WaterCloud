@@ -99,7 +99,7 @@ namespace WaterCloud.Service.CommonService
                                            AND sysindexes.id = syscolumns.id 
                                            AND sysobjects.name = sysindexes.name AND sysindexkeys.id = syscolumns.id 
                                            AND sysindexkeys.indid = sysindexes.indid 
-                                           AND syscolumns.colid = sysindexkeys.colid;";
+                                           AND syscolumns.colid = sysindexkeys.colid";
 
             IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString());
             return list.ToList();

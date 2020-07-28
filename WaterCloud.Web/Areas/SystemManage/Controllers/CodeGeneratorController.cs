@@ -31,11 +31,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             _context = context;
             switch (dbType)
             {
-                case "System.Data.SqlClient":
+                case Define.DBTYPE_SQLSERVER:
                     _service = new DatabaseTableSqlServerService(context);
                     break;
-                case "MySql.Data.MySqlClient":
+                case Define.DBTYPE_MYSQL:
                     _service = new DatabaseTableMySqlService(context);
+                    break;
+                case Define.DBTYPE_ORACLE:
+                    _service = new DatabaseTableOracleService(context);
                     break;
                 default:
                     _service = new DatabaseTableMySqlService(context);

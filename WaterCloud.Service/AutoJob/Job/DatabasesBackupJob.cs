@@ -11,18 +11,21 @@ namespace WaterCloud.Service.AutoJob
     public class DatabasesBackupJob : IJobTask
     {
         #region  构造函数
-        private IDatabaseTableService databaseTableService;
+        private IDatabaseTableService _service;
 
         public DatabasesBackupJob(IDbContext context)
         {
             string dbType = GlobalContext.SystemConfig.DBProvider;
             switch (dbType)
             {
-                case "MySql.Data.MySqlClient":
-                    databaseTableService = new DatabaseTableMySqlService (context);
+                case Define.DBTYPE_SQLSERVER:
+                    _service = new DatabaseTableSqlServerService(context);
                     break;
-                case "System.Data.SqlClient":
-                    databaseTableService = new DatabaseTableSqlServerService(context);
+                case Define.DBTYPE_MYSQL:
+                    _service = new DatabaseTableMySqlService(context);
+                    break;
+                case Define.DBTYPE_ORACLE:
+                    _service = new DatabaseTableOracleService(context);
                     break;
                 default:
                     throw new Exception("未找到数据库配置");
@@ -46,7 +49,7 @@ namespace WaterCloud.Service.AutoJob
             {
                 Directory.CreateDirectory(backupPath);
             }
-            if(await databaseTableService.DatabaseBackup(backupPath))
+            if(await _service.DatabaseBackup(backupPath))
             {
                 obj.state = ResultType.success.ToString();
                 obj.message = "备份路径：" + backupPath;
