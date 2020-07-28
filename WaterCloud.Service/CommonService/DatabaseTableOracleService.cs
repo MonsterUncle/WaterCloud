@@ -42,8 +42,8 @@ namespace WaterCloud.Service.CommonService
 
             if (!tableName.IsEmpty())
             {
-                strSql.Append(" AND TABLE_NAME like @TableName ");
-                parameter.Add(new DbParam("@TableName", '%' + tableName + '%'));
+                strSql.Append(" AND TABLE_NAME like :TableName ");
+                parameter.Add(new DbParam(":TableName", '%' + tableName + '%'));
             }
 
             IEnumerable<TableInfo> list = await FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
@@ -71,12 +71,12 @@ namespace WaterCloud.Service.CommonService
                                    a.comments Remark
         FROM all_col_comments a, user_tab_columns b  
         LEFT JOIN user_cons_columns c on b.TABLE_NAME=c.TABLE_NAME
-        WHERE a.table_name = b.table_name and a.Column_name = b.Column_name and a.table_name =@TableName
-        and c.constraint_name in (select constraint_name from  user_constraints where  constraint_type='P' and a.table_name =@TableName)
+        WHERE a.table_name = b.table_name and a.Column_name = b.Column_name and a.table_name =:TableName
+        and c.constraint_name in (select constraint_name from  user_constraints where  constraint_type='P' and a.table_name =:TableName)
         ");
 
             var parameter = new List<DbParam>();
-            parameter.Add(new DbParam("@TableName", tableName));
+            parameter.Add(new DbParam(":TableName", tableName));
             var list = await FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
             return list.ToList();
         }
