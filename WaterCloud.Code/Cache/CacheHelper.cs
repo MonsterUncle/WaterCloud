@@ -42,7 +42,7 @@ namespace WaterCloud.Code
                     }
                     else
                     {
-                        MemoryCacheHelper.Set(key, value, TimeSpan.FromHours(12));
+                        MemoryCacheHelper.Set(key, value);
                     }
                     return await Exists(key);
                 default:
@@ -52,7 +52,7 @@ namespace WaterCloud.Code
                     }
                     else
                     {
-                        MemoryCacheHelper.Set(key, value, TimeSpan.FromHours(12));
+                        MemoryCacheHelper.Set(key, value);
                     }
                     return await Exists(key);
             }
