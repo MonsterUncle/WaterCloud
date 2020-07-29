@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace WaterCloud.Code
@@ -63,7 +62,6 @@ namespace WaterCloud.Code
                 throw new ArgumentNullException(nameof(key));
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
-
             Cache.Set(key, value,
                 isSliding
                     ? new MemoryCacheEntryOptions().SetSlidingExpiration(expiresIn)
@@ -71,7 +69,22 @@ namespace WaterCloud.Code
 
             return Exists(key);
         }
+        /// <summary>
+        /// 添加缓存
+        /// </summary>
+        /// <param name="key">缓存Key</param>
+        /// <param name="value">缓存Value</param>
+        /// <returns></returns>
+        public static bool Set(string key, object value)
+        {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+            Cache.Set(key, value);
 
+            return Exists(key);
+        }
         #region 删除缓存
 
         /// <summary>
