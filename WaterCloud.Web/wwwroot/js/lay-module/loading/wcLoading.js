@@ -1,5 +1,5 @@
 var wc_load_options = {
-   time: 0,//初始时间设低
+   time: 0,//初始时间设0
    content: "waterlcloud..."
 };
 
@@ -58,11 +58,8 @@ var wcLoading = {
       dom = dom || document.getElementsByClassName("wc-loading")[0];
       var setTime1 = setTimeout(function () {
          clearTimeout(setTime1);
-         dom.classList.add("close");
-         var setTime2 = setTimeout(function () {
-            clearTimeout(setTime2);
-            dom.parentNode.removeChild(dom);/**删除当前节点*/
-         }, 800);
+          dom.classList.add("close");
+          dom.parentNode.removeChild(dom);/**删除当前节点*/
       }, time);
    }
 };
