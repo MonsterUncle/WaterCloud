@@ -32,7 +32,7 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
         public override ActionResult Form()
         {
             //控制器视图传值示例
-            if (_service.currentuser == null)
+            if (_service.currentuser.UserId == null)
             {
                 return View();
             }
@@ -45,7 +45,7 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
         public override ActionResult Details()
         {
             //控制器视图传值示例
-            if (_service.currentuser == null)
+            if (_service.currentuser.UserId == null)
             {
                 return View();
             }

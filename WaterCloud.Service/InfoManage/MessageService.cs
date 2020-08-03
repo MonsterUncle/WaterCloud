@@ -1,0 +1,180 @@
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using WaterCloud.Code;
+using Chloe;
+using WaterCloud.Domain.InfoManage;
+using Microsoft.AspNetCore.SignalR;
+using WaterCloud.Domain.SystemOrganize;
+using Serenity;
+using Microsoft.AspNetCore.Mvc;
+using Renci.SshNet.Security;
+
+namespace WaterCloud.Service.InfoManage
+{
+    /// <summary>
+    /// 创 建：超级管理员
+    /// 日 期：2020-07-29 16:41
+    /// 描 述：通知管理服务类
+    /// </summary>
+    public class MessageService : DataFilterService<MessageEntity>, IDenpendency
+    {
+        private string cacheKey = "watercloud_messagedata_";
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        private readonly IHubContext<MessageHub> _messageHub;
+        public MessageService(IDbContext context, IHubContext<MessageHub> messageHub) : base(context)
+        {
+            _messageHub = messageHub;
+        }
+        #region 获取数据
+        public async Task<List<MessageEntity>> GetList(string keyword = "")
+        {
+            var cachedata = await repository.CheckCacheList(cacheKey + "list");
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                //此处需修改
+                cachedata = cachedata.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword)).ToList();
+            }
+            return cachedata.OrderByDescending(t => t.F_CreatorTime).ToList();
+        }
+
+        public async Task<List<MessageEntity>> GetLookList(string keyword = "")
+        {
+            var list =new List<MessageEntity>();
+            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            {
+                list = await repository.CheckCacheList(cacheKey + "list");
+            }
+            else
+            {
+                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                list = forms.ToList();
+            }
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                //此处需修改
+                list = list.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword)).ToList();
+            }
+            return GetFieldsFilterData(list.OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));
+        }
+
+        public async Task<List<MessageEntity>> GetUnReadListJson()
+        {
+            var hisquery = uniwork.IQueryable<MessagehistoryEntity>(a => a.F_CreatorUserId == currentuser.UserId).Select(a => a.F_MessageId).ToList();
+            var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId)||a.F_ToUserId=="")&&!hisquery.Contains(a.F_Id));
+            return GetFieldsFilterData(query.OrderByDesc(t => t.F_CreatorTime).ToList(), className.Substring(0, className.Length - 7));
+        }
+
+        public async Task<List<MessageEntity>> GetLookList(Pagination pagination,string keyword = "")
+        {
+            //获取数据权限
+            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                //此处需修改
+                list = list.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
+            }
+            return GetFieldsFilterData(await repository.OrderList(list, pagination),className.Substring(0, className.Length - 7));
+        }
+
+        public async Task<MessageEntity> GetForm(string keyValue)
+        {
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
+            return cachedata;
+        }
+        #endregion
+
+        public async Task<MessageEntity> GetLookForm(string keyValue)
+        {
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
+            return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));
+        }
+
+        #region 提交数据
+        public async Task SubmitForm(MessageEntity entity)
+        {
+            entity.Create();
+            if (entity.F_MessageType==0||string.IsNullOrEmpty(entity.F_ToUserId))
+            {
+                string msg = entity.ToJson();
+                entity.F_ToUserName = "所有人";
+                entity.F_ToUserId = "";
+                await _messageHub.Clients.All.SendAsync("ReceiveMessage",msg);
+            }
+            else
+            {
+                var str = entity.F_ToUserId.Split(",");
+                entity.F_ToUserName = string.Join(",", uniwork.IQueryable<UserEntity>(a => str.Contains(a.F_Id)).Select(a => a.F_RealName).ToList());
+                foreach (var item in str)
+                {
+                    //存在就私信
+                    var connectionID = await CacheHelper.Get<string>(cacheKey + item);
+                    if (connectionID == null)
+                    {
+                        continue;
+                    }
+                    string msg = entity.ToJson();
+                    await _messageHub.Clients.User(connectionID).SendAsync("ReceiveMessage", msg);
+                }
+            }
+            await repository.Insert(entity);
+            await CacheHelper.Remove(cacheKey + "list");
+        }
+
+        public async Task ReadAllMsgForm(int type)
+        {
+            var unList=await GetUnReadListJson();
+            var strList = unList.Where(a => a.F_MessageType == type&&a.F_ClickRead==true).Select(a=>a.F_Id).ToList();
+            uniwork.BeginTrans();
+            foreach (var item in strList)
+            {
+               await ReadMsgForm(item);
+            }
+            uniwork.Commit();
+        }
+
+        public async Task ReadMsgForm(string keyValue)
+        {            
+            MessagehistoryEntity msghis = new MessagehistoryEntity();
+            msghis.Create();
+            msghis.F_CreatorUserName = currentuser.UserName;
+            msghis.F_MessageId = keyValue;
+            await uniwork.Insert(msghis);
+        }
+
+        public async Task<bool> CheckMsg(string keyValue)
+        {
+            var msg = await repository.FindEntity(keyValue);
+            if (msg==null)
+            {
+                return true;
+            }
+            if (msg.F_ClickRead==false)
+            {
+                return true;
+            }
+            if (uniwork.IQueryable<MessagehistoryEntity>(a => a.F_MessageId == keyValue && a.F_CreatorUserId == currentuser.UserId).Count() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task DeleteForm(string keyValue)
+        {
+            var ids = keyValue.Split(',');
+            await repository.Delete(t => ids.Contains(t.F_Id));
+            foreach (var item in ids)
+            {
+            await CacheHelper.Remove(cacheKey + item);
+            }
+            await CacheHelper.Remove(cacheKey + "list");
+        }
+        #endregion
+
+    }
+}

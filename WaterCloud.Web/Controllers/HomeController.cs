@@ -18,7 +18,7 @@ namespace WaterCloud.Web.Controllers
         public ActionResult Index()
         {
             //主页信息获取
-            if (_setService.currentuser== null)
+            if (_setService.currentuser.UserId == null)
             {
                 return View();
             }

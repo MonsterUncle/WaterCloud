@@ -90,7 +90,7 @@ namespace WaterCloud.Web.Controllers
         {
             try
             {
-                if (_setService.currentuser == null)
+                if (_setService.currentuser.UserId == null)
                 {
                     return Content(new AjaxResult { state = ResultType.error.ToString() }.ToJson());
                 }

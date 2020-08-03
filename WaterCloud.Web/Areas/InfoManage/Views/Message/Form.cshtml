@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            common = layui.common,
+            laydate = layui.laydate;
+        var keyValue = $.request("keyValue");
+        //权限字段
+        common.authorizeFields('adminform');
+        wcLoading.close();
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            // 单击之后提交按钮不可选,防止重复提交
+            $('.site-demo-active').addClass('layui-btn-disabled');
+            $('.site-demo-active').attr('disabled', 'disabled');
+            var postData = data.field;
+            common.submitForm({
+                url: "/InfoManage/Message/SubmitForm",
+                param: postData,
+                success: function () {
+                    common.parentreload("data-search-btn");
+                }
+            })
+            return false;
+        });
+    });
+</script>
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form " lay-filter="adminform">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">上级</label>
+                    <div class="layui-input-block">
+                        <select id="F_MessageType" name="F_MessageType" lay-verify="required" lay-search>
+                            <option value="0" selected>通知</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide layui-form-text">
+                    <label class="layui-form-label required">内容</label>
+                    <div class="layui-input-block">
+                        <textarea id="F_MessageInfo" name="F_MessageInfo" class="layui-textarea" lay-verify="required" placeholder="内容"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <button class="layui-btn site-demo-active" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

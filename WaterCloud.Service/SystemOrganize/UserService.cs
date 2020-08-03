@@ -40,7 +40,6 @@ namespace WaterCloud.Service.SystemOrganize
                 list = list.Where(u => u.F_Account.Contains(keyword) || u.F_RealName.Contains(keyword)||u.F_MobilePhone.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark == false && u.F_IsAdmin == false);
-            list.Select(a => Sql.Count()).First();
             return GetFieldsFilterData(await repository.OrderList(list, pagination), className.Substring(0, className.Length - 7));
         }
         public async Task<List<UserEntity>> GetList(string keyword)

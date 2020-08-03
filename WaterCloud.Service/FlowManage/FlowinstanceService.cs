@@ -12,6 +12,9 @@ using System.Net.Http;
 using System.IO;
 using System.Reflection;
 using Serenity;
+using WaterCloud.Domain.InfoManage;
+using WaterCloud.Service.InfoManage;
+using Microsoft.AspNetCore.SignalR;
 
 namespace WaterCloud.Service.FlowManage
 {
@@ -25,9 +28,11 @@ namespace WaterCloud.Service.FlowManage
         private IHttpClientFactory _httpClientFactory;
         private string cacheKey = "watercloud_flowinstancedata_";
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public FlowinstanceService(IDbContext context, IHttpClientFactory httpClientFactory) : base(context)
+        private MessageService messageApp;
+        public FlowinstanceService(IDbContext context, IHttpClientFactory httpClientFactory, IHubContext<MessageHub> messageHub) : base(context)
         {
             _httpClientFactory = httpClientFactory;
+            messageApp = new MessageService(context, messageHub);
         }
         #region 获取数据
         public async Task<List<FlowinstanceEntity>> GetList(string keyword = "")
@@ -161,6 +166,37 @@ namespace WaterCloud.Service.FlowManage
                           + "】【" + DateTime.Now.ToString("yyyy-MM-dd HH:mm") + "】驳回,备注："
                           + reqest.F_VerificationOpinion
             });
+            MessageEntity msg = new MessageEntity();
+            if (resnode== wfruntime.startNodeId)
+            {
+                msg.F_MessageInfo = flowInstance.F_CustomName + "--流程驳回";
+                var module= uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
+                msg.F_Href = module.F_UrlAddress;
+                msg.F_HrefTarget = module.F_Target;
+                msg.F_ToUserId = flowInstance.F_CreatorUserId;
+                msg.F_ToUserName = flowInstance.F_CreatorUserName;
+                msg.F_ClickRead = false;
+                msg.F_KeyValue = flowInstance.F_Id;
+            }
+            else
+            {
+                msg.F_MessageInfo = flowInstance.F_CustomName + "--流程待处理";
+                var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
+                msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5)+ "ToDoFlow";
+                msg.F_HrefTarget = module.F_Target;
+                msg.F_ToUserId = flowInstance.F_MakerList == "1" ? "" : flowInstance.F_MakerList;
+                msg.F_ClickRead = false;
+                msg.F_KeyValue = flowInstance.F_Id;
+            }
+            msg.F_CreatorUserName = currentuser.UserName;
+            msg.F_EnabledMark = true;
+            msg.F_MessageType = 2;
+            var lastmsg= uniwork.IQueryable<MessageEntity>(a => a.F_ClickRead == false && a.F_KeyValue == flowInstance.F_Id).OrderByDesc(a=>a.F_CreatorTime).FirstOrDefault();
+            if (lastmsg!=null&&uniwork.IQueryable<MessagehistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count()==0)
+            {
+               await messageApp.ReadMsgForm(lastmsg.F_Id);
+            }
+            await messageApp.SubmitForm(msg);
             uniwork.Commit();
 
             wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
@@ -266,6 +302,36 @@ namespace WaterCloud.Service.FlowManage
             flowInstance.F_SchemeContent = JsonHelper.Serialize(wfruntime.ToSchemeObj());
             await uniwork.Update(flowInstance);
             await uniwork.Insert(flowInstanceOperationHistory);
+            MessageEntity msg = new MessageEntity();
+            msg.F_CreatorUserName = currentuser.UserName;
+            msg.F_EnabledMark = true;
+            if (flowInstance.F_IsFinish == 1)
+            {
+                msg.F_MessageInfo = flowInstance.F_CustomName + "--流程已完成";
+                var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
+                msg.F_Href = module.F_UrlAddress;
+                msg.F_HrefTarget = module.F_Target;
+                msg.F_ToUserId = flowInstance.F_CreatorUserId;
+                msg.F_ClickRead = true;
+                msg.F_KeyValue = flowInstance.F_Id;
+            }
+            else
+            {
+                msg.F_MessageInfo = flowInstance.F_CustomName + "--流程待处理";
+                var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
+                msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5) + "ToDoFlow";
+                msg.F_HrefTarget = module.F_Target;
+                msg.F_ToUserId = flowInstance.F_MakerList == "1" ? "" : flowInstance.F_MakerList;
+                msg.F_ClickRead = false;
+                msg.F_KeyValue = flowInstance.F_Id;
+            }
+            msg.F_MessageType = 2;
+            var lastmsg = uniwork.IQueryable<MessageEntity>(a => a.F_ClickRead == false && a.F_KeyValue == flowInstance.F_Id).OrderByDesc(a => a.F_CreatorTime).FirstOrDefault();
+            if (lastmsg != null && uniwork.IQueryable<MessagehistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
+            {
+                await messageApp.ReadMsgForm(lastmsg.F_Id);
+            }
+            await messageApp.SubmitForm(msg);
             uniwork.Commit();
 
             wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
@@ -551,6 +617,36 @@ namespace WaterCloud.Service.FlowManage
             #endregion 流程操作记录
 
             await AddTransHistory(wfruntime);
+
+            MessageEntity msg = new MessageEntity();
+            msg.F_CreatorUserName = currentuser.UserName;
+            msg.F_EnabledMark = true;
+            if (entity.F_IsFinish == 1)
+            {
+                msg.F_MessageInfo = entity.F_CustomName + "--流程已完成";
+                var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
+                msg.F_Href = module.F_UrlAddress;
+                msg.F_HrefTarget = module.F_Target;
+                msg.F_ClickRead = true;
+                msg.F_KeyValue = entity.F_Id;
+            }
+            else
+            {
+                msg.F_MessageInfo = entity.F_CustomName + "--流程待处理";
+                var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
+                msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5) + "ToDoFlow";
+                msg.F_HrefTarget = module.F_Target;
+                msg.F_ClickRead = false;
+                msg.F_KeyValue = entity.F_Id;
+            }
+            msg.F_MessageType = 2;
+            msg.F_ToUserId = entity.F_MakerList == "1" ? "" : entity.F_MakerList;
+            var lastmsg = uniwork.IQueryable<MessageEntity>(a => a.F_ClickRead == false && a.F_KeyValue == entity.F_Id).OrderByDesc(a => a.F_CreatorTime).FirstOrDefault();
+            if (lastmsg != null && uniwork.IQueryable<MessagehistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
+            {
+                await messageApp.ReadMsgForm(lastmsg.F_Id);
+            }
+            await messageApp.SubmitForm(msg);
             uniwork.Commit();
             await CacheHelper.Remove(cacheKey + "list");
         }
@@ -623,9 +719,41 @@ namespace WaterCloud.Service.FlowManage
             #endregion
 
             await AddTransHistory(wfruntime);
+
+            MessageEntity msg = new MessageEntity();
+            msg.F_CreatorUserName = currentuser.UserName;
+            msg.F_EnabledMark = true;
+            if (entity.F_IsFinish == 1)
+            {
+                msg.F_MessageInfo = entity.F_CustomName + "--流程已完成";
+                var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
+                msg.F_Href = module.F_UrlAddress;
+                msg.F_HrefTarget = module.F_Target;
+                msg.F_ClickRead = true;
+                msg.F_KeyValue = entity.F_Id;
+            }
+            else
+            {
+                msg.F_MessageInfo = entity.F_CustomName + "--流程待处理";
+                var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
+                msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5) + "ToDoFlow";
+                msg.F_HrefTarget = module.F_Target;
+                msg.F_ClickRead = false;
+                msg.F_KeyValue = entity.F_Id;
+            }
+            msg.F_MessageType = 2;
+            msg.F_ToUserId = entity.F_MakerList == "1" ? "" : entity.F_MakerList;
+            var lastmsg = uniwork.IQueryable<MessageEntity>(a => a.F_ClickRead == false && a.F_KeyValue == entity.F_Id).OrderByDesc(a => a.F_CreatorTime).FirstOrDefault();
+            if (lastmsg != null && uniwork.IQueryable<MessagehistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
+            {
+                await messageApp.ReadMsgForm(lastmsg.F_Id);
+            }
+            await messageApp.SubmitForm(msg);
             uniwork.Commit();
             await CacheHelper.Remove(cacheKey + entity.F_Id);
             await CacheHelper.Remove(cacheKey + "list");
+            msg.F_ClickRead = false;
+            msg.F_KeyValue = entity.F_Id;
         }
 
         public async Task DeleteForm(string keyValue)

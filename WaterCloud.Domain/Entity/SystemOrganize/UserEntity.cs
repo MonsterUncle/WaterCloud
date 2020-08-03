@@ -60,5 +60,8 @@ namespace WaterCloud.Domain.SystemOrganize
         [NotMapped]
         //tablecheck字段
         public bool LAY_CHECKED { get; set; }
+        [NotMapped]
+        //tablecheck字段
+        public int MsgCout { get; set; }
     }
 }

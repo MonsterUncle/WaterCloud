@@ -35,5 +35,6 @@ layui.config({
     formDesigner: 'formDesigner/formDesigner', //表单设计器
     formField: 'formDesigner/formField', //表单设计器
     formPreview: 'formDesigner/formPreview', //表单设计器
+    notice: 'notice/notice', //消息提醒
     //optimizeSelectOption: 'tablePlug/optimizeSelectOption/optimizeSelectOption', //  下拉框遮挡
 });

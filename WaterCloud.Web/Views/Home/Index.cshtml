@@ -55,7 +55,7 @@
                     </li>
                     <li class="layui-nav-item" lay-unselect>
                         <a class="layui-icon layui-icon-notice" data-notice="消息" id="noticeMarker">
-                            <span class="layui-badge-dot"></span>
+
                         </a>
                     </li>
                     <li class="layui-nav-item layuimini-setting">
@@ -132,6 +132,8 @@
     <script src="~/js/lay-config.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
     <script src="~/js/framework-clientdata.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script src="~/js/framework-ui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
     <script>
         function btn_revisepassword() {
             layui.use(['common'], function () {
@@ -148,11 +150,12 @@
                 });
             })
         };
-        layui.use(['jquery', 'layer', 'miniAdmin', 'miniTongji', 'miniTab', 'common'], function () {
+        layui.use(['jquery', 'layer', 'miniAdmin', 'miniTongji', 'miniTab', 'common', 'notice'], function () {
             var $ = layui.jquery,
                 layer = layui.layer,
                 miniAdmin = layui.miniAdmin,
-                common=layui.common,
+                common = layui.common,
+                notice = layui.notice,
                 miniTongji = layui.miniTongji;
             function loadUser() {
                 common.ajax({
@@ -162,11 +165,24 @@
                     success: function (data) {
                         var code = document.getElementById("usercode");
                         code.innerHTML = data.F_Account;
+                        if (data.MsgCout > 0) {
+                            $('#noticeMarker').html('<span class="layui-badge-dot"></span>');
+                            notice.options = {
+                                positionClass: "toast-bottom-right",//弹出的位置,
+                                onclick: function () {
+                                    $('#noticeMarker').click();
+                                },
+                            };
+                            notice.info('您有' + data.MsgCout+'条信息未读');
+                        }
+                        else {
+                            $('#noticeMarker').html('');
+                        }
                     }
                 });
             };
             var options = {
-                iniUrl: "/ClientsData/GetInitDataJson?v="+new Date().Format("yyyy-MM-dd hh:mm:ss"),    // 初始化接口
+                iniUrl: "/ClientsData/GetInitDataJson?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),    // 初始化接口
                 clearUrl: "/ClientsData/ClearCache?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"), // 缓存清理接口
                 urlHashLocation: true,      // 是否打开hash定位  说明：url地址显示
                 bgColorDefault: 0,          // 主题默认配置
@@ -180,7 +196,7 @@
             $(function () {
                 loadUser();
             });
-             //百度统计代码，只统计指定域名
+            //百度统计代码，只统计指定域名
             miniTongji.render({
                 specific: true,
                 domains: [
@@ -194,5 +210,7 @@
             });
         });
     </script>
+
 </body>
+
 </html>

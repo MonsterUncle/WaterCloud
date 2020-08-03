@@ -20,6 +20,7 @@ using CSRedis;
 using WaterCloud.Code.Model;
 using WaterCloud.Service.SystemOrganize;
 using WaterCloud.Domain.SystemOrganize;
+using WaterCloud.Service.InfoManage;
 
 namespace WaterCloud.Web.Controllers
 {
@@ -44,6 +45,7 @@ namespace WaterCloud.Web.Controllers
         public RoleService _roleService { get; set; }
         public DutyService _dutyService { get; set; }
         public SystemSetService _setService { get; set; }
+        public MessageService _msgService { get; set; }
         /// <summary>
         /// 初始数据加载请求方法
         /// </summary>
@@ -113,7 +115,7 @@ namespace WaterCloud.Web.Controllers
         private async Task<object> GetQuickModuleList()
         {
             var currentuser = _userService.currentuser;
-            if (currentuser == null)
+            if (currentuser.UserId == null)
             {
                 return null;
             }
@@ -198,6 +200,8 @@ namespace WaterCloud.Web.Controllers
         {
             var currentuser = _userService.currentuser;
             var data =await _userService.GetForm(currentuser.UserId);
+            var msglist= await _msgService.GetUnReadListJson();
+            data.MsgCout = msglist.Count();
             return Content(data.ToJson());
         }
         /// <summary>
@@ -225,7 +229,7 @@ namespace WaterCloud.Web.Controllers
         public async Task<ActionResult> GetCoutData()
         {
             var currentuser = _userService.currentuser;
-            if (currentuser==null)
+            if (currentuser.UserId == null)
             {
                 return Content("");
             }

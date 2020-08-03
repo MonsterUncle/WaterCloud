@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Mvc;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
+using System;
 
 namespace WaterCloud.Web
 {
@@ -78,7 +79,14 @@ namespace WaterCloud.Web
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             services.AddSingleton<IJobFactory, IOCJobFactory>();
             #endregion
-
+            //注入SignalR实时通讯，默认用json传输
+            services.AddSignalR(options =>
+            {
+                //客户端发保持连接请求到服务端最长间隔，默认30秒，改成4分钟，网页需跟着设置connection.keepAliveIntervalInMilliseconds = 12e4;即2分钟
+                options.ClientTimeoutInterval = TimeSpan.FromMinutes(4);
+                //服务端发保持连接请求到客户端间隔，默认15秒，改成2分钟，网页需跟着设置connection.serverTimeoutInMilliseconds = 24e4;即4分钟
+                options.KeepAliveInterval = TimeSpan.FromMinutes(2);
+            });
             //百度UEditor
             services.AddUEditorService();
             ////注册html解析
@@ -197,6 +205,7 @@ namespace WaterCloud.Web
             //MVC路由
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<MessageHub>("/chatHub");
                 endpoints.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Login}/{action=Index}/{id?}");
             });

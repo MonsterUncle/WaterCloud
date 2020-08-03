@@ -50,7 +50,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             var data = await _service.GetList(keyword);
             var currentuser = _service.currentuser;
-            if (currentuser == null)
+            if (currentuser.UserId == null)
             {
                 return null;
             }
