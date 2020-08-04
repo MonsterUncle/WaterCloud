@@ -100,7 +100,7 @@ namespace WaterCloud.Service.CommonService
         {
 
             //--P-主键；R-外键；U-唯一约束
-            string strSql = @"Select  b.Constraint_Name Id, b.Column_Name TableKey,b.Constraint_Name TableKeyName,0 TableCount
+            string strSql = @"Select  b.Constraint_Name Id,a.table_name TableName, b.Column_Name TableKey,b.Constraint_Name TableKeyName,0 TableCount
                                      From user_Constraints a,user_Cons_Columns b
                                      WHERE a.Constraint_Type = 'P'
                                      and a.Constraint_Name = b.Constraint_Name 　　
