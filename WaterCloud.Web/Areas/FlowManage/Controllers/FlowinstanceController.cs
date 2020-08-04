@@ -99,6 +99,7 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
             {
                 logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
                 logEntity.F_Description += DbLogType.Create.ToDescription();
+                entity.F_EnabledMark = true;
             }
             else
             {
