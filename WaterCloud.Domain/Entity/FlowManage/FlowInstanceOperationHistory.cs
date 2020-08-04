@@ -15,7 +15,7 @@ namespace WaterCloud.Domain.FlowManage
     /// <summary>
 	/// 工作流实例操作记录
 	/// </summary>
-      [Table("oms_flowInstanceoperationhistory")]
+      [Table("oms_flowinstanceinfo")]
     public class FlowInstanceOperationHistory
     {
         /// <summary>

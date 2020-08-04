@@ -8,8 +8,8 @@ namespace WaterCloud.Domain.InfoManage
     /// 日 期：2020-07-29 16:44
     /// 描 述：信息历史实体类
     /// </summary>
-    [TableAttribute("oms_messagehistory")]
-    public class MessagehistoryEntity : IEntity<MessagehistoryEntity>,ICreationAudited
+    [TableAttribute("oms_messagehis")]
+    public class MessageHistoryEntity : IEntity<MessageHistoryEntity>,ICreationAudited
     {
         /// <summary>
         /// 主键Id

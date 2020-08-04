@@ -82,6 +82,7 @@ namespace WaterCloud.Web.Controllers
                     return Content(new { code = 0, msg = "此功能需要管理员权限" }.ToJson());
                 }
                 await CacheHelper.FlushAll();
+                await OperatorProvider.Provider.EmptyCurrent("pc_");
                 return Content(new { code = 1, msg = "服务端清理缓存成功" }.ToJson());
             }
             catch (Exception)

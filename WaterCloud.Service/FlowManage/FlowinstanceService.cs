@@ -192,7 +192,7 @@ namespace WaterCloud.Service.FlowManage
             msg.F_EnabledMark = true;
             msg.F_MessageType = 2;
             var lastmsg= uniwork.IQueryable<MessageEntity>(a => a.F_ClickRead == false && a.F_KeyValue == flowInstance.F_Id).OrderByDesc(a=>a.F_CreatorTime).FirstOrDefault();
-            if (lastmsg!=null&&uniwork.IQueryable<MessagehistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count()==0)
+            if (lastmsg!=null&&uniwork.IQueryable<MessageHistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count()==0)
             {
                await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
@@ -327,7 +327,7 @@ namespace WaterCloud.Service.FlowManage
             }
             msg.F_MessageType = 2;
             var lastmsg = uniwork.IQueryable<MessageEntity>(a => a.F_ClickRead == false && a.F_KeyValue == flowInstance.F_Id).OrderByDesc(a => a.F_CreatorTime).FirstOrDefault();
-            if (lastmsg != null && uniwork.IQueryable<MessagehistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
+            if (lastmsg != null && uniwork.IQueryable<MessageHistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
             {
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
@@ -642,7 +642,7 @@ namespace WaterCloud.Service.FlowManage
             msg.F_MessageType = 2;
             msg.F_ToUserId = entity.F_MakerList == "1" ? "" : entity.F_MakerList;
             var lastmsg = uniwork.IQueryable<MessageEntity>(a => a.F_ClickRead == false && a.F_KeyValue == entity.F_Id).OrderByDesc(a => a.F_CreatorTime).FirstOrDefault();
-            if (lastmsg != null && uniwork.IQueryable<MessagehistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
+            if (lastmsg != null && uniwork.IQueryable<MessageHistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
             {
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
@@ -744,7 +744,7 @@ namespace WaterCloud.Service.FlowManage
             msg.F_MessageType = 2;
             msg.F_ToUserId = entity.F_MakerList == "1" ? "" : entity.F_MakerList;
             var lastmsg = uniwork.IQueryable<MessageEntity>(a => a.F_ClickRead == false && a.F_KeyValue == entity.F_Id).OrderByDesc(a => a.F_CreatorTime).FirstOrDefault();
-            if (lastmsg != null && uniwork.IQueryable<MessagehistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
+            if (lastmsg != null && uniwork.IQueryable<MessageHistoryEntity>(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
             {
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }

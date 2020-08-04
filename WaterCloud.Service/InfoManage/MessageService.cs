@@ -61,7 +61,7 @@ namespace WaterCloud.Service.InfoManage
 
         public async Task<List<MessageEntity>> GetUnReadListJson()
         {
-            var hisquery = uniwork.IQueryable<MessagehistoryEntity>(a => a.F_CreatorUserId == currentuser.UserId).Select(a => a.F_MessageId).ToList();
+            var hisquery = uniwork.IQueryable<MessageHistoryEntity>(a => a.F_CreatorUserId == currentuser.UserId).Select(a => a.F_MessageId).ToList();
             var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId)||a.F_ToUserId=="")&&!hisquery.Contains(a.F_Id));
             return GetFieldsFilterData(query.OrderByDesc(t => t.F_CreatorTime).ToList(), className.Substring(0, className.Length - 7));
         }
@@ -100,7 +100,7 @@ namespace WaterCloud.Service.InfoManage
                 string msg = entity.ToJson();
                 entity.F_ToUserName = "所有人";
                 entity.F_ToUserId = "";
-                await _messageHub.Clients.All.SendAsync("ReceiveMessage",msg);
+                await _messageHub.Clients.Group(currentuser.CompanyId).SendAsync("ReceiveMessage",msg);
             }
             else
             {
@@ -136,7 +136,7 @@ namespace WaterCloud.Service.InfoManage
 
         public async Task ReadMsgForm(string keyValue)
         {            
-            MessagehistoryEntity msghis = new MessagehistoryEntity();
+            MessageHistoryEntity msghis = new MessageHistoryEntity();
             msghis.Create();
             msghis.F_CreatorUserName = currentuser.UserName;
             msghis.F_MessageId = keyValue;
@@ -154,7 +154,7 @@ namespace WaterCloud.Service.InfoManage
             {
                 return true;
             }
-            if (uniwork.IQueryable<MessagehistoryEntity>(a => a.F_MessageId == keyValue && a.F_CreatorUserId == currentuser.UserId).Count() > 0)
+            if (uniwork.IQueryable<MessageHistoryEntity>(a => a.F_MessageId == keyValue && a.F_CreatorUserId == currentuser.UserId).Count() > 0)
             {
                 return true;
             }

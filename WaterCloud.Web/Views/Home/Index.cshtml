@@ -48,7 +48,7 @@
 
                 <ul class="layui-nav layui-layout-right">
                     <li class="layui-nav-item" lay-unselect>
-                        <a href="javascript:;" data-clear="清理" class="layuimini-clear"><i class="fa fa-trash-o"></i></a>
+                        <a href="javascript:;" data-clear="清理" class="layuimini-clear layui-hide"><i class="fa fa-trash-o"></i></a>
                     </li>
                     <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
                         <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
@@ -164,6 +164,9 @@
                     async: true,
                     success: function (data) {
                         var code = document.getElementById("usercode");
+                        if (data.F_IsAdmin) {
+                            $('[data-clear]').removeClass('layui-hide');
+                        }
                         code.innerHTML = data.F_Account;
                         if (data.MsgCout > 0) {
                             $('#noticeMarker').html('<span class="layui-badge-dot"></span>');

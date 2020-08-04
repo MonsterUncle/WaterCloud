@@ -21,8 +21,8 @@ namespace WaterCloud.Service
         public override async Task OnConnectedAsync()
         {
             var user = _service.currentuser;
-            ////一个人一个分组
-            //await Groups.AddToGroupAsync(Context.ConnectionId, user.UserId);
+            //一个公司一个分组
+            await Groups.AddToGroupAsync(Context.ConnectionId, user.CompanyId);
             //将用户信息存进缓存
             await CacheHelper.Set(cacheKey + user.UserId, Context.ConnectionId);
             await base.OnConnectedAsync();

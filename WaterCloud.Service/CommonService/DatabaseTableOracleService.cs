@@ -24,7 +24,7 @@ namespace WaterCloud.Service.CommonService
         {
             StringBuilder strSql = new StringBuilder();
             //select TABLE_NAME Id,TABLE_NAME from user_tab_comments utc where utc.table_type='TABLE'
-            strSql.Append(@"select TABLE_NAME from sys.user_tables");
+            strSql.Append(@"select TABLE_NAME TableName from sys.user_tables where table_name not like '%$%' and table_name not like '%LOGMNR%'");
             IEnumerable<TableInfo> list = await FindList<TableInfo>(strSql.ToString());
             if (!tableName.IsEmpty())
             {
@@ -38,7 +38,7 @@ namespace WaterCloud.Service.CommonService
         {
             StringBuilder strSql = new StringBuilder();
             var parameter = new List<DbParam>();
-            strSql.Append(@"select TABLE_NAME from sys.user_tables where 1=1");
+            strSql.Append(@"select TABLE_NAME TableName from sys.user_tables where table_name not like '%$%' and table_name not like '%LOGMNR%'");
 
             if (!tableName.IsEmpty())
             {
@@ -105,7 +105,7 @@ namespace WaterCloud.Service.CommonService
                                      WHERE a.Constraint_Type = 'P'
                                      and a.Constraint_Name = b.Constraint_Name 　　
 　　                                  And a.Owner = b.Owner 　　
-　　                                  And a.table_name = b.table_name";
+　　                                  And a.table_name = b.table_name AND a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'";
 
             IEnumerable<TableInfo> list = await FindList<TableInfo>(strSql.ToString());
             return list.ToList();

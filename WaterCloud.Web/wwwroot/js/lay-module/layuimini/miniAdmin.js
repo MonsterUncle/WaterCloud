@@ -261,7 +261,13 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme"], function
                         if (data.code != 1) {
                             return miniAdmin.error(data.msg);
                         } else {
-                            return miniAdmin.success(data.msg);
+                            miniAdmin.success(data.msg);
+                            var setTime1 = setTimeout(function () {
+                                clearTimeout(setTime1);
+                                window.location.href = document.location.origin + '/Login/Index';
+                            }, 300);
+
+                            return false;
                         }
                     }).fail(function () {
                         layer.close(loading);
@@ -269,7 +275,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme"], function
                     });
                 } else {
                     layer.close(loading);
-                    return miniAdmin.success('清除缓存成功');
+                    return miniAdmin.success(data.msg);
                 }
             });
             /**
@@ -286,7 +292,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme"], function
                     anim: 2,
                     shadeClose: true,
                     id: 'layuiMessage',
-                    area: ['340px', clientHeight + 'px'],
+                    area: ['250px', clientHeight + 'px'],//带私信宽度340px
                     offset: 'rb',
                     content: '/Home/Message',
                     success: function (index, layero) {
