@@ -43,7 +43,7 @@ namespace WaterCloud.Service.FlowManage
                 //此处需修改
                 cachedata = cachedata.Where(t => t.F_Code.Contains(keyword) || t.F_CustomName.Contains(keyword)).ToList();
             }
-            return cachedata.OrderByDescending(t => t.F_CreatorTime).ToList();
+            return cachedata.Where(a=>a.F_EnabledMark==true).OrderByDescending(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<FlowInstanceOperationHistory>> QueryHistories(string keyValue)
@@ -68,7 +68,7 @@ namespace WaterCloud.Service.FlowManage
                 //此处需修改
                 list = list.Where(u => u.F_Code.Contains(keyword) || u.F_CustomName.Contains(keyword)).ToList();
             }
-            return GetFieldsFilterData(list.OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(list.Where(a => a.F_EnabledMark == true).OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));
         }
 
         public async Task<List<FlowinstanceEntity>> GetLookList(Pagination pagination,string type="", string keyword = "")
@@ -96,7 +96,7 @@ namespace WaterCloud.Service.FlowManage
             {
                 list = list.Where(u => u.F_CreatorUserId==user.UserId);
             }
-            return GetFieldsFilterData(await repository.OrderList(list, pagination),className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list.Where(a => a.F_EnabledMark == true), pagination),className.Substring(0, className.Length - 7));
         }
 
         public async Task<FlowinstanceEntity> GetForm(string keyValue)
@@ -759,7 +759,10 @@ namespace WaterCloud.Service.FlowManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Delete(t => ids.Contains(t.F_Id));
+            await repository.Update(t => ids.Contains(t.F_Id), t => new FlowinstanceEntity
+            {
+                F_EnabledMark = false
+            });
             foreach (var item in ids)
             {
             await CacheHelper.Remove(cacheKey + item);

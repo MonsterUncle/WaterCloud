@@ -36,7 +36,7 @@ namespace WaterCloud.Service.InfoManage
                 //此处需修改
                 cachedata = cachedata.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword)).ToList();
             }
-            return cachedata.OrderByDescending(t => t.F_CreatorTime).ToList();
+            return cachedata.Where(a=>a.F_EnabledMark==true).OrderByDescending(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<MessageEntity>> GetLookList(string keyword = "")
@@ -56,13 +56,13 @@ namespace WaterCloud.Service.InfoManage
                 //此处需修改
                 list = list.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword)).ToList();
             }
-            return GetFieldsFilterData(list.OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(list.Where(a => a.F_EnabledMark == true).OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));
         }
 
         public async Task<List<MessageEntity>> GetUnReadListJson()
         {
             var hisquery = uniwork.IQueryable<MessageHistoryEntity>(a => a.F_CreatorUserId == currentuser.UserId).Select(a => a.F_MessageId).ToList();
-            var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId)||a.F_ToUserId=="")&&!hisquery.Contains(a.F_Id));
+            var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId)||a.F_ToUserId=="")&&a.F_EnabledMark==true&&!hisquery.Contains(a.F_Id));
             return GetFieldsFilterData(query.OrderByDesc(t => t.F_CreatorTime).ToList(), className.Substring(0, className.Length - 7));
         }
 
@@ -75,7 +75,7 @@ namespace WaterCloud.Service.InfoManage
                 //此处需修改
                 list = list.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
             }
-            return GetFieldsFilterData(await repository.OrderList(list, pagination),className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list.Where(a => a.F_EnabledMark == true), pagination),className.Substring(0, className.Length - 7));
         }
 
         public async Task<MessageEntity> GetForm(string keyValue)
@@ -167,7 +167,9 @@ namespace WaterCloud.Service.InfoManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Delete(t => ids.Contains(t.F_Id));
+            await repository.Update(t => ids.Contains(t.F_Id), t=>new MessageEntity { 
+                F_EnabledMark=false         
+            });
             foreach (var item in ids)
             {
             await CacheHelper.Remove(cacheKey + item);
