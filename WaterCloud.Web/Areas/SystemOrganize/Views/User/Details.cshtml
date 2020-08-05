@@ -77,9 +77,8 @@
                     <div class="layui-inline layui-hide">
                         <label class="layui-form-label">部门</label>
                         <div class="layui-input-inline">
-                            <select id="F_DepartmentId" name="F_DepartmentId" lay-verify="required" lay-search="">
-                                <option value="">==请选择==</option>
-                            </select>
+                            <input id="F_DepartmentName" name="F_DepartmentName" type="text" lay-verify="required" maxlength="50" autocomplete="off" class="layui-input" onclick="search('部门')" />
+                            <input id="F_DepartmentId" name="F_DepartmentId" type="text" hidden />
                         </div>
                     </div>
                 </div>
@@ -87,9 +86,8 @@
                     <div class="layui-inline layui-hide">
                         <label class="layui-form-label">角色</label>
                         <div class="layui-input-inline">
-                            <select id="F_RoleId" name="F_RoleId" lay-verify="required" lay-search="">
-                                <option value="">==请选择==</option>
-                            </select>
+                            <input id="F_RoleName" name="F_RoleName" type="text" lay-verify="required" maxlength="50" autocomplete="off" class="layui-input" onclick="search('角色')" />
+                            <input id="F_RoleId" name="F_RoleId" type="text" hidden />
                         </div>
                     </div>
                     <div class="layui-inline">
