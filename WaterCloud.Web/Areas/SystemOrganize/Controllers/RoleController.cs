@@ -48,7 +48,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             {
                 foreach (var item in ids.Split(','))
                 {
-                    data.Find(a => a.F_Id == item).LAY_CHECKED = true;
+                    var temp = data.Find(a => a.F_Id == item);
+                    if (temp != null)
+                    {
+                        temp.LAY_CHECKED = true;
+                    }
                 }
             }
             return Success(data.Count, data);

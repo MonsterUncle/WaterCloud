@@ -352,12 +352,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
         },
         //二次确认框
         modalConfirm: function (content, callBack) {
-            top.layer.confirm(content, {
+           var index= top.layer.confirm(content, {
                 icon: "fa-exclamation-circle",
                 title: "系统提示",
                 btn: ['确认', '取消'],
                 btnclass: ['btn btn-primary', 'btn btn-danger'],
             }, function () {
+                top.layer.close(index);
                 callBack(true);
             }, function () {
                 callBack(false)
