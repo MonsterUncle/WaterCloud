@@ -91,6 +91,26 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> GetUserFormJson()
         {
             var data =await _service.GetForm(_service.currentuser.UserId);
+            if (string.IsNullOrEmpty(data.F_DepartmentId))
+            {
+                List<string> str = new List<string>();
+                foreach (var item in data.F_DepartmentId.Split(','))
+                {
+                    var temp = await _orgService.GetForm(item);
+                    str.Add(temp.F_FullName);
+                }
+                data.F_DepartmentName = string.Join("  ", str.ToArray());
+            }
+            if (string.IsNullOrEmpty(data.F_RoleId))
+            {
+                List<string> str = new List<string>();
+                foreach (var item in data.F_RoleId.Split(','))
+                {
+                    var temp = await _roleService.GetForm(item);
+                    str.Add(temp.F_FullName);
+                }
+                data.F_RoleName = string.Join("  ", str.ToArray());
+            }
             return Content(data.ToJson());
         }
         [HttpPost]
