@@ -51,6 +51,23 @@
                 }
             ]]
         });
+        // 监听双击事件
+        table.on('rowDouble(currentTableFilter)', function (obj) {
+            var pvalue = obj.data.F_Id;
+            var pname = obj.data.F_FullName;
+            common.modalConfirm("注：您确定要选择{名称：" + pname + "}的数据吗？", function (r) {
+                if (r) {
+                    if (!!pvalue) {
+                        parent.$('#' + value).val(pvalue);
+                    }
+                    if (!!pname) {
+                        parent.$('#' + name).val(pname);
+                    }
+                    common.modalClose();
+                }
+            });
+            return false;
+        });
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             //执行搜索重载
