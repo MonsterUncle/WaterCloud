@@ -28,7 +28,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public LogService _logService { get; set; }
 
         [HttpGet]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult AddForm()
         {
             return View();

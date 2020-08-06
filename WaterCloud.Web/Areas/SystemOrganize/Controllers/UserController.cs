@@ -39,7 +39,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             return Success(pagination.records, data);
         }
         [HttpGet]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult AddForm()
         {
             return View();
