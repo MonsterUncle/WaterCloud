@@ -549,12 +549,12 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);");
             if (baseConfigModel.PageIndex.IsTree==1)
             {
+                sb.AppendLine("         var queryJson;");
                 sb.AppendLine("         var rendertree = common.rendertreetable({");
                 sb.AppendLine("             elem: '#currentTableId',");
                 sb.AppendLine("             treeIdName: '" + idColumn + "',");
                 sb.AppendLine("             //此处需修改 父Id修改");
-                sb.AppendLine("             url: !queryJson ?'/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson': '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson?keyword=' + queryJson,");
-                sb.AppendLine("             sqlkey: '"+ idColumn + "',//数据库主键");
+                sb.AppendLine("             url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson'+(!queryJson ? '' : '?keyword=' + queryJson),"); sb.AppendLine("             sqlkey: '"+ idColumn + "',//数据库主键");
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 { field: '"+ idColumn + "', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");
