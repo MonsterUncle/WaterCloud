@@ -645,7 +645,7 @@ namespace WaterCloud.Code
         // 判断文件是否是bai图片
         public static bool IsPicture(string fileName)
         {
-            string strFilter = ".jpeg|du.gif|.jpg|.png|.bmp|.pic|.tiff|.ico|.iff|.lbm|.mag|.mac|.mpt|.opt|";
+            string strFilter = ".jpeg|.gif|.jpg|.png|.bmp|.pic|.tiff|.ico|.iff|.lbm|.mag|.mac|.mpt|.opt|";
             char[] separtor = { '|' };
             string[] tempFileds = StringSplit(strFilter, separtor);
             foreach (string str in tempFileds)
