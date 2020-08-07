@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright © 2018 WaterCloud 版权所有
  * Author: WaterCloud
  * Description: WaterCloud
@@ -74,13 +74,17 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                result = data.TreeWhere(t => t.F_FullName.Contains(keyword));
+                result = data.TreeWhere(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
             }
             else
             {
                 result = data;
             }
             result = result.Where(t => t.F_ParentId == keyValue).ToList();
+            if (result.Count==0)
+            {
+                result= data.Where(t => t.F_ParentId == keyValue).ToList();
+            }
             foreach (var item in result)
             {
                 item.haveChild = data.Where(a => a.F_ParentId == item.F_Id).Count() > 0 ? true : false;
