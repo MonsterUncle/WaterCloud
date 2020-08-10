@@ -70,7 +70,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
             logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
-                string stemp = "";
+                string stemp = "local";
                 if (_service.currentuser.CompanyId != Define.SYSTEM_MASTERPROJECT)
                 {
                     stemp = (await _setService.GetForm(_service.currentuser.CompanyId)).F_CompanyName;
@@ -103,14 +103,13 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
                 {
                     fileValue = "file";
                 }
-                string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/"+ fileValue + $@"/";
+                string filePath = "";
                 fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + fileName.Substring(fileName.LastIndexOf("."));
                 UploadfileEntity entity = new UploadfileEntity();
-                entity.F_FilePath = fileName;
                 if (!string.IsNullOrEmpty(stemp))
                 {
-                    entity.F_FilePath = stemp + $@"/" + fileName;
-                    filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + fileValue + $@"/" + stemp + $@"/";
+                    entity.F_FilePath = stemp + $@"/" + DateTime.Now.ToString("yyyyMMdd") + $@"/" + fileName;
+                    filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + fileValue + $@"/" + stemp + $@"/" + DateTime.Now.ToString("yyyyMMdd") + $@"/";
                 }
                 string fileFullName = filePath + fileName;
                 entity.Create();
