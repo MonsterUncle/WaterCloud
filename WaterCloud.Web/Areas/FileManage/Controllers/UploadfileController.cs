@@ -73,7 +73,15 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
                 string stemp = "local";
                 if (_service.currentuser.CompanyId != Define.SYSTEM_MASTERPROJECT)
                 {
-                    stemp = (await _setService.GetForm(_service.currentuser.CompanyId)).F_CompanyName;
+                    var temp = await _setService.GetForm(_service.currentuser.CompanyId);
+                    if (temp != null)
+                    {
+                        stemp = temp.F_CompanyName;
+                    }
+                    else
+                    {
+                        throw new Exception("租户不存在");
+                    }
                 }
                 logEntity.F_Account = _service.currentuser.UserCode;
                 logEntity.F_NickName = _service.currentuser.UserName;
