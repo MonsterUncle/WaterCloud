@@ -829,6 +829,10 @@ namespace WaterCloud.CodeGenerator
                             {
                                 sb.AppendLine("                       </div>");
                             }
+                            else if (i == baseConfigModel.PageForm.FieldList.Count)
+                            {
+                                sb.AppendLine("                       </div>");
+                            }
                         }
                         break;
                 }
@@ -939,6 +943,10 @@ namespace WaterCloud.CodeGenerator
                             sb.AppendLine("                        </div>");
                             sb.AppendLine("                    </div>");
                             if (i % 2 == 1)
+                            {
+                                sb.AppendLine("                       </div>");
+                            }
+                            else if (i == baseConfigModel.PageForm.FieldList.Count)
                             {
                                 sb.AppendLine("                       </div>");
                             }
