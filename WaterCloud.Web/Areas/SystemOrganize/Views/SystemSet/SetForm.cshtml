@@ -47,7 +47,8 @@
                         demoText.find('.demo-reload').on('click', function () {
                             uploadInst.upload();
                         });
-                        return layer.msg('操作失败，上传图片失败');
+                        common.modalMsg(res.msg, "warning");
+                        return false;
                     }
                     postData.F_Logo = res.data.src;
                     //上传成功

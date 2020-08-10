@@ -1,4 +1,4 @@
-layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField']
+layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField', 'common']
     , function (exports) {
         var $ = layui.jquery
             , layer = layui.layer
@@ -14,6 +14,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
             , upload = layui.upload
             , layedit = layui.layedit
             , formField = layui.formField
+            , common = layui.common
             , hint = layui.hint
             , guid = function () {
                 var d = new Date().getTime();
@@ -817,7 +818,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                                 demoText.find('.updata-reload').on('click', function () {
                                     uploadInst.upload();
                                 });
-                                return layer.msg('操作失败，上传图片失败');
+                                common.modalMsg(res.msg, "warning");
+                                return false;
                             }
                             $('#' + item.id).val(res.data.src);
                             layer.close(layer.msg());//关闭上传提示窗口
