@@ -178,15 +178,15 @@
             });
             //监听提交
             form.on('submit(saveBtn)', function (data) {
-                // 单击之后提交按钮不可选,防止重复提交
-                $('.site-demo-active').addClass('layui-btn-disabled');
-                $('.site-demo-active').attr('disabled', 'disabled');
-                var postData = data.field;
                 var cachedata = table.cache.currentTableId
                 if (cachedata.length == 0) {
                     common.modalMsg("未添加规则", "warning");
                     return false;
                 }
+                // 单击之后提交按钮不可选,防止重复提交
+                $('.site-demo-active').addClass('layui-btn-disabled');
+                $('.site-demo-active').attr('disabled', 'disabled');
+                var postData = data.field;
                 postData.listData = JSON.stringify(cachedata);
                 common.submitForm({
                     url: '/SystemOrganize/DataPrivilegeRule/SubmitForm?keyValue=' + keyValue,
