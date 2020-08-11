@@ -259,7 +259,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             options.url = obj.urlAddTime(options.url);
             var _width = top.$(window).width() > parseInt(options.width.replace('px', '')) ? options.width : top.$(window).width() - 20 + 'px';
             var _height = top.$(window).height() > parseInt(options.height.replace('px', '')) ? options.height : top.$(window).height() - 20 + 'px';
-            var index = layer.open({
+            var index = top.layer.open({
                 type: 2,
                 shade: options.shade,
                 title: options.title,
@@ -289,7 +289,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                 }
             });
             if (options.isMax) {
-                layer.full(index);
+                top.layer.full(index);
             }
         },
         //表单提交
@@ -545,7 +545,16 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
         },
         //父窗体刷新（按钮刷新）
         parentreload: function (filter) {
-            parent.$('button[lay-filter="' + filter + '"]').click();//按钮刷新
+            var iframes = top.$(".layui-show>iframe");
+            if (iframes.length > 0) {
+                iframes[0].contentWindow.$('button[lay-filter="' + filter + '"]').click();
+            }
+        },
+        currentWindow: function () {
+            var iframes = top.$(".layui-show>iframe");
+            if (iframes.length > 0) {
+                return iframes[0].contentWindow;
+            }
         },
         //当前页刷新（按钮刷新）
         reload: function (filter) {
@@ -790,14 +799,10 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             });
         },
         //刷新tab Iframe
-        reloadIframe: function (src,filter) {
-            var iframes = parent.document.getElementsByTagName("iframe");
-            for (var i = 0; i < iframes.length; i++) {
-                var doc = iframes[i].contentWindow.document;
-                if (iframes[i].src.indexOf(src) != -1) {
-                   $(doc).find('button[lay-filter="' + filter + '"]').click();
-                    break;
-                }
+        reloadIframe: function (src, filter) {
+            var iframes = top.$('.layui-tab-item>iframe[src="' + src + '"]');
+            if (iframes.length>0) {
+                iframes[0].contentWindow.$('button[lay-filter="' + filter + '"]').click();
             }
         },
         //url参数注入(//ie缓存问题)

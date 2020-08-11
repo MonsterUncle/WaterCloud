@@ -15,7 +15,7 @@
             $(function () {
                 initControl();
                 if (!!keyValue) {
-                    var tempdata = parent.layui.table.cache.currentTableId;
+                    var tempdata = common.currentWindow().layui.table.cache.currentTableId;
                     var Filters = [];
                     for (var i = 0; i < tempdata.length; i++) {
                         if (keyValue == tempdata[i].F_Id) {
@@ -110,7 +110,7 @@
                         }
                     }
                     postData.Filters = JSON.stringify(Filters);
-                    var tempdata = parent.layui.table.cache.currentTableId;
+                    var tempdata = common.currentWindow().layui.table.cache.currentTableId;
                     if (!!keyValue) {
                         for (var i = 0; i < tempdata.length; i++) {
                             if (keyValue == tempdata[i].F_Id) {
@@ -124,7 +124,7 @@
                         tempdata.push(postData);
                     }
                     common.modalMsg("操作成功", "success");
-                    parent.layui.table.reload('currentTableId', {
+                    common.currentWindow().layui.table.reload('currentTableId', {
                         data: tempdata
                     });
                     parent.layer.close(index);
@@ -154,11 +154,12 @@
                 var form = layui.form,
                     $ = layui.$,
                     common = layui.common;
+                var parentform = window.name;
                 //不同弹窗
                 if (fields == '{loginRole}') {
                     common.modalOpen({
                         title: "选择角色",
-                        url: "/SystemOrganize/Role/AddForm?name=" + "lookname" + data + "&value=" + "values" + data,
+                        url: "/SystemOrganize/Role/AddForm?parentform=" + parentform+"&name=" + "lookname" + data + "&value=" + "values" + data,
                         width: "650px",
                         height: "500px",
                     });
@@ -166,7 +167,7 @@
                 else if (fields == '{loginUser}') {
                     common.modalOpen({
                         title: "选择用户",
-                        url: "/SystemOrganize/User/AddForm?name=" + "lookname" + data + "&value=" + "values" + data,
+                        url: "/SystemOrganize/User/AddForm?parentform=" + parentform +"&name=" + "lookname" + data + "&value=" + "values" + data,
                         width: "650px",
                         height: "500px",
                     });
@@ -174,7 +175,7 @@
                 else if (fields == '{loginOrg}') {
                     common.modalOpen({
                         title: "选择组织",
-                        url: "/SystemOrganize/Organize/AddForm?name=" + "lookname" + data + "&value=" + "values" + data,
+                        url: "/SystemOrganize/Organize/AddForm?parentform=" + parentform +"&name=" + "lookname" + data + "&value=" + "values" + data,
                         width: "650px",
                         height: "500px",
                     });

@@ -3,22 +3,25 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
     <script>
+        var entity = {};
         layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
             var form = layui.form,
                 $ = layui.$,
                 common = layui.common;
-            var keyValue = $.request("keyValue");
             //权限字段
             common.authorizeFields('adminform');
-            wcLoading.close();
-            if (!!keyValue) {
+            if (!!entity) {
                 $('#F_EnCode').prop('disabled', true);
                 $('#F_FullName').prop('disabled', true);
+                $('#F_EnCode').val(entity.TableColumn);
+                $('#F_FullName').val(entity.Remark);
             }
             else {
                 $('#F_FullName').parent().parent().remove();
                 $('#F_NewName').parent().parent().find("label").html("名称");
             }
+            form.render();
+            wcLoading.close();
             //监听提交
             var lock = false;
             form.on('submit(saveBtn)', function (data) {
@@ -30,16 +33,16 @@
                     var postData = {};
                     postData.TableColumn = data.field.F_EnCode;
                     postData.Remark = data.field.F_NewName;
-                    if (!!keyValue) {
-                        postData.F_Id = keyValue;
+                    if (!!entity) {
+                        postData.F_Id = entity.F_Id;
                     }
                     else {
                         postData.F_Id = uuid();
                     }
-                    var tempdata = parent.layui.table.cache.currentTableId;
-                    if (!!keyValue) {
+                    var tempdata = common.currentWindow().layui.table.cache.currentTableId;
+                    if (!!entity) {
                         for (var i = 0; i < tempdata.length; i++) {
-                            if (keyValue == tempdata[i].F_Id) {
+                            if (entity.F_Id == tempdata[i].F_Id) {
                                 tempdata[i].TableColumn = postData.TableColumn;
                                 tempdata[i].Remark = postData.Remark;
                                 break;
@@ -57,7 +60,7 @@
                         tempdata.push(postData);
                     }
                     common.modalMsg("操作成功", "success");
-                    parent.layui.table.reload('currentTableId', {
+                    common.currentWindow().layui.table.reload('currentTableId', {
                         data: tempdata
                     });
                     parent.layer.close(index);
@@ -66,6 +69,9 @@
                 return false;
             });
         });
+        function initForm(data) {
+            entity = data;           
+        }
     </script>
 <body>
     <div class="layuimini-container">

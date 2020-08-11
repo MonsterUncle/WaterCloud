@@ -12,6 +12,8 @@
             //加载数据
             wcLoading.close();
             var value = $.request("value");
+            var parentform = $.request("parentform");
+            var currentWindow = !parent[parentform] ? common.currentWindow() : parent[parentform];
             var name = $.request("name");
             var ids = $.request("ids");
             common.rendertable({
@@ -61,10 +63,10 @@
                 common.modalConfirm("注：您确定要选择{账号：" + pcode + ",姓名：" + pname + "}的数据吗？", function (r) {
                     if (r) {
                         if (!!pvalue) {
-                            parent.$('#' + value).val(pvalue);
+                            currentWindow.$('#' + value).val(pvalue);
                         }
                         if (!!pname) {
-                            parent.$('#' + name).val(pname);
+                            currentWindow.$('#' + name).val(pname);
                         }
                         common.modalClose();
                     }
@@ -107,10 +109,10 @@
                     common.modalConfirm("注：您确定要清除选择的数据吗？", function (r) {
                         if (r) {
                             if (!!pvalue) {
-                                parent.$('#' + value).val(null);
+                                currentWindow.$('#' + value).val(null);
                             }
                             if (!!pname) {
-                                parent.$('#' + name).val(null);
+                                currentWindow.$('#' + name).val(null);
                             }
                             common.modalClose();
                         }
@@ -120,10 +122,10 @@
                     common.modalConfirm("注：您确定要选择{账号" + pcode.join(",") + ",姓名：" + pname.join(",") + "}的数据吗？", function (r) {
                         if (r) {
                             if (!!pvalue) {
-                                parent.$('#' + value).val(pvalue.join(","));
+                                currentWindow.$('#' + value).val(pvalue.join(","));
                             }
                             if (!!pname) {
-                                parent.$('#' + name).val(pname.join(","));
+                                currentWindow.$('#' + name).val(pname.join(","));
                             }
                             common.modalClose();
                         }
