@@ -68,7 +68,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
             var data =await _service.GetLookForm(keyValue);
-            if (string.IsNullOrEmpty(data.F_DepartmentId))
+            if (!string.IsNullOrEmpty(data.F_DepartmentId))
             {
                 List<string> str = new List<string>();
                 foreach (var item in data.F_DepartmentId.Split(','))
@@ -78,7 +78,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 }
                 data.F_DepartmentName = string.Join("  ", str.ToArray());
             }
-            if (string.IsNullOrEmpty(data.F_RoleId))
+            if (!string.IsNullOrEmpty(data.F_RoleId))
             {
                 List<string> str = new List<string>();
                 foreach (var item in data.F_RoleId.Split(','))
@@ -95,7 +95,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> GetUserFormJson()
         {
             var data =await _service.GetForm(_service.currentuser.UserId);
-            if (string.IsNullOrEmpty(data.F_DepartmentId))
+            if (!string.IsNullOrEmpty(data.F_DepartmentId))
             {
                 List<string> str = new List<string>();
                 foreach (var item in data.F_DepartmentId.Split(','))
