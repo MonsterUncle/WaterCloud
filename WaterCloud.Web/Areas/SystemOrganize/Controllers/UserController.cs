@@ -105,7 +105,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 }
                 data.F_DepartmentName = string.Join("  ", str.ToArray());
             }
-            if (string.IsNullOrEmpty(data.F_RoleId))
+            if (!string.IsNullOrEmpty(data.F_RoleId))
             {
                 List<string> str = new List<string>();
                 foreach (var item in data.F_RoleId.Split(','))
