@@ -115,6 +115,17 @@
                         btn: []
                     });
                 }
+                else if (obj.event === 'import') {
+                    common.modalOpen({
+                        title: "导入界面",
+                        url: "/SystemOrganize/Duty/Import",
+                        width: "650px",
+                        height: "500px",
+                    });
+                }
+                else if (obj.event === 'export') {
+                    window.open('/SystemOrganize/Duty/Export?keyword=' + $('#txt_keyword').val());
+                }
                 return false;
             });
         });
@@ -146,6 +157,8 @@
                 <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
                 <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
                 <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+                <button id="NF-import" authorize class="layui-btn layui-btn-sm data-import-btn layui-hide" lay-event="import"> <i class="layui-icon">&#xe67c;</i>导入</button>
+                <button id="NF-export" authorize class="layui-btn layui-btn-sm layui-btn-warm data-export-btn layui-hide" lay-event="export"> <i class="layui-icon">&#xe67d;</i>导出</button>
             </div>
         </script>
 

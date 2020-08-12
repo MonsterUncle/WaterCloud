@@ -11,6 +11,7 @@ using System.Linq;
 using System;
 using System.Threading.Tasks;
 using Chloe;
+using System.IO;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -83,6 +84,59 @@ namespace WaterCloud.Service.SystemOrganize
                 await repository.Insert(roleEntity);
                 await CacheHelper.Remove(cacheKey + "list");
             }
+        }
+
+        public async Task<List<RoleExtend>> CheckFile(string fileFullName)
+        {
+            if (!FileHelper.IsExcel(fileFullName))
+            {
+                throw new Exception("文件不是有效的Excel文件!");
+            }
+            //文件解析
+            var list = new ExcelHelper<RoleExtend>().ImportFromExcel(fileFullName);
+            //删除文件
+            File.Delete(fileFullName);
+            foreach (var item in list)
+            {
+                item.F_EnabledMark = true;
+                item.F_DeleteMark = false;
+                item.F_OrganizeId = currentuser.CompanyId;
+                item.F_SortCode = 1;
+                item.F_Category = 2;
+                item.F_AllowEdit = false;
+                item.F_AllowDelete = false;
+                List<string> str = new List<string>();
+                if (string.IsNullOrEmpty(item.F_EnCode))
+                {
+                    item.F_EnabledMark = false;
+                    item.ErrorMsg = "编号不存在";
+                    continue;
+                }
+                else if (repository.IQueryable(a => a.F_EnCode == item.F_EnCode).Count() > 0 || list.Where(a => a.F_EnCode == item.F_EnCode).Count() > 2)
+                {
+                    str.Add("编号重复");
+                    item.F_EnabledMark = false;
+                }
+                if (string.IsNullOrEmpty(item.F_FullName))
+                {
+                    str.Add("名称不存在");
+                    item.F_EnabledMark = false;
+                }
+                if (item.F_EnabledMark == false)
+                {
+                    item.ErrorMsg = string.Join(',', str.ToArray());
+                }
+            }
+            return list;
+        }
+
+        public async Task ImportForm(List<RoleEntity> filterList)
+        {
+            foreach (var item in filterList)
+            {
+                item.Create();
+            }
+            await uniwork.Insert(filterList);
         }
     }
 }

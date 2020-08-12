@@ -654,6 +654,18 @@ namespace WaterCloud.Code
             }
             return false;
         }
+        // 判断文件是否是excle
+        public static bool IsExcel(string fileName)
+        {
+            string strFilter = ".xls|.xlsx|";
+            char[] separtor = { '|' };
+            string[] tempFileds = StringSplit(strFilter, separtor);
+            foreach (string str in tempFileds)
+            {
+                if (str.ToUpper() == fileName.Substring(fileName.LastIndexOf("."), fileName.Length - fileName.LastIndexOf(".")).ToUpper()) { return true; }
+            }
+            return false;
+        }
         // 通过字符串，分隔符返回zhistring[]数组 
         public static string[] StringSplit(string s, char[] separtor)
         {

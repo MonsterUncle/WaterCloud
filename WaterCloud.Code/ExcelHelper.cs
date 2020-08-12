@@ -214,12 +214,11 @@ namespace WaterCloud.Code
         /// <returns></returns>
         public List<T> ImportFromExcel(string filePath)
         {
-            string absoluteFilePath = GlobalContext.HostingEnvironment.ContentRootPath + filePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
             List<T> list = new List<T>();
             HSSFWorkbook hssfWorkbook = null;
             XSSFWorkbook xssWorkbook = null;
             ISheet sheet = null;
-            using (FileStream file = new FileStream(absoluteFilePath, FileMode.Open, FileAccess.Read))
+            using (FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
                 switch (Path.GetExtension(filePath))
                 {
@@ -341,6 +340,65 @@ namespace WaterCloud.Code
                 }
             }
             return null;
+        }
+        #endregion
+
+        #region excle转datatable
+        /// <summary>
+        /// 读取excel文件数据到DataTable
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="deleteFile"></param>
+        /// <returns></returns>
+        public static DataTable ReadExcelToTable(string filePath, bool deleteFile = false)
+        {
+            var dataTable = new DataTable();
+            using (var tempFile = new FileStream(filePath, FileMode.Open))
+            {
+                IWorkbook workbook = null;
+                if (Path.GetExtension(filePath)==".xls")
+                {
+                    workbook = new HSSFWorkbook(tempFile);
+                }
+                else
+                {
+                    workbook = new XSSFWorkbook(tempFile);
+                }
+
+                var sheet = workbook.GetSheetAt(0);
+                var tableHeadRow = sheet.GetRow(0);
+                for (int i = 0; i < tableHeadRow.PhysicalNumberOfCells; i++)
+                {
+                    if (tableHeadRow.Cells[i] != null)
+                    {
+                        tableHeadRow.Cells[i].SetCellType(CellType.String);
+                    }
+                    var headCell = tableHeadRow.Cells[i];
+                    dataTable.Columns.Add(new DataColumn(headCell.StringCellValue));
+                }
+                for (int i = 1; i < sheet.PhysicalNumberOfRows; i++)
+                {
+                    var row = sheet.GetRow(i);
+                    var newRow = dataTable.NewRow();
+                    for (int j = 0; j < row.PhysicalNumberOfCells; j++)
+                    {
+                        if (row.Cells[j] != null)
+                        {
+                            row.Cells[j].SetCellType(CellType.String);
+                        }
+                        var cell = row.Cells[j];
+
+                        newRow[j] = cell.StringCellValue;
+                    }
+                    dataTable.Rows.Add(newRow);
+                }
+                workbook.Close();
+            }
+            if (deleteFile)
+            {
+                File.Delete(filePath);
+            }
+            return dataTable;
         }
         #endregion
     }

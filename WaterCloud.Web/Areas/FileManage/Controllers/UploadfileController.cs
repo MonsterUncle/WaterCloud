@@ -98,9 +98,18 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
                 {
                     throw new Exception("请上传图片");
                 }
+                var isexcle = FileHelper.IsExcel(fileName);
+                if (filetype == 2 && !isexcle)
+                {
+                    throw new Exception("请上传Excel");
+                }
                 if (ispic)
                 {
                     filetype = 1;
+                }
+                if (isexcle)
+                {
+                    filetype = 2;
                 }
                 string fileValue = "";
                 if (fileby=="公司logo")
