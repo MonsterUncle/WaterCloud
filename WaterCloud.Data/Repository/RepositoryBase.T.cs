@@ -146,7 +146,10 @@ namespace WaterCloud.DataBase
             if (cachedata == null)
             {
                 cachedata = await _context.QueryByKeyAsync<TEntity>(keyValue);
-                await CacheHelper.Set(cacheKey + keyValue, cachedata);
+                if (cachedata != null)
+                {
+                    await CacheHelper.Set(cacheKey + keyValue, cachedata);
+                }
             }
             return cachedata;
         }
