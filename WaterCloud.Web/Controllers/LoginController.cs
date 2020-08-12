@@ -35,9 +35,10 @@ namespace WaterCloud.Web.Controllers
                 var systemset = await _setService.GetFormByHost("");
                 if (systemset.F_DBProvider!= GlobalContext.SystemConfig.DBProvider|| systemset.F_DbString != GlobalContext.SystemConfig.DBConnectionString)
                 {
-                    systemset.F_DBProvider = GlobalContext.SystemConfig.DBProvider;
-                    systemset.F_DbString = GlobalContext.SystemConfig.DBConnectionString;
-                    await _setService.SubmitForm(systemset, systemset.F_Id);
+                    SystemSetEntity temp = new SystemSetEntity();
+                    temp.F_DBProvider = GlobalContext.SystemConfig.DBProvider;
+                    temp.F_DbString = GlobalContext.SystemConfig.DBConnectionString;
+                    await _setService.SubmitForm(temp, systemset.F_Id);
                 }
                 if (GlobalContext.SystemConfig.Demo)
                 {
