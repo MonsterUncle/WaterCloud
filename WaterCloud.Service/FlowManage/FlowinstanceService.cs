@@ -590,7 +590,7 @@ namespace WaterCloud.Service.FlowManage
                 var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
                 var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
                 var t = referencedAssemblies
-                    .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.FlowManage." + entity.F_DbName + "Service"))).FirstOrDefault();
+                    .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("."+entity.F_DbName + "Service"))).FirstOrDefault();
                 ICustomerForm icf = (ICustomerForm)GlobalContext.ServiceProvider.GetService(t);
                 await icf.Add(entity.F_Id, entity.F_FrmData);
             }
@@ -695,7 +695,7 @@ namespace WaterCloud.Service.FlowManage
                 var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
                 var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
                 var t = referencedAssemblies
-                    .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.FlowManage." + entity.F_DbName + "Service"))).FirstOrDefault();
+                    .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("."+entity.F_DbName + "Service"))).FirstOrDefault();
                 ICustomerForm icf = (ICustomerForm)GlobalContext.ServiceProvider.GetService(t);
                 await icf.Edit(entity.F_Id, entity.F_FrmData);
             }
