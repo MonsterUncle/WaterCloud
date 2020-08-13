@@ -21,6 +21,7 @@ namespace WaterCloud.Service.FlowManage
             var req = frmData.ToObject<FormTestEntity>();
             req.F_FlowInstanceId = flowInstanceId;
             req.Create();
+            req.F_CreatorUserName = currentuser.UserName;
             await repository.Insert(req);
         }
         public async Task Edit(string flowInstanceId, string frmData)
