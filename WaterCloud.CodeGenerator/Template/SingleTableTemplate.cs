@@ -804,7 +804,7 @@ namespace WaterCloud.CodeGenerator
                             sb.AppendLine("                <div class=\"layui-form-item layui-hide\">");
                             sb.AppendLine( "                   <label class=\"layui-form-label required\">"+ item.Value + "</label>");
                             sb.AppendLine( "                   <div class=\"layui-input-block\">");
-                            sb.AppendLine("                        <input type=\"text\" id=\""+ item.Key + "\" name=\"" + item.Key + "\" autocomplete=\"off\" lay-verify=\"required\" class=\"layui-input\">");
+                            sb.AppendLine("                        <input type=\"text\" id=\"" + item.Key + "\" name=\"" + item.Key + "\" autocomplete=\"off\" lay-verify=\"required\" placeholder=\"请输入\" class=\"layui-input\">");
                             sb.AppendLine( "                   </div>");
                             sb.AppendLine( "               </div>");
                         }
@@ -822,7 +822,7 @@ namespace WaterCloud.CodeGenerator
                             sb.AppendLine("                    <div class=\"layui-inline layui-hide\">");
                             sb.AppendLine("                        <label class=\"layui-form-label required\">" + item.Value + "</label>");
                             sb.AppendLine("                        <div class=\"layui-input-inline\">");
-                            sb.AppendLine("                            <input type=\"text\" id=\"" + item.Key + "\" name=\"" + item.Key + "\" autocomplete=\"off\" lay-verify=\"required\" class=\"layui-input\">");
+                            sb.AppendLine("                            <input type=\"text\" id=\"" + item.Key + "\" name=\"" + item.Key + "\" autocomplete=\"off\" lay-verify=\"required\" placeholder=\"请输入\" class=\"layui-input\">");
                             sb.AppendLine("                        </div>");
                             sb.AppendLine("                    </div>");
                             if (i % 2 == 1)
