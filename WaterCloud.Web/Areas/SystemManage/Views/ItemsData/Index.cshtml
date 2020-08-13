@@ -10,7 +10,7 @@
 </style>
 <script>
 
-    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'dtree','miniTab'], function () {
+    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'dtree', 'miniTab'], function () {
         var $ = layui.jquery,
             form = layui.form,
             miniTab = layui.miniTab,
@@ -32,7 +32,7 @@
             line: true,  // 显示树线
             scroll: "#toolbarDiv", // 绑定div元素
             icon: ["0", "-1"],  // 显示非最后一级节点图标，隐藏最后一级节点图标
-            initLevel: 0,
+            initLevel: 1,
             url: "/SystemManage/ItemsType/GetTreeGridJson?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss") // 使用url加载（可与data加载同时存在）
         });
         var treeid;
@@ -122,6 +122,12 @@
             item = null;
             return false;
         });
+        // 监听搜索操作
+        form.on('submit(item-search-btn)', function (data) {
+            // 调用内置函数搜索节点
+            DemoTree.fuzzySearch(data.field.item_keyword);
+            return false;
+        });
         var item;
         table.on('row(currentTableFilter)', function (obj) {
             obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
@@ -162,7 +168,7 @@
                 }
                 common.modalOpen({
                     title: "编辑字典",
-                    url: "/SystemManage/ItemsData/Form?itemId=" + treeid+"&keyValue=" + item.data.F_Id,
+                    url: "/SystemManage/ItemsData/Form?itemId=" + treeid + "&keyValue=" + item.data.F_Id,
                     width: "450px",
                     height: "350px",
                 });
@@ -194,7 +200,19 @@
 <div class="layui-fluid" style="padding:0 0px">
     <div class="layui-row layui-col-space5">
         <div class="layui-col-md4 layui-col-xs5">
-            <div class="layui-card" style="text-align:left;" id="toolbarDiv">
+            <div class="layui-card" style="text-align:left;overflow: auto;" id="toolbarDiv">
+                <fieldset class="table-search-fieldset" style="border:1px solid #e6e6e6">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <input type="text" id="item_keyword" name="item_keyword" autocomplete="off" class="layui-input" placeholder="">
+                            </div>
+                            <div class="layui-inline">
+                                <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="item-search-btn"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
                 <ul id="demoTree" class="dtree" data-id="0"></ul>
             </div>
         </div>
@@ -219,7 +237,7 @@
                         <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
                         <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
                         <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
-                        <button id="NF-itemstype" authorize="yes" class="layui-btn layui-btn-sm  data-itemstype-btn layui-hide"  lay-event="itemstype"> <i class="fa fa-key"></i>分类管理</button>
+                        <button id="NF-itemstype" authorize="yes" class="layui-btn layui-btn-sm  data-itemstype-btn layui-hide" lay-event="itemstype"> <i class="fa fa-key"></i>分类管理</button>
                     </div>
                 </script>
                 <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>

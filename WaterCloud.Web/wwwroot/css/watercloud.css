@@ -174,3 +174,7 @@
 .layui-table-tool .layui-btn-container {
     margin-bottom:0px;
 }
+.layui-form-item .layui-inline {
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
