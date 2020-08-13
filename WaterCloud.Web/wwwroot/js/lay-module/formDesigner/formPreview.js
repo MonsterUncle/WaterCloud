@@ -747,6 +747,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     laydate.render({
                         elem: '#' +item.id,
                         type: item.datetype
+                        , trigger: 'click'
                     });
                 } else if (item.tag === 'rate') {
                     rate.render({
