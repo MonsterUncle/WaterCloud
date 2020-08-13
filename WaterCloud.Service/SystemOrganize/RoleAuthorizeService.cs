@@ -155,6 +155,7 @@ namespace WaterCloud.Service.SystemOrganize
                     var role = uniwork.IQueryable<RoleEntity>(a =>a.F_Id== roles && a.F_EnabledMark == true).ToList();
                     if (role!=null)
                     {
+                        var authdata = new List<AuthorizeActionModel>();
                         var authorizedata = await GetList(roles);
                         foreach (var item in authorizedata)
                         {
@@ -165,7 +166,7 @@ namespace WaterCloud.Service.SystemOrganize
                                     ModuleEntity moduleEntity = moduledata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false);
                                     if (moduleEntity != null)
                                     {
-                                        authorizeurldata.Add(new AuthorizeActionModel { F_Id = moduleEntity.F_Id, F_UrlAddress = moduleEntity.F_UrlAddress });
+                                        authdata.Add(new AuthorizeActionModel { F_Id = moduleEntity.F_Id, F_UrlAddress = moduleEntity.F_UrlAddress });
                                     }
                                 }
                                 else if (item.F_ItemType == 2)
@@ -173,7 +174,7 @@ namespace WaterCloud.Service.SystemOrganize
                                     ModuleButtonEntity moduleButtonEntity = buttondata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false);
                                     if (moduleButtonEntity != null)
                                     {
-                                        authorizeurldata.Add(new AuthorizeActionModel { F_Id = moduleButtonEntity.F_ModuleId, F_UrlAddress = moduleButtonEntity.F_UrlAddress });
+                                        authdata.Add(new AuthorizeActionModel { F_Id = moduleButtonEntity.F_ModuleId, F_UrlAddress = moduleButtonEntity.F_UrlAddress });
                                     }
                                 }
                             }
@@ -183,9 +184,10 @@ namespace WaterCloud.Service.SystemOrganize
                                 continue;
                             }
                         }
-                        authorizeurldata.AddRange(moduledata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_Id, F_UrlAddress = a.F_UrlAddress }).ToList());
-                        authorizeurldata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress }).ToList());
-                        cachedata.Add(roles, authorizeurldata);
+                        authdata.AddRange(moduledata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_Id, F_UrlAddress = a.F_UrlAddress }).ToList());
+                        authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress }).ToList());
+                        cachedata.Add(roles, authdata);
+                        authorizeurldata.AddRange(authdata);
                         await CacheHelper.Remove(cacheKey + "authorize_list");
                         await CacheHelper.Set(cacheKey + "authorize_list", cachedata);
                     }
@@ -227,6 +229,7 @@ namespace WaterCloud.Service.SystemOrganize
                     var role = await uniwork.FindEntity<RoleEntity>(roles);
                     if (role != null && role.F_EnabledMark != false)
                     {
+                        var authdata = new List<AuthorizeActionModel>();
                         var authorizedata = await GetList(roles);
                         foreach (var item in authorizedata)
                         {
@@ -237,7 +240,7 @@ namespace WaterCloud.Service.SystemOrganize
                                     ModuleEntity moduleEntity = moduledata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false);
                                     if (moduleEntity != null)
                                     {
-                                        authorizeurldata.Add(new AuthorizeActionModel { F_Id = moduleEntity.F_Id, F_UrlAddress = moduleEntity.F_UrlAddress });
+                                        authdata.Add(new AuthorizeActionModel { F_Id = moduleEntity.F_Id, F_UrlAddress = moduleEntity.F_UrlAddress });
                                     }
                                 }
                                 else if (item.F_ItemType == 2)
@@ -245,7 +248,7 @@ namespace WaterCloud.Service.SystemOrganize
                                     ModuleButtonEntity moduleButtonEntity = buttondata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false);
                                     if (moduleButtonEntity != null)
                                     {
-                                        authorizeurldata.Add(new AuthorizeActionModel { F_Id = moduleButtonEntity.F_ModuleId, F_UrlAddress = moduleButtonEntity.F_UrlAddress });
+                                        authdata.Add(new AuthorizeActionModel { F_Id = moduleButtonEntity.F_ModuleId, F_UrlAddress = moduleButtonEntity.F_UrlAddress });
                                     }
                                 }
                             }
@@ -255,9 +258,10 @@ namespace WaterCloud.Service.SystemOrganize
                                 continue;
                             }
                         }
-                        authorizeurldata.AddRange(moduledata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_Id, F_UrlAddress = a.F_UrlAddress }).ToList());
-                        authorizeurldata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress }).ToList());
+                        authdata.AddRange(moduledata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_Id, F_UrlAddress = a.F_UrlAddress }).ToList());
+                        authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress }).ToList());
                         cachedata.Add(roles, authorizeurldata);
+                        authorizeurldata.AddRange(authdata);
                         await CacheHelper.Remove(cacheKey + "authorize_list");
                         await CacheHelper.Set(cacheKey + "authorize_list", cachedata);
                     }
