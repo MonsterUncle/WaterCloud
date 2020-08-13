@@ -260,7 +260,7 @@ namespace WaterCloud.Service.SystemOrganize
                         }
                         authdata.AddRange(moduledata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_Id, F_UrlAddress = a.F_UrlAddress }).ToList());
                         authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress }).ToList());
-                        cachedata.Add(roles, authorizeurldata);
+                        cachedata.Add(roles, authdata);
                         authorizeurldata.AddRange(authdata);
                         await CacheHelper.Remove(cacheKey + "authorize_list");
                         await CacheHelper.Set(cacheKey + "authorize_list", cachedata);
