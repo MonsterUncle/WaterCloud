@@ -50,6 +50,24 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
+        public async Task<ActionResult> GetSelectJson()
+        {
+            var data = await _service.GetList();
+            data = data.Where(a => a.F_EnabledMark == true).ToList();
+            var treeList = new List<TreeSelectModel>();
+            foreach (OrganizeEntity item in data)
+            {
+                TreeSelectModel treeModel = new TreeSelectModel();
+                treeModel.id = item.F_Id;
+                treeModel.text = item.F_FullName;
+                treeModel.parentId = item.F_ParentId;
+                treeModel.data = item;
+                treeList.Add(treeModel);
+            }
+            return Content(treeList.TreeSelectJson());
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeJson()
         {
             var data =await _service.GetList();

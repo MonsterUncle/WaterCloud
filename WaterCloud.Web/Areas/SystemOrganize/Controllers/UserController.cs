@@ -50,6 +50,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> GetListJson(string keyword,string ids)
         {
             var data = await _service.GetList(keyword);
+            data = data.Where(a => a.F_EnabledMark == true).ToList();
             if (!string.IsNullOrEmpty(ids))
             {
                 foreach (var item in ids.Split(','))
