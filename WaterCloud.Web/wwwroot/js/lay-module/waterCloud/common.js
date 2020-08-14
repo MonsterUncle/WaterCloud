@@ -1,4 +1,4 @@
-﻿/**
+/**
  * date:2020/02/27
  * author:Mr.Q
  * version:1.6
@@ -258,10 +258,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
             //options.url = obj.urlAddTime(options.url);
-            //var _width = top.$(window).width() > parseInt(options.width.replace('px', '')) ? options.width: top.$(window).width() - 20 + 'px';
-            //var _height = top.$(window).height() > parseInt(options.height.replace('px', '')) ? options.height : top.$(window).height() - 20 + 'px';
-            var _width = options.width;
-            var _height = options.height;
+            var _width = document.body.clientWidth > parseInt(options.width.replace('px', '')) ? options.width : document.body.clientWidth - 20 + 'px';
+            var _height = document.body.clientHeight > parseInt(options.height.replace('px', '')) ? options.height : document.body.clientHeight - 20 + 'px';
             var index = top.layer.open({
                 type: 2,
                 shade: options.shade,
