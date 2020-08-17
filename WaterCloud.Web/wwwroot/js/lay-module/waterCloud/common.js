@@ -484,7 +484,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                     }, 500);
                 }
                 else {
-                    layer.close(index);
+                    parent.layer.close(index);
                 }
             });
 
