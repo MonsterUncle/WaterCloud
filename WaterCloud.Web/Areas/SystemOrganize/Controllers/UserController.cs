@@ -75,7 +75,10 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 foreach (var item in data.F_DepartmentId.Split(','))
                 {
                     var temp = await _orgService.GetForm(item);
-                    str.Add(temp.F_FullName);
+                    if (temp != null)
+                    {
+                        str.Add(temp.F_FullName);
+                    }
                 }
                 data.F_DepartmentName = string.Join("  ", str.ToArray());
             }
@@ -85,7 +88,10 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 foreach (var item in data.F_RoleId.Split(','))
                 {
                     var temp = await _roleService.GetForm(item);
-                    str.Add(temp.F_FullName);
+                    if (temp != null)
+                    {
+                        str.Add(temp.F_FullName);
+                    }
                 }
                 data.F_RoleName = string.Join("  ", str.ToArray());
             }
@@ -102,7 +108,10 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 foreach (var item in data.F_DepartmentId.Split(','))
                 {
                     var temp = await _orgService.GetForm(item);
-                    str.Add(temp.F_FullName);
+                    if (temp != null)
+                    {
+                        str.Add(temp.F_FullName);
+                    }
                 }
                 data.F_DepartmentName = string.Join("  ", str.ToArray());
             }
@@ -112,7 +121,10 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 foreach (var item in data.F_RoleId.Split(','))
                 {
                     var temp = await _roleService.GetForm(item);
-                    str.Add(temp.F_FullName);
+                    if (temp != null)
+                    {
+                        str.Add(temp.F_FullName);
+                    }
                 }
                 data.F_RoleName = string.Join("  ", str.ToArray());
             }
