@@ -541,8 +541,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("         var $ = layui.jquery,");
             sb.AppendLine("             form = layui.form,");
             sb.AppendLine("             layer = layui.layer,");
-            sb.AppendLine("             table = layui.table,");
-            sb.AppendLine("             treeTable = layui.treeTable,");
+            sb.AppendLine("             " + (baseConfigModel.PageIndex.IsTree == 1 ? "treeTable = layui.treeTable," : "table = layui.table,"));
             sb.AppendLine("             common = layui.common;");
             sb.AppendLine("         var entity;");
             sb.AppendLine("         //权限控制(js是值传递)");
