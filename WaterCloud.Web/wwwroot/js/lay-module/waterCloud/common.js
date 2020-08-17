@@ -258,8 +258,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
             //options.url = obj.urlAddTime(options.url);
+            //高度宽度超出就适应屏幕
             var _width = document.body.clientWidth > parseInt(options.width.replace('px', '')) ? options.width : document.body.clientWidth - 20 + 'px';
             var _height = document.body.clientHeight > parseInt(options.height.replace('px', '')) ? options.height : document.body.clientHeight - 20 + 'px';
+            if (obj.currentWindow()) {
+                _width = obj.currentWindow().document.body.clientWidth > parseInt(options.width.replace('px', '')) ? options.width : obj.currentWindow().document.body.clientWidth - 20 + 'px';
+                _height = obj.currentWindow().document.body.clientHeight > parseInt(options.height.replace('px', '')) ? options.height : obj.currentWindow().document.body.clientHeight - 150 + 'px';
+            }
             var index = top.layer.open({
                 type: 2,
                 shade: options.shade,
