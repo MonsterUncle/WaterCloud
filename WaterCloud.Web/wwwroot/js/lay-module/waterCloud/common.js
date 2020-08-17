@@ -292,6 +292,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             if (options.isMax) {
                 top.layer.full(index);
             }
+            return index;
         },
         //表单提交
         submitForm: function (options) {
