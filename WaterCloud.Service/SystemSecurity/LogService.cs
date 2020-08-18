@@ -100,7 +100,7 @@ namespace WaterCloud.Service.SystemSecurity
             logEntity.F_Date = DateTime.Now;
             try
             {
-                if (currentuser == null)
+                if (currentuser == null || string.IsNullOrEmpty(currentuser.UserId))
                 {
                     logEntity.F_IPAddress = LoginProvider=="WebApi"? "未连接未知": WebHelper.Ip;
                     logEntity.F_IPAddressName = "本地局域网";
