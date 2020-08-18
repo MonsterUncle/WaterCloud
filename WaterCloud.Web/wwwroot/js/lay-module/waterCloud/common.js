@@ -263,7 +263,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             var _height = document.body.clientHeight > parseInt(options.height.replace('px', '')) ? options.height : document.body.clientHeight - 20 + 'px';
             if (obj.currentWindow()) {
                 _width = obj.currentWindow().document.body.clientWidth > parseInt(options.width.replace('px', '')) ? options.width : obj.currentWindow().document.body.clientWidth - 20 + 'px';
-                _height = obj.currentWindow().document.body.clientHeight > parseInt(options.height.replace('px', '')) ? options.height : obj.currentWindow().document.body.clientHeight - 150 + 'px';
+                _height = obj.currentWindow().document.body.clientHeight > parseInt(options.height.replace('px', '')) ? options.height : obj.currentWindow().document.body.clientHeight - 20 + 'px';
             }
             var index = top.layer.open({
                 type: 2,
