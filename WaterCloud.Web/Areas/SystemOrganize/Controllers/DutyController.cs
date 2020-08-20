@@ -21,6 +21,8 @@ using System.Net.Http.Headers;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 {
@@ -220,7 +222,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             return File(ms, contentType, fileName);
         }
         [HttpGet]
-        public async Task<FileResult> Export(string keyword = "")
+        public async Task<FileResult> ExportExcel(string keyword = "")
         {
             var list = await _service.GetList(keyword);
             #region NPOI
@@ -259,6 +261,91 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             #endregion
 
             return File(ms, contentType, filename);
+        }
+        [HttpGet]
+        public async Task<FileResult> Export(string keyword = "")
+        {
+            var list = await _service.GetList(keyword);
+            //生成pdf
+            string fileName = "岗位信息" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".pdf";
+            //步骤1
+            Document Doc = new Document(PageSize.A4);
+            Doc.SetMargins(60, 60, 20, 40);
+
+            MemoryStream stream = new MemoryStream();
+            //步骤2
+            PdfWriter pdfWriter = PdfWriter.GetInstance(Doc, stream);
+            //步骤3
+            Doc.Open();
+
+            #region 相关元素准备
+            BaseFont bfChinese;
+            bfChinese = BaseFont.CreateFont(GlobalContext.HostingEnvironment.WebRootPath + "/fonts/simsun.ttc,1", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            Font Font16 = new Font(bfChinese, 16);
+            Font Font14 = new Font(bfChinese, 14);
+            Font Font12 = new Font(bfChinese, 12);
+            Font Font12Bold = new Font(bfChinese, 12, Font.BOLD);
+            Font Font12Italic = new Font(bfChinese, 12, Font.BOLDITALIC);
+            Font Font10Bold = new Font(bfChinese, 10, Font.BOLD);
+
+            Paragraph parag;
+            //Chunk chunk;
+            PdfPTable table;
+            #endregion
+
+            #region 文件标题
+            Doc.Open();
+            Doc.AddAuthor(_service.currentuser.UserName);
+            Doc.AddTitle("需求单信息\r\n\r\n");
+            #endregion
+
+            #region 正文
+            parag = new Paragraph("岗位信息", Font16);
+            parag.Alignment = Element.ALIGN_CENTER;
+            Doc.Add(parag);
+
+            table = new PdfPTable(new float[] { 5, 5, 5, 5, 5, 5, 5});
+            table.WidthPercentage = 100f;
+            table.AddCell(new Phrase("序号", Font12Bold));
+            table.AddCell(new Phrase("岗位编号", Font12Bold));
+            table.AddCell(new Phrase("岗位名称", Font12Bold));
+            table.AddCell(new Phrase("归属公司", Font12Bold));
+            table.AddCell(new Phrase("有效状态", Font12Bold));
+            table.AddCell(new Phrase("创建时间", Font12Bold));
+            table.AddCell(new Phrase("备注", Font12Bold));
+            Doc.Add(table);
+
+            int i = 0;
+            foreach (var item in list)
+            {
+                i++;
+                table = new PdfPTable(new float[] { 5, 5, 5, 5, 5, 5, 5 });
+                table.WidthPercentage = 100f;
+                table.AddCell(new Phrase(i.ToString(), Font12));
+                table.AddCell(new Phrase(item.F_EnCode != null ? item.F_EnCode.ToString() : "", Font12));
+                table.AddCell(new Phrase(item.F_FullName != null ? item.F_EnCode.ToString() : "", Font12));
+                var set = await _setService.GetForm(_service.currentuser.CompanyId);
+                table.AddCell(new Phrase(set != null ? set.F_CompanyName.ToString() : "", Font12));
+                table.AddCell(new Phrase(item.F_EnabledMark != true ? "无效" : "有效", Font12));
+                table.AddCell(new Phrase(item.F_CreatorTime!=null?((DateTime)item.F_CreatorTime).ToString("yyyyMMdd_HHmmss") :"", Font12));
+                table.AddCell(new Phrase(item.F_Description, Font12));
+                Doc.Add(table);
+            }
+            table = new PdfPTable(new float[] { 35 });
+            table.WidthPercentage = 100f;
+            table.AddCell(new Phrase("合计:一共" + i + "项", Font12));
+            table.AddCell(new Phrase("", Font12));
+            Doc.Add(table);
+            Doc.Close();
+            #endregion
+            ////页脚
+            //PDFFooter footer = new PDFFooter();
+            //footer.OnEndPage(pdfWriter, Doc);
+            Doc.Close();
+            var contentType = MimeMapping.GetMimeMapping(fileName);
+            FileResult fileResult = new FileContentResult(stream.ToArray(), contentType);
+            fileResult.FileDownloadName = fileName;
+            return fileResult;
         }
     }
 }
