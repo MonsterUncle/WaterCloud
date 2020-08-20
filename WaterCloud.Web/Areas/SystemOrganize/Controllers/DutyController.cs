@@ -296,11 +296,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             #region 文件标题
             Doc.Open();
             Doc.AddAuthor(_service.currentuser.UserName);
-            Doc.AddTitle("需求单信息\r\n\r\n");
+            Doc.AddTitle("岗位信息");
             #endregion
 
             #region 正文
-            parag = new Paragraph("岗位信息", Font16);
+            parag = new Paragraph("岗位信息\r\n\r\n", Font16);
             parag.Alignment = Element.ALIGN_CENTER;
             Doc.Add(parag);
 
@@ -327,7 +327,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 var set = await _setService.GetForm(_service.currentuser.CompanyId);
                 table.AddCell(new Phrase(set != null ? set.F_CompanyName.ToString() : "", Font12));
                 table.AddCell(new Phrase(item.F_EnabledMark != true ? "无效" : "有效", Font12));
-                table.AddCell(new Phrase(item.F_CreatorTime!=null?((DateTime)item.F_CreatorTime).ToString("yyyyMMdd_HHmmss") :"", Font12));
+                table.AddCell(new Phrase(item.F_CreatorTime!=null?((DateTime)item.F_CreatorTime).ToString("yyyy-MM-dd") :"", Font12));
                 table.AddCell(new Phrase(item.F_Description, Font12));
                 Doc.Add(table);
             }
