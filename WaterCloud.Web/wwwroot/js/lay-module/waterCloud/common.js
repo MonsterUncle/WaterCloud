@@ -38,6 +38,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                     , last: false //不显示尾页
                 },
                 smartReloadModel: true, // 是否开启智能reload的模式 tablePlug
+                authorizeFields: true, // 字段权限开关
                 request: {
                     pageName: 'page' //页码的参数名称，默认：page
                     , limitName: 'rows' //每页数据量的参数名，默认：limit
@@ -56,7 +57,9 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
             //字段权限
-            options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
+            if (authorizeFields) {
+                options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
+            }
             options.done = function (res, curr, count) {
                 //关闭加载
                 //layer.closeAll('loading');
@@ -87,7 +90,8 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                 height: 'full-130',
                 method: 'get',//请求方法
                 sqlkey: 'F_Id',//数据库主键
-                cellMinWidth: 60,//最小宽度     
+                cellMinWidth: 60,//最小宽度
+                authorizeFields: true, // 字段权限开关
                 parseData: function (res) { //res 即为原始返回的数据
                     return {
                         "code": res.state, //解析接口状态
@@ -102,7 +106,9 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
             //字段权限
-            options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
+            if (authorizeFields) {
+                options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
+            }
             options.done = function (res, curr, count) {
                 //关闭加载
                 //layer.closeAll('loading');
@@ -590,8 +596,12 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
         authorizeButtonNew: function (innerHTML) {
             //行操作权限控制
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
-            var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
             var returnhtml = '';
+            //没有就全清
+            if (!top.clients || !top.clients.authorizeButton) {
+                return returnhtml;
+            }
+            var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
             if (innerHTML.indexOf('</button>') > -1) {
                 var tempList = innerHTML.split('</button>');
                 for (var i = 0; i < tempList.length; i++) {
@@ -650,6 +660,14 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
         //权限按钮(控制dom)
         authorizeButton: function (id) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            //没有就全清
+            if (!top.clients || top.clients.authorizeButton) {
+                $element.find('button[authorize=yes]').attr('authorize', 'no');
+                $element.find("[authorize=no]").parents('button').prev('.split').remove();
+                $element.find("[authorize=no]").parents('button').remove();
+                $element.find('[authorize=no]').remove();
+                return false;
+            }
             var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
             var $element = $('#' + id);
             $element.find('button[authorize=yes]').attr('authorize', 'no');
@@ -667,6 +685,13 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
         authorizeFields: function (filter) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             var element = $('div[lay-filter=' + filter + ']');
+            //没有就全清
+            if (!top.clients || top.clients.moduleFields) {
+                element.find('input,select,textarea').each(function (r) {
+                    $this.parent().parent().remove();
+                });
+                return false;
+            }
             if (!!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == true) {
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
                 element.find('input,select,textarea').each(function (r) {
@@ -831,8 +856,9 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
         tableAuthorizeFields: function (cols, sqlkey) {
             var keys = !!sqlkey ? sqlkey : 'F_Id';
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            //没有权限就返回无
             if (!top.clients||!top.clients.moduleFields) {
-                return cols;
+                return [];
             }
             if (!!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == true) {
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
