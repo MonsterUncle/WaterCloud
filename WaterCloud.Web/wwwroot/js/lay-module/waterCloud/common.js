@@ -57,7 +57,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
             //字段权限
-            if (authorizeFields) {
+            if (options.authorizeFields) {
                 options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
             }
             options.done = function (res, curr, count) {
@@ -106,7 +106,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
             //字段权限
-            if (authorizeFields) {
+            if (options.authorizeFields) {
                 options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
             }
             options.done = function (res, curr, count) {
@@ -661,7 +661,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
         authorizeButton: function (id) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             //没有就全清
-            if (!top.clients || top.clients.authorizeButton) {
+            if (!top.clients || !top.clients.authorizeButton) {
                 $element.find('button[authorize=yes]').attr('authorize', 'no');
                 $element.find("[authorize=no]").parents('button').prev('.split').remove();
                 $element.find("[authorize=no]").parents('button').remove();
@@ -686,7 +686,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             var element = $('div[lay-filter=' + filter + ']');
             //没有就全清
-            if (!top.clients || top.clients.moduleFields) {
+            if (!top.clients || !top.clients.moduleFields) {
                 element.find('input,select,textarea').each(function (r) {
                     $this.parent().parent().remove();
                 });
