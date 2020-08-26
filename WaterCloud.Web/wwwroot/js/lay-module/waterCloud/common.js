@@ -831,6 +831,9 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
         tableAuthorizeFields: function (cols, sqlkey) {
             var keys = !!sqlkey ? sqlkey : 'F_Id';
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            if (!top.clients||!top.clients.moduleFields) {
+                return cols;
+            }
             if (!!top.clients.moduleFields[moduleId.split("?")[0]] && top.clients.moduleFields[moduleId.split("?")[0]] == true) {
                 var dataJson = top.clients.authorizeFields[moduleId.split("?")[0]];
                 var array = [];
