@@ -537,7 +537,7 @@ namespace WaterCloud.CodeGenerator
 
             #region js layui方法
             sb.AppendLine(" <script>");
-            sb.AppendLine("     layui.use(['jquery', 'form',"+ (baseConfigModel.PageIndex.IsTree == 1 ? "'treeTable'" : "'table', 'tablePlug'") + ", 'common','layer'], function () {");
+            sb.AppendLine("     layui.use(['jquery', 'form',"+ (baseConfigModel.PageIndex.IsTree == 1 ? "'treeTable'" : "'table'") + ", 'common','layer','optimizeSelectOption'], function () {");
             sb.AppendLine("         var $ = layui.jquery,");
             sb.AppendLine("             form = layui.form,");
             sb.AppendLine("             layer = layui.layer,");
@@ -555,7 +555,6 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             //此处需修改 父Id修改");
                 sb.AppendLine("             url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson'+(!queryJson ? '' : '?keyword=' + queryJson),"); sb.AppendLine("             sqlkey: '"+ idColumn + "',//数据库主键");
                 sb.AppendLine("             cols: [[");
-                sb.AppendLine("                 { field: '"+ idColumn + "', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");
                 int cout = 1;
                 foreach (var item in baseConfigModel.PageIndex.ColumnList)
@@ -598,9 +597,7 @@ namespace WaterCloud.CodeGenerator
                 {
                     sb.AppendLine("             page: false,");
                 }
-                sb.AppendLine("             sqlkey: '" + idColumn + "',//数据库主键");
                 sb.AppendLine("             cols: [[");
-                sb.AppendLine("                 { field: '" + idColumn + "', title: 'ID', sort: true, hide: true, hideAlways: true },");
                 sb.AppendLine("                 //此处需修改");
                 int cout = 1;
                 foreach (var item in baseConfigModel.PageIndex.ColumnList)
@@ -726,7 +723,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("    Layout = \"~/Views/Shared/_Form.cshtml\";");
             sb.AppendLine("}");
             sb.AppendLine("<script>");
-            sb.AppendLine("    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {");
+            sb.AppendLine("    layui.use(['jquery', 'form', 'laydate', 'common','optimizeSelectOption'], function () {");
             sb.AppendLine("        var form = layui.form,");
             sb.AppendLine("            $ = layui.$,");
             sb.AppendLine("            common = layui.common,");
@@ -864,7 +861,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("    Layout = \"~/Views/Shared/_Form.cshtml\";");
             sb.AppendLine("}");
             sb.AppendLine("<script>");
-            sb.AppendLine("    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {");
+            sb.AppendLine("    layui.use(['jquery', 'form', 'laydate', 'common'], function () {");
             sb.AppendLine("        var form = layui.form,");
             sb.AppendLine("            $ = layui.$,");
             sb.AppendLine("            common = layui.common,");

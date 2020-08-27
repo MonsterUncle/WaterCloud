@@ -31,7 +31,7 @@
      </div>
  </div>
  <script>
-     layui.use(['jquery', 'form','table', 'tablePlug', 'common','layer'], function () {
+     layui.use(['jquery', 'form','table', 'common','layer'], function () {
          var $ = layui.jquery,
              form = layui.form,
              layer = layui.layer,
@@ -44,10 +44,8 @@
          common.rendertable({
              elem: '#currentTableId',
              id: 'currentTableId',
-             url: '/FileManage/Uploadfile/GetGridJson',
-             sqlkey: 'F_Id',//数据库主键
-             cols: [[
-                 { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },
+             url: '/FileManage/Uploadfile/GetGridJson',             
+             cols: [[                 
                  //此处需修改
                  { field: 'F_FilePath', title: '文件路径', width: 120, sort: true, hide: true },
                  { field: 'F_FileName', title: '文件名称', width: 180, sort: true },

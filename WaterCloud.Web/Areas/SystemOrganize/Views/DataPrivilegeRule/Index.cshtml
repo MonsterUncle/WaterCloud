@@ -32,7 +32,7 @@
      </div>
  </div>
  <script>
-     layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'layer','miniTab'], function () {
+     layui.use(['jquery', 'form', 'table', 'common', 'layer', 'miniTab', 'optimizeSelectOption'], function () {
          var $ = layui.jquery,
              form = layui.form,
              layer = layui.layer,
@@ -46,9 +46,7 @@
              elem: '#currentTableId',
              id: 'currentTableId',
              url: '/SystemOrganize/DataPrivilegeRule/GetGridJson',
-             sqlkey: 'F_Id',//数据库主键
              cols: [[
-                 { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },
                  { field: 'F_ModuleCode', title: '模块编号', width: 120 },
                  { field: 'F_PrivilegeRules', title: '权限规则', width: 200 },
                  { field: 'F_SortCode', title: '排序号', width: 120 },

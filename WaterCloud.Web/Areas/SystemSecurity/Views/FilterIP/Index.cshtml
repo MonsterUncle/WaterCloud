@@ -3,11 +3,10 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', "layer"], function () {
+    layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption'], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
-            layer = layui.layer,
             common = layui.common;
         //加载数据
         wcLoading.close();
@@ -18,11 +17,9 @@
            id: 'currentTableId',
             url: '/SystemSecurity/FilterIP/GetGridJson',
            page: false,
-           sqlkey: 'F_Id',//数据库主键
-            cols: [[
-                { field: 'F_Id', title: 'ID', sort: true, fixed: "left",hide:true, hideAlways: true },
+            cols: [[                
                 {
-                    field: 'F_Type', title: '策略类型', width: 120, sort: true, filter: true,
+                    field: 'F_Type', title: '策略类型', width: 120, sort: true,
                     templet: function (d) {
                         if (d.F_Type == true) {
                             return "<span class=\"layui-bg-green\">允许访问</span>";

@@ -3,11 +3,11 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
     <script>
-        layui.use(['jquery', 'table', 'form', 'laydate', 'tablePlug', 'common'], function () {
+        layui.use(['jquery', 'table', 'form', 'laydate', 'common', 'optimizeSelectOption'], function () {
             var form = layui.form,
                 $ = layui.$,
                 common = layui.common,
-                table = layui.table
+                table = layui.table,
             laydate = layui.laydate;
             var keyValue = $.request("keyValue");
             if (!!keyValue) {
@@ -25,9 +25,6 @@
                         async: false,
                         success: function (data) {
                             common.val('adminform', data);
-                            if (!!$('#F_ModuleId').val()) {
-                                $('#toolbar').removeClass('layui-hide');
-                            }
                             var datas = JSON.parse(data.F_PrivilegeRules);
                             for (var i = 0; i < datas.length; i++) {
                                 datas[i]["F_Id"] = uuid();
@@ -35,6 +32,9 @@
                             table.reload('currentTableId', {
                                 data: datas
                             });
+                            if (!!$('#F_ModuleId').val()) {
+                                $('#toolbar').removeClass('layui-hide');
+                            }
                         }
                     });
                 }
@@ -51,10 +51,8 @@
                     , first: false //不显示首页
                     , last: false //不显示尾页
                 },
-                sqlkey: 'F_Id',//数据库主键
                 height: 'full-140',
                 cols: [[
-                    { field: 'F_Id', title: 'ID', hide: true, hideAlways: true },
                     { field: 'Operation', title: '规则间条件', width: 120 },
                     { field: 'Filters', title: '规则内容', minWidth: 200 },
                     { field: 'Description', title: '规则备注', minWidth: 200 },

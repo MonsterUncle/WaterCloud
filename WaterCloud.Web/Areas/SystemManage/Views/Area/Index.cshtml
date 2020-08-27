@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treeTable', "layer"], function () {
+    layui.use(['jquery', 'form', 'table', 'common', 'treeTable', "layer"], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
@@ -17,11 +17,10 @@
         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
         wcLoading.close();
         var rendertree = common.rendertreetable({
-            elem: '#currentTableId',
-            sqlkey: 'F_Id',//数据库主键
+            elem: '#currentTableId',          
             //懒加载设置
             tree: {
-                iconIndex: 1,           // 折叠图标显示在第几列
+                iconIndex: 0,           // 折叠图标显示在第几列
                 idName: 'F_Id',  // id字段名称
                 arrowType: 'arrow2',
                 getIcon: 'ew-tree-icon-style2',
@@ -40,8 +39,7 @@
                     }
                 });
             },
-            cols: [[
-                { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
+            cols: [[                
                 { field: 'F_FullName', title: '名称', width: 200 },
                 { field: 'F_EnCode', title: '编号', width: 150 },
                 {

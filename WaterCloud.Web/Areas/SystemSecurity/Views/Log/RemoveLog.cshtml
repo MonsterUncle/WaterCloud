@@ -2,19 +2,19 @@
     ViewBag.Title = "RemoveLog";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
-<script>
-    layui.use(['form', 'jquery', 'common','tablePlug'], function () {
-        var form = layui.form
-            , $ = layui.$,
-            common = layui.common;
-        //权限字段
-        common.authorizeFields('adminform');
-        wcLoading.close();
-        //监听提交
-        form.on('submit(clear)', function (data) {
-            // 单击之后提交按钮不可选,防止重复提交
-            $('.site-demo-active').addClass('layui-btn-disabled');
-            $('.site-demo-active').attr('disabled', 'disabled');
+    <script>
+        layui.use(['form', 'jquery', 'common', 'optimizeSelectOption'], function () {
+            var form = layui.form
+                , $ = layui.$,
+                common = layui.common;
+            //权限字段
+            common.authorizeFields('adminform');
+            wcLoading.close();
+            //监听提交
+            form.on('submit(clear)', function (data) {
+                // 单击之后提交按钮不可选,防止重复提交
+                $('.site-demo-active').addClass('layui-btn-disabled');
+                $('.site-demo-active').attr('disabled', 'disabled');
                 common.submitForm({
                     loading: "正在备份数据...",
                     url: "/SystemSecurity/Log/SubmitRemoveLog",
@@ -26,11 +26,11 @@
                         common.parentreload("data-search-btn");
                     }
                 })
-            return false;
-        });
+                return false;
+            });
 
-    });
-</script>
+        });
+    </script>
 <div class="layui-form select_option_to_layer" lay-filter="adminform">
     <div style="margin: 25px; margin-left: 40px; margin-right: 40px;">
         <div class="layui-form-item layui-hide">

@@ -4,14 +4,12 @@
  * version:1.6
  * description:watercloud 主体框架扩展
  */
-layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSelect', 'miniTab'], function (exports) {
+layui.define(["jquery", "layer", 'form', 'table','treeTable', 'xmSelect', 'miniTab'], function (exports) {
     var $ = layui.jquery,
         form = layui.form,
         miniTab = layui.miniTab,
         layer = layui.layer,
         treeTable = layui.treeTable,
-        //tablePlug不可与其他table插件共用
-        tablePlug = layui.tablePlug,
         xmSelect = layui.xmSelect,
         table = layui.table;
 
@@ -29,7 +27,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                 id:'currentTableId',
                 height: 'full-130',
                 loading: false,
-                sqlkey: 'F_Id',//数据库主键
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['skip', 'prev', 'page', 'next', 'limit', 'count'] //自定义分页布局
                     ,curr: 1 //设定初始在第 1 页
@@ -37,7 +34,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                     , first: false //不显示首页
                     , last: false //不显示尾页
                 },
-                smartReloadModel: true, // 是否开启智能reload的模式 tablePlug
                 authorizeFields: true, // 字段权限开关
                 request: {
                     pageName: 'page' //页码的参数名称，默认：page
@@ -58,7 +54,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             options.url = obj.urlAddTime(options.url);
             //字段权限
             if (options.authorizeFields) {
-                options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
+                options.cols = obj.tableAuthorizeFields(options.cols);
             }
             options.done = function (res, curr, count) {
                 //关闭加载
@@ -80,7 +76,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                 toolbar: '#toolbarDemo',//工具栏
                 loading: false,
                 tree: {
-                    iconIndex: 1,           // 折叠图标显示在第几列  多选等记得修改
+                    iconIndex: 0,           // 折叠图标显示在第几列  多选等记得修改
                     isPidData: true,        // 是否是id、pid形式数据
                     idName: 'F_Id',  // id字段名称
                     pidName: 'F_ParentId',     // pid字段名称
@@ -89,7 +85,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                 },
                 height: 'full-130',
                 method: 'get',//请求方法
-                sqlkey: 'F_Id',//数据库主键
                 cellMinWidth: 60,//最小宽度
                 authorizeFields: true, // 字段权限开关
                 parseData: function (res) { //res 即为原始返回的数据
@@ -107,7 +102,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             options.url = obj.urlAddTime(options.url);
             //字段权限
             if (options.authorizeFields) {
-                options.cols = obj.tableAuthorizeFields(options.cols, options.sqlkey);
+                options.cols = obj.tableAuthorizeFields(options.cols);
             }
             options.done = function (res, curr, count) {
                 //关闭加载
@@ -853,8 +848,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
             }
         },
         //表格权限字段(过滤cols)
-        tableAuthorizeFields: function (cols, sqlkey) {
-            var keys = !!sqlkey ? sqlkey : 'F_Id';
+        tableAuthorizeFields: function (cols) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             //没有权限就返回无
             if (!top.clients||!top.clients.moduleFields) {
@@ -868,9 +862,6 @@ layui.define(["jquery", "layer", 'form', 'table', 'tablePlug','treeTable', 'xmSe
                     if (!!cols[0][i].type && cols[0][i].type != 'normal') {
                         array.push(cols[0][i]);
                     } else if (!cols[0][i].field && cols[0][i].title == "操作") {
-                        array.push(cols[0][i]);
-                    }
-                    if (cols[0][i].field == keys) {
                         array.push(cols[0][i]);
                     }
                     if (!!dataJson) {

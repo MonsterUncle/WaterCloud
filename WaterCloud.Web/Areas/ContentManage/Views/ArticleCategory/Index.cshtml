@@ -51,9 +51,8 @@
          var rendertree = common.rendertreetable({
              elem: '#currentTableId',
              url: '/ContentManage/ArticleCategory/GetTreeGridJson',
-             sqlkey: 'F_Id',//数据库主键
              tree: {
-                 iconIndex: 2,           // 折叠图标显示在第几列
+                 iconIndex: 1,           // 折叠图标显示在第几列
                  isPidData: true,        // 是否是id、pid形式数据
                  idName: 'F_Id',  // id字段名称
                  pidName: 'F_ParentId',     // pid字段名称
@@ -61,8 +60,7 @@
                  getIcon: 'ew-tree-icon-style2',
              },
              cols: [[
-                 { type: "checkbox", width: 50 },
-                 { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },
+                 { type: "checkbox", width: 50 },                 
                  //此处需修改
                  { field: 'F_FullName', title: '类别名称', width: 200 },
                  { field: 'F_SortCode', title: '排序', width: 80 },

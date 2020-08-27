@@ -48,7 +48,7 @@
 </div>
 
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'layer'], function () {
+    layui.use(['jquery', 'form', 'table', 'common', 'layer'], function () {
         var $ = layui.jquery,
             form = layui.form,
             layer = layui.layer,
@@ -62,10 +62,8 @@
             elem: '#currentTableId',
             id:'currentTableId',
             url: '/ContentManage/ArticleNews/GetGridJson',
-            sqlkey: 'F_Id',//数据库主键
             cols: [[
                 { type: "checkbox", width: 50, fixed: 'left' },
-                { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },
                 //此处需修改
                 { field: 'F_CategoryName', title: '新闻类别', width: 120 },
                 { field: 'F_Title', title: '标题', width: 160 },

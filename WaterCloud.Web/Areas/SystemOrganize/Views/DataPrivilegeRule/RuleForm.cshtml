@@ -3,12 +3,11 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
     <script>
-        layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common', 'xmSelect'], function () {
+        layui.use(['jquery', 'form', 'laydate', 'common', 'xmSelect', 'optimizeSelectOption'], function () {
             var form = layui.form,
                 $ = layui.$,
                 common = layui.common,
-                xmSelect = layui.xmSelect,
-                tablePlug = layui.tablePlug;
+                xmSelect = layui.xmSelect;
             var keyValue = $.request("keyValue");
             var module = $.request("module");
             var cout = 0;
@@ -139,7 +138,7 @@
             if (obj != null) {
                 obj.parentNode.removeChild(obj);
             }
-            layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+            layui.use(['jquery', 'form', 'laydate', 'common'], function () {
                 layui.form.render();
             });
         }

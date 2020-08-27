@@ -31,7 +31,7 @@
      </div>
  </div>
  <script>
-     layui.use(['jquery', 'form','table', 'tablePlug', 'common','layer'], function () {
+     layui.use(['jquery', 'form', 'table', 'common', 'layer','optimizeSelectOption'], function () {
          var $ = layui.jquery,
              form = layui.form,
              layer = layui.layer,
@@ -45,10 +45,8 @@
              elem: '#currentTableId',
              id: 'currentTableId',
              url: '/FlowManage/Flowinstance/GetGridJson',
-             where: { type: 'todo'},
-             sqlkey: 'F_Id',//数据库主键
-             cols: [[
-                 { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },
+             where: { type: 'todo'},           
+             cols: [[             
                  {
                      field: 'F_IsFinish', title: '流程状态', width: 120, sort: true, 
                      templet: function (d) {

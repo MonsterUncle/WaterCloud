@@ -36,7 +36,7 @@
             }
         }).sortable();
     };
-    layui.use(['element', 'table', 'form', 'step', 'common', 'dtree', 'laydate', 'xmSelect'], function () {
+    layui.use(['element', 'table', 'form', 'step', 'common', 'dtree', 'laydate', 'xmSelect', 'optimizeSelectOption'], function () {
         var $ = layui.$,
             form = layui.form,
             element = layui.element,
@@ -206,11 +206,10 @@
                 , first: false //不显示首页
                 , last: false //不显示尾页
             },
-            sqlkey: 'F_Id',//数据库主键
+            
             height: 'full-220',
             defaultToolbar:false,//默认工具栏
             cols: [[
-                { field: 'F_Id', title: 'ID', hide: true, hideAlways: true },
                 { field: 'TableColumn', title: '字段编号', width: 200 },
                 { field: 'Remark', title: '字段名称', minWidth: 200 },
             ]]
@@ -550,7 +549,7 @@
         var key = $('#' + data).parent().find("input")[0].id;
         var value = $('#' + data).html();
         
-        layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
+        layui.use(['jquery', 'form', 'laydate', 'common'], function () {
             layui.common.modalOpen({
                 title: "修改值",
                 url: "/SystemManage/CodeGenerator/AddForm?parentform=" + window.name + "&event=" + data,

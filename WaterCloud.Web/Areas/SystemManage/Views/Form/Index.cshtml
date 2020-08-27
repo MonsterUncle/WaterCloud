@@ -33,7 +33,7 @@
      </div>
  </div>
  <script>
-     layui.use(['jquery', 'form', 'table', 'tablePlug', 'common', 'layer'], function () {
+     layui.use(['jquery', 'form', 'table', 'common', 'layer'], function () {
          var $ = layui.jquery,
              form = layui.form,
              layer = layui.layer,
@@ -46,10 +46,8 @@
          common.rendertable({
              elem: '#currentTableId',
              id: 'currentTableId',
-             url: '/SystemManage/Form/GetGridJson',
-             sqlkey: 'F_Id',//数据库主键
-             cols: [[
-                 { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },
+             url: '/SystemManage/Form/GetGridJson',             
+             cols: [[                 
                  //此处需修改
                  { field: 'F_Name', title: '表单名称', width: 150, sort: true },
                  { field: 'F_Description', title: '备注', minWidth: 250 },
