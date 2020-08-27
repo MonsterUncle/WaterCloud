@@ -88,7 +88,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'treeTable', 'xmSelect', 'mini
                     total: []
                 },
                 excel: {
-                    filename: '表格信息' + new Date().Format('yyyyMMddhhmmss') + '.xlsx',
+                    filename: '表格信息' + new Date().formatDate() + '.xlsx',
                 },
                 request: {
                     pageName: 'page' //页码的参数名称，默认：page
