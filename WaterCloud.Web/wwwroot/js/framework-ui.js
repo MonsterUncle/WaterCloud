@@ -117,6 +117,30 @@ Date.prototype.Format = function (fmt) {
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
+Date.prototype.formatDate = function () { //author: meizz   
+    var myyear = this.getFullYear();
+    var mymonth = this.getMonth() + 1;
+    var myweekday = this.getDate();
+    var myhour = this.getHours();
+    var myminute = this.getMinutes();
+    var second = this.getSeconds();
+    if (mymonth < 10) {
+        mymonth = "0" + mymonth;
+    }
+    if (myweekday < 10) {
+        myweekday = "0" + myweekday;
+    }
+    if (myhour < 10) {
+        myhour = "0" + myhour;
+    }
+    if (myminute < 10) {
+        myminute = "0" + myminute;
+    }
+    if (second < 10) {
+        second = "0" + second;
+    }
+    return (myyear.toString() + mymonth.toString() + myweekday.toString() + myhour.toString() + myminute.toString() + second.toString());
+};
 //集合id
 function uuid() {
     var s = [];
