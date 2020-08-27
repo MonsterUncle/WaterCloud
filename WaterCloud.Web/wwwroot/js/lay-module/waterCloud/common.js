@@ -49,10 +49,10 @@ layui.define(["jquery", "layer", 'form', 'table', 'treeTable', 'xmSelect', 'mini
                     clearFilter: true
                 },
                 contextmenu: {
-                    // 表头右键菜单配置
                     header: [
                         {
                             name: '复制',
+                            icon: 'layui-icon layui-icon-template',
                             click: function (obj) {
                                 soulTable.copy(obj.text)
                                 layer.msg('复制成功！')
@@ -60,12 +60,14 @@ layui.define(["jquery", "layer", 'form', 'table', 'treeTable', 'xmSelect', 'mini
                         },
                         {
                             name: '导出excel',
+                            icon: 'layui-icon layui-icon-download-circle',
                             click: function () {
                                 soulTable.export(this.id)
                             }
                         },
                         {
                             name: '重载表格',
+                            icon: 'layui-icon layui-icon-refresh-1',
                             click: function () {
                                 table.reload(this.id)
                             }
@@ -75,6 +77,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'treeTable', 'xmSelect', 'mini
                     body: [
                         {
                             name: '复制',
+                            icon: 'layui-icon layui-icon-template',
                             click: function (obj) {
                                 soulTable.copy(obj.text)
                                 layer.msg('复制成功！')
