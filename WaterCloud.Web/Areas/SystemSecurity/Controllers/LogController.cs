@@ -31,6 +31,12 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         {
             pagination.order = "desc";
             pagination.sort = "F_CreatorTime desc";
+            //导出全部页使用
+            if (pagination.rows == 0 && pagination.page == 0)
+            {
+                pagination.rows = 99999999;
+                pagination.page = 1;
+            }
             var data =await _logService.GetLookList(pagination, timetype, keyword);
             return Success(pagination.records, data);
         }

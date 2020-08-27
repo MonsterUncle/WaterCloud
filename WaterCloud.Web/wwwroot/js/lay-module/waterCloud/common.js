@@ -4,13 +4,14 @@
  * version:1.6
  * description:watercloud 主体框架扩展
  */
-layui.define(["jquery", "layer", 'form', 'table','treeTable', 'xmSelect', 'miniTab'], function (exports) {
+layui.define(["jquery", "layer", 'form', 'table', 'treeTable', 'xmSelect', 'miniTab', 'soulTable'], function (exports) {
     var $ = layui.jquery,
         form = layui.form,
         miniTab = layui.miniTab,
         layer = layui.layer,
         treeTable = layui.treeTable,
-        xmSelect = layui.xmSelect,
+        soulTable = layui.soulTable,
+        xmSelect = layui.xmSelect,       
         table = layui.table;
 
     var obj = {
@@ -35,6 +36,57 @@ layui.define(["jquery", "layer", 'form', 'table','treeTable', 'xmSelect', 'miniT
                     , last: false //不显示尾页
                 },
                 authorizeFields: true, // 字段权限开关
+                autoColumnWidth: true,
+                overflow: { // 默认所有表格都超出
+                    type: 'tips'
+                    , hoverTime: 300 // 悬停时间，单位ms, 悬停 hoverTime 后才会显示，默认为 0
+                    , color: 'black' // 字体颜色
+                    , bgColor: 'white' // 背景色
+                    , header: true, // 表头支持 overflow
+                    total: true // 合计行支持 overflow
+                },
+                filter: {
+                    clearFilter: true
+                },
+                contextmenu: {
+                    // 表头右键菜单配置
+                    header: [
+                        {
+                            name: '复制',
+                            click: function (obj) {
+                                soulTable.copy(obj.text)
+                                layer.msg('复制成功！')
+                            }
+                        },
+                        {
+                            name: '导出excel',
+                            click: function () {
+                                soulTable.export(this.id)
+                            }
+                        },
+                        {
+                            name: '重载表格',
+                            click: function () {
+                                table.reload(this.id)
+                            }
+                        }
+                    ],
+                    // 表格内容右键菜单配置
+                    body: [
+                        {
+                            name: '复制',
+                            click: function (obj) {
+                                soulTable.copy(obj.text)
+                                layer.msg('复制成功！')
+                            }
+                        }
+                    ],
+                    // 合计栏右键菜单配置
+                    total: []
+                },
+                excel: {
+                    filename: '表格信息' + new Date().Format('yyyyMMddhhmmss') + '.xlsx',
+                },
                 request: {
                     pageName: 'page' //页码的参数名称，默认：page
                     , limitName: 'rows' //每页数据量的参数名，默认：limit
@@ -65,6 +117,7 @@ layui.define(["jquery", "layer", 'form', 'table','treeTable', 'xmSelect', 'miniT
                 if (doneCallback) {
                     doneCallback(res, curr, count);
                 }
+                soulTable.render(this);
             };
             return table.render(options);
         },

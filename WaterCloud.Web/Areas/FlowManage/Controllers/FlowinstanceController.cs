@@ -67,6 +67,12 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
             //此处需修改
             pagination.order = "desc";
             pagination.sort = "F_CreatorTime desc";
+            //导出全部页使用
+            if (pagination.rows == 0 && pagination.page == 0)
+            {
+                pagination.rows = 99999999;
+                pagination.page = 1;
+            }
             var data = await _service.GetLookList(pagination, type, keyword);
             return Success(pagination.records, data);
         }

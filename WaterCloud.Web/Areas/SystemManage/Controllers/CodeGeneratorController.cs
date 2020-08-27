@@ -54,6 +54,12 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTablePageListJson(Pagination pagination,string keyword)
         {
+            //导出全部页使用
+            if (pagination.rows == 0 && pagination.page == 0)
+            {
+                pagination.rows = 99999999;
+                pagination.page = 1;
+            }
             List<TableInfo> data =await _service.GetTablePageList(keyword, pagination);
             return Success(pagination.records, data);
         }

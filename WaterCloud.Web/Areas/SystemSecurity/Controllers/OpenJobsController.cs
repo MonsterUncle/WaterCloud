@@ -105,6 +105,12 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         {
             pagination.order = "desc";
             pagination.sort = "F_EnabledMark";
+            //导出全部页使用
+            if (pagination.rows == 0 && pagination.page == 0)
+            {
+                pagination.rows = 99999999;
+                pagination.page = 1;
+            }
             var data = await _service.GetLookList(pagination, keyword);
             return Success(pagination.records, data);
         }
