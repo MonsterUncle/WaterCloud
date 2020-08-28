@@ -547,10 +547,7 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function (e) {
 						list: function () {
 							var e = [];
 							return i.eachCols(function (t, i) {
-								//过滤行也不显示hideAlways的参数
-								if (!i.hideAlways) {
-									i.field && "normal" == i.type && e.push('<li><input type="checkbox" name="' + i.field + '" data-key="' + i.key + '" data-parentkey="' + (i.parentKey || "") + '" lay-skin="primary" ' + (i.hide ? "" : "checked") + ' title="' + (i.title || i.field) + '" lay-filter="LAY_TABLE_TOOL_COLS"></li>')
-                                }
+								i.field && "normal" == i.type && e.push('<li><input type="checkbox" name="' + i.field + '" data-key="' + i.key + '" data-parentkey="' + (i.parentKey || "") + '" lay-skin="primary" ' + (i.hide ? "" : "checked") + ' title="' + (i.title || i.field) + '" lay-filter="LAY_TABLE_TOOL_COLS"></li>')
 							}), e.join("")
 						}(),
 						done: function () {

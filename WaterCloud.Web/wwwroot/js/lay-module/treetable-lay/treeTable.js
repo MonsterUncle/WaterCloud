@@ -71,7 +71,6 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
         rowspan: undefined,   // 单元格所占的行数
         templet: undefined,   // 自定义模板
         toolbar: undefined,   // 工具列
-        hideAlways: false,
         'class': undefined,   // 单元格class
         singleLine: undefined // 是否一行显示
     };
@@ -1435,7 +1434,7 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
             components.$toolbar.find('.layui-table-tool-panel').remove();
             var cols = ['<ul class="layui-table-tool-panel">'];
             this.eachCols(function (i, item) {
-                if (item.type !== 'normal' || item.hideAlways==true) return;
+                if (item.type !== 'normal') return;
                 cols.push('<li><input type="checkbox" lay-skin="primary"');
                 cols.push(' lay-filter="' + components.colsToggleFilter + '"');
                 cols.push(' value="' + item.key + '" title="' + util.escape(item.title || '') + '"');
