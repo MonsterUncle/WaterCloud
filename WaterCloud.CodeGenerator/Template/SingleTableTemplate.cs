@@ -491,7 +491,7 @@ namespace WaterCloud.CodeGenerator
             if (baseConfigModel.PageIndex.IsSearch == 1)
             {
                 sb.AppendLine("         <fieldset class=\"table-search-fieldset\">");
-                sb.AppendLine("             <div style=\"margin: 10px 10px 10px 10px\">");
+                sb.AppendLine("             <div>");
                 sb.AppendLine("                 <form class=\"layui-form layui-form-pane\" >");
                 sb.AppendLine("                     <div class=\"layui-form-item\">");
                 sb.AppendLine("                         <div class=\"layui-inline\">");

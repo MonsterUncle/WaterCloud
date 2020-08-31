@@ -26,7 +26,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'treeTable', 'xmSelect', 'mini
                 limit: 10,//每页数据 默认
                 limits: [10, 20, 30, 40, 50],
                 id:'currentTableId',
-                height: 'full-130',
+                height: 'full-110',
                 loading: false,
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['skip', 'prev', 'page', 'next', 'limit', 'count'] //自定义分页布局
@@ -140,7 +140,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'treeTable', 'xmSelect', 'mini
                     arrowType: 'arrow2',
                     getIcon: 'ew-tree-icon-style2',
                 },
-                height: 'full-130',
+                height: 'full-110',
                 method: 'get',//请求方法
                 cellMinWidth: 60,//最小宽度
                 authorizeFields: true, // 字段权限开关
