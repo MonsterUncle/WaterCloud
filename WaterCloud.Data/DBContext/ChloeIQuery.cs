@@ -11,6 +11,7 @@ namespace WaterCloud.DataBase
 {
     public static partial class ChloeIQuery
     {
+        #region Filter 拼接
         /// <summary>
         /// 创建linq表达示的body部分
         /// </summary>
@@ -29,9 +30,17 @@ namespace WaterCloud.DataBase
                 {
                     right = Expression.Constant(int.Parse(filterObj.Value));
                 }
+                else if (property.PropertyType == typeof(Nullable<int>))
+                {
+                    right = Expression.Constant(int.Parse(filterObj.Value), typeof(int?));
+                }
                 else if (property.PropertyType == typeof(DateTime))
                 {
                     right = Expression.Constant(DateTime.Parse(filterObj.Value));
+                }
+                else if (property.PropertyType == typeof(Nullable<DateTime>))
+                {
+                    right = Expression.Constant(DateTime.Parse(filterObj.Value), typeof(DateTime?));
                 }
                 else if (property.PropertyType == typeof(string))
                 {
@@ -41,6 +50,10 @@ namespace WaterCloud.DataBase
                 {
                     right = Expression.Constant(decimal.Parse(filterObj.Value));
                 }
+                else if (property.PropertyType == typeof(Nullable<decimal>))
+                {
+                    right = Expression.Constant(decimal.Parse(filterObj.Value), typeof(decimal?));
+                }
                 else if (property.PropertyType == typeof(Guid))
                 {
                     right = Expression.Constant(Guid.Parse(filterObj.Value));
@@ -48,6 +61,10 @@ namespace WaterCloud.DataBase
                 else if (property.PropertyType == typeof(bool))
                 {
                     right = Expression.Constant(filterObj.Value.Equals("1"));
+                }
+                else if (property.PropertyType == typeof(Nullable<bool>))
+                {
+                    right = Expression.Constant(filterObj.Value.Equals("1"), typeof(bool?));
                 }
                 else if (property.PropertyType == typeof(Guid?))
                 {
@@ -196,5 +213,388 @@ namespace WaterCloud.DataBase
 
             return result;
         }
+        #endregion
+
+        #region SoulPage 拼接
+        /// <summary>
+        /// 创建linq表达示的body部分
+        /// </summary>
+        public static Expression GenerateBody<T>(this ParameterExpression param, FilterSo filterObj)
+        {
+            PropertyInfo property = typeof(T).GetProperty(filterObj.field);
+
+            Expression left = null; //组装左边
+            //组装右边
+            Expression right = null;
+            if (property != null)
+            {
+                left = Expression.Property(param, property);
+                if (property.PropertyType == typeof(int))
+                {
+                    right = Expression.Constant(int.Parse(filterObj.value));
+                }
+                else if (property.PropertyType == typeof(Nullable<int>))
+                {
+                    right = Expression.Constant(int.Parse(filterObj.value), typeof(int?));
+                }
+                else if (property.PropertyType == typeof(DateTime))
+                {
+                    right = Expression.Constant(DateTime.Parse(filterObj.value));
+                }
+                else if (property.PropertyType == typeof(Nullable<DateTime>))
+                {
+                    left = Expression.Constant(filterObj.field);
+                    right = Expression.Constant(DateTime.Parse(filterObj.value), typeof(DateTime?));
+                }
+                else if (property.PropertyType == typeof(string))
+                {
+                    right = Expression.Constant(filterObj.value);
+                }
+                else if (property.PropertyType == typeof(decimal))
+                {
+                    right = Expression.Constant(decimal.Parse(filterObj.value));
+                }
+                else if (property.PropertyType == typeof(Nullable<decimal>))
+                {
+                    left = Expression.Constant(filterObj.field);
+                    right = Expression.Constant(decimal.Parse(filterObj.value), typeof(decimal?));
+                }
+                else if (property.PropertyType == typeof(bool))
+                {
+                    right = Expression.Constant(filterObj.value.Equals("1"));
+                }
+                else if (property.PropertyType == typeof(Nullable<bool>))
+                {
+                    right = Expression.Constant(filterObj.value.Equals("1"), typeof(bool?));
+                }
+                else if (property.PropertyType == typeof(Guid))
+                {
+                    right = Expression.Constant(Guid.Parse(filterObj.value));
+                }
+                else if (property.PropertyType == typeof(Guid?))
+                {
+                    left = Expression.Property(left, "Value");
+                    right = Expression.Constant(Guid.Parse(filterObj.value));
+                }
+                else
+                {
+                    throw new Exception("暂不能解析该Key的类型");
+                }
+            }
+            else //如果左边不是属性，直接是值的情况
+            {
+                left = Expression.Constant(filterObj.field);
+                right = Expression.Constant(filterObj.value);
+            }
+            Expression filter = Expression.Equal(left, right);
+            switch (filterObj.type)
+            {
+                case "eq":
+                    filter = Expression.Equal(left, right);
+                    break;
+                case "ne":
+                    filter = Expression.NotEqual(left, right);
+                    break;
+                case "gt":
+                    filter = Expression.GreaterThan(left, right);
+                    break;
+                case "ge":
+                    filter = Expression.GreaterThanOrEqual(left, right);
+                    break;
+                case "lt":
+                    filter = Expression.LessThan(left, right);
+                    break;
+                case "le":
+                    filter = Expression.LessThanOrEqual(left, right);
+                    break;
+                case "contain":
+                    filter = Expression.Call(left, typeof(string).GetMethod("Contains", new Type[] { typeof(string) }),
+                        Expression.Constant(filterObj.value));
+                    break;
+                case "notContain":
+                    filter = Expression.Not(Expression.Call(left, typeof(string).GetMethod("Contains", new Type[] { typeof(string) }),
+                        Expression.Constant(filterObj.value)));
+                    break;
+                case "start":
+                    filter = Expression.Call(left, typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) }),
+                        Expression.Constant(filterObj.value));
+                    break;
+                case "end":
+                    filter = Expression.Call(left, typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) }),
+                        Expression.Constant(filterObj.value));
+                    break;
+                case "null":
+                    filter = Expression.Call(typeof(string).GetMethod("IsNullOrEmpty"), left);
+                    break;
+                case "notNull":
+                    filter = Expression.Not(Expression.Call(typeof(string).GetMethod("IsNullOrEmpty"), left));
+                    break;
+                default: break;              
+            }
+
+            return filter;
+        }
+        /// <summary>
+        /// 转换FilterGroup为Lambda表达式
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="parametername"></param>
+        /// <param name="filterList"></param>
+        /// <returns></returns>
+        public static IQuery<T> GenerateFilter<T>(this IQuery<T> query, string parametername,
+            List<FilterSo> filterList)
+        {
+            var param = ExtLinq.CreateLambdaParam<T>(parametername);
+            Expression result = ConvertList<T>(filterList, param);
+            if (result==null)
+            {
+                return query;
+            }
+            query = query.Where(param.GenerateTypeLambda<T>(result));
+            return query;
+        }
+        /// <summary>
+        /// 转换filterlist为表达式
+        /// </summary>
+        /// <param name="filterList"></param>
+        /// <param name="param"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static Expression ConvertList<T>(List<FilterSo> filterList, ParameterExpression param)
+        {
+            if (filterList == null) return null;
+            Expression result = null;
+            Expression gresult = null;
+            PropertyInfo property;
+            Expression left = null;
+            foreach (var item in filterList)
+            {
+                switch (item.mode)
+                {
+                    case "condition":
+                        gresult = param.GenerateBody<T>(item);
+                        if (item.prefix == "or")
+                        {
+                            if (result != null)
+                            {
+                                result = result.Or(gresult);
+                            }
+                            else
+                            {
+                                result = gresult;
+                            }
+                        }
+                        else
+                        {
+                            if (result != null)
+                            {
+                                result = result.AndAlso(gresult);
+                            }
+                            else
+                            {
+                                result = gresult;
+                            }
+                        }
+                        break;
+                    case "group":
+                        gresult = ConvertList<T>(item.children, param);
+                        if (item.prefix == "or")
+                        {
+                            if (result != null)
+                            {
+                                result = result.Or(gresult);
+                            }
+                            else
+                            {
+                                result = gresult;
+                            }
+                        }
+                        else
+                        {
+                            if (result != null)
+                            {
+                                result = result.AndAlso(gresult);
+                            }
+                            else
+                            {
+                                result = gresult;
+                            }
+                        }
+                        break;
+                    case "in":
+                        property = typeof(T).GetProperty(item.field);
+                        left = Expression.Property(param, property);
+                        if (item.values==null||item.values.Count==0)
+                        {
+                            break;
+                        }
+                        if (property.PropertyType == typeof(int))
+                        {
+                            List<int> list = new List<int>();
+                            foreach (var temp in item.values)
+                            {
+                                list.Add(int.Parse(temp));
+                            }
+                            gresult = Expression.Call(Expression.Constant(item.values), typeof(List<int>).GetMethod("Contains", new Type[] { typeof(int) }), left);
+                        }
+                        if (property.PropertyType == typeof(Nullable<int>))
+                        {
+                            List<int?> list = new List<int?>();
+                            foreach (var temp in item.values)
+                            {
+                                list.Add(int.Parse(temp));
+                            }
+                            gresult = Expression.Call(Expression.Constant(item.values), typeof(List<int?>).GetMethod("Contains", new Type[] { typeof(int?) }), left);
+                        }
+                        else if (property.PropertyType == typeof(DateTime))
+                        {
+                            List<DateTime> list = new List<DateTime>();
+                            foreach (var temp in item.values)
+                            {
+                                list.Add(DateTime.Parse(temp));
+                            }
+                            gresult = Expression.Call(Expression.Constant(list), typeof(List<DateTime>).GetMethod("Contains", new Type[] { typeof(DateTime) }), left);
+                        }
+                        else if (property.PropertyType == typeof(Nullable<DateTime>))
+                        {
+                            List<DateTime?> list = new List<DateTime?>();
+                            foreach (var temp in item.values)
+                            {
+                                list.Add(DateTime.Parse(temp));
+                            }
+                            gresult = Expression.Call(Expression.Constant(list), typeof(List<DateTime?>).GetMethod("Contains", new Type[] { typeof(DateTime?) }), left);
+                        }
+                        else if (property.PropertyType == typeof(decimal))
+                        {
+                            List<decimal> list = new List<decimal>();
+                            foreach (var temp in item.values)
+                            {
+                                list.Add(decimal.Parse(temp));
+                            }
+                            gresult = Expression.Call(Expression.Constant(list), typeof(List<decimal>).GetMethod("Contains", new Type[] { typeof(decimal) }), left);
+                        }
+                        else if (property.PropertyType == typeof(Nullable<decimal>))
+                        {
+                            List<decimal?> list = new List<decimal?>();
+                            foreach (var temp in item.values)
+                            {
+                                list.Add(decimal.Parse(temp));
+                            }
+                            gresult = Expression.Call(Expression.Constant(list), typeof(List<decimal?>).GetMethod("Contains", new Type[] { typeof(decimal?) }), left);
+                        }
+                        else if (property.PropertyType == typeof(bool))
+                        {
+                            List<bool> list = new List<bool>();
+                            foreach (var temp in item.values)
+                            {
+                                if (temp == "1")
+                                {
+                                    list.Add(true);
+                                }
+                                else
+                                {
+                                    list.Add(false);
+                                }
+                            }
+                            gresult = Expression.Call(Expression.Constant(list), typeof(List<bool>).GetMethod("Contains", new Type[] { typeof(bool) }), left);
+                        }
+                        else if (property.PropertyType == typeof(Nullable<bool>))
+                        {
+                            List<bool?> list = new List<bool?>();
+                            foreach (var temp in item.values)
+                            {
+                                if (temp=="1")
+                                {
+                                    list.Add(true);
+                                }
+                                else
+                                {
+                                    list.Add(false);
+                                }
+                            }
+                            gresult = Expression.Call(Expression.Constant(list), typeof(List<bool?>).GetMethod("Contains", new Type[] { typeof(bool?) }), left);
+                        }
+                        else
+                        {
+                            gresult = Expression.Call(Expression.Constant(item.values), typeof(List<string>).GetMethod("Contains", new Type[] { typeof(string) }), left);
+                        }
+                        if (result != null)
+                        {
+                            result = result.AndAlso(gresult);
+                        }
+                        else
+                        {
+                            result = gresult;
+                        }
+                        break;
+                    case "date":
+                        property = typeof(T).GetProperty(item.field);
+                        left = Expression.Property(param, property);
+                        bool isNull = false;
+                        if (property.PropertyType == typeof(Nullable<DateTime>))
+                        {
+                            isNull = true ;
+                        }
+                        DateTime? startTime = null;
+                        DateTime? endTime = null;
+                        switch (item.type)
+                        {
+                            case "yesterday":
+                                startTime = DateTime.Now.Date.AddDays(-1);
+                                endTime = DateTime.Now.Date;
+                                break;
+                            case "thisWeek":
+                                startTime = DateTime.Now.Date.AddDays(1 - Convert.ToInt32(DateTime.Now.Date.DayOfWeek.ToString("d")));  //本周周一  
+                                endTime = ((DateTime)startTime).AddDays(6);  //本周周日  
+                                break;
+                            case "lastWeek":
+                                startTime = DateTime.Now.Date.AddDays(1 - Convert.ToInt32(DateTime.Now.Date.DayOfWeek.ToString("d"))-7);  //上周周一  
+                                endTime = ((DateTime)startTime).AddDays(6);  //上周周日  
+                                break;
+                            case "thisMonth":
+                                startTime = DateTime.Now.Date.AddDays(1 - DateTime.Now.Date.Day);  //本月月初  
+                                endTime = ((DateTime)startTime).AddMonths(1).AddDays(-1);  //本月月末  
+                                break;
+                            case "thisYear":
+                                startTime = new DateTime(DateTime.Now.Date.Year, 1, 1); //本年年初  
+                                endTime = new DateTime(DateTime.Now.Date.Year, 12, 31); //本年年末
+                                break;
+                            case "specific":
+                                var tempTime = DateTime.Parse(item.value);
+                                startTime = tempTime.Date;
+                                endTime = tempTime.Date.AddDays(+1);
+                                break;                       
+                            default: break;
+                        }
+                        if (startTime!=null&& endTime!=null)
+                        {
+                            if (isNull)
+                            {
+                                gresult = Expression.GreaterThanOrEqual(left, Expression.Constant(startTime, typeof(DateTime?)));
+                                gresult = gresult.And(Expression.LessThan(left, Expression.Constant(endTime, typeof(DateTime?))));
+                            }
+                            else
+                            {
+                                gresult = Expression.GreaterThanOrEqual(left, Expression.Constant((DateTime)startTime));
+                                gresult = gresult.And(Expression.LessThan(left, Expression.Constant((DateTime)endTime)));
+                            }
+                        }
+                        if (result != null)
+                        {
+                            result = result.AndAlso(gresult);
+                        }
+                        else
+                        {
+                            result = gresult;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return result;
+        }
+        #endregion
     }
 }

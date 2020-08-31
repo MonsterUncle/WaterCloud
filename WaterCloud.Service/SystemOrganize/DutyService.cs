@@ -37,7 +37,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             return cachedata.OrderBy(t => t.F_SortCode).ToList();
         }
-        public async Task<List<RoleEntity>> GetLookList(Pagination pagination, string keyword = "")
+        public async Task<List<RoleEntity>> GetLookList(SoulPage<RoleEntity> pagination, string keyword = "")
         {
             //获取数据权限
             var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));

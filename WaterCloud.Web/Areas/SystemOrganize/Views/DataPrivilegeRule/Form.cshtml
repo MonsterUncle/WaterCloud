@@ -32,11 +32,13 @@
                             table.reload('currentTableId', {
                                 data: datas
                             });
-                            if (!!$('#F_ModuleId').val()) {
-                                $('#toolbar').removeClass('layui-hide');
-                            }
                         }
                     });
+                }
+                else {
+                    if (!$('#F_ModuleId').val()) {
+                        $('#toolbar').addClass('layui-hide');
+                    }
                 }
                 form.render();
             });
@@ -229,7 +231,7 @@
                 </div>
             </fieldset>
             <script type="text/html" id="toolbarDemo">
-                <div class="layui-btn-container layui-hide" id="toolbar">
+                <div class="layui-btn-container" id="toolbar">
                     <button id="NF-add" class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
                     <button id="NF-edit" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
                     <button id="NF-delete" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>

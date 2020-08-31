@@ -264,7 +264,8 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function (e) {
 		e.loading(!0)
 	}, j.prototype.resize = function () {
 		var e = this;
-		e.fullSize(), e.setColsWidth(), e.scrollPatch()
+		e.fullSize(), e.setColsWidth(), e.scrollPatch();
+		if (layui.tableFilter) { layui.tableFilter.resize(e.config) } // 这是要添加的那一行
 	}, j.prototype.reload = function (e) {
 		var i = this;
 		e = e || {}, delete i.haveInit, e.data && e.data.constructor === Array && delete i.config.data, i.config = t.extend(!0, {}, i.config, e), i.render()

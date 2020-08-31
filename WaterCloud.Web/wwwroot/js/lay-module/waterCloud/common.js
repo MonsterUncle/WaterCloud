@@ -46,6 +46,7 @@ layui.define(["jquery", "layer", 'form', 'table', 'treeTable', 'xmSelect', 'mini
                     total: true // 合计行支持 overflow
                 },
                 filter: {
+                    items: ['column', 'excel', 'condition'], // 只显示表格列和导出excel两个菜单项
                     clearFilter: true
                 },
                 contextmenu: {

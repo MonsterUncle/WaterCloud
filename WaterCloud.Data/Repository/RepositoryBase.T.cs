@@ -129,6 +129,26 @@ namespace WaterCloud.DataBase
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
+        public async Task<List<T>> OrderList<T>(IQuery<T> query, SoulPage<T> pagination)
+        {
+            var tempData = query;
+            List<FilterSo> filterSos = pagination.getFilterSos();
+            if (filterSos!=null && filterSos.Count>0)
+            {
+                tempData = tempData.GenerateFilter("u", filterSos);
+            }
+            if (pagination.order == "desc")
+            {
+                tempData = tempData.OrderBy(pagination.field + " " + pagination.order);
+            }
+            else
+            {
+                tempData = tempData.OrderBy(pagination.field);
+            }
+            pagination.count = tempData.Count();
+            tempData = tempData.TakePage(pagination.page, pagination.rows);
+            return tempData.ToList();
+        }
         public async Task<List<TEntity>> CheckCacheList(string cacheKey, long old = 0)
         {
             var cachedata =await CacheHelper.Get<List<TEntity>>(cacheKey);

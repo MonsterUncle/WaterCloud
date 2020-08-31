@@ -127,6 +127,14 @@ namespace WaterCloud.DataBase
         /// <returns></returns>
         Task<List<T>> OrderList<T>(IQuery<T> query, Pagination pagination);
         /// <summary>
+        /// soultable-后端筛选
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="pagination"></param>
+        /// <returns></returns>
+        Task<List<T>> OrderList<T>(IQuery<T> query, SoulPage<T> pagination);
+        /// <summary>
         /// 缓存单个对象
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
