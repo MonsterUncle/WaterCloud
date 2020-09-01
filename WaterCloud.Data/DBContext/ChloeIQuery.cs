@@ -444,7 +444,7 @@ namespace WaterCloud.DataBase
                             {
                                 list.Add(int.Parse(temp));
                             }
-                            gresult = Expression.Call(Expression.Constant(item.values), typeof(List<int>).GetMethod("Contains", new Type[] { typeof(int) }), left);
+                            gresult = Expression.Call(Expression.Constant(list), typeof(List<int>).GetMethod("Contains", new Type[] { typeof(int) }), left);
                         }
                         if (property.PropertyType == typeof(Nullable<int>))
                         {
@@ -453,7 +453,7 @@ namespace WaterCloud.DataBase
                             {
                                 list.Add(int.Parse(temp));
                             }
-                            gresult = Expression.Call(Expression.Constant(item.values), typeof(List<int?>).GetMethod("Contains", new Type[] { typeof(int?) }), left);
+                            gresult = Expression.Call(Expression.Constant(list), typeof(List<int?>).GetMethod("Contains", new Type[] { typeof(int?) }), left);
                         }
                         else if (property.PropertyType == typeof(DateTime))
                         {
