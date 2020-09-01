@@ -543,10 +543,9 @@ namespace WaterCloud.CodeGenerator
 
             #region js layui方法
             sb.AppendLine(" <script>");
-            sb.AppendLine("     layui.use(['jquery', 'form',"+ (baseConfigModel.PageIndex.IsTree == 1 ? "'treeTable'" : "'table'") + ", 'common','layer','optimizeSelectOption'], function () {");
+            sb.AppendLine("     layui.use(['jquery', 'form',"+ (baseConfigModel.PageIndex.IsTree == 1 ? "'treeTable'" : "'table'") + ", 'common','optimizeSelectOption'], function () {");
             sb.AppendLine("         var $ = layui.jquery,");
             sb.AppendLine("             form = layui.form,");
-            sb.AppendLine("             layer = layui.layer,");
             sb.AppendLine("             " + (baseConfigModel.PageIndex.IsTree == 1 ? "treeTable = layui.treeTable," : "table = layui.table,"));
             sb.AppendLine("             common = layui.common;");
             sb.AppendLine("         var entity;");
