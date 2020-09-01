@@ -50,7 +50,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab','so
                             name: '复制',
                             icon: 'layui-icon layui-icon-template',
                             click: function (obj) {
-                                soulTable.copy(obj.text)
+                                soulTableSlim.copy(obj.text)
                                 layer.msg('复制成功！')
                             }
                         },
@@ -68,7 +68,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab','so
                             name: '复制',
                             icon: 'layui-icon layui-icon-template',
                             click: function (obj) {
-                                soulTable.copy(obj.text)
+                                soulTableSlim.copy(obj.text)
                                 layer.msg('复制成功！')
                             }
                         }
@@ -78,7 +78,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab','so
                         name: '复制',
                         icon: 'layui-icon layui-icon-template',
                         click: function (obj) {
-                            soulTable.copy(obj.text)
+                            soulTableSlim.copy(obj.text)
                             layer.msg('复制成功！')
                         }
                     }]
