@@ -54,13 +54,10 @@ var wc_load_options = {
 
 var wcLoading = {
    close: function (time, dom) {
-      time = time || wc_load_options.time;
-      dom = dom || document.getElementsByClassName("wc-loading")[0];
-      var setTime1 = setTimeout(function () {
-         clearTimeout(setTime1);
-          dom.classList.add("close");
-          dom.parentNode.removeChild(dom);/**删除当前节点*/
-      }, time);
+        time = time || wc_load_options.time;
+        dom = dom || document.getElementsByClassName("wc-loading")[0];
+        dom.classList.add("close");
+        dom.parentNode.removeChild(dom);/**删除当前节点*/
    }
 };
 
