@@ -329,7 +329,7 @@ namespace WaterCloud.DataBase
                 case "notNull":
                     filter = Expression.Not(Expression.Call(typeof(string).GetMethod("IsNullOrEmpty"), left));
                     break;
-                default: break;              
+                default: break;
             }
 
             return filter;
@@ -347,7 +347,7 @@ namespace WaterCloud.DataBase
         {
             var param = ExtLinq.CreateLambdaParam<T>(parametername);
             Expression result = ConvertList<T>(filterList, param);
-            if (result==null)
+            if (result == null)
             {
                 return query;
             }
@@ -374,6 +374,10 @@ namespace WaterCloud.DataBase
                 {
                     case "condition":
                         gresult = param.GenerateBody<T>(item);
+                        if (gresult == null)
+                        {
+                            break;
+                        }
                         if (item.prefix == "or")
                         {
                             if (result != null)
@@ -399,6 +403,10 @@ namespace WaterCloud.DataBase
                         break;
                     case "group":
                         gresult = ConvertList<T>(item.children, param);
+                        if (gresult==null)
+                        {
+                            break;
+                        }
                         if (item.prefix == "or")
                         {
                             if (result != null)
@@ -425,7 +433,7 @@ namespace WaterCloud.DataBase
                     case "in":
                         property = typeof(T).GetProperty(item.field);
                         left = Expression.Property(param, property);
-                        if (item.values==null||item.values.Count==0)
+                        if (item.values == null || item.values.Count == 0)
                         {
                             break;
                         }
@@ -504,7 +512,7 @@ namespace WaterCloud.DataBase
                             List<bool?> list = new List<bool?>();
                             foreach (var temp in item.values)
                             {
-                                if (temp=="1")
+                                if (temp == "1")
                                 {
                                     list.Add(true);
                                 }
@@ -534,7 +542,7 @@ namespace WaterCloud.DataBase
                         bool isNull = false;
                         if (property.PropertyType == typeof(Nullable<DateTime>))
                         {
-                            isNull = true ;
+                            isNull = true;
                         }
                         DateTime? startTime = null;
                         DateTime? endTime = null;
@@ -546,28 +554,28 @@ namespace WaterCloud.DataBase
                                 break;
                             case "thisWeek":
                                 startTime = DateTime.Now.Date.AddDays(1 - Convert.ToInt32(DateTime.Now.Date.DayOfWeek.ToString("d")));  //本周周一  
-                                endTime = ((DateTime)startTime).AddDays(6);  //本周周日  
+                                endTime = ((DateTime)startTime).AddDays(7);  //本周周日  
                                 break;
                             case "lastWeek":
-                                startTime = DateTime.Now.Date.AddDays(1 - Convert.ToInt32(DateTime.Now.Date.DayOfWeek.ToString("d"))-7);  //上周周一  
-                                endTime = ((DateTime)startTime).AddDays(6);  //上周周日  
+                                startTime = DateTime.Now.Date.AddDays(1 - Convert.ToInt32(DateTime.Now.Date.DayOfWeek.ToString("d")) - 7);  //上周周一  
+                                endTime = ((DateTime)startTime).AddDays(7);  //上周周日  
                                 break;
                             case "thisMonth":
                                 startTime = DateTime.Now.Date.AddDays(1 - DateTime.Now.Date.Day);  //本月月初  
-                                endTime = ((DateTime)startTime).AddMonths(1).AddDays(-1);  //本月月末  
+                                endTime = ((DateTime)startTime).AddMonths(1);  //本月月末  
                                 break;
                             case "thisYear":
                                 startTime = new DateTime(DateTime.Now.Date.Year, 1, 1); //本年年初  
-                                endTime = new DateTime(DateTime.Now.Date.Year, 12, 31); //本年年末
+                                endTime = new DateTime(DateTime.Now.Date.AddYears(1).Year, 1, 1); //本年年初
                                 break;
                             case "specific":
                                 var tempTime = DateTime.Parse(item.value);
                                 startTime = tempTime.Date;
                                 endTime = tempTime.Date.AddDays(+1);
-                                break;                       
+                                break;
                             default: break;
                         }
-                        if (startTime!=null&& endTime!=null)
+                        if (startTime != null && endTime != null)
                         {
                             if (isNull)
                             {
