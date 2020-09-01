@@ -1487,5 +1487,5 @@ layui.define(['table'], function (exports) {
     }
 
     // 输出
-    exports('soulTable', mod);
+    exports('soulTableSlim', mod);
 });

@@ -3,22 +3,101 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
     <script>
-        layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption'], function () {
+        layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption', 'soulTable'], function () {
             var $ = layui.jquery,
                 form = layui.form,
                 table = layui.table,
+                soulTable = layui.soulTable,
                 common = layui.common;
-            wcLoading.close();
             //权限控制(js是值传递)
             toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-            common.rendertable({
+            table.render({
                 elem: '#currentTableId',
+                toolbar: '#toolbarDemo',//工具栏
+                defaultToolbar: ['filter', 'exports', 'print'],//默认工具栏
+                method: 'get',//请求方法
+                cellMinWidth: 100,//最小宽度
+                limit: 10,//每页数据 默认
+                limits: [10, 20, 30, 40, 50],
                 id: 'currentTableId',
-                url: '/SystemOrganize/Duty/GetGridJson',
+                url: common.urlAddTime('/SystemOrganize/Duty/GetGridJson'),
+                height: 'full-110',
+                loading: false,
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['skip', 'prev', 'page', 'next', 'limit', 'count'] //自定义分页布局
+                    , curr: 1 //设定初始在第 1 页
+                    , groups: 3 //只显示 1 个连续页码
+                    , first: false //不显示首页
+                    , last: false //不显示尾页
+                },
+                autoColumnWidth: true,
+                overflow: { // 默认所有表格都超出
+                    type: 'tips'
+                    , hoverTime: 300 // 悬停时间，单位ms, 悬停 hoverTime 后才会显示，默认为 0
+                    , color: 'black' // 字体颜色
+                    , bgColor: 'white' // 背景色
+                    , header: true, // 表头支持 overflow
+                    total: true // 合计行支持 overflow
+                },
                 filter: {
+                    //items: ['column', 'excel', 'condition'], // 只显示表格列和导出excel两个菜单项
                     clearFilter: false
                 },
-                cols: [[
+                contextmenu: {
+                    header: [
+                        {
+                            name: '复制',
+                            icon: 'layui-icon layui-icon-template',
+                            click: function (obj) {
+                                soulTable.copy(obj.text)
+                                layer.msg('复制成功！')
+                            }
+                        },
+                        {
+                            name: '导出excel',
+                            icon: 'layui-icon layui-icon-download-circle',
+                            click: function () {
+                                soulTable.export(this.id)
+                            }
+                        },
+                        {
+                            name: '重载表格',
+                            icon: 'layui-icon layui-icon-refresh-1',
+                            click: function () {
+                                table.reload(this.id)
+                            }
+                        }
+                    ],
+                    // 表格内容右键菜单配置
+                    body: [
+                        {
+                            name: '复制',
+                            icon: 'layui-icon layui-icon-template',
+                            click: function (obj) {
+                                soulTable.copy(obj.text)
+                                layer.msg('复制成功！')
+                            }
+                        }
+                    ],
+                    // 合计栏右键菜单配置
+                    total: []
+                },
+                excel: {
+                    filename: '表格信息' + new Date().formatDate() + '.xlsx',
+                },
+                request: {
+                    pageName: 'page' //页码的参数名称，默认：page
+                    , limitName: 'rows' //每页数据量的参数名，默认：limit
+                },
+                parseData: function (res) { //res 即为原始返回的数据
+                    return {
+                        "code": res.state, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.count, //解析数据长度
+                        "data": res.data //解析数据列表
+                    };
+                },
+                cols: common.tableAuthorizeFields([[
                     { field: 'F_FullName', title: '岗位名称', width: 120, sort: true, filter: true },
                     { field: 'F_EnCode', title: '岗位编号', width: 120, sort: true, filter: true },
                     {
@@ -47,8 +126,12 @@
                         }
                     },
                     { field: 'F_Description', title: '备注', minWidth: 150, sort: true, filter: true },
-                ]]
+                ]]),
+                done: function () {
+                    soulTable.render(this)
+                }
             });
+            wcLoading.close();
             // 监听搜索操作
             form.on('submit(data-search-btn)', function (data) {
                 //执行搜索重载

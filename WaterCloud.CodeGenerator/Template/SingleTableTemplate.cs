@@ -215,7 +215,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));");
             sb.AppendLine("        }");
             sb.AppendLine();
-            sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(Pagination pagination,string keyword = \"\")");
+            sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(SoulPage<"+ baseConfigModel.FileConfig.EntityName + "> pagination,string keyword = \"\")");
             sb.AppendLine("        {");
             sb.AppendLine("            //获取数据权限");
             sb.AppendLine("            var list = GetDataPrivilege(\"u\", className.Substring(0, className.Length - 7));");
@@ -363,19 +363,15 @@ namespace WaterCloud.CodeGenerator
             {
                 sb.AppendLine("        [HttpGet]");
                 sb.AppendLine("        [HandlerAjaxOnly]");
-                sb.AppendLine("        public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)");
+                sb.AppendLine("        public async Task<ActionResult> GetGridJson(SoulPage<"+ baseConfigModel.FileConfig .EntityName+ "> pagination, string keyword)");
                 sb.AppendLine("        {");
-                sb.AppendLine("            //此处需修改");
-                sb.AppendLine("            pagination.order = \"desc\";");
-                sb.AppendLine("            pagination.sort = \"F_CreatorTime desc\";");
-                sb.AppendLine("            //导出全部页使用");
-                sb.AppendLine("            if (pagination.rows == 0 && pagination.page == 0)");
+                sb.AppendLine("            if (string.IsNullOrEmpty(pagination.field))");
                 sb.AppendLine("            {");
-                sb.AppendLine("                pagination.rows = 99999999;");
-                sb.AppendLine("                pagination.page = 1;");
+                sb.AppendLine("                pagination.field = \"F_CreatorTime\";");
+                sb.AppendLine("                pagination.order = \"desc\";");
                 sb.AppendLine("            }");
                 sb.AppendLine("            var data = await _service.GetLookList(pagination,keyword);");
-                sb.AppendLine("            return Success(pagination.records, data);");
+                sb.AppendLine("            return Content(pagination.setData(data).ToJson());");
                 sb.AppendLine("        }");
                 sb.AppendLine();
                 sb.AppendLine("        [HttpGet]");

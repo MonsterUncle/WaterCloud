@@ -4,13 +4,13 @@
  * version:1.6
  * description:watercloud 主体框架扩展
  */
-layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab', 'soulTable'], function (exports) {
+layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab','soulTableSlim'], function (exports) {
     var $ = layui.jquery,
         miniTab = layui.miniTab,
         layer = layui.layer,
         treeTable = layui.treeTable,
-        soulTable = layui.soulTable,
         xmSelect = layui.xmSelect,       
+        soulTableSlim = layui.soulTableSlim,       
         table = layui.table;
 
     var obj = {
@@ -44,10 +44,6 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab', 's
                     , header: true, // 表头支持 overflow
                     total: true // 合计行支持 overflow
                 },
-                filter: {
-                    items: ['column', 'excel', 'condition'], // 只显示表格列和导出excel两个菜单项
-                    clearFilter: true
-                },
                 contextmenu: {
                     header: [
                         {
@@ -56,13 +52,6 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab', 's
                             click: function (obj) {
                                 soulTable.copy(obj.text)
                                 layer.msg('复制成功！')
-                            }
-                        },
-                        {
-                            name: '导出excel',
-                            icon: 'layui-icon layui-icon-download-circle',
-                            click: function () {
-                                soulTable.export(this.id)
                             }
                         },
                         {
@@ -85,10 +74,14 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab', 's
                         }
                     ],
                     // 合计栏右键菜单配置
-                    total: []
-                },
-                excel: {
-                    filename: '表格信息' + new Date().formatDate() + '.xlsx',
+                    total: [{
+                        name: '复制',
+                        icon: 'layui-icon layui-icon-template',
+                        click: function (obj) {
+                            soulTable.copy(obj.text)
+                            layer.msg('复制成功！')
+                        }
+                    }]
                 },
                 request: {
                     pageName: 'page' //页码的参数名称，默认：page
@@ -120,7 +113,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab', 's
                 if (doneCallback) {
                     doneCallback(res, curr, count);
                 }
-                soulTable.render(this);
+                soulTableSlim.render(this)
             };
             return table.render(options);
         },
@@ -171,7 +164,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab', 's
         },
         //table刷新
         reloadtable: function (options) {
-            var loading = layer.load(0, { shade: false });
+            layer.load(0, { shade: false });
             var defaults = {
                 elem: 'currentTableId',//主键
                 page: true,//分页参数

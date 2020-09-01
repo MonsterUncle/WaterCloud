@@ -37,6 +37,7 @@ layui.config({
     formPreview: 'formDesigner/formPreview', //表单设计器
     notice: 'notice/notice', //消息提醒
     soulTable: 'soulTable/soulTable',//表格插件
+    soulTableSlim: 'soulTable/soulTable.slim',//表格插件
     tableChild: 'soulTable/tableChild',//子表
     tableMerge: 'soulTable/tableMerge',//合并表格
     tableFilter: 'soulTable/tableFilter',//表格过滤
