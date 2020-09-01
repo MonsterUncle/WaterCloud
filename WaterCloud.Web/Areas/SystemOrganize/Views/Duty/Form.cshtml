@@ -3,11 +3,10 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'laydate', 'common', 'optimizeSelectOption'], function () {
+    layui.use(['jquery', 'form', 'common', 'optimizeSelectOption'], function () {
         var form = layui.form,
             $ = layui.$,
             common = layui.common,
-            laydate = layui.laydate;
         var keyValue = $.request("keyValue");
         //权限字段
         common.authorizeFields('adminform');
