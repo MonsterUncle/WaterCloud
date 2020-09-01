@@ -4,9 +4,8 @@
  * version:1.6
  * description:watercloud 主体框架扩展
  */
-layui.define(["jquery", "layer", 'form', 'table', 'treeTable', 'xmSelect', 'miniTab', 'soulTable'], function (exports) {
+layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab', 'soulTable'], function (exports) {
     var $ = layui.jquery,
-        form = layui.form,
         miniTab = layui.miniTab,
         layer = layui.layer,
         treeTable = layui.treeTable,
