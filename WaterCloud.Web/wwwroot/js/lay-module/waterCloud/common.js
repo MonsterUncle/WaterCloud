@@ -4,13 +4,13 @@
  * version:1.6
  * description:watercloud 主体框架扩展
  */
-layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab','soulTableSlim'], function (exports) {
+layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab','soulTable'], function (exports) {
     var $ = layui.jquery,
         miniTab = layui.miniTab,
         layer = layui.layer,
         treeTable = layui.treeTable,
         xmSelect = layui.xmSelect,       
-        soulTableSlim = layui.soulTableSlim,       
+        soulTable = layui.soulTable,       
         table = layui.table;
 
     var obj = {
@@ -50,8 +50,15 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab','so
                             name: '复制',
                             icon: 'layui-icon layui-icon-template',
                             click: function (obj) {
-                                soulTableSlim.copy(obj.text)
+                                soulTable.copy(obj.text)
                                 layer.msg('复制成功！')
+                            }
+                        },
+                        {
+                            name: '导出excel',
+                            icon: 'layui-icon layui-icon-download-circle',
+                            click: function () {
+                                soulTable.export(this.id)
                             }
                         },
                         {
@@ -68,7 +75,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab','so
                             name: '复制',
                             icon: 'layui-icon layui-icon-template',
                             click: function (obj) {
-                                soulTableSlim.copy(obj.text)
+                                soulTable.copy(obj.text)
                                 layer.msg('复制成功！')
                             }
                         }
@@ -78,10 +85,13 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab','so
                         name: '复制',
                         icon: 'layui-icon layui-icon-template',
                         click: function (obj) {
-                            soulTableSlim.copy(obj.text)
+                            soulTable.copy(obj.text)
                             layer.msg('复制成功！')
                         }
                     }]
+                },
+                excel: {
+                    filename: '表格信息' + new Date().formatDate() + '.xlsx',
                 },
                 request: {
                     pageName: 'page' //页码的参数名称，默认：page
@@ -113,7 +123,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab','so
                 if (doneCallback) {
                     doneCallback(res, curr, count);
                 }
-                soulTableSlim.render(this)
+                soulTable.render(this)
             };
             return table.render(options);
         },
