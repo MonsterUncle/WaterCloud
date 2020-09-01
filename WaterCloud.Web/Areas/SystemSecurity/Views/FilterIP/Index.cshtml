@@ -22,9 +22,9 @@
                     field: 'F_Type', title: '策略类型', width: 120, sort: true,
                     templet: function (d) {
                         if (d.F_Type == true) {
-                            return "<span class=\"layui-bg-green\">允许访问</span>";
+                            return "<span class='layui-badge layui-bg-blue'>允许访问</span>";
                         } else {
-                            return "<span class=\"layui-bg-red\">禁止访问</span>";
+                            return "<span class='layui-btn layui-btn-warm'>禁止访问</span>";
                         }
                     }
                 },
@@ -40,12 +40,12 @@
                     }
                 },
                 {
-                    field: 'F_EnabledMark', title: '有效', Width: 80, sort: true,
+                    field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
                     templet: function (d) {
                         if (d.F_EnabledMark == true) {
-                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                            return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
-                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                            return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                         }
                     }
                 },

@@ -18,22 +18,22 @@
                 url: '/SystemSecurity/OpenJobs/GetGridJson',
                 page: false,
                 cols: [[
-                    { field: 'F_JobName', title: '名称', minWidth: 150 },
-                    { field: 'F_JobGroup', title: '组名', minWidth: 150 },
+                    { field: 'F_JobName', title: '名称', width: 150 },
+                    { field: 'F_JobGroup', title: '组名', width: 150 },
                     { field: 'F_FileName', title: '文件名', minWidth: 200 },
                     { field: 'F_CronExpress', title: 'CRON', minWidth: 180 },
                     {
-                        field: 'F_EnabledMark', title: '状态', minWidth: 80, sort: true,
+                        field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
                         templet: function (d) {
                             if (d.F_EnabledMark == true) {
-                                return "<span class=\"layui-bg-green\">启动</span>";
+                                return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                             } else {
-                                return "<span class=\"layui-bg-red\">关闭</span>";
+                                return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                             }
                         }
                     },
                     {
-                        field: 'F_LastRunTime', title: '最近执行时间', minWidth: 180,
+                        field: 'F_LastRunTime', title: '最近执行时间', width: 180,
                         templet: function (d) {
                             if (d.F_LastRunTime) {
                                 var time = new Date(d.F_LastRunTime);
@@ -42,7 +42,7 @@
                         }
                     },
                     {
-                        field: 'F_StarRunTime', title: '最近启动时间', minWidth: 180,
+                        field: 'F_StarRunTime', title: '最近启动时间', width: 180,
                         templet: function (d) {
                             if (d.F_StarRunTime) {
                                 var time = new Date(d.F_StarRunTime);
@@ -51,7 +51,7 @@
                         }
                     },
                     {
-                        field: 'F_EndRunTime', title: '最近关闭时间', minWidth: 180,
+                        field: 'F_EndRunTime', title: '最近关闭时间', width: 180,
                         templet: function (d) {
                             if (d.F_EndRunTime) {
                                 var time = new Date(d.F_EndRunTime);
@@ -60,7 +60,7 @@
                         }
                     },
 
-                    { field: 'F_Description', title: '备注', minWidth: 200 },
+                    { field: 'F_Description', title: '备注', width: 200 },
                 ]]
             });
             // 监听搜索操作

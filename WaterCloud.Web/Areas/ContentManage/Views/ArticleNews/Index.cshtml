@@ -72,22 +72,22 @@
                     field: 'F_IsTop', title: '置顶', width: 80,
                     templet: function (d) {
                         if (d.F_IsTop == true) {
-                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                            return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
                         } else {
-                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                            return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
                         }
                     }
-                },
+                }, 
                 {
                     field: 'F_IsHot', title: '热门', width: 80,
                     templet: function (d) {
                         if (d.F_IsHot == true) {
-                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                            return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
                         } else {
-                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                            return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
                         }
                     }
-                },
+                }, 
                 { field: 'F_Click', title: '点击次数', width: 100 },
                 { field: 'F_Source', title: '来源', width: 120 },
                 { field: 'F_Author', title: '作者', width: 120 },

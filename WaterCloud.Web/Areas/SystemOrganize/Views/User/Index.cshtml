@@ -56,12 +56,12 @@
                     }
                 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 100, sort: true,
+                    field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
                     templet: function (d) {
                         if (d.F_EnabledMark == true) {
-                            return "<span class=\"layui-bg-green\">正常</span>";
+                            return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
-                            return "<span class=\"layui-bg-red\">禁用</span>";
+                            return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                         }
                     }
                 },

@@ -21,15 +21,15 @@
                 { field: 'F_Title', title: '标题', Width: 120 },
                 { field: 'F_Content', title: '内容', Width: 250},
                 {
-                    field: 'F_EnabledMark', title: '有效', Width: 80, sort: true,
+                    field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
                     templet: function (d) {
                         if (d.F_EnabledMark == true) {
-                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                            return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
-                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                            return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                         }
                     }
-                },
+                }, 
                 {
                     field: 'F_CreatorUserName', title: '创建人', Width: 100, sort: true,
                 },

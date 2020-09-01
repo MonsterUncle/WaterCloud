@@ -75,12 +75,12 @@
                      }
                  },
                  {
-                     field: 'F_EnabledMark', title: '有效', Width: 80, sort: true,
+                     field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
                      templet: function (d) {
                          if (d.F_EnabledMark == true) {
-                             return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                          } else {
-                             return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                          }
                      }
                  },

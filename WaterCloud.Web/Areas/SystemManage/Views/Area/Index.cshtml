@@ -43,15 +43,15 @@
                 { field: 'F_FullName', title: '名称', width: 200 },
                 { field: 'F_EnCode', title: '编号', width: 150 },
                 {
-                    field: 'F_EnabledMark', title: '有效', width: 60,
+                    field: 'F_EnabledMark', title: '状态', width: 80,
                     templet: function (d) {
                         if (d.F_EnabledMark == true) {
-                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                            return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
-                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                            return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                         }
                     }
-                },
+                }, 
                 {
                     field: 'F_CreatorTime', title: '创建时间', width: 120,
                     templet: function (d) {

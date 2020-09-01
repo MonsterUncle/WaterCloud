@@ -42,55 +42,55 @@
                         }
                     },
                     {
-                        field: 'F_IsMenu', title: '菜单', width: 60,
+                        field: 'F_IsMenu', title: '菜单', width: 80,
                         templet: function (d) {
                             if (d.F_IsMenu == true) {
-                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                                return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
                             } else {
-                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                                return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
                             }
                         }
                     },
                     {
-                        field: 'F_IsExpand', title: '展开', width: 60,
+                        field: 'F_IsExpand', title: '展开', width: 80,
                         templet: function (d) {
                             if (d.F_IsExpand == true) {
-                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                                return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
                             } else {
-                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                                return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
                             }
                         }
                     },
                     {
-                        field: 'F_IsPublic', title: '公共', width: 60,
+                        field: 'F_IsPublic', title: '公共', width: 80,
                         templet: function (d) {
                             if (d.F_IsPublic == true) {
-                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                                return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
                             } else {
-                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                                return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
                             }
                         }
                     },
                     {
-                        field: 'F_IsFields', title: '字段', width: 60,
+                        field: 'F_IsFields', title: '字段', width: 80,
                         templet: function (d) {
                             if (d.F_IsFields == true) {
-                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true' >";
+                                return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
                             } else {
-                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false' >";
+                                return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
                             }
                         }
                     },
                     {
-                        field: 'F_EnabledMark', title: '有效', width: 60,
+                        field: 'F_EnabledMark', title: '状态', width: 80,
                         templet: function (d) {
                             if (d.F_EnabledMark == true) {
-                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
+                                return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                             } else {
-                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
+                                return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                             }
                         }
-                    },
+                    }, 
                     { field: 'F_SortCode', title: '排序', width: 60 },
                     {
                         field: 'F_CreatorTime', title: '创建时间', width: 120,
