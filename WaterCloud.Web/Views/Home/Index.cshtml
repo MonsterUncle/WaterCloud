@@ -167,7 +167,7 @@
                         if (data.F_IsAdmin) {
                             $('[data-clear]').removeClass('layui-hide');
                         }
-                        code.innerHTML = data.F_Account;
+                        code.innerHTML = data.F_Account + '<span class="layui-nav-more"></span>';
                         if (data.MsgCout > 0) {
                             $('#noticeMarker').html('<span class="layui-badge-dot"></span>');
                             notice.options = {
