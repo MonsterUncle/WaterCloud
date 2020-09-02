@@ -21,8 +21,12 @@
                 id: 'currentTableId',
                 url: '/SystemOrganize/User/GetListJson',
                 where: { ids: (!!ids ? ids : "") },
-                page: false,
-                height: 'full-35',
+                limit: 99999,//每页数据 默认
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['count'] //自定义分页布局
+                    , first: false //不显示首页
+                    , last: false //不显示尾页
+                },
                 toolbar: false,//工具栏
                 cols: [[
                     { type: 'checkbox' },
