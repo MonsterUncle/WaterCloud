@@ -398,10 +398,13 @@ layui.define(["laytpl", "laypage", "layer", "form", "util"], function (e) {
 			t.eachCols(function (e, n) {
 				var o = n.field || e,
 					r = function () {
-						var e = n.totalRowText || "",
-							t = parseFloat(a[o])
-								.toFixed(2),
-							i = {};
+						var e = n.totalRowText || "", i = {}, t;
+						//t = parseFloat(a[o]).toFixed(2),
+						if (parseInt(a[o]) == a[o]) //是否是整数
+							t = parseFloat(a[o]).toFixed(0);
+						else
+							t = parseFloat(a[o]).toFixed(2);
+						//var i = {};
 						return i[o] = t, t = u(n, t, i), n.totalRow ? t || e : e
 					}(),
 					d = ['<td data-field="' + o + '" data-key="' + i.index + "-" + n.key + '" ' + function () {
