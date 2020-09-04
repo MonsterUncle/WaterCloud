@@ -1,5 +1,6 @@
 ﻿using Chloe;
 using Chloe.Annotations;
+using Serenity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -126,6 +127,33 @@ namespace WaterCloud.Service
             //    return false; //没有设置数据规则，那么视为该资源允许被任何主体查看
             //}
             return true;
+        }
+        /// <summary>
+        ///  soul数据反向模板化
+        /// </summary>
+        /// <param name=""moduleName>菜单名称</param>
+        /// <returns></returns>
+        protected SoulPage<TEntity> ChangeSoulData<TEntity>(Dictionary<string, Dictionary<string, string>> dic,SoulPage<TEntity> pagination)
+        {
+            List<FilterSo> filterSos = pagination.getFilterSos();
+            filterSos = FormatData(dic, filterSos);
+            pagination.filterSos = filterSos.ToJson();
+            return pagination;
+        }
+        protected List<FilterSo> FormatData(Dictionary<string, Dictionary<string, string>> dic, List<FilterSo> filterSos)
+        {
+            foreach (var item in filterSos)
+            {
+                if (item.mode == "condition"&&dic.ContainsKey(item.field)&&dic[item.field].ContainsKey(item.value))
+                {
+                    item.value = dic[item.field][item.value];
+                }
+                if (item.children!=null&&item.children.Count>0)
+                {
+                    item.children= FormatData(dic, item.children);
+                }
+            }
+            return filterSos;
         }
         /// <summary>
         ///  字段权限处理
