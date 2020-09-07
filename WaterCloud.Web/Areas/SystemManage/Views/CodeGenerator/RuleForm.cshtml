@@ -10,7 +10,7 @@
                 common = layui.common;
             //权限字段
             common.authorizeFields('adminform');
-            if (!!entity) {
+            if (!!entity && !!entity.TableColumn) {
                 $('#F_EnCode').prop('disabled', true);
                 $('#F_FullName').prop('disabled', true);
                 $('#F_EnCode').val(entity.TableColumn);
