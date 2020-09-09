@@ -71,34 +71,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitForm(ModuleFieldsEntity entity, string keyValue)
         {
-            LogEntity logEntity;
-            if (string.IsNullOrEmpty(keyValue))
-            {
-                logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
-                logEntity.F_Description += DbLogType.Create.ToDescription();
-                entity.F_DeleteMark = false;
-            }
-            else
-            {
-                logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
-                logEntity.F_Description += DbLogType.Update.ToDescription();
-                logEntity.F_KeyValue = keyValue;
-            }
             try
             {
-                logEntity.F_Account = _service.currentuser.UserCode;
-                logEntity.F_NickName = _service.currentuser.UserName;
                 await _service.SubmitForm(entity, keyValue);
-                logEntity.F_Description += "操作成功";
-                await _logService.WriteDbLog(logEntity);
-                return Success("操作成功。");
+                return await Success("操作成功。", className, keyValue);
             }
             catch (Exception ex)
             {
-                logEntity.F_Result = false;
-                logEntity.F_Description += "操作失败，" + ex.Message;
-                await _logService.WriteDbLog(logEntity);
-                return Error(ex.Message);
+                return await Error(ex.Message, className, keyValue);
             }
         }
 
@@ -108,23 +88,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString());
-            logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = _service.currentuser.UserCode;
-                logEntity.F_NickName = _service.currentuser.UserName;
                 await _service.DeleteForm(keyValue);
-                logEntity.F_Description += "操作成功";
-                await _logService.WriteDbLog(logEntity);
-                return Success("操作成功。");
+                return await Success("操作成功。", className, keyValue, DbLogType.Delete);
             }
             catch (Exception ex)
             {
-                logEntity.F_Result = false;
-                logEntity.F_Description += "操作失败，" + ex.Message;
-                await _logService.WriteDbLog(logEntity);
-                return Error(ex.Message);
+                return await Error(ex.Message, className, keyValue, DbLogType.Delete);
             }
         }
         [HttpGet]
@@ -167,23 +138,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> SubmitCloneFields(string moduleId, string Ids)
         {
-            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
-            logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
-                logEntity.F_Account = _service.currentuser.UserCode;
-                logEntity.F_NickName = _service.currentuser.UserName;
                 await _service.SubmitCloneFields(moduleId, Ids);
-                logEntity.F_Description += "克隆成功";
-                await _logService.WriteDbLog(logEntity);
-                return Success("克隆成功。");
+                return await Success("克隆成功。", className, Ids, DbLogType.Delete);
             }
             catch (Exception ex)
             {
-                logEntity.F_Result = false;
-                logEntity.F_Description += "克隆失败，" + ex.Message;
-                await _logService.WriteDbLog(logEntity);
-                return Error(ex.Message);
+                return await Error("克隆失败，" + ex.Message, className, Ids, DbLogType.Delete);
             }
         }
         #endregion

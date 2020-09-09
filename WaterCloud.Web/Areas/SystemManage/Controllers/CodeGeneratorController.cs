@@ -169,7 +169,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             catch (System.Exception ex)
             {
-
                 return Error(ex.Message);
             }
 
@@ -195,12 +194,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CodeGenerateJson(BaseConfigModel baseConfig, string Code)
         {
-            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
-            logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
                 if (!GlobalContext.SystemConfig.Debug)
                 {
                     throw new System.Exception("请在本地开发模式时使用代码生成");
@@ -210,16 +205,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                     SingleTableTemplate template = new SingleTableTemplate(_context);
                     await template.CreateCode(baseConfig, HttpUtility.UrlDecode(Code));
                 }
-                logEntity.F_Description += "操作成功";
-                await _logService.WriteDbLog(logEntity);
-                return Success("操作成功。");
+                return await Success("操作成功。", className, "");
             }
             catch (System.Exception ex)
             {
-                logEntity.F_Result = false;
-                logEntity.F_Description += "操作失败，" + ex.Message;
-                await _logService.WriteDbLog(logEntity);
-                return Error(ex.Message);
+                return await Error(ex.Message, className, "");
             }
         }
         [HttpPost]
@@ -228,12 +218,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EntityCodeGenerateJson(BaseConfigModel baseConfig, string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
-            logEntity.F_Description += DbLogType.Create.ToDescription();
             try
             {
-                logEntity.F_Account = _logService.currentuser.UserCode;
-                logEntity.F_NickName = _logService.currentuser.UserName;
                 if (!GlobalContext.SystemConfig.Debug)
                 {
                     throw new System.Exception("请在本地开发模式时使用代码生成");
@@ -254,16 +240,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                     string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
                     await template.EntityCreateCode(baseConfig, codeEntity);
                 }
-                logEntity.F_Description += "操作成功";
-                await _logService.WriteDbLog(logEntity);
-                return Success("操作成功。");
+                return await Success("操作成功。", className, "");
             }
             catch (System.Exception ex)
             {
-                logEntity.F_Result = false;
-                logEntity.F_Description += "操作失败，" + ex.Message;
-                await _logService.WriteDbLog(logEntity);
-                return Error(ex.Message);
+                return await Error(ex.Message, className, "");
             }
         }
         #endregion

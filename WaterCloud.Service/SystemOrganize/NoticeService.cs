@@ -85,6 +85,8 @@ namespace WaterCloud.Service.SystemOrganize
             }
             else
             {
+                entity.F_CreatorUserName = currentuser.UserName;
+                entity.F_DeleteMark = false;
                 entity.Create();
                 await repository.Insert(entity);
                 await CacheHelper.Remove(cacheKey + "list");

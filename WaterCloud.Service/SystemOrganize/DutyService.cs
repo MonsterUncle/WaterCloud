@@ -96,6 +96,9 @@ namespace WaterCloud.Service.SystemOrganize
             }
             else
             {
+                roleEntity.F_DeleteMark = false;
+                roleEntity.F_AllowEdit = false;
+                roleEntity.F_AllowDelete = false;
                 roleEntity.Create();
                 roleEntity.F_Category = 2;
                 await repository.Insert(roleEntity);

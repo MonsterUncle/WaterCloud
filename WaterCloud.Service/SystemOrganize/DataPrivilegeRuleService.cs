@@ -63,6 +63,7 @@ namespace WaterCloud.Service.SystemOrganize
             entity.F_ModuleCode = (await uniwork.FindEntity<ModuleEntity>(entity.F_ModuleId)).F_EnCode;
             if (string.IsNullOrEmpty(keyValue))
             {
+                entity.F_DeleteMark = false;
                 entity.Create();
                 await repository.Insert(entity);
                 await CacheHelper.Remove(cacheKey + "list");

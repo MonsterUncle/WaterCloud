@@ -125,11 +125,17 @@ namespace WaterCloud.Service.SystemSecurity
             }
         }
 
-        public async Task<LogEntity> CreateLog(string className, string type)
+        public async Task<LogEntity> CreateLog(string className, DbLogType type)
         {
             var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
             var module = (await moduleservice.GetList()).Where(a =>  a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
-            return new LogEntity(await CreateModule(module), moduleitem==null? "": moduleitem.F_FullName, type);
+            return new LogEntity(await CreateModule(module), moduleitem==null? "": moduleitem.F_FullName, type.ToString());
+        }
+        public async Task<LogEntity> CreateLog(string className, string type)
+        {
+            var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
+            return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type);
         }
         public async Task<string> CreateModule(ModuleEntity module, string str="")
         {
@@ -147,6 +153,44 @@ namespace WaterCloud.Service.SystemSecurity
                 var temp= (await moduleservice.GetList()).Where(a =>a.F_Id==module.F_ParentId).FirstOrDefault();
                 return await CreateModule(temp ,str);
             }
+        }
+        public async Task WriteLog(string message, string className, string keyValue = "", DbLogType? logType = null, bool isError = false)
+        {
+            LogEntity logEntity;
+            if (logType != null)
+            {
+                logEntity = await CreateLog(className, (DbLogType)logType);
+                logEntity.F_Description += logType.ToDescription();
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(keyValue))
+                {
+                    logEntity = await CreateLog(className, DbLogType.Create);
+                    logEntity.F_Description += DbLogType.Create.ToDescription();
+                }
+                else
+                {
+                    logEntity = await CreateLog(className, DbLogType.Update);
+                    logEntity.F_Description += DbLogType.Update.ToDescription();
+                }
+            }
+            logEntity.F_KeyValue = keyValue;
+            if (isError)
+            {
+                logEntity.F_Result = false;
+                logEntity.F_Description += "操作失败，" + message;
+            }
+            else
+            {
+                logEntity.F_Description += message;
+            }
+            if (currentuser != null && currentuser.UserId != null)
+            {
+                logEntity.F_Account = currentuser.UserCode;
+                logEntity.F_NickName = currentuser.UserName;
+            }
+            await WriteDbLog(logEntity);
         }
     }
 }

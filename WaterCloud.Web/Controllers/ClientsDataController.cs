@@ -16,8 +16,6 @@ using WaterCloud.Service.SystemSecurity;
 using Serenity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using CSRedis;
-using WaterCloud.Code.Model;
 using WaterCloud.Service.SystemOrganize;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Service.InfoManage;

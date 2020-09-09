@@ -83,6 +83,9 @@ namespace WaterCloud.Service.SystemOrganize
             }
             else
             {
+                organizeEntity.F_AllowDelete = false;
+                organizeEntity.F_AllowEdit = false;
+                organizeEntity.F_DeleteMark = false;
                 organizeEntity.Create();
                 await repository.Insert(organizeEntity);
                 await CacheHelper.Remove(cacheKey + "list");

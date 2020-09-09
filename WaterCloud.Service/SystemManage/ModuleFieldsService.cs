@@ -66,6 +66,7 @@ namespace WaterCloud.Service.SystemManage
         {
             if (string.IsNullOrEmpty(keyValue))
             {
+                entity.F_DeleteMark = false;
                 entity.Create();
                 await repository.Insert(entity);
                 await CacheHelper.Remove(cacheKey + "list");

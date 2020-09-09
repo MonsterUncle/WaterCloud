@@ -117,15 +117,12 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitForm(ModuleEntity moduleEntity, string keyValue)
         {
-            LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
                 moduleEntity.F_DeleteMark = false;
                 moduleEntity.F_AllowEdit = false;
                 moduleEntity.F_AllowDelete = false;
                 moduleEntity.F_IsPublic = false;
-                logEntity = await _logService.CreateLog(className, DbLogType.Create.ToString());
-                logEntity.F_Description += DbLogType.Create.ToDescription();
             }
             else
             {
@@ -138,14 +135,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 {
                     moduleEntity.F_Icon = "";
                 }
-                logEntity = await _logService.CreateLog(className, DbLogType.Update.ToString());
-                logEntity.F_Description += DbLogType.Update.ToDescription();
-                logEntity.F_KeyValue = keyValue;
             }
             try
             {
-                logEntity.F_Account = _service.currentuser.UserCode;
-                logEntity.F_NickName = _service.currentuser.UserName;
                 if (moduleEntity.F_ParentId == "0")
                 {
                     moduleEntity.F_Layers = 1;
@@ -169,16 +161,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                     moduleEntity.F_UrlAddress = null;
                 }
                 await _service.SubmitForm(moduleEntity, keyValue);
-                logEntity.F_Description += "操作成功";
-                await _logService.WriteDbLog(logEntity);
-                return Success("操作成功。");
+                return await Success("操作成功。", className, keyValue);
             }
             catch (Exception ex)
             {
-                logEntity.F_Result = false;
-                logEntity.F_Description += "操作失败，" + ex.Message;
-                await _logService.WriteDbLog(logEntity);
-                return Error(ex.Message);
+                return await Error(ex.Message, className, keyValue);
             }
         }
         [HttpPost]
@@ -188,23 +175,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
-            LogEntity logEntity = await _logService.CreateLog(className, DbLogType.Delete.ToString()); 
-            logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                logEntity.F_Account = _service.currentuser.UserCode;
-                logEntity.F_NickName = _service.currentuser.UserName;
                 await _service.DeleteForm(keyValue);
-                logEntity.F_Description += "操作成功";
-                await _logService.WriteDbLog(logEntity);
-                return Success("操作成功。");
+                return await Success("操作成功。", className, keyValue, DbLogType.Delete);
             }
             catch (Exception ex)
             {
-                logEntity.F_Result = false;
-                logEntity.F_Description += "操作失败，" + ex.Message;
-                await _logService.WriteDbLog(logEntity);
-                return Error(ex.Message);
+                return await Error(ex.Message, className, keyValue, DbLogType.Delete);
             }
         }
     }

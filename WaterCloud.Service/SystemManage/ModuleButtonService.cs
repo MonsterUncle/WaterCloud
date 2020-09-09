@@ -102,6 +102,9 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
+                moduleButtonEntity.F_DeleteMark = false;
+                moduleButtonEntity.F_AllowEdit = false;
+                moduleButtonEntity.F_AllowDelete = false;
                 var module = await uniwork.FindEntity<ModuleEntity>(a => a.F_Id == moduleButtonEntity.F_ModuleId);
                 if (string.IsNullOrEmpty(module.F_UrlAddress) || module.F_Target != "iframe")
                 {

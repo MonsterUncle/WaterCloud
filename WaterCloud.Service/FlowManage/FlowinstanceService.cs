@@ -532,6 +532,7 @@ namespace WaterCloud.Service.FlowManage
         }
         public async Task CreateInstance(FlowinstanceEntity entity)
         {
+            entity.F_EnabledMark = true;
             FlowschemeEntity scheme = null;
             if (!string.IsNullOrEmpty(entity.F_SchemeId))
             {

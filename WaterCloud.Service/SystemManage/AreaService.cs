@@ -87,6 +87,7 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
+                mEntity.F_DeleteMark = false;
                 mEntity.Create();
                 await repository.Insert(mEntity);
                 await CacheHelper.Remove(cacheKey + "list");

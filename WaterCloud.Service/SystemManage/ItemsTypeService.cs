@@ -80,6 +80,8 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
+                itemsEntity.F_DeleteMark = false;
+                itemsEntity.F_IsTree = false;
                 itemsEntity.Create();
                 await repository.Insert(itemsEntity);
                 await CacheHelper.Remove(cacheKey + "list");
