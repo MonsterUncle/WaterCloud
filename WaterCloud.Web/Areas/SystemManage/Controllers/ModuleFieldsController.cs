@@ -141,11 +141,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             try
             {
                 await _service.SubmitCloneFields(moduleId, Ids);
-                return await Success("克隆成功。", className, Ids, DbLogType.Delete);
+                return await Success("克隆成功。", className, Ids, DbLogType.Create);
             }
             catch (Exception ex)
             {
-                return await Error("克隆失败，" + ex.Message, className, Ids, DbLogType.Delete);
+                return await Error("克隆失败，" + ex.Message, className, Ids, DbLogType.Create);
             }
         }
         #endregion
