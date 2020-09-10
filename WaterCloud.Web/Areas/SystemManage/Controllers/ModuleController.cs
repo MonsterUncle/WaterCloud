@@ -10,9 +10,7 @@ using WaterCloud.Domain.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service;
-using WaterCloud.Service.SystemSecurity;
 using System;
 using System.Threading.Tasks;
 using Serenity;
@@ -25,7 +23,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         public ModuleService _service { get; set; }
         public ModuleButtonService _moduleButtonService { get; set; }
-        public LogService _logService { get; set; }
 
         [HttpGet]
         [HandlerAjaxOnly]

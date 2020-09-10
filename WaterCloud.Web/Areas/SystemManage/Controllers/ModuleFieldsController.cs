@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Code;
-using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Domain.SystemManage;
 using WaterCloud.Service;
-using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Service.SystemManage;
 using Serenity;
 
@@ -22,7 +20,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     public class ModuleFieldsController :  ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public LogService _logService { get; set; }
         public ModuleFieldsService _service { get; set; }
         public ModuleService _moduleService { get; set; }
 

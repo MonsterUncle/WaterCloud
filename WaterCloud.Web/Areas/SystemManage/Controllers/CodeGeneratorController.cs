@@ -6,9 +6,6 @@ using WaterCloud.Domain;
 using WaterCloud.Code;
 using WaterCloud.CodeGenerator;
 using WaterCloud.Service.CommonService;
-using WaterCloud.Service.SystemSecurity;
-using WaterCloud.Service.SystemManage;
-using WaterCloud.Domain.SystemSecurity;
 using System.Linq;
 using WaterCloud.Service;
 using System.Threading.Tasks;
@@ -23,7 +20,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         private readonly IDatabaseTableService _service;
-        public LogService _logService { get; set; }
         private readonly IDbContext _context;
         public CodeGeneratorController(IDbContext context)
         {

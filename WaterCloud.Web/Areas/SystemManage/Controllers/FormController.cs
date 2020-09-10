@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Serenity;
 using WaterCloud.Code;
-using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Domain.SystemManage;
 using WaterCloud.Service;
-using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Service.SystemManage;
-using WaterCloud.Service.CommonService;
 using System.IO;
 using WaterCloud.Code.Model;
 
@@ -25,7 +21,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     public class FormController :  ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public LogService _logService {get;set;}
         public FormService _service {get;set;}
 
         #region 获取数据

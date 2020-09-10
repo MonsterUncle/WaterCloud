@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Serenity;
 using WaterCloud.Code;
-using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Domain.SystemManage;
 using WaterCloud.Service;
-using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Service.SystemManage;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
@@ -21,7 +19,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     public class FlowschemeController :  ControllerBase
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public LogService _logService {get;set;}
         public FlowschemeService _service {get;set;}
         public FormService _formService { get; set; }
         [HttpGet]

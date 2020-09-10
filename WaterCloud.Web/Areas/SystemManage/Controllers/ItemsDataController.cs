@@ -5,15 +5,12 @@
  * Website：
 *********************************************************************************/
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemManage;
-using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service;
 using WaterCloud.Service.SystemManage;
-using WaterCloud.Service.SystemSecurity;
 using System.Threading.Tasks;
 using Serenity;
 
@@ -24,7 +21,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     {
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
         public ItemsDataService _service { get; set; }
-        public LogService _logService { get; set; }
         [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(string itemId, string keyword)
