@@ -280,6 +280,10 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
               } else { //清除排序
                 cache[myTable.id] = layui.sort(cache[myTable.id], myTable.indexName)
               }
+              //排序后及时更新row[SOUL_ROW_INDEX]
+              cache[myTable.id].forEach(function (item, index) {
+                item[SOUL_ROW_INDEX] = index
+              })
               myTable.initSort = obj;
               myTable.page = {curr: 1};
               _this.soulReload(myTable, false)
@@ -1022,15 +1026,16 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
       filterBoard.push('</ul>')
       filterBoard.push('</div>')
       filterBoard.push('</div>')
+      var _width = document.body.clientWidth > parseInt('480') ? '480px' : document.body.clientWidth - 10 + 'px'
+      var _height = document.body.clientHeight > parseInt('480') ? '480px' : document.body.clientHeight - 10 + 'px'
       layer.open({
         title: '编辑条件',
         type: 1,
         offset: 'auto',
-        area: ['480px', '480px'],
+        area: [_width, _height],
         content: filterBoard.join('')
       })
       form.render(null, 'soul-edit-out');
-
       form.on('checkbox(out_auto)', function (data) {
         if (data.elem.checked) {
           _this.soulReload(myTable);
