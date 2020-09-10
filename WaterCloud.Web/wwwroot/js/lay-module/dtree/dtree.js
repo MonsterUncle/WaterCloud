@@ -3095,7 +3095,12 @@ layui.define(['jquery','layer','form'], function(exports) {
         } else {		//当前复选框为未选中状态，点击后变为选中状态
             // 处理当前节点的选中状态
             _this.checkStatus($i).check();
-
+            // 处理父级节点的选中状态
+            for (var i = 1, item = $parent_li; i < item.length; i++) {
+                var $item_i = item.eq(i).find(">." + LI_DIV_ITEM + ">." + LI_DIV_CHECKBAR + ">i[data-type='" + dataType + "']");
+                //把父级选中
+                _this.checkStatus($item_i).check();
+            } 
             // 处理子级节点的选中状态
             var $child_li_i = $child_li.find(">."+LI_DIV_ITEM+">."+LI_DIV_CHECKBAR+">i[data-type='"+dataType+"']");
             _this.checkStatus($child_li_i).check();
