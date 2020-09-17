@@ -321,7 +321,6 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("    public class " + baseConfigModel.FileConfig.ControllerName + " :  ControllerBase");
             sb.AppendLine("    {");
             sb.AppendLine("        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];");
-            sb.AppendLine("        public LogService _logService {get;set;}");
             sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + " _service {get;set;}");
             sb.AppendLine();
             sb.AppendLine("        #region 获取数据");
@@ -417,11 +416,11 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            try");
             sb.AppendLine("            {");
             sb.AppendLine("                await _service.DeleteForm(keyValue);");
-            sb.AppendLine("                return Success(\"操作成功。\", className, keyValue, DbLogType.Delete);");
+            sb.AppendLine("                return await Success(\"操作成功。\", className, keyValue, DbLogType.Delete);");
             sb.AppendLine("            }");
             sb.AppendLine("            catch (Exception ex)");
             sb.AppendLine("            {");
-            sb.AppendLine("                return Error(ex.Message, className, keyValue, DbLogType.Delete);");
+            sb.AppendLine("                return await Error(ex.Message, className, keyValue, DbLogType.Delete);");
             sb.AppendLine("            }");
             sb.AppendLine("        }");
             sb.AppendLine("        #endregion");
