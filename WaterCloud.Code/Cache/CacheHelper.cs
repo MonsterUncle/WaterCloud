@@ -72,9 +72,9 @@ namespace WaterCloud.Code
                 case Define.CACHEPROVIDER_REDIS:
                     return await RedisHelper.GetAsync<T>(key);
                 case Define.CACHEPROVIDER_MEMORY:
-                    return MemoryCacheHelper.Get(key) as T;
+                    return MemoryCacheHelper.Get<T>(key);
                 default:
-                    return MemoryCacheHelper.Get(key) as T;
+                    return MemoryCacheHelper.Get<T>(key);
             }
 
         }
