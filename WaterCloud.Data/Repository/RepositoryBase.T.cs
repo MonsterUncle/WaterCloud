@@ -15,6 +15,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace WaterCloud.DataBase
 {
@@ -159,7 +161,6 @@ namespace WaterCloud.DataBase
             }
             return cachedata;
         }
-
         public async Task<TEntity> CheckCache(string cacheKey, string keyValue, long old = 0)
         {
             var cachedata = await CacheHelper.Get<TEntity>(cacheKey + keyValue);
