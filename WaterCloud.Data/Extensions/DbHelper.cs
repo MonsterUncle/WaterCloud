@@ -4,13 +4,10 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using MySql.Data.MySqlClient;
 using System;
-using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
-using System.IO;
 using WaterCloud.Code;
 
 namespace WaterCloud.DataBase.Extensions

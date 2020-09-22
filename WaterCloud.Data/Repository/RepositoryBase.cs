@@ -5,16 +5,13 @@
  * Website：
 *********************************************************************************/
 using Chloe;
-using Chloe.SqlServer;
 using WaterCloud.Code;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace WaterCloud.DataBase
