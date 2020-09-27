@@ -114,3 +114,16 @@ connection.on("ReceiveMessage", function (msg) {
         $("#noticeMarker").html("<span class='layui-badge-dot'></span>");
     })
 });
+//下面测试断线重连机制 ，
+//重连之前调用 （只有在掉线的一瞬间，只进入一次）
+connection.onreconnecting((error) => {
+    console.log("重连中...");
+});
+//(默认4次重连)，任何一次只要回调成功，调用
+connection.onreconnected((connectionId) => {
+    console.log("重连成功");
+});
+//(默认4次重连) 全部都失败后，调用
+connection.onclose((error) => {
+    console.log('重连失败');
+});
