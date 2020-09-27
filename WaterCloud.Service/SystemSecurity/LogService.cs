@@ -127,15 +127,30 @@ namespace WaterCloud.Service.SystemSecurity
 
         public async Task<LogEntity> CreateLog(string className, DbLogType type)
         {
-            var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
-            var module = (await moduleservice.GetList()).Where(a =>  a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
-            return new LogEntity(await CreateModule(module), moduleitem==null? "": moduleitem.F_FullName, type.ToString());
+            try
+            {
+                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+                var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
+                return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type.ToString());
+            }
+            catch (Exception)
+            {
+                return new LogEntity(className, "" , type.ToString());
+            }
         }
         public async Task<LogEntity> CreateLog(string className, string type)
         {
-            var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
-            var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
-            return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type);
+            try
+            {
+                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+                var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
+                return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type);
+
+            }
+            catch (Exception)
+            {
+                return new LogEntity(className, "", type.ToString());
+            }
         }
         public async Task<string> CreateModule(ModuleEntity module, string str="")
         {
