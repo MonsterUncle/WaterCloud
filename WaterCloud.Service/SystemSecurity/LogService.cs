@@ -115,7 +115,7 @@ namespace WaterCloud.Service.SystemSecurity
                 logEntity.Create();
                 await repository.Insert(logEntity);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 logEntity.F_IPAddress = LoginProvider == "WebApi" ? "未连接未知" : WebHelper.Ip;
                 logEntity.F_IPAddressName = "本地局域网";
@@ -130,10 +130,14 @@ namespace WaterCloud.Service.SystemSecurity
             try
             {
                 var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+                if (moduleitem==null)
+                {
+                    throw new Exception();
+                }
                 var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
                 return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type.ToString());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new LogEntity(className, "" , type.ToString());
             }
@@ -143,11 +147,15 @@ namespace WaterCloud.Service.SystemSecurity
             try
             {
                 var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+                if (moduleitem == null)
+                {
+                    throw new Exception();
+                }
                 var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
                 return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new LogEntity(className, "", type.ToString());
             }
