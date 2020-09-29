@@ -11,7 +11,6 @@ using WaterCloud.Domain.SystemOrganize;
 using System.Net.Http;
 using System.IO;
 using System.Reflection;
-using Serenity;
 using WaterCloud.Domain.InfoManage;
 using WaterCloud.Service.InfoManage;
 using Microsoft.AspNetCore.SignalR;
@@ -299,7 +298,7 @@ namespace WaterCloud.Service.FlowManage
             }
             #endregion 一般审核
 
-            flowInstance.F_SchemeContent = JsonHelper.Serialize(wfruntime.ToSchemeObj());
+            flowInstance.F_SchemeContent = wfruntime.ToSchemeObj().ToJson();
             await uniwork.Update(flowInstance);
             await uniwork.Insert(flowInstanceOperationHistory);
             MessageEntity msg = new MessageEntity();

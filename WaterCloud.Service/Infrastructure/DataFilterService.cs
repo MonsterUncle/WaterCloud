@@ -1,12 +1,10 @@
 ﻿using Chloe;
 using Chloe.Annotations;
-using Serenity;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;

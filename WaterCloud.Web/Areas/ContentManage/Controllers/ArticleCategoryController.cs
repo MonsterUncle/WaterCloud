@@ -5,7 +5,6 @@ using WaterCloud.Code;
 using WaterCloud.Domain.ContentManage;
 using WaterCloud.Service;
 using WaterCloud.Service.ContentManage;
-using Serenity;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WaterCloud.Web.Areas.ContentManage.Controllers

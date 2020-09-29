@@ -6,11 +6,7 @@
 *********************************************************************************/
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Code;
-using WaterCloud.Domain.SystemManage;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Serenity;
 using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers

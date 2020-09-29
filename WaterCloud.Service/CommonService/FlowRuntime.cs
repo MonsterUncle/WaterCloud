@@ -21,7 +21,7 @@ namespace WaterCloud.Service.CommonService
         /// </summary>
         public FlowRuntime(FlowinstanceEntity instance)
         {
-            dynamic schemeContentJson = instance.F_SchemeContent.ToJson();//获取工作流模板内容的json对象;
+            dynamic schemeContentJson = instance.F_SchemeContent.ToObject();//获取工作流模板内容的json对象;
 
             InitLines(schemeContentJson);
             InitNodes(schemeContentJson);
@@ -376,7 +376,7 @@ namespace WaterCloud.Service.CommonService
                 isFinish = currentNodeType == 4
             };
 
-            using (HttpContent httpContent = new StringContent(JsonHelper.Serialize(postData), Encoding.UTF8))
+            using (HttpContent httpContent = new StringContent(postData.ToJson(), Encoding.UTF8))
             {
                     httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                    client.PostAsync(currentNode.setInfo.ThirdPartyUrl, httpContent);

@@ -12,7 +12,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Service;
 using System;
-using Serenity;
 using System.Threading.Tasks;
 using WaterCloud.Service.SystemManage;
 
@@ -131,7 +130,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 }
                 data.F_RoleName = string.Join("  ", str.ToArray());
             }
-            return Content(data.ToJson());
+            return Content(data.ToJson("yyyy-MM-dd"));
         }
         [HttpPost]
         [HandlerAjaxOnly]

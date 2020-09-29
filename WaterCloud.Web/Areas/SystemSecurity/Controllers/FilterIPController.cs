@@ -10,7 +10,6 @@ using WaterCloud.Domain.SystemSecurity;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Service;
 using System;
-using Serenity;
 using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
