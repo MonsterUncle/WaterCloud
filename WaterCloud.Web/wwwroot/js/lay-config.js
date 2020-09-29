@@ -27,6 +27,7 @@ layui.config({
     wangEditor: 'wangEditor/wangEditor', // wangEditor富文本扩展
     layarea: 'layarea/layarea', //  省市县区三级联动下拉选择器
     common: 'waterCloud/common', //  工具类
+    commonTable: 'waterCloud/commonTable', //  工具类
     optimizeSelectOption: 'optimizeSelectOption/optimizeSelectOption', //  下拉框遮挡
     dtree: 'dtree/dtree', //  树形扩展
     xmSelect:'xm-select/xm-select', //select多选扩展

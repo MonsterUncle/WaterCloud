@@ -47,19 +47,19 @@
 </div>
 
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'layer'], function () {
+    layui.use(['jquery', 'form', 'table', 'common', 'commonTable'], function () {
         var $ = layui.jquery,
             form = layui.form,
-            layer = layui.layer,
             table = layui.table,
+            commonTable = layui.commonTable,
             common = layui.common;
         //权限控制(js是值传递)
         currentTableBar.innerHTML = common.authorizeButtonNew(currentTableBar.innerHTML);
         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
         wcLoading.close();
-        common.rendertable({
+        commonTable.rendertable({
             elem: '#currentTableId',
-            id:'currentTableId',
+            id: 'currentTableId',
             url: '/ContentManage/ArticleNews/GetGridJson',
             cols: [[
                 { type: "checkbox", width: 50, fixed: 'left' },
@@ -77,7 +77,7 @@
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
                         }
                     }
-                }, 
+                },
                 {
                     field: 'F_IsHot', title: '热门', width: 80,
                     templet: function (d) {
@@ -87,7 +87,7 @@
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
                         }
                     }
-                }, 
+                },
                 { field: 'F_Click', title: '点击次数', width: 100 },
                 { field: 'F_Source', title: '来源', width: 120 },
                 { field: 'F_Author', title: '作者', width: 120 },
@@ -121,7 +121,7 @@
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             //执行搜索重载
-            common.reloadtable({
+            commonTable.reloadtable({
                 elem: 'currentTableId',
                 curr: 1,
                 where: { CategoryId: data.field.CategoryId, keyword: data.field.txt_keyword }

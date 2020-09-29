@@ -3,11 +3,11 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption', 'layer'], function () {
+    layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption', 'commonTable'], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
-            layer = layui.layer,
+            commonTable = layui.commonTable,
             common = layui.common;
         //加载数据
         wcLoading.close();
@@ -16,7 +16,7 @@
         var currentWindow = !parent[parentform] ? common.currentWindow() : parent[parentform];
         var name = $.request("name");
         var ids = $.request("ids");
-        common.rendertable({
+        commonTable.rendertable({
             elem: '#currentTableId',
             id: 'currentTableId',
             url: '/SystemOrganize/Role/GetSelectJson',
@@ -75,7 +75,7 @@
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             //执行搜索重载
-            common.reloadtable({
+            commonTable.reloadtable({
                 elem: 'currentTableId',
                 page: false,
                 where: { ids: (!!ids ? ids : ""), keyword: data.field.txt_keyword }
@@ -86,7 +86,7 @@
         form.on('submit(data-clear-btn)', function (data) {
             ids ="";
             //执行搜索重载
-            common.reloadtable({
+            commonTable.reloadtable({
                 elem: 'currentTableId',
                 page: false,
                 where: { ids: "", keyword: data.field.txt_keyword }

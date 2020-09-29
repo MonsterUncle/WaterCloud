@@ -3,11 +3,11 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'layer', 'optimizeSelectOption'], function () {
+    layui.use(['jquery', 'form', 'table', 'common', 'commonTable', 'optimizeSelectOption'], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
-            layer = layui.layer,
+            commonTable = layui.commonTable,
             common = layui.common;
         //加载数据
         wcLoading.close();
@@ -23,7 +23,7 @@
             }
 
         }
-        common.rendertable({
+        commonTable.rendertable({
             elem: '#currentTableId',
             id: 'currentTableId',
             url: "/SystemManage/ModuleButton/GetTreeGridJson?moduleId=" + moduleId,
@@ -79,7 +79,7 @@
         form.on('submit(data-search-btn)', function (data) {
             var queryJson = data.field.txt_keyword;
             //执行搜索重载
-            common.reloadtable({
+            commonTable.reloadtable({
                 elem: 'currentTableId',
                 curr: 1,
                 queryJson: queryJson

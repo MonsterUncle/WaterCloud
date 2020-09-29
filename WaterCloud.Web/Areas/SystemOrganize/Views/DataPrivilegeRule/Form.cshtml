@@ -3,12 +3,12 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
     <script>
-        layui.use(['jquery', 'table', 'form', 'laydate', 'common', 'optimizeSelectOption'], function () {
+        layui.use(['jquery', 'table', 'form', 'commonTable', 'common', 'optimizeSelectOption'], function () {
             var form = layui.form,
                 $ = layui.$,
                 common = layui.common,
                 table = layui.table,
-            laydate = layui.laydate;
+                commonTable = layui.commonTable;
             var keyValue = $.request("keyValue");
             if (!!keyValue) {
                 $('#F_ModuleId').prop('disabled', true);
@@ -43,7 +43,7 @@
                 form.render();
             });
             wcLoading.close();
-            common.rendertable({
+            commonTable.rendertable({
                 elem: '#currentTableId',
                 id: 'currentTableId',
                 data: [],

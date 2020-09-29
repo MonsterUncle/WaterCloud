@@ -3,14 +3,15 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
     <script>
-        layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption'], function () {
+        layui.use(['jquery', 'form', 'table', 'common','commonTable', 'optimizeSelectOption'], function () {
             var $ = layui.jquery,
                 form = layui.form,
                 table = layui.table,
+                commonTable = layui.commonTable,
                 common = layui.common;
             //权限控制(js是值传递)
             toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-            common.rendertable({
+            commonTable.rendertable({
                 elem: '#currentTableId',
                 id: 'currentTableId',
                 url: '/SystemOrganize/Duty/GetGridJson',
@@ -52,7 +53,7 @@
             // 监听搜索操作
             form.on('submit(data-search-btn)', function (data) {
                 //执行搜索重载
-                common.reloadtable({
+                commonTable.reloadtable({
                     elem: 'currentTableId',
                     curr: 1,
                     where: { keyword: data.field.txt_keyword }

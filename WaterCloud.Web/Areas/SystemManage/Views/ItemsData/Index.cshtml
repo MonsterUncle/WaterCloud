@@ -10,10 +10,10 @@
 </style>
 <script>
 
-    layui.use(['jquery', 'form', 'table', 'common', 'dtree', 'miniTab', 'optimizeSelectOption'], function () {
+    layui.use(['jquery', 'form', 'table', 'common', 'dtree', 'commonTable', 'optimizeSelectOption'], function () {
         var $ = layui.jquery,
             form = layui.form,
-            miniTab = layui.miniTab,
+            commonTable = layui.commonTable,
             table = layui.table,
             dtree = layui.dtree,
             common = layui.common;
@@ -54,7 +54,7 @@
         //        }
         //    });
         //}
-        common.rendertable({
+        commonTable.rendertable({
             elem: '#currentTableId',
             url: "/SystemManage/ItemsData/GetGridJson",
             where: {
@@ -107,7 +107,7 @@
             //}
             //var itemId = $("#itemTree").getCurrentNode().id;
             //执行搜索重载
-            common.reloadtable({
+            commonTable.reloadtable({
                 elem: 'currentTableId',
                 page: false,
                 where: {

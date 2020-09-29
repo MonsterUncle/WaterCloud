@@ -89,12 +89,13 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'layer', 'element', 'table', 'jquery', 'common', 'optimizeSelectOption'], function () {
-        var layer = layui.layer,
+    layui.use(['form', 'commonTable', 'element', 'table', 'jquery', 'common', 'optimizeSelectOption'], function () {
+        var commonTable = layui.commonTable,
             $ = layui.jquery,
             table = layui.table,
-            common = layui.common;
-        var form = layui.form;
+            common = layui.common,
+            element = layui.element,
+            form = layui.form;
         var Method = $.request("Method");
         //从flowschemes.js进入的节点信息
         var node = parent.FlowDesignObject;
@@ -135,7 +136,7 @@
 
             }
         }
-        common.rendertable({
+        commonTable.rendertable({
             elem: '#UserId',
             id: 'UserId',
             url: '/SystemOrganize/User/GetListJson?ids=' + (!!userids ? userids : ""),
@@ -173,7 +174,7 @@
                 }
             ]]
         });
-        common.rendertable({
+        commonTable.rendertable({
             elem: '#RoleId',
             id: 'RoleId',
             url: '/SystemOrganize/Role/GetSelectJson?ids=' + (!!roleids ? roleids : ""),

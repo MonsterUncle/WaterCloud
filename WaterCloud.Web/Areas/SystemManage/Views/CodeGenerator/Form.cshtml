@@ -36,11 +36,11 @@
             }
         }).sortable();
     };
-    layui.use(['element', 'table', 'form', 'step', 'common', 'dtree', 'laydate', 'xmSelect', 'optimizeSelectOption'], function () {
+    layui.use(['element', 'table', 'form', 'step', 'common', 'dtree', 'laydate', 'commonTable', 'optimizeSelectOption'], function () {
         var $ = layui.$,
             form = layui.form,
             element = layui.element,
-            xmSelect = layui.xmSelect,
+            commonTable = layui.commonTable,
             dtree = layui.dtree,
             table = layui.table,
             laydate = layui.laydate,
@@ -196,7 +196,7 @@
         //for (var i = 0; i < templist.length; i++) {
         //    columnList.append([templist[i].id]);
         //}
-        common.rendertable({
+        commonTable.rendertable({
             elem: '#currentTableId',
             id: 'currentTableId',
             data: [],

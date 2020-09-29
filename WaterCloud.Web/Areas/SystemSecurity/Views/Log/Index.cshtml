@@ -54,21 +54,22 @@
         </div>
     </div>
     <script>
-        layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption'], function () {
+        layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption', 'commonTable'], function () {
             var $ = layui.jquery,
                 form = layui.form,
                 table = layui.table,
+                commonTable = layui.commonTable,
                 common = layui.common;
             //加载数据
             wcLoading.close();
             //权限控制(js是值传递)
             toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-            common.rendertable({
+            commonTable.rendertable({
                 elem: '#currentTableId',
                 id: 'currentTableId',
                 url: '/SystemSecurity/Log/GetGridJson',
                 cols: [[
-                    { field: 'F_Account', title: '账户', width: 100, sort: true},
+                    { field: 'F_Account', title: '账户', width: 100, sort: true },
                     { field: 'F_NickName', title: '姓名', width: 100, sort: true },
                     { field: 'F_ModuleName', title: '操作菜单', width: 220, sort: true },
                     {
@@ -83,13 +84,13 @@
                             return d.F_IPAddress + ";" + d.F_IPAddressName;
                         }, sort: true
                     },
-                    { field: 'F_KeyValue', title: '操作对象', width: 300, hide: true},
+                    { field: 'F_KeyValue', title: '操作对象', width: 300, hide: true },
                     {
                         field: 'F_CreatorTime', title: '创建时间', width: 180,
                         templet: function (d) {
                             if (d.F_CreatorTime) {
                                 return new Date(d.F_CreatorTime).Format("yyyy-MM-dd hh:mm:ss");
-                                
+
                             }
                         }
                     },
@@ -115,9 +116,9 @@
             });
             // 监听搜索操作
             form.on('submit(data-search-btn)', function (data) {
-                var queryJson =JSON.stringify(data.field);
+                var queryJson = JSON.stringify(data.field);
                 //执行搜索重载
-                common.reloadtable({
+                commonTable.reloadtable({
                     elem: 'currentTableId',
                     curr: 1,
                     where: { timetype: data.field.time_horizon, keyword: data.field.txt_keyword }
@@ -140,7 +141,7 @@
                 }
                 return false;
             });
-         });
+        });
     </script>
 
 </body>

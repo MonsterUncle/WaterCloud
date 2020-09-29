@@ -508,10 +508,10 @@ namespace WaterCloud.CodeGenerator
 
             #region js layui方法
             sb.AppendLine(" <script>");
-            sb.AppendLine("     layui.use(['jquery', 'form',"+ (baseConfigModel.PageIndex.IsTree == 1 ? "'treeTable'" : "'table'") + ", 'common','optimizeSelectOption'], function () {");
+            sb.AppendLine("     layui.use(['jquery', 'form',"+ (baseConfigModel.PageIndex.IsTree == 1 ? "'treeTable'" : "'table','commonTable'") + ", 'common','optimizeSelectOption'], function () {");
             sb.AppendLine("         var $ = layui.jquery,");
             sb.AppendLine("             form = layui.form,");
-            sb.AppendLine("             " + (baseConfigModel.PageIndex.IsTree == 1 ? "treeTable = layui.treeTable," : "table = layui.table,"));
+            sb.AppendLine("             " + (baseConfigModel.PageIndex.IsTree == 1 ? "treeTable = layui.treeTable," : "table = layui.table,commonTable = layui.commonTable"));
             sb.AppendLine("             common = layui.common;");
             sb.AppendLine("         var entity;");
             sb.AppendLine("         //权限控制(js是值传递)");
@@ -559,7 +559,7 @@ namespace WaterCloud.CodeGenerator
             }
             else
             {
-                sb.AppendLine("         common.rendertable({");
+                sb.AppendLine("         commonTable.rendertable({");
                 sb.AppendLine("             elem: '#currentTableId',");
                 sb.AppendLine("             id: 'currentTableId',");
                 sb.AppendLine("             url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetGridJson',");
@@ -587,7 +587,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("         // 监听搜索操作");
                 sb.AppendLine("         form.on('submit(data-search-btn)', function (data) {");
                 sb.AppendLine("             //执行搜索重载");
-                sb.AppendLine("             common.reloadtable({");
+                sb.AppendLine("             commonTable.reloadtable({");
                 if (baseConfigModel.PageIndex.IsPagination != 1)
                 {
                     sb.AppendLine("                 page: false,");

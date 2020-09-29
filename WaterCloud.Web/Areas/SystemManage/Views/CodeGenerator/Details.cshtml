@@ -3,14 +3,13 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption'], function () {
+    layui.use(['jquery', 'form', 'commonTable', 'optimizeSelectOption'], function () {
         var $ = layui.jquery,
             form = layui.form,
-            table = layui.table,
-            common = layui.common;
+            commonTable = layui.commonTable;
         var keyValue = $.request("keyValue");
         wcLoading.close();
-        common.rendertable({
+        commonTable.rendertable({
             elem: '#currentTableId',
             url: '/SystemManage/CodeGenerator/GetTableFieldJson?keyValue=' + keyValue,
             toolbar: false,
@@ -27,7 +26,7 @@
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             //执行搜索重载
-            common.reloadtable({
+            commonTable.reloadtable({
                 elem: 'currentTableId',
                 page: false,
                 curr: 1,

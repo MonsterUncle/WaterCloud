@@ -3,8 +3,8 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
     <script>
-        layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption'], function () {
-            var $ = layui.jquery,
+        layui.use(['commonTable', 'form', 'table', 'common', 'optimizeSelectOption'], function () {
+            var commonTable = layui.commonTable,
                 form = layui.form,
                 table = layui.table,
                 common = layui.common;
@@ -12,7 +12,7 @@
             wcLoading.close();
             //权限控制(js是值传递)
             toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-            common.rendertable({
+            commonTable.rendertable({
                 elem: '#currentTableId',
                 id: 'currentTableId',
                 url: '/SystemSecurity/OpenJobs/GetGridJson',
@@ -66,7 +66,7 @@
             // 监听搜索操作
             form.on('submit(data-search-btn)', function (data) {
                 //执行搜索重载
-                common.reloadtable({
+                commonTable.reloadtable({
                     elem: 'currentTableId',
                     page: false,
                     curr: 1,

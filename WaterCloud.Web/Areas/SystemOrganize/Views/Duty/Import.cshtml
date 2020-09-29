@@ -16,13 +16,14 @@
     </div>
 </div>
 <script>
-    layui.use(['jquery', 'table', 'upload', 'common'], function () {
+    layui.use(['jquery', 'table', 'upload', 'common', 'commonTable'], function () {
         var $ = layui.jquery,
             table = layui.table,
             upload = layui.upload,
+            commonTable = layui.commonTable,
             common = layui.common;
         var dataJson = [];
-        common.rendertable({
+        commonTable.rendertable({
             elem: '#currentTableId',
             id: 'currentTableId',
             data: dataJson,
@@ -47,7 +48,7 @@
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                         }
                     }
-                }, 
+                },
                 { field: 'F_Description', title: '备注', minWidth: 150, sort: true },
             ]]
         });

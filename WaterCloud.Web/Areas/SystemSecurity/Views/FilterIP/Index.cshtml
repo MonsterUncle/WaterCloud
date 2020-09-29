@@ -3,21 +3,21 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption'], function () {
-        var $ = layui.jquery,
-            form = layui.form,
+    layui.use(['form', 'table', 'common', 'commonTable', 'optimizeSelectOption'], function () {
+        var form = layui.form,
             table = layui.table,
+            commonTable = layui.commonTable,
             common = layui.common;
         //加载数据
         wcLoading.close();
         //权限控制(js是值传递)
         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-       common.rendertable({
-           elem: '#currentTableId',
-           id: 'currentTableId',
+        commonTable.rendertable({
+            elem: '#currentTableId',
+            id: 'currentTableId',
             url: '/SystemSecurity/FilterIP/GetGridJson',
-           page: false,
-            cols: [[                
+            page: false,
+            cols: [[
                 {
                     field: 'F_Type', title: '策略类型', width: 120, sort: true,
                     templet: function (d) {
@@ -49,15 +49,15 @@
                         }
                     }
                 },
-                { field: 'F_Description', title: '备注', minWidth: 150},
-           ]]
-       });
+                { field: 'F_Description', title: '备注', minWidth: 150 },
+            ]]
+        });
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             //执行搜索重载
-            common.reloadtable({
+            commonTable.reloadtable({
                 elem: 'currentTableId',
-                page:false,
+                page: false,
                 curr: 1,
                 where: { keyword: data.field.txt_keyword }
             });
@@ -82,7 +82,7 @@
                 });
             }
             else if (obj.event === 'delete') {
-                if (fitlerIP==null) {
+                if (fitlerIP == null) {
                     common.modalMsg("未选中数据", "warning");
                     return false;
                 }
@@ -106,7 +106,7 @@
                     height: "480px",
                 });
             }
-            else if (obj.event === 'details'){
+            else if (obj.event === 'details') {
                 if (fitlerIP == null) {
                     common.modalMsg("未选中数据", "warning");
                     return false;
@@ -116,7 +116,7 @@
                     url: "/SystemSecurity/FilterIP/Details?keyValue=" + fitlerIP.data.F_Id,
                     width: "450px",
                     height: "450px",
-                    btn:[]
+                    btn: []
                     //callBack: function (index) {
                     //    var iframe = "layui-layer-iframe" + index;
                     //    window.frames[iframe].submitForm();

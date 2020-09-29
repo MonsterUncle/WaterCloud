@@ -3,18 +3,16 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'miniTab', 'layer', 'optimizeSelectOption'], function () {
-        var $ = layui.jquery,
-            form = layui.form,
+    layui.use(['form', 'table', 'common', 'commonTable', 'optimizeSelectOption'], function () {
+        var form = layui.form,
             table = layui.table,
-            layer = layui.layer,
-            miniTab = layui.miniTab,
+            commonTable = layui.commonTable,
             common = layui.common;
         //加载数据
         wcLoading.close();
         //权限控制(js是值传递)
         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-        common.rendertable({
+        commonTable.rendertable({
             elem: '#currentTableId',
             url: '/SystemManage/CodeGenerator/GetTablePageListJson',
             sqlkey: 'TableName',//数据库主键
@@ -29,7 +27,7 @@
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             //执行搜索重载
-            common.reloadtable({
+            commonTable.reloadtable({
                 elem: 'currentTableId',
                 curr: 1,
                 where: { keyword: data.field.txt_keyword}
