@@ -21,7 +21,7 @@
                     { field: 'F_JobName', title: '名称', width: 150 },
                     { field: 'F_JobGroup', title: '组名', width: 150 },
                     { field: 'F_FileName', title: '文件名', minWidth: 200 },
-                    { field: 'F_CronExpress', title: 'CRON', minWidth: 180 },
+                    { field: 'F_CronExpress', title: 'CRON', width: 180 },
                     {
                         field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
                         templet: function (d) {
@@ -39,6 +39,7 @@
                                 var time = new Date(d.F_LastRunTime);
                                 return time.Format("yyyy-MM-dd hh:mm:ss");
                             }
+                            return '';
                         }
                     },
                     {
@@ -48,6 +49,7 @@
                                 var time = new Date(d.F_StarRunTime);
                                 return time.Format("yyyy-MM-dd hh:mm:ss");
                             }
+                            return '';
                         }
                     },
                     {
@@ -57,10 +59,11 @@
                                 var time = new Date(d.F_EndRunTime);
                                 return time.Format("yyyy-MM-dd hh:mm:ss");
                             }
+                            return '';
                         }
                     },
 
-                    { field: 'F_Description', title: '备注', width: 200 },
+                    { field: 'F_Description', title: '备注', minWidth: 200 },
                 ]]
             });
             // 监听搜索操作
