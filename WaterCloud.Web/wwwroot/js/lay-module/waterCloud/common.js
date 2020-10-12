@@ -712,7 +712,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         ajax: function (options) {
             var defaults = {
                 dataType: "json",
-                async: false,
+                async: true,
                 type: "GET"
             };
             var options = $.extend(defaults, options);
