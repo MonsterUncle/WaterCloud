@@ -84,8 +84,8 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 entity.Create();
                 await repository.Insert(entity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
+            await CacheHelper.Remove(cacheKey + "list");
         }
         public async Task DeleteForm(string keyValue)
         {
@@ -140,7 +140,6 @@ namespace WaterCloud.Service.SystemSecurity
                                                  .WithCronSchedule(job.F_CronExpress)
                                                  .Build();
                 await _scheduler.ScheduleJob(jobdetail, trigger);
-                await _scheduler.Start();
                 job.F_EnabledMark = true;
                 job.F_StarRunTime = DateTime.Now;
             }

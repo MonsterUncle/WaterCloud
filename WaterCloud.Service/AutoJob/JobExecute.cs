@@ -56,6 +56,7 @@ namespace WaterCloud.Service.AutoJob
                                         // 更新任务周期
                                         trigger.CronExpressionString = dbJobEntity.F_CronExpress;
                                         await _scheduler.RescheduleJob(trigger.Key, trigger);
+                                        return;
                                     }
                                     #region 执行任务
                                     //反射执行就行

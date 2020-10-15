@@ -34,6 +34,7 @@ namespace WaterCloud.Service.AutoJob
                 {
                     await AddScheduleJob(obj);
                 }
+                await _scheduler.Start();
                 //if (!GlobalContext.SystemConfig.Debug)
                 //{
                 //    List<OpenJobEntity> obj = await new OpenJobService().GetList(null);
@@ -70,9 +71,7 @@ namespace WaterCloud.Service.AutoJob
                                                  .WithIdentity(entity.F_JobName, entity.F_JobGroup)
                                                  .WithCronSchedule(entity.F_CronExpress)
                                                  .Build();
-
                     await _scheduler.ScheduleJob(job, trigger);
-                    await _scheduler.Start();
                 }
             }
             catch (Exception ex)
