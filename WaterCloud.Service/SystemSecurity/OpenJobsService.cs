@@ -93,6 +93,15 @@ namespace WaterCloud.Service.SystemSecurity
             await CacheHelper.Remove(cacheKey + keyValue);
             await CacheHelper.Remove(cacheKey + "list");
         }
+
+        public async Task UpdataLastRuntime(string keyValue)
+        {
+            await repository.Update(t => t.F_Id == keyValue,a=>new OpenJobEntity { 
+               F_LastRunTime=DateTime.Now           
+            });
+            await CacheHelper.Remove(cacheKey + keyValue);
+            await CacheHelper.Remove(cacheKey + "list");
+        }
         #region 定时任务运行相关操作
 
         /// <summary>
