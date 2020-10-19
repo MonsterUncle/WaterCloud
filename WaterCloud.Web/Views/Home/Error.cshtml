@@ -41,6 +41,8 @@
     <script src="~/js/lay-config.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
     <script src="~/js/framework-ui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script type="text/javascript">
+        window.onbeforeunload = returnIndex;
+        window.onunload = returnIndex;
         layui.use(['layer'], function () {
             var $ = layui.$;
             var msg = $.request("msg");
