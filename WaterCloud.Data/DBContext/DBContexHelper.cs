@@ -10,6 +10,7 @@ namespace WaterCloud.DataBase
     {
         private static string dbType = GlobalContext.SystemConfig.DBProvider;
         private static string dbConnectionString = GlobalContext.SystemConfig.DBConnectionString;
+        private static string DBCommandTimeout = GlobalContext.SystemConfig.DBCommandTimeout;
 
         public static IDbContext Contex(string ConnectStr = "", string providerName = "")
         {
@@ -20,17 +21,21 @@ namespace WaterCloud.DataBase
             {
                 case Define.DBTYPE_SQLSERVER:
                     context = new MsSqlContext(ConnectStr);
+                    context.Session.CommandTimeout = int.Parse(DBCommandTimeout);
                     break;
                 case Define.DBTYPE_MYSQL:
                     context = new MySqlContext(new MySqlConnectionFactory(ConnectStr));
+                    context.Session.CommandTimeout = int.Parse(DBCommandTimeout);
                     break;
                 case Define.DBTYPE_ORACLE:
                     var con = new OracleContext(new OracleConnectionFactory(ConnectStr));
+                    con.Session.CommandTimeout = int.Parse(DBCommandTimeout);
                     con.ConvertToUppercase = false;
                     context = con;
                     break;
                 default:
                     context = new MsSqlContext(ConnectStr);
+                    context.Session.CommandTimeout = int.Parse(DBCommandTimeout);
                     break;
             }
             return context;
