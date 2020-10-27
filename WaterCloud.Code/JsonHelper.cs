@@ -55,7 +55,7 @@ namespace WaterCloud.Code
         {
             return Json == null ? null : JsonConvert.DeserializeObject<List<T>>(Json);
         }
-        public static string ToJson(this object obj, string dateFormat = "yyyy/MM/dd hh:mm:ss")
+        public static string ToJson(this object obj, string dateFormat = "yyyy/MM/dd HH:mm:ss")
         {
             return obj == null ? string.Empty : JsonConvert.SerializeObject(obj, new IsoDateTimeConverter { DateTimeFormat = dateFormat });
         }
@@ -122,7 +122,7 @@ namespace WaterCloud.Code
                 writer.WriteNull();
                 return;
             }
-            writer.WriteValue(dt.Value.ToString("yyyy/MM/dd hh:mm:ss"));
+            writer.WriteValue(dt.Value.ToString("yyyy/MM/dd HH:mm:ss"));
         }
     }
     #endregion
