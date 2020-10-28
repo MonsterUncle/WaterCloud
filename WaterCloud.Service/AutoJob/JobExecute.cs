@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -61,7 +61,8 @@ namespace WaterCloud.Service.AutoJob
                                     #region 执行任务
                                     //反射执行就行
                                     var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
-                                    var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
+                                    //反射取指定前后缀的dll
+                                    var referencedAssemblies = Directory.GetFiles(path, "WaterCloud.*.dll").Select(Assembly.LoadFrom).ToArray();
                                     var types = referencedAssemblies
                                         .SelectMany(a => a.GetTypes().Where(t => t.GetInterfaces()
                                         .Contains(typeof(IJobTask)))).ToArray();
