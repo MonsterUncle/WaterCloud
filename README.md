@@ -1,5 +1,9 @@
 # WaterCloud
 
+<div class="cover-main">
+    <image width="100px" src="https://watercloud.vip/icon/favicon.ico">
+</div>
+
 #### 介绍
 
 - 请勿用于违反我国法律的web平台、如诈骗等非法平台网站。
