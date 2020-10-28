@@ -17,6 +17,7 @@
 ![](https://img.shields.io/badge/Quartz-3.0.7-brightgreen)
 ![](https://img.shields.io/badge/Autofac-5.2.0-brightgreen)
 ![](https://img.shields.io/badge/SignalR-4.2.2-brightgreen)
+</div>
 
 ----
 # WaterCloud
