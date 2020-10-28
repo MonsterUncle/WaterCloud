@@ -1,8 +1,23 @@
-# WaterCloud
+<p></p>
+<p></p>
 
-<div class="cover-main">
-    <image width="100px" src="https://watercloud.vip/icon/favicon.ico">
+<p align="center">
+<img src="https://watercloud.vip/icon/favicon.ico" height="80"/>
+</p>
+<div align="center">
+
+[![star](https://gitee.com/qian_wei_hong/WaterCloud_Core/badge/star.svg)](https://gitee.com/qian_wei_hong/WaterCloud_Core/stargazers) 
+[![fork](https://gitee.com/qian_wei_hong/WaterCloud_Core/badge/fork.svg)](https://gitee.com/qian_wei_hong/WaterCloud_Core/members)
 </div>
+
+<div align="center">
+
+WaterCloud 敏捷开发框架
+
+</div>
+
+
+# WaterCloud
 
 #### 介绍
 
