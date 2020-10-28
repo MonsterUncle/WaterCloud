@@ -22,7 +22,7 @@
 
 - .net版地址：https://gitee.com/qian_wei_hong/WaterCloud
 - 项目演示地址：http://www.watercloud.vip/  （账号：admin 密码：0000，数据库2个小时还原一次）
-- 文档地址：http://qian_wei_hong.gitee.io/waterclouddocument/#/
+- 文档地址：https://gitee.com/qian_wei_hong/WaterCloud_Core/wikis/pages
 
 #### 前端以及后端使用技术介绍
 
