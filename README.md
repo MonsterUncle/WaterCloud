@@ -8,7 +8,7 @@
 
 [![star](https://gitee.com/qian_wei_hong/WaterCloud_Core/badge/star.svg)](https://gitee.com/qian_wei_hong/WaterCloud_Core/stargazers) 
 [![fork](https://gitee.com/qian_wei_hong/WaterCloud_Core/badge/fork.svg)](https://gitee.com/qian_wei_hong/WaterCloud_Core/members)
-![](https://img.shields.io/badge/release-1.7-red)
+![](https://img.shields.io/badge/release-1.1.7-red)
 
 ![](https://img.shields.io/badge/.net%20core-3.1.0-blue)
 ![](https://img.shields.io/badge/Chloe-4.8.0-blue)
