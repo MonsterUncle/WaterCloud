@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright © 2020 WaterCloud.Framework 版权所有
  * Author: WaterCloud
  * Description: WaterCloud快速开发平台
@@ -31,7 +31,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
                 pagination.rows = 99999999;
                 pagination.page = 1;
             }
-            var data =await _logService.GetLookList(pagination, timetype, keyword);
+            var data =await _logService.GetList(pagination, timetype, keyword);
             return Success(pagination.records, data);
         }
         [HttpPost]
