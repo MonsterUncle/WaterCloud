@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright © 2020 WaterCloud.Framework 版权所有
  * Author: WaterCloud
  * Description: WaterCloud快速开发平台
@@ -20,6 +20,7 @@ namespace WaterCloud.Service.SystemSecurity
     {
         //登录信息保存方式
         private string LoginProvider = GlobalContext.SystemConfig.LoginProvider;
+        private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
         private ModuleService moduleservice;
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
@@ -27,14 +28,10 @@ namespace WaterCloud.Service.SystemSecurity
         {
             moduleservice = new ModuleService(context);
         }
-        public async Task<List<LogEntity>> GetLookList(Pagination pagination, int timetype, string keyword="")
+        public async Task<List<LogEntity>> GetList(Pagination pagination, int timetype, string keyword="")
         {
             //获取数据权限
-            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                list = list.Where(u => u.F_Account.Contains(keyword) || u.F_Description.Contains(keyword) || u.F_ModuleName.Contains(keyword));
-            }
+            var result = new List<LogEntity>();
             DateTime startTime = DateTime.Now.ToString("yyyy-MM-dd").ToDate();
             DateTime endTime = DateTime.Now.ToString("yyyy-MM-dd").ToDate().AddDays(1);
             switch (timetype)
@@ -53,12 +50,41 @@ namespace WaterCloud.Service.SystemSecurity
                 default:
                     break;
             }
-            list = list.Where(t => t.F_Date >= startTime && t.F_Date <= endTime);
-            return GetFieldsFilterData(await repository.OrderList(list, pagination), className.Substring(0, className.Length - 7));
+            if (HandleLogProvider=="Sql")
+            {
+                var list = repository.IQueryable();
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    list = list.Where(u => u.F_Account.Contains(keyword) || u.F_Description.Contains(keyword) || u.F_ModuleName.Contains(keyword));
+                }
+
+                list = list.Where(t => t.F_Date >= startTime && t.F_Date <= endTime);
+                result = await repository.OrderList(list, pagination);
+            }
+            else
+            {
+                result = HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList();
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    result = result.Where(u => u.F_Account.Contains(keyword) || u.F_Description.Contains(keyword) || u.F_ModuleName.Contains(keyword)).Where(t => t.F_Date >= startTime && t.F_Date <= endTime).ToList();
+                }
+                else
+                {
+                    result = result.Where(t => t.F_Date >= startTime && t.F_Date <= endTime).ToList();
+                }
+            }
+            return GetFieldsFilterData(result, className.Substring(0, className.Length - 7));
         }
         public async Task<List<LogEntity>> GetList()
-        {           
-            return repository.IQueryable().ToList();
+        {
+            if (HandleLogProvider == "Sql")
+            {
+                return repository.IQueryable().ToList();
+            }
+            else
+            {
+                return HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList(); ;
+            }
         }
         public async Task RemoveLog(string keepTime)
         {
@@ -75,9 +101,18 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 operateTime = DateTime.Now.AddMonths(-3);
             }
-            var expression = ExtLinq.True<LogEntity>();
-            expression = expression.And(t => t.F_Date <= operateTime);
-            await repository.Delete(expression);
+            if (HandleLogProvider == "Sql")
+            {
+                var expression = ExtLinq.True<LogEntity>();
+                expression = expression.And(t => t.F_Date <= operateTime);
+                await repository.Delete(expression);
+            }
+            else
+            {
+                var list = HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList();
+                var strList = list.Where(t => t.F_Date <= operateTime).Select(a=>a.F_Id).ToList();
+                await HandleLogHelper.HDelAsync(currentuser.CompanyId, strList.ToArray());
+            }
         }
         public async Task WriteDbLog(bool result, string resultLog)
         {
@@ -92,7 +127,14 @@ namespace WaterCloud.Service.SystemSecurity
             logEntity.F_Result = result;
             logEntity.F_Description = resultLog;
             logEntity.Create();
-            await repository.Insert(logEntity);
+            if (HandleLogProvider == "Sql")
+            {
+                await repository.Insert(logEntity);
+            }
+            else
+            {
+                await HandleLogHelper.HSetAsync(currentuser.CompanyId, logEntity.F_Id, logEntity);
+            }
         }
         public async Task WriteDbLog(LogEntity logEntity)
         {
@@ -113,7 +155,14 @@ namespace WaterCloud.Service.SystemSecurity
                     logEntity.F_CompanyId = currentuser.CompanyId;
                 }
                 logEntity.Create();
-                await repository.Insert(logEntity);
+                if (HandleLogProvider == "Sql")
+                {
+                    await repository.Insert(logEntity);
+                }
+                else
+                {
+                    await HandleLogHelper.HSetAsync(logEntity.F_CompanyId, logEntity.F_Id, logEntity);
+                }
             }
             catch (Exception ex)
             {
@@ -121,7 +170,14 @@ namespace WaterCloud.Service.SystemSecurity
                 logEntity.F_IPAddressName = "本地局域网";
                 logEntity.F_CompanyId = Define.SYSTEM_MASTERPROJECT;
                 logEntity.Create();
-                await repository.Insert(logEntity);
+                if (HandleLogProvider == "Sql")
+                {
+                    await repository.Insert(logEntity);
+                }
+                else
+                {
+                    await HandleLogHelper.HSetAsync(logEntity.F_CompanyId, logEntity.F_Id, logEntity);
+                }
             }
         }
 
