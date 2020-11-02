@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -49,6 +49,7 @@ namespace WaterCloud.Code.Model
         public string DBBackup { get; set; }
 
         public string CacheProvider { get; set; }
+        public string HandleLogProvider { get; set; }
         public string RedisConnectionString { get; set; }
     }
 }
