@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -51,10 +51,13 @@ namespace WaterCloud.WebApi
             {
                 //redis 注入服务
                 string redisConnectiong = Configuration.GetSection("SystemConfig:RedisConnectionString").Value;
-                // 多客户端
-                var redisDB = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
-                RedisHelper.Initialization(redisDB);
-                services.AddSingleton(redisDB);
+                // 多客户端 1、基础 2、操作日志
+                var redisDB1 = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
+                BaseHelper.Initialization(redisDB1);
+                var redisDB2 = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 1);
+                HandleLogHelper.Initialization(redisDB2);
+                services.AddSingleton(redisDB1);
+                services.AddSingleton(redisDB2);
             }
             //注入数据库连接
             services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
