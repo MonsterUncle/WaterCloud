@@ -464,8 +464,10 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         },
         //父窗体刷新（按钮刷新）
         parentreload: function (filter) {
-            var iframe = obj.currentWindow();
-            iframe.$('button[lay-filter="' + filter + '"]').click();
+            var iframes = top.$(".layui-show>iframe");
+            if (iframes.length > 0) {
+                iframes[0].contentWindow.$('button[lay-filter="' + filter + '"]').click();
+            }
         },
         currentWindow: function () {
             var iframes = top.$(".layui-show>iframe");
