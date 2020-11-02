@@ -50,7 +50,7 @@ namespace WaterCloud.Service.SystemSecurity
                 default:
                     break;
             }
-            if (HandleLogProvider=="Sql")
+            if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
                 var list = repository.IQueryable();
                 if (!string.IsNullOrEmpty(keyword))
@@ -77,7 +77,7 @@ namespace WaterCloud.Service.SystemSecurity
         }
         public async Task<List<LogEntity>> GetList()
         {
-            if (HandleLogProvider == "Sql")
+            if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
                 return repository.IQueryable().ToList();
             }
@@ -101,7 +101,7 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 operateTime = DateTime.Now.AddMonths(-3);
             }
-            if (HandleLogProvider == "Sql")
+            if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
                 var expression = ExtLinq.True<LogEntity>();
                 expression = expression.And(t => t.F_Date <= operateTime);
@@ -127,7 +127,7 @@ namespace WaterCloud.Service.SystemSecurity
             logEntity.F_Result = result;
             logEntity.F_Description = resultLog;
             logEntity.Create();
-            if (HandleLogProvider == "Sql")
+            if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
                 await repository.Insert(logEntity);
             }
@@ -155,7 +155,7 @@ namespace WaterCloud.Service.SystemSecurity
                     logEntity.F_CompanyId = currentuser.CompanyId;
                 }
                 logEntity.Create();
-                if (HandleLogProvider == "Sql")
+                if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
                     await repository.Insert(logEntity);
                 }
@@ -170,7 +170,7 @@ namespace WaterCloud.Service.SystemSecurity
                 logEntity.F_IPAddressName = "本地局域网";
                 logEntity.F_CompanyId = Define.SYSTEM_MASTERPROJECT;
                 logEntity.Create();
-                if (HandleLogProvider == "Sql")
+                if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
                     await repository.Insert(logEntity);
                 }
