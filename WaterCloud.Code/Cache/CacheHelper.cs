@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace WaterCloud.Code
 {
+    public abstract class BaseHelper : RedisHelper<BaseHelper> { }
+    public abstract class HandleLogHelper : RedisHelper<HandleLogHelper> { }
     public class CacheHelper
     {
         private static string cacheProvider = GlobalContext.SystemConfig.CacheProvider;
@@ -28,11 +30,11 @@ namespace WaterCloud.Code
                 case Define.CACHEPROVIDER_REDIS:
                     if (expiresIn > 0)
                     {
-                      await RedisHelper.SetAsync(key, value, expiresIn*3600);
+                      await BaseHelper.SetAsync(key, value, expiresIn*3600);
                     }
                     else
                     {
-                        await RedisHelper.SetAsync(key, value);
+                        await BaseHelper.SetAsync(key, value);
                     }
                     return await Exists(key);
                 case Define.CACHEPROVIDER_MEMORY:
@@ -70,7 +72,7 @@ namespace WaterCloud.Code
             switch (cacheProvider)
             {
                 case Define.CACHEPROVIDER_REDIS:
-                    return await RedisHelper.GetAsync<T>(key);
+                    return await BaseHelper.GetAsync<T>(key);
                 case Define.CACHEPROVIDER_MEMORY:
                     return MemoryCacheHelper.Get<T>(key);
                 default:
@@ -90,7 +92,7 @@ namespace WaterCloud.Code
             switch (cacheProvider)
             {
                 case Define.CACHEPROVIDER_REDIS:
-                    await RedisHelper.DelAsync(key);
+                    await BaseHelper.DelAsync(key);
                     break;
                 case Define.CACHEPROVIDER_MEMORY:
                     MemoryCacheHelper.Remove(key);
@@ -110,7 +112,7 @@ namespace WaterCloud.Code
             switch (cacheProvider)
             {
                 case Define.CACHEPROVIDER_REDIS:
-                    return  await RedisHelper.ExistsAsync(key);
+                    return  await BaseHelper.ExistsAsync(key);
                 case Define.CACHEPROVIDER_MEMORY:
                     return MemoryCacheHelper.Exists(key);
                 default:
@@ -127,7 +129,7 @@ namespace WaterCloud.Code
             switch (cacheProvider)
             {
                 case Define.CACHEPROVIDER_REDIS:
-                    await RedisHelper.NodesServerManager.FlushAllAsync();
+                    await BaseHelper.NodesServerManager.FlushDbAsync();
                     break;
                 case Define.CACHEPROVIDER_MEMORY:
                     MemoryCacheHelper.RemoveCacheAll();
