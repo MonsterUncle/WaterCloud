@@ -85,6 +85,7 @@
         public string[] users { get; set; }
         public string[] roles { get; set; }
         public string[] orgs { get; set; }
+        public bool currentDepart { get; set; }
     }
 
     /// <summary>

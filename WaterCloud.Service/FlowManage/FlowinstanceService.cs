@@ -468,8 +468,26 @@ namespace WaterCloud.Service.FlowManage
                     List<string> users = new List<string>();
                     foreach (var item in node.setInfo.NodeDesignateData.roles)
                     {
-                        var temp = uniwork.IQueryable<UserEntity>(a => a.F_RoleId.Contains(item)).Select(a => a.F_Id).ToList();
-                        users.AddRange(temp);
+                        var temp = uniwork.IQueryable<UserEntity>(a => a.F_RoleId.Contains(item)).ToList();
+                        var tempList = new List<UserEntity>();
+                        if (node.setInfo.NodeDesignateData.currentDepart)
+                        {
+                            var currentDepartment = currentuser.DepartmentId.Split(',').ToList();
+                            foreach (var user in temp)
+                            {
+                                var nextCurrentDepartment = user.F_DepartmentId.Split(',').ToList();
+                                if (TextHelper.IsArrayIntersection(currentDepartment, nextCurrentDepartment))
+                                {
+                                    tempList.Add(user);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            tempList = temp;
+                        }
+                        var tempFinal = tempList.Select(a => a.F_Id).ToList();
+                        users.AddRange(tempFinal);
                     }
                     users = users.Distinct().ToList();
                     makerList = JsonHelper.ArrayToString(users, makerList);

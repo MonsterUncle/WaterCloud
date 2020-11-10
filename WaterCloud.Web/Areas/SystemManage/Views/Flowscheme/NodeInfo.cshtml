@@ -65,8 +65,10 @@
                                 <input type="radio" name="NodeDesignate" lay-filter="NodeDesignate" value="SPECIAL_ROLE" title="指定角色">
                             </div>
                         </div>
+
                         <div class="layui-form-item">
                             <div class="layui-hide" id="specialrole">
+                                <input id="currentDepart" name="currentDepart" type="checkbox" value="true" title="当前部门">
                                 <div class="layui-input-block" style="margin-left: 0px;">
                                     <table class="layui-hide" id="RoleId" lay-filter="RoleTableFilter"></table>
                                 </div>
@@ -133,8 +135,11 @@
                 $('#specialrole').removeClass("layui-hide");
                 $('#specialuser').addClass("layui-hide");
                 $('#alluser').addClass("layui-hide");
-
+                form.val("adminform", {
+                    "currentDepart": tmp.NodeDesignateData.currentDepart
+                });
             }
+
         }
         commonTable.rendertable({
             elem: '#UserId',
@@ -269,6 +274,7 @@
                     users: users,
                     roles: roles,
                     orgs: [],
+					currentDepart:$('#currentDepart').is(':checked')?true:false,
                 }
             };
             //  $.extend(result, vm.tmp);
