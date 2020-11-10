@@ -174,7 +174,7 @@ namespace WaterCloud.Service.FlowManage
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ToUserId = flowInstance.F_CreatorUserId;
                 msg.F_ToUserName = flowInstance.F_CreatorUserName;
-                msg.F_ClickRead = false;
+                msg.F_ClickRead = true;
                 msg.F_KeyValue = flowInstance.F_Id;
             }
             else
@@ -304,9 +304,9 @@ namespace WaterCloud.Service.FlowManage
             MessageEntity msg = new MessageEntity();
             msg.F_CreatorUserName = currentuser.UserName;
             msg.F_EnabledMark = true;
-            if (flowInstance.F_IsFinish == 1)
+            if (flowInstance.F_IsFinish == 1|| flowInstance.F_IsFinish == 3)
             {
-                msg.F_MessageInfo = flowInstance.F_CustomName + "--流程已完成";
+                msg.F_MessageInfo = flowInstance.F_CustomName + (flowInstance.F_IsFinish == 3? "--流程已终止" : "--流程已完成");
                 var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
@@ -639,9 +639,9 @@ namespace WaterCloud.Service.FlowManage
             MessageEntity msg = new MessageEntity();
             msg.F_CreatorUserName = currentuser.UserName;
             msg.F_EnabledMark = true;
-            if (entity.F_IsFinish == 1)
+            if (entity.F_IsFinish == 1 || entity.F_IsFinish == 3)
             {
-                msg.F_MessageInfo = entity.F_CustomName + "--流程已完成";
+                msg.F_MessageInfo = entity.F_CustomName + (entity.F_IsFinish == 3 ? "--流程已终止" : "--流程已完成");
                 var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
@@ -741,9 +741,9 @@ namespace WaterCloud.Service.FlowManage
             MessageEntity msg = new MessageEntity();
             msg.F_CreatorUserName = currentuser.UserName;
             msg.F_EnabledMark = true;
-            if (entity.F_IsFinish == 1)
+            if (entity.F_IsFinish == 1 || entity.F_IsFinish == 3)
             {
-                msg.F_MessageInfo = entity.F_CustomName + "--流程已完成";
+                msg.F_MessageInfo = entity.F_CustomName + (entity.F_IsFinish == 3 ? "--流程已终止" : "--流程已完成");
                 var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
