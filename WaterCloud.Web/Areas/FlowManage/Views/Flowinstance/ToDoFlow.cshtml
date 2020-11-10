@@ -97,13 +97,13 @@
              entity = obj;
          })
          //toolbar监听事件
-         table.on('toolbar(currentTableFilter)', function (obj) { 
+         table.on('toolbar(currentTableFilter)', function (obj) {
              if (obj.event === 'vft') {
                  if (entity == null) {
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
-                 if (entity.data.F_IsFinish != 0) {
+                 if (entity.data.F_IsFinish != 0 && entity.data.F_IsFinish != 4) {
                      common.modalMsg("申请已处理，无法处理", "warning");
                      return false;
                  }

@@ -70,7 +70,7 @@ namespace WaterCloud.Service.FlowManage
             return GetFieldsFilterData(list.Where(a => a.F_EnabledMark == true).OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));
         }
 
-        public async Task<List<FlowinstanceEntity>> GetLookList(Pagination pagination,string type="", string keyword = "")
+        public async Task<List<FlowinstanceEntity>> GetLookList(Pagination pagination, string type = "", string keyword = "")
         {
             //获取数据权限
             var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
@@ -83,11 +83,11 @@ namespace WaterCloud.Service.FlowManage
 
             if (type == "todo")   //待办事项
             {
-                list = list.Where(u => (u.F_MakerList == "1" || u.F_MakerList.Contains(user.UserId)) && u.F_IsFinish == 0);
+                list = list.Where(u => (u.F_MakerList == "1" || u.F_MakerList.Contains(user.UserId)) && (u.F_IsFinish == 0|| u.F_IsFinish == 4));
             }
             else if (type == "done")  //已办事项（即我参与过的流程）
             {
-                var instances = uniwork.IQueryable<FlowInstanceTransitionHistory>(u => u.F_CreatorUserId == user.UserId)
+                var instances = uniwork.IQueryable<FlowInstanceOperationHistory>(u => u.F_CreatorUserId == user.UserId)
                     .Select(u => u.F_InstanceId).Distinct().ToList();
                 list = list.Where(u => instances.Contains(u.F_Id));
             }
@@ -145,7 +145,14 @@ namespace WaterCloud.Service.FlowManage
                 flowInstance.F_ActivityId = resnode;
                 flowInstance.F_ActivityType = wfruntime.GetNodeType(resnode);
                 flowInstance.F_ActivityName = wfruntime.Nodes[resnode].name;
-                flowInstance.F_MakerList = GetNodeMarkers(wfruntime.Nodes[resnode]);//当前节点可执行的人信息
+                if (resnode == wfruntime.startNodeId)
+                {
+                    flowInstance.F_MakerList = flowInstance.F_CreatorUserName;
+                }
+                else
+                {
+                    flowInstance.F_MakerList = await uniwork.IQueryable<FlowInstanceTransitionHistory>(a => a.F_FromNodeId == resnode && a.F_ToNodeId == flowInstance.F_PreviousId).OrderByDesc(a => a.F_CreatorTime).Select(a => a.F_CreatorUserId).FirstAsync();//当前节点可执行的人信息
+                }
                 await AddTransHistory(wfruntime);
             }
             await uniwork.Update(flowInstance);
@@ -304,12 +311,23 @@ namespace WaterCloud.Service.FlowManage
             MessageEntity msg = new MessageEntity();
             msg.F_CreatorUserName = currentuser.UserName;
             msg.F_EnabledMark = true;
-            if (flowInstance.F_IsFinish == 1|| flowInstance.F_IsFinish == 3)
+            if (flowInstance.F_IsFinish == 1)
             {
-                msg.F_MessageInfo = flowInstance.F_CustomName + (flowInstance.F_IsFinish == 3? "--流程已终止" : "--流程已完成");
+                msg.F_MessageInfo = flowInstance.F_CustomName +  "--流程已完成";
                 var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
+                msg.F_ToUserId = flowInstance.F_CreatorUserId;
+                msg.F_ClickRead = true;
+                msg.F_KeyValue = flowInstance.F_Id;
+            }
+            else if(flowInstance.F_IsFinish == 3)
+            {
+                msg.F_MessageInfo = flowInstance.F_CustomName + "--流程已终止";
+                var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
+                msg.F_Href = module.F_UrlAddress;
+                msg.F_HrefTarget = module.F_Target;
+                var makerList = uniwork.IQueryable<FlowInstanceOperationHistory>(a => a.F_InstanceId == flowInstance.F_Id && a.F_CreatorUserId != currentuser.UserId).Select(a => a.F_CreatorUserId).Distinct().ToList();
                 msg.F_ToUserId = flowInstance.F_CreatorUserId;
                 msg.F_ClickRead = true;
                 msg.F_KeyValue = flowInstance.F_Id;
@@ -639,12 +657,23 @@ namespace WaterCloud.Service.FlowManage
             MessageEntity msg = new MessageEntity();
             msg.F_CreatorUserName = currentuser.UserName;
             msg.F_EnabledMark = true;
-            if (entity.F_IsFinish == 1 || entity.F_IsFinish == 3)
+            if (entity.F_IsFinish == 1)
             {
-                msg.F_MessageInfo = entity.F_CustomName + (entity.F_IsFinish == 3 ? "--流程已终止" : "--流程已完成");
+                msg.F_MessageInfo = entity.F_CustomName + "--流程已完成";
                 var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
+                msg.F_ClickRead = true;
+                msg.F_KeyValue = entity.F_Id;
+            }
+            else if (entity.F_IsFinish == 3)
+            {
+                msg.F_MessageInfo = entity.F_CustomName + "--流程已终止";
+                var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
+                msg.F_Href = module.F_UrlAddress;
+                msg.F_HrefTarget = module.F_Target;
+                var makerList = uniwork.IQueryable<FlowInstanceOperationHistory>(a => a.F_InstanceId == entity.F_Id && a.F_CreatorUserId != currentuser.UserId).Select(a => a.F_CreatorUserId).Distinct().ToList();
+                msg.F_ToUserId = entity.F_CreatorUserId;
                 msg.F_ClickRead = true;
                 msg.F_KeyValue = entity.F_Id;
             }
@@ -685,6 +714,11 @@ namespace WaterCloud.Service.FlowManage
             {
                 throw new Exception("该流程模板对应的表单已不存在，请重新设计流程");
             }
+            var wfruntime = new FlowRuntime(await repository.FindEntity(entity.F_Id));
+            if (wfruntime.currentNodeId != entity.F_ActivityId)
+            {
+                throw new Exception("等待流程，无法修改");
+            }
             entity.F_FrmContentData = form.F_ContentData;
             entity.F_FrmContentParse = form.F_ContentParse;
             entity.F_FrmType = form.F_FrmType;
@@ -693,7 +727,8 @@ namespace WaterCloud.Service.FlowManage
             entity.F_DbName = form.F_WebId;
             entity.F_FlowLevel = 0;
             //创建运行实例
-            var wfruntime = new FlowRuntime(entity);
+            wfruntime = new FlowRuntime(entity);
+
             var user = currentuser;
 
             #region 根据运行实例改变当前节点状态
@@ -741,12 +776,23 @@ namespace WaterCloud.Service.FlowManage
             MessageEntity msg = new MessageEntity();
             msg.F_CreatorUserName = currentuser.UserName;
             msg.F_EnabledMark = true;
-            if (entity.F_IsFinish == 1 || entity.F_IsFinish == 3)
+            if (entity.F_IsFinish == 1)
             {
-                msg.F_MessageInfo = entity.F_CustomName + (entity.F_IsFinish == 3 ? "--流程已终止" : "--流程已完成");
+                msg.F_MessageInfo = entity.F_CustomName + "--流程已完成";
                 var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
+                msg.F_ClickRead = true;
+                msg.F_KeyValue = entity.F_Id;
+            }
+            else if (entity.F_IsFinish == 3)
+            {
+                msg.F_MessageInfo = entity.F_CustomName + "--流程已终止";
+                var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == className.Substring(0, className.Length - 7)).FirstOrDefault();
+                msg.F_Href = module.F_UrlAddress;
+                msg.F_HrefTarget = module.F_Target;
+                var makerList = uniwork.IQueryable<FlowInstanceOperationHistory>(a => a.F_InstanceId == entity.F_Id && a.F_CreatorUserId != currentuser.UserId).Select(a => a.F_CreatorUserId).Distinct().ToList();
+                msg.F_ToUserId = entity.F_CreatorUserId;
                 msg.F_ClickRead = true;
                 msg.F_KeyValue = entity.F_Id;
             }

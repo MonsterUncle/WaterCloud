@@ -128,7 +128,7 @@
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
-                 if (entity.data.F_IsFinish != 4) {
+                 if (entity.data.F_IsFinish != 4 && entity.data.a) {
                      common.modalMsg("申请已处理，无法修改", "warning");
                      return false;
                  }
