@@ -11,17 +11,17 @@ connection.start().then(function () {
 }).catch(function (ex) {
     console.log("连接失败" + ex);
     //SignalR JavaScript 客户端不会自动重新连接，必须编写代码将手动重新连接你的客户端
-    setTimeout(() => start(), 5000);
+    setTimeout(start(), 5000);
 
 });
 
-async function start() {
+function start() {
     try {
-        await signalr_connection.start();
+        signalr_connection.start();
         console.log("connected");
     } catch (err) {
         console.log(err);
-        setTimeout(() => start(), 5000);
+        setTimeout(start(), 5000);
     }
 };
 connection.on("ReceiveMessage", function (msg) {
@@ -116,14 +116,14 @@ connection.on("ReceiveMessage", function (msg) {
 });
 //下面测试断线重连机制 ，
 //重连之前调用 （只有在掉线的一瞬间，只进入一次）
-connection.onreconnecting((error) => {
+connection.onreconnecting(function(error) {
     console.log("重连中...");
 });
 //(默认4次重连)，任何一次只要回调成功，调用
-connection.onreconnected((connectionId) => {
+connection.onreconnected(function(connectionId){
     console.log("重连成功");
 });
 //(默认4次重连) 全部都失败后，调用
-connection.onclose((error) => {
+connection.onclose(function(error){
     console.log('重连失败');
 });
