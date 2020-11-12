@@ -740,10 +740,6 @@ namespace WaterCloud.Service.FlowManage
                 throw new Exception("该流程模板对应的表单已不存在，请重新设计流程");
             }
             var wfruntime = new FlowRuntime(await repository.FindEntity(entity.F_Id));
-            if (wfruntime.currentNodeId != entity.F_ActivityId)
-            {
-                throw new Exception("等待流程，无法修改");
-            }
             entity.F_FrmContentData = form.F_ContentData;
             entity.F_FrmContentParse = form.F_ContentParse;
             entity.F_FrmType = form.F_FrmType;
