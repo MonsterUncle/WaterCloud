@@ -77,6 +77,7 @@
             elem: '#mainList',
             page: false,
             url: '/FlowManage/Flowinstance/QueryHistories',
+            where: { time: new Date().Format("yyyy-MM-dd hh:mm:ss")},
             cols: [[ //标题栏
                 { field: 'F_Content', title: '流转记录', minWidth: 150 }
                 , { field: 'F_CreatorUserName', title: '操作人', width: 150 }

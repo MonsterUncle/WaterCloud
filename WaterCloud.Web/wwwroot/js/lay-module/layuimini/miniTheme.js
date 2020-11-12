@@ -430,8 +430,8 @@ layui.define(["jquery", "layer"], function (exports) {
                     '<ul>\n' + bgColorHtml + '</ul>\n' +
                     '</div>\n' +
                     '<div class="more-menu-list">\n' +
-                    '<a class="more-menu-item" href="http://qian_wei_hong.gitee.io/waterclouddocument/#/" target="_blank"><i class="layui-icon layui-icon-read" style="font-size: 19px;"></i> 开发文档</a>\n' +
-                    '<a class="more-menu-item" href="https://gitee.com/qian_wei_hong/WaterCloud_Core" target="_blank"><i class="layui-icon layui-icon-tabs" style="font-size: 16px;"></i> 开源地址</a>\n' +
+                    '<a class="more-menu-item" href="https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages" target="_blank"><i class="layui-icon layui-icon-read" style="font-size: 19px;"></i> 开发文档</a>\n' +
+                    '<a class="more-menu-item" href="https://gitee.com/qian_wei_hong/WaterCloud" target="_blank"><i class="layui-icon layui-icon-tabs" style="font-size: 16px;"></i> 开源地址</a>\n' +
                     '<a class="more-menu-item" href="http://www.watercloud.vip/" target="_blank"><i class="layui-icon layui-icon-theme"></i> 演示地址</a>\n' +
                     '</div>' +
                     '</div>';
