@@ -14,8 +14,8 @@
 ![](https://img.shields.io/badge/Chloe-4.8.0-blue)
 ![](https://img.shields.io/badge/layui-2.5.5-blue)
 
-![](https://img.shields.io/badge/Quartz-3.0.7-brightgreen)
-![](https://img.shields.io/badge/Autofac-5.2.0-brightgreen)
+![](https://img.shields.io/badge/Quartz-3.2.3-brightgreen)
+![](https://img.shields.io/badge/Autofac-6.0.0-brightgreen)
 ![](https://img.shields.io/badge/SignalR-4.2.2-brightgreen)
 </div>
 
