@@ -18,6 +18,7 @@ namespace WaterCloud.Service.InfoManage
     public class MessageService : DataFilterService<MessageEntity>, IDenpendency
     {
         private string cacheKey = "watercloud_messagedata_";
+        private string cacheHubKey = "watercloud_hubuserinfo_";
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         private readonly IHubContext<MessageHub> _messageHub;
         public MessageService(IDbContext context, IHubContext<MessageHub> messageHub) : base(context)
@@ -108,13 +109,13 @@ namespace WaterCloud.Service.InfoManage
                 foreach (var item in str)
                 {
                     //存在就私信
-                    var connectionID = await CacheHelper.Get<string>(cacheKey + item);
+                    var connectionID = await CacheHelper.Get<string>(cacheHubKey + item);
                     if (connectionID == null)
                     {
                         continue;
                     }
                     string msg = entity.ToJson();
-                    await _messageHub.Clients.User(connectionID).SendAsync("ReceiveMessage", msg);
+                    await _messageHub.Clients.Client(connectionID).SendAsync("ReceiveMessage", msg);
                 }
             }
             await repository.Insert(entity);

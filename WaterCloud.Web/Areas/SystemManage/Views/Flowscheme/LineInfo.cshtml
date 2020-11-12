@@ -66,6 +66,11 @@
     </div>
 </div>
 <script>
+    var FlowDesignObject, valueList;
+    function initForm(data) {
+        FlowDesignObject = data.FlowDesignObject;
+        valueList = data.valueList;
+    }
     layui.use(['form', 'layer', 'element', 'jquery', 'common', 'optimizeSelectOption'], function () {
         var layer = layui.layer,
             $ = layui.jquery,
@@ -73,8 +78,8 @@
         var form = layui.form;
         var Method = $.request("Method");
         //从flowschemes.js进入的节点信息
-        var line = parent.FlowDesignObject;
-        var valuelist = parent.valueList;
+        var line = FlowDesignObject;
+        var valuelist = valueList;
         $('#ComparesFieldName').append($("<option></option>").val("申请人").html("申请人"));
         $('#ComparesFieldName').append($("<option></option>").val("所属部门").html("所属部门"));
         for (var i = 0; i < valuelist.length; i++) {
@@ -197,11 +202,12 @@
             var form = layui.form,
                 $ = layui.$,
                 common = layui.common;
+            var parentform = window.name;
             //不同弹窗
             if (fields == '申请人') {
                 common.modalOpen({
                     title: "选择用户",
-                    url: "/SystemOrganize/User/AddForm?name=" + "ComparesName" + data + "&value=" + "ComparesValue" + data,
+                    url: "/SystemOrganize/User/AddForm?parentform=" + parentform +"&name=" + "ComparesName" + data + "&value=" + "ComparesValue" + data,
                     width: "650px",
                     height: "600px",
                 });
@@ -209,7 +215,7 @@
             else if (fields == '所属部门') {
                 common.modalOpen({
                     title: "选择组织",
-                    url: "/SystemOrganize/Organize/AddForm?name=" + "ComparesName" + data + "&value=" + "ComparesValue" + data,
+                    url: "/SystemOrganize/Organize/AddForm?parentform=" + parentform +"&name=" + "ComparesName" + data + "&value=" + "ComparesValue" + data,
                     width: "650px",
                     height: "600px",
                 });

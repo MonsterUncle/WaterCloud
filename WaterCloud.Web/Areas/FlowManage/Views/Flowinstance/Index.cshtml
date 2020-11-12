@@ -128,7 +128,9 @@
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
-                 if (entity.data.F_IsFinish != 4 && entity.data.a) {
+                 var userJsonStr = sessionStorage.getItem('currentUser');
+                 var userId = JSON.parse(userJsonStr).F_Id;
+                 if (entity.data.F_IsFinish != 4 || entity.data.F_MakerList.indexOf(userId)<0 ) {
                      common.modalMsg("申请已处理，无法修改", "warning");
                      return false;
                  }

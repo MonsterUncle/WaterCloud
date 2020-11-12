@@ -31,7 +31,7 @@ namespace WaterCloud.Service.CommonService
             FrmData = instance.F_FrmData;
             title = schemeContentJson.title;
             initNum = schemeContentJson.initNum?? 0;
-            previousId = instance.F_PreviousId;
+            previousId = GetPreviousNodeId(currentNodeId);
             flowInstanceId = instance.F_Id;
 
             //会签开始节点和流程结束节点没有下一步
@@ -133,7 +133,44 @@ namespace WaterCloud.Service.CommonService
 
             return lines[0].to;
         }
+        /// <summary>
+        /// 获取上一个节点
+        /// </summary>
+        private string GetPreviousNodeId(string nodeId = null)
+        {
+            try
+            {
+                var lines = nodeId == null ? ToNodeLines[currentNodeId] : ToNodeLines[nodeId];
+                if (lines.Count == 0)
+                {
+                    return string.Empty;
+                }
 
+                if (FrmData == "") return lines[0].from;
+
+                FrmData = FrmData.ToLower();//统一转小写
+                var frmDataJson = FrmData.ToJObject();//获取数据内容
+
+                foreach (var l in lines)
+                {
+                    if (l.Compares == null)
+                    {
+                        l.Compares = new List<DataCompare>();
+                    }
+                    if (l.Compares.Count > 0 && l.Compare(frmDataJson))
+                    {
+                        return l.from;
+                    }
+                }
+
+                return lines[0].from;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+
+        }
         #endregion 私有方法
 
         #region 共有方法
@@ -312,7 +349,7 @@ namespace WaterCloud.Service.CommonService
             }
             if (rejectType == "1")
             {
-                return GetNextNodeId(startNodeId);
+                return startNodeId;
             }
             return previousId;
         }

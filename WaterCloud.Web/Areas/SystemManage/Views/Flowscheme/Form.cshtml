@@ -154,19 +154,28 @@
                     return false;
                 }
 
-                layer.open({
+                top.layer.open({
                     type: 2,
                     area: ['550px', '550px'], //宽高
                     maxmin: true, //开启最大化最小化按钮
                     title: '节点设置【' + object.name + '】',
                     content: '/SystemManage/Flowscheme/NodeInfo',
                     btn: ['确定', '取消'],
+                    success: function (layero, index) {
+                        //子界面定义一个窗口方法initForm，里面调用common.val给参数赋值
+                        if (layero.find('iframe')[0].contentWindow.initForm) {
+                            var data = {};
+                            data.FlowDesignObject = FlowDesignObject;
+                            layero.find('iframe')[0].contentWindow.initForm(data);
+                        }
+                    },
                     yes: function (index, layero) {
-                        var body = layer.getChildFrame('body', index);
-                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-                        var nodedata = iframeWin.getVal();
-                        flowDesignPanel.SetNodeEx(object.id, nodedata);
-                        layer.close(index);
+                        if (layero.find('iframe')[0].contentWindow.initForm) {
+                            var iframeWin = layero.find('iframe')[0].contentWindow; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                            var nodedata = iframeWin.getVal();
+                            flowDesignPanel.SetNodeEx(object.id, nodedata);
+                            top.layer.close(index);
+                        }
                     },
                     cancel: function (index) {
                         layer.close(index);
@@ -176,19 +185,29 @@
             OpenLine: function (object) {
                 FlowDesignObject = object; //为NodeInfo窗口提供调用
                 valueList = $("#valueList").val().split(',');
-                layer.open({
+                top.layer.open({
                     type: 2,
                     area: ['550px', '550px'], //宽高
                     maxmin: true, //开启最大化最小化按钮
                     title: '连线设置【' + object.name + '】',
                     content: '/SystemManage/Flowscheme/LineInfo',
                     btn: ['确定', '取消'],
+                    success: function (layero, index) {
+                        //子界面定义一个窗口方法initForm，里面调用common.val给参数赋值
+                        if (layero.find('iframe')[0].contentWindow.initForm) {
+                            var data = {};
+                            data.FlowDesignObject = FlowDesignObject;
+                            data.valueList = valueList;
+                            layero.find('iframe')[0].contentWindow.initForm(data);
+                        }
+                    },
                     yes: function (index, layero) {
-                        var body = layer.getChildFrame('body', index);
-                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-                        var linedata = iframeWin.getVal();
-                        flowDesignPanel.SetLineEx(object.id, linedata);
-                        layer.close(index);
+                        if (layero.find('iframe')[0].contentWindow.initForm) {
+                            var iframeWin = layero.find('iframe')[0].contentWindow; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                            var linedata = iframeWin.getVal();
+                            flowDesignPanel.SetLineEx(object.id, linedata);
+                            top.layer.close(index);
+                        }
                     },
                     cancel: function (index) {
                         layer.close(index);

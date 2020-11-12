@@ -33,12 +33,11 @@
                                 <select id="NodeRejectType" lay-filter="NodeRejectType" name="NodeRejectType" required lay-verify="required">
                                     <option value="0">上一步</option>
                                     <option value="1">第一步</option>
-                                    <option value="2">指定步骤</option>
-                                    <option value="3">不处理</option>
+                                    @*<option value="2">指定步骤</option>
+                                    <option value="3">不处理</option>*@
                                 </select>
                             </div>
                         </div>
-
                         <div class="layui-form-item" v-if="isFork()">
                             <label class="layui-form-label">会签方式</label>
                             <div class="layui-input-block">
@@ -91,6 +90,10 @@
     </div>
 </div>
 <script>
+    var FlowDesignObject;
+    function initForm(data) {
+        FlowDesignObject = data.FlowDesignObject;
+    }
     layui.use(['form', 'commonTable', 'element', 'table', 'jquery', 'common', 'optimizeSelectOption'], function () {
         var commonTable = layui.commonTable,
             $ = layui.jquery,
@@ -100,11 +103,11 @@
             form = layui.form;
         var Method = $.request("Method");
         //从flowschemes.js进入的节点信息
-        var node = parent.FlowDesignObject;
+        var node = FlowDesignObject;
         var tmp = {
             NodeName: node.name,
             NodeCode: node.id,//默认的code
-            NodeRejectType: "0",
+            NodeRejectType: "1",
             NodeDesignate: "ALL_USER",
             NodeConfluenceType: "all",
             ThirdPartyUrl: ""

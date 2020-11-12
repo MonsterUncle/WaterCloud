@@ -83,7 +83,7 @@ namespace WaterCloud.Service.FlowManage
 
             if (type == "todo")   //待办事项
             {
-                list = list.Where(u => (u.F_MakerList == "1" || u.F_MakerList.Contains(user.UserId)) && (u.F_IsFinish == 0|| u.F_IsFinish == 4));
+                list = list.Where(u => ((u.F_MakerList == "1" || u.F_MakerList.Contains(user.UserId)))&& (u.F_IsFinish == 0|| u.F_IsFinish == 4) && u.F_ActivityType<3);
             }
             else if (type == "done")  //已办事项（即我参与过的流程）
             {
@@ -141,21 +141,23 @@ namespace WaterCloud.Service.FlowManage
             uniwork.BeginTrans();
             if (resnode != "")
             {
-                flowInstance.F_PreviousId = flowInstance.F_ActivityId;
                 flowInstance.F_ActivityId = resnode;
-                flowInstance.F_ActivityType = wfruntime.GetNodeType(resnode);
-                flowInstance.F_ActivityName = wfruntime.Nodes[resnode].name;
+                var prruntime = new FlowRuntime(flowInstance);
+                prruntime.MakeTagNode(prruntime.currentNodeId, tag);
+                flowInstance.F_PreviousId = prruntime.previousId;
+                flowInstance.F_ActivityType = prruntime.GetNodeType(resnode);
+                flowInstance.F_ActivityName = prruntime.Nodes[resnode].name;
                 if (resnode == wfruntime.startNodeId)
                 {
-                    flowInstance.F_MakerList = flowInstance.F_CreatorUserName;
+                    flowInstance.F_MakerList = flowInstance.F_CreatorUserId;
                 }
                 else
                 {
-                    flowInstance.F_MakerList = await uniwork.IQueryable<FlowInstanceTransitionHistory>(a => a.F_FromNodeId == resnode && a.F_ToNodeId == flowInstance.F_PreviousId).OrderByDesc(a => a.F_CreatorTime).Select(a => a.F_CreatorUserId).FirstAsync();//当前节点可执行的人信息
+                    flowInstance.F_MakerList = await uniwork.IQueryable<FlowInstanceTransitionHistory>(a => a.F_FromNodeId == resnode && a.F_ToNodeId == prruntime.nextNodeId).OrderByDesc(a => a.F_CreatorTime).Select(a => a.F_CreatorUserId).FirstAsync();//当前节点可执行的人信息
                 }
-                await AddTransHistory(wfruntime);
+                await AddRejectTransHistory(wfruntime, prruntime);
+                await repository.Update(flowInstance);
             }
-            await uniwork.Update(flowInstance);
             await uniwork.Insert(new FlowInstanceOperationHistory
             {
                 F_Id = Utils.GuId(),
@@ -540,6 +542,29 @@ namespace WaterCloud.Service.FlowManage
                 F_ToNodeName = wfruntime.nextNode.name,
                 F_ToNodeType = wfruntime.nextNodeType,
                 F_IsFinish = wfruntime.nextNodeType == 4 ? true : false,
+                F_TransitionSate = false
+            });
+        }
+        /// <summary>
+        /// 添加扭转记录
+        /// </summary>
+        private async Task AddRejectTransHistory(FlowRuntime wfruntime, FlowRuntime prruntime)
+        {
+            var tag = currentuser;
+            await uniwork.Insert(new FlowInstanceTransitionHistory
+            {
+                F_Id = Utils.GuId(),
+                F_InstanceId = wfruntime.flowInstanceId,
+                F_CreatorUserId = tag.UserId,
+                F_CreatorTime = DateTime.Now,
+                F_CreatorUserName = tag.UserName,
+                F_FromNodeId = wfruntime.currentNodeId,
+                F_FromNodeName = wfruntime.currentNode.name,
+                F_FromNodeType = wfruntime.currentNodeType,
+                F_ToNodeId = prruntime.currentNodeId,
+                F_ToNodeName = prruntime.currentNode.name,
+                F_ToNodeType = prruntime.currentNodeType,
+                F_IsFinish = false,
                 F_TransitionSate = false
             });
         }
