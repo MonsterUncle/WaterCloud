@@ -221,6 +221,35 @@ namespace WaterCloud.Service.CommonService
             }
         }
 
+        public void RemoveNode(string nodeId)
+        {
+            var node = Nodes[nodeId];
+            if (node != null && node.setInfo != null)
+            {
+                node.setInfo.Taged = null;
+                node.setInfo.UserName = null;
+                node.setInfo.UserId = null;
+                node.setInfo.Description = null;
+                node.setInfo.TagedTime = null;
+            }
+        }
+
+        public void RemoveNodes()
+        {
+            foreach (var item in Nodes)
+            {
+                var node = item.Value;
+                if (node != null && node.setInfo != null)
+                {
+                    node.setInfo.Taged = null;
+                    node.setInfo.UserName = null;
+                    node.setInfo.UserId = null;
+                    node.setInfo.Description = null;
+                    node.setInfo.TagedTime = null;
+                }
+            }
+        }
+
         /// <summary>
         /// 节点会签审核
         /// </summary>

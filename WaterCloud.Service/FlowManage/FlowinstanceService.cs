@@ -141,6 +141,8 @@ namespace WaterCloud.Service.FlowManage
             uniwork.BeginTrans();
             if (resnode != "")
             {
+                wfruntime.RemoveNode(resnode);
+                flowInstance.F_SchemeContent = wfruntime.ToSchemeObj().ToJson();
                 flowInstance.F_ActivityId = resnode;
                 var prruntime = new FlowRuntime(flowInstance);
                 prruntime.MakeTagNode(prruntime.currentNodeId, tag);
@@ -307,6 +309,7 @@ namespace WaterCloud.Service.FlowManage
             }
             #endregion 一般审核
 
+            wfruntime.RemoveNode(wfruntime.nextNodeId);
             flowInstance.F_SchemeContent = wfruntime.ToSchemeObj().ToJson();
             await uniwork.Update(flowInstance);
             await uniwork.Insert(flowInstanceOperationHistory);
