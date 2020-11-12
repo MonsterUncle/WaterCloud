@@ -6,8 +6,8 @@
 </p>
 <div align="center">
 
-[![star](https://gitee.com/qian_wei_hong/WaterCloud_Core/badge/star.svg)](https://gitee.com/qian_wei_hong/WaterCloud_Core/stargazers) 
-[![fork](https://gitee.com/qian_wei_hong/WaterCloud_Core/badge/fork.svg)](https://gitee.com/qian_wei_hong/WaterCloud_Core/members)
+[![star](https://gitee.com/qian_wei_hong/WaterCloud/badge/star.svg)](https://gitee.com/qian_wei_hong/WaterCloud/stargazers) 
+[![fork](https://gitee.com/qian_wei_hong/WaterCloud/badge/fork.svg)](https://gitee.com/qian_wei_hong/WaterCloud/members)
 ![](https://img.shields.io/badge/release-1.1.8-red)
 
 ![](https://img.shields.io/badge/.net%20core-3.1.0-blue)
@@ -44,7 +44,7 @@
 
 - .net版地址：https://gitee.com/qian_wei_hong/WaterCloud
 - 项目演示地址：http://www.watercloud.vip/  （账号：admin 密码：0000，数据库2个小时还原一次）
-- 文档地址：https://gitee.com/qian_wei_hong/WaterCloud_Core/wikis/pages
+- 文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
 
 #### 前端以及后端使用技术介绍
 
