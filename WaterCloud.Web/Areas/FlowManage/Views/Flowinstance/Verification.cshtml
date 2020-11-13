@@ -133,6 +133,7 @@
                         formtext = data.F_FrmData;
                         $("#frmPreview").load(document.location.origin + '/form/' + data.F_DbName + '.html');
                     }
+                    flowDesignPanel.reinitSize($(window).width() - 50, $(window).height() - 100);
                 }
             });
             form.render();
@@ -152,6 +153,7 @@
             }
             return arr;
         };
+
         $(window).resize(function () {
             flowDesignPanel.reinitSize($(window).width() - 50, $(window).height() - 100);
         });

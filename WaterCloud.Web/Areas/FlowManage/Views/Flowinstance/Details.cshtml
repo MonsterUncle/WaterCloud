@@ -132,6 +132,7 @@
                         $("#frmPreview").load(document.location.origin + '/form/' + data.F_DbName + '.html');
                         form.render();
                     }
+                    flowDesignPanel.reinitSize($(window).width() - 50, $(window).height() - 100);
                 }
             });
         });
