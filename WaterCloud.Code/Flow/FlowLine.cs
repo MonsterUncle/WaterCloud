@@ -27,6 +27,7 @@ namespace WaterCloud.Code
             foreach (var compare in Compares)
             {
                 compare.FieldName = compare.FieldName.ToLower();
+                compare.Value = compare.Value.ToLower();
                 decimal value=0;  //参考值
                 decimal frmvalue=0; //表单中填写的值
                 if (compare.Operation!= DataCompare.Equal&& compare.Operation != DataCompare.NotEqual)
