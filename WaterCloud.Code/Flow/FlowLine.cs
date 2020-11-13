@@ -16,6 +16,7 @@ namespace WaterCloud.Code
         public string to { get; set; }
         public string name { get; set; }
         public bool dash { get; set; }
+        public double M { get; set; }
 
         /// <summary> 分支条件 </summary>
         public List<DataCompare> Compares { get; set; }
@@ -25,6 +26,7 @@ namespace WaterCloud.Code
             bool result = true;
             foreach (var compare in Compares)
             {
+                compare.FieldName = compare.FieldName.ToLower();
                 decimal value=0;  //参考值
                 decimal frmvalue=0; //表单中填写的值
                 if (compare.Operation!= DataCompare.Equal&& compare.Operation != DataCompare.NotEqual)
