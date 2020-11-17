@@ -184,3 +184,10 @@
     padding: 10px 10px 5px 10px;
     color: #6b6b6b;
 }
+@media screen and (max-width: 450px) {
+    .layui-form-item .layui-form-label {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: unset;
+    }
+}
