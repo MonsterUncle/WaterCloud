@@ -72,6 +72,9 @@ namespace WaterCloud.Service.SystemSecurity
                 {
                     result = result.Where(t => t.F_Date >= startTime && t.F_Date <= endTime).ToList();
                 }
+                pagination.records = result.Count();
+                result = result.OrderByDescending(a => a.F_CreatorTime).Skip((pagination.page - 1) * pagination.rows).Take(pagination.rows).ToList();
+
             }
             return GetFieldsFilterData(result, className.Substring(0, className.Length - 7));
         }
@@ -157,6 +160,11 @@ namespace WaterCloud.Service.SystemSecurity
                 logEntity.Create();
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
+                    var context = uniwork.GetDbContext();
+                    if (context.Session.CurrentTransaction != null)
+                    {
+                        context.Session.RollbackTransaction();
+                    }
                     await repository.Insert(logEntity);
                 }
                 else
