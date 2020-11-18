@@ -18,12 +18,13 @@ layui.define(["jquery", "layer", 'table', 'soulTable','common'], function (expor
                 elem: '#currentTableId',//主键
                 toolbar: '#toolbarDemo',//工具栏
                 defaultToolbar: ['filter', 'exports', 'print'],//默认工具栏
+                search: true,//搜索按钮
                 method: 'get',//请求方法
                 cellMinWidth: 100,//最小宽度
                 limit: 10,//每页数据 默认
                 limits: [10, 20, 30, 40, 50],
                 id:'currentTableId',
-                height: 'full-110',
+                height: 'full-60',
                 loading: false,
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['skip', 'prev', 'page', 'next', 'limit', 'count'] //自定义分页布局
@@ -106,6 +107,21 @@ layui.define(["jquery", "layer", 'table', 'soulTable','common'], function (expor
             };
             var doneCallback = options.done;
             var options = $.extend(defaults, options);
+            if (document.body.clientWidth < 500 && !!options.defaultToolbar) {
+                for (var i = 0; i < options.defaultToolbar.length; i++) {
+                    if (options.defaultToolbar[i] == "print") {
+                        options.defaultToolbar.splice(i, 1);
+                    }
+                }
+            }
+            if (options.search) {
+                options.defaultToolbar = !options.defaultToolbar ? [] : options.defaultToolbar;
+                options.defaultToolbar.push({
+                    title: '搜索',
+                    layEvent: 'TABLE_SEARCH',
+                    icon: 'layui-icon-search'
+                });
+            }  
             //ie缓存问题
             options.url = common.urlAddTime(options.url);
             //字段权限

@@ -66,8 +66,8 @@
     margin-bottom: 16px;
 }
 .layui-btn-sm {
-    height: 25px;
-    line-height: 25px;
+    height: 30px;
+    line-height: 30px;
     padding: 0 8px;
     font-size: 11px;
 }
@@ -76,7 +76,7 @@
     margin-bottom: 5px;
 }
 .layui-table-tool > .layui-table-tool-temp {
-    padding-right: 120px;
+    padding-right: 119px;
     display: inline-block;
 }
 .layui-table-tool .layui-table-tool-self > div:not(.layui-inline) .layui-table-tool-temp {
@@ -190,4 +190,30 @@
         overflow: hidden;
         white-space: unset;
     }
+}
+
+.layui-table-tool-self {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.layui-table-tool .layui-inline[lay-event] {
+    position: relative;
+    color: #333;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    margin-left: 5px;
+    padding: unset;
+    line-height: 30px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    vertical-align: middle;
+    -webkit-transition: .3s all;
+    transition: .3s all;
+    cursor: pointer;
+}
+.layui-table-tool .layui-table-tool-self .layui-inline[lay-event] {
+    margin: 0 0 0 5px;
 }

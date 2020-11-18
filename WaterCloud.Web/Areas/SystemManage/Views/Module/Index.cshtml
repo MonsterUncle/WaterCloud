@@ -202,13 +202,21 @@
                         href: "/SystemManage/ModuleFields/Index?moduleId=" + module.data.F_Id + "&modulename=" + module.data.F_FullName,
                     });
                 }
+                else if (obj.event === 'TABLE_SEARCH') {
+                    var _that = $("#searchField");
+                    if (_that.hasClass("layui-hide")) {
+                        _that.removeClass('layui-hide');
+                    } else {
+                        _that.addClass('layui-hide');
+                    }
+                }
                 return false;
             });
         });
     </script>
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <fieldset class="table-search-fieldset">
+        <fieldset class="table-search-fieldset layui-hide" id="searchField">
             @*<legend>搜索信息</legend>*@
             <div>
                 <form class="layui-form layui-form-pane" action="">

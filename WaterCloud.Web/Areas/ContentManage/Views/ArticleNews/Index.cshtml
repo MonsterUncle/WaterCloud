@@ -4,7 +4,7 @@
 }
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <fieldset class="table-search-fieldset">
+        <fieldset class="table-search-fieldset layui-hide" id="searchField">
             <div>
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
@@ -202,6 +202,14 @@
                     title: "查看文章",
                     href: "/ContentManage/ArticleNews/Details?keyValue=" + data[0].F_Id,
                 });
+            }
+            else if (obj.event === 'TABLE_SEARCH') {
+                var _that = $("#searchField");
+                if (_that.hasClass("layui-hide")) {
+                    _that.removeClass('layui-hide');
+                } else {
+                    _that.addClass('layui-hide');
+                }
             }
             return false;
         });

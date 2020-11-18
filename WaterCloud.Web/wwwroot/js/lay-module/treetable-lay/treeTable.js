@@ -2153,18 +2153,19 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
         //按钮遮挡
         //'    float: right;',
         '    position: absolute;',
-        '    right: 17px;',    
-        '    top: 10px;',    
+        //原来17改成10
+        '    right: 10px;',
+        '    top: 10px;',
         '}',
 
         '.ew-tree-table .ew-tree-table-tool .ew-tree-table-tool-item {',
         '    position: relative;',
         '    color: #333;',
-        '    width: 26px;',
-        '    height: 26px;',
-        '    line-height: 26px;',
+        '    width: 30px;',
+        '    height: 30px;',
+        '    line-height: 30px;',
         '    text-align: center;',
-        '    margin-left: 10px;',
+        '    margin-left: 5px;',//原来10改成5
         '    display: inline-block;',
         '    border: 1px solid #ccc;',
         '    box-sizing: border-box;',
@@ -2174,9 +2175,9 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
         '    cursor: pointer;',
         '}',
 
-        '.ew-tree-table .ew-tree-table-tool .ew-tree-table-tool-item:first-child {',
-        '    margin-left: 0;',
-        '}',
+        //'.ew-tree-table .ew-tree-table-tool .ew-tree-table-tool-item:first-child {',
+        //'    margin-left: 0;',
+        //'}',
 
         '.ew-tree-table .ew-tree-table-tool .ew-tree-table-tool-item:hover {',
         '    border-color: #999;',

@@ -454,7 +454,7 @@ namespace WaterCloud.CodeGenerator
             #region 搜索栏
             if (baseConfigModel.PageIndex.IsSearch == 1)
             {
-                sb.AppendLine("         <fieldset class=\"table-search-fieldset\">");
+                sb.AppendLine("         <fieldset class=\"table-search-fieldset layui-hide\" id=\"searchField\">");
                 sb.AppendLine("             <div>");
                 sb.AppendLine("                 <form class=\"layui-form layui-form-pane\" >");
                 sb.AppendLine("                     <div class=\"layui-form-item\">");
@@ -522,6 +522,10 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             elem: '#currentTableId',");
                 sb.AppendLine("             treeIdName: '" + idColumn + "',");
                 sb.AppendLine("             //此处需修改 父Id修改");
+                if (baseConfigModel.PageIndex.IsSearch != 1)
+                {
+                    sb.AppendLine("             search:false,");
+                }
                 sb.AppendLine("             url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson'+(!queryJson ? '' : '?keyword=' + queryJson),"); sb.AppendLine("             sqlkey: '"+ idColumn + "',//数据库主键");
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 //此处需修改");
@@ -565,6 +569,10 @@ namespace WaterCloud.CodeGenerator
                 if (baseConfigModel.PageIndex.IsPagination != 1)
                 {
                     sb.AppendLine("             page: false,");
+                }
+                if (baseConfigModel.PageIndex.IsSearch != 1)
+                {
+                    sb.AppendLine("             search:false,");
                 }
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 //此处需修改");
@@ -667,6 +675,18 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine( "                  btn: []");
             sb.AppendLine( "               });");
             sb.AppendLine( "           }");
+            sb.AppendLine("           }");
+            if (baseConfigModel.PageIndex.IsSearch == 1)
+            {
+                sb.AppendLine("           else if (obj.event === 'TABLE_SEARCH') {");
+                sb.AppendLine("                var _that = $(\"#searchField\");");
+                sb.AppendLine("                if (_that.hasClass(\"layui-hide\")) {");
+                sb.AppendLine("                   _that.removeClass('layui-hide');");
+                sb.AppendLine("                } else {");
+                sb.AppendLine("                   _that.addClass('layui-hide');");
+                sb.AppendLine("                }");
+                sb.AppendLine("           }");
+            }
             sb.AppendLine( "           return false;");
             sb.AppendLine( "       });");
             sb.AppendLine( "   });");
