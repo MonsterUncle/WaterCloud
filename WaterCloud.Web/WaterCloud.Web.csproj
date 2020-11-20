@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\SystemSecurity\Views\ServerMonitoring\" />
+    <Folder Include="DataProtection\" />
     <Folder Include="wwwroot\file\" />
     <Folder Include="wwwroot\js\lay-module\xm-select\" />
   </ItemGroup>
