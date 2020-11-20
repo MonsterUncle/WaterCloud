@@ -151,6 +151,10 @@ namespace WaterCloud.Service.SystemOrganize
             var set=await ibs.FindEntity<SystemSetEntity>(entity.F_Id);
             var tempkey=new RepositoryBase(DBContexHelper.Contex(set.F_DbString, set.F_DBProvider)).IQueryable<UserEntity>().Where(a => a.F_IsAdmin == true && a.F_OrganizeId == keyValue).FirstOrDefault().F_Id;
             await CacheHelper.Remove(cacheKeyOperator + "info_" + tempkey);
+            if (currentuser.UserId == null)
+            {
+                _context.Dispose();
+            }
         }
 
         public async Task DeleteForm(string keyValue)
