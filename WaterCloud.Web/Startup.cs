@@ -122,6 +122,20 @@ namespace WaterCloud.Web
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
+            //更新数据库管理员和主系统
+            try
+            {
+                var context = DBContexHelper.Contex();
+                var _setService = new Service.SystemOrganize.SystemSetService(context);
+                Domain.SystemOrganize.SystemSetEntity temp = new Domain.SystemOrganize.SystemSetEntity();
+                temp.F_AdminAccount = GlobalContext.SystemConfig.SysemUserCode;
+                temp.F_AdminPassword = GlobalContext.SystemConfig.SysemUserPwd;
+                _setService.SubmitForm(temp, GlobalContext.SystemConfig.SysemMasterProject);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex);
+            }
         }
         //AutoFac注入
         public void ConfigureContainer(ContainerBuilder builder)

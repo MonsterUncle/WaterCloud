@@ -210,3 +210,26 @@ p {
     cursor: pointer;
     background-color: white;
 }
+.logo-title h1 {
+    color: #FFFFCE;
+    font-size: 40px;
+    font-weight: bold;
+    padding-top: 50px;
+}
+
+.layui-tab-title {
+    position: relative;
+    left: 0;
+    height: 40px;
+    white-space: nowrap;
+    font-size: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: unset;
+    transition: all .2s;
+    -webkit-transition: all .2s;
+}
+
+    .layui-tab-title .layui-this {
+        color: orange;
+        background-color: #FFFFCE;
+    }

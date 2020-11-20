@@ -18,6 +18,7 @@ namespace WaterCloud.Service.SystemOrganize
         private IDbContext _context;
         private string cacheKey = "watercloud_systemsetdata_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
+        private string cacheKeyUser = "watercloud_userdata_";
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         public SystemSetService(IDbContext context) : base(context)
         {
@@ -65,12 +66,12 @@ namespace WaterCloud.Service.SystemOrganize
             }
             else
             {
-                cachedata = cachedata.Where(t => t.F_Id==Define.SYSTEM_MASTERPROJECT).ToList();
+                cachedata = cachedata.Where(t => t.F_Id==GlobalContext.SystemConfig.SysemMasterProject).ToList();
             }
             if (cachedata.Count==0)
             {
                 cachedata = await repository.CheckCacheList(cacheKey + "list");
-                cachedata = cachedata.Where(t => t.F_Id == Define.SYSTEM_MASTERPROJECT).ToList();
+                cachedata = cachedata.Where(t => t.F_Id == GlobalContext.SystemConfig.SysemMasterProject).ToList();
             }
             return cachedata.Where(t => t.F_DeleteMark == false).FirstOrDefault();
         }
@@ -117,7 +118,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                     //此处需修改
                 entity.Modify(keyValue);
-                if (entity.F_Id != Define.SYSTEM_MASTERPROJECT)
+                if (currentuser.UserId != GlobalContext.SystemConfig.SysemUserId || currentuser.UserId == null)
                 {
                     var setentity = await repository.FindEntity(entity.F_Id);
                     uniwork.BeginTrans();
@@ -129,6 +130,7 @@ namespace WaterCloud.Service.SystemOrganize
                     {
                         F_Account = entity.F_AdminAccount
                     });
+                    await CacheHelper.Remove(cacheKeyUser + user.F_Id);
                     await uniwork.Update<UserLogOnEntity>(a => a.F_Id == userinfo.F_Id, a => new UserLogOnEntity
                     {
                         F_UserPassword = userinfo.F_UserPassword,

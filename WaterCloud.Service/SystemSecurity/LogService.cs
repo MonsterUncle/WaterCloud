@@ -149,7 +149,7 @@ namespace WaterCloud.Service.SystemSecurity
                 {
                     logEntity.F_IPAddress = LoginProvider=="WebApi"? "未连接未知": WebHelper.Ip;
                     logEntity.F_IPAddressName = "本地局域网";
-                    logEntity.F_CompanyId = Define.SYSTEM_MASTERPROJECT;
+                    logEntity.F_CompanyId = GlobalContext.SystemConfig.SysemMasterProject;
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 logEntity.F_IPAddress = LoginProvider == "WebApi" ? "未连接未知" : WebHelper.Ip;
                 logEntity.F_IPAddressName = "本地局域网";
-                logEntity.F_CompanyId = Define.SYSTEM_MASTERPROJECT;
+                logEntity.F_CompanyId = GlobalContext.SystemConfig.SysemMasterProject;
                 logEntity.Create();
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {

@@ -34,7 +34,7 @@ namespace WaterCloud.WebApi
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            string token = context.HttpContext.Request.Headers[Define.TOKEN_NAME].ParseToString();
+            string token = context.HttpContext.Request.Headers[GlobalContext.SystemConfig.TokenName].ParseToString();
             OperatorModel user = OperatorProvider.Provider.GetCurrent();
             if (user != null)
             {

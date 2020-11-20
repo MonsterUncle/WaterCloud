@@ -72,15 +72,15 @@ namespace WaterCloud.Code
         public string GetToken()
         {
             //查请求头
-            string token = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Headers[Define.TOKEN_NAME].ParseToString();
+            string token = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Headers[GlobalContext.SystemConfig.TokenName].ParseToString();
             if (!String.IsNullOrEmpty(token)) return token;
 
             //查参数
-            token = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Query[Define.TOKEN_NAME];
+            token = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Query[GlobalContext.SystemConfig.TokenName];
             if (!String.IsNullOrEmpty(token)) return token;
 
             //查cookies
-            string cookie = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Cookies[Define.TOKEN_NAME];
+            string cookie = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Cookies[GlobalContext.SystemConfig.TokenName];
             return cookie == null ? string.Empty : cookie;
         }
         public void RemoveProvider(string key)

@@ -32,17 +32,10 @@ namespace WaterCloud.Web.Controllers
             try
             {
                 var systemset = await _setService.GetFormByHost("");
-                if (systemset.F_DBProvider!= GlobalContext.SystemConfig.DBProvider|| systemset.F_DbString != GlobalContext.SystemConfig.DBConnectionString)
-                {
-                    SystemSetEntity temp = new SystemSetEntity();
-                    temp.F_DBProvider = GlobalContext.SystemConfig.DBProvider;
-                    temp.F_DbString = GlobalContext.SystemConfig.DBConnectionString;
-                    await _setService.SubmitForm(temp, systemset.F_Id);
-                }
                 if (GlobalContext.SystemConfig.Demo)
                 {
-                    ViewBag.UserName = Define.SYSTEM_USERNAME;
-                    ViewBag.Password = Define.SYSTEM_USERPWD;
+                    ViewBag.UserName = GlobalContext.SystemConfig.SysemUserCode;
+                    ViewBag.Password = GlobalContext.SystemConfig.SysemUserPwd;
                 }
                 ViewBag.ProjectName = systemset.F_ProjectName;
                 ViewBag.LogoIcon = "../icon/" + systemset.F_Logo;

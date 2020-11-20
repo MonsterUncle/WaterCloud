@@ -67,7 +67,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
             try
             {
                 string stemp = "local";
-                if (_service.currentuser.CompanyId != Define.SYSTEM_MASTERPROJECT)
+                if (_service.currentuser.CompanyId != GlobalContext.SystemConfig.SysemMasterProject)
                 {
                     var temp = await _setService.GetForm(_service.currentuser.CompanyId);
                     if (temp != null)

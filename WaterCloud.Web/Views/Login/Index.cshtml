@@ -17,12 +17,12 @@
     @*动画特效*@
     <div id="starsBox"></div>
     <div class="layui-container">
+        <div class="logo-title">
+            <h1>@ViewBag.ProjectName</h1>
+        </div>
         <div class="admin-login-background">
             <div class="layui-form login-form">
                 <form class="layui-form" action="">
-                    <div class="layui-form-item logo-title">
-                        <h1>@ViewBag.ProjectName</h1>
-                    </div>
                     <div class="layui-form-item">
                         <label class="layui-icon layui-icon-username" for="username"></label>
                         <input type="text" id="username" lay-verify="required|account" placeholder="用户名" autocomplete="off" class="layui-input" value="@ViewBag.UserName">

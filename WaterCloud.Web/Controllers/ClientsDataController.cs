@@ -74,7 +74,7 @@ namespace WaterCloud.Web.Controllers
         {
             try
             {
-                if (_setService.currentuser.UserCode != Define.SYSTEM_USERNAME)
+                if (_setService.currentuser.UserId != GlobalContext.SystemConfig.SysemUserId)
                 {
                     return Content(new { code = 0, msg = "此功能需要管理员权限" }.ToJson());
                 }

@@ -112,7 +112,7 @@ namespace WaterCloud.Service
         /// <returns></returns>
         protected bool CheckDataPrivilege(string moduleName)
         {
-            if (currentuser.UserCode == Define.SYSTEM_USERNAME) return false;  //超级管理员特权
+            if (currentuser.UserId == GlobalContext.SystemConfig.SysemUserId) return false;  //超级管理员特权
             var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             ////系统菜单也不需要数据权限 跟字段重合取消这样处理
             //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).Result;
