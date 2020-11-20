@@ -13,6 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DataProtection\**" />
+    <Content Remove="DataProtection\**" />
+    <EmbeddedResource Remove="DataProtection\**" />
+    <None Remove="DataProtection\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="6.0.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="iTextSharp.LGPLv2.Core.Fix" Version="1.4.3" />
@@ -33,7 +40,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\SystemSecurity\Views\ServerMonitoring\" />
-    <Folder Include="DataProtection\" />
     <Folder Include="wwwroot\file\" />
     <Folder Include="wwwroot\js\lay-module\xm-select\" />
   </ItemGroup>
