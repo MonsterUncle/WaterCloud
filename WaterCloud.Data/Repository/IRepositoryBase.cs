@@ -18,6 +18,7 @@ namespace WaterCloud.DataBase
         IDbContext GetDbContext();
         IRepositoryBase BeginTrans();
         void Commit();
+        void Rollback();
         /// <summary>
         /// 插入
         /// </summary>

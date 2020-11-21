@@ -160,11 +160,7 @@ namespace WaterCloud.Service.SystemSecurity
                 logEntity.Create();
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
-                    var context = uniwork.GetDbContext();
-                    if (context.Session.CurrentTransaction != null)
-                    {
-                        context.Session.RollbackTransaction();
-                    }
+                    uniwork.Rollback();
                     await repository.Insert(logEntity);
                 }
                 else
