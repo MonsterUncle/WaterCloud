@@ -15,7 +15,7 @@
     <PackageReference Include="Chloe.Oracle" Version="4.8.0" />
     <PackageReference Include="Chloe.SqlServer" Version="4.8.0" />
     <PackageReference Include="MySql.Data" Version="8.0.22" />
-    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.91" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.100" />
   </ItemGroup>
 
   <ItemGroup>
