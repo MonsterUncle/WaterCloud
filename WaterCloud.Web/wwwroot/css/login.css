@@ -210,13 +210,6 @@ p {
     cursor: pointer;
     background-color: white;
 }
-.logo-title h1 {
-    color: #FFFFCE;
-    font-size: 40px;
-    font-weight: bold;
-    padding-top: 50px;
-}
-
 .layui-tab-title {
     position: relative;
     left: 0;
