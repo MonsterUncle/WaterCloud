@@ -108,6 +108,7 @@ namespace WaterCloud.Web
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<GlobalExceptionFilter>();
+                options.Filters.Add<ModelActionFilter>();
                 options.ModelMetadataDetailsProviders.Add(new ModelBindingMetadataProvider());
             }).AddNewtonsoftJson(options =>
             {
