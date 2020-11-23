@@ -88,8 +88,8 @@ namespace WaterCloud.CodeGenerator
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
             //sb.AppendLine("using Newtonsoft.Json;");
-            //sb.AppendLine("using System.ComponentModel.DataAnnotations.Schema;");
             //sb.AppendLine("using WaterCloud.Code;");
+            sb.AppendLine("using System.ComponentModel.DataAnnotations;");
             sb.AppendLine("using Chloe.Annotations;");
             sb.AppendLine();
 

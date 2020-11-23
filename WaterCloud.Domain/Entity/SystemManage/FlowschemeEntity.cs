@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Chloe.Annotations;
 
 namespace WaterCloud.Domain.SystemManage
@@ -21,11 +22,13 @@ namespace WaterCloud.Domain.SystemManage
         /// 流程编号
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "流程编号不能为空")]
         public string F_SchemeCode { get; set; }
         /// <summary>
         /// 流程名称
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "流程名称不能为空")]
         public string F_SchemeName { get; set; }
         /// <summary>
         /// 流程分类
@@ -66,6 +69,8 @@ namespace WaterCloud.Domain.SystemManage
         /// 排序码
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "排序不能为空")]
+        [Range(0, 99999999, ErrorMessage = "排序大小必须介于1~99999999之间")]
         public int? F_SortCode { get; set; }
         /// <summary>
         /// 删除标记

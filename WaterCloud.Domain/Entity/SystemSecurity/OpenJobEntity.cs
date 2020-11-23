@@ -10,6 +10,7 @@
 using System;
 using System.ComponentModel;
 using Chloe.Annotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace WaterCloud.Domain.SystemSecurity
 {
@@ -25,16 +26,19 @@ namespace WaterCloud.Domain.SystemSecurity
         /// 任务名称
         /// </summary>
         [Description("任务名称")]
+        [Required(ErrorMessage = "任务名称不能为空")]
         public string F_JobName { get; set; }
         /// <summary>
         /// 任务组别
         /// </summary>
         [Description("任务组别")]
+        [Required(ErrorMessage = "任务组别不能为空")]
         public string F_JobGroup { get; set; }
         /// <summary>
         /// 文件名称
         /// </summary>
         [Description("文件名称")]
+        [Required(ErrorMessage = "文件名称不能为空")]
         public string F_FileName { get; set; }
         /// <summary>
         /// 开始时间
@@ -55,6 +59,7 @@ namespace WaterCloud.Domain.SystemSecurity
         /// CRON表达式
         /// </summary>
         [Description("CRON表达式")]
+        [Required(ErrorMessage = "CRON表达式不能为空")]
         public string F_CronExpress { get; set; }
         public bool? F_DeleteMark { get; set; }
         public bool? F_EnabledMark { get; set; }

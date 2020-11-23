@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Chloe.Annotations;
 
 namespace WaterCloud.Domain.FlowManage
@@ -9,7 +10,7 @@ namespace WaterCloud.Domain.FlowManage
     /// 描 述：我的流程实体类
     /// </summary>
     [TableAttribute("oms_flowinstance")]
-    public class FlowinstanceEntity : IEntity<FlowinstanceEntity>,ICreationAudited
+    public class FlowinstanceEntity : IEntity<FlowinstanceEntity>, ICreationAudited
     {
         /// <summary>
         /// 主键Id
@@ -26,6 +27,7 @@ namespace WaterCloud.Domain.FlowManage
         /// 实例编号
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "编号不能为空")]
         public string F_Code { get; set; }
         /// <summary>
         /// 自定义名称
@@ -61,6 +63,7 @@ namespace WaterCloud.Domain.FlowManage
         /// 流程模板ID
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "模板不能为空")]
         public string F_SchemeId { get; set; }
         /// <summary>
         /// 数据库名称

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Chloe.Annotations;
 
 namespace WaterCloud.Domain.SystemManage
@@ -21,11 +22,13 @@ namespace WaterCloud.Domain.SystemManage
         /// 表单名称
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "表单名称不能为空")]
         public string F_Name { get; set; }
         /// <summary>
         /// 表单类型，0：默认动态表单；1：Web自定义表单
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "表单类型不能为空")]
         public int? F_FrmType { get; set; }
         /// <summary>
         /// 系统页面标识，当表单类型为用Web自定义的表单时，需要标识加载哪个页面
@@ -56,6 +59,8 @@ namespace WaterCloud.Domain.SystemManage
         /// 排序码
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "排序不能为空")]
+        [Range(0, 99999999, ErrorMessage = "排序大小必须介于1~99999999之间")]
         public int? F_SortCode { get; set; }
         /// <summary>
         /// 是否启用

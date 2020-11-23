@@ -6,6 +6,7 @@
 *********************************************************************************/
 using Chloe.Annotations;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WaterCloud.Domain.SystemOrganize
 {
@@ -15,6 +16,7 @@ namespace WaterCloud.Domain.SystemOrganize
         [ColumnAttribute("F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         public string F_UserId { get; set; }
+        [Required(ErrorMessage = "密码不能为空")]
         public string F_UserPassword { get; set; }
         public string F_UserSecretkey { get; set; }
         public DateTime? F_AllowStartTime { get; set; }

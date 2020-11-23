@@ -134,10 +134,18 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> SubmitUserForm(UserEntity userEntity)
+        public async Task<ActionResult> SubmitUserForm(string F_Account,string F_RealName, bool F_Gender,DateTime F_Birthday,string F_MobilePhone,string F_Email,string F_Description)
         {
             try
             {
+                var userEntity = new UserEntity();
+                userEntity.F_Account = F_Account;
+                userEntity.F_RealName = F_RealName;
+                userEntity.F_Gender = F_Gender;
+                userEntity.F_Birthday = F_Birthday;
+                userEntity.F_MobilePhone = F_MobilePhone;
+                userEntity.F_Email = F_Email;
+                userEntity.F_Description = F_Description;
                 userEntity.F_Id = _service.currentuser.UserId;
                 await _service.SubmitUserForm(userEntity);
                 return await Success("操作成功。", className, userEntity.F_Id);

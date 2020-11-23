@@ -6,6 +6,7 @@
 *********************************************************************************/
 using Chloe.Annotations;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WaterCloud.Domain.SystemOrganize
 {
@@ -14,10 +15,13 @@ namespace WaterCloud.Domain.SystemOrganize
     {
         [ColumnAttribute("F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
+        [Required(ErrorMessage = "账户不能为空")]
         public string F_Account { get; set; }
+        [Required(ErrorMessage = "姓名不能为空")]
         public string F_RealName { get; set; }
         public string F_NickName { get; set; }
         public string F_HeadIcon { get; set; }
+        [Required(ErrorMessage = "性别不能为空")]
         public bool? F_Gender { get; set; }
         public DateTime? F_Birthday { get; set; }
         public string F_MobilePhone { get; set; }
@@ -26,9 +30,13 @@ namespace WaterCloud.Domain.SystemOrganize
         public string F_ManagerId { get; set; }
         public int? F_SecurityLevel { get; set; }
         public string F_Signature { get; set; }
+        [Required(ErrorMessage = "公司不能为空")]
         public string F_OrganizeId { get; set; }
+        [Required(ErrorMessage = "部门不能为空")]
         public string F_DepartmentId { get; set; }
+        [Required(ErrorMessage = "角色不能为空")]
         public string F_RoleId { get; set; }
+        [Required(ErrorMessage = "职位不能为空")]
         public string F_DutyId { get; set; }
         public bool? F_IsAdmin { get; set; }
         public bool? F_IsBoss { get; set; }

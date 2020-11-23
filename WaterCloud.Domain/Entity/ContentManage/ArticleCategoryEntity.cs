@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Chloe.Annotations;
 
 namespace WaterCloud.Domain.ContentManage
@@ -21,16 +22,20 @@ namespace WaterCloud.Domain.ContentManage
         /// 类别名称
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage="新闻类别名称不能为空")]
         public string F_FullName { get; set; }
         /// <summary>
         /// 父级Id
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "新闻类别父级不能为空")]
         public string F_ParentId { get; set; }
         /// <summary>
         /// 排序
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "排序不能为空")]
+        [Range(0, 99999999, ErrorMessage = "排序大小必须介于1~99999999之间")]
         public int? F_SortCode { get; set; }
         /// <summary>
         /// 描述

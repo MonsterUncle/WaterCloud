@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Chloe.Annotations;
 
 namespace WaterCloud.Domain.SystemManage
@@ -21,16 +22,19 @@ namespace WaterCloud.Domain.SystemManage
         /// 
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "模块不能为空")]
         public string F_ModuleId { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "编号不能为空")]
         public string F_EnCode { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "名称不能为空")]
         public string F_FullName { get; set; }
         /// <summary>
         /// 

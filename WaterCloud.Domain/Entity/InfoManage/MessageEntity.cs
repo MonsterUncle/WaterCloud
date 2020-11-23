@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Chloe.Annotations;
 
 namespace WaterCloud.Domain.InfoManage
@@ -21,6 +22,7 @@ namespace WaterCloud.Domain.InfoManage
         /// 信息类型（通知、私信、处理）
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "信息类型不能为空")]
         public int? F_MessageType { get; set; }
         /// <summary>
         /// 收件人主键
@@ -36,6 +38,7 @@ namespace WaterCloud.Domain.InfoManage
         /// 内容
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "内容不能为空")]
         public string F_MessageInfo { get; set; }
         /// <summary>
         /// 有效

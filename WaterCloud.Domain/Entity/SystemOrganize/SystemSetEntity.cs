@@ -1,5 +1,6 @@
 ﻿using System;
 using Chloe.Annotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace WaterCloud.Domain.SystemOrganize
 {
@@ -18,34 +19,40 @@ namespace WaterCloud.Domain.SystemOrganize
         [ColumnAttribute("F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         /// <summary>
-        /// 
+        /// Logo图标
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "Logo图标不能为空")]
         public string F_Logo { get; set; }
         /// <summary>
-        /// 
+        /// Logo编号
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "Logo编号不能为空")]
         public string F_LogoCode { get; set; }
         /// <summary>
-        /// 
+        /// 项目名称
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "项目名称不能为空")]
         public string F_ProjectName { get; set; }
         /// <summary>
-        /// 
+        /// 公司名称
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "公司名称不能为空")]
         public string F_CompanyName { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "系统账户不能为空")]
         public string F_AdminAccount { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "系统密码不能为空")]
         public string F_AdminPassword { get; set; }
         /// <summary>
         /// 
@@ -96,16 +103,19 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "联系电话不能为空")]
         public string F_MobilePhone { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "联系人不能为空")]
         public string F_PrincipalMan { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "到期时间不能为空")]
         public DateTime? F_EndTime { get; set; }
         /// <summary>
         /// 
@@ -117,6 +127,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// </summary>
         /// <returns></returns>
         public string F_DBProvider { get; set; }
+        [Required(ErrorMessage = "域名不能为空")]
         public string F_HostUrl { get; set; }
     }
 }

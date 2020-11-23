@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Chloe.Annotations;
 
 namespace WaterCloud.Domain.SystemOrganize
@@ -21,6 +22,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "模块不能为空")]
         public string F_ModuleId { get; set; }
         /// <summary>
         /// 
@@ -36,6 +38,8 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 
         /// </summary>
         /// <returns></returns>
+        [Required(ErrorMessage = "排序不能为空")]
+        [Range(0, 99999999, ErrorMessage = "排序大小必须介于1~99999999之间")]
         public int? F_SortCode { get; set; }
         /// <summary>
         /// 
