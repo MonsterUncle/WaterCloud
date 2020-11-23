@@ -71,6 +71,7 @@ namespace WaterCloud.WebApi
             services.AddCors();
             services.AddControllers(options =>
             {
+                options.Filters.Add<ModelActionFilter>();
                 options.ModelMetadataDetailsProviders.Add(new ModelBindingMetadataProvider());
             }).AddNewtonsoftJson(options =>
             {
