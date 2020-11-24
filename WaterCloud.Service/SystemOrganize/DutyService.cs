@@ -118,6 +118,7 @@ namespace WaterCloud.Service.SystemOrganize
             File.Delete(fileFullName);
             foreach (var item in list)
             {
+                item.F_Id = Utils.GuId();
                 item.F_EnabledMark = true;
                 item.F_DeleteMark = false;
                 item.F_OrganizeId = currentuser.CompanyId;
