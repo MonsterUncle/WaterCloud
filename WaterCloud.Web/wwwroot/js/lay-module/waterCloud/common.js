@@ -242,7 +242,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             options.url = obj.urlAddTime(options.url);
             window.setTimeout(function () {
                 if ($('[name=__RequestVerificationToken]').length > 0) {
-                    options.param["__RequestVerificationToken"] = $('[name=__RequestVerificationToken]').val();
+                    var csrfToken = $('[name=__RequestVerificationToken]').val();
                 }
                 var index = parent.layer.load(0, {
                     shade: [0.5, '#000'], //0.1透明度的背景
@@ -252,6 +252,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     data: options.param,
                     type: "post",
                     dataType: "json",
+                    headers: {
+                        "X-CSRF-TOKEN": csrfToken
+                    },
                     success: function (data) {
                         if (data.state == "success") {
                             options.success(data);
@@ -330,7 +333,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
             if ($('[name=__RequestVerificationToken]').length > 0) {
-                options.param["__RequestVerificationToken"] = $('[name=__RequestVerificationToken]').val();
+                var csrfToken = $('[name=__RequestVerificationToken]').val();
             }
             obj.modalConfirm(options.prompt, function (r) {
                 if (r) {
@@ -343,6 +346,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                             data: options.param,
                             type: "post",
                             dataType: "json",
+                            headers: {
+                                "X-CSRF-TOKEN": csrfToken
+                            },
                             success: function (data) {
                                 if (data.state == "success") {
                                     options.success(data);
@@ -382,7 +388,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
             if ($('[name=__RequestVerificationToken]').length > 0) {
-                options.param["__RequestVerificationToken"] = $('[name=__RequestVerificationToken]').val();
+                var csrfToken = $('[name=__RequestVerificationToken]').val();
             }
             obj.modalConfirm(options.prompt, function (r) {
                 if (r) {
@@ -395,6 +401,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                             data: options.param,
                             type: "post",
                             dataType: "json",
+                            headers: {
+                                "X-CSRF-TOKEN": csrfToken
+                            },
                             success: function (data) {
                                 if (data.state == "success") {
                                     options.success(data);
@@ -475,9 +484,6 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                         break;
                 }
             });
-            if ($('[name=__RequestVerificationToken]').length > 0) {
-                postdata["__RequestVerificationToken"] = $('[name=__RequestVerificationToken]').val();
-            }
             return postdata;
         },
         //父窗体刷新（按钮刷新）

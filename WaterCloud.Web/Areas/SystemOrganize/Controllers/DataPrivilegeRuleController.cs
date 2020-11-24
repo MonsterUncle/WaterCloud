@@ -64,7 +64,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         #region 提交数据
         [HttpPost]
         [HandlerAjaxOnly]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitForm(DataPrivilegeRuleEntity entity,string listData, string keyValue)
         {
             var filterList = JsonConvert.DeserializeObject<List<FilterList>>(listData);
@@ -94,7 +93,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
             try

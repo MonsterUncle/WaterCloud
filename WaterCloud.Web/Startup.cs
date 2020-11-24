@@ -110,11 +110,13 @@ namespace WaterCloud.Web
                 options.Filters.Add<GlobalExceptionFilter>();
                 options.Filters.Add<ModelActionFilter>();
                 options.ModelMetadataDetailsProviders.Add(new ModelBindingMetadataProvider());
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             }).AddNewtonsoftJson(options =>
             {
                 // 返回数据首字母不小写，CamelCasePropertyNamesContractResolver是小写
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
+            services.AddAntiforgery(options => options.HeaderName = "X-CSRF-TOKEN");
             services.AddControllersWithViews().AddControllersAsServices();
             //调试前端可更新
             services.AddControllersWithViews().AddRazorRuntimeCompilation();

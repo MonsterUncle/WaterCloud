@@ -392,7 +392,6 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        #region 提交数据");
             sb.AppendLine("        [HttpPost]");
             sb.AppendLine("        [HandlerAjaxOnly]");
-            sb.AppendLine("        [ValidateAntiForgeryToken]");
             sb.AppendLine("        public async Task<ActionResult> SubmitForm(" + baseConfigModel.FileConfig.EntityName + " entity, string keyValue)");
             sb.AppendLine("        {");
             sb.AppendLine("            try");
@@ -409,7 +408,6 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        [HttpPost]");
             sb.AppendLine("        [HandlerAjaxOnly]");
             sb.AppendLine("        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]");
-            sb.AppendLine("        [ValidateAntiForgeryToken]");
             sb.AppendLine("        public async Task<ActionResult> DeleteForm(string keyValue)");
             sb.AppendLine("        {");
             sb.AppendLine("            try");

@@ -68,7 +68,6 @@ namespace WaterCloud.Web.Areas.InfoManage.Controllers
         #region 提交数据
         [HttpPost]
         [HandlerAjaxOnly]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitForm(MessageEntity entity)
         {
             try
@@ -86,6 +85,7 @@ namespace WaterCloud.Web.Areas.InfoManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
+        [IgnoreAntiforgeryToken]
         public async Task<ActionResult> ReadMsgForm(string keyValue)
         {
             if (await _service.CheckMsg(keyValue))
@@ -104,6 +104,7 @@ namespace WaterCloud.Web.Areas.InfoManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
+        [IgnoreAntiforgeryToken]
         public async Task<ActionResult> ReadAllMsgForm(int type=0)
         {
             try
@@ -119,7 +120,6 @@ namespace WaterCloud.Web.Areas.InfoManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
             try

@@ -78,7 +78,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         #region 提交数据
         [HttpPost]
         [HandlerAjaxOnly]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitForm(SystemSetEntity entity, string keyValue)
         {
             try
@@ -93,7 +92,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> SetSubmitForm(SystemSetEntity entity)
         {
             var keyValue = _service.currentuser.CompanyId;
@@ -113,7 +111,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
             try

@@ -89,7 +89,6 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
         #region 提交数据
         [HttpPost]
         [HandlerAjaxOnly]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitForm(FlowinstanceEntity entity, string keyValue)
         {
             try
@@ -112,7 +111,6 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Verification(VerificationExtend entity)
         {
             try
@@ -129,7 +127,6 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
             try

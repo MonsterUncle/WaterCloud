@@ -193,7 +193,6 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ValidateAntiForgeryToken]
         public async Task<bool> SubmitForm(UploadfileEntity entity, string keyValue)
         {
             try
@@ -212,7 +211,6 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
             try

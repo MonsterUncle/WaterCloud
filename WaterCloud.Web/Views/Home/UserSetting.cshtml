@@ -22,59 +22,59 @@
 <body>
     <div class="layuimini-container">
         <div class="layuimini-main">
-                <div class="layui-form layuimini-form" lay-filter="adminform">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label required">账号</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_Account" name="F_Account" lay-verify="required" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label required">姓名</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_RealName" name="F_RealName"  autocomplete="off" lay-verify="required" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label ">性别</label>
-                        <div class="layui-input-block">
-                            <select id="F_Gender" name="F_Gender">
-                                <option value="true">男</option>
-                                <option value="false">女</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">生日</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_Birthday" name="F_Birthday" autocomplete="off" value="" class="layui-input ">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">手机</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_MobilePhone" name="F_MobilePhone"  autocomplete="off" placeholder="请输入手机号" value="" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">邮箱</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_Email" name="F_Email"  autocomplete="off" placeholder="请输入邮箱" value="" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item layui-form-text">
-                        <label class="layui-form-label">备注</label>
-                        <div class="layui-input-block">
-                            <textarea id="F_Description" name="F_Description"  autocomplete="off" class="layui-textarea" placeholder="请输入备注信"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="layui-form-item" style="text-align:center">
-                        <div class="layui-input-block">
-                            <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
-                        </div>
+            <div class="layui-form layuimini-form" lay-filter="adminform">
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">账号</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_Account" name="F_Account" lay-verify="required" class="layui-input">
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_RealName" name="F_RealName" autocomplete="off" lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label ">性别</label>
+                    <div class="layui-input-block">
+                        <select id="F_Gender" name="F_Gender">
+                            <option value="true">男</option>
+                            <option value="false">女</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">生日</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_Birthday" name="F_Birthday" autocomplete="off" value="" class="layui-input ">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">手机</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_MobilePhone" name="F_MobilePhone" autocomplete="off" placeholder="请输入手机号" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_Email" name="F_Email" autocomplete="off" placeholder="请输入邮箱" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                        <textarea id="F_Description" name="F_Description" autocomplete="off" class="layui-textarea" placeholder="请输入备注信"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item" style="text-align:center">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -102,7 +102,7 @@
                 elem: '#F_Birthday'
                 , btns: ['clear', 'now']
                 , trigger: 'click',
-                format:'yyyy-MM-dd',
+                format: 'yyyy-MM-dd',
             });
             //监听提交
             form.on('submit(saveBtn)', function (data) {

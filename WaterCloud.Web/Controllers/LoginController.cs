@@ -79,6 +79,7 @@ namespace WaterCloud.Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [HandlerAjaxOnly]
+        [IgnoreAntiforgeryToken]
         public async Task<ActionResult> CheckLoginState()
         {
             try
@@ -113,6 +114,7 @@ namespace WaterCloud.Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [HandlerAjaxOnly]
+        [IgnoreAntiforgeryToken]
         public async Task<ActionResult> CheckLogin(string username, string password,string localurl)
         {
             //根据域名判断租户
