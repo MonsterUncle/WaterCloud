@@ -62,6 +62,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
         #region 提交数据
         [HttpPost]
         [ServiceFilter(typeof(HandlerLoginAttribute))]
+        [IgnoreAntiforgeryToken]
         public async Task<ActionResult> Upload(string fileby,int filetype =0)
         {
             try
@@ -197,7 +198,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
         {
             try
             {
-                await _service.DeleteForm(keyValue);
+                await _service.SubmitForm(entity, keyValue);
                 await Success("操作成功。", className, keyValue);
                 return true;
             }
