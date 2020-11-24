@@ -155,7 +155,7 @@ namespace WaterCloud.Code
                 return string.Empty;
             }
             IHttpContextAccessor hca = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>();
-            return hca?.HttpContext?.Session.GetString(key) as string;
+            return hca?.HttpContext?.Session.GetString(key) ?? "";
         }
         /// <summary>
         /// 删除指定Session
