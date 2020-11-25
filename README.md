@@ -10,13 +10,10 @@
 [![fork](https://gitee.com/qian_wei_hong/WaterCloud/badge/fork.svg)](https://gitee.com/qian_wei_hong/WaterCloud/members)
 ![](https://img.shields.io/badge/release-1.2.0-red)
 
-![](https://img.shields.io/badge/.net%20core-3.1.0-blue)
-![](https://img.shields.io/badge/Chloe-4.8.0-blue)
+![](https://img.shields.io/badge/.net-4.5.0-blue)
+![](https://img.shields.io/badge/Chloe-4.5.0-blue)
 ![](https://img.shields.io/badge/layui-2.5.5-blue)
 
-![](https://img.shields.io/badge/Quartz-3.2.3-brightgreen)
-![](https://img.shields.io/badge/Autofac-6.0.0-brightgreen)
-![](https://img.shields.io/badge/SignalR-4.2.2-brightgreen)
 </div>
 
 ----
@@ -35,8 +32,10 @@
 - 页面为响应式设计，支持电脑、平板、智能手机等设备，微信浏览器以及各种常见浏览器。
 - 适用范围：可以开发OA、ERP、BPM、CRM、WMS、TMS、MIS、BI、电商平台后台、物流管理系统、快递管理系统、教务管理系统等各类管理软件。
 
-- Core版项目演示地址：http://www.watercloud.vip/  （账号：admin 密码：0000，数据库2个小时还原一次）
-- Core版文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
+- .net5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net5
+- .netcore3.1版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/core3.1
+- .net5版项目演示地址：http://www.watercloud.vip/  （账号：admin 密码：0000，数据库2个小时还原一次）
+- .net5版文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
 
 #### 版本
 
