@@ -38,7 +38,7 @@ namespace UEditor.Core
                 client.PutObject(bucketName, key, filePathToUpload, metadata);
                 // 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 result = false;
             }
@@ -76,7 +76,7 @@ namespace UEditor.Core
                 client.PutObject(bucketName, key, fileStream, metadata);
                 // 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 result = false;
             }
