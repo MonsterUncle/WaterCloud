@@ -2,40 +2,37 @@
 using Chloe.MySql;
 using Chloe.Oracle;
 using Chloe.SqlServer;
-using WaterCloud.Code;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace WaterCloud.DataBase
 {
     public class DBContexHelper
     {
-        private static string dbType = GlobalContext.SystemConfig.DBProvider;
-        private static string dbConnectionString = GlobalContext.SystemConfig.DBConnectionString;
-        private static string DBCommandTimeout = GlobalContext.SystemConfig.DBCommandTimeout;
-
-        public static IDbContext Contex(string ConnectStr = "", string providerName = "")
+        public static DbContext Contex(string ConnectStr = "", string providerName = "")
         {
-            ConnectStr = string.IsNullOrEmpty(ConnectStr) ? dbConnectionString : ConnectStr;
-            providerName = string.IsNullOrEmpty(providerName) ? dbType : providerName;
-            IDbContext context;
+            ConnectStr = string.IsNullOrEmpty(ConnectStr) ? ConfigurationManager.ConnectionStrings["WaterCloudDbContext"].ConnectionString : ConnectStr;
+            providerName = string.IsNullOrEmpty(providerName) ? ConfigurationManager.ConnectionStrings["WaterCloudDbContext"].ProviderName : providerName;
+            DbContext context;
             switch (providerName)
             {
-                case Define.DBTYPE_SQLSERVER:
+                case "System.Data.SqlClient":
                     context = new MsSqlContext(ConnectStr);
-                    context.Session.CommandTimeout = int.Parse(DBCommandTimeout);
                     break;
-                case Define.DBTYPE_MYSQL:
+                case "MySql.Data.MySqlClient":
                     context = new MySqlContext(new MySqlConnectionFactory(ConnectStr));
-                    context.Session.CommandTimeout = int.Parse(DBCommandTimeout);
                     break;
-                case Define.DBTYPE_ORACLE:
+                case "Oracle.ManagedDataAccess.Client":
                     var con = new OracleContext(new OracleConnectionFactory(ConnectStr));
-                    con.Session.CommandTimeout = int.Parse(DBCommandTimeout);
                     con.ConvertToUppercase = false;
                     context = con;
                     break;
                 default:
                     context = new MsSqlContext(ConnectStr);
-                    context.Session.CommandTimeout = int.Parse(DBCommandTimeout);
                     break;
             }
             return context;

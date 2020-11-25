@@ -8,8 +8,9 @@ using Chloe;
 using WaterCloud.Code;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace WaterCloud.DataBase
 {
@@ -19,24 +20,22 @@ namespace WaterCloud.DataBase
     /// <typeparam name="TEntity">实体类型</typeparam>
     public interface IRepositoryBase<TEntity> where TEntity : class, new()
     {
-        IDbContext GetDbContext();
-        Task<TEntity> Insert(TEntity entity);
-        Task<int> Insert(List<TEntity> entitys);
-        Task<int> Update(TEntity entity);
-        Task<int> Update(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> content);
-        Task<int> Delete(TEntity entity);
-        Task<int> Delete(Expression<Func<TEntity, bool>> predicate);
-        Task<TEntity> FindEntity(object keyValue);
-        Task<TEntity> FindEntity(Expression<Func<TEntity, bool>> predicate);
+        void Insert(TEntity entity);
+        void Insert(List<TEntity> entitys);
+        int Update(TEntity entity);
+        int Update(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> content);
+        int Delete(TEntity entity);
+        int Delete(Expression<Func<TEntity, bool>> predicate);
+        TEntity FindEntity(object keyValue);
+        TEntity FindEntity(Expression<Func<TEntity, bool>> predicate);
         IQuery<TEntity> IQueryable();
         IQuery<TEntity> IQueryable(Expression<Func<TEntity, bool>> predicate);
-        Task<List<TEntity>> FindList(string strSql);
-        Task<List<TEntity>> FindList(string strSql, DbParam[] dbParameter);
-        Task<List<TEntity>> FindList(Pagination pagination);
-        Task<List<TEntity>> FindList(Expression<Func<TEntity, bool>> predicate, Pagination pagination);
-        Task<List<T>> OrderList<T>(IQuery<T> query, Pagination pagination);
-        Task<List<T>> OrderList<T>(IQuery<T> query, SoulPage<T> pagination);
-        Task<List<TEntity>> CheckCacheList(string cacheKey, long old = 0);
-        Task<TEntity> CheckCache(string cacheKey, string keyValue, long old = 0);
+        List<TEntity> FindList(string strSql);
+        List<TEntity> FindList(string strSql, DbParam[] dbParameter);
+        List<TEntity> FindList(Pagination pagination);
+        List<TEntity> FindList(Expression<Func<TEntity, bool>> predicate, Pagination pagination);
+        List<T> OrderList<T>(IQuery<T> query, Pagination pagination);
+        List<TEntity> CheckCacheList(string cacheKey, long old = 0);
+        TEntity CheckCache(string cacheKey, string keyValue, long old = 0);
     }
 }

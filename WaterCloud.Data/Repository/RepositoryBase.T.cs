@@ -5,13 +5,15 @@
  * Website：
 *********************************************************************************/
 using Chloe;
+using Chloe.SqlServer;
 using WaterCloud.Code;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WaterCloud.DataBase
 {
@@ -21,34 +23,39 @@ namespace WaterCloud.DataBase
     /// <typeparam name="TEntity"></typeparam>
     public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class, new()
     {
-        private IDbContext _context;
-        public IDbContext GetDbContext()
-        {           
-            return _context;
+        private ICache cache = CacheFactory.CaChe();
+        private DbContext dbcontext;
+        public RepositoryBase()
+        {
+            dbcontext = DBContexHelper.Contex();
         }
         public RepositoryBase(string ConnectStr, string providerName)
         {
-            _context = DBContexHelper.Contex(ConnectStr, providerName);
+            dbcontext = DBContexHelper.Contex(ConnectStr, providerName);
         }
-        public RepositoryBase(IDbContext context)
+        public void Insert(TEntity entity)
         {
-            _context = context;
+            dbcontext.Insert(entity);
         }
-        public async Task<TEntity> Insert(TEntity entity)
+        public void Insert(List<TEntity> entitys)
         {
-           return await _context.InsertAsync(entity);
+            if (dbcontext.DatabaseProvider.DatabaseType== "SqlServer")
+            {
+                dbcontext.BulkInsert(entitys);
+            }
+            else
+            {
+                foreach (var item in entitys)
+                {
+                    dbcontext.Insert(item);
+                }
+            }
         }
-        public async Task<int> Insert(List<TEntity> entitys)
-        {
-            int i = 1;
-            await _context.InsertRangeAsync(entitys);
-            return i;
-        }
-        public async Task<int> Update(TEntity entity)
+        public int Update(TEntity entity)
         {
             //反射对比更新对象变更
-            TEntity newentity = _context.QueryByKey<TEntity>(entity);
-            _context.TrackEntity(newentity);
+            TEntity newentity = dbcontext.QueryByKey<TEntity>(entity);
+            dbcontext.TrackEntity(newentity);
             PropertyInfo[] newprops = newentity.GetType().GetProperties();
             PropertyInfo[] props = entity.GetType().GetProperties();
             foreach (PropertyInfo prop in props)
@@ -64,61 +71,65 @@ namespace WaterCloud.DataBase
                     }
                 }
             }
-            return await _context.UpdateAsync(newentity);
+            int id = dbcontext.Update(newentity);
+            return id;
         }
-        public async Task<int> Update(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> content)
+        public int Update(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> content)
         {
-            return await _context.UpdateAsync(predicate, content);
+            int id = dbcontext.Update(predicate, content);
+            return id;
         }
-        public async Task<int> Delete(TEntity entity)
+        public int Delete(TEntity entity)
         {
-            return await _context.DeleteAsync(entity);
+            int id = dbcontext.Delete(entity);
+            return id;
         }
-        public async Task<int> Delete(Expression<Func<TEntity, bool>> predicate)
+        public int Delete(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _context.DeleteAsync(predicate);
+            int id = dbcontext.Delete(predicate);
+            return id;
         }
-        public async Task<TEntity> FindEntity(object keyValue)
+        public TEntity FindEntity(object keyValue)
         {
-            return await _context.QueryByKeyAsync<TEntity>(keyValue);
+            return dbcontext.QueryByKey<TEntity>(keyValue);
         }
-        public async Task<TEntity> FindEntity(Expression<Func<TEntity, bool>> predicate)
+        public TEntity FindEntity(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Query<TEntity>().FirstOrDefault(predicate);
+            return dbcontext.Query<TEntity>().FirstOrDefault(predicate);
         }
         public IQuery<TEntity> IQueryable()
         {
-            return _context.Query<TEntity>();
+            return dbcontext.Query<TEntity>();
         }
         public IQuery<TEntity> IQueryable(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Query<TEntity>().Where(predicate);
+            return dbcontext.Query<TEntity>().Where(predicate);
         }
-        public async Task<List<TEntity>> FindList(string strSql)
+        public List<TEntity> FindList(string strSql)
         {
-            return await _context.SqlQueryAsync<TEntity>(strSql);
+            return dbcontext.SqlQuery<TEntity>(strSql).ToList<TEntity>();
         }
-        public async Task<List<TEntity>> FindList(string strSql, DbParam[] dbParameter)
+        public List<TEntity> FindList(string strSql, DbParam[] dbParameter)
         {
-            return await _context.SqlQueryAsync<TEntity>(strSql, dbParameter);
+            return dbcontext.SqlQuery<TEntity>(strSql, dbParameter).ToList<TEntity>();
         }
-        public async Task<List<TEntity>> FindList(Pagination pagination)
+        public List<TEntity> FindList(Pagination pagination)
         {
-            var tempData = _context.Query<TEntity>();
+            var tempData = dbcontext.Query<TEntity>();
             tempData = tempData.OrderBy(pagination.sort);
             pagination.records = tempData.Count();
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
-        public async Task<List<TEntity>> FindList(Expression<Func<TEntity, bool>> predicate, Pagination pagination)
+        public List<TEntity> FindList(Expression<Func<TEntity, bool>> predicate, Pagination pagination)
         {
-            var tempData = _context.Query<TEntity>().Where(predicate);
+            var tempData = dbcontext.Query<TEntity>().Where(predicate);
             tempData = tempData.OrderBy(pagination.sort);
             pagination.records = tempData.Count();
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
-        public async Task<List<T>> OrderList<T>(IQuery<T> query, Pagination pagination)
+        public List<T> OrderList<T>(IQuery<T> query, Pagination pagination)
         {
             var tempData = query;
             tempData = tempData.OrderBy(pagination.sort);
@@ -126,45 +137,29 @@ namespace WaterCloud.DataBase
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
-        public async Task<List<T>> OrderList<T>(IQuery<T> query, SoulPage<T> pagination)
+        public List<TEntity> CheckCacheList(string cacheKey, long old = 0)
         {
-            var tempData = query;
-            List<FilterSo> filterSos = pagination.getFilterSos();
-            if (filterSos!=null && filterSos.Count>0)
-            {
-                tempData = tempData.GenerateFilter("u", filterSos);
-            }
-            if (pagination.order == "desc")
-            {
-                tempData = tempData.OrderBy(pagination.field + " " + pagination.order);
-            }
-            else
-            {
-                tempData = tempData.OrderBy(pagination.field);
-            }
-            pagination.count = tempData.Count();
-            tempData = tempData.TakePage(pagination.page, pagination.rows);
-            return tempData.ToList();
-        }
-        public async Task<List<TEntity>> CheckCacheList(string cacheKey, long old = 0)
-        {
-            var cachedata =await CacheHelper.Get<List<TEntity>>(cacheKey);
+            var cachedata = cache.Read<List<TEntity>>(cacheKey, old);
             if (cachedata == null || cachedata.Count() == 0)
             {
-                cachedata = _context.Query<TEntity>().ToList();
-                await CacheHelper.Set(cacheKey, cachedata);
+                using (var db = new RepositoryBase().BeginTrans())
+                {
+                    cachedata = db.IQueryable<TEntity>().ToList();
+                    cache.Write(cacheKey, cachedata, old);
+                }
             }
             return cachedata;
         }
-        public async Task<TEntity> CheckCache(string cacheKey, string keyValue, long old = 0)
+
+        public TEntity CheckCache(string cacheKey, string keyValue, long old = 0)
         {
-            var cachedata = await CacheHelper.Get<TEntity>(cacheKey + keyValue);
+            var cachedata = cache.Read<TEntity>(cacheKey + keyValue, old);
             if (cachedata == null)
             {
-                cachedata = await _context.QueryByKeyAsync<TEntity>(keyValue);
-                if (cachedata != null)
+                using (var db = new RepositoryBase().BeginTrans())
                 {
-                    await CacheHelper.Set(cacheKey + keyValue, cachedata);
+                    cachedata = db.FindEntity<TEntity>(keyValue);
+                    cache.Write(cacheKey + keyValue, cachedata, old);
                 }
             }
             return cachedata;

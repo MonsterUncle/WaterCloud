@@ -5,14 +5,16 @@
  * Website：
 *********************************************************************************/
 using Chloe;
+using Chloe.SqlServer;
 using WaterCloud.Code;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WaterCloud.DataBase
 {
@@ -21,24 +23,21 @@ namespace WaterCloud.DataBase
     /// </summary>
     public class RepositoryBase : IRepositoryBase, IDisposable
     {
-        private IDbContext _context;
-        public RepositoryBase(IDbContext context)
+        private ICache cache = CacheFactory.CaChe();
+        private DbContext dbcontext;
+        public RepositoryBase()
         {
-            _context = context;
-        }
-        public IDbContext GetDbContext()
-        {
-            return _context;
+            dbcontext = DBContexHelper.Contex();
         }
         public RepositoryBase(string ConnectStr, string providerName)
         {
-            _context = DBContexHelper.Contex(ConnectStr, providerName);
+            dbcontext = DBContexHelper.Contex(ConnectStr, providerName);
         }
         public IRepositoryBase BeginTrans()
         {
-            if (_context.Session.CurrentTransaction == null)
+            if (dbcontext.Session.CurrentTransaction == null)
             {
-                _context.Session.BeginTransaction();
+                dbcontext.Session.BeginTransaction();
             }
             return this;
         }
@@ -46,216 +45,161 @@ namespace WaterCloud.DataBase
         {
             try
             {
-                if (_context.Session.CurrentTransaction != null)
+                if (dbcontext.Session.CurrentTransaction != null)
                 {
-                    _context.Session.CommitTransaction();
+                    dbcontext.Session.CommitTransaction();
                 }
             }
             catch (Exception)
             {
-                this.Rollback();
+                if (dbcontext.Session.CurrentTransaction != null)
+                {
+                    dbcontext.Session.RollbackTransaction();
+                }
                 throw;
-            }
-            finally
-            {
-                this.Dispose();
             }
         }
         public void Dispose()
         {
-            if (_context.Session.CurrentTransaction != null)
+            if (dbcontext.Session.CurrentTransaction != null)
             {
-                _context.Session.Dispose();
+                dbcontext.Session.Dispose();
             }
         }
         public void Rollback()
         {
-            if (_context.Session.CurrentTransaction != null)
+            if (dbcontext.Session.CurrentTransaction != null)
             {
-                _context.Session.RollbackTransaction();
-            }
-            this.Dispose();
-        }
-        public async Task<TEntity> Insert<TEntity>(TEntity entity) where TEntity : class
-        {
-            try
-            {
-                return await _context.InsertAsync(entity);
-            }
-            catch (Exception)
-            {
-                this.Rollback();
-                throw;
+                dbcontext.Session.RollbackTransaction();
             }
         }
-        public async Task<int> Insert<TEntity>(List<TEntity> entitys) where TEntity : class
+        public void Insert<TEntity>(TEntity entity) where TEntity : class
         {
-            try
+            dbcontext.Insert(entity);
+        }
+        public void Insert<TEntity>(List<TEntity> entitys) where TEntity : class
+        {
+            if (dbcontext.DatabaseProvider.DatabaseType=="SqlServer")
             {
-                await _context.InsertRangeAsync(entitys);
-                return 1;
-            }
-            catch (Exception)
-            {
-                this.Rollback();
-                throw;
-            }
-        }
-        public async Task<int> Update<TEntity>(TEntity entity) where TEntity : class
-        {
-            try
-            {
-                TEntity newentity = _context.QueryByKey<TEntity>(entity);
-                _context.TrackEntity(newentity);
-                PropertyInfo[] newprops = newentity.GetType().GetProperties();
-                PropertyInfo[] props = entity.GetType().GetProperties();
-                foreach (PropertyInfo prop in props)
-                {
-                    if (prop.GetValue(entity, null) != null)
-                    {
-                        PropertyInfo item = newprops.Where(a => a.Name == prop.Name).FirstOrDefault();
-                        if (item != null)
-                        {
-                            item.SetValue(newentity, prop.GetValue(entity, null), null);
-                            if (prop.GetValue(entity, null).ToString() == "&nbsp;")
-                                item.SetValue(newentity, null, null);
-                        }
-                    }
-                }
-                return await _context.UpdateAsync(newentity);
-            }
-            catch (Exception)
-            {
-                this.Rollback();
-                throw;
-            }
-        }
-        public async Task<int> Update<TEntity>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> content) where TEntity : class
-        {
-            try
-            {
-                return await _context.UpdateAsync(predicate, content);
-            }
-            catch (Exception)
-            {
-                this.Rollback();
-                throw;
-            }
-
-        }
-        public async Task<int> Delete<TEntity>(TEntity entity) where TEntity : class
-        {
-            try
-            {
-                return await _context.DeleteAsync(entity);
-            }
-            catch (Exception)
-            {
-                this.Rollback();
-                throw;
-            }
-
-        }
-        public async Task<int> Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
-        {
-            try
-            {
-                return await _context.DeleteAsync(predicate);
-            }
-            catch (Exception)
-            {
-                this.Rollback();
-                throw;
-            }
-        }
-        public async Task<TEntity> FindEntity<TEntity>(object keyValue) where TEntity : class
-        {
-            return await _context.QueryByKeyAsync<TEntity>(keyValue);
-        }
-        public async Task<TEntity> FindEntity<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
-        {
-            return _context.Query<TEntity>().FirstOrDefault(predicate);
-        }
-        public IQuery<TEntity> IQueryable<TEntity>() where TEntity : class
-        {
-            return _context.Query<TEntity>();
-        }
-        public IQuery<TEntity> IQueryable<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
-        {
-            return _context.Query<TEntity>().Where(predicate);
-        }
-        public async Task<List<TEntity>> FindList<TEntity>(string strSql) where TEntity : class
-        {
-            return await _context.SqlQueryAsync<TEntity>(strSql);
-        }
-        public async Task<List<TEntity>> FindList<TEntity>(string strSql, DbParam[] dbParameter) where TEntity : class
-        {
-            return await _context.SqlQueryAsync<TEntity>(strSql, dbParameter);
-        }
-        public async Task<List<TEntity>> FindList<TEntity>(Pagination pagination) where TEntity : class, new()
-        {
-            var tempData = _context.Query<TEntity>();
-            tempData = tempData.OrderBy(pagination.sort);
-            pagination.records = tempData.Count();
-            tempData = tempData.TakePage(pagination.page, pagination.rows);
-            return tempData.ToList();
-        }
-        public async Task<List<TEntity>> FindList<TEntity>(Expression<Func<TEntity, bool>> predicate, Pagination pagination) where TEntity : class, new()
-        {
-            var tempData = _context.Query<TEntity>().Where(predicate);
-            tempData = tempData.OrderBy(pagination.sort);
-            pagination.records = tempData.Count();
-            tempData = tempData.TakePage(pagination.page, pagination.rows);
-            return tempData.ToList();
-        }
-        public async Task<List<T>> OrderList<T>(IQuery<T> query, Pagination pagination)
-        {
-            var tempData = query;
-            tempData = tempData.OrderBy(pagination.sort);
-            pagination.records = tempData.Count();
-            tempData = tempData.TakePage(pagination.page, pagination.rows);
-            return tempData.ToList();
-        }
-        public async Task<List<T>> OrderList<T>(IQuery<T> query, SoulPage<T> pagination)
-        {
-            var tempData = query;
-            List<FilterSo> filterSos = pagination.getFilterSos();
-            if (filterSos != null && filterSos.Count > 0)
-            {
-                tempData = tempData.GenerateFilter("u", filterSos);
-            }
-            if (pagination.order == "desc")
-            {
-                tempData = tempData.OrderBy(pagination.field + " " + pagination.order);
+                dbcontext.BulkInsert(entitys);
             }
             else
             {
-                tempData = tempData.OrderBy(pagination.field);
+                foreach (var item in entitys)
+                {
+                    dbcontext.Insert(item);
+                }
             }
-            pagination.count = tempData.Count();
+        }
+        public int Update<TEntity>(TEntity entity) where TEntity : class
+        {
+
+            TEntity newentity = dbcontext.QueryByKey<TEntity>(entity);
+            dbcontext.TrackEntity(newentity);
+            PropertyInfo[] newprops = newentity.GetType().GetProperties();
+            PropertyInfo[] props = entity.GetType().GetProperties();
+            foreach (PropertyInfo prop in props)
+            {
+                if (prop.GetValue(entity, null) != null)
+                {
+                    PropertyInfo item = newprops.Where(a => a.Name == prop.Name).FirstOrDefault();
+                    if (item != null)
+                    {
+                        item.SetValue(newentity, prop.GetValue(entity, null), null);
+                        if (prop.GetValue(entity, null).ToString() == "&nbsp;")
+                            item.SetValue(newentity, null, null);
+                    }
+                }
+            }
+            int id = dbcontext.Update(newentity);
+            return id;
+        }
+        public int Update<TEntity>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> content) where TEntity : class
+        {
+            int id = dbcontext.Update(predicate, content);
+            return id;
+        }
+        public int Delete<TEntity>(TEntity entity) where TEntity : class
+        {
+            int id = dbcontext.Delete(entity);
+            return id;
+        }
+        public int Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        {
+            int id = dbcontext.Delete(predicate);
+            return id;
+        }
+        public TEntity FindEntity<TEntity>(object keyValue) where TEntity : class
+        {
+            return dbcontext.QueryByKey<TEntity>(keyValue);
+        }
+        public TEntity FindEntity<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        {
+            return dbcontext.Query<TEntity>().FirstOrDefault(predicate);
+        }
+        public IQuery<TEntity> IQueryable<TEntity>() where TEntity : class
+        {
+            return dbcontext.Query<TEntity>();
+        }
+        public IQuery<TEntity> IQueryable<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        {
+            return dbcontext.Query<TEntity>().Where(predicate);
+        }
+        public List<TEntity> FindList<TEntity>(string strSql) where TEntity : class
+        {
+            return dbcontext.SqlQuery<TEntity>(strSql).ToList<TEntity>();
+        }
+        public List<TEntity> FindList<TEntity>(string strSql, DbParam[] dbParameter) where TEntity : class
+        {
+            return dbcontext.SqlQuery<TEntity>(strSql, dbParameter).ToList<TEntity>();
+        }
+        public List<TEntity> FindList<TEntity>(Pagination pagination) where TEntity : class, new()
+        {
+            var tempData = dbcontext.Query<TEntity>();
+            tempData = tempData.OrderBy(pagination.sort);
+            pagination.records = tempData.Count();
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
-        public async Task<List<TEntity>> CheckCacheList<TEntity>(string cacheKey, long old = 0) where TEntity : class
+        public List<TEntity> FindList<TEntity>(Expression<Func<TEntity, bool>> predicate, Pagination pagination) where TEntity : class, new()
         {
-            var cachedata = await CacheHelper.Get<List<TEntity>>(cacheKey);
+            var tempData = dbcontext.Query<TEntity>().Where(predicate);
+            tempData = tempData.OrderBy(pagination.sort);
+            pagination.records = tempData.Count();
+            tempData = tempData.TakePage(pagination.page, pagination.rows);
+            return tempData.ToList();
+        }
+        public List<T> OrderList<T>(IQuery<T> query, Pagination pagination)
+        {
+            var tempData = query;
+            tempData = tempData.OrderBy(pagination.sort);
+            pagination.records = tempData.Count();
+            tempData = tempData.TakePage(pagination.page, pagination.rows);
+            return tempData.ToList();
+        }
+        public List<TEntity> CheckCacheList<TEntity>(string cacheKey, long old = 0) where TEntity : class
+        {
+            var cachedata = cache.Read<List<TEntity>>(cacheKey, old);
             if (cachedata == null || cachedata.Count() == 0)
             {
-                cachedata = _context.Query<TEntity>().ToList();
-                await CacheHelper.Set(cacheKey, cachedata);
+                using (var db = new RepositoryBase().BeginTrans())
+                {
+                    cachedata = db.IQueryable<TEntity>().ToList();
+                    cache.Write(cacheKey, cachedata, old);
+                }
             }
             return cachedata;
         }
 
-        public async Task<TEntity> CheckCache<TEntity>(string cacheKey, string keyValue, long old = 0) where TEntity : class
+        public TEntity CheckCache<TEntity>(string cacheKey, string keyValue, long old = 0) where TEntity : class
         {
-            var cachedata = await CacheHelper.Get<TEntity>(cacheKey + keyValue);
+            var cachedata = cache.Read<TEntity>(cacheKey + keyValue, old);
             if (cachedata == null)
             {
-                cachedata = await _context.QueryByKeyAsync<TEntity>(keyValue);
-                if (cachedata != null)
+                using (var db = new RepositoryBase().BeginTrans())
                 {
-                    await CacheHelper.Set(cacheKey + keyValue, cachedata);
+                    cachedata = db.FindEntity<TEntity>(keyValue);
+                    cache.Write(cacheKey + keyValue, cachedata, old);
                 }
             }
             return cachedata;
