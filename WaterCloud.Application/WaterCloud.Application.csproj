@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F2035EE2-B73D-4FB8-A433-CAB465DE6A2A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WaterCloud.Application</RootNamespace>
+    <AssemblyName>WaterCloud.Application</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Chloe, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.4.5.0\lib\net45\Chloe.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.Extension, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.Extension.4.5.0\lib\net45\Chloe.Extension.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.MySql, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.MySql.4.5.0\lib\net45\Chloe.MySql.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.Oracle, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.Oracle.4.5.0\lib\net45\Chloe.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.SqlServer, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.SqlServer.4.5.0\lib\net45\Chloe.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin">
+      <HintPath>..\packages\Senparc.Weixin.6.4.8\lib\net45\Senparc.Weixin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin.MP">
+      <HintPath>..\packages\Senparc.Weixin.MP.16.7.9\lib\net45\Senparc.Weixin.MP.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TopSdk">
+      <HintPath>..\packages\TopSdk.2.0\TopSdk.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonService\Common\BaseAttachApp.cs" />
+    <Compile Include="CommonService\Common\CommonApp.cs" />
+    <Compile Include="CommonService\Common\LicenseSecret.cs" />
+    <Compile Include="CommonService\Common\UpLoad.cs" />
+    <Compile Include="CommonService\DdWorkMsg\CommonDdWorkMsg.cs" />
+    <Compile Include="CommonService\WxTempMsg\SendWxTemplateMsg.cs" />
+    <Compile Include="CommonService\WxTempMsg\WxTemplateMessageServer.cs" />
+    <Compile Include="DingTalkManage\DingTalkApp.cs" />
+    <Compile Include="DingTalkManage\DepartmentApp.cs" />
+    <Compile Include="DingTalkManage\DingTalkWorkMsgApp.cs" />
+    <Compile Include="DingTalkManage\DingTalkUsersApp.cs" />
+    <Compile Include="DingTalkManage\ProcessInstanceApp.cs" />
+    <Compile Include="Infrastructure\DbLogType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemManage\ItemsApp.cs" />
+    <Compile Include="SystemManage\ItemsDetailApp.cs" />
+    <Compile Include="SystemManage\ModuleApp.cs" />
+    <Compile Include="SystemManage\ModuleButtonApp.cs" />
+    <Compile Include="SystemManage\AreaApp.cs" />
+    <Compile Include="SystemManage\OrganizeApp.cs" />
+    <Compile Include="SystemManage\RoleApp.cs" />
+    <Compile Include="SystemManage\UserApp.cs" />
+    <Compile Include="SystemManage\UserLogOnApp.cs" />
+    <Compile Include="SystemManage\DutyApp.cs" />
+    <Compile Include="SystemManage\RoleAuthorizeApp.cs" />
+    <Compile Include="SystemSecurity\DbBackupApp.cs" />
+    <Compile Include="SystemSecurity\FilterIPApp.cs" />
+    <Compile Include="SystemSecurity\LogApp.cs" />
+    <Compile Include="SystemManage\NoticeApp.cs" />
+    <Compile Include="SystemManage\QuickModuleApp.cs" />
+    <Compile Include="SystemSecurity\ServerStateApp.cs" />
+    <Compile Include="WeixinMPManage\WxTemplateMessageApp.cs" />
+    <Compile Include="WeixinMPManage\WxUsersApp.cs" />
+    <Compile Include="WeixinMPManage\WeixinRequestRuleApp.cs" />
+    <Compile Include="WeixinMPManage\WxTempMsgApp.cs" />
+    <Compile Include="WeixinMPManage\WxPropertyInfoApp.cs" />
+    <Compile Include="WeixinMPManage\WxBaseConfigApp.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj">
+      <Project>{db19ce03-c307-43fe-a209-08aa4ae10e21}</Project>
+      <Name>WaterCloud.Code</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.Data\WaterCloud.DataBase.csproj">
+      <Project>{f71003e8-a836-48f4-9df6-df9095cebd18}</Project>
+      <Name>WaterCloud.DataBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.DBUtility\WaterCloud.DBUtility.csproj">
+      <Project>{2cfdfca0-a3fc-4dde-8448-1769a6e24825}</Project>
+      <Name>WaterCloud.DBUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.DingDing\WaterCloud.DingTalk.csproj">
+      <Project>{2036c349-0fc2-4c80-85cb-d033988e6d12}</Project>
+      <Name>WaterCloud.DingTalk</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.Domain\WaterCloud.Domain.csproj">
+      <Project>{7dc886cd-b8a0-44e8-aadd-57fcb0cfecb8}</Project>
+      <Name>WaterCloud.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.Repository\WaterCloud.Repository.csproj">
+      <Project>{875233bf-ea15-49e0-9a9c-77884a897ff6}</Project>
+      <Name>WaterCloud.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
