@@ -124,6 +124,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         #region 提交数据
         [HttpPost]
         [HandlerAjaxOnly]
+        [IgnoreAntiforgeryToken]
         public async Task<ActionResult> CodePreviewJson(BaseConfigModel baseConfig)
         {
             try
