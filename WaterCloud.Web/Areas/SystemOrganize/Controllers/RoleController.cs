@@ -79,7 +79,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> SubmitForm(RoleEntity roleEntity, string permissionbuttonIds, string permissionfieldsIds, string keyValue)
         {
-            LogEntity logEntity;
             if (!string.IsNullOrEmpty(keyValue)&& _service.currentuser.RoleId == keyValue)
             {
                 return Error("操作失败，不能修改用户当前角色");
