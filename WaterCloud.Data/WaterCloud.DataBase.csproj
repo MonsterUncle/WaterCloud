@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Chloe" Version="4.8.0" />
+    <PackageReference Include="Chloe" Version="4.8.1" />
     <PackageReference Include="Chloe.Extension" Version="4.7.0" />
-    <PackageReference Include="Chloe.MySql" Version="4.8.0" />
-    <PackageReference Include="Chloe.Oracle" Version="4.8.0" />
-    <PackageReference Include="Chloe.SqlServer" Version="4.8.0" />
+    <PackageReference Include="Chloe.MySql" Version="4.8.1" />
+    <PackageReference Include="Chloe.Oracle" Version="4.8.1" />
+    <PackageReference Include="Chloe.SqlServer" Version="4.8.1" />
     <PackageReference Include="MySql.Data" Version="8.0.22" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.100" />
   </ItemGroup>
