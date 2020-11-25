@@ -417,7 +417,7 @@ namespace WaterCloud.Code
                         result = GetLanIp();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return string.Empty;
                 }
@@ -438,7 +438,7 @@ namespace WaterCloud.Code
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return string.Empty;
             }
@@ -457,7 +457,7 @@ namespace WaterCloud.Code
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return string.Empty;
             }
@@ -476,7 +476,7 @@ namespace WaterCloud.Code
                     ip = HtmlHelper.Resove(html, "<h2>", "</h2>");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return string.Empty;
             }
@@ -502,11 +502,10 @@ namespace WaterCloud.Code
                 }
                 return ip;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return string.Empty;
             }
-            return string.Empty;
         }
 
         public static string UserAgent
@@ -624,7 +623,7 @@ namespace WaterCloud.Code
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return string.Empty;
             }

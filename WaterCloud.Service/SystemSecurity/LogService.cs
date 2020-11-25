@@ -168,7 +168,7 @@ namespace WaterCloud.Service.SystemSecurity
                     await HandleLogHelper.HSetAsync(logEntity.F_CompanyId, logEntity.F_Id, logEntity);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 logEntity.F_IPAddress = LoginProvider == "WebApi" ? "未连接未知" : WebHelper.Ip;
                 logEntity.F_IPAddressName = "本地局域网";
@@ -197,7 +197,7 @@ namespace WaterCloud.Service.SystemSecurity
                 var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
                 return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type.ToString());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new LogEntity(className, "" , type.ToString());
             }
@@ -215,7 +215,7 @@ namespace WaterCloud.Service.SystemSecurity
                 return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new LogEntity(className, "", type.ToString());
             }

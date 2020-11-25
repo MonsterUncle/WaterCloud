@@ -82,7 +82,7 @@ namespace WaterCloud.DataBase
             {
                 return await _context.InsertAsync(entity);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 this.Rollback();
                 throw;
@@ -92,11 +92,10 @@ namespace WaterCloud.DataBase
         {
             try
             {
-                int i = 1;
                 await _context.InsertRangeAsync(entitys);
                 return 1;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 this.Rollback();
                 throw;
@@ -125,7 +124,7 @@ namespace WaterCloud.DataBase
                 }
                 return await _context.UpdateAsync(newentity);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 this.Rollback();
                 throw;
@@ -137,7 +136,7 @@ namespace WaterCloud.DataBase
             {
                 return await _context.UpdateAsync(predicate, content);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 this.Rollback();
                 throw;
@@ -150,7 +149,7 @@ namespace WaterCloud.DataBase
             {
                 return await _context.DeleteAsync(entity);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 this.Rollback();
                 throw;
@@ -163,7 +162,7 @@ namespace WaterCloud.DataBase
             {
                 return await _context.DeleteAsync(predicate);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 this.Rollback();
                 throw;
