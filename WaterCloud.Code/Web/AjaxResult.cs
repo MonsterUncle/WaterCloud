@@ -17,18 +17,88 @@ namespace WaterCloud.Code
         /// 获取 消息内容
         /// </summary>
         public string message { get; set; }
-
-    }
-    public class AjaxResult<T>: AjaxResult
-    {
-        /// <summary>
-        /// 列表的记录数
-        /// </summary>
-        public int count { get; set; }
         /// <summary>
         /// 获取 返回数据
         /// </summary>
-        public T data { get; set; }
+        public object data { get; set; }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AjaxResult2
+    {
+        /// <summary>
+        /// 操作结果类型
+        /// </summary>
+        public object state { get; set; }
+        /// <summary>
+        /// 获取 消息内容
+        /// </summary>
+        public string message { get; set; }
+        /// <summary>
+        /// 获取 返回数据
+        /// </summary>
+        public object result { get; set; }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AjaxResultByEasyUI
+    {
+        /// <summary>
+        /// 操作结果类型
+        /// </summary>
+        public object success { get; set; }
+        /// <summary>
+        /// 获取 消息内容
+        /// </summary>
+        public string message { get; set; }
+        /// <summary>
+        /// 获取 返回数据
+        /// </summary>
+        public object result { get; set; }
+    }
+
+    /// <summary>
+    /// 返回DataGrid所需数据格式
+    /// </summary>
+    public class AjaxResultDataGrid
+    {
+        /// <summary>
+        /// 操作结果类型
+        /// </summary>
+        public object state { get; set; }
+        /// <summary>
+        /// 所有记录的条数
+        /// </summary>
+        public object total { get; set; }
+        /// <summary>
+        /// 此页要显示的记录列表
+        /// </summary>
+        public object rows { get; set; }
+    }
+    /// <summary>
+    /// 返回AjaxResultLayUiTable所需数据格式
+    /// </summary>
+    public class AjaxResultLayUiTable
+    {
+        /// <summary>
+        /// 操作结果类型
+        /// </summary>
+        public object code { get; set; }
+        /// <summary>
+        /// 操作结果类型
+        /// </summary>
+        public object msg { get; set; }
+        /// <summary>
+        /// 所有记录的条数
+        /// </summary>
+        public object count { get; set; }
+        /// <summary>
+        /// 此页要显示的记录列表
+        /// </summary>
+        public object data { get; set; }
     }
     /// <summary>
     /// 返回AjaxResultLayUiTable所需数据格式

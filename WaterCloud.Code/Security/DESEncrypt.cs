@@ -38,8 +38,8 @@ namespace WaterCloud.Code
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
             byte[] inputByteArray;
             inputByteArray = Encoding.Default.GetBytes(Text);
-            des.Key = ASCIIEncoding.ASCII.GetBytes(DecryptMd5(sKey));
-            des.IV = ASCIIEncoding.ASCII.GetBytes(DecryptMd5(sKey));
+            des.Key = ASCIIEncoding.ASCII.GetBytes(System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(sKey, "md5").Substring(0, 8));
+            des.IV = ASCIIEncoding.ASCII.GetBytes(System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(sKey, "md5").Substring(0, 8));
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
             CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write);
             cs.Write(inputByteArray, 0, inputByteArray.Length);
@@ -126,29 +126,15 @@ namespace WaterCloud.Code
                 i = Convert.ToInt32(Text.Substring(x * 2, 2), 16);
                 inputByteArray[x] = (byte)i;
             }
-
-            des.Key = ASCIIEncoding.ASCII.GetBytes(DecryptMd5(sKey));
-            des.IV = ASCIIEncoding.ASCII.GetBytes(DecryptMd5(sKey));
+            des.Key = ASCIIEncoding.ASCII.GetBytes(System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(sKey, "md5").Substring(0, 8));
+            des.IV = ASCIIEncoding.ASCII.GetBytes(System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(sKey, "md5").Substring(0, 8));
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
             CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write);
             cs.Write(inputByteArray, 0, inputByteArray.Length);
             cs.FlushFinalBlock();
             return Encoding.Default.GetString(ms.ToArray());
         }
-        public static string DecryptMd5(string str)
-        {
-            string strEncrypt = string.Empty;
-            var md5 = System.Security.Cryptography.MD5.Create();
-            var data = md5.ComputeHash(Encoding.UTF8.GetBytes(str));
-            StringBuilder builder = new StringBuilder();
-            // 循环遍历哈希数据的每一个字节并格式化为十六进制字符串 
-            for (int i = 0; i < data.Length; i++)
-            {
-                builder.Append(data[i].ToString("X2"));
-            }
-            strEncrypt = builder.ToString().Substring(0,8);
-            return strEncrypt;
-        }
+
         /// <summary>
         /// 解密数据,用Security.MD5而非Web.Security的Hash方式加密
         /// </summary>

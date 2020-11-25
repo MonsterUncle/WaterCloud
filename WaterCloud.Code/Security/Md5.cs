@@ -5,9 +5,7 @@
  * Website：
 *********************************************************************************/
 
-using System;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace WaterCloud.Code
 {
@@ -27,32 +25,17 @@ namespace WaterCloud.Code
             string strEncrypt = string.Empty;
             if (code == 16)
             {
-                var md5 = System.Security.Cryptography.MD5.Create();
-                var data = md5.ComputeHash(Encoding.UTF8.GetBytes(str));
-                StringBuilder builder = new StringBuilder();
-                // 循环遍历哈希数据的每一个字节并格式化为十六进制字符串 
-                for (int i = 0; i < data.Length; i++)
-                {
-                    builder.Append(data[i].ToString("X2"));
-                }
-                strEncrypt = builder.ToString().Substring(8, 16);
+                strEncrypt = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "MD5").Substring(8, 16);
             }
 
             if (code == 32)
             {
-                var md5 = System.Security.Cryptography.MD5.Create();
-                var data = md5.ComputeHash(Encoding.UTF8.GetBytes(str));
-                StringBuilder builder = new StringBuilder();
-                // 循环遍历哈希数据的每一个字节并格式化为十六进制字符串 
-                for (int i = 0; i < data.Length; i++)
-                {
-                    builder.Append(data[i].ToString("X2"));
-                }
-                strEncrypt = builder.ToString();
+                strEncrypt = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "MD5");
             }
 
             return strEncrypt;
         }
+
         public static string MD5(string str)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
@@ -67,6 +50,7 @@ namespace WaterCloud.Code
             }
             return str;
         }
+
         public static string MD5Lower16(string str)
         {
             return MD5(str).ToLower().Substring(8, 16);
@@ -83,11 +67,7 @@ namespace WaterCloud.Code
         /// <returns></returns> 
         public static string SHA1(string s)
         {
-            SHA1 sha1 = System.Security.Cryptography.SHA1.Create();
-            byte[] hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(s));
-            string shaStr = BitConverter.ToString(hash);
-            shaStr = shaStr.Replace("-", "");
-            shaStr = shaStr.ToLower();
+            s = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "SHA1").ToString();
             return s.ToLower();
         }
     }
