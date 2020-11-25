@@ -673,7 +673,6 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine( "                  btn: []");
             sb.AppendLine( "               });");
             sb.AppendLine( "           }");
-            sb.AppendLine("           }");
             if (baseConfigModel.PageIndex.IsSearch == 1)
             {
                 sb.AppendLine("           else if (obj.event === 'TABLE_SEARCH') {");
