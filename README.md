@@ -8,9 +8,9 @@
 
 [![star](https://gitee.com/qian_wei_hong/WaterCloud/badge/star.svg)](https://gitee.com/qian_wei_hong/WaterCloud/stargazers) 
 [![fork](https://gitee.com/qian_wei_hong/WaterCloud/badge/fork.svg)](https://gitee.com/qian_wei_hong/WaterCloud/members)
-![](https://img.shields.io/badge/release-1.3.0-red)
+![](https://img.shields.io/badge/release-1.5.0-red)
 
-![](https://img.shields.io/badge/.net%20core-3.1.0-blue)
+![](https://img.shields.io/badge/.net-5.0.0-blue)
 ![](https://img.shields.io/badge/Chloe-4.8.1-blue)
 ![](https://img.shields.io/badge/layui-2.5.5-blue)
 
@@ -25,7 +25,7 @@
 #### 介绍
 
 - 请勿用于违反我国法律的web平台、如诈骗等非法平台网站。
-- WaterCloud是一套基于ASP.NET Core 3.1  MVC+Chloe+LayUI的框架，源代码完全开源，可以帮助你解决C#.NET项目的重复工作！
+- WaterCloud是一套基于ASP.NET 5.0  MVC+Chloe+LayUI的框架，源代码完全开源，可以帮助你解决C#.NET项目的重复工作！
 - 采用主流框架，容易上手，简单易学，学习成本低。
 - 可完全实现二次开发让开发更多关注业务逻辑。既能快速提高开发效率，帮助公司节省人力成本，同时又不失灵活性。
 - 支持SQLServer、MySQL、Oracle 等多数据库类型。模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。
@@ -42,7 +42,8 @@
 - 租户管理(未实现，理论阶段)
 
 
-- .net4.5版地址：https://gitee.com/qian_wei_hong/WaterCloud_NET4.5
+- .net4.5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net4.5
+- .netcore3.1版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/core3.1
 - 项目演示地址：http://www.watercloud.vip/  （账号：admin 密码：0000，数据库2个小时还原一次）
 - 文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
 
@@ -70,7 +71,7 @@
 
 2、后端技术
 
-- 核心框架：ASP.NET Core 3.1、WEB API
+- 核心框架：ASP.NET 5.0、WEB API
 - 定时任务：QuartZ，实现web控制(WaterCloud.Service/AutoJob/Job下新建job，web端创建定时任务)
 - 持久层框架：Chloe（支持多种数据库，复杂查询操作）
 - 安全支持：过滤器、Sql注入、请求伪造
@@ -84,7 +85,7 @@
 #### 环境要求
 
 1. VS2019及以上版本；
-2. Asp.net Core 3.1；
+2. Asp.net 5.0；
 3. Mysql或者SQLSERVER2005及以上版本，database文件夹下有sql文件可执行；
 4. 请使用VS2019及以上版本打开解决方案。
 

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp5.0</TargetFrameworks>
     <Version>1.0.6</Version>
     <Authors>baiyunchen,lilei</Authors>
     <Description>百度UEditor图片、文件等上传所依赖的后端服务，支持.Net Core 2.0+以及.Net Framework 3.5+，简单易用，文档优秀，速来尝试。
