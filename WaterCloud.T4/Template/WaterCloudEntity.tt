@@ -1,0 +1,38 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".txt" #>
+<#@ import namespace="EntityInfo" #>
+<#@ parameter type="EntityInfo.EntityClassInfo" name="entity" #>
+//-----------------------------------------------------------------------
+// <copyright file=" <#= entity.EntityName #>.cs" company="WaterCloud">
+// * Copyright (C) WaterCloud.Framework  All Rights Reserved
+// * version : 1.0
+// * author  : WaterCloud.Framework
+// * FileName: <#= entity.EntityName #>.cs
+// * history : Created by T4 <#= DateTime.Now #> 
+// </copyright>
+//-----------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Chloe.Annotations;
+using WaterCloud.Entity;
+
+namespace WaterCloud.Entity.<#= entity.EntityNameSpace #>
+{
+    /// <summary>
+    /// <#= entity.EntityName #> Entity Model
+    /// </summary>
+	[TableAttribute("<#= entity.TableName #>")]
+    public class <#= entity.EntityName #>Entity : IEntity<<#= entity.EntityName #>Entity>, ICreationAudited, IDeleteAudited, IModificationAudited
+    {
+			<#  foreach(EntityClassPropertyInfo property in entity.RopertyList)
+			{ #>
+			<#= property.key#>
+			public  <#= property.PropertyType#>  <#= property.PropertyName#> { get; set; }
+		<#;
+			}
+		#>
+    }
+}

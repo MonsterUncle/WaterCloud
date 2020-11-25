@@ -1,52 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using WaterCloud.Application.SystemManage;
+using WaterCloud.Entity.SystemManage;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace WaterCloud.WebApi.Controllers
+namespace WaterCloud.WebAPI.Controllers
 {
-    /// <summary>
-    /// 测试文件
-    /// </summary>
-    [Route("api/[controller]")]
-    [ApiController]
-    [AuthorizeFilter]
-    public class TestController : ControllerBase
+    public class TestController : ApiController
     {
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private AreaApp areaApp = new AreaApp();
+        /// <summary>
+        /// 获取列表方法
+        /// </summary>
+        /// <returns>区域列表</returns>
+        public List<AreaEntity> Get()
         {
-            return new string[] { "value1", "value2" };
+            var data = areaApp.GetList();
+            return data;
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        /// <summary>
+        /// 获取单个方法
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        /// <returns>区域</returns>
+        public AreaEntity GetForm(string keyValue)
         {
-            return "value";
+            var data = areaApp.GetForm(keyValue);
+            return data;
         }
 
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
+        /// <summary>
+        /// 提交方法
+        /// </summary>
+        /// <param name="entity">区域</param>
+        public void Post([FromBody]AreaEntity entity)
         {
+            areaApp.SubmitForm(entity,"");
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        /// <summary>
+        /// 编辑方法
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        /// <param name="entity">区域</param>
+        public void Put(string keyValue, [FromBody]AreaEntity entity)
         {
+            areaApp.SubmitForm(entity, keyValue);
         }
 
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        /// <summary>
+        /// 删除方法
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        public void Delete(string keyValue)
         {
+            areaApp.DeleteForm(keyValue);
         }
     }
 }

@@ -1,71 +1,670 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>c1fb91bb-fd9e-4a3a-8c93-b84e89a0941a</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <Version>1.3.0.0</Version>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BEF1F2C9-1903-4AC4-93BD-08452BFA37A3}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WaterCloud.Web</RootNamespace>
+    <AssemblyName>WaterCloud.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="DataProtection\**" />
-    <Content Remove="DataProtection\**" />
-    <EmbeddedResource Remove="DataProtection\**" />
-    <None Remove="DataProtection\**" />
+    <Reference Include="Chloe, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.4.5.0\lib\net45\Chloe.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.Extension, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.Extension.4.5.0\lib\net45\Chloe.Extension.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.MySql, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.MySql.4.5.0\lib\net45\Chloe.MySql.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.Oracle, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.Oracle.4.5.0\lib\net45\Chloe.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.SqlServer, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.SqlServer.4.5.0\lib\net45\Chloe.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentScheduler, Version=5.3.0.0, Culture=neutral, PublicKeyToken=b76503528a14ebd1, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentScheduler.5.3.0\lib\net40\FluentScheduler.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.CO2NET, Version=1.0.103.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.CO2NET.1.0.103\lib\net45\Senparc.CO2NET.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.CO2NET.APM, Version=0.4.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.CO2NET.APM.0.4.1.1\lib\net45\Senparc.CO2NET.APM.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.NeuChar, Version=0.7.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.NeuChar.0.7.4\lib\net45\Senparc.NeuChar.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.NeuChar.App, Version=0.5.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.NeuChar.App.0.5.4\lib\net45\Senparc.NeuChar.App.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin, Version=6.4.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.6.4.8\lib\net45\Senparc.Weixin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin.MP, Version=16.7.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.MP.16.7.9\lib\net45\Senparc.Weixin.MP.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin.MP.MvcExtension">
+      <HintPath>..\packages\Senparc.Weixin.MP.MVC.7.2.13\lib\net45\Senparc.Weixin.MP.MvcExtension.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin.Open, Version=4.5.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.Open.4.5.7\lib\net45\Senparc.Weixin.Open.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Entity">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.0.0" />
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
-    <PackageReference Include="iTextSharp.LGPLv2.Core.Fix" Version="1.4.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.5" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
-    <PackageReference Include="Quartz" Version="3.2.3" />
-    <PackageReference Include="System.DirectoryServices.Protocols" Version="5.0.0" />
+    <Compile Include="App_Start\Handler\HandlerAjaxOnlyAttribute.cs" />
+    <Compile Include="App_Start\Handler\HandlerAuthorizeAttribute.cs" />
+    <Compile Include="App_Start\Handler\HandlerErrorAttribute.cs" />
+    <Compile Include="App_Start\Handler\HandlerLoginAttribute.cs" />
+    <Compile Include="App_Start\Handler\ControllerBase.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\AreaController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\DutyController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\ItemsDataController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\ItemsTypeController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\ModuleButtonController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\ModuleController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\NoticeController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\OrganizeController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\QuickModuleController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\RoleAuthorizeController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\RoleController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\UserController.cs" />
+    <Compile Include="Areas\SystemManage\SystemManageAreaRegistration.cs" />
+    <Compile Include="Areas\SystemSecurity\Controllers\DbBackupController.cs" />
+    <Compile Include="Areas\SystemSecurity\Controllers\FilterIPController.cs" />
+    <Compile Include="Areas\SystemSecurity\Controllers\LogController.cs" />
+    <Compile Include="Areas\SystemSecurity\Controllers\ServerMonitoringController.cs" />
+    <Compile Include="Areas\SystemSecurity\SystemSecurityAreaRegistration.cs" />
+    <Compile Include="Controllers\ClientsDataController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\UEditor.Core\UEditor.Core.csproj" />
-    <ProjectReference Include="..\WaterCloud.CodeGenerator\WaterCloud.CodeGenerator.csproj" />
-    <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj" />
-    <ProjectReference Include="..\WaterCloud.Service\WaterCloud.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\SystemSecurity\Views\ServerMonitoring\" />
-    <Folder Include="wwwroot\file\" />
-    <Folder Include="wwwroot\js\lay-module\xm-select\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Areas\SystemManage\Views\Area\Details.cshtml" />
-    <None Include="Areas\SystemManage\Views\Area\Form.cshtml" />
-    <None Include="Areas\SystemManage\Views\Area\Index.cshtml" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="Areas\SystemManage\Views\Area\Details.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Area\Form.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Area\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Duty\Details.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Duty\Form.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Duty\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\ItemsData\Details.cshtml" />
+    <Content Include="Areas\SystemManage\Views\ItemsData\Form.cshtml" />
+    <Content Include="Areas\SystemManage\Views\ItemsData\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\ItemsType\Details.cshtml" />
+    <Content Include="Areas\SystemManage\Views\ItemsType\Form.cshtml" />
+    <Content Include="Areas\SystemManage\Views\ItemsType\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\ModuleButton\CloneButton.cshtml" />
+    <Content Include="Areas\SystemManage\Views\ModuleButton\Details.cshtml" />
+    <Content Include="Areas\SystemManage\Views\ModuleButton\Form.cshtml" />
+    <Content Include="Areas\SystemManage\Views\ModuleButton\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Module\Details.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Module\Form.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Module\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Notice\Details.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Notice\Form.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Notice\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Organize\Details.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Organize\Form.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Organize\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\QuickModule\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Role\Details.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Role\Form.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Role\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\User\Details.cshtml" />
+    <Content Include="Areas\SystemManage\Views\User\Form.cshtml" />
+    <Content Include="Areas\SystemManage\Views\User\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\User\RevisePassword.cshtml" />
+    <Content Include="Areas\SystemManage\Views\Web.config" />
+    <Content Include="Areas\SystemSecurity\Views\DbBackup\Form.cshtml" />
+    <Content Include="Areas\SystemSecurity\Views\DbBackup\Index.cshtml" />
+    <Content Include="Areas\SystemSecurity\Views\FilterIP\Details.cshtml" />
+    <Content Include="Areas\SystemSecurity\Views\FilterIP\Form.cshtml" />
+    <Content Include="Areas\SystemSecurity\Views\FilterIP\Index.cshtml" />
+    <Content Include="Areas\SystemSecurity\Views\Log\RemoveLog.cshtml" />
+    <Content Include="Areas\SystemSecurity\Views\ServerMonitoring\Index.cshtml" />
+    <Content Include="Areas\SystemSecurity\Views\Web.config" />
+    <Content Include="Configs\database.config" />
+    <Content Include="Configs\log4net.config" />
+    <Content Include="Configs\redis.config" />
+    <Content Include="Configs\system.config" />
+    <Content Include="Content\api\clear.json" />
+    <Content Include="Content\api\tableSelect.json" />
+    <Content Include="Content\api\upload.json" />
+    <Content Include="Content\css\knowledge.css" />
+    <Content Include="Content\css\layout.css" />
+    <Content Include="Content\css\layuimini.css" />
+    <Content Include="Content\css\order.css" />
+    <Content Include="Content\css\public.css" />
+    <Content Include="Content\css\report.css" />
+    <Content Include="Content\css\themes\white.css" />
+    <Content Include="Content\css\watercloud.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\glyphicons-halflings-regulard41d.eot" />
+    <Content Include="Content\fonts\weathericons-regular-webfont.eot" />
+    <Content Include="Content\fonts\weathericons-regular-webfont.svg" />
+    <Content Include="Content\fonts\weathericons-regular-webfont.ttf" />
+    <Content Include="Content\fonts\weathericons-regular-webfont.woff" />
+    <Content Include="Content\fonts\weathericons-regular-webfontd41d.eot" />
+    <Content Include="Content\images\bg.jpg" />
+    <Content Include="Content\images\bgs.jpg" />
+    <Content Include="Content\images\ic_404.png" />
+    <Content Include="Content\images\moon.jfif" />
+    <Content Include="Content\images\timg.jfif" />
+    <Content Include="Content\js\art-template\dateformate.js" />
+    <Content Include="Content\js\art-template\template-web.js" />
+    <Content Include="Content\js\charts\Chart.js" />
+    <Content Include="Content\js\charts\Chart.min.js" />
+    <Content Include="Content\js\cookie\jquery.cookie.js" />
+    <Content Include="Content\js\dingtalk\dingtalkinit.js" />
+    <Content Include="Content\js\dingtalk\fastclick.js" />
+    <Content Include="Content\js\dingtalk\index.js" />
+    <Content Include="Content\js\dingtalk\indextab.js" />
+    <Content Include="Content\js\echarts\echarts-all.js" />
+    <Content Include="Content\js\echarts\echarts.js" />
+    <Content Include="Content\js\echarts\echarts.min.js" />
+    <Content Include="Content\js\echarts\infographic.js" />
+    <Content Include="Content\js\framework-clientdata.js" />
+    <Content Include="Content\js\framework-ui.js" />
+    <Content Include="Content\js\highcharts\adapters\mootools-adapter.js" />
+    <Content Include="Content\js\highcharts\adapters\mootools-adapter.src.js" />
+    <Content Include="Content\js\highcharts\adapters\prototype-adapter.js" />
+    <Content Include="Content\js\highcharts\adapters\prototype-adapter.src.js" />
+    <Content Include="Content\js\highcharts\adapters\standalone-framework.js" />
+    <Content Include="Content\js\highcharts\adapters\standalone-framework.src.js" />
+    <Content Include="Content\js\highcharts\highcharts-all.js" />
+    <Content Include="Content\js\highcharts\highcharts-more.js" />
+    <Content Include="Content\js\highcharts\highcharts-more.src.js" />
+    <Content Include="Content\js\highcharts\highcharts.js" />
+    <Content Include="Content\js\highcharts\highcharts.src.js" />
+    <Content Include="Content\js\highcharts\modules\canvas-tools.js" />
+    <Content Include="Content\js\highcharts\modules\canvas-tools.src.js" />
+    <Content Include="Content\js\highcharts\modules\data.js" />
+    <Content Include="Content\js\highcharts\modules\data.src.js" />
+    <Content Include="Content\js\highcharts\modules\drilldown.js" />
+    <Content Include="Content\js\highcharts\modules\drilldown.src.js" />
+    <Content Include="Content\js\highcharts\modules\exporting.js" />
+    <Content Include="Content\js\highcharts\modules\exporting.src.js" />
+    <Content Include="Content\js\highcharts\modules\funnel.js" />
+    <Content Include="Content\js\highcharts\modules\funnel.src.js" />
+    <Content Include="Content\js\highcharts\modules\no-data-to-display.js" />
+    <Content Include="Content\js\highcharts\modules\no-data-to-display.src.js" />
+    <Content Include="Content\js\highcharts\themes\dark-blue.js" />
+    <Content Include="Content\js\highcharts\themes\dark-green.js" />
+    <Content Include="Content\js\highcharts\themes\gray.js" />
+    <Content Include="Content\js\highcharts\themes\grid.js" />
+    <Content Include="Content\js\highcharts\themes\skies.js" />
+    <Content Include="Content\js\jqprint\jquery.jqprint-0.3.js" />
+    <Content Include="Content\js\jqprint\jquery.jqprint.css" />
+    <Content Include="Content\js\lay-config.js" />
+    <Content Include="Content\js\lay-module\dtree\dtree.css" />
+    <Content Include="Content\js\lay-module\dtree\dtree.js" />
+    <Content Include="Content\js\lay-module\dtree\font\dtreefont.css" />
+    <Content Include="Content\js\lay-module\dtree\font\dtreefont.eot" />
+    <Content Include="Content\js\lay-module\dtree\font\dtreefont.svg" />
+    <Content Include="Content\js\lay-module\dtree\font\dtreefont.ttf" />
+    <Content Include="Content\js\lay-module\dtree\font\dtreefont.woff" />
+    <Content Include="Content\js\lay-module\dtree\font\icons.json" />
+    <Content Include="Content\js\lay-module\dtree\开发者日志.txt" />
+    <Content Include="Content\js\lay-module\echarts\echarts.js" />
+    <Content Include="Content\js\lay-module\echarts\echartsTheme.js" />
+    <Content Include="Content\js\lay-module\iconPicker\iconPickerFa.js" />
+    <Content Include="Content\js\lay-module\layarea\layarea.js" />
+    <Content Include="Content\js\lay-module\layuimini\miniAdmin.js" />
+    <Content Include="Content\js\lay-module\layuimini\miniMenu.js" />
+    <Content Include="Content\js\lay-module\layuimini\miniTab.js" />
+    <Content Include="Content\js\lay-module\layuimini\miniTheme.js" />
+    <Content Include="Content\js\lay-module\layuimini\miniTongji.js" />
+    <Content Include="Content\js\lay-module\step-lay\step.css" />
+    <Content Include="Content\js\lay-module\step-lay\step.js" />
+    <Content Include="Content\js\lay-module\tablePlug\icon\iconfont.css" />
+    <Content Include="Content\js\lay-module\tablePlug\icon\iconfont.eot" />
+    <Content Include="Content\js\lay-module\tablePlug\icon\iconfont.js" />
+    <Content Include="Content\js\lay-module\tablePlug\icon\iconfont.svg" />
+    <Content Include="Content\js\lay-module\tablePlug\icon\iconfont.ttf" />
+    <Content Include="Content\js\lay-module\tablePlug\icon\iconfont.woff" />
+    <Content Include="Content\js\lay-module\tablePlug\optimizeSelectOption\optimizeSelectOption.css" />
+    <Content Include="Content\js\lay-module\tablePlug\optimizeSelectOption\optimizeSelectOption.js" />
+    <Content Include="Content\js\lay-module\tablePlug\optimizeSelectOption\optimizeSelectOption.min.js" />
+    <Content Include="Content\js\lay-module\tablePlug\tablePlug.css" />
+    <Content Include="Content\js\lay-module\tablePlug\tablePlug.js" />
+    <Content Include="Content\js\lay-module\tablePlug\tablePlug.min.js" />
+    <Content Include="Content\js\lay-module\tableSelect\tableSelect.js" />
+    <Content Include="Content\js\lay-module\treetable-lay\treetable.css" />
+    <Content Include="Content\js\lay-module\treetable-lay\treetable.js" />
+    <Content Include="Content\js\lay-module\wangEditor\fonts\w-e-icon.woff" />
+    <Content Include="Content\js\lay-module\wangEditor\wangEditor.css" />
+    <Content Include="Content\js\lay-module\wangEditor\wangEditor.js" />
+    <Content Include="Content\js\lay-module\wangEditor\wangEditor.min.css" />
+    <Content Include="Content\js\lay-module\wangEditor\wangEditor.min.js" />
+    <Content Include="Content\js\lay-module\wangEditor\wangEditor.min.js.map" />
+    <Content Include="Content\js\lay-module\waterCloud\common.js" />
+    <Content Include="Content\js\md5\jquery.md5.js" />
+    <Content Include="Content\js\qrcode\jquery.qrcode.js" />
+    <Content Include="Content\js\qrcode\qrcode.js" />
+    <Content Include="Content\js\tableExport\html2canvas.js" />
+    <Content Include="Content\js\tableExport\jquery.base64.js" />
+    <Content Include="Content\js\tableExport\jspdf\jspdf.js" />
+    <Content Include="Content\js\tableExport\jspdf\libs\base64.js" />
+    <Content Include="Content\js\tableExport\jspdf\libs\sprintf.js" />
+    <Content Include="Content\js\tableExport\tableExport.js" />
+    <Content Include="Content\lib\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Content\lib\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Content\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\lib\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\lib\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\lib\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Content\lib\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Content\lib\jq-module\jquery.particleground.min.js" />
+    <Content Include="Content\lib\jq-module\paigusu.min.js" />
+    <Content Include="Content\lib\jq-module\zyupload\images\add_img.png" />
+    <Content Include="Content\lib\jq-module\zyupload\zyupload-1.0.0.min.css" />
+    <Content Include="Content\lib\jq-module\zyupload\zyupload-1.0.0.min.js" />
+    <Content Include="Content\lib\jquery-3.4.1\jquery-3.4.1.min.js" />
+    <Content Include="Content\lib\layui-v2.5.5\css\layui.css" />
+    <Content Include="Content\lib\layui-v2.5.5\css\layui.mobile.css" />
+    <Content Include="Content\lib\layui-v2.5.5\css\modules\code.css" />
+    <Content Include="Content\lib\layui-v2.5.5\css\modules\laydate\default\laydate.css" />
+    <Content Include="Content\lib\layui-v2.5.5\css\modules\layer\default\icon-ext.png" />
+    <Content Include="Content\lib\layui-v2.5.5\css\modules\layer\default\icon.png" />
+    <Content Include="Content\lib\layui-v2.5.5\css\modules\layer\default\layer.css" />
+    <Content Include="Content\lib\layui-v2.5.5\css\modules\layer\default\loading-0.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\css\modules\layer\default\loading-1.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\css\modules\layer\default\loading-2.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\font\iconfont.eot" />
+    <Content Include="Content\lib\layui-v2.5.5\font\iconfont.svg" />
+    <Content Include="Content\lib\layui-v2.5.5\font\iconfont.ttf" />
+    <Content Include="Content\lib\layui-v2.5.5\font\iconfont.woff" />
+    <Content Include="Content\lib\layui-v2.5.5\font\iconfont.woff2" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\0.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\1.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\10.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\11.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\12.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\13.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\14.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\15.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\16.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\17.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\18.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\19.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\2.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\20.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\21.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\22.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\23.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\24.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\25.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\26.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\27.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\28.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\29.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\3.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\30.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\31.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\32.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\33.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\34.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\35.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\36.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\37.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\38.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\39.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\4.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\40.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\41.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\42.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\43.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\44.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\45.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\46.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\47.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\48.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\49.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\5.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\50.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\51.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\52.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\53.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\54.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\55.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\56.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\57.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\58.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\59.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\6.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\60.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\61.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\62.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\63.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\64.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\65.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\66.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\67.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\68.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\69.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\7.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\70.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\71.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\8.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\images\face\9.gif" />
+    <Content Include="Content\lib\layui-v2.5.5\layui.all.js" />
+    <Content Include="Content\lib\layui-v2.5.5\layui.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\carousel.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\code.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\colorpicker.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\element.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\flow.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\form.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\jquery.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\laydate.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\layedit.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\layer.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\laypage.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\laytpl.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\mobile.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\rate.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\slider.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\table.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\transfer.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\tree.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\upload.js" />
+    <Content Include="Content\lib\layui-v2.5.5\lay\modules\util.js" />
+    <Content Include="Content\page\404.html" />
+    <Content Include="Content\page\area.html" />
+    <Content Include="Content\page\color-select.html" />
+    <Content Include="Content\page\editor.html" />
+    <Content Include="Content\page\error.html" />
+    <Content Include="Content\page\icon-picker.html" />
+    <Content Include="Content\page\icon.html" />
+    <Content Include="Content\page\table-select.html" />
+    <Content Include="Content\page\upload.html" />
+    <Content Include="Content\page\welcome-1.html" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Index.htm" />
+    <Content Include="Areas\SystemSecurity\Views\Log\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\User\ReviseSelfPassword.cshtml" />
     <None Include="Views\Home\Message.cshtml" />
-    <None Include="wwwroot\js\lay-module\formDesigner\Sortable\.circleci\config.yml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Areas\SystemManage\Views\CodeGenerator\Index.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Shared\_Form.cshtml" />
+    <Content Include="Views\Shared\_Index.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-
   <ItemGroup>
-    <None Update="Dockerfile">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Content Include="packages.config" />
+    <Content Include="Views\Home\Default.cshtml" />
+    <Content Include="Views\Home\index.cshtml" />
+    <Content Include="Views\Home\UserSetting.cshtml" />
   </ItemGroup>
-
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
-
-
+  <ItemGroup>
+    <ProjectReference Include="..\WaterCloud.Application\WaterCloud.Application.csproj">
+      <Project>{f2035ee2-b73d-4fb8-a433-cab465de6a2a}</Project>
+      <Name>WaterCloud.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj">
+      <Project>{db19ce03-c307-43fe-a209-08aa4ae10e21}</Project>
+      <Name>WaterCloud.Code</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.DingDing\WaterCloud.DingTalk.csproj">
+      <Project>{2036c349-0fc2-4c80-85cb-d033988e6d12}</Project>
+      <Name>WaterCloud.DingTalk</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.Domain\WaterCloud.Domain.csproj">
+      <Project>{7dc886cd-b8a0-44e8-aadd-57fcb0cfecb8}</Project>
+      <Name>WaterCloud.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.Repository\WaterCloud.Repository.csproj">
+      <Project>{875233bf-ea15-49e0-9a9c-77884a897ff6}</Project>
+      <Name>WaterCloud.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.SystemTask\WaterCloud.SystemTask.csproj">
+      <Project>{ec7230dc-98f2-43cc-a471-38ef0e3293cc}</Project>
+      <Name>WaterCloud.SystemTask</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.WeixinMP\WaterCloud.WeixinMP.csproj">
+      <Project>{20b8fb5a-4362-48f8-bd3a-245fdaf9bcac}</Project>
+      <Name>WaterCloud.WeixinMP</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\WaterCloud.pubxml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>2024</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:2024/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://eims.dalecloud.cn</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
 </Project>

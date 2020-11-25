@@ -9,56 +9,54 @@
                     注意!IP地址格式：192.168.0.1；192.168.0.*
                 </blockquote>
                 <div class="layui-form layuimini-form" lay-filter="adminform">
-                    <div class="layui-form-item layui-hide">
+                    <div class="layui-form-item">
                         <label class="layui-form-label required">策略类型</label>
                         <div class="layui-input-block">
-                            <select id="F_Type" name="F_Type" lay-verify="required">
+                            <select id="F_Type" name="F_Type">
                                 <option value="">==请选择==</option>
                                 <option value="true">允许访问</option>
                                 <option value="false">拒绝访问</option>
                             </select>
                         </div>
                     </div>
-                    <div class="layui-form-item layui-hide">
+                    <div class="layui-form-item">
                         <label class="layui-form-label required">起始IP</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_StartIP" name="F_StartIP" maxlength="50" lay-verify="required" class="layui-input">
+                            <input type="text" id="F_StartIP" name="F_StartIP" lay-verify="required" class="layui-input">
                         </div>
                     </div>
-                    <div class="layui-form-item layui-hide">
+                    <div class="layui-form-item">
                         <label class="layui-form-label">结束IP</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_EndIP" name="F_EndIP" maxlength="50" value="" class="layui-input ">
+                            <input type="text" id="F_EndIP" name="F_EndIP" value="" class="layui-input ">
                         </div>
                     </div>
-                    <div class="layui-form-item layui-hide">
+                    <div class="layui-form-item">
                         <label class="layui-form-label">有效</label>
                         <div class="layui-input-block">
                             <input type="checkbox" checked="" id="F_EnabledMark" name="F_EnabledMark" lay-skin="switch" lay-filter="switchTest" value="true" lay-text="ON|OFF">
                         </div>
                     </div>
-                    <div class="layui-form-item layui-form-text layui-hide">
+                    <div class="layui-form-item layui-form-text">
                         <label class="layui-form-label">备注</label>
                         <div class="layui-input-block">
                             <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入备注"></textarea>
                         </div>
                     </div>
-                    <div class="layui-form-item layui-hide">
-                        <button class="layui-btn site-demo-active" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
-                    </div>
                 </div>
             </div>
         </div>
+        <div class="layui-form-item layui-hide">
+            <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+        </div>
     </body>
 <script>
-    layui.use(['jquery', 'form', 'laydate', 'common', 'optimizeSelectOption'], function () {
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
         var form = layui.form,
             $ = layui.$,
             common = layui.common,
             laydate = layui.laydate;
         var keyValue = $.request("keyValue");
-        //权限字段
-        common.authorizeFields('adminform');
         $(function () {
             if (!!keyValue) {
                 common.ajax({
@@ -71,24 +69,6 @@
                         form.render();
                     }
                 });
-            }
-        });
-        wcLoading.close();
-        //select验证
-        form.verify({
-            required: function (value, item) {
-                var msg = "必填项不能为空";
-                value = $.trim(value);
-                var isEmpty = !value || value.length < 1;
-                // 当前验证元素是select且为空时,将页面定位至layui渲染的select处，或自定义想定位的位置
-                if (item.tagName == 'SELECT' && isEmpty) {
-                    $("html").animate({
-                        scrollTop: $(item).siblings(".layui-form-select").offset().top - 74
-                    }, 50);
-                }
-                if (isEmpty) {
-                    return msg;
-                }
             }
         });
         function compareIP(ipBegin, ipEnd) {
@@ -106,35 +86,32 @@
         }
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            // 单击之后提交按钮不可选,防止重复提交
-            $('.site-demo-active').addClass('layui-btn-disabled');
-            $('.site-demo-active').attr('disabled', 'disabled');
-                var index = layer.load(1, {
-                    shade: [0.5, '#000'] //0.1透明度的背景
-                });
-                var postData = data.field;
-                var StartIP = data.field.F_StartIP;
-                var EndIP = data.field.F_EndIP;
-                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-                if (!!EndIP) {
+            var index = layer.load(1, {
+                shade: [0.5, '#000'] //0.1透明度的背景
+            });
+            var postData = data.field;
+            var StartIP = data.field.F_StartIP;
+            var EndIP = data.field.F_EndIP;
+            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+            if (!!EndIP) {
 
-                    if (compareIP(StartIP, EndIP) == -1) {
-                        common.modalMsg("不在同一个网段内");
-                        return false;
-                    }
-                    if (compareIP(StartIP, EndIP) == 0) {
-                        common.modalMsg("结束IP不能大于开始IP");
-                        return false;
-                    }
+                if (compareIP(StartIP, EndIP) == -1) {
+                    common.modalMsg("不在同一个网段内");
+                    return false;
                 }
-                common.submitForm({
-                    url: "/SystemSecurity/FilterIP/SubmitForm?keyValue=" + keyValue,
-                    param: postData,
-                    success: function () {
-                        common.parentreload("data-search-btn");
-                    }
-                })
-                layer.close(index);
+                if (compareIP(StartIP, EndIP) == 0) {
+                    common.modalMsg("结束IP不能大于开始IP");
+                    return false;
+                }
+            }
+            common.submitForm({
+                url: "/SystemSecurity/FilterIP/SubmitForm?keyValue=" + keyValue,
+                param: postData,
+                success: function () {
+                    common.parentreload("data-search-btn");
+                }
+            })
+            layer.close(index);
             return false;
         });
     });

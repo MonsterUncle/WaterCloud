@@ -8,14 +8,19 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Chloe.Annotations;
+using WaterCloud.Entity;
 
-namespace WaterCloud.Domain.SystemSecurity
+namespace WaterCloud.Entity.SystemSecurity
 {
-	/// <summary>
-	/// ServerState Entity Model
-	/// </summary>
-	[TableAttribute("sys_serverstate")]
+    /// <summary>
+    /// ServerState Entity Model
+    /// </summary>
+	[TableAttribute("Sys_ServerState")]
     public class ServerStateEntity : IEntity<ServerStateEntity>
     {
 						[ColumnAttribute("F_Id", IsPrimaryKey = true)]

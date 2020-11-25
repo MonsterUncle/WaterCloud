@@ -7,9 +7,9 @@
 using Chloe.Annotations;
 using System;
 
-namespace WaterCloud.Domain.SystemSecurity
+namespace WaterCloud.Entity.SystemSecurity
 {
-    [TableAttribute("sys_log")]
+    [TableAttribute("Sys_Log")]
 
     public class LogEntity : IEntity<LogEntity>, ICreationAudited
     {
@@ -28,7 +28,6 @@ namespace WaterCloud.Domain.SystemSecurity
         public DateTime? F_CreatorTime { get; set; }
         public string F_CreatorUserId { get; set; }
         public string F_KeyValue { get; set; }
-        public string F_CompanyId { get; set; }
         public  LogEntity()
         {
 
@@ -36,7 +35,7 @@ namespace WaterCloud.Domain.SystemSecurity
         //重载构造方法
         public LogEntity(string module,string moduleitem,string optiontype)
         {
-            this.F_ModuleName = module+ moduleitem;
+            this.F_ModuleName = module;
             this.F_Description = moduleitem+"操作,";
             this.F_Type = optiontype;
             this.F_Result = true;

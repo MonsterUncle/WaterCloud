@@ -1,16 +1,172 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7DC886CD-B8A0-44E8-AADD-57FCB0CFECB8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WaterCloud.Domain</RootNamespace>
+    <AssemblyName>WaterCloud.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj" />
-    <ProjectReference Include="..\WaterCloud.Data\WaterCloud.DataBase.csproj" />
+    <Reference Include="Chloe, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.4.5.0\lib\net45\Chloe.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.Extension, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.Extension.4.5.0\lib\net45\Chloe.Extension.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.MySql, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.MySql.4.5.0\lib\net45\Chloe.MySql.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.Oracle, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.Oracle.4.5.0\lib\net45\Chloe.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.SqlServer, Version=4.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.SqlServer.4.5.0\lib\net45\Chloe.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.12.1.24160719\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
-
+  <ItemGroup>
+    <Compile Include="Entity\ArticleManage\BaseAttachEntity.cs" />
+    <Compile Include="Entity\DingTalkManage\DepartmentEntity.cs" />
+    <Compile Include="Entity\DingTalkManage\DingTalkAppConfigEntity.cs" />
+    <Compile Include="Entity\DingTalkManage\DingTalkCorpConfigEntity.cs" />
+    <Compile Include="Entity\DingTalkManage\DingTalkUserEntity.cs" />
+    <Compile Include="Entity\DingTalkManage\MessageSendRecordEntity.cs" />
+    <Compile Include="Entity\DingTalkManage\MessageTemplateEntity.cs" />
+    <Compile Include="Entity\DingTalkManage\ProcessInstanceEntity.cs" />
+    <Compile Include="Entity\DingTalkManage\WorkMessageSendLogEntity.cs" />
+    <Compile Include="Entity\IBaseEntity\InfrastructureV2\BaseEntityV2.cs" />
+    <Compile Include="Entity\IBaseEntity\InfrastructureV2\ICreationAuditedV2.cs" />
+    <Compile Include="Entity\IBaseEntity\InfrastructureV2\IEntityV2.cs" />
+    <Compile Include="Entity\IBaseEntity\InfrastructureV2\IModificationAuditedV2.cs" />
+    <Compile Include="Entity\IBaseEntity\Infrastructure\BaseEntity.cs" />
+    <Compile Include="Entity\IBaseEntity\Infrastructure\ICreationAudited.cs" />
+    <Compile Include="Entity\IBaseEntity\Infrastructure\IDeleteAudited.cs" />
+    <Compile Include="Entity\IBaseEntity\Infrastructure\IEntity.cs" />
+    <Compile Include="Entity\IBaseEntity\Infrastructure\IModificationAudited.cs" />
+    <Compile Include="Entity\LayUI\HomeInfoEntity.cs" />
+    <Compile Include="Entity\LayUI\InitEntity.cs" />
+    <Compile Include="Entity\LayUI\LogoInfoEntity.cs" />
+    <Compile Include="Entity\LayUI\MenuInfoEntity.cs" />
+    <Compile Include="Entity\SystemManage\AreaEntity.cs" />
+    <Compile Include="Entity\SystemManage\Extend\QuickModuleEntity.cs" />
+    <Compile Include="Entity\SystemManage\ItemsDetailEntity.cs" />
+    <Compile Include="Entity\SystemManage\ItemsEntity.cs" />
+    <Compile Include="Entity\SystemManage\ModuleButtonEntity.cs" />
+    <Compile Include="Entity\SystemManage\ModuleEntity.cs" />
+    <Compile Include="Entity\SystemManage\NoticeEntity.cs" />
+    <Compile Include="Entity\SystemManage\OrganizeEntity.cs" />
+    <Compile Include="Entity\SystemManage\QuickModuleEntity.cs" />
+    <Compile Include="Entity\SystemManage\RoleAuthorizeEntity.cs" />
+    <Compile Include="Entity\SystemManage\RoleEntity.cs" />
+    <Compile Include="Entity\SystemManage\UserEntity.cs" />
+    <Compile Include="Entity\SystemManage\UserLogOnEntity.cs" />
+    <Compile Include="Entity\SystemSecurity\DbBackupEntity.cs" />
+    <Compile Include="Entity\SystemSecurity\FilterIPEntity.cs" />
+    <Compile Include="Entity\SystemSecurity\LogEntity.cs" />
+    <Compile Include="Entity\SystemSecurity\ServerStateEntity.cs" />
+    <Compile Include="Entity\WeixinManage\RequestBaseDataEntity.cs" />
+    <Compile Include="Entity\WeixinManage\RequestRuleContentEntity.cs" />
+    <Compile Include="Entity\WeixinManage\RequestRuleEntity.cs" />
+    <Compile Include="Entity\WeixinManage\ResponseBaseDataEntity.cs" />
+    <Compile Include="Entity\WeixinManage\TemplateMessageEntity.cs" />
+    <Compile Include="Entity\WeixinManage\UsersEntity.cs" />
+    <Compile Include="Entity\WeixinManage\WxBaseConfigEntity.cs" />
+    <Compile Include="Entity\WeixinManage\WxPropertyInfoEntity.cs" />
+    <Compile Include="IRepository\SystemManage\INoticeRepository.cs" />
+    <Compile Include="IRepository\SystemManage\IQuickModuleRepository.cs" />
+    <Compile Include="IRepository\SystemSecurity\IServerStateRepository.cs" />
+    <Compile Include="ViewModel\AuthorizeActionModel.cs" />
+    <Compile Include="IRepository\SystemManage\IAreaRepository.cs" />
+    <Compile Include="IRepository\SystemManage\IItemsDetailRepository.cs" />
+    <Compile Include="IRepository\SystemManage\IItemsRepository.cs" />
+    <Compile Include="IRepository\SystemManage\IModuleButtonRepository.cs" />
+    <Compile Include="IRepository\SystemManage\IModuleRepository.cs" />
+    <Compile Include="IRepository\SystemManage\IOrganizeRepository.cs" />
+    <Compile Include="IRepository\SystemManage\IRoleAuthorizeRepository.cs" />
+    <Compile Include="IRepository\SystemManage\IRoleRepository.cs" />
+    <Compile Include="IRepository\SystemManage\IUserLogOnRepository.cs" />
+    <Compile Include="IRepository\SystemManage\IUserRepository.cs" />
+    <Compile Include="IRepository\SystemSecurity\IDbBackupRepository.cs" />
+    <Compile Include="IRepository\SystemSecurity\IFilterIPRepository.cs" />
+    <Compile Include="IRepository\SystemSecurity\ILogRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj">
+      <Project>{db19ce03-c307-43fe-a209-08aa4ae10e21}</Project>
+      <Name>WaterCloud.Code</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.Data\WaterCloud.DataBase.csproj">
+      <Project>{f71003e8-a836-48f4-9df6-df9095cebd18}</Project>
+      <Name>WaterCloud.DataBase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

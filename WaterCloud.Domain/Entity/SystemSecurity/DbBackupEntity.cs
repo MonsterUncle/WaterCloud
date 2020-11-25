@@ -7,9 +7,9 @@
 using Chloe.Annotations;
 using System;
 
-namespace WaterCloud.Domain.SystemSecurity
+namespace WaterCloud.Entity.SystemSecurity
 {
-    [TableAttribute("sys_dbbackup")]
+    [TableAttribute("Sys_DbBackup")]
 
     public class DbBackupEntity : ICreationAudited, IDeleteAudited, IModificationAudited
     {

@@ -4,67 +4,102 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using WaterCloud.Service.SystemSecurity;
+using WaterCloud.Application.SystemSecurity;
 using WaterCloud.Code;
-using WaterCloud.Domain.SystemSecurity;
-using Microsoft.AspNetCore.Mvc;
-using WaterCloud.Service;
+using WaterCloud.Entity.SystemSecurity;
+using System.Web.Mvc;
+using WaterCloud.Application;
 using System;
-using System.Threading.Tasks;
+using WaterCloud.Application.SystemManage;
+using System.Linq;
 
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
 {
-    [Area("SystemSecurity")]
     public class FilterIPController : ControllerBase
     {
+        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public FilterIPService _service { get; set; }
+        private FilterIPApp filterIPApp = new FilterIPApp();
 
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetGridJson(string keyword)
+        public ActionResult GetGridJson(string keyword)
         {
-            var data =await _service.GetLookList(keyword);
-            return Success(data.Count,data);
+            var data = filterIPApp.GetList(keyword);
+            return ResultLayUiTable(data.Count,data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetFormJson(string keyValue)
+        public ActionResult GetFormJson(string keyValue)
         {
-            var data =await _service.GetLookForm(keyValue);
+            var data = filterIPApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
         {
+            var module = new ModuleApp().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = new ModuleApp().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            LogEntity logEntity ;
+            if (!string.IsNullOrEmpty(keyValue))
+            {
+                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Update.ToString());
+                logEntity.F_Description += DbLogType.Update.ToDescription();
+                logEntity.F_KeyValue = keyValue;
+            }
+            else
+            {
+                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Create.ToString());
+                logEntity.F_Description += DbLogType.Create.ToDescription();
+            }
             try
             {
+                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
+                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
                 if (string.IsNullOrEmpty(keyValue))
                 {
                     filterIPEntity.F_DeleteMark = false;
                 }
-                await _service.SubmitForm(filterIPEntity, keyValue);
-                return await Success("操作成功。", className, keyValue);
+                filterIPApp.SubmitForm(filterIPEntity, keyValue);
+                logEntity.F_Description += "操作成功";
+                new LogApp().WriteDbLog(logEntity);
+                return Success("操作成功。");
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue);
+                logEntity.F_Result = false;
+                logEntity.F_Description += "操作失败，" + ex.Message;
+                new LogApp().WriteDbLog(logEntity);
+                return Error(ex.Message);
             }
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
-        public async Task<ActionResult> DeleteForm(string keyValue)
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteForm(string keyValue)
         {
+            var module = new ModuleApp().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = new ModuleApp().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Delete.ToString());
+            logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                await _service.DeleteForm(keyValue);
-                return await Success("操作成功。", className, keyValue, DbLogType.Delete);
+                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
+                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                filterIPApp.DeleteForm(keyValue);
+                logEntity.F_Description += "操作成功";
+                new LogApp().WriteDbLog(logEntity);
+                return Success("删除成功。");
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue, DbLogType.Delete);
+                logEntity.F_Result = false;
+                logEntity.F_Description += "操作失败，" + ex.Message;
+                new LogApp().WriteDbLog(logEntity);
+                return Error(ex.Message);
             }
         }
     }

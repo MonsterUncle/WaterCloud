@@ -3,14 +3,12 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'laydate', 'common', 'optimizeSelectOption'], function () {
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
         var form = layui.form,
             $ = layui.$,
             common = layui.common,
             laydate = layui.laydate;
         var keyValue = $.request("keyValue");
-        //权限字段
-        common.authorizeFields('adminform');
         $(function () {
             initControl();
             if (!!keyValue) {
@@ -27,7 +25,6 @@
             }
             form.render();
         });
-        wcLoading.close();
         function initControl() {
             $("#F_ParentId").bindSelect({
                 url: "/SystemManage/ItemsType/GetTreeSelectJson",
@@ -39,7 +36,7 @@
     <div class="layuimini-container">
         <div class="layuimini-main">
             <div class="layui-form layuimini-form" lay-filter="adminform">
-                <div class="layui-form-item layui-hide">
+                <div class="layui-form-item">
                     <label class="layui-form-label">上级</label>
                     <div class="layui-input-block">
                         <select id="F_ParentId" name="F_ParentId" lay-search>
@@ -47,31 +44,31 @@
                         </select>
                     </div>
                 </div>
-                <div class="layui-form-item layui-hide">
+                <div class="layui-form-item">
                     <label class="layui-form-labeld">名称</label>
                     <div class="layui-input-block">
                         <input type="text" id="F_FullName" name="F_FullName" lay-verify="required" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item layui-hide">
+                <div class="layui-form-item">
                     <label class="layui-form-label">编号</label>
                     <div class="layui-input-block">
                         <input type="text" id="F_EnCode" name="F_EnCode" lay-verify="required" class="layui-input ">
                     </div>
                 </div>
-                <div class="layui-form-item layui-hide">
+                <div class="layui-form-item">
                     <label class="layui-form-label">显示顺序</label>
                     <div class="layui-input-block">
-                        <input  type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required" class="layui-input ">
+                        <input type="text" id="F_SortCode" name="F_SortCode" lay-verify="required" class="layui-input ">
                     </div>
                 </div>
-                <div class="layui-form-item layui-hide">
+                <div class="layui-form-item">
                     <label class="layui-form-label">选项</label>
                     <div class="layui-input-block">
                         <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
                     </div>
                 </div>
-                <div class="layui-form-item layui-form-text layui-hide">
+                <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-block">
                         <textarea id="F_Description" name="F_Description" class="layui-textarea"></textarea>

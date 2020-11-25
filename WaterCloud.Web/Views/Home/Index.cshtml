@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>@ViewBag.ProjectName-WaterCloud出品</title>
+    <title>企业信息管理系统-WaterCloud出品</title>
     <meta name="keywords" content="layuimini,layui,layui模板,layui后台,后台模板,admin,admin模板,layui mini">
     <meta name="description" content="layuimini基于layui的轻量级前端后台管理框架，最简洁、易用的后台框架模板，面向所有层次的前后端程序,只需提供一个接口就直接初始化整个框架，无需复杂操作。">
     <meta name="renderer" content="webkit">
@@ -12,17 +12,20 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
-    <link rel="icon" href="@ViewBag.LogoIcon">
-    <link rel="stylesheet" href="~/lib/layui-v2.5.5/css/layui.css" media="all">
-    <link rel="stylesheet" href="~/css/layuimini.css" media="all">
-    <link rel="stylesheet" href="~/css/themes/default.css" media="all">
-    <link rel="stylesheet" href="~/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <script src="~/Content/lib/jquery-3.4.1/jquery-3.4.1.min.js?v=@WaterCloud.Code.Ext.ToDateString()" charset="utf-8"></script>
+    <link rel="icon" href="~/favicon.ico">
+    <link rel="stylesheet" href="~/Content/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/Content/css/layuimini.css?v=@WaterCloud.Code.Ext.ToDateString()" media="all">
+    <link rel="stylesheet" href="~/Content/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    @*<link rel="stylesheet" href="~/Content/css/iconfont.css" media="all">*@
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
     <style id="layuimini-bg-color">
     </style>
 </head>
-@*style="background: url(/images/bgs.jpg)"*@
-<body class="layui-layout-body layuimini-all">
+<body class="layui-layout-body layuimini-all" @*style="background: url(/Content/images/bgs.jpg)"*@>
     <div class="layui-layout layui-layout-admin">
 
         <div class="layui-header header">
@@ -34,11 +37,11 @@
                 </a>
 
                 <!--电脑端头部菜单-->
-                <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-menu-header-pc layuimini-pc-show">
+                <ul class="layui-nav layui-layout-left layuimini-header-menu mobile layui-hide-xs layuimini-menu-header-pc">
                 </ul>
 
                 <!--手机端头部菜单-->
-                <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-mobile-show">
+                <ul class="layui-nav layui-layout-left layuimini-header-menu mobile layui-hide-sm">
                     <li class="layui-nav-item">
                         <a href="javascript:;"><i class="fa fa-list-ul"></i> 选择模块</a>
                         <dl class="layui-nav-child layuimini-menu-header-mobile">
@@ -48,16 +51,16 @@
 
                 <ul class="layui-nav layui-layout-right">
                     <li class="layui-nav-item" lay-unselect>
-                        <a href="javascript:;" data-clear="清理" class="layuimini-clear layui-hide"><i class="fa fa-trash-o"></i></a>
+                        <a href="javascript:;" data-clear="清理" class="layuimini-clear"><i class="fa fa-trash-o"></i></a>
                     </li>
                     <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
                         <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                     </li>
-                    <li class="layui-nav-item" lay-unselect>
-                        <a class="layui-icon layui-icon-notice" data-notice="消息" id="noticeMarker">
-
+                    <li class="layui-nav-item"  lay-unselect>
+                        <a class="layui-icon layui-icon-notice" data-notice="消息">
+                            <span class="layui-badge-dot"></span>
                         </a>
-                    </li>
+                    </li>        
                     <li class="layui-nav-item layuimini-setting">
                         <a href="javascript:;" id="usercode"></a>
                         <dl class="layui-nav-child">
@@ -128,19 +131,17 @@
         </div>
 
     </div>
-    <script src="~/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
-    <script src="~/js/lay-config.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
-    <script src="~/js/framework-clientdata.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
-    <script src="~/js/framework-ui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
-    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat.js"></script>
+    <script src="~/Content/lib/layui-v2.5.5/layui.js?v=@WaterCloud.Code.Ext.ToDateString()" charset="utf-8"></script>
+    <script src="~/Content/js/lay-config.js?v=@WaterCloud.Code.Ext.ToDateString()" charset="utf-8"></script>
+    <script src="~/Content/js/framework-clientdata.js?v=@WaterCloud.Code.Ext.ToDateString()"></script>
+    <script src="~/Content/js/framework-ui.js?v=@WaterCloud.Code.Ext.ToDateString()"></script>
     <script>
         function btn_revisepassword() {
             layui.use(['common'], function () {
                 var common = layui.common;
                 common.modalOpen({
                     title: '重置密码',
-                    url: '/SystemOrganize/User/ReviseSelfPassword',
+                    url: '/SystemManage/User/ReviseSelfPassword',
                     width: "400px",
                     height: "300px",
                     callBack: function (index) {
@@ -150,64 +151,47 @@
                 });
             })
         };
-        layui.use(['jquery', 'layer', 'miniAdmin', 'miniTongji', 'miniTab', 'common', 'notice'], function () {
+        layui.use(['jquery', 'layer', 'miniAdmin', 'miniTongji', 'miniTab', 'common'], function () {
             var $ = layui.jquery,
                 layer = layui.layer,
-                miniAdmin = layui.miniAdmin,
                 common = layui.common,
-                notice = layui.notice,
+                miniAdmin = layui.miniAdmin,
                 miniTongji = layui.miniTongji;
             function loadUser() {
                 common.ajax({
-                    url: "/ClientsData/GetUserCode?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
+                    url: "/ClientsData/GetUserCode",
                     dataType: "json",
                     async: true,
                     success: function (data) {
                         var code = document.getElementById("usercode");
-                        if (data.F_IsAdmin) {
-                            $('[data-clear]').removeClass('layui-hide');
-                        }
-                        code.innerHTML = data.F_Account + '<span class="layui-nav-more"></span>';
-                        sessionStorage.setItem('currentUser', JSON.stringify(data));
-                        if (data.MsgCout > 0) {
-                            $('#noticeMarker').html('<span class="layui-badge-dot"></span>');
-                            notice.options = {
-                                positionClass: "toast-bottom-right",//弹出的位置,
-                                onclick: function () {
-                                    $('#noticeMarker').click();
-                                },
-                            };
-                            notice.info('您有' + data.MsgCout + '条信息未读');
-                        }
-                        else {
-                            $('#noticeMarker').html('');
-                        }
+                        code.innerHTML = data.F_Account;
                     }
                 });
             };
-            var bgcolor = localStorage.getItem('watercloudBgcolorId');
             var options = {
-                iniUrl: "/ClientsData/GetInitDataJson?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),    // 初始化接口
-                clearUrl: "/ClientsData/ClearCache?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"), // 缓存清理接口
-                urlHashLocation: true,      // 是否打开hash定位  说明：url地址显示
-                bgColorDefault: !!bgcolor ? bgcolor : 0,          // 主题默认配置
+                iniUrl: "/ClientsData/GetInitDataJson?v=" + new Date(),    // 初始化接口
+                clearUrl: "/ClientsData/ClearDataJson?v=" + new Date(), // 缓存清理接口
+                urlHashLocation: false,      // 是否打开hash定位  说明：url地址显示
+                bgColorDefault: 0,          // 主题默认配置
                 multiModule: true,          // 是否开启多模块
                 menuChildOpen: false,       // 是否默认展开菜单
                 loadingTime: 0,             // 初始化加载时间
-                pageAnim: false,             // iframe窗口动画
+                pageAnim: true,             // iframe窗口动画
                 maxTabNum: 20,              // 最大的tab打开数量
             };
             miniAdmin.render(options);
             $(function () {
                 loadUser();
             });
-            //百度统计代码，只统计指定域名
-            miniTongji.render({
-                specific: true,
-                domains: [
-                    'watercloud.vip',
-                ],
-            });
+            // 百度统计代码，只统计指定域名
+            //miniTongji.render({
+            //    specific: true,
+            //    domains: [
+            //        '99php.cn',
+            //        'layuimini.99php.cn',
+            //        'layuimini-onepage.99php.cn',
+            //    ],
+            //});
             $('.login-out').on("click", function () {
                 layer.msg('退出登录成功', function () {
                     window.location.href = '../Login/OutLogin';
@@ -215,7 +199,5 @@
             });
         });
     </script>
-
 </body>
-
 </html>

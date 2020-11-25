@@ -1,33 +1,32 @@
-/*******************************************************************************
+﻿/*******************************************************************************
  * Copyright © 2018 WaterCloud 版权所有
  * Author: WaterCloud
  * Description: WaterCloud
  * Website：
 *********************************************************************************/
+using WaterCloud.Application.SystemManage;
 using WaterCloud.Code;
+using WaterCloud.Entity.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
+using WaterCloud.Entity.SystemSecurity;
+using WaterCloud.Application;
 using System;
-using Microsoft.AspNetCore.Mvc;
-using WaterCloud.Domain.SystemManage;
-using WaterCloud.Service.SystemManage;
-using WaterCloud.Service;
-using System.Threading.Tasks;
-
+using WaterCloud.Application.SystemSecurity;
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
-    [Area("SystemManage")]
     public class AreaController : ControllerBase
     {
+        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public AreaService _areaService { get; set; }
+        private AreaApp areaApp = new AreaApp();
+
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTreeSelectJson()
+        public ActionResult GetTreeSelectJson()
         {
-            var data =await _areaService.GetList();
-            //默认三级区域
-            data = data.Where(a => a.F_Layers < 3).ToList();
+            var data = areaApp.GetList();
             var treeList = new List<TreeSelectModel>();
             foreach (AreaEntity item in data)
             {
@@ -41,94 +40,106 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetSelectJson(string keyValue)
+        public ActionResult GetTreeGridJson(string keyword)
         {
-            var data = await _areaService.GetList();
-            data = data.Where(a => a.F_ParentId== keyValue).ToList();
-            return Content(data.ToJson());
-        }
-        [HttpGet]
-        [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTreeGridJson(string keyword)
-        {
-            var data =await _areaService.GetLookList();
+            var data = areaApp.GetList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
             }
-            return Success(data.Count, data);
+            //var treeList = new List<TreeGridModel2>();
+            //foreach (AreaEntity item in data)
+            //{
+            //    TreeGridModel2 treeModel = new TreeGridModel2();
+            //    treeModel.id = item.F_Id;
+            //    treeModel.text = item.F_FullName;
+            //    treeModel.parentId = item.F_ParentId;
+            //    treeModel.self = item;
+            //    treeList.Add(treeModel);
+            //}
+            //if (!string.IsNullOrEmpty(keyword))
+            //{
+            //    treeList = treeList.TreeWhere(t => t.text.Contains(keyword), "id", "parentId");
+            //}
+            return ResultLayUiTable(data.Count, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetListJson(string keyValue, string keyword)
+        public ActionResult GetFormJson(string keyValue)
         {
-            var data = await _areaService.GetLookList();
-            var result = new List<AreaEntity>();
-            if (string.IsNullOrEmpty(keyValue))
-            {
-                keyValue = "0";
-            }
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                result = data.TreeWhere(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
-            }
-            else
-            {
-                result = data;
-            }
-            result = result.Where(t => t.F_ParentId == keyValue).ToList();
-            if (result.Count==0)
-            {
-                result= data.Where(t => t.F_ParentId == keyValue).ToList();
-            }
-            foreach (var item in result)
-            {
-                item.haveChild = data.Where(a => a.F_ParentId == item.F_Id).Count() > 0 ? true : false;
-            }
-            return Success(data.Count, result);
-        }
-        [HttpGet]
-        [HandlerAjaxOnly]
-        public async Task<ActionResult> GetFormJson(string keyValue)
-        {
-            var data =await _areaService.GetLookForm(keyValue);
+            var data = areaApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> SubmitForm(AreaEntity areaEntity, string keyValue)
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitForm(AreaEntity areaEntity, string keyValue)
         {
+            var module = new ModuleApp().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = new ModuleApp().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            LogEntity logEntity;
+            if (string.IsNullOrEmpty(keyValue))
+            {
+                areaEntity.F_DeleteMark = false;
+                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Create.ToString());
+                logEntity.F_Description += DbLogType.Create.ToDescription();
+            }
+            else
+            {
+                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Update.ToString());
+                logEntity.F_Description += DbLogType.Update.ToDescription();
+                logEntity.F_KeyValue = keyValue;
+            }
             if (areaEntity.F_ParentId=="0")
             {
                 areaEntity.F_Layers = 1;
             }
             else
             {
-                areaEntity.F_Layers =(await _areaService.GetForm(areaEntity.F_ParentId)).F_Layers + 1;
+                areaEntity.F_Layers = areaApp.GetForm(areaEntity.F_ParentId).F_Layers + 1;
             }
             try
             {
-                await _areaService.SubmitForm(areaEntity, keyValue);
-                return await Success("操作成功。", className, keyValue);
+                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
+                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                areaApp.SubmitForm(areaEntity, keyValue);
+                logEntity.F_Description += "操作成功";
+                new LogApp().WriteDbLog(logEntity);
+                return Success("操作成功。");
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue);
+                logEntity.F_Result = false;
+                logEntity.F_Description += "操作失败，" + ex.Message;
+                new LogApp().WriteDbLog(logEntity);
+                return Error(ex.Message);
             }
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
-        public async Task<ActionResult> DeleteForm(string keyValue)
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteForm(string keyValue)
         {
+            var module = new ModuleApp().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = new ModuleApp().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Delete.ToString());
+            logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                await _areaService.DeleteForm(keyValue);
-                return await Success("操作成功。", className, keyValue, DbLogType.Delete);
+                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
+                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                areaApp.DeleteForm(keyValue);
+                logEntity.F_Description += "操作成功";
+                new LogApp().WriteDbLog(logEntity);
+                return Success("删除成功。");
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue, DbLogType.Delete);
+                logEntity.F_Result = false;
+                logEntity.F_Description += "操作失败，" + ex.Message;
+                new LogApp().WriteDbLog(logEntity);
+                return Error(ex.Message);
             }
         }
     }

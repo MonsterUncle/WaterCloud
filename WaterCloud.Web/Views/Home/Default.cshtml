@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -6,16 +6,15 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="~/lib/layui-v2.5.5/css/layui.css" media="all">
-    <link rel="stylesheet" href="~/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
-    <link rel="stylesheet" href="~/css/public.css" media="all">
-    <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="~/Content//lib/layui-v2.5.5/css/layui.css?v=@WaterCloud.Code.Ext.ToDateString()" media="all">
+    <link rel="stylesheet" href="~/Content//lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="~/Content//css/public.css?v=@WaterCloud.Code.Ext.ToDateString()" media="all">
+    <script src="~/Content/lib/jquery-3.4.1/jquery-3.4.1.min.js?v=@WaterCloud.Code.Ext.ToDateString()" charset="utf-8"></script>
     <style>
 
         .layui-card {
             border: 1px solid #f2f2f2;
             border-radius: 5px;
-            overflow: auto;
         }
 
         .icon {
@@ -267,12 +266,12 @@
                                     <tr>
                                         <td>框架名称</td>
                                         <td>
-                                            WaterCloud_Core
+                                            WaterCloud
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>当前版本</td>
-                                        <td>@WaterCloud.Code.GlobalContext.GetVersion()</td>
+                                        <td>v1.0.0</td>
                                     </tr>
                                     <tr>
                                         <td>主要特色</td>
@@ -298,7 +297,7 @@
                             <p>本模板基于layuimini以及DaleCloud进行实现。</p>
                             <p>开发文档地址：<a class="layui-btn layui-btn-xs layui-btn-danger" target="_blank" href="https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages">WaterCloud文档</a></p>
                             <p>技术交流QQ群（1065447456）：<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=51RHQVG"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="watercloud" title="watercloud"></a>（加群请备注）</p>
-                            <p>喜欢此模板的可以给我的Gitee加个Star支持一下</p>
+                            <p>喜欢此模板的可以给我的Github和Gitee加个Star支持一下</p>
                         </div>
                     </div>
 
@@ -306,9 +305,9 @@
             </div>
         </div>
     </div>
-    <script src="~/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
-    <script src="~/js/lay-config.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
-    <script src="~/js/framework-ui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script src="~/Content//lib/layui-v2.5.5/layui.js?v=@WaterCloud.Code.Ext.ToDateString()" charset="utf-8"></script>
+    <script src="~/Content//js/lay-config.js?v=@WaterCloud.Code.Ext.ToDateString()" charset="utf-8"></script>
+    <script src="~/Content/js/framework-ui.js?v=@WaterCloud.Code.Ext.ToDateString()"></script>
     <script>
         // 公告赋值
         $(function () {
@@ -319,7 +318,7 @@
         //记录信息
         loadInfo = function () {
             $.ajax({
-                url: "/ClientsData/GetCoutData?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
+                url: "/ClientsData/GetCoutData?v=" + new Date(),
                 dataType: "json",
                 success: function (data) {
                     $('#usercout').html(data.usercout);
@@ -332,19 +331,22 @@
         //公告
         noticeInfo = function () {
             $.ajax({
-                url: "/ClientsData/GetNoticeInfo?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
+                url: "/ClientsData/GetNoticeInfo?v=" + new Date(),
                 dataType: "json",
                 success: function (data) {
                     var noticeHtml = '';
                     for (var i = 0; i < data.length; i++) {
                         noticeHtml += '<div class="layuimini-notice">';
                         noticeHtml += '<div class="layuimini-notice-title">' + data[i].F_Title + '</div>';
-                        noticeHtml += '<div class="layuimini-notice-extra">' + new Date(data[i].F_CreatorTime).Format("yyyy-MM-dd hh:mm") + '</div>';
+                        noticeHtml += '<div class="layuimini-notice-extra">' + new Date(data[i].F_CreatorTime.replace(/-/g,'/')).Format("yyyy-MM-dd hh:mm") + '</div>';
                         noticeHtml += '<div class="layuimini-notice-content layui-hide">';
-                        noticeHtml += '<pre>';
+                        var n = 20;
                         var str = data[i].F_Content;
-                        noticeHtml += str;
-                        noticeHtml += '</pre></div></div >';
+                        for (var k = 0, l = str.length; k < l / n; k++) {
+                            var a = str.slice(n * k, n * (k + 1));
+                            noticeHtml += a + '<br>';
+                        }
+                        noticeHtml += '</div></div >';
                     }
                     $('.layui-watercloud-notice').empty();
                     $('.layui-watercloud-notice').html(noticeHtml);
@@ -354,7 +356,7 @@
         //快捷入口
         quickModuleInfo = function () {
             $.ajax({
-                url: "/ClientsData/GetQuickModule?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
+                url: "/ClientsData/GetQuickModule?v=" + new Date(),
                 dataType: "json",
                 success: function (data) {
                     var qiuckHtml = '';
@@ -422,23 +424,27 @@
             function loadChart() {
                 var myChart = echarts.init(document.getElementById('echarts-records'), 'walden');
                 var xData = [];
+                var iisData = [];
                 var armData = [];
                 var cpuData = [];
-                common.ajax({
-                    url: "/SystemSecurity/ServerMonitoring/GetServerData",
+                $.ajax({
+                    url: "/ServerMonitoring/GetServerData",
                     dataType: "json",
                     async: false,
                     success: function (data) {
                         var length = data.length;
                         for (var i = 0; i < length; i++) {
                             if (data[i]['F_Date'] !== null) {
-                                xData.push(new Date(data[i]['F_Date']).Format("yyyy-MM-dd"));
+                                xData.push(new Date(data[i]['F_Date'].replace(/-/g, '/')).Format("yyyy-MM-dd"));
                             }
                             if (data[i]['F_ARM'] !== null) {
                                 armData.push(data[i]['F_ARM']);
                             }
                             if (data[i]['F_CPU'] !== null) {
                                 cpuData.push(data[i]['F_CPU']);
+                            }
+                            if (data[i]['F_IIS'] !== null) {
+                                iisData.push(data[i]['F_IIS']);
                             }
                         }
                     }
@@ -448,7 +454,7 @@
                         trigger: 'axis'
                     },
                     legend: {
-                        data: ['CPU使用率', 'ARM使用率']
+                        data: ['IIS连接数', 'CPU使用率', 'ARM使用率']
                     },
 
                     xAxis: {
@@ -460,6 +466,10 @@
                         type: 'value'
                     },
                     series: [
+                        {
+                            name: 'IIS连接数', type: 'line',
+                            data: iisData
+                        },
                         {
                             name: 'CPU使用率', type: 'line',
                             data: cpuData

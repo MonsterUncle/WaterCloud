@@ -1,0 +1,91 @@
+﻿.form-group-bottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 5px 5px;
+    background-color: #fff;
+    box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, .05);
+}
+.text-right {
+   text-align:right;
+}
+.form-bottom-button {
+    padding-bottom: 30px;
+}
+/*.layui-table-page {
+    background-color: #F0F0F0;
+    z-index: 99999;
+    position: fixed;
+    bottom: 0;
+}*/
+
+/*.layui-table-box {
+    margin-bottom: 30px;
+}*/
+
+.layui-form-item {
+    margin-bottom: 5px;
+    clear:both;
+}
+.error-page {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.error-page-img {
+    max-width: 100%;
+    max-height: 300px;
+}
+
+.error-page-info {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding-left: 30px;
+}
+
+    .error-page-info h1 {
+        color: #434e59;
+        font-size: 72px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+.error-page-info-desc {
+    color: #777;
+    font-size: 20px;
+    line-height: 28px;
+    margin-bottom: 16px;
+}
+.layui-btn-sm {
+    height: 25px;
+    line-height: 25px;
+    padding: 0 8px;
+    font-size: 11px;
+}
+.layui-btn-container .layui-btn {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.layui-table-tool > .layui-table-tool-temp {
+    padding-right: 100px;
+}
+.layui-table-tool .layui-table-tool-self > div:not(.layui-inline) .layui-table-tool-temp {
+    padding-right: 0px;
+}
+@media screen and (max-width: 450px) {
+    .layui-form-item .layui-inline {
+        margin-bottom: 5px;
+        margin-right: 10px;
+        clear:none;
+    }
+}
+@media screen and (max-width: 400px) {
+    .layui-laypage-default > .layui-laypage-skip {
+        display: none;
+    }
+}

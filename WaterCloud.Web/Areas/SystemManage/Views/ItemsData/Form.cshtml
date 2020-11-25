@@ -3,15 +3,13 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'laydate', 'common', 'optimizeSelectOption'], function () {
+    layui.use(['jquery', 'form', 'laydate', 'tablePlug', 'common'], function () {
         var form = layui.form,
             $ = layui.$,
             common = layui.common,
             laydate = layui.laydate;
         var keyValue = $.request("keyValue");
         var itemId = $.request("itemId");
-        //权限字段
-        common.authorizeFields('adminform');
         $(function () {
             initControl();
             if (!!keyValue) {
@@ -27,31 +25,13 @@
             }
             form.render();
         });
-        wcLoading.close();
         function initControl() {
+            $("#F_OrganizeId").bindSelect({
+                url: "/SystemManage/Organize/GetTreeSelectJson",
+            });
         }
-        //select验证
-        form.verify({
-            required: function (value, item) {
-                var msg = "必填项不能为空";
-                value = $.trim(value);
-                var isEmpty = !value || value.length < 1;
-                // 当前验证元素是select且为空时,将页面定位至layui渲染的select处，或自定义想定位的位置
-                if (item.tagName == 'SELECT' && isEmpty) {
-                    $("html").animate({
-                        scrollTop: $(item).siblings(".layui-form-select").offset().top - 74
-                    }, 50);
-                }
-                if (isEmpty) {
-                    return msg;
-                }
-            }
-        });
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            // 单击之后提交按钮不可选,防止重复提交
-            $('.site-demo-active').addClass('layui-btn-disabled');
-            $('.site-demo-active').attr('disabled', 'disabled');
             var postData = data.field;
             if (!postData["F_IsDefault"]) postData["F_IsDefault"] = false;
             if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
@@ -71,39 +51,39 @@
     <div class="layuimini-container">
         <div class="layuimini-main">
             <div class="layui-form layuimini-form" lay-filter="adminform">
-                <div class="layui-form-item layui-hide">
+                <div class="layui-form-item">
                     <label class="layui-form-label required">名称</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_ItemName" name="F_ItemName" maxlength="50" lay-verify="required" class="layui-input">
+                        <input type="text" id="F_ItemName" name="F_ItemName" lay-verify="required" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item layui-hide">
+                <div class="layui-form-item">
                     <label class="layui-form-label required">编号</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_ItemCode" name="F_ItemCode" maxlength="50" lay-verify="required" class="layui-input ">
+                        <input type="text" id="F_ItemCode" name="F_ItemCode" lay-verify="required" class="layui-input ">
                     </div>
                 </div>
-                <div class="layui-form-item layui-hide">
+                <div class="layui-form-item">
                     <label class="layui-form-label required">排序</label>
                     <div class="layui-input-block">
-                        <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
+                        <input type="text" id="F_SortCode" name="F_SortCode" lay-verify="required" class="layui-input ">
                     </div>
                 </div>
-                <div class="layui-form-item layui-hide">
+                <div class="layui-form-item">
                     <label class="layui-form-label">选项</label>
                     <div class="layui-input-block">
                         <input type="checkbox" name="F_IsDefault" id="F_IsDefault" value="true" title="默认">
                         <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效">
                     </div>
                 </div>
-                <div class="layui-form-item layui-form-text layui-hide">
+                <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-block">
                         <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入备注"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
-                    <button class="layui-btn site-demo-active" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                    <button class="layui-btn" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
                 </div>
             </div>
         </div>

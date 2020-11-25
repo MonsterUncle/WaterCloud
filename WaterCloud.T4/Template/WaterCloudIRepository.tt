@@ -1,0 +1,28 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".txt" #>
+<#@ import namespace="EntityInfo" #>
+<#@ parameter type="EntityInfo.EntityClassInfo" name="entity" #>
+//-----------------------------------------------------------------------
+// <copyright file=" <#= entity.EntityName #>.cs" company="WaterCloud">
+// * Copyright (C) WaterCloud.Framework  All Rights Reserved
+// * version : 1.0
+// * author  : WaterCloud.Framework
+// * FileName: <#= entity.EntityName #>.cs
+// * history : Created by T4 <#= DateTime.Now #> 
+// </copyright>
+//-----------------------------------------------------------------------
+using WaterCloud.DataBase;
+using WaterCloud.Entity.<#= entity.EntityNameSpace #>;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WaterCloud.Domain.IRepository.<#= entity.EntityNameSpace #>
+{
+    public interface I<#= entity.EntityName #>Repository : IRepositoryBase<<#= entity.EntityName #>Entity>
+    {
+		void DeleteForm(string keyValue);
+    }
+}

@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "WaterCloud.Service": {
-      "commandName": "Project",
-      "nativeDebugging": true
-    }
-  }
-}

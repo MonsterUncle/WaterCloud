@@ -12,7 +12,6 @@
         //数据
         var jsondata = [];
         var jsonvalue = [];
-        wcLoading.close();
         $(function () {
             common.ajax({
                 url: "/SystemManage/QuickModule/GetTransferJson",
@@ -54,27 +53,24 @@
 
 
         //批量办法定事件
-        var lock = false;
         util.event('lay-demoTransferActive', {
             saveChange: function (othis) {
-                if (!lock) {
-                    var getData = transfer.getData('transferval'); //获取右侧数据
-                    var json = [];
-                    if (getData.length > 8) {
-                        common.modalAlert("快捷入口最多支持8个选项！");
-                        return false;
-                    }
-                    for (var i = 0; i < getData.length; i++) {
-                        json.push(getData[i].value);
-                    }
-                    common.submitForm({
-                        url: "/SystemManage/QuickModule/SubmitForm",
-                        param: { permissionIds: String(json) },
-                        close: false,
-                        success: function () {
-                        }
-                    })
+                var getData = transfer.getData('transferval'); //获取右侧数据
+                var json = [];
+                if (getData.length>8) {
+                    common.modalAlert("快捷入口最多支持8个选项！");
+                    return false;
                 }
+                for (var i = 0; i < getData.length; i++) {
+                    json.push(getData[i].value);
+                }
+                common.submitForm({
+                    url: "/SystemManage/QuickModule/SubmitForm",
+                    param: { permissionIds: String(json)},
+                    close:false,
+                    success: function () {
+                    }
+                })
             }
         });
 

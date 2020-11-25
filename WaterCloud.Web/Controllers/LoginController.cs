@@ -4,94 +4,63 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-
+using WaterCloud.Entity.SystemSecurity;
+using WaterCloud.Application.SystemSecurity;
 using System;
-using Microsoft.AspNetCore.Mvc;
-using WaterCloud.Service;
-using WaterCloud.Service.SystemSecurity;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WaterCloud.Entity.SystemManage;
+using WaterCloud.Application.SystemManage;
 using WaterCloud.Code;
-using WaterCloud.Domain.SystemSecurity;
-using System.Threading.Tasks;
-using WaterCloud.Service.SystemOrganize;
-using WaterCloud.Domain.SystemOrganize;
-using Chloe;
+using WaterCloud.Application;
 
 namespace WaterCloud.Web.Controllers
 {
     public class LoginController : Controller
     {
-        public FilterIPService _filterIPService { get; set; }
-        public UserService _userService { get; set; }
-        public LogService _logService { get; set; }
-        public SystemSetService _setService { get; set; }
-        public IDbContext _context { get; set; }
         [HttpGet]
-        public virtual async Task<ActionResult> Index()
+        public virtual ActionResult Index()
         {
-            //登录页获取logo和项目名称
-            try
-            {
-                var systemset = await _setService.GetFormByHost("");
-                if (GlobalContext.SystemConfig.Demo)
-                {
-                    ViewBag.UserName = GlobalContext.SystemConfig.SysemUserCode;
-                    ViewBag.Password = GlobalContext.SystemConfig.SysemUserPwd;
-                }
-                ViewBag.ProjectName = systemset.F_ProjectName;
-                ViewBag.LogoIcon = "../icon/" + systemset.F_Logo;
-                return View();
-            }
-            catch (Exception)
-            {
-                ViewBag.ProjectName = "水之云信息系统";
-                ViewBag.LogoIcon = "../icon/favicon.ico";
-                return View();
-            }
-
+            var test = string.Format("{0:E2}", 1);
+            return View();
         }
-        /// <summary>
-        /// 验证码获取（此接口已弃用）
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public ActionResult GetAuthCode()
         {
-            return File(new VerifyCodeHelper().GetVerifyCode(), @"image/Gif");
+            return File(new VerifyCode().GetVerifyCode(), @"image/Gif");
         }
         [HttpGet]
-        public async Task<ActionResult> OutLogin()
+        public ActionResult OutLogin()
         {
-            await _logService.WriteDbLog(new LogEntity
+            new LogApp().WriteDbLog(new LogEntity
             {
                 F_ModuleName = "系统登录",
                 F_Type = DbLogType.Exit.ToString(),
-                F_Account = _setService.currentuser.UserCode,
-                F_NickName = _setService.currentuser.UserName,
+                F_Account = OperatorProvider.Provider.GetCurrent().UserCode,
+                F_NickName = OperatorProvider.Provider.GetCurrent().UserName,
                 F_Result = true,
                 F_Description = "安全退出系统",
             });
-            await OperatorProvider.Provider.EmptyCurrent("pc_");
-            return Redirect("/Login/Index");
+            OperatorProvider.Provider.EmptyCurrent();
+            return RedirectToAction("Index", "Login");
         }
-        /// <summary>
-        /// 验证登录状态请求接口
-        /// </summary>
-        /// <returns></returns>
         [HttpPost]
         [HandlerAjaxOnly]
-        [IgnoreAntiforgeryToken]
-        public async Task<ActionResult> CheckLoginState()
+        public ActionResult CheckLoginState()
         {
             try
             {
-                if (_setService.currentuser.UserId == null)
+                var operatorProvider = OperatorProvider.Provider.GetCurrent();
+                if (operatorProvider==null)
                 {
                     return Content(new AjaxResult { state = ResultType.error.ToString() }.ToJson());
                 }
                 //登录检测      
-                if ((await OperatorProvider.Provider.IsOnLine("pc_")).stateCode<=0)
+                if (OperatorProvider.Provider.IsOnLine("pc_").stateCode<=0)
                 {
-                    await OperatorProvider.Provider.EmptyCurrent("pc_");
+                    OperatorProvider.Provider.EmptyCurrent();
                     return Content(new AjaxResult { state = ResultType.error.ToString() }.ToJson());
                 }
                 else
@@ -105,33 +74,24 @@ namespace WaterCloud.Web.Controllers
             }
 
         }
-        /// <summary>
-        /// 登录验证
-        /// </summary>
-        /// <param name="username">用户</param>
-        /// <param name="password">密码</param>
-        /// <param name="localurl">域名</param>
-        /// <returns></returns>
         [HttpPost]
         [HandlerAjaxOnly]
-        [IgnoreAntiforgeryToken]
-        public async Task<ActionResult> CheckLogin(string username, string password,string localurl)
+        public ActionResult CheckLogin(string username, string password, string code)
         {
-            //根据域名判断租户
+            if (!CheckIP())
+            {
+                throw new Exception("IP受限");
+            }
             LogEntity logEntity = new LogEntity();
             logEntity.F_ModuleName ="系统登录";
             logEntity.F_Type = DbLogType.Login.ToString();
-            if (GlobalContext.SystemConfig.Debug)
-            {
-                localurl = "";
-            }
             try
             {
-                if (!await CheckIP())
+                if (Session["wcloud_session_verifycode"].IsEmpty() || Md5.md5(code.ToLower(), 16) != Session["wcloud_session_verifycode"].ToString())
                 {
-                    throw new Exception("IP受限");
+                    throw new Exception("验证码错误，请重新输入");
                 }
-                UserEntity userEntity =await _userService.CheckLogin(username, password, localurl);
+                UserEntity userEntity = new UserApp().CheckLogin(username, password);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
                 operatorModel.UserCode = userEntity.F_Account;
@@ -139,20 +99,15 @@ namespace WaterCloud.Web.Controllers
                 operatorModel.CompanyId = userEntity.F_OrganizeId;
                 operatorModel.DepartmentId = userEntity.F_DepartmentId;
                 operatorModel.RoleId = userEntity.F_RoleId;
-                operatorModel.LoginIPAddress = WebHelper.Ip;
+                operatorModel.LoginIPAddress = Net.Ip;
                 operatorModel.LoginIPAddressName = "本地局域网";//Net.GetLocation(operatorModel.LoginIPAddress);
                 operatorModel.LoginTime = DateTime.Now;
                 operatorModel.DdUserId = userEntity.F_DingTalkUserId;
                 operatorModel.WxOpenId = userEntity.F_WxOpenId;
-                //各租户的管理员也是当前数据库的全部权限
-                operatorModel.IsSystem = userEntity.F_IsAdmin.Value;
                 operatorModel.IsAdmin = userEntity.F_IsAdmin.Value;
                 operatorModel.IsBoss = userEntity.F_IsBoss.Value;
                 operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
-                SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
-                operatorModel.DbString = setEntity.F_DbString;
-                operatorModel.DBProvider = setEntity.F_DBProvider;
                 if (userEntity.F_Account == "admin")
                 {
                     operatorModel.IsSystem = true;
@@ -161,13 +116,12 @@ namespace WaterCloud.Web.Controllers
                 {
                     operatorModel.IsSystem = false;
                 }
-                //缓存保存用户信息
-                await OperatorProvider.Provider.AddLoginUser(operatorModel, "","pc_");
+                OperatorProvider.Provider.AddLoginUser(operatorModel, "","pc_");
                 logEntity.F_Account = userEntity.F_Account;
                 logEntity.F_NickName = userEntity.F_RealName;
                 logEntity.F_Result = true;
                 logEntity.F_Description = "登录成功";
-                await _logService.WriteDbLog(logEntity);
+                new LogApp().WriteDbLog(logEntity);
                 return Content(new AjaxResult { state = ResultType.success.ToString(), message = "登录成功。"}.ToJson());
             }
             catch (Exception ex)
@@ -176,14 +130,14 @@ namespace WaterCloud.Web.Controllers
                 logEntity.F_NickName = username;
                 logEntity.F_Result = false;
                 logEntity.F_Description = "登录失败，" + ex.Message;
-                await _logService.WriteDbLog(logEntity);
+                new LogApp().WriteDbLog(logEntity);
                 return Content(new AjaxResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
             }
         }
-        private async Task<bool> CheckIP()
+        private bool CheckIP()
         {
-            string ip = WebHelper.Ip;
-            return await _filterIPService.CheckIP(ip);
+            string ip = Net.Ip;
+            return new FilterIPApp().CheckIP(ip);
         }
     }
 }

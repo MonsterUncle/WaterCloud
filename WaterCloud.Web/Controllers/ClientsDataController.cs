@@ -4,276 +4,198 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using WaterCloud.Service.SystemManage;
+using WaterCloud.Application.SystemManage;
 using WaterCloud.Code;
-using WaterCloud.Domain.SystemManage;
+using WaterCloud.Entity.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Mvc;
 using System;
-using WaterCloud.Domain;
-using WaterCloud.Service.SystemSecurity;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using WaterCloud.Service.SystemOrganize;
-using WaterCloud.Domain.SystemOrganize;
-using WaterCloud.Service.InfoManage;
+using WaterCloud.Entity;
+using Newtonsoft.Json.Linq;
+using WaterCloud.Application.SystemSecurity;
 
 namespace WaterCloud.Web.Controllers
 {
-    [ServiceFilter(typeof(HandlerLoginAttribute))]
+    [HandlerLogin]
     public class ClientsDataController : Controller
     {
         /// <summary>
         /// 缓存操作类
         /// </summary>
+        private ICache redisCache = CacheFactory.CaChe();
         private string cacheKey = "watercloud_quickmoduledata_";
         private string initcacheKey = "watercloud_init_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
-        public QuickModuleService _quickModuleService { get; set; }
-        public NoticeService _noticeService { get; set; }
-        public UserService _userService { get; set; }
-        public ModuleService _moduleService { get; set; }
-        public LogService _logService { get; set; }
-        public RoleAuthorizeService _roleAuthorizeService { get; set; }
-        public ItemsDataService _itemsDetailService { get; set; }
-        public ItemsTypeService _itemsService { get; set; }
-        public OrganizeService _organizeService { get; set; }
-        public RoleService _roleService { get; set; }
-        public DutyService _dutyService { get; set; }
-        public SystemSetService _setService { get; set; }
-        public MessageService _msgService { get; set; }
-        /// <summary>
-        /// 初始数据加载请求方法
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetClientsDataJson()
+        public ActionResult GetClientsDataJson()
         {
             var data = new
             {
-                dataItems =await this.GetDataItemList(),
-                organize = await this.GetOrganizeList(),
-                company = await this.GetCompanyList(),
-                role = await this.GetRoleList(),
-                duty = await this.GetDutyList(),
-                user = await this.GetUserList(),
-                authorizeButton = await this.GetMenuButtonListNew(),
-                moduleFields = await this.GetMenuFields(),
-                authorizeFields = await this.GetMenuFieldsListNew(),
+                dataItems = this.GetDataItemList(),
+                organize = this.GetOrganizeList(),
+                role = this.GetRoleList(),
+                duty = this.GetDutyList(),
+                user = this.GetUserList(),
+                authorizeButton = this.GetMenuButtonListNew(),
             };
             return Content(data.ToJson());
         }
-        /// <summary>
-        /// 清空缓存请求方法
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ClearCache()
+
+        private object GetQuickModuleList()
         {
-            try
-            {
-                if (_setService.currentuser.UserId != GlobalContext.SystemConfig.SysemUserId)
-                {
-                    return Content(new { code = 0, msg = "此功能需要管理员权限" }.ToJson());
-                }
-                await CacheHelper.FlushAll();
-                await OperatorProvider.Provider.EmptyCurrent("pc_");
-                return Content(new { code = 1, msg = "服务端清理缓存成功" }.ToJson());
-            }
-            catch (Exception)
-            {
-                return Content(new { code = 0, msg = "此功能需要管理员权限" }.ToJson());
-            }
-        }
-        /// <summary>
-        /// 模块字段权限
-        /// </summary>
-        /// <returns></returns>
-        private async Task<object> GetMenuFields()
-        {
-            var roleId = _userService.currentuser.RoleId;
-            if (_userService.currentuser.UserCode=="admin")
-            {
-                roleId = "admin";
-            }
-            Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
-            var list= await _roleAuthorizeService.GetMenuList(roleId);
-            foreach (ModuleEntity item in list.Where(a=>a.F_UrlAddress!=null))
-            {
-                dictionary.Add(item.F_UrlAddress, item.F_IsFields??false);
-            }
-            return dictionary;
-        }
-        /// <summary>
-        /// 快捷菜单列表
-        /// </summary>
-        /// <returns></returns>
-        private async Task<object> GetQuickModuleList()
-        {
-            var currentuser = _userService.currentuser;
-            if (currentuser.UserId == null)
+            if (OperatorProvider.Provider.GetCurrent()==null)
             {
                 return null;
             }
-            var userId = currentuser.UserId;
-            var data =await CacheHelper.Get<Dictionary<string,List<QuickModuleExtend>>>(cacheKey + "list");
+            var userId = OperatorProvider.Provider.GetCurrent().UserId;
+            var data = redisCache.Read<Dictionary<string,List<QuickModuleExtend>>>(cacheKey + "list", CacheId.module);
             if (data==null)
             {
                 data = new Dictionary<string, List<QuickModuleExtend>>();
-                data.Add(userId,await _quickModuleService.GetQuickModuleList(userId));
+                data.Add(userId, new QuickModuleApp().GetQuickModuleList(userId));
             }
             else
             {
                 if (data.ContainsKey(userId))
                 {
-                    data[userId] =await _quickModuleService.GetQuickModuleList(userId);
+                    data[userId] = new QuickModuleApp().GetQuickModuleList(userId);
                 }
                 else
                 {
-                    data.Add(userId,await _quickModuleService.GetQuickModuleList(userId));
+                    data.Add(userId, new QuickModuleApp().GetQuickModuleList(userId));
                 }
             }
-            await CacheHelper.Remove(cacheKey + "list");
-            await CacheHelper.Set(cacheKey + "list", data);
+            redisCache.Remove(cacheKey + "list", CacheId.module);
+            redisCache.Write(cacheKey + "list", data, CacheId.module);
             return data[userId];
         }
-        /// <summary>
-        /// 获取公告信息
-        /// </summary>
-        /// <returns></returns>
-        private async Task<object> GetNoticeList()
+
+        private object GetNoticeList()
         {
-            var data = (await _noticeService.GetList("")).Where(a => a.F_EnabledMark == true).OrderByDescending(a => a.F_CreatorTime).Take(6).ToList();
+            NoticeApp noticeApp = new NoticeApp();
+            var data = noticeApp.GetList("").Where(a=>a.F_EnabledMark==true).OrderByDescending(a=>a.F_CreatorTime).Take(6).ToList();
             return data;
         }
-        /// <summary>
-        /// 初始菜单列表请求方法
-        /// </summary>
-        /// <returns></returns>
+
         [HttpGet]
-        public async Task<ActionResult> GetInitDataJson()
+        public ActionResult GetInitDataJson()
         {
-            var currentuser = _userService.currentuser;
-            var userId = currentuser.UserId;
-            if (currentuser.UserId == null)
+            var roleId = OperatorProvider.Provider.GetCurrent().RoleId;
+            if (roleId==null&& OperatorProvider.Provider.GetCurrent().IsSystem)
             {
-                return Content("");
+                roleId = "admin";
             }
-            Dictionary<string, string > data =await CacheHelper.Get<Dictionary<string, string>>(initcacheKey + "list");
+            Dictionary<string, string > data = redisCache.Read<Dictionary<string, string>>(initcacheKey + "list", CacheId.module);
             if (data == null)
             {
                 data =new Dictionary <string, string>();
-                data.Add(userId, await this.GetMenuListNew());
+                data .Add(roleId, this.GetMenuListNew());
+
             }
             else
             {
-                if (data.ContainsKey(userId))
+                if (data.ContainsKey(roleId))
                 {
-                    data[userId] = await this.GetMenuListNew();
+                    data[roleId] = this.GetMenuListNew();
                 }
                 else
                 {
-                    data.Add(userId, await this.GetMenuListNew());
+                    data.Add(roleId, this.GetMenuListNew());
                 }
             }
-            await CacheHelper.Remove(initcacheKey + "list");
-            await CacheHelper.Set(initcacheKey + "list",data);
-            return Content(data[userId]);
+            redisCache.Remove(initcacheKey + "list", CacheId.module);
+            redisCache.Write(initcacheKey + "list",data, CacheId.module);
+            return Content(data[roleId]);
         }
-        /// <summary>
-        /// 获取公告信息请求方法
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> GetNoticeInfo()
+        public ActionResult ClearDataJson()
         {
-            var data =await this.GetNoticeList();
+            // 启动的时候清除全部缓存
+            ICache cache = CacheFactory.CaChe();
+            for (int i = 0; i <= 6; i++)
+            {
+                cache.RemoveAll(i);
+
+            }
+            cache.RemoveAll(6);
+            return Content(new { code = 1, msg = "服务端清理缓存成功" }.ToJson());
+        }
+        [HttpGet]
+        public ActionResult GetNoticeInfo()
+        {
+            var data = this.GetNoticeList();
             return Content(data.ToJson());
         }
-        /// <summary>
-        /// 获取当前用户信息请求方法
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetUserCode()
+        public ActionResult GetUserCode()
         {
-            var currentuser = _userService.currentuser;
-            if (currentuser.UserId==null)
-            {
-                return Content("");
-            }
-            var data =await _userService.GetForm(currentuser.UserId);
-            var msglist= await _msgService.GetUnReadListJson();
-            data.MsgCout = msglist.Count();
+            var data = new UserApp().GetForm(OperatorProvider.Provider.GetCurrent().UserId);
             return Content(data.ToJson());
         }
-        /// <summary>
-        /// 获取快捷菜单请求方法
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> GetQuickModule()
+        public ActionResult GetQuickModule()
         {
             try
             {
-                var data =await this.GetQuickModuleList();
+                var data = this.GetQuickModuleList();
                 return Content(data.ToJson());
             }
             catch (Exception)
             {
-                return Content("");
+                return null;
             }
         }
-        /// <summary>
-        /// 获取数据信息接口
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> GetCoutData()
+        public ActionResult GetCoutData()
         {
-            var currentuser = _userService.currentuser;
-            if (currentuser.UserId == null)
-            {
-                return Content("");
-            }
-            int usercout =(await _userService.GetUserList("")).Count();
-            var temp =await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + currentuser.UserId);
-            int logincout = temp!=null&&temp.F_LogOnCount!=null? (int)temp.F_LogOnCount : 0;
-            int modulecout =(await _moduleService.GetList()).Where(a => a.F_EnabledMark == true && a.F_UrlAddress != null).Count();
-            int logcout = (await _logService.GetList()).Count();
+            int usercout = new UserApp().GetUserList("").Count();
+            var info = redisCache.Read<OperatorUserInfo>(cacheKeyOperator + "info_" + OperatorProvider.Provider.GetCurrent().UserId, CacheId.loginInfo);
+            int logincout = info!=null&&info.F_LogOnCount!=null? (int)info.F_LogOnCount : 0;
+            int modulecout = new ModuleApp().GetList().Where(a => a.F_EnabledMark == true && a.F_UrlAddress != null).Count();
+            int logcout = new LogApp().GetList().Count();
             var data= new { usercout = usercout, logincout = logincout, modulecout = modulecout, logcout = logcout };
             return Content(data.ToJson());
         }
-        /// <summary>
-        /// 菜单按钮信息
-        /// </summary>
-        /// <returns></returns>
-        private async Task<string> GetMenuListNew()
+        private string GetMenuListNew()
         {
-            var currentuser = _userService.currentuser;
-            var roleId = currentuser.RoleId;
-            StringBuilder sbJson = new StringBuilder();
-            InitEntity init = new InitEntity();
-            init.homeInfo = new HomeInfoEntity();
-            init.logoInfo = new LogoInfoEntity();
-            var systemset =await _setService.GetForm(currentuser.CompanyId);
-            //修改主页及logo参数
-            init.logoInfo.title = systemset.F_LogoCode;
-            init.logoInfo.image = "../icon/"+systemset.F_Logo;
-            init.menuInfo = new List<MenuInfoEntity>();
-            init.menuInfo = ToMenuJsonNew(await _roleAuthorizeService.GetMenuList(roleId), "0");
-            sbJson.Append(init.ToJson());
-            return sbJson.ToString() ;
+            var roleId = OperatorProvider.Provider.GetCurrent().RoleId;            StringBuilder sbJson = new StringBuilder();            InitEntity init = new InitEntity();            init.homeInfo = new HomeInfoEntity();            init.logoInfo = new LogoInfoEntity();            init.menuInfo = new List<MenuInfoEntity>();            MenuInfoEntity munu = new MenuInfoEntity();            init.menuInfo.Add(munu);            munu.title = "常规管理";            munu.icon = "fa fa-address-book";            munu.href = "";            munu.target = "_self";            munu.child = new List<MenuInfoEntity>();            munu.child = ToMenuJsonNew(new RoleAuthorizeApp().GetMenuList(roleId), "0");            CreateMunu(init.menuInfo);            sbJson.Append(init.ToJson());            return sbJson.ToString() ;
         }
         /// <summary>
-        /// 菜单信息
+        /// 组件管理
         /// </summary>
-        /// <param name="data"></param>
-        /// <param name="parentId"></param>
-        /// <returns></returns>
+        /// <param name="menuInfo"></param>
+        private void CreateMunu(List<MenuInfoEntity> menuInfo)
+        {
+
+            MenuInfoEntity modelmunu = new MenuInfoEntity();            modelmunu.title = "组件管理";            modelmunu.icon = "fa fa-lemon-o";            modelmunu.href = "";            modelmunu.target = "_self";            modelmunu.child = new List<MenuInfoEntity>();
+            MenuInfoEntity child1 = new MenuInfoEntity();
+            child1.title = "图标列表";            child1.href = "../Content/page/icon.html";            child1.icon = "fa fa-dot-circle-o";            child1.target = "_self";
+            modelmunu.child.Add(child1);
+            MenuInfoEntity child2 = new MenuInfoEntity();
+            child2.title = "图标选择";            child2.href = "../Content/page/icon-picker.html";            child2.icon = "fa fa-adn";            child2.target = "_self";
+            modelmunu.child.Add(child2);
+            MenuInfoEntity child3 = new MenuInfoEntity();
+            child3.title = "颜色选择";            child3.href = "../Content/page/color-select.html";            child3.icon = "fa fa-dashboard";            child3.target = "_self";
+            modelmunu.child.Add(child3);
+            MenuInfoEntity child4 = new MenuInfoEntity();
+            child4.title = "下拉选择";            child4.href = "../Content/page/table-select.html";            child4.icon = "fa fa-angle-double-down";            child4.target = "_self";
+            modelmunu.child.Add(child4);
+            MenuInfoEntity child5 = new MenuInfoEntity();
+            child5.title = "文件上传";            child5.href = "../Content/page/upload.html";            child5.icon = "fa fa-arrow-up";            child5.target = "_self";
+            modelmunu.child.Add(child5);
+            MenuInfoEntity child6 = new MenuInfoEntity();
+            child6.title = "富文本编辑器";            child6.href = "../Content/page/editor.html";            child6.icon = "fa fa-edit";            child6.target = "_self";
+            modelmunu.child.Add(child6);
+            MenuInfoEntity child7 = new MenuInfoEntity();
+            child7.title = "省市县区选择器";            child7.href = "../Content/page/area.html";            child7.icon = "fa fa-rocket";            child7.target = "_self";
+            modelmunu.child.Add(child7);
+            menuInfo.Add(modelmunu);
+        }
+
         private List<MenuInfoEntity> ToMenuJsonNew(List<ModuleEntity> data, string parentId)
         {
             List<MenuInfoEntity> list = new List<MenuInfoEntity>();
@@ -300,33 +222,32 @@ namespace WaterCloud.Web.Controllers
                         default:
                             munu.target = "_self";
                             break;
-                    }                    
+                    }
                     if (data.FindAll(t => t.F_ParentId == item.F_Id).Count>0)
                     {
                         munu.child = new List<MenuInfoEntity>();
                         munu.child = ToMenuJsonNew(data, item.F_Id);
                     }
-                    if (item.F_IsMenu ==true)
+                    if (item.F_Layers == 1)
                     {
                         list.Add(munu);
                     }
-
+                    if (item.F_Layers > 1 && item.F_IsMenu == true)
+                    {
+                        list.Add(munu);
+                    }
                 };
             }
             return list;
         }
-        /// <summary>
-        /// 字段信息
-        /// </summary>
-        /// <returns></returns>
-        private async Task<object> GetDataItemList()
+
+        private object GetDataItemList()
         {
-            var itemdata =await _itemsDetailService.GetList();
+            var itemdata = new ItemsDetailApp().GetList();
             Dictionary<string, object> dictionaryItem = new Dictionary<string, object>();
-            var itemlist = await _itemsService.GetList();
-            foreach (var item in itemlist.Where(a=>a.F_EnabledMark==true).ToList())
+            foreach (var item in new ItemsApp().GetList())
             {
-                var dataItemList = itemdata.FindAll(t => t.F_ItemId==item.F_Id);
+                var dataItemList = itemdata.FindAll(t => t.F_ItemId.Equals(item.F_Id));
                 Dictionary<string, string> dictionaryItemList = new Dictionary<string, string>();
                 foreach (var itemList in dataItemList)
                 {
@@ -337,13 +258,10 @@ namespace WaterCloud.Web.Controllers
 
             return dictionaryItem;
         }
-        /// <summary>
-        /// 组织信息
-        /// </summary>
-        /// <returns></returns>
-        private async Task<object> GetOrganizeList()
+        private object GetOrganizeList()
         {
-            var data =await _organizeService.GetList();
+            OrganizeApp organizeApp = new OrganizeApp();
+            var data = organizeApp.GetList();
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (OrganizeEntity item in data)
             {
@@ -356,32 +274,10 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
-        /// <summary>
-        /// 公司信息
-        /// </summary>
-        /// <returns></returns>
-        private async Task<object> GetCompanyList()
+        private object GetRoleList()
         {
-            var data = await _setService.GetList();
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            foreach (SystemSetEntity item in data)
-            {
-                var fieldItem = new
-                {
-                    encode = item.F_Id,
-                    fullname = item.F_CompanyName
-                };
-                dictionary.Add(item.F_Id, fieldItem);
-            }
-            return dictionary;
-        }
-        /// <summary>
-        /// 角色信息
-        /// </summary>
-        /// <returns></returns>
-        private async Task<object> GetRoleList()
-        {
-            var data =await _roleService.GetList();
+            RoleApp roleApp = new RoleApp();
+            var data = roleApp.GetList();
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (RoleEntity item in data)
             {
@@ -394,32 +290,26 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
-        /// <summary>
-        /// 岗位信息
-        /// </summary>
-        /// <returns></returns>
-        private async Task<object> GetDutyList()
+        private object GetDutyList()
         {
-            var data =await _dutyService.GetList();
+            DutyApp dutyApp = new DutyApp();
+            var data = dutyApp.GetList();
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (RoleEntity item in data)
             {
                 var fieldItem = new
                 {
-                    encode = item.F_Id,
+                    encode = item.F_EnCode,
                     fullname = item.F_FullName
                 };
                 dictionary.Add(item.F_Id, fieldItem);
             }
             return dictionary;
         }
-        /// <summary>
-        /// 用户信息
-        /// </summary>
-        /// <returns></returns>
-        private async Task<object> GetUserList()
+        private object GetUserList()
         {
-            var data =await _userService.GetUserList("");
+            UserApp userApp = new UserApp();
+            var data = userApp.GetUserList("");
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             foreach (UserEntity item in data)
             {
@@ -432,123 +322,41 @@ namespace WaterCloud.Web.Controllers
             }
             return dictionary;
         }
-        /// <summary>
-        /// 菜单按钮信息
-        /// </summary>
-        /// <returns></returns>
-        private async Task<object> GetMenuButtonListNew()
+        private object GetMenuButtonListNew()
         {
-            var currentuser = _userService.currentuser;
-            var roleId = currentuser.RoleId;
-            if (roleId==null&& currentuser.IsSystem)
+            var roleId = OperatorProvider.Provider.GetCurrent().RoleId;
+            var data = new RoleAuthorizeApp().GetButtonList(roleId);
+            if (roleId==null&& OperatorProvider.Provider.GetCurrent().IsSystem)
             {
                 roleId = "admin";
             }
-            var rolelist = roleId.Split(',');
-            Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>> dictionary = await CacheHelper.Get<Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>>(initcacheKey + "modulebutton_list");
-            var dictionarylist = new Dictionary<string, List<ModuleButtonEntity>>();
-            if (currentuser.UserId == null)
+            var dataModuleId = data.Distinct(new ExtList<ModuleButtonEntity>("F_ModuleId"));
+            Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>> dictionary = redisCache.Read<Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>>(initcacheKey+ "modulebutton_list", CacheId.loginInfo);
+            var dictionarytemp = new Dictionary<string, List<ModuleButtonEntity>>();
+            foreach (ModuleButtonEntity item in dataModuleId)
             {
-                return dictionarylist;
+                var buttonList = data.Where(t => t.F_ModuleId.Equals(item.F_ModuleId)).ToList();
+                dictionarytemp.Add(item.F_ModuleId, buttonList);
             }
-            foreach (var roles in rolelist)
+            if (dictionary == null)
             {
-                var dictionarytemp = new Dictionary<string, List<ModuleButtonEntity>>();
-                var data = await _roleAuthorizeService.GetButtonList(roles);
-                var dataModuleId = data.Distinct(new ExtList<ModuleButtonEntity>("F_ModuleId"));
-                foreach (ModuleButtonEntity item in dataModuleId)
+                dictionary = new Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>();
+                dictionary.Add(roleId, dictionarytemp);
+            }
+            else
+            {
+                if (dictionary.ContainsKey(roleId))
                 {
-                    var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId).ToList();
-                    dictionarytemp.Add(item.F_ModuleId, buttonList);
-                    if (dictionarylist.ContainsKey(item.F_ModuleId))
-                    {
-                        dictionarylist[item.F_ModuleId].AddRange(buttonList);
-                        dictionarylist[item.F_ModuleId]= dictionarylist[item.F_ModuleId].GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
-                    }
-                    else
-                    {
-                        dictionarylist.Add(item.F_ModuleId, buttonList);
-                    }
-                }
-                if (dictionary == null)
-                {
-                    dictionary = new Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>();
-                    dictionary.Add(roles, dictionarytemp);
+                    dictionary[roleId] = dictionarytemp;
                 }
                 else
                 {
-                    if (dictionary.ContainsKey(roles))
-                    {
-                        dictionary[roles] = dictionarytemp;
-                    }
-                    else
-                    {
-                        dictionary.Add(roles, dictionarytemp);
-                    }
+                    dictionary.Add(roleId, dictionarytemp);
                 }
             }
-            await CacheHelper.Remove(initcacheKey + "modulebutton_list");
-            await CacheHelper.Set(initcacheKey + "modulebutton_list", dictionary);
-            return dictionarylist;
-        }
-        /// <summary>
-        /// 菜单字段信息
-        /// </summary>
-        /// <returns></returns>
-        private async Task<object> GetMenuFieldsListNew()
-        {
-            var currentuser = _userService.currentuser;
-            var roleId = currentuser.RoleId;
-            if (roleId == null && currentuser.IsSystem)
-            {
-                roleId = "admin";
-            }
-            var rolelist = roleId.Split(',');
-            Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>> dictionary = await CacheHelper.Get<Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>>>(initcacheKey + "modulefields_list");
-            var dictionarylist = new Dictionary<string, List<ModuleFieldsEntity>>();
-            if (currentuser.UserId == null)
-            {
-                return dictionarylist;
-            }
-            foreach (var roles in rolelist)
-            {
-                var dictionarytemp = new Dictionary<string, List<ModuleFieldsEntity>>();
-                var data = await _roleAuthorizeService.GetFieldsList(roles);
-                var dataModuleId = data.Distinct(new ExtList<ModuleFieldsEntity>("F_ModuleId"));
-                foreach (ModuleFieldsEntity item in dataModuleId)
-                {
-                    var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId).ToList();
-                    dictionarytemp.Add(item.F_ModuleId, buttonList);
-                    if (dictionarylist.ContainsKey(item.F_ModuleId))
-                    {
-                        dictionarylist[item.F_ModuleId].AddRange(buttonList);
-                        dictionarylist[item.F_ModuleId] = dictionarylist[item.F_ModuleId].GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
-                    }
-                    else
-                    {
-                        dictionarylist.Add(item.F_ModuleId, buttonList);
-                    }
-                }
-                if (dictionary == null)
-                {
-                    dictionary = new Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>>();
-                    dictionary.Add(roles, dictionarytemp);
-                }
-                else
-                {
-                    if (dictionary.ContainsKey(roles))
-                    {
-                        dictionary[roles] = dictionarytemp;
-                    }
-                    else
-                    {
-                        dictionary.Add(roles, dictionarytemp);
-                    }
-                }
-            }
-            await CacheHelper.Remove(initcacheKey + "modulefields_list");
-            await CacheHelper.Set(initcacheKey + "modulefields_list", dictionary);
-            return dictionarylist;
+            redisCache.Remove(initcacheKey + "modulebutton_list", CacheId.module);
+            redisCache.Write(initcacheKey + "modulebutton_list", dictionary, CacheId.module);
+            return dictionary[roleId];
         }
     }
 }

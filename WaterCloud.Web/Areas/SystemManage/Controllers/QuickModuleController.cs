@@ -4,18 +4,18 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using WaterCloud.Service.SystemManage;
+using WaterCloud.Application.SystemManage;
 using WaterCloud.Code;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using WaterCloud.Entity.SystemManage;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
-    [Area("SystemManage")]
     public class QuickModuleController : Controller
     {
-        public QuickModuleService _moduleService { get; set; }
-
+        private QuickModuleApp moduleApp = new QuickModuleApp();
         [HttpGet]
         public virtual ActionResult Index()
         {
@@ -23,17 +23,17 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTransferJson()
+        public ActionResult GetTransferJson()
         {
-            var userId = _moduleService.currentuser.UserId;
-            var data =await _moduleService.GetTransferList(userId);
+            var userId = OperatorProvider.Provider.GetCurrent().UserId;
+            var data = moduleApp.GetTransferList(userId);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> SubmitForm(string permissionIds)
+        public ActionResult SubmitForm(string permissionIds)
         {
-            await _moduleService.SubmitForm(permissionIds.Split(','));
+            moduleApp.SubmitForm(permissionIds.Split(','));
             return Content(new AjaxResult { state = ResultType.success.ToString(), message = "操作成功" }.ToJson());
         }
     }

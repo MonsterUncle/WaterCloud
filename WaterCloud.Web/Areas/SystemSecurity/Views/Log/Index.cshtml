@@ -15,15 +15,15 @@
     <div class="layuimini-container">
         <div class="layuimini-main">
 
-            <fieldset class="table-search-fieldset layui-hide" id="searchField">
+            <fieldset class="table-search-fieldset">
                 @*<legend>搜索信息</legend>*@
-                <div>
+                <div style="margin: 10px 10px 10px 10px">
                     <form class="layui-form layui-form-pane" action="">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <label class="layui-form-label required">日期:</label>
+                                <label class="layui-form-label">日期:</label>
                                 <div class="layui-input-block">
-                                    <select id="time_horizon" name="time_horizon" lay-verify="required">
+                                    <select id="time_horizon" name="time_horizon" >
                                         <option value="1">今天</option>
                                         <option value="2" selected>近7天</option>
                                         <option value="3">近1个月</option>
@@ -47,80 +47,70 @@
 
             <script type="text/html" id="toolbarDemo">
                 <div class="layui-btn-container" id="toolbar">
-                    <button id="NF-removelog" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="add"><i class="layui-icon">&#xe640;</i>清空日志</button>
+                    <button id="NF-removelog" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="add"><i class="layui-icon">&#xe640;</i>清空日志</button>
                 </div>
             </script>
             <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
         </div>
     </div>
     <script>
-        layui.use(['jquery', 'form', 'table', 'common', 'optimizeSelectOption', 'commonTable'], function () {
+        layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treetable', 'miniTab', 'layer'], function () {
             var $ = layui.jquery,
                 form = layui.form,
                 table = layui.table,
-                commonTable = layui.commonTable,
+                layer = layui.layer,
+                miniTab = layui.miniTab,
+                tablePlug = layui.tablePlug,
+                treetable = layui.treetable,
                 common = layui.common;
             //加载数据
-            wcLoading.close();
-            //权限控制(js是值传递)
-            toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-            commonTable.rendertable({
+            var loading = layer.load(0, { shade: false });
+            common.rendertable({
                 elem: '#currentTableId',
-                id: 'currentTableId',
                 url: '/SystemSecurity/Log/GetGridJson',
                 cols: [[
-                    { field: 'F_Account', title: '账户', width: 100, sort: true },
-                    { field: 'F_NickName', title: '姓名', width: 100, sort: true },
-                    { field: 'F_ModuleName', title: '操作菜单', width: 220, sort: true },
+                    { field: 'F_Id', title: 'ID', sort: true, hide: true, hideAlways: true },
+                    { field: 'F_Account', title: '账户', width: 100, sort: true},
+                    { field: 'F_NickName', title: '姓名', width: 100, sort: true,filter:true },
+                    { field: 'F_ModuleName', title: '操作菜单', width: 120, sort: true },
                     {
-                        field: 'F_Type', title: '操作类型', width: 120, sort: true,
+                        field: 'F_Type', title: '操作类型', width: 120, sort: true, filter: true,
                         templet: function (d) {
                             return top.clients.dataItems["DbLogType"][d.F_Type] == undefined ? "" : top.clients.dataItems["DbLogType"][d.F_Type]
                         }
                     },
                     {
-                        field: 'F_IPAddress', title: 'IP地址', width: 200,
+                        field: 'F_IPAddress', title: 'IP地址', width: 150,
                         templet: function (d) {
                             return d.F_IPAddress + ";" + d.F_IPAddressName;
                         }, sort: true
                     },
-                    { field: 'F_KeyValue', title: '操作对象', width: 300, hide: true },
                     {
-                        field: 'F_CreatorTime', title: '创建时间', width: 180,
+                        field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true,
                         templet: function (d) {
                             if (d.F_CreatorTime) {
-                                return new Date(d.F_CreatorTime).Format("yyyy-MM-dd hh:mm:ss");
-
+                                var time = new Date(d.F_CreatorTime.replace(/-/g, '/'));
+                                return time.Format("yyyy-MM-dd hh:mm:ss");
                             }
-                            return '';
                         }
                     },
-                    { field: 'F_Description', title: '备注', minWidth: 250 },
-                ]]
-            });
-            //select验证
-            form.verify({
-                required: function (value, item) {
-                    var msg = "必填项不能为空";
-                    value = $.trim(value);
-                    var isEmpty = !value || value.length < 1;
-                    // 当前验证元素是select且为空时,将页面定位至layui渲染的select处，或自定义想定位的位置
-                    if (item.tagName == 'SELECT' && isEmpty) {
-                        $("html").animate({
-                            scrollTop: $(item).siblings(".layui-form-select").offset().top - 74
-                        }, 50);
-                    }
-                    if (isEmpty) {
-                        return msg;
-                    }
+                    { field: 'F_KeyValue', title: '操作对象', width: 100, sort: true },
+                    { field: 'F_Description', title: '备注', minWidth: 150, sort: true },
+                ]],
+                done: function () {
+                    //权限控制
+                    common.authorizeButton("toolbar");
+                    //关闭加载
+                    layer.closeAll('loading');
                 }
             });
             // 监听搜索操作
             form.on('submit(data-search-btn)', function (data) {
-                var queryJson = JSON.stringify(data.field);
+                var queryJson =JSON.stringify(data.field);
                 //执行搜索重载
-                commonTable.reloadtable({
+                common.reloadtable({
                     elem: 'currentTableId',
+                    //page:false,
                     curr: 1,
                     where: { timetype: data.field.time_horizon, keyword: data.field.txt_keyword }
                 });
@@ -140,17 +130,9 @@
                         height: "200px",
                     });
                 }
-                else if (obj.event === 'TABLE_SEARCH') {
-                    var _that = $("#searchField");
-                    if (_that.hasClass("layui-hide")) {
-                        _that.removeClass('layui-hide');
-                    } else {
-                        _that.addClass('layui-hide');
-                    }
-                }
                 return false;
             });
-        });
+         });
     </script>
 
 </body>

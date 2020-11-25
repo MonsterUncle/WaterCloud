@@ -4,31 +4,38 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using WaterCloud.Service.SystemManage;
+using WaterCloud.Application.SystemManage;
 using WaterCloud.Code;
-using WaterCloud.Domain.SystemManage;
+using WaterCloud.Entity.SystemManage;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using WaterCloud.Service;
+using System.Web.Mvc;
+using WaterCloud.Entity.SystemSecurity;
+using WaterCloud.Application;
+using WaterCloud.Application.SystemSecurity;
 using System;
-using System.Threading.Tasks;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
-    [Area("SystemManage")]
     public class ModuleController : ControllerBase
     {
+        private string moduleName = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Namespace.Split('.')[3];
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
-        public ModuleService _service { get; set; }
-        public ModuleButtonService _moduleButtonService { get; set; }
+        private ModuleApp moduleApp = new ModuleApp();
+
+        [HttpGet]
+        [HandlerAuthorize]
+        public virtual ActionResult FontIcons()
+        {
+            return View();
+        }
 
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTreeSelectJson()
+        public ActionResult GetTreeSelectJson()
         {
-            var data =await _service.GetList();
-            data = data.Where(a => a.F_Target == "expand"&&a.F_IsExpand==true).ToList();
+            var data = moduleApp.GetList();
+            data = data.Where(a => a.F_Target == "expand" && a.F_IsExpand == true).ToList();
             var treeList = new List<TreeSelectModel>();
             foreach (ModuleEntity item in data)
             {
@@ -42,141 +49,122 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTreeGridJson(string keyword)
+        public ActionResult GetTreeGridJson(string keyword)
         {
-            var data =await _service.GetLookList();
+            var data = moduleApp.GetList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
             }
-            return Success(data.Count, data);
+            //var treeList = new List<TreeGridModel2>();
+            //foreach (ModuleEntity item in data)
+            //{
+            //    TreeGridModel2 treeModel = new TreeGridModel2();
+            //    treeModel.id = item.F_Id;
+            //    treeModel.parentId = item.F_ParentId;
+            //    treeModel.self = item;
+            //    treeList.Add(treeModel);
+            //}
+            return ResultLayUiTable(data.Count, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetSelectJson()
+        public ActionResult GetFormJson(string keyValue)
         {
-            var data = await _service.GetList();
-            data = data.Where(a => a.F_Target == "expand" && a.F_IsExpand == true).ToList();
-            var treeList = new List<TreeSelectModel>();
-            foreach (ModuleEntity item in data)
-            {
-                TreeSelectModel treeModel = new TreeSelectModel();
-                treeModel.id = item.F_Id;
-                treeModel.text = item.F_EnCode;
-                treeModel.parentId = item.F_ParentId;
-                treeList.Add(treeModel);
-            }
-            return Content(treeList.TreeSelectJson());
-        }
-        [HttpGet]
-        [HandlerAjaxOnly]
-        public async Task<ActionResult> GetSelectMunuJson(string keyword)
-        {
-            var data = (await _service.GetList()).Where(a => a.F_Target=="iframe").ToList();
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                data = data.Where(a => a.F_FullName.Contains(keyword)).ToList();
-            }
-            List<object> list = new List<object>();
-            foreach (var item in data)
-            {
-                list.Add(new { id = item.F_Id, text = item.F_FullName });
-            }
-            return Content(list.ToJson());
-        }
-        [HttpGet]
-        [HandlerAjaxOnly]
-        public async Task<ActionResult> GetSelectMunuBesidesJson(string keyword)
-        {
-            var data = await _service.GetBesidesList();
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                data = data.Where(a => a.F_FullName.Contains(keyword)).ToList();
-            }
-            List<object> list = new List<object>();
-            foreach (var item in data)
-            {
-                list.Add(new { id = item.F_Id, text = item.F_FullName });
-            }
-            return Content(list.ToJson());
-        }
-        [HttpGet]
-        [HandlerAjaxOnly]
-        public async Task<ActionResult> GetFormJson(string keyValue)
-        {
-            var data =await _service.GetLookForm(keyValue);
+            var data = moduleApp.GetForm(keyValue);
             return Content(data.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAdminAttribute))]
-        public async Task<ActionResult> SubmitForm(ModuleEntity moduleEntity, string keyValue)
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitForm(ModuleEntity moduleEntity, string keyValue)
         {
+            var module = new ModuleApp().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = new ModuleApp().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            LogEntity logEntity;
             if (string.IsNullOrEmpty(keyValue))
             {
                 moduleEntity.F_DeleteMark = false;
                 moduleEntity.F_AllowEdit = false;
                 moduleEntity.F_AllowDelete = false;
-                moduleEntity.F_IsPublic = false;
+                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Create.ToString());
+                logEntity.F_Description += DbLogType.Create.ToDescription();
             }
             else
             {
-                if (keyValue==moduleEntity.F_ParentId)
-                {
-                    throw new Exception("父级不能是自身");
-                }
                 //前端传值为null，更新的时候null不更新
                 if (moduleEntity.F_Icon==null)
                 {
                     moduleEntity.F_Icon = "";
                 }
+                logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Update.ToString());
+                logEntity.F_Description += DbLogType.Update.ToDescription();
+                logEntity.F_KeyValue = keyValue;
             }
             try
             {
+                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
+                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
                 if (moduleEntity.F_ParentId == "0")
                 {
                     moduleEntity.F_Layers = 1;
                 }
                 else
                 {
-                    moduleEntity.F_Layers =(await _service.GetForm(moduleEntity.F_ParentId)).F_Layers + 1;
+                    moduleEntity.F_Layers = moduleApp.GetForm(moduleEntity.F_ParentId).F_Layers + 1;
                 }
                 if (!string.IsNullOrEmpty(moduleEntity.F_UrlAddress))
                 {
-                    var templist = await _service.GetList();
+                    var templist = moduleApp.GetList();
                     if (!string.IsNullOrEmpty(keyValue))
                     {
                         templist = templist.Where(a => a.F_Id != keyValue).ToList();
                     }
-                    if(templist.Find(a=>a.F_UrlAddress==moduleEntity.F_UrlAddress)!=null)
-                    throw new Exception("菜单地址不能重复！");
+                    if (templist.Find(a => a.F_UrlAddress == moduleEntity.F_UrlAddress) != null)
+                        throw new Exception("菜单地址不能重复！");
                 }
                 else
                 {
                     moduleEntity.F_UrlAddress = null;
                 }
-                await _service.SubmitForm(moduleEntity, keyValue);
-                return await Success("操作成功。", className, keyValue);
+                moduleApp.SubmitForm(moduleEntity, keyValue);
+                logEntity.F_Description += "操作成功";
+                new LogApp().WriteDbLog(logEntity);
+                return Success("操作成功。");
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue);
+                logEntity.F_Result = false;
+                logEntity.F_Description += "操作失败，" + ex.Message;
+                new LogApp().WriteDbLog(logEntity);
+                return Error(ex.Message);
             }
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
-        [ServiceFilter(typeof(HandlerAdminAttribute))]
-        public async Task<ActionResult> DeleteForm(string keyValue)
+        [HandlerAuthorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteForm(string keyValue)
         {
+            var module = new ModuleApp().GetList().Where(a => a.F_Layers == 1 && a.F_EnCode == moduleName).FirstOrDefault();
+            var moduleitem = new ModuleApp().GetList().Where(a => a.F_Layers > 1 && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+            LogEntity logEntity = new LogEntity(module.F_FullName, moduleitem.F_FullName, DbLogType.Delete.ToString());
+            logEntity.F_Description += DbLogType.Delete.ToDescription();
             try
             {
-                await _service.DeleteForm(keyValue);
-                return await Success("操作成功。", className, keyValue, DbLogType.Delete);
+                logEntity.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
+                logEntity.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
+                moduleApp.DeleteForm(keyValue);
+                logEntity.F_Description += "操作成功";
+                new LogApp().WriteDbLog(logEntity);
+                return Success("删除成功。");
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue, DbLogType.Delete);
+                logEntity.F_Result = false;
+                logEntity.F_Description += "操作失败，" + ex.Message;
+                new LogApp().WriteDbLog(logEntity);
+                return Error(ex.Message);
             }
         }
     }

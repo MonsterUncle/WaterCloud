@@ -2,31 +2,32 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
-    <script>
-        layui.use(['jquery', 'form', 'table', 'common', 'treeTable', 'miniTab', 'layer', 'optimizeSelectOption'], function () {
-            var $ = layui.jquery,
-                form = layui.form,
-                table = layui.table,
-                layer = layui.layer,
-                miniTab = layui.miniTab,
-                treeTable = layui.treeTable,
-                common = layui.common;
-            //加载数据
-            wcLoading.close();
-            //权限控制(js是值传递)
-            toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-            var rendertree =common.rendertreetable({
+<script>
+    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treetable', 'miniTab', 'layer'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            tablePlug = layui.tablePlug,
+            treetable = layui.treetable,
+            common = layui.common;
+        //加载数据
+        var loading = layer.load(0, { shade: false });
+        var rendertree = function (queryJson) {
+            common.rendertreetable({
                 elem: '#currentTableId',
-                url: '/SystemManage/Module/GetTreeGridJson',
+                url: !queryJson ? '/SystemManage/Module/GetTreeGridJson' : '/SystemManage/Module/GetTreeGridJson?keyword=' + queryJson,
                 cols: [[
-                    { field: 'F_FullName', title: '名称', width: 200 },
+                    { field: 'F_Id', title: 'ID', sort: true, fixed: "left", hide: true, hideAlways: true },
+                    { field: 'F_FullName', title: '名称', width: 120 },
                     {
                         field: 'F_Icon', title: '图标', width: 60,
                         templet: function (d) {
                             return d.F_Icon == "" ? "<i class=\"fa \"></i>" : "<i class=\"fa " + d.F_Icon + "\"></i>";
                         }
                     },
-                    { field: 'F_UrlAddress', title: '连接', width: 220 },
+                    { field: 'F_UrlAddress', title: '连接', width: 250 },
                     {
                         field: 'F_Target', title: '目标', width: 80,
                         templet: function (d) {
@@ -42,183 +43,158 @@
                         }
                     },
                     {
-                        field: 'F_IsMenu', title: '菜单', width: 80,
+                        field: 'F_IsMenu', title: '菜单', width: 60,
                         templet: function (d) {
                             if (d.F_IsMenu == true) {
-                                return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
+                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
                             } else {
-                                return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
+                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
                             }
                         }
                     },
                     {
-                        field: 'F_IsExpand', title: '展开', width: 80,
+                        field: 'F_IsExpand', title: '展开', width: 60,
                         templet: function (d) {
                             if (d.F_IsExpand == true) {
-                                return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
+                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
                             } else {
-                                return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
+                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
                             }
                         }
                     },
                     {
-                        field: 'F_IsPublic', title: '公共', width: 80,
+                        field: 'F_IsPublic', title: '公共', width: 60,
                         templet: function (d) {
                             if (d.F_IsPublic == true) {
-                                return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
+                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true' >";
                             } else {
-                                return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
+                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false' >";
                             }
                         }
                     },
                     {
-                        field: 'F_IsFields', title: '字段', width: 80,
-                        templet: function (d) {
-                            if (d.F_IsFields == true) {
-                                return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
-                            } else {
-                                return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
-                            }
-                        }
-                    },
-                    {
-                        field: 'F_EnabledMark', title: '状态', width: 80,
+                        field: 'F_EnabledMark', title: '有效', width: 60,
                         templet: function (d) {
                             if (d.F_EnabledMark == true) {
-                                return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
+                                return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
                             } else {
-                                return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
+                                return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
                             }
-                        }
-                    }, 
-                    { field: 'F_SortCode', title: '排序', width: 60 },
-                    {
-                        field: 'F_CreatorTime', title: '创建时间', width: 120,
-                        templet: function (d) {
-                            if (d.F_CreatorTime) {
-                                var time = new Date(d.F_CreatorTime);
-                                return time.Format("yyyy-MM-dd");
-                            }
-                            return '';
                         }
                     },
-                    { field: 'F_Description', title: '备注', minWidth: 100 },
+                    { field: 'F_SortCode', title: '排序', width: 60 },
+                    {
+                        field: 'F_CreatorTime', title: '创建时间', width: 100,
+                        templet: function (d) {
+                            if (d.F_CreatorTime) {
+                                var time = new Date(d.F_CreatorTime.replace(/-/g, '/'));
+                                return time.Format("yyyy-MM-dd");
+                            }
+                        }
+                    },
+                    { field: 'F_Description', title: '介绍', minWidth: 100 },
                 ]],
                 done: function () {
-                    //展开全部
-                    rendertree.expandAll(); 
+                    //权限控制
+                    common.authorizeButton("toolbar");
+                    //关闭加载
+                    layer.closeAll('loading');
                 }
             });
-            // 监听搜索操作
-            form.on('submit(data-search-btn)', function (data) {
-                queryJson = data.field.txt_keyword;
-                common.reloadtreetable(rendertree, {
-                    where: { keyword: queryJson },
-                }); 
-                module = null;
-                return false;
-            });
-            var module;
-            treeTable.on('row(currentTableId)', function (obj) {
-                obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
-                module = obj;
-            })
-            /**
-             * toolbar监听事件
-             */
-            treeTable.on('toolbar(currentTableId)', function (obj) {
-                if (obj.event === 'add') {  // 监听操作
-                    keyValue = !!module ? module.data.F_Id : null;
-                    common.modalOpen({
-                        title: "添加菜单",
-                        url: "/SystemManage/Module/Form?event=add&keyValue=" + keyValue,
-                        width: "500px",
-                        height: "500px"
-                    });
-                }
-                else if (obj.event === 'delete') {
-                    if (module == null) {
-                        common.modalMsg("未选中数据", "warning");
-                        return false;
-                    }
-                    common.deleteForm({
-                        url: "/SystemManage/Module/DeleteForm",
-                        param: { keyValue: module.data.F_Id },
-                        success: function () {
-                            common.reload('data-search-btn');
-                        }
-                    });
-                }
-                else if (obj.event === 'edit') {
-                    if (module == null) {
-                        common.modalMsg("未选中数据", "warning");
-                        return false;
-                    }
-                    common.modalOpen({
-                        title: "编辑菜单",
-                        url: "/SystemManage/Module/Form?event=edit&keyValue=" + module.data.F_Id,
-                        width: "500px",
-                        height: "500px"
-                    });
-                }
-                else if (obj.event === 'details') {
-                    if (module == null) {
-                        common.modalMsg("未选中数据", "warning");
-                        return false;
-                    }
-                    common.modalOpen({
-                        title: "查看菜单",
-                        url: "/SystemManage/Module/Details?keyValue=" + module.data.F_Id,
-                        width: "500px",
-                        height: "500px",
-                        btn: []
-                    });
-                }
-                else if (obj.event === 'modulebutton') {
-                    if (module == null) {
-                        common.modalMsg("未选中数据", "warning");
-                        return false;
-                    }
-                    if (module.data.F_Target != "iframe" || !module.data.F_UrlAddress) {
-                        common.modalAlert("菜单不能创建按钮,请修改后重试", "warning");
-                        return false;
-                    }
-                    common.openNewTabByIframe({
-                        title: "按钮管理",
-                        href: "/SystemManage/ModuleButton/Index?moduleId=" + module.data.F_Id + "&modulename=" + module.data.F_FullName,
-                    });
-                }
-                else if (obj.event === 'modulefields') {
-                    if (module == null) {
-                        common.modalMsg("未选中数据", "warning");
-                        return false;
-                    }
-                    if (module.data.F_Target != "iframe" || !module.data.F_UrlAddress) {
-                        common.modalAlert("菜单不能创建字段,请修改后重试", "warning");
-                        return false;
-                    }
-                    common.openNewTabByIframe({
-                        title: "字段管理",
-                        href: "/SystemManage/ModuleFields/Index?moduleId=" + module.data.F_Id + "&modulename=" + module.data.F_FullName,
-                    });
-                }
-                else if (obj.event === 'TABLE_SEARCH') {
-                    var _that = $("#searchField");
-                    if (_that.hasClass("layui-hide")) {
-                        _that.removeClass('layui-hide');
-                    } else {
-                        _that.addClass('layui-hide');
-                    }
-                }
-                return false;
-            });
+        }
+        rendertree();
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            var queryJson = data.field.txt_keyword;
+            //执行搜索重载
+            rendertree(queryJson);
+            return false;
         });
-    </script>
+        var module;
+        table.on('row(currentTableFilter)', function (obj) {
+            obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
+            module = obj;
+        })
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听操作
+                keyValue = !!module ? module.data.F_Id :null;
+                common.modalOpen({
+                    title: "添加菜单",
+                    url: "/SystemManage/Module/Form?event=add&keyValue=" + keyValue,
+                    width: "500px",
+                    height: "500px",
+                    btn: [],
+                });
+            }
+            else if (obj.event === 'delete') {
+                if (module == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.deleteForm({
+                    url: "/SystemManage/Module/DeleteForm",
+                    param: { keyValue: module.data.F_Id },
+                    success: function () {
+                        common.reload('data-search-btn');
+                        module = null;
+                    }
+                });
+            }
+            else if (obj.event === 'edit') {
+                if (module == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalOpen({
+                    title: "编辑菜单",
+                    url: "/SystemManage/Module/Form?event=edit&keyValue=" + module.data.F_Id,
+                    width: "500px",
+                    height: "500px",
+                    btn: []
+                });
+            }
+            else if (obj.event === 'details') {
+                if (module == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalOpen({
+                    title: "查看菜单",
+                    url: "/SystemManage/Module/Details?keyValue=" + module.data.F_Id,
+                    width: "500px",
+                    height: "500px",
+                    btn: []
+                });
+            }
+            else if (obj.event === 'modulebutton') {
+                if (module == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                if (miniTab.check("/SystemManage/ModuleButton/Index", true)) {
+                    common.modalAlert("系统按钮界面已打开,请关闭后重试", "warning");
+                }
+                if (module.data.F_Target != "iframe" || !module.data.F_UrlAddress) {
+                    common.modalAlert("菜单不能创建按钮,请修改后重试", "warning");
+                    return false;
+                }
+                miniTab.openNewTabByIframe({
+                    title: "系统按钮",
+                    href: "/SystemManage/ModuleButton/Index?moduleId=" + module.data.F_Id,
+                });
+            }
+            return false;
+        });
+    });
+</script>
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <fieldset class="table-search-fieldset layui-hide" id="searchField">
+        <fieldset class="table-search-fieldset">
             @*<legend>搜索信息</legend>*@
-            <div>
+            <div style="margin: 10px 10px 10px 10px">
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
@@ -236,12 +212,11 @@
         </fieldset>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
-                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
-                <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
-                <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
-                <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
-                <button id="NF-modulebutton" authorize="yes" class="layui-btn layui-btn-sm  data-modulebutton-btn layui-hide" lay-event="modulebutton"> <i class="fa fa-gavel"></i>按钮管理</button>
-                <button id="NF-modulefields" authorize="yes" class="layui-btn layui-btn-sm  data-modulefields-btn layui-hide" lay-event="modulefields"> <i class="fa fa-table"></i>字段管理</button>
+                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
+                <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+                <button id="NF-modulebutton" authorize="yes" class="layui-btn layui-btn-sm  data-modulebutton-btn" lay-event="modulebutton"> <i class="fa fa-gavel"></i>按钮管理</button>
             </div>
         </script>
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>

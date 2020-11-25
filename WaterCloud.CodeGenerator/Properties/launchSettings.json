@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "WaterCloud.CodeGenerator": {
-      "commandName": "Project",
-      "nativeDebugging": true
-    }
-  }
-}

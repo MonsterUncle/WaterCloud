@@ -3,28 +3,30 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
-    layui.use(['form', 'table', 'common', 'commonTable', 'optimizeSelectOption'], function () {
-        var form = layui.form,
+    layui.use(['jquery', 'form', 'table', 'common', 'tablePlug', 'treetable', 'miniTab', 'layer'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
             table = layui.table,
-            commonTable = layui.commonTable,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            tablePlug = layui.tablePlug,
+            treetable = layui.treetable,
             common = layui.common;
         //加载数据
-        wcLoading.close();
-        //权限控制(js是值传递)
-        toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-        commonTable.rendertable({
+        var loading = layer.load(0, { shade: false });
+       common.rendertable({
             elem: '#currentTableId',
-            id: 'currentTableId',
             url: '/SystemSecurity/FilterIP/GetGridJson',
-            page: false,
+            page:false,
             cols: [[
+                { field: 'F_Id', title: 'ID', sort: true, fixed: "left",hide:true, hideAlways: true },
                 {
-                    field: 'F_Type', title: '策略类型', width: 120, sort: true,
+                    field: 'F_Type', title: '策略类型', width: 120, sort: true, filter: true,
                     templet: function (d) {
                         if (d.F_Type == true) {
-                            return "<span class='layui-badge layui-bg-blue'>允许访问</span>";
+                            return "<span class=\"layui-bg-green\">允许访问</span>";
                         } else {
-                            return "<span class='layui-badge layui-btn-warm'>禁止访问</span>";
+                            return "<span class=\"layui-bg-red\">禁止访问</span>";
                         }
                     }
                 },
@@ -34,35 +36,39 @@
                     field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true,
                     templet: function (d) {
                         if (d.F_CreatorTime) {
-                            var time = new Date(d.F_CreatorTime);
+                            var time = new Date(d.F_CreatorTime.replace(/-/g, '/'));
                             return time.Format("yyyy-MM-dd");
                         }
-                        return '';
                     }
                 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
+                    field: 'F_EnabledMark', title: '有效', width: 60,
                     templet: function (d) {
                         if (d.F_EnabledMark == true) {
-                            return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
+                            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
                         } else {
-                            return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
+                            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
                         }
                     }
                 },
-                { field: 'F_Description', title: '备注', minWidth: 150 },
-            ]]
-        });
+                { field: 'F_Description', title: '备注', minWidth: 150, sort: true },
+           ]],
+           done: function () {
+               //权限控制
+               common.authorizeButton("toolbar");
+               //关闭加载
+               layer.closeAll('loading');
+           }
+       });
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             //执行搜索重载
-            commonTable.reloadtable({
+            common.reloadtable({
                 elem: 'currentTableId',
-                page: false,
+                page:false,
                 curr: 1,
                 where: { keyword: data.field.txt_keyword }
             });
-            fitlerIP = null;
             return false;
         });
         var fitlerIP;
@@ -83,7 +89,7 @@
                 });
             }
             else if (obj.event === 'delete') {
-                if (fitlerIP == null) {
+                if (fitlerIP==null) {
                     common.modalMsg("未选中数据", "warning");
                     return false;
                 }
@@ -92,6 +98,7 @@
                     param: { keyValue: fitlerIP.data.F_Id },
                     success: function () {
                         common.reload('data-search-btn');
+                        fitlerIP = null;
                     }
                 });
             }
@@ -107,7 +114,7 @@
                     height: "480px",
                 });
             }
-            else if (obj.event === 'details') {
+            else if (obj.event === 'details'){
                 if (fitlerIP == null) {
                     common.modalMsg("未选中数据", "warning");
                     return false;
@@ -117,20 +124,12 @@
                     url: "/SystemSecurity/FilterIP/Details?keyValue=" + fitlerIP.data.F_Id,
                     width: "450px",
                     height: "450px",
-                    btn: []
+                    btn:[]
                     //callBack: function (index) {
                     //    var iframe = "layui-layer-iframe" + index;
                     //    window.frames[iframe].submitForm();
                     //}
                 });
-            }
-            else if (obj.event === 'TABLE_SEARCH') {
-                var _that = $("#searchField");
-                if (_that.hasClass("layui-hide")) {
-                    _that.removeClass('layui-hide');
-                } else {
-                    _that.addClass('layui-hide');
-                }
             }
             return false;
         });
@@ -139,9 +138,9 @@
 <div class="layuimini-container">
     <div class="layuimini-main">
 
-        <fieldset class="table-search-fieldset layui-hide" id="searchField">
+        <fieldset class="table-search-fieldset">
             @*<legend>搜索信息</legend>*@
-            <div>
+            <div style="margin: 10px 10px 10px 10px">
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
@@ -160,10 +159,10 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
-                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
-                <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
-                <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
-                <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
+                <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
             </div>
         </script>
 

@@ -1,0 +1,69 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".txt" #>
+<#@ import namespace="EntityInfo" #>
+<#@ parameter type="EntityInfo.EntityClassInfo" name="entity" #>
+//-----------------------------------------------------------------------
+// <copyright file=" <#= entity.EntityName #>.cs" company="JR">
+// * Copyright (C) WaterCloud.Framework  All Rights Reserved
+// * version : 1.0
+// * author  : WaterCloud.Framework
+// * FileName: <#= entity.EntityName #>.cs
+// * history : Created by T4 <#= DateTime.Now #> 
+// </copyright>
+//-----------------------------------------------------------------------
+using WaterCloud.Entity.<#= entity.EntityNameSpace #>;
+using WaterCloud.Domain.IRepository.<#= entity.EntityNameSpace #>;
+using WaterCloud.Repository.<#= entity.EntityNameSpace #>;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using WaterCloud.Code;
+namespace WaterCloud.Application.<#= entity.EntityNameSpace #>
+{
+    public class <#= entity.EntityName #>App
+    {
+		private I<#= entity.EntityName #>Repository service = new <#= entity.EntityName #>Repository();
+
+		public List<<#= entity.EntityName #>Entity> GetList(Pagination pagination, string queryJson)
+        {
+		    var expression = ExtLinq.True<<#= entity.EntityName #>Entity>();
+            var queryParam = queryJson.ToJObject();
+            if (!queryParam["keyword"].IsEmpty())
+            {
+                string keyword = queryParam["keyword"].ToString();
+                expression = expression.And(t => t.Title.Contains(keyword));
+            }
+            return service.FindList(expression, pagination);
+        }
+
+	    public <#= entity.EntityName #>Entity GetForm(string keyValue)
+        {
+            return service.FindEntity(keyValue);
+        }
+
+        public void Delete(<#= entity.EntityName #>Entity entity)
+        {
+            service.Delete(entity);
+        }
+
+		public void SubmitForm(<#= entity.EntityName #>Entity entity, string keyValue)
+        {
+            if (!string.IsNullOrEmpty(keyValue))
+            {
+                entity.Modify(keyValue);
+                service.Update(entity);
+            }
+            else
+            {
+                entity.Create();
+                service.Insert(entity);
+            }
+        }
+
+		public void DeleteForm(string keyValue)
+        {
+            service.DeleteForm(keyValue);
+        }
+
+    }
+}

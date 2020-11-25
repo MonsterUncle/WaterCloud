@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{20B8FB5A-4362-48F8-BD3A-245FDAF9BCAC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WaterCloud.WeixinMP</RootNamespace>
+    <AssemblyName>WaterCloud.WeixinMP</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LitJSON, Version=0.16.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LitJson.0.16.0\lib\net45\LitJSON.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.CO2NET, Version=1.0.103.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.CO2NET.1.0.103\lib\net45\Senparc.CO2NET.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.CO2NET.APM, Version=0.6.102.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.CO2NET.APM.0.6.102\lib\net45\Senparc.CO2NET.APM.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.NeuChar, Version=1.0.104.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.NeuChar.1.0.104\lib\net45\Senparc.NeuChar.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.NeuChar.App, Version=0.6.104.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.NeuChar.App.0.6.104\lib\net45\Senparc.NeuChar.App.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.WebSocket, Version=0.9.104.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.WebSocket.0.9.104\lib\net45\Senparc.WebSocket.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin, Version=6.6.104.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.6.6.104.1\lib\net45\Senparc.Weixin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin.MP, Version=16.9.104.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.MP.16.9.104.1\lib\net45\Senparc.Weixin.MP.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin.MP.MvcExtension, Version=7.2.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.MP.MVC.7.2.13\lib\net45\Senparc.Weixin.MP.MvcExtension.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin.Open">
+      <HintPath>..\packages\Senparc.Weixin.Open.4.5.7\lib\net45\Senparc.Weixin.Open.dll</HintPath>
+    </Reference>
+    <Reference Include="Senparc.Weixin.TenPay, Version=1.5.104.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.TenPay.1.5.104\lib\net45\Senparc.Weixin.TenPay.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin.Work, Version=3.7.104.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.Work.3.7.104.2\lib\net45\Senparc.Weixin.Work.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Senparc.Weixin.WxOpen, Version=3.7.104.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.WxOpen.3.7.104.2\lib\net45\Senparc.Weixin.WxOpen.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Download\CodeRecord.cs" />
+    <Compile Include="Download\Config.cs" />
+    <Compile Include="Download\ConfigHelper.cs" />
+    <Compile Include="EventService.cs" />
+    <Compile Include="LocationService.cs" />
+    <Compile Include="MenuManage.cs" />
+    <Compile Include="MessageHandlers\CustomMessageHandler\Async\CustomMessageHandlerAsync_Events.cs" />
+    <Compile Include="MessageHandlers\CustomMessageHandler\CustomMessageContext.cs" />
+    <Compile Include="MessageHandlers\CustomMessageHandler\CustomMessageHandler.cs" />
+    <Compile Include="MessageHandlers\CustomMessageHandler\CustomMessageHandler_Events.cs" />
+    <Compile Include="MessageHandlers\CustomThirdPartyMessageHandlers\CustomThirdPartyMessageHandler.cs" />
+    <Compile Include="MessageHandlers\WebSocket\CustomWebSocketMessageHandler.cs" />
+    <Compile Include="MessageHandlers\WorkMessageHandler\WorkCustomMessageContext.cs" />
+    <Compile Include="MessageHandlers\WorkMessageHandler\WorkCustomMessageHandler.cs" />
+    <Compile Include="MessageHandlers\WxOpenMessageHandler\CustomWxOpenMessageContext.cs" />
+    <Compile Include="MessageHandlers\WxOpenMessageHandler\CustomWxOpenMessageHandler.cs" />
+    <Compile Include="Model\RequestRuleContent.cs" />
+    <Compile Include="Model\ResponseContentEntity.cs" />
+    <Compile Include="Model\WxMenu.cs" />
+    <Compile Include="Model\WxUserInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\ResponseBaseData.cs" />
+    <Compile Include="ResponseMsg\ResponseBaseMgr.cs" />
+    <Compile Include="TemplateMessageService.cs" />
+    <Compile Include="TemplateMessage\WeixinTemplate_ExceptionAlert.cs" />
+    <Compile Include="TemplateMessage\WeixinTemplate_PaySuccess.cs" />
+    <Compile Include="TemplateMessage\WxOpen\WxOpenTemplateMessage_PaySuccessNotice.cs" />
+    <Compile Include="Utilities\Server.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj">
+      <Project>{db19ce03-c307-43fe-a209-08aa4ae10e21}</Project>
+      <Name>WaterCloud.Code</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="threeInterface\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Download\readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
