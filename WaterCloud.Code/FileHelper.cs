@@ -18,7 +18,7 @@ namespace WaterCloud.Code
                 //string root = Dir.Parent.Parent.Parent.FullName;
                 return rootdir + path;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return path;
             }
@@ -215,7 +215,7 @@ namespace WaterCloud.Code
                     Directory.CreateDirectory(fileName);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;
@@ -240,8 +240,7 @@ namespace WaterCloud.Code
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                LogHelper.WriteWithTime(ex);
             }
         }
         #region 创建文本文件
@@ -286,8 +285,7 @@ namespace WaterCloud.Code
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                LogHelper.WriteWithTime(ex);
             }
         }
         #endregion
@@ -476,7 +474,7 @@ namespace WaterCloud.Code
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return true;

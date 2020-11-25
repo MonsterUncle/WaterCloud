@@ -25,6 +25,7 @@ namespace WaterCloud.Code
         /// <param name="sFileName"></param>
         /// <param name="sHeaderText"></param>
         /// <param name="list"></param>
+        [Obsolete]
         public string ExportToExcel(string sFileName, string sHeaderText, List<T> list, string[] columns)
         {
             sFileName = string.Format("{0}_{1}", Utils.GetGuid(), sFileName);
@@ -54,6 +55,7 @@ namespace WaterCloud.Code
         /// <param name="list">数据源</param>  
         /// <param name="sHeaderText">表头文本</param>  
         /// <param name="columns">需要导出的属性</param>  
+        [Obsolete]
         private MemoryStream CreateExportMemoryStream(List<T> list, string sHeaderText, string[] columns)
         {
             HSSFWorkbook workbook = new HSSFWorkbook();
