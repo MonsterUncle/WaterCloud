@@ -48,8 +48,12 @@ namespace WaterCloud.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            services.AddSession();
+            //防止微端不支持session
+            services.AddSession(options =>
+            {
+                options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = SameSiteMode.None;
+            });
             //代替HttpContext.Current
             services.AddHttpContextAccessor();
             //缓存缓存选择
