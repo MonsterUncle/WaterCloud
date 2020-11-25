@@ -1,0 +1,581 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Chloe</name>
+    </assembly>
+    <members>
+        <member name="P:Chloe.Annotations.ColumnAttribute.DbType">
+            <summary>
+            -1 表示未指定确切的值，用该属性的时候务必做 -1 判断。
+            </summary>
+        </member>
+        <member name="P:Chloe.Annotations.ColumnAttribute.Size">
+            <summary>
+            -1 表示未指定确切的值，用该属性的时候务必做 -1 判断。
+            </summary>
+        </member>
+        <member name="P:Chloe.Annotations.ColumnAttribute.Scale">
+            <summary>
+            -1 表示未指定确切的值，用该属性的时候务必做 -1 判断。
+            </summary>
+        </member>
+        <member name="P:Chloe.Annotations.ColumnAttribute.Precision">
+            <summary>
+            -1 表示未指定确切的值，用该属性的时候务必做 -1 判断。
+            </summary>
+        </member>
+        <member name="T:Chloe.Annotations.NavigationAttribute">
+            <summary>
+            Marks a property as navigation property.
+            </summary>
+        </member>
+        <member name="T:Chloe.Case">
+            <summary>
+            Usage: Case.When(a.Gender == Gender.Male).Then("Male").When(a.Gender == Gender.Female).Then("Female").Else(null)
+            </summary>
+        </member>
+        <member name="F:Chloe.CompareType.eq">
+            <summary>
+            ==
+            </summary>
+        </member>
+        <member name="F:Chloe.CompareType.neq">
+            <summary>
+            !=
+            </summary>
+        </member>
+        <member name="F:Chloe.CompareType.gt">
+            <summary>
+            &gt;
+            </summary>
+        </member>
+        <member name="F:Chloe.CompareType.gte">
+            <summary>
+            >=
+            </summary>
+        </member>
+        <member name="F:Chloe.CompareType.lt">
+            <summary>
+            &lt;
+            </summary>
+        </member>
+        <member name="F:Chloe.CompareType.lte">
+            <summary>
+            &lt;=
+            </summary>
+        </member>
+        <member name="P:Chloe.Core.DbSession.CurrentTransaction">
+            <summary>
+            如果未开启事务，则返回 null
+            </summary>
+        </member>
+        <member name="T:Chloe.Core.Visitors.EvaluableDbExpressionTransformerBase">
+            <summary>
+            将 DbExpression 中可求值的表达式计算出来，转换成 DbParameterExpression
+            </summary>
+        </member>
+        <member name="M:Chloe.Core.Visitors.EvaluableDbExpressionTransformerBase.CanTranslateToSql(Chloe.DbExpressions.DbMemberExpression)">
+            <summary>
+            是否可以将 exp.Member 翻译成数据库对应的语法
+            </summary>
+            <param name="exp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.Core.Visitors.EvaluableDbExpressionTransformerBase.CanTranslateToSql(Chloe.DbExpressions.DbMethodCallExpression)">
+            <summary>
+            是否可以将 exp.Method 翻译成数据库对应的语法
+            </summary>
+            <param name="exp"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Chloe.Data.AdoSession.DbTransaction">
+            <summary>
+            如果未开启事务，则返回 null
+            </summary>
+        </member>
+        <member name="P:Chloe.Data.AdoSession.CommandTimeout">
+            <summary>
+            命令执行超时时间，单位 seconds
+            </summary>
+        </member>
+        <member name="T:Chloe.Data.DataReaderExtension">
+            <summary>
+            通过该扩展类方法从 DataReader 获取得到的值如果是 DBNull，则会返回 null
+            </summary>
+        </member>
+        <member name="P:Chloe.Data.IAdoSession.DbTransaction">
+            <summary>
+            如果未开启事务，则返回 null
+            </summary>
+        </member>
+        <member name="M:Chloe.Data.IAdoSession.Complete">
+            <summary>
+            表示一次查询完成。在事务中的话不关闭连接，交给 CommitTransaction() 或者 RollbackTransaction() 控制，否则调用 IDbConnection.Close() 关闭连接
+            </summary>
+        </member>
+        <member name="M:Chloe.Data.InnerAdoSession.UseExternalTransaction(System.Data.IDbTransaction)">
+            <summary>
+            使用外部事务。
+            </summary>
+            <param name="dbTransaction"></param>
+        </member>
+        <member name="T:Chloe.DbExpressions.DbColumnAccessExpression">
+            <summary>
+            T.Id
+            </summary>
+        </member>
+        <member name="T:Chloe.DbExpressions.DbColumnSegment">
+            <summary>
+            T.Name as Alias
+            </summary>
+        </member>
+        <member name="P:Chloe.DbExpressions.DbColumnSegment.Body">
+            <summary>
+            T.Name 部分
+            </summary>
+        </member>
+        <member name="P:Chloe.DbExpressions.DbMemberExpression.Expression">
+            <summary>
+            字段或属性的包含对象
+            </summary>
+        </member>
+        <member name="M:Chloe.DbExpressions.DbSqlQueryExpression.#ctor(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="type">作为子句时，有时候可以指定返回的 Type，如 select A = (select id from users)，(select id from users) 就可以表示拥有一个返回的类型 Int</param>
+        </member>
+        <member name="T:Chloe.DbExpressions.DbTableSegment">
+            <summary>
+            User as T1 , (select * from User) as T1
+            </summary>
+        </member>
+        <member name="P:Chloe.DbExpressions.DbTableSegment.Body">
+            <summary>
+            User、(select * from User)
+            </summary>
+        </member>
+        <member name="P:Chloe.DbParam.ExplicitParameter">
+            <summary>
+            如果设置了该自定义参数，框架内部就会忽视 DbParam 类的其他属性，使用该属性值
+            </summary>
+        </member>
+        <member name="M:Chloe.InternalExtensions.DbExpressionExtension.TryConvertToParameterExpression(Chloe.DbExpressions.DbMemberExpression,Chloe.DbExpressions.DbParameterExpression@)">
+            <summary>
+            尝试将 exp 转换成 DbParameterExpression。
+            </summary>
+            <param name="exp"></param>
+            <param name="val"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.InternalExtensions.DbExpressionExtension.ConvertToParameterExpression(Chloe.DbExpressions.DbMemberExpression)">
+            <summary>
+            对 memberExpression 进行求值
+            </summary>
+            <param name="exp"></param>
+            <returns>返回 DbParameterExpression</returns>
+        </member>
+        <member name="M:Chloe.InternalExtensions.DbExpressionExtension.AffirmExpressionRetValueIsNull(Chloe.DbExpressions.DbExpression)">
+            <summary>
+            判定 exp 返回值肯定是 null
+            </summary>
+            <param name="exp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.InternalExtensions.DbExpressionExtension.AffirmExpressionRetValueIsNotNull(Chloe.DbExpressions.DbExpression)">
+            <summary>
+            判定 exp 返回值肯定不是 null
+            </summary>
+            <param name="exp"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Chloe.IDbContext">
+            <summary>
+            注：DbContext 对象非线程安全，多线程不能共享一个 DbContext 对象。
+            </summary>
+        </member>
+        <member name="M:Chloe.IDbContext.QueryByKey``1(System.Object,System.String,Chloe.LockType,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="key">If the entity just has one primary key, input a value that it's type is same as the primary key. If the entity has multiple keys, input an instance that defines the same properties as the keys like 'new { Key1 = "1", Key2 = "2" }'.</param>
+            <param name="table"></param>
+            <param name="lock"></param>
+            <param name="tracking"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbContext.JoinQuery``2(System.Linq.Expressions.Expression{System.Func{``0,``1,System.Object[]}})">
+            <summary>
+            context.JoinQuery&lt;User, City&gt;((user, city) => new object[] 
+            { 
+                JoinType.LeftJoin, user.CityId == city.Id 
+            })
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <param name="joinInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbContext.JoinQuery``3(System.Linq.Expressions.Expression{System.Func{``0,``1,``2,System.Object[]}})">
+            <summary>
+            context.JoinQuery&lt;User, City, Province&gt;((user, city, province) => new object[] 
+            { 
+                JoinType.LeftJoin, user.CityId == city.Id, 
+                JoinType.LeftJoin, city.ProvinceId == province.Id 
+            })
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <typeparam name="T3"></typeparam>
+            <param name="joinInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbContext.SqlQuery``1(System.String,System.Object)">
+            <summary>
+            dbContext.SqlQuery&lt;User&gt;("select * from Users where Id=@Id", new { Id = 1 });
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="sql"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbContext.Save``1(``0)">
+            <summary>
+            插入数据，连同导航属性一并插入。
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbContext.Insert``1(``0)">
+            <summary>
+            插入数据，但不包括导航属性。
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbContext.Insert``1(System.Linq.Expressions.Expression{System.Func{``0}})">
+            <summary>
+            context.Insert&lt;User&gt;(() => new User() { Name = "lu", Age = 18, Gender = Gender.Woman, CityId = 1, OpTime = DateTime.Now })
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="content"></param>
+            <returns>It will return null if an entity does not define primary key,other wise return primary key value.</returns>
+        </member>
+        <member name="M:Chloe.IDbContext.Update``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{``0,``0}})">
+            <summary>
+            context.Update&lt;User&gt;(a => a.Id == 1, a => new User() { Name = "lu", Age = a.Age + 1, Gender = Gender.Woman, OpTime = DateTime.Now })
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="condition"></param>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbContext.Delete``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            context.Delete&lt;User&gt;(a => a.Id == 1)
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbContext.DeleteByKey``1(System.Object,System.String)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="key">If the entity just has one primary key, input a value that it's type is same as the primary key. If the entity has multiple keys, input an instance that defines the same properties as the keys like 'new { Key1 = "1", Key2 = "2" }'.</param>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Chloe.IDbSession.CurrentTransaction">
+            <summary>
+            如果未开启事务，则返回 null
+            </summary>
+        </member>
+        <member name="M:Chloe.IDbSession.ExecuteNonQuery(System.String,System.Data.CommandType,System.Object)">
+            <summary>
+            dbSession.ExecuteNonQuery("update Users set Age=18 where Id=@Id", CommandType.Text, new { Id = 1 })
+            </summary>
+            <param name="cmdText"></param>
+            <param name="cmdType"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbSession.ExecuteNonQueryAsync(System.String,System.Data.CommandType,System.Object)">
+            <summary>
+            dbSession.ExecuteNonQueryAsync("update Users set Age=18 where Id=@Id", CommandType.Text, new { Id = 1 })
+            </summary>
+            <param name="cmdText"></param>
+            <param name="cmdType"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbSession.ExecuteScalar(System.String,System.Data.CommandType,System.Object)">
+            <summary>
+            dbSession.ExecuteScalar("select Age from Users where Id=@Id", CommandType.Text, new { Id = 1 })
+            </summary>
+            <param name="cmdText"></param>
+            <param name="cmdType"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbSession.ExecuteScalarAsync(System.String,System.Data.CommandType,System.Object)">
+            <summary>
+            dbSession.ExecuteScalarAsync("select Age from Users where Id=@Id", CommandType.Text, new { Id = 1 })
+            </summary>
+            <param name="cmdText"></param>
+            <param name="cmdType"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbSession.ExecuteReader(System.String,System.Data.CommandType,System.Object)">
+            <summary>
+            dbSession.ExecuteReader("select * from Users where Id=@Id", CommandType.Text, new { Id = 1 })
+            </summary>
+            <param name="cmdText"></param>
+            <param name="cmdType"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbSession.ExecuteReaderAsync(System.String,System.Data.CommandType,System.Object)">
+            <summary>
+            dbSession.ExecuteReaderAsync("select * from Users where Id=@Id", CommandType.Text, new { Id = 1 })
+            </summary>
+            <param name="cmdText"></param>
+            <param name="cmdType"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IDbSession.UseTransaction(System.Data.IDbTransaction)">
+            <summary>
+            使用外部事务。传 null 则取消使用外部事务。
+            </summary>
+            <param name="dbTransaction"></param>
+        </member>
+        <member name="M:Chloe.IIncludableQuery`2.AndWhere(System.Linq.Expressions.Expression{System.Func{`1,System.Boolean}})">
+            <summary>
+            dbContext.Query&lt;City&gt;().IncludeMany(a =&gt; a.Users).AndWhere(a =&gt; a.Age &gt;= 18) --&gt; select ... from City left join User on City.Id=User.CityId and User.Age &gt;= 18
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Chloe.IJoinQuery`2">
+            <summary>
+            Usage: joinQuery.Select((user, city) =&gt; new { User = user, City = city }).Where(a => a.User.Age &gt;= 18).OrderBy(a => a.User.Id).Select(a =&gt; new { UserId = a.User.Id, UserName = a.User.Name, CityName = a.City.Name }).TakePage(1, 20)
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+        </member>
+        <member name="M:Chloe.IJoinQuery`2.Select``1(System.Linq.Expressions.Expression{System.Func{`0,`1,``0}})">
+            <summary>
+            Usage: joinQuery.Select((user, city) =&gt; new { User = user, City = city }).Where(a => a.User.Age &gt;= 18).OrderBy(a => a.User.Id).Select(a =&gt; new { UserId = a.User.Id, UserName = a.User.Name, CityName = a.City.Name }).TakePage(1, 20)
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="selector"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Chloe.IJoinQuery`3">
+            <summary>
+            Usage: joinQuery.Select((user, city) =&gt; new { User = user, City = city }).Where(a => a.User.Age &gt;= 18).OrderBy(a => a.User.Id).Select(a =&gt; new { UserId = a.User.Id, UserName = a.User.Name, CityName = a.City.Name }).TakePage(1, 20)
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <typeparam name="T3"></typeparam>
+        </member>
+        <member name="T:Chloe.IJoinQuery`4">
+            <summary>
+            Usage: joinQuery.Select((user, city) =&gt; new { User = user, City = city }).Where(a => a.User.Age &gt;= 18).OrderBy(a => a.User.Id).Select(a =&gt; new { UserId = a.User.Id, UserName = a.User.Name, CityName = a.City.Name }).TakePage(1, 20)
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <typeparam name="T3"></typeparam>
+            <typeparam name="T4"></typeparam>
+        </member>
+        <member name="T:Chloe.IJoinQuery`5">
+            <summary>
+            Usage: joinQuery.Select((user, city) =&gt; new { User = user, City = city }).Where(a => a.User.Age &gt;= 18).OrderBy(a => a.User.Id).Select(a =&gt; new { UserId = a.User.Id, UserName = a.User.Name, CityName = a.City.Name }).TakePage(1, 20)
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <typeparam name="T3"></typeparam>
+            <typeparam name="T4"></typeparam>
+            <typeparam name="T5"></typeparam>
+        </member>
+        <member name="M:Chloe.Infrastructure.DbConfiguration.UseTypeBuilders(Chloe.Entity.IEntityTypeBuilder[])">
+            <summary>
+            Fluent Mapping
+            </summary>
+            <param name="entityTypeBuilders"></param>
+        </member>
+        <member name="M:Chloe.Infrastructure.DbConfiguration.UseTypeBuilders(System.Type[])">
+            <summary>
+            Fluent Mapping
+            </summary>
+            <param name="entityTypeBuilderTypes"></param>
+        </member>
+        <member name="M:Chloe.Infrastructure.DbConfiguration.ConfigureMappingType``1">
+            <summary>
+            配置映射类型
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.Infrastructure.EntityTypeContainer.UseBuilders(Chloe.Entity.IEntityTypeBuilder[])">
+            <summary>
+            Fluent Mapping
+            </summary>
+            <param name="entityTypeBuilders"></param>
+        </member>
+        <member name="M:Chloe.Infrastructure.EntityTypeContainer.UseBuilders(System.Type[])">
+            <summary>
+            Fluent Mapping
+            </summary>
+            <param name="entityTypeBuilderTypes"></param>
+        </member>
+        <member name="M:Chloe.Infrastructure.MappingTypeSystem.Configure``1">
+            <summary>
+            配置映射的类型
+            </summary>
+            <typeparam name="T">元数据类型</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IQuery`1.Max``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            求最大值。考虑到满足条件的数据个数为零的情况，为避免报错，可在 lambda 中将相应字段强转成可空类型，如 query.Max(a => (double?)a.Price)。
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="selector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.IQuery`1.Min``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            求最小值。考虑到满足条件的数据个数为零的情况，为避免报错，可在 lambda 中将相应字段强转成可空类型，如 query.Min(a => (double?)a.Price)。
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="selector"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Chloe.ITransientTransaction">
+            <summary>
+            调用 ITransientTransaction.Dispose() 时，如果事务未提交，则会自动回滚
+            </summary>
+        </member>
+        <member name="T:Chloe.Mapper.IFitter">
+            <summary>
+            集合填充器
+            </summary>
+        </member>
+        <member name="P:Chloe.Query.Mapping.ComplexObjectActivatorCreator.PrimitiveMembers">
+            <summary>
+            映射成员集合。以 MemberInfo 为 key，读取 DataReader 时的 Ordinal 为 value
+            </summary>
+        </member>
+        <member name="P:Chloe.Query.Mapping.ComplexObjectActivatorCreator.ComplexMembers">
+            <summary>
+            复杂类型成员集合。
+            </summary>
+        </member>
+        <member name="P:Chloe.Query.ComplexObjectModel.IncludeCollections">
+            <summary>
+            导航集合属性
+            </summary>
+        </member>
+        <member name="P:Chloe.Query.ComplexObjectModel.ConstructorDescriptor">
+            <summary>
+            返回类型
+            </summary>
+        </member>
+        <member name="M:Chloe.Query.ComplexObjectModel.GetPrimitiveMember(System.Reflection.MemberInfo)">
+            <summary>
+            考虑匿名函数构造函数参数和其只读属性的对应
+            </summary>
+            <param name="memberInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Chloe.Query.QueryModel.InheritOrderings">
+            <summary>
+            Orderings 是否是传承下来的
+            </summary>
+        </member>
+        <member name="P:Chloe.Query.QueryModel.FromTable">
+            <summary>
+            如 takequery 了以后，则 table 的 Expression 类似 (select T.Id.. from User as T),Alias 则为新生成的
+            </summary>
+        </member>
+        <member name="M:Chloe.Query.Query`1.CreateAggregateQuery``1(System.Reflection.MethodInfo,System.Collections.Generic.List{System.Linq.Expressions.Expression})">
+            <summary>
+            类<see cref="T:Chloe.Query.Visitors.GeneralExpressionParser"/>有引用该方法[反射]
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="method"></param>
+            <param name="arguments"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.Query.SelectorResolver.VisitMemberAccess(System.Linq.Expressions.MemberExpression)">
+            <summary>
+            a => a.Id   a => a.Name   a => a.User
+            </summary>
+            <param name="exp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.Sql.Equals``1(``0,``0)">
+            <summary>
+            比较两个相同类型的对象值是否相等，仅支持在 lambda 表达式树中使用。
+            使用此方法与双等号（==）的区别是：a => Sql.Equals(a.Name, a.XName) 会被翻译成 a.Name == a.XName，而 a => a.Name == a.XName 则会被翻译成 a.Name == a.XName or (a.Name is null and a.XName is null)
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value1"></param>
+            <param name="value2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.Sql.NotEquals``1(``0,``0)">
+            <summary>
+            比较两个相同类型的对象值是否不相等，仅支持在 lambda 表达式树中使用。
+            使用此方法与不等号（!=）的区别是：a => Sql.NotEquals(a.Name, a.XName) 会被翻译成 a.Name &lt;&gt; a.XName，而 a => a.Name != a.XName 则会被翻译成 a.Name &lt;&gt; a.XName or (a.Name is null and a.XName is not null) or (a.Name is not null and a.XName is null)
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value1"></param>
+            <param name="value2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.Sql.Compare``1(``0,Chloe.CompareType,``0)">
+            <summary>
+            比较两个相同类型的对象值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value1"></param>
+            <param name="compareType"></param>
+            <param name="value2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.Sql.Max``1(``0)">
+            <summary>
+            求最大值。考虑到满足条件的数据个数为零的情况，为避免报错，可在 lambda 中将相应字段强转成可空类型，如 query.Select(a => Sql.Max((double?)a.Price))。
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.Sql.Min``1(``0)">
+            <summary>
+            求最小值。考虑到满足条件的数据个数为零的情况，为避免报错，可在 lambda 中将相应字段强转成可空类型，如 query.Select(a => Sql.Min((double?)a.Price))。
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.Collections.Generic.DictionaryExtension.FindValue``2(System.Collections.Generic.Dictionary{``0,``1},``0)">
+            <summary>
+            如果找到 key 对应的value，则返回 value。否则返回 default(TValue)
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="dic"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

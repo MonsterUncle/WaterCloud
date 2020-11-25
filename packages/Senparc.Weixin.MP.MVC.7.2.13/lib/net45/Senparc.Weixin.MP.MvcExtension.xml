@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Senparc.Weixin.MP.MvcExtension</name>
+    </assembly>
+    <members>
+        <member name="M:Senparc.Weixin.MP.MvcExtension.SenparcOAuthAttribute.#ctor(System.String,System.String,Senparc.Weixin.MP.OAuthScope)">
+            <summary>
+            AppId
+            </summary>
+            <param name="appId"></param>
+            <param name="oauthCallbackUrl">网站内路径（如：/TenpayV3/OAuthCallback），以/开头！当前页面地址会加在Url中的returlUrl=xx参数中</param>
+        </member>
+        <member name="M:Senparc.Weixin.MP.MvcExtension.SenparcOAuthAttribute.IsLogined(System.Web.HttpContextBase)">
+            <summary>
+            判断用户是否已经登录
+            </summary>
+            <param name="httpContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.MP.MvcExtension.WeixinInternalRequestAttribute">
+            <summary>
+            过滤来自非微信客户端浏览器的请求
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.MvcExtension.WeixinInternalRequestAttribute.RedirectUrl">
+            <summary>
+            重定向地址，如果提供了redirectResult将忽略构造函数中的message
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MP.MvcExtension.WeixinInternalRequestAttribute.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message">错误提示信息</param>
+            <param name="ignoreParameter">如果地址栏中提供改参数，则忽略浏览器判断，建议设置得复杂一些。如?abc=[任意字符]</param>
+        </member>
+        <member name="T:Senparc.Weixin.MP.MvcExtension.FixWeixinBugWeixinResult">
+            <summary>
+            修复微信换行 bug
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MP.MvcExtension.FixWeixinBugWeixinResult.#ctor(Senparc.NeuChar.MessageHandlers.IMessageHandlerDocument)">
+            <summary>
+            这个类型只用于特殊阶段：目前IOS版本微信有换行的bug，\r\n会识别为2行
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.MP.MvcExtension.WeixinResult">
+            <summary>
+            返回MessageHandler结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.MP.MvcExtension.WeixinResult.Content">
+            <summary>
+            获取ContentResult中的Content或IMessageHandler中的ResponseDocument文本结果。
+            一般在测试的时候使用。
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.MP.MvcExtension.BrowserUtility.BrowserUtility">
+            <summary>
+            BrowserUtility
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MP.MvcExtension.BrowserUtility.BrowserUtility.SideInWeixinBrowser(System.Web.HttpContextBase)">
+            <summary>
+            判断是否在微信内置浏览器中
+            </summary>
+            <param name="httpContext">HttpContextBase对象</param>
+            <returns>true：在微信内置浏览器内。false：不在微信内置浏览器内。</returns>
+        </member>
+    </members>
+</doc>

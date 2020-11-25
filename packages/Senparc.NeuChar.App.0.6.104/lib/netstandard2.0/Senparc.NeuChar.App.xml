@@ -1,0 +1,500 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Senparc.NeuChar.App</name>
+    </assembly>
+    <members>
+        <member name="T:Senparc.NeuChar.App.AppStore.Api.ApiConnection">
+            <summary>
+            API 连接器
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.Api.ApiConnection.#ctor(Senparc.NeuChar.App.AppStore.Passport)">
+            <summary>
+            API 连接器构造函数
+            </summary>
+            <param name="passport"></param>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.Api.ApiConnection.Connection``1(System.Func{Senparc.NeuChar.App.AppStore.IAppResult{``0}})">
+            <summary>
+            自动更新Passport的链接方法
+            </summary>
+            <param name="apiFunc"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.Api.ApiContainer">
+            <summary>
+            API操作容器（每次构造都会获取当前缓存中最新的Passport）
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.Api.ApiContainer.Passport">
+            <summary>
+            Passport
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.Api.ApiContainer.MemberApi">
+            <summary>
+            MemberApi
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.Api.ApiContainer.#ctor(System.String,System.String,System.String)">
+            <summary>
+            ApiContainer 构造函数
+            </summary>
+            <param name="appKey"></param>
+            <param name="appSecret"></param>
+            <param name="url"></param>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.Api.BaseApi">
+            <summary>
+            API调用类基类
+            </summary>
+        </member>
+        <member name="F:Senparc.NeuChar.App.AppStore.Api.BaseApi._passport">
+            <summary>
+            passport
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.Api.BaseApi.ApiConnection">
+            <summary>
+            ApiConnection
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.Api.BaseApi.#ctor(Senparc.NeuChar.App.AppStore.Passport)">
+            <summary>
+            BaseApi 构造函数
+            </summary>
+            <param name="passport"></param>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.Api.MemberApi">
+            <summary>
+            用户信息 Api
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.Api.MemberApi.GetMemberFunc(System.Int32,System.String)">
+            <summary>
+            获取用户信息
+            </summary>
+            <param name="weixinId"></param>
+            <param name="openId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.Api.MemberApi.GetMember(System.Int32,System.String)">
+            <summary>
+            获取用户信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.AppStoreManager">
+            <summary>
+            AppStore 管理类
+            </summary>
+        </member>
+        <member name="F:Senparc.NeuChar.App.AppStore.AppStoreManager.DEFAULT_URL">
+            <summary>
+            默认域名
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.AppStoreManager.GetPassportBag(System.String)">
+            <summary>
+            获取 PassportBag
+            </summary>
+            <param name="appKey"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Senparc.NeuChar.App.AppStore.AppStoreManager.BasicApiPath">
+            <summary>
+            API 默认路径（紧跟域名）
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.AppStoreManager.Register(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            注册P2P应用基本信息（可以选择不立即载入Passport以节省系统启动时间）
+            </summary>
+            <param name="appKey">P2P后台申请到微信应用后的AppKey</param>
+            <param name="secret">AppKey对应的Secret</param>
+            <param name="url">API地址，建议使用默认值</param>
+            <param name="getPassportImmediately">是否马上获取Passport，默认为False</param>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.AppStoreManager.ApplyPassport(System.String,System.String,System.String)">
+            <summary>
+            申请新的通行证。
+            每次调用完毕前将有1秒左右的Thread.Sleep时间
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.AppStoreManager.RemovePassport(System.String)">
+            <summary>
+            清除当前的通行证
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.AppStoreManager.GetApiContainer(System.String,System.String,System.String)">
+            <summary>
+            获取appKey对应的接口集合。
+            调用此方法请确认此appKey已经成功使用SdkManager.Register(appKey, appSecret, appUrl)方法注册过。
+            </summary>
+            <param name="appKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.AppStoreOAuth.GetAuthorizeUrl(System.Int32,System.String,System.String,System.String,System.String)">
+            <summary>
+            获取验证地址
+            </summary>
+            <param name="weixinId">正在使用此APP的weixinId</param>
+            <param name="clientId">此App的唯一标识。可以在此APP的【开发接入】页面的【OAuth认证 设置】页面看到</param>
+            <param name="redirectUrl"></param>
+            <param name="state"></param>
+            <param name="responseType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.AppStoreOAuth.GetAccessTokenAsync(System.String,System.String,System.String,System.String)">
+            <summary>
+            获取AccessToken
+            </summary>
+            <param name="clientId">此App的唯一标识。可以在此APP的【开发接入】页面的【OAuth认证 设置】页面看到</param>
+            <param name="clientSecret">对应此App的唯一标识的密码。可以在此APP的【开发接入】页面的【OAuth认证 设置】页面看到</param>
+            <param name="code">code作为换取access_token的票据，每次用户授权带上的code将不一样，code只能使用一次，5分钟未被使用自动过期。</param>
+            <param name="grantType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.Config">
+            <summary>
+            AppStore 配置
+            </summary>
+        </member>
+        <member name="F:Senparc.NeuChar.App.AppStore.Config.IsDebug">
+            <summary>
+            是否启用调试状态
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.DeveloperInfo">
+            <summary>
+            微微嗨开发者信息。申请开发者：http://www.weiweihi.com/User/Developer/Apply
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.DeveloperInfo.WeiweihiKey">
+            <summary>
+            在www.weiweihi.com对接微信公众号之后，自动生成的WeiweihiKey。
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.ApiJsonResult">
+            <summary>
+            JSON返回结果（用于菜单接口等）
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.AppResult`1">
+            <summary>
+            JSON返回结果（用于菜单接口等）
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.AppResult`1.Data">
+            <summary>
+            如果结果未成功，则Data为期望的类型
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.AppResult`1.ErrorMessage">
+            <summary>
+            错误信息，如果结果为成功，错误信息为Null
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.AppResult`1.RunTime">
+            <summary>
+            Api执行时间
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.GetMemberResult">
+            <summary>
+            获取微信会员信息结果
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.GetMemberResult.OpenId">
+            <summary>
+            OpenId
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.GetMemberResult.NickName">
+            <summary>
+            昵称
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.GetMemberResult.Sex">
+            <summary>
+            性别
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.GetMemberResult.HeadImageBase64">
+            <summary>
+            Base64格式的头像信息，当提供HeadImageUrl时不再提供HeadImageBase64
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.GetMemberResult.HeadImageUrl">
+            <summary>
+            头像URL地址
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.NormalAppResult">
+            <summary>
+            普通API返回类型
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.PassportResult">
+            <summary>
+            获取通行证结果
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.OAuthAccountInfo">
+            <summary>
+            通过 OAuth 认证后得到的用户信息 
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.OAuthAccountInfo.neuchar_app_id">
+            <summary>
+            NeuralApp 的 Id，可以通过如下方式定位：https://www.neuchar.com/User/NeuralAPM?app={neuchar_app_id}
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.OAuthAccountInfo.neuchar_app_name">
+            <summary>
+            NeuralApp 对应的名称
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.OAuthAccessTokenResult">
+            <summary>
+            获取OAuth AccessToken的结果
+            如果错误，返回结果{"errcode":40029,"errmsg":"invalid code"}
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.OAuthAccessTokenResult.ExpireTimeTicks">
+            <summary>
+            过期时间Ticks
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.OAuthAccessTokenResult.ExpireTime">
+            <summary>
+            过期时间
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.Passport">
+            <summary>
+            P2P通行证
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.Passport.ApiUrl">
+            <summary>
+            API常规URL
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.Passport.DeveloperId">
+            <summary>
+            供微微嗨服务器记录唯一开发人员ID
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.PassportCollection">
+            <summary>
+            同时管理多个应用的Passport的容器
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.PassportCollection.BasicUrl">
+            <summary>
+            统一URL前缀，如http://api.weiweihi.com:8080/App/Api
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.AppResultKind">
+            <summary>
+            P2P返回结果类型
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.ReturnResult.AppStoreState">
+            <summary>
+            如果>0则进入某个APP状态，如果=0则维持当前状态不变，如果>0则退出某个App状态
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.ReturnResult.AppId">
+            <summary>
+            改变状态的AppId
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.ReturnResult.ErrorMessage">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.AppStore.Utility.WeixinRequestInfo">
+            <summary>
+            微信请求中ToUserName包含的信息
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.Utility.WeixinRequestInfo.WeixinId">
+            <summary>
+            使用此应用的微信账号ID（在微微嗨平台上的唯一ID）
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.AppStore.Utility.WeixinRequestInfo.AppId">
+            <summary>
+            被请求应用的唯一ID
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.Utility.AppUtility.GetWeixinRequestInfo(System.String)">
+            <summary>
+            获取RequestMessage中ToUserName中的信息（这条信息由微微嗨平台向APP发出）
+            </summary>
+            <param name="toUserName">RequestMessage中的ToUserName属性</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.NeuChar.App.AppStore.Utility.AppUtility.GetWeixinRequestInfo(Senparc.NeuChar.Entities.IRequestMessageBase)">
+            <summary>
+            获取RequestMessage中ToUserName中的信息（这条信息由微微嗨平台向APP发出）
+            </summary>
+            <param name="requestMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.NeuChar.App.Controllers.NeuCharAppController">
+            <summary>
+            用于快速实现 NeuChar 开发者发布的 App 与 NeuChar 平台交互（如状态发送）的默认 Controller 
+            <para>如果你有已经自己实现的带有 MessageHandler 的 Controller，也可以不使用这个基类</para>
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.Controllers.NeuCharAppController.Get(Senparc.NeuChar.App.Entities.NeuCharAppPostModel,System.String,System.String)">
+            <summary>
+            后台验证地址（使用Get），微信后台的“接口配置信息”的Url填写如：http://sdk.weixin.senparc.com/weixin
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.Controllers.NeuCharAppController.Post(Senparc.NeuChar.App.Entities.NeuCharAppPostModel,System.String)">
+            <summary>
+            最简化的处理流程（不加密）
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.Entities.AppCentralis.GlobalVariable">
+            <summary>
+            单个应用中枢中的全局变量
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.Entities.AppCentralis.GlobalVariable.Name">
+            <summary>
+            变量名称
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.Entities.AppCentralis.GlobalVariable.Value">
+            <summary>
+            变量值
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.Entities.NeuCharAppPostModel">
+            <summary>
+            给 NeuCharAppController 使用的 PostModel
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.Entities.NeuCharAppPostModel.AppId">
+            <summary>
+            当前请求对应的 NeuChar App 的 AppId
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.HttpRequestType">
+            <summary>
+            Http 请求类型
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.Exceptions.NeuCharAppApiRequestException">
+            <summary>
+            NeuCharApp 异常
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.Exceptions.NeuCharAppApiRequestException.JsonResult">
+            <summary>
+            JsonResult
+            </summary>
+        </member>
+        <member name="P:Senparc.NeuChar.App.Exceptions.NeuCharAppApiRequestException.Url">
+            <summary>
+            接口 URL
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.Exceptions.NeuCharAppApiRequestException.#ctor(System.String,System.Exception,Senparc.NeuChar.App.AppStore.ApiJsonResult,System.String)">
+            <summary>
+            ErrorJsonResultException
+            </summary>
+            <param name="message">异常消息</param>
+            <param name="inner">内部异常</param>
+            <param name="jsonResult">WxJsonResult</param>
+            <param name="url">API地址</param>
+        </member>
+        <member name="T:Senparc.NeuChar.App.Exceptions.NeuCharAppException">
+            <summary>
+            NeuCharApp 异常
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.Helpers.AppCentralisHelper">
+            <summary>
+            应用中枢 帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.Helpers.AppCentralisHelper.GetGlobalVariableKeyName(System.String)">
+            <summary>
+            获取全局变量指定键名（用于区分第三方App设置的常规参数）
+            </summary>
+            <param name="key">系统内（数据库内）设置的默认key</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.NeuChar.App.Helpers.AppCentralisHelper.GetVariable(Senparc.NeuChar.Entities.App.InputPostModel,System.String)">
+            <summary>
+            获取指定参数，支持自动从全局变量获取
+            </summary>
+            <param name="inputPostModel"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.NeuChar.App.MessageHandlers.NeuCharAppMessageContext.NeuCharAppMessageContext_MessageContextRemoved(System.Object,Senparc.NeuChar.Context.WeixinContextRemovedEventArgs{Senparc.NeuChar.Entities.RequestMessageNeuChar,Senparc.NeuChar.Entities.SuccessResponseMessage})">
+            <summary>
+            当上下文过期，被移除时触发的时间
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:Senparc.NeuChar.App.MessageHandlers.NeuCharAppMessageEntityEnlightener">
+            <summary>
+            NeuChar-App MessageEntityEnlightener
+            </summary>
+        </member>
+        <member name="F:Senparc.NeuChar.App.MessageHandlers.NeuCharAppMessageEntityEnlightener.Instance">
+            <summary>
+            MpMessageEntityEnlightener 全局对象
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.MessageHandlers.NeuCharAppMessageHandler">
+            <summary>
+            此 MessageHandler 仅提供 NeuChar 平台对接使用，无其他功能
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.MessageHandlers.NeuCharAppMessageHandler.MarkRepeatedMessage">
+            <summary>
+            标记为已重复消息
+            </summary>
+        </member>
+        <member name="T:Senparc.NeuChar.App.Utilities.HttpUtilities">
+            <summary>
+            HttpUtilities
+            </summary>
+        </member>
+        <member name="F:Senparc.NeuChar.App.Utilities.HttpUtilities.getFailAction">
+            <summary>
+            设定条件，当API结果没有返回成功信息时抛出异常
+            </summary>
+        </member>
+        <member name="F:Senparc.NeuChar.App.Utilities.HttpUtilities.postFailAction">
+            <summary>
+            设定条件，当API结果没有返回成功信息时抛出异常
+            </summary>
+        </member>
+        <member name="M:Senparc.NeuChar.App.Utilities.HttpUtilities.SendAsync``1(System.String,System.String,System.Object,Senparc.NeuChar.App.HttpRequestType,System.Int32,System.Boolean,Senparc.CO2NET.Helpers.Serializers.JsonSetting)">
+            <summary>
+            向需要AccessToken的API发送消息的公共方法
+            </summary>
+            <param name="accessToken">这里的AccessToken是通用接口的AccessToken，非OAuth的。如果不需要，可以为null，此时urlFormat不要提供{0}参数</param>
+            <param name="urlFormat"></param>
+            <param name="data">如果是Get方式，可以为null。在POST方式中将被转为JSON字符串提交</param>
+            <param name="sendType">发送类型，POST或GET，默认为POST</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="checkValidationResult">验证服务器证书回调自动验证</param>
+            <param name="jsonSetting">JSON字符串生成设置</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

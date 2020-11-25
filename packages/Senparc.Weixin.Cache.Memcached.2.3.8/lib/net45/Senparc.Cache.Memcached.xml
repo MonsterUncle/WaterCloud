@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Senparc.Weixin.Cache.Memcached</name>
+    </assembly>
+    <members>
+        <member name="M:Senparc.Weixin.Cache.Memcached.MemcachedContainerCacheStrategy.#ctor">
+            <summary>
+            MemcachedContainerCacheStrategy 的构造函数
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Memcached.MemcachedContainerCacheStrategy.GetAllAsync``1">
+            <summary>
+             【异步方法】获取所有 Bag 对象
+            </summary>
+            <typeparam name="TBag"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Memcached.Register.RegisterDomainCache">
+            <summary>
+            注册领域缓存
+            </summary>
+        </member>
+    </members>
+</doc>

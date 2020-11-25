@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Senparc.WebSocket</name>
+    </assembly>
+    <members>
+        <member name="T:Senparc.WebSocket.Exceptions.WebSocketExceptionBase">
+            <summary>
+            WebSocket 自定义异常基类
+            </summary>
+        </member>
+        <member name="T:Senparc.WebSocket.WebSocketHelper">
+            <summary>
+            WebSocketHelper
+            </summary>
+        </member>
+        <member name="M:Senparc.WebSocket.WebSocketHelper.#ctor(Senparc.WebSocket.SignalR.SenparcWebSocketHubBase,System.Threading.CancellationToken)">
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Senparc.WebSocket.WebSocketHelper.SendMessage(System.String,Microsoft.AspNetCore.SignalR.IClientProxy)">
+            <summary>
+            发送消息
+            </summary>
+            <param name="message">文字消息</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.WebSocket.WebSocketMessageHandler">
+            <summary>
+            WebSocket 处理程序
+            </summary>
+        </member>
+        <member name="M:Senparc.WebSocket.WebSocketMessageHandler.OnConnecting(Senparc.WebSocket.WebSocketHelper)">
+            <summary>
+            连接时触发事件
+            </summary>
+            <param name="webSocketHandler"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.WebSocket.WebSocketMessageHandler.OnDisConnected(Senparc.WebSocket.WebSocketHelper)">
+            <summary>
+            断开连接时触发事件
+            </summary>
+            <param name="webSocketHandler"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.WebSocket.WebSocketMessageHandler.OnMessageReceiced(Senparc.WebSocket.WebSocketHelper,Senparc.WebSocket.ReceivedMessage,System.String)">
+            <summary>
+            收到消息时触发事件
+            </summary>
+            <param name="webSocketHandler"></param>
+            <param name="message">封装好的数据</param>
+            <param name="originalData">原始数据字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.WebSocket.Register.AddSenparcWebSocket``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            注册基于 SignalR 的 Senparc.WebSocket。注册过程中会执行 services.AddSignalR();
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.WebSocket.ReceivedMessage">
+            <summary>
+            接收到消息封装的实体
+            </summary>
+        </member>
+        <member name="T:Senparc.WebSocket.SignalR.SenparcWebSocketHubBase">
+            <summary>
+            SenparcWebSocketHub 基类
+            </summary>
+        </member>
+        <member name="P:Senparc.WebSocket.SignalR.SenparcWebSocketHubBase.ClientFunctionName">
+            <summary>
+            默认客户端接收方法名称，默认为 ReceiveMessage
+            </summary>
+        </member>
+        <member name="M:Senparc.WebSocket.SignalR.SenparcWebSocketHubBase.ReceiveMessage(System.String)">
+            <summary>
+            统一接收消息方法
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.WebSocket.SignalR.SenparcWebSocketHubBase.SendAsync(System.String,Microsoft.AspNetCore.SignalR.IClientProxy,System.Threading.CancellationToken)">
+            <summary>
+            通用消息发送
+            </summary>
+            <param name="message">SenparcWebSocket 标准化信息</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.WebSocket.WebSocketConfig">
+            <summary>
+            WebSocket 配置
+            </summary>
+        </member>
+        <member name="M:Senparc.WebSocket.WebSocketConfig.RegisterMessageHandler``1">
+            <summary>
+            注册WebSocketMessageHandler
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Senparc.WebSocket.WebSocketConfig.RegisterMessageHandler``1(System.Func{``0})">
+            <summary>
+            注册WebSocketMessageHandler，自定义对象的实例化方法
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+    </members>
+</doc>

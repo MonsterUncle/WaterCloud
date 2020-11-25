@@ -1,0 +1,3049 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Senparc.Weixin.WxOpen</name>
+    </assembly>
+    <members>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.CustomApi">
+            <summary>
+            小程序客服接口
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.CustomApi.SendText(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            发送文本信息
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId">普通用户(openid)</param>
+            <param name="content">文本消息内容</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.CustomApi.SendImage(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            发送图片消息
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId">普通用户(openid)</param>
+            <param name="mediaId">发送的图片的媒体ID，通过新增素材接口上传图片文件获得。</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.CustomApi.SendLink(System.String,System.String,System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            发送图文链接
+            <para>每次可以发送一个图文链接</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId">普通用户(openid)</param>
+            <param name="title">消息标题</param>
+            <param name="description">图文链接消息</param>
+            <param name="url">图文链接消息被点击后跳转的链接</param>
+            <param name="thumbUrl">[官方文档未给说明]</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.CustomApi.SendMiniProgramPage(System.String,System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            发送小程序卡片
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId">普通用户(openid)</param>
+            <param name="title">消息标题</param>
+            <param name="pagePath">小程序的页面路径，跟app.json对齐，支持参数，比如pages/index/index?foo=bar</param>
+            <param name="thumbMediaId">小程序消息卡片的封面， image类型的media_id，通过新增素材接口上传图片文件获得，建议大小为520*416</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.CustomApi.SendTextAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】发送文本信息
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId">普通用户(openid)</param>
+            <param name="content">文本消息内容</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.CustomApi.SendImageAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】发送图片消息
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId">普通用户(openid)</param>
+            <param name="mediaId">发送的图片的媒体ID，通过新增素材接口上传图片文件获得。</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.CustomApi.SendLinkAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】发送图文链接
+            <para>每次可以发送一个图文链接</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId">普通用户(openid)</param>
+            <param name="title">消息标题</param>
+            <param name="description">图文链接消息</param>
+            <param name="url">图文链接消息被点击后跳转的链接</param>
+            <param name="thumbUrl">[官方文档未给说明]</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.CustomApi.SendMiniProgramPageAsync(System.String,System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】发送小程序卡片
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId">普通用户(openid)</param>
+            <param name="title">消息标题</param>
+            <param name="pagePath">小程序的页面路径，跟app.json对齐，支持参数，比如pages/index/index?foo=bar</param>
+            <param name="thumbMediaId">小程序消息卡片的封面， image类型的media_id，通过新增素材接口上传图片文件获得，建议大小为520*416</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi">
+            <summary>
+            小程序“数据分析”接口
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidDailySummaryTrend(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            概况趋势
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，如：20170313</param>
+            <param name="beginDate">结束日期，限定查询1天数据，end_date允许设置的最大值为昨日，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidDailyVisitTrend(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            访问分析：日趋势
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，如：20170313</param>
+            <param name="beginDate">结束日期，限定查询1天数据，end_date允许设置的最大值为昨日，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidWeeklyVisitTrend(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            访问分析：周趋势
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，为周一日期，如：20170306</param>
+            <param name="beginDate">结束日期，为周日日期，限定查询一周数据，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidMonthlyVisitTrend(System.String,System.String,System.String,System.Int32)" -->
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidVisitDistribution(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            访问分析：访问分布
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，如：20170313</param>
+            <param name="beginDate">结束日期，限定查询1天数据，end_date允许设置的最大值为昨日，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidDailyRetainInfo(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            访问分析：访问留存-日留存
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，如：20170313</param>
+            <param name="beginDate">结束日期，限定查询1天数据，end_date允许设置的最大值为昨日，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidWeeklyRetainInfo(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            访问分析：访问留存-周留存
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，为周一日期，如：20170306</param>
+            <param name="beginDate">结束日期，为周日日期，限定查询一周数据，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidMonthlyRetainInfo(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            访问分析：访问留存-月留存
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，为自然月第一天，如：20170201</param>
+            <param name="beginDate">结束日期，为自然月最后一天，限定查询一个月数据，如：20170228</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidVisitPage(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            访问分析：访问页面。
+            注意：目前只提供按 page_visit_pv 排序的 top200
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，如：20170313</param>
+            <param name="beginDate">结束日期，限定查询1天数据，end_date允许设置的最大值为昨日，如：20170313</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidUserPortrait(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            访问分析：用户画像。
+            注：
+            1、部分用户属性数据缺失，属性值可能出现 “未知”。
+            2、机型数据无 id 字段，暂只提供用户数最多的 top20。
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，如：2017-06-11</param>
+            <param name="beginDate">结束日期，开始日期与结束日期相差的天数限定为0/6/29，分别表示查询最近1/7/30天数据，end_date允许设置的最大值为昨日，如：2017-06-17</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidDailySummaryTrendAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】概况趋势
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="endDate">开始日期，如：20170313</param>
+            <param name="beginDate">结束日期，限定查询1天数据，end_date允许设置的最大值为昨日，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidDailyVisitTrendAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】访问分析：日趋势
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，如：20170313</param>
+            <param name="beginDate">结束日期，限定查询1天数据，end_date允许设置的最大值为昨日，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidWeeklyVisitTrendAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】访问分析：周趋势
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，为周一日期，如：20170306</param>
+            <param name="beginDate">结束日期，为周日日期，限定查询一周数据，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidMonthlyVisitTrendAsync(System.String,System.String,System.String,System.Int32)" -->
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidVisitDistributionAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】访问分析：访问分布
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，如：20170313</param>
+            <param name="beginDate">结束日期，限定查询1天数据，end_date允许设置的最大值为昨日，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidDailyRetainInfoAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】访问分析：访问留存-日留存
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，如：20170313</param>
+            <param name="beginDate">结束日期，限定查询1天数据，end_date允许设置的最大值为昨日，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidWeeklyRetainInfoAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】访问分析：访问留存-周留存
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，为周一日期，如：20170306</param>
+            <param name="beginDate">结束日期，为周日日期，限定查询一周数据，如：20170312</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidMonthlyRetainInfoAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】访问分析：访问留存-月留存
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，为自然月第一天，如：20170201</param>
+            <param name="beginDate">结束日期，为自然月最后一天，限定查询一个月数据，如：20170228</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidVisitPageAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】访问分析：访问页面。
+            注意：目前只提供按 page_visit_pv 排序的 top200
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，如：20170313</param>
+            <param name="beginDate">结束日期，限定查询1天数据，end_date允许设置的最大值为昨日，如：20170313</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.DataCubeApi.GetWeAnalysisAppidUserPortraitAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】访问分析：用户画像。
+            注：
+            1、部分用户属性数据缺失，属性值可能出现 “未知”。
+            2、机型数据无 id 字段，暂只提供用户数最多的 top20。
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="endDate">开始日期，如：2017-06-11</param>
+            <param name="beginDate">结束日期，开始日期与结束日期相差的天数限定为0/6/29，分别表示查询最近1/7/30天数据，end_date允许设置的最大值为昨日，如：2017-06-17</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.CommonGetWeAnalysisAppidRetainInfoResultJson">
+            <summary>
+            小程序“数据分析”接口 - 访问留存：周留存 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.CommonGetWeAnalysisAppidRetainInfoResultJson.ref_date">
+            <summary>
+            时间。
+            日存留如："20170313"；
+            周存留如："20170306-20170312"；
+            月存留如："201702"。
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.CommonGetWeAnalysisAppidRetainInfoResultJson.visit_uv_new">
+            <summary>
+            新增用户留存
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.CommonGetWeAnalysisAppidRetainInfoResultJson.visit_uv">
+            <summary>
+            活跃用户留存
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.CommonGetWeAnalysisAppidRetainInfoResultJson_visit">
+            <summary>
+            公共类：小程序“数据分析”接口 - 访问留存：日/周/月留存 返回结果 - visit_uv及相关属性
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.CommonGetWeAnalysisAppidRetainInfoResultJson_visit.key">
+            <summary>
+            标识。
+            日留存：0开始，0表示当天，1表示1天后，依此类推，key取值分别是：0,1,2,3,4,5,6,7,14,30；
+            周留存：0开始，0表示当周，1表示1周后，依此类推，key取值分别是：0,1,2,3,4；
+            月留存：标识，0开始，0表示当月，1表示1月后，key取值分别是：0,1。
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.CommonGetWeAnalysisAppidRetainInfoResultJson_visit.value">
+            <summary>
+            key对应日期的新增用户数/活跃用户数（key=0时）或留存用户数（k>0时）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailySummaryTrendResultJson">
+            <summary>
+            小程序“数据分析”接口 - 概况趋势 返回结果
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailySummaryTrendResultJson_list">
+            <summary>
+            小程序“数据分析”接口 - 概况趋势 返回结果 - list
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailySummaryTrendResultJson_list.ref_date">
+            <summary>
+            日期，如：20170313
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailySummaryTrendResultJson_list.visit_total">
+            <summary>
+            累计用户数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailySummaryTrendResultJson_list.share_pv">
+            <summary>
+            转发次数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailySummaryTrendResultJson_list.share_uv">
+            <summary>
+            转发人数
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailyVisitTrendResultJson">
+            <summary>
+            小程序“数据分析”接口 - 访问趋势：日趋势 返回结果
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailyVisitTrendResultJson_list">
+            <summary>
+            小程序“数据分析”接口 - 访问趋势：日趋势 返回结果 - list
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailyVisitTrendResultJson_list.ref_date">
+            <summary>
+            日期，如：20170313
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailyVisitTrendResultJson_list.session_cnt">
+            <summary>
+            打开次数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailyVisitTrendResultJson_list.visit_pv">
+            <summary>
+            访问次数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailyVisitTrendResultJson_list.visit_uv">
+            <summary>
+            访问人数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailyVisitTrendResultJson_list.visit_uv_new">
+            <summary>
+            新用户数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailyVisitTrendResultJson_list.stay_time_uv">
+            <summary>
+            人均停留时长 (浮点型，单位：秒)
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailyVisitTrendResultJson_list.stay_time_session">
+            <summary>
+            次均停留时长 (浮点型，单位：秒)
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidDailyVisitTrendResultJson_list.visit_depth">
+            <summary>
+            平均访问深度 (浮点型)
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidMonthlyVisitTrendResultJson">
+            <summary>
+            小程序“数据分析”接口 - 访问趋势：月趋势 返回结果
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidMonthlyVisitTrendResultJson_list">
+            <summary>
+            小程序“数据分析”接口 - 访问趋势：月趋势 返回结果 - list
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidMonthlyVisitTrendResultJson_list.ref_date">
+            <summary>
+            时间，如："201702"
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidMonthlyVisitTrendResultJson_list.session_cnt">
+            <summary>
+            打开次数（自然月内汇总）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidMonthlyVisitTrendResultJson_list.visit_pv">
+            <summary>
+            访问次数（自然月内汇总）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidMonthlyVisitTrendResultJson_list.visit_uv">
+            <summary>
+            访问人数（自然月内去重）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidMonthlyVisitTrendResultJson_list.visit_uv_new">
+            <summary>
+            新用户数（自然月内去重）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidMonthlyVisitTrendResultJson_list.stay_time_uv">
+            <summary>
+            人均停留时长 (浮点型，单位：秒)
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidMonthlyVisitTrendResultJson_list.stay_time_session">
+            <summary>
+            次均停留时长 (浮点型，单位：秒)
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidMonthlyVisitTrendResultJson_list.visit_depth">
+            <summary>
+            平均访问深度 (浮点型)
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson">
+            <summary>
+            小程序“数据分析”接口 - 用户画像 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson.ref_date">
+            <summary>
+            时间范围,如： "20170611-20170617"
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson.visit_uv_new">
+            <summary>
+            新用户
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson.visit_uv">
+            <summary>
+            活跃用户
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson_visit_uv">
+            <summary>
+            小程序“数据分析”接口 - 用户画像 返回结果 - visit_uv_new and visit_uv
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson_visit_uv.province">
+            <summary>
+            省份，如北京、广东等
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson_visit_uv.city">
+            <summary>
+            城市，如北京、广州等
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson_visit_uv.genders">
+            <summary>
+            性别，包括男、女、未知
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson_visit_uv.platforms">
+            <summary>
+            终端类型，包括iPhone, android,其他
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson_visit_uv.devices">
+            <summary>
+            机型，如苹果iPhone6, OPPO R9等
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson_visit_uv.ages">
+            <summary>
+            年龄，包括17岁以下、18-24岁等区间
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson_visit_uv_item">
+            <summary>
+            小程序“数据分析”接口 - 用户画像 返回结果 - visit_uv_new and visit_uv 每一项属性
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson_visit_uv_item.id">
+            <summary>
+            属性值id
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson_visit_uv_item.name">
+            <summary>
+            属性值名称，与id一一对应。如属性为province时，返回的属性值名称包括“广东”等
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidUserPortraitResultJson_visit_uv_item.value">
+            <summary>
+            属性值对应的指标值，如指标为visit_uv,属性为province,属性值为"广东省”，value对应广东地区的活跃用户数
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson">
+            <summary>
+            小程序“数据分析”接口 - 访问趋势：访问分布 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson.ref_date">
+            <summary>
+            时间： 如： "20170313"
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson_list">
+            <summary>
+            小程序“数据分析”接口 - 访问趋势：访问分布 返回结果 - list
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson_list.index">
+            <summary>
+            分布类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson_list.item_list">
+            <summary>
+            访问次数（自然周内汇总）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson_list_index">
+            <summary>
+            小程序“数据分析”接口 - 访问趋势：访问分布 返回结果 - list - index 枚举
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson_list_index.access_source_session_cnt">
+            <summary>
+            访问来源分布
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson_list_index.access_staytime_info">
+            <summary>
+            访问时长分布
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson_list_index.access_depth_info">
+            <summary>
+            访问深度的分布
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson_list_item_list">
+            <summary>
+            小程序“数据分析”接口 - 访问趋势：访问分布 返回结果 - list - item_list
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson_list_item_list.key">
+            <summary>
+            场景 id
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson_list_item_list.value">
+            <summary>
+            value 场景下的值（均为整数型）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitDistributionResultJson_list_item_list.access_source_visit_uv">
+            <summary>
+            该场景 id 访问 uv	
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitPageResultJson">
+            <summary>
+            小程序“数据分析”接口 - 访问页面 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitPageResultJson.ref_date">
+            <summary>
+            时间，如："20170313"
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitPageResultJson_list">
+            <summary>
+            小程序“数据分析”接口 - 访问页面 返回结果 - list
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitPageResultJson_list.page_path">
+            <summary>
+            页面路径
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitPageResultJson_list.page_visit_pv">
+            <summary>
+            访问次数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitPageResultJson_list.page_visit_uv">
+            <summary>
+            访问人数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitPageResultJson_list.page_staytime_pv">
+            <summary>
+            次均停留时长
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitPageResultJson_list.entrypage_pv">
+            <summary>
+            进入页次数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitPageResultJson_list.exitpage_pv">
+            <summary>
+            退出页次数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitPageResultJson_list.page_share_pv">
+            <summary>
+            转发次数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidVisitPageResultJson_list.page_share_uv">
+            <summary>
+            转发人数
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidWeeklyVisitTrendResultJson">
+            <summary>
+            小程序“数据分析”接口 - 访问趋势：周趋势 返回结果
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidWeeklyVisitTrendResultJson_list">
+            <summary>
+            小程序“数据分析”接口 - 访问趋势：周趋势 返回结果 - list
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidWeeklyVisitTrendResultJson_list.ref_date">
+            <summary>
+            时间，如："20170306-20170312"
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidWeeklyVisitTrendResultJson_list.session_cnt">
+            <summary>
+            打开次数（自然周内汇总）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidWeeklyVisitTrendResultJson_list.visit_pv">
+            <summary>
+            访问次数（自然周内汇总）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidWeeklyVisitTrendResultJson_list.visit_uv">
+            <summary>
+            访问人数（自然周内去重）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidWeeklyVisitTrendResultJson_list.visit_uv_new">
+            <summary>
+            新用户数（自然周内去重）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidWeeklyVisitTrendResultJson_list.stay_time_uv">
+            <summary>
+            人均停留时长 (浮点型，单位：秒)
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidWeeklyVisitTrendResultJson_list.stay_time_session">
+            <summary>
+            次均停留时长 (浮点型，单位：秒)
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.DataCube.GetWeAnalysisAppidWeeklyVisitTrendResultJson_list.visit_depth">
+            <summary>
+            平均访问深度 (浮点型)
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.MessageApi">
+            <summary>
+            小程序订阅消息接口
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.MessageApi.SendSubscribe(System.String,System.String,System.String,Senparc.Weixin.Entities.TemplateMessage.TemplateMessageData,System.String,System.Int32)">
+            <summary>
+            发送订阅消息
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="toUser">接收者（用户）的 openid</param>
+            <param name="templateId">所需下发的订阅模板id</param>
+            <param name="data">模板内容，格式形如 { "key1": { "value": any }, "key2": { "value": any } }</param>
+            <param name="page">点击模板卡片后的跳转页面，仅限本小程序内的页面。支持带参数,（示例index?foo=bar）。该字段不填则模板无跳转。</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.MessageApi.SendSubscribeAsync(System.String,System.String,System.String,Senparc.Weixin.Entities.TemplateMessage.TemplateMessageData,System.String,System.Int32)">
+            <summary>
+            【异步方法】发送订阅消息
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="toUser">接收者（用户）的 openid</param>
+            <param name="templateId">所需下发的订阅模板id</param>
+            <param name="data">模板内容，格式形如 { "key1": { "value": any }, "key2": { "value": any } }</param>
+            <param name="page">点击模板卡片后的跳转页面，仅限本小程序内的页面。支持带参数,（示例index?foo=bar）。该字段不填则模板无跳转。</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.QrCodeJumpApi.Get(System.String,System.Int32)">
+            <summary>
+            获取已设置的二维码规则
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.QrCodeJumpApi.Download(System.String,System.Int32)">
+            <summary>
+            获取校验文件名称及内容
+            通过本接口下载随机校验文件，并将文件上传至服务器指定位置的目录下，方可通过所属权校验。
+            验证文件放置规则：放置于 URL 中声明的最后一级子目录下，若无子目录，则放置于 host 所属服务器的顶层目录下。
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.QrCodeJumpApi.Add(System.String,System.String,System.Int32,System.String,System.Int32,System.Int32,System.String[],System.Int32)">
+            <summary>
+            增加或修改二维码规则
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="prefix">二维码规则</param>
+            <param name="permit_sub_rule">是否独占符合二维码前缀匹配规则的所有子规 1 为不占用，2 为占用;</param>
+            <param name="path">小程序功能页面</param>
+            <param name="open_version">测试范围1开发版（配置只对开发者生效）,2体验版（配置对管理员、体验者生效),3正式版（配置对开发者、管理员和体验者生效）</param>
+            <param name="is_edit">编辑标志位，0 表示新增二维码规则，1 表示修改已有二维码规则</param>
+            <param name="debug_url">测试链接，至多 5 个用于测试的二维码完整链接，此链接必须符合已填写的二维码规则。</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.QrCodeJumpApi.Publish(System.String,System.String,System.Int32)">
+            <summary>
+            发布已设置的二维码规则
+            需要先添加二维码规则，然后调用本接口将二维码规则发布生效，发布后现网用户扫码命中改规则的普通链接二维码时将调整到正式版小程序指定的页面。
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="prefix">二维码规则</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.QrCodeJumpApi.Delete(System.String,System.String,System.Int32)">
+            <summary>
+            删除已设置的二维码规则
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="prefix">二维码规则</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.QrCodeJumpApi.GetAsync(System.String,System.Int32)">
+            <summary>
+            【异步方法】获取已设置的二维码规则
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.QrCodeJumpApi.DownloadAsync(System.String,System.Int32)">
+            <summary>
+            【异步方法】获取校验文件名称及内容
+            通过本接口下载随机校验文件，并将文件上传至服务器指定位置的目录下，方可通过所属权校验。
+            验证文件放置规则：放置于 URL 中声明的最后一级子目录下，若无子目录，则放置于 host 所属服务器的顶层目录下。
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.QrCodeJumpApi.AddAsync(System.String,System.String,System.Int32,System.String,System.Int32,System.Int32,System.String[],System.Int32)">
+            <summary>
+            【异步方法】增加或修改二维码规则
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="prefix">二维码规则</param>
+            <param name="permit_sub_rule">是否独占符合二维码前缀匹配规则的所有子规 1 为不占用，2 为占用;</param>
+            <param name="path">小程序功能页面</param>
+            <param name="open_version">测试范围1开发版（配置只对开发者生效）,2体验版（配置对管理员、体验者生效),3正式版（配置对开发者、管理员和体验者生效）</param>
+            <param name="is_edit">编辑标志位，0 表示新增二维码规则，1 表示修改已有二维码规则</param>
+            <param name="debug_url">测试链接，至多 5 个用于测试的二维码完整链接，此链接必须符合已填写的二维码规则。</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.QrCodeJumpApi.PublishAsync(System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】发布已设置的二维码规则
+            需要先添加二维码规则，然后调用本接口将二维码规则发布生效，发布后现网用户扫码命中改规则的普通链接二维码时将调整到正式版小程序指定的页面。
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="prefix">二维码规则</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.QrCodeJumpApi.DeleteAsync(System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】删除已设置的二维码规则
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="prefix">二维码规则</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.DownloadJsonResult.file_name">
+            <summary>
+            文件名称
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.DownloadJsonResult.file_content">
+            <summary>
+            文件内容
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.GetJsonResult">
+            <summary>
+            获取已设置的普通链接二维码规则结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.GetJsonResult.qrcodejump_open">
+            <summary>
+            是否已经打开二维码跳转链接设置
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.GetJsonResult.qrcodejump_pub_quota">
+            <summary>
+            本月还可发布的次数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.GetJsonResult.list_size">
+            <summary>
+            二维码规则数量
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.Rule">
+            <summary>
+            二维码规则详情
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.Rule.prefix">
+            <summary>
+            二维码规则
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.Rule.permit_sub_rule">
+            <summary>
+            是否独占符合二维码前缀匹配规则的所有子规 1 为不占用，2 为占用; 
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.Rule.path">
+            <summary>
+            小程序功能页面
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.Rule.open_version">
+            <summary>
+            测试范围1开发版（配置只对开发者生效）,2体验版（配置对管理员、体验者生效),3正式版（配置对开发者、管理员和体验者生效）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.Rule.debug_url">
+            <summary>
+            测试链接（选填）可填写不多于 5 个用于测试的二维码完整链接，此链接必须符合已填写的二维码规则。
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.QrCodeJump.Rule.state">
+            <summary>
+            发布标志位，1 表示未发布，2 表示已发布
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Sns.SnsApi">
+            <summary>
+            WxApp接口
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Sns.SnsApi.JsCode2Json(System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            code 换取 session_key
+            </summary>
+            <param name="appId"></param>
+            <param name="secret"></param>
+            <param name="jsCode"></param>
+            <param name="grantType">保持默认：authorization_code</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Sns.SnsApi.JsCode2JsonAsync(System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】code 换取 session_key
+            </summary>
+            <param name="appId"></param>
+            <param name="secret"></param>
+            <param name="jsCode"></param>
+            <param name="grantType">保持默认：authorization_code</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Sns.JsCode2JsonResult">
+            <summary>
+            JsCode2Json接口结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Sns.JsCode2JsonResult.openid">
+            <summary>
+            用户唯一标识
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Sns.JsCode2JsonResult.session_key">
+            <summary>
+            会话密钥
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Sns.JsCode2JsonResult.unionid">
+            <summary>
+            用户在开放平台的唯一标识符。本字段在满足一定条件的情况下才返回。具体参看：https://mp.weixin.qq.com/debug/wxadoc/dev/api/uinionID.html
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi">
+            <summary>
+            云函数
+            注意: HTTP API 途径触发云函数不包含用户信息
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.InvokeCloudFunction(System.String,System.String,System.String,System.Object,System.Int32)">
+            <summary>
+            触发云函数。注意：HTTP API 途径触发云函数不包含用户信息。
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云开发环境ID</param>
+            <param name="name">云函数名称</param>
+            <param name="postBody">云函数的传入参数，具体结构由开发者定义。</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseMigrateImport(System.String,System.String,System.String,System.String,Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.FileType,System.Boolean,Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.ConflictMode,System.Int32)">
+            <summary>
+            数据库导入
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="collection">导入collection名</param>
+            <param name="file_path">导入文件路径(导入文件需先上传到同环境的存储中，可使用开发者工具或 HTTP API的上传文件 API上传）</param>
+            <param name="file_type">导入文件类型，文件格式参考数据库导入指引中的文件格式部分</param>
+            <param name="stop_on_error">是否在遇到错误时停止导入</param>
+            <param name="conflict_mode">冲突处理模式</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseMigrateExport(System.String,System.String,System.String,Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.FileType,System.String,System.Int32)">
+            <summary>
+            数据库导出
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="file_path">导出文件路径（文件会导出到同环境的云存储中，可使用获取下载链接 API 获取下载链接）</param>
+            <param name="file_type">导出文件类型，文件格式参考数据库导入指引中的文件格式部分</param>
+            <param name="query">导出条件</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseMigrateQueryInfo(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            数据库迁移状态查询
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="job_id">迁移任务ID</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseCollectionAdd(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            新增集合
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="collection_name">集合名称</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseCollectionDelete(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            删除集合
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="collection_name">集合名称</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseCollectionGet(System.String,System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            获取特定云环境下集合信息
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="limit">获取数量限制</param>
+            <param name="offset">偏移量</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseAdd(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            数据库插入记录
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="query">数据库操作语句</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseDelete(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            数据库删除记录
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="query">数据库操作语句</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseUpdate(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            数据库更新记录
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="query">数据库操作语句</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseQuery(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            数据库查询记录
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="query">数据库操作语句</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseCount(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            统计集合记录数或统计查询语句对应的结果记录数
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="query">数据库操作语句</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.UploadFile(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            获取文件上传链接
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="path">上传路径</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.BatchDownloadFile(System.String,System.String,System.Collections.Generic.IEnumerable{Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.FileItem},System.Int32)">
+            <summary>
+            获取文件下载链接
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="file_list">文件列表</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.BatchDeleteFile(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Int32)">
+            <summary>
+            删除文件
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="fileid_list">文件ID列表</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.GetQcloudToken(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取腾讯云API调用凭证
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="lifespan">有效期（单位为秒，最大7200）</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.SendTemplateMessageAsync(System.String,System.String,System.String,System.Object,System.Int32)">
+            <summary>
+            【异步方法】触发云函数。注意：HTTP API 途径触发云函数不包含用户信息。
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云开发环境ID</param>
+            <param name="name">云函数名称</param>
+            <param name="postBody">云函数的传入参数，具体结构由开发者定义。</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseMigrateImportAsync(System.String,System.String,System.String,System.String,Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.FileType,System.Boolean,Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.ConflictMode,System.Int32)">
+            <summary>
+            【异步方法】数据库导入
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="collection">导入collection名</param>
+            <param name="file_path">导入文件路径(导入文件需先上传到同环境的存储中，可使用开发者工具或 HTTP API的上传文件 API上传）</param>
+            <param name="file_type">导入文件类型，文件格式参考数据库导入指引中的文件格式部分</param>
+            <param name="stop_on_error">是否在遇到错误时停止导入</param>
+            <param name="conflict_mode">冲突处理模式</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseMigrateExportAsync(System.String,System.String,System.String,Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.FileType,System.String,System.Int32)">
+            <summary>
+            【异步方法】数据库导出
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="file_path">导出文件路径（文件会导出到同环境的云存储中，可使用获取下载链接 API 获取下载链接）</param>
+            <param name="file_type">导出文件类型，文件格式参考数据库导入指引中的文件格式部分</param>
+            <param name="query">导出条件</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseMigrateQueryInfoAsync(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            【异步方法】数据库迁移状态查询
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="job_id">迁移任务ID</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseCollectionAddAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】新增集合
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="collection_name">集合名称</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseCollectionDeleteAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】删除集合
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="collection_name">集合名称</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseCollectionGetAsync(System.String,System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            【异步方法】获取特定云环境下集合信息
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="limit">获取数量限制</param>
+            <param name="offset">偏移量</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseAddAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】数据库插入记录
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="query">数据库操作语句</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseDeleteAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】数据库删除记录
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="query">数据库操作语句</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseUpdateAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】数据库更新记录
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="query">数据库操作语句</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseQueryAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】数据库查询记录
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="query">数据库操作语句</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.DatabaseCountAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】统计集合记录数或统计查询语句对应的结果记录数
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="query">数据库操作语句</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.UploadFileAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】获取文件上传链接
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="path">上传路径</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.BatchDownloadFileAsync(System.String,System.String,System.Collections.Generic.IEnumerable{Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.FileItem},System.Int32)">
+            <summary>
+            【异步方法】获取文件下载链接
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="file_list">文件列表</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.BatchDeleteFileAsync(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Int32)">
+            <summary>
+            【异步方法】删除文件
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="env">云环境ID</param>
+            <param name="fileid_list">文件ID列表</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.TcbApi.GetQcloudTokenAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取腾讯云API调用凭证
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="lifespan">有效期（单位为秒，最大7200）</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxCloudFunctionJsonResult.resp_data">
+            <summary>
+            云函数返回的buffer
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseCollectionJsonResult.collections">
+            <summary>
+            集合信息
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseCollectionJsonResult.pager">
+            <summary>
+            分页信息
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Pager.Offset">
+            <summary>
+            偏移
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Pager.Limit">
+            <summary>
+            单次查询限制
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Pager.Total">
+            <summary>
+            符合查询条件的记录总数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Collection.name">
+            <summary>
+            集合名
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Collection.count">
+            <summary>
+            表中文档数量
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Collection.size">
+            <summary>
+            表的大小（即表中文档总大小），单位：字节
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Collection.index_count">
+            <summary>
+            索引数量
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Collection.index_size">
+            <summary>
+            索引占用大小，单位：字节
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseAddJsonResult">
+            <summary>
+            数据库插入记录 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseAddJsonResult.id_list">
+            <summary>
+            插入成功的数据集合主键_id。
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseDeleteJsonResult">
+            <summary>
+            数据库删除记录 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseDeleteJsonResult.deleted">
+            <summary>
+            删除记录数量
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseUpdateJsonResult">
+            <summary>
+            数据库更新记录 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseUpdateJsonResult.matched">
+            <summary>
+            更新条件匹配到的结果数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseUpdateJsonResult.modified">
+            <summary>
+            修改的记录数，注意：使用set操作新插入的数据不计入修改数目
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseUpdateJsonResult.id">
+            <summary>
+            新插入记录的id，注意：只有使用set操作新插入数据时这个字段会有值
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseQueryJsonResult">
+            <summary>
+            数据库查询记录 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseQueryJsonResult.pager">
+            <summary>
+            分页信息
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseQueryJsonResult.data">
+            <summary>
+            记录数组
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseCountJsonResult">
+            <summary>
+            统计集合记录数或统计查询语句对应的结果记录数 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseCountJsonResult.count">
+            <summary>
+            记录数量
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseMigrateJsonResult">
+            <summary>
+            数据库导入/导出 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseMigrateJsonResult.job_id">
+            <summary>
+            任务ID，可使用数据库迁移进度查询 API 查询进度及结果
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseMigrateQueryInfoJsonResult">
+            <summary>
+            数据库迁移状态查询 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseMigrateQueryInfoJsonResult.status">
+            <summary>
+            导出状态
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseMigrateQueryInfoJsonResult.record_success">
+            <summary>
+            导出成功记录数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseMigrateQueryInfoJsonResult.record_fail">
+            <summary>
+            导出失败记录数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseMigrateQueryInfoJsonResult.err_msg">
+            <summary>
+            导出错误信息
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDatabaseMigrateQueryInfoJsonResult.file_url">
+            <summary>
+            导出文件下载地址
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxUploadFileJsonResult">
+            <summary>
+            获取文件上传链接 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxUploadFileJsonResult.url">
+            <summary>
+            上传url
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxUploadFileJsonResult.file_id">
+            <summary>
+            文件ID
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxUploadFileJsonResult.cos_file_id">
+            <summary>
+            cos文件ID
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDownloadFileJsonResult">
+            <summary>
+            获取文件下载链接 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDownloadFileJsonResult.file_list">
+            <summary>
+            文件列表
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDeleteFileJsonResult">
+            <summary>
+            删除文件 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxDeleteFileJsonResult.delete_list">
+            <summary>
+            文件列表
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Result_File_List.fileid">
+            <summary>
+            文件ID
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Result_File_List.download_url">
+            <summary>
+            下载链接
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Result_File_List.status">
+            <summary>
+            状态码
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.Result_File_List.errmsg">
+            <summary>
+            该文件错误信息
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.FileItem.fileid">
+            <summary>
+            文件ID
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.FileItem.max_age">
+            <summary>
+            下载链接有效期
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxQcloudTokenJsonResult">
+            <summary>
+            获取腾讯云API调用凭证 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb.WxQcloudTokenJsonResult.expired_time">
+            <summary>
+            过期时间戳
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi">
+            <summary>
+            模板消息接口
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.SendTemplateMessage(System.String,System.String,System.String,System.Object,System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            小程序模板消息接口
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId"></param>
+            <param name="templateId"></param>
+            <param name="data"></param>
+            <param name="emphasisKeyword">模板需要放大的关键词，不填则默认无放大</param>
+            <param name="color">模板内容字体的颜色，不填默认黑色（非必填）</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="formId">表单提交场景下，为 submit 事件带上的 formId；支付场景下，为本次支付的 prepay_id</param>
+            <param name="page">点击模板查看详情跳转页面，不填则模板无跳转（非必填）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.UniformSend(System.String,Senparc.Weixin.WxOpen.AdvancedAPIs.Template.UniformSendData,System.Int32)">
+            <summary>
+            下发小程序和公众号统一的服务消息
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="msgData"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.LibraryList(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            获取小程序模板库标题列表
+            </summary>
+            <param name="accessToken">接口调用凭证</param>
+            <param name="offset">offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。</param>
+            <param name="count">offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.LibraryGet(System.String,System.String,System.Int32)">
+            <summary>
+            获取模板库某个模板标题下关键词库
+            </summary>
+            <param name="accessToken">接口调用凭证</param>
+            <param name="id">模板标题id，可通过接口获取，也可登录小程序后台查看获取</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.Add(System.String,System.String,System.Int32[],System.Int32)">
+            <summary>
+            组合模板并添加至帐号下的个人模板库
+            </summary>
+            <param name="accessToken">接口调用凭证</param>
+            <param name="id">模板标题id，可通过接口获取，也可登录小程序后台查看获取</param>
+            <param name="keywordIdList">开发者自行组合好的模板关键词列表，关键词顺序可以自由搭配（例如[3,5,4]或[4,5,3]），最多支持10个关键词组合</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.List(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            获取帐号下已存在的模板列表
+            </summary>
+            <param name="accessToken">接口调用凭证</param>
+            <param name="offset">offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。最后一页的list长度可能小于请求的count</param>
+            <param name="count">offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。最后一页的list长度可能小于请求的count</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.Del(System.String,System.String,System.Int32)">
+            <summary>
+            删除帐号下的某个模板
+            </summary>
+            <param name="accessToken">接口调用凭证</param>
+            <param name="templateId">要删除的模板id</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.SendTemplateMessageAsync(System.String,System.String,System.String,System.Object,System.String,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】小程序模板消息接口
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId"></param>
+            <param name="templateId"></param>
+            <param name="data"></param>
+            <param name="emphasisKeyword">模板需要放大的关键词，不填则默认无放大</param>
+            <param name="color">模板内容字体的颜色，不填默认黑色（非必填）</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="formId">表单提交场景下，为 submit 事件带上的 formId；支付场景下，为本次支付的 prepay_id</param>
+            <param name="page">点击模板查看详情跳转页面，不填则模板无跳转（非必填）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.UniformSendAsync(System.String,Senparc.Weixin.WxOpen.AdvancedAPIs.Template.UniformSendData,System.Int32)">
+            <summary>
+            【异步方法】下发小程序和公众号统一的服务消息
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="msgData"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.LibraryListAsync(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            【异步方法】获取小程序模板库标题列表
+            </summary>
+            <param name="accessToken">接口调用凭证</param>
+            <param name="offset">offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。</param>
+            <param name="count">offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.LibraryGetAsync(System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】获取模板库某个模板标题下关键词库
+            </summary>
+            <param name="accessToken">接口调用凭证</param>
+            <param name="id">模板标题id，可通过接口获取，也可登录小程序后台查看获取</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.AddAsync(System.String,System.String,System.Int32[],System.Int32)">
+            <summary>
+            【异步方法】组合模板并添加至帐号下的个人模板库
+            </summary>
+            <param name="accessToken">接口调用凭证</param>
+            <param name="id">模板标题id，可通过接口获取，也可登录小程序后台查看获取</param>
+            <param name="keywordIdList">开发者自行组合好的模板关键词列表，关键词顺序可以自由搭配（例如[3,5,4]或[4,5,3]），最多支持10个关键词组合</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.ListAsync(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            【异步方法】获取帐号下已存在的模板列表
+            </summary>
+            <param name="accessToken">接口调用凭证</param>
+            <param name="offset">offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。最后一页的list长度可能小于请求的count</param>
+            <param name="count">offset和count用于分页，表示从offset开始，拉取count条记录，offset从0开始，count最大为20。最后一页的list长度可能小于请求的count</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TemplateApi.DelAsync(System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】删除帐号下的某个模板
+            </summary>
+            <param name="accessToken">接口调用凭证</param>
+            <param name="templateId">要删除的模板id</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.AddJsonResult">
+            <summary>
+            “获取模板库某个模板标题下关键词库”接口：Add 结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.AddJsonResult.template_id">
+            <summary>
+            添加至帐号下的模板id，发送小程序模板消息时所需
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.LibraryGetJsonResult">
+            <summary>
+            “获取模板库某个模板标题下关键词库”接口：LibraryGet 结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.LibraryGetJsonResult_KeywordList.keyword_id">
+            <summary>
+            关键词id，添加模板时需要
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.LibraryGetJsonResult_KeywordList.name">
+            <summary>
+            关键词内容
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.LibraryGetJsonResult_KeywordList.example">
+            <summary>
+            关键词内容对应的示例
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.LibraryListJsonResult">
+            <summary>
+            “获取小程序模板库标题列表”接口：LibraryList 结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.LibraryListJsonResult.total_count">
+            <summary>
+            模板库标题总数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.LibraryListJsonResult_List.id">
+            <summary>
+            模板标题id（获取模板标题下的关键词库时需要）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.LibraryListJsonResult_List.title">
+            <summary>
+            模板标题内容
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.ListJsonResult">
+            <summary>
+            “获取帐号下已存在的模板列表”接口：List 结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.ListJsonResult.list">
+            <summary>
+            帐号下的模板列表
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.ListJsonResult_List.template_id">
+            <summary>
+            模板id，发送小程序模板消息时所需
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.ListJsonResult_List.title">
+            <summary>
+            模板标题
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.ListJsonResult_List.content">
+            <summary>
+            模板内容
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.ListJsonResult_List.example">
+            <summary>
+            模板内容示例
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TempleteModel">
+            <summary>
+            模板消息Post数据
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TempleteModel.touser">
+            <summary>
+            目标用户OpenId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TempleteModel.template_id">
+            <summary>
+            模板ID
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TempleteModel.page">
+            <summary>
+            点击模板查看详情跳转页面，不填则模板无跳转（非必填）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TempleteModel.form_id">
+            <summary>
+            表单提交场景下，为 submit 事件带上的 formId；支付场景下，为本次支付的 prepay_id
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TempleteModel.data">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TempleteModel.emphasis_keyword">
+            <summary>
+            模板需要放大的关键词，不填则默认无放大（非必填）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.TempleteModel.color">
+            <summary>
+            模板内容字体的颜色，不填默认黑色（非必填）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.Template.UniformSendData">
+            <summary>
+            下发小程序和公众号统一的服务消息
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor">
+            <summary>
+            小程序二维码线条颜色（RGB颜色）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor.r">
+            <summary>
+            红色
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor.g">
+            <summary>
+            绿色
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor.b">
+            <summary>
+            蓝色
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            LineColor 构造函数
+            </summary>
+            <param name="red"></param>
+            <param name="green"></param>
+            <param name="blue"></param>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.Search.Page.path">
+            <summary>
+            页面路径
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.Search.Page.query">
+            <summary>
+            页面参数
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.Search.SearchApi">
+            <summary>
+            小程序搜索
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.Search.SearchApi.SubmitPages(System.String,System.Collections.Generic.IEnumerable{Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.Search.Page},System.Int32)">
+            <summary>
+            小程序开发者可以通过本接口提交小程序页面url及参数信息，让微信可以更及时的收录到小程序的页面信息，开发者提交的页面信息将可能被用于小程序搜索结果展示。
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="pages">小程序页面信息列表</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.Search.SearchApi.SubmitPagesAsync(System.String,System.Collections.Generic.IEnumerable{Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.Search.Page},System.Int32)">
+            <summary>
+            小程序开发者可以通过本接口提交小程序页面url及参数信息，让微信可以更及时的收录到小程序的页面信息，开发者提交的页面信息将可能被用于小程序搜索结果展示。
+            </summary>
+            <param name="accessTokenOrAppId">接口调用凭证</param>
+            <param name="pages">小程序页面信息列表</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi">
+            <summary>
+            WxApp接口
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetWxaCode(System.String,System.IO.Stream,System.String,System.Int32,System.Boolean,Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor,System.Boolean,System.Int32)">
+            <summary>
+            获取小程序页面的小程序码
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="stream">储存小程序码的流</param>
+            <param name="path">不能为空，最大长度 128 字节（如：pages/index?query=1。注：pages/index 需要在 app.json 的 pages 中定义）</param>
+            <param name="width">小程序码的宽度</param>
+            <param name="auto_color">自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调</param>
+            <param name="lineColor">auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}</param>
+            <param name="isHyaline">是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码，默认为 false</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetWxaCode(System.String,System.String,System.String,System.Int32,System.Boolean,Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor,System.Boolean,System.Int32)">
+            <summary>
+            获取小程序页面的小程序码
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="filePath">储存图片的物理路径</param>
+            <param name="path">不能为空，最大长度 128 字节（如：pages/index?query=1。注：pages/index 需要在 app.json 的 pages 中定义）</param>
+            <param name="width">二维码的宽度</param>
+            <param name="auto_color">自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调</param>
+            <param name="lineColor">auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}</param>
+            <param name="isHyaline">是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码，默认为 false</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetWxaCodeUnlimit(System.String,System.IO.Stream,System.String,System.String,System.Int32,System.Boolean,Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor,System.Boolean,System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetWxaCodeUnlimit(System.String,System.String,System.String,System.String,System.Int32,System.Boolean,Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor,System.Boolean,System.Int32)" -->
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.CreateWxQrCode(System.String,System.IO.Stream,System.String,System.Int32,System.Int32)">
+            <summary>
+            获取小程序页面二维码
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="stream">储存二维码的流</param>
+            <param name="path">不能为空，最大长度 128 字节（如：pages/index?query=1。注：pages/index 需要在 app.json 的 pages 中定义）</param>
+            <param name="width">二维码的宽度</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.CreateWxQrCode(System.String,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            获取小程序页面二维码
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="filePath">储存图片的物理路径</param>
+            <param name="path">不能为空，最大长度 128 字节（如：pages/index?query=1。注：pages/index 需要在 app.json 的 pages 中定义）</param>
+            <param name="width">二维码的宽度</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.CheckSession(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            session_key 合法性校验
+            https://mp.weixin.qq.com/debug/wxagame/dev/tutorial/http-signature.html
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId">用户唯一标识符</param>
+            <param name="sessionKey">用户登录态签名</param>
+            <param name="buffer">托管数据，类型为字符串，长度不超过1000字节（官方文档没有提供说明，可留空）</param>
+            <param name="sigMethod">用户登录态签名的哈希方法，默认为hmac_sha256</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.AddNearbyPoi(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32)" -->
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetNearbyPoiList(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            查看地点列表
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="page">起始页id（从1开始计数）</param>
+            <param name="page_rows">每页展示个数（最多1000个）</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.DelNearbyPoi(System.String,System.String,System.Int32)">
+            <summary>
+            删除地点
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="poi_id">附近地点ID</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.SetNearbyPoiShowStatus(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            展示/取消展示附近小程序
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="poi_id">附近地点ID</param>
+            <param name="status">0：取消展示；1：展示</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.MsgSecCheck(System.String,System.String,System.Int32)">
+            <summary>
+            检查一段文本是否含有违法违规内容
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/msgSecCheck.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="content">要检测的文本内容，长度不超过 500KB，编码格式为utf-8</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.ImgSecCheck(System.String,System.String,System.Int32)">
+            <summary>
+            校验一张图片是否含有违法违规内容
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/imgSecCheck.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="filePath">文件完整物理路径<para>格式支持PNG、JPEG、JPG、GIF，图片尺寸不超过 750px * 1334px</para></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.ApplyPlugin(System.String,System.String,System.Int32)">
+            <summary>
+            向插件开发者发起使用插件的申请
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/open-api/plugin-management/applyPlugin.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="pluginAppid"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.DevPlugin(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            获取当前所有插件使用方（供插件开发者调用）
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/open-api/plugin-management/getPluginDevApplyList.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="page"></param>
+            <param name="num"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.SetDevPluginApplyStatus(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            修改插件使用申请的状态（供插件开发者调用）
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/open-api/plugin-management/setDevPluginApplyStatus.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="action"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetPluginList(System.String,System.Int32)">
+            <summary>
+            查询已添加的插件
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/open-api/plugin-management/getPluginList.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.UnbindPlugin(System.String,System.String,System.Int32)">
+            <summary>
+            删除已添加的插件
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/open-api/plugin-management/unbindPlugin.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="appId"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetPaidUnionid(System.String,System.String,System.String,System.String,System.Int32)" -->
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetWxaCodeAsync(System.String,System.String,System.String,System.Int32,System.Boolean,Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor,System.Boolean,System.Int32)">
+            <summary>
+            【异步方法】获取小程序页面的小程序码
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="filePath">储存图片的物理路径</param>
+            <param name="path">不能为空，最大长度 128 字节（如：pages/index?query=1。注：pages/index 需要在 app.json 的 pages 中定义）</param>
+            <param name="width">二维码的宽度</param>
+            <param name="auto_color">自动配置线条颜色</param>
+            <param name="lineColor">auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}</param>
+            <param name="isHyaline">是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码，默认为 false</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetWxaCodeUnlimitAsync(System.String,System.IO.Stream,System.String,System.String,System.Int32,System.Boolean,Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor,System.Boolean,System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetWxaCodeUnlimitAsync(System.String,System.String,System.String,System.String,System.Int32,System.Boolean,Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor,System.Boolean,System.Int32)" -->
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetWxaCodeAsync(System.String,System.IO.Stream,System.String,System.Int32,System.Boolean,Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.LineColor,System.Boolean,System.Int32)">
+            <summary>
+            【异步方法】获取小程序页面的小程序码
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="stream">储存小程序码的流</param>
+            <param name="path">不能为空，最大长度 128 字节（如：pages/index?query=1。注：pages/index 需要在 app.json 的 pages 中定义）</param>
+            <param name="width">小程序码的宽度</param>
+            <param name="auto_color">自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调</param>
+            <param name="lineColor">auth_color 为 false 时生效，使用 rgb 设置颜色 例如 {"r":"xxx","g":"xxx","b":"xxx"}</param>
+            <param name="isHyaline">是否需要透明底色， is_hyaline 为true时，生成透明底色的小程序码，默认为 false</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.CreateWxQrCodeAsync(System.String,System.IO.Stream,System.String,System.Int32,System.Int32)">
+            <summary>
+            【异步方法】获取小程序页面二维码
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="stream">储存二维码的流</param>
+            <param name="path">不能为空，最大长度 128 字节（如：pages/index?query=1,注：pages/index 需要在 app.json 的 pages 中定义）</param>
+            <param name="width">二维码的宽度</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.CreateWxQrCodeAsync(System.String,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            【异步方法】获取小程序页面二维码
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="filePath">储存图片的物理路径</param>
+            <param name="path">不能为空，最大长度 128 字节（如：pages/index?query=1。注：pages/index 需要在 app.json 的 pages 中定义）</param>
+            <param name="width">二维码的宽度</param>
+            <param name="timeOut">请求超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.CheckSessionAsync(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            【异步方法】session_key 合法性校验
+            https://mp.weixin.qq.com/debug/wxagame/dev/tutorial/http-signature.html
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="openId">用户唯一标识符</param>
+            <param name="sessionKey">用户登录态签名</param>
+            <param name="buffer">托管数据，类型为字符串，长度不超过1000字节（官方文档没有提供说明，可留空）</param>
+            <param name="sigMethod">用户登录态签名的哈希方法，默认为hmac_sha256</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.AddNearbyPoiAsync(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32)" -->
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetNearbyPoiListAsync(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            【异步方法】查看地点列表
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="page">起始页id（从1开始计数）</param>
+            <param name="page_rows">每页展示个数（最多1000个）</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.DelNearbyPoiAsync(System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】删除地点
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="poi_id">附近地点ID</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.SetNearbyPoiListAsync(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            【异步方法】展示/取消展示附近小程序
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="poi_id">附近地点ID</param>
+            <param name="status">0：取消展示；1：展示</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.MsgSecCheckAsync(System.String,System.String,System.Int32)">
+            <summary>
+            检查一段文本是否含有违法违规内容
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/msgSecCheck.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="content">要检测的文本内容，长度不超过 500KB，编码格式为utf-8</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.ImgSecCheckAsync(System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】校验一张图片是否含有违法违规内容
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/imgSecCheck.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="filePath">文件完整物理路径<para>格式支持PNG、JPEG、JPG、GIF，图片尺寸不超过 750px * 1334px</para></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.ApplyPluginAsync(System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】向插件开发者发起使用插件的申请
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/open-api/plugin-management/applyPlugin.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="pluginAppid"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.DevPluginAsync(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            【异步方法】获取当前所有插件使用方（供插件开发者调用）
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/open-api/plugin-management/getPluginDevApplyList.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="page"></param>
+            <param name="num"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.SetDevPluginApplyStatusAsync(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】修改插件使用申请的状态（供插件开发者调用）
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/open-api/plugin-management/setDevPluginApplyStatus.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="action"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetPluginListAsync(System.String,System.Int32)">
+            <summary>
+            【异步方法】查询已添加的插件
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/open-api/plugin-management/getPluginList.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.UnbindPluginAsync(System.String,System.String,System.Int32)">
+            <summary>
+            删除已添加的插件
+            <para>https://developers.weixin.qq.com/miniprogram/dev/api/open-api/plugin-management/unbindPlugin.html</para>
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <param name="appId"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppApi.GetPaidUnionidAsync(System.String,System.String,System.String,System.String,System.Int32)" -->
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.AddNearbyPoiJsonResult">
+            <summary>
+            添加地点返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.AddNearbyPoiJsonResult.audit_id">
+            <summary>
+            审核单ID
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.AddNearbyPoiJsonResult.poi_id">
+            <summary>
+            附近地点ID
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.AddNearbyPoiJsonResult.related_credential">
+            <summary>
+            经营资质证件号
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.GetNearbyPoiListJsonResult">
+            <summary>
+            添加地点返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.Data.left_apply_num">
+            <summary>
+            剩余可添加地点个数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.Data.max_apply_num">
+            <summary>
+            最大可添加地点个数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.Data.data">
+            <summary>
+            地址列表的 JSON 格式字符串
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.PoiInfo">
+            <summary>
+            地点详情
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.PoiInfo.poi_id">
+            <summary>
+            附近地点 ID
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.PoiInfo.qualification_address">
+            <summary>
+            资质证件地址
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.PoiInfo.qualification_num">
+            <summary>
+            资质证件证件号
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.PoiInfo.audit_status">
+            <summary>
+            地点审核状态
+            3	审核中
+            4	审核失败
+            5	审核通过
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.PoiInfo.display_status">
+            <summary>
+            地点展示在附近状态
+            0	未展示
+            1	展示中
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.PoiInfo.refuse_reason">
+            <summary>
+            审核失败原因，audit_status=4 时返回
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson.DevPluginResultJson">
+            <summary>
+            获取当前所有插件使用方返回结果
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxOpenApiEnlightener.SendText(System.String,System.String,System.String)">
+            <summary>
+            发送文本客服消息
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="openId"></param>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxOpenApiEnlightener.SendImage(System.String,System.String,System.String)">
+            <summary>
+            发送图片客服消息
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="openId"></param>
+            <param name="mediaId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.AdvancedAPIs.WxOpenApiEnlightener.SendNews(System.String,System.String,System.Collections.Generic.List{Senparc.NeuChar.Entities.Article})">
+            <summary>
+            返回多图文消息（转成文字发送）
+            </summary>
+            <param name="accessTokenOrAppId"></param>
+            <param name="openId"></param>
+            <param name="articleList"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.WxOpenApiHandlerWapper">
+            <summary>
+            针对AccessToken无效或过期的自动处理类
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.WxOpenApiHandlerWapper.TryCommonApi``1(System.Func{System.String,``0},System.String,System.Boolean)">
+            <summary>
+            使用AccessToken进行操作时，如果遇到AccessToken错误的情况，重新获取AccessToken一次，并重试。
+            使用此方法之前必须使用AccessTokenContainer.Register(_appId, _appSecret);或JsApiTicketContainer.Register(_appId, _appSecret);方法对账号信息进行过注册，否则会出错。
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="fun"></param>
+            <param name="accessTokenOrAppId">AccessToken或AppId。如果为null，则自动取已经注册的第一个appId/appSecret来信息获取AccessToken。</param>
+            <param name="retryIfFaild">请保留默认值true，不用输入。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.WxOpenApiHandlerWapper.TryCommonApiAsync``1(System.Func{System.String,System.Threading.Tasks.Task{``0}},System.String,System.Boolean)">
+            <summary>
+            【异步方法】使用AccessToken进行操作时，如果遇到AccessToken错误的情况，重新获取AccessToken一次，并重试。
+            使用此方法之前必须使用AccessTokenContainer.Register(_appId, _appSecret);或JsApiTicketContainer.Register(_appId, _appSecret);方法对账号信息进行过注册，否则会出错。
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="fun"></param>
+            <param name="accessTokenOrAppId">AccessToken或AppId。如果为null，则自动取已经注册的第一个appId/appSecret来信息获取AccessToken。</param>
+            <param name="retryIfFaild">请保留默认值true，不用输入。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Containers.SessionBag">
+            <summary>
+            第三方APP信息包
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Containers.SessionBag.Key">
+            <summary>
+            Session的Key（3rd_session / sessionId）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Containers.SessionBag.OpenId">
+            <summary>
+            OpenId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Containers.SessionBag.SessionKey">
+            <summary>
+            SessionKey
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Containers.SessionBag.ExpireTime">
+            <summary>
+            过期时间
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Containers.SessionBag.#ctor">
+            <summary>
+            ComponentBag
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Containers.SessionContainer">
+            <summary>
+            3rdSession容器
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Containers.SessionContainer.GetExpireTime">
+            <summary>
+            获取最新的过期时间
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Containers.SessionContainer.GetSession(System.String)">
+            <summary>
+            获取Session
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Containers.SessionContainer.UpdateSession(System.String,System.String,System.String,System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            更新或插入SessionBag
+            </summary>
+            <param name="key">如果留空，则新建一条记录</param>
+            <param name="openId">OpenId</param>
+            <param name="sessionKey">SessionKey</param>
+            <param name="uniondId">UnionId</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Containers.SessionContainer.AddDecodedUserInfo(Senparc.Weixin.WxOpen.Containers.SessionBag,Senparc.Weixin.WxOpen.Entities.DecodedUserInfo)">
+            <summary>
+            添加解码后的用户信息
+            </summary>
+            <param name="bag"></param>
+            <param name="decodedUserInfo"></param>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Containers.SessionContainer.GetSessionAsync(System.String)">
+            <summary>
+            获取Session
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Containers.SessionContainer.UpdateSessionAsync(System.String,System.String,System.String,System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            更新或插入SessionBag
+            </summary>
+            <param name="key">如果留空，则新建一条记录</param>
+            <param name="openId">OpenId</param>
+            <param name="sessionKey">SessionKey</param>
+            <param name="uniondId">UnionId</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Containers.SessionContainer.AddDecodedUserInfoAsync(Senparc.Weixin.WxOpen.Containers.SessionBag,Senparc.Weixin.WxOpen.Entities.DecodedUserInfo)">
+            <summary>
+            【异步方法】添加解码后的用户信息
+            </summary>
+            <param name="bag"></param>
+            <param name="decodedUserInfo"></param>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.DecodedPhoneNumber">
+            <summary>
+            用户绑定手机号解密类
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.DecodedPhoneNumber.phoneNumber">
+            <summary>
+            用户绑定的手机号（国外手机号会有区号）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.DecodedPhoneNumber.purePhoneNumber">
+            <summary>
+            没有区号的手机号
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.DecodedPhoneNumber.countryCode">
+            <summary>
+            区号（Senparc注：国别号）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.DecodedUserInfo">
+            <summary>
+            解码后的用户信息
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.IRequestMessageEventBase">
+            <summary>
+            IRequestMessageEventBase
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.IRequestMessageEventBase.Event">
+            <summary>
+            事件类型
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.RequestMessageEventBase">
+            <summary>
+            请求消息的事件推送消息基类
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEventBase.Event">
+            <summary>
+            事件类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEventBase.EventType">
+            <summary>
+            事件类型
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_AddNearbyPoiAuditInfo">
+            <summary>
+            事件之地点审核
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_AddNearbyPoiAuditInfo.Event">
+            <summary>
+            事件类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_AddNearbyPoiAuditInfo.audit_id">
+            <summary>
+            审核单id
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_AddNearbyPoiAuditInfo.status">
+            <summary>
+            审核状态（3：审核通过，2：审核失败）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_AddNearbyPoiAuditInfo.reason">
+            <summary>
+            如果status为2，会返回审核失败的原因
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_AddNearbyPoiAuditInfo.poi_id">
+            <summary>
+            poi_id
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_NicknameAudit">
+            <summary>
+            事件之小程序审核失败
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_NicknameAudit.Event">
+            <summary>
+            事件类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_NicknameAudit.ret">
+            <summary>
+            审核结果 2：失败，3：成功
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_NicknameAudit.nickname">
+            <summary>
+            需要更改的昵称
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_NicknameAudit.reason">
+            <summary>
+            驳回原因
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_UserEnterTempSession">
+            <summary>
+            事件之用户进入客服
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_UserEnterTempSession.Event">
+            <summary>
+            事件类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_UserEnterTempSession.SessionFrom">
+            <summary>
+            开发者在客服会话按钮设置的sessionFrom参数
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditDelay">
+            <summary>
+            事件之小程序审核延后
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditDelay.Event">
+            <summary>
+            事件类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditDelay.Reason">
+            <summary>
+            审核延后的原因
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditDelay.DelayTime">
+            <summary>
+            审核延后时的时间戳
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditFail">
+            <summary>
+            事件之小程序审核失败
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditFail.Event">
+            <summary>
+            事件类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditFail.Reason">
+            <summary>
+            审核失败的原因
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditFail.FailTime">
+            <summary>
+            审核失败时的时间（整型），时间戳
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditFail.ScreenShot">
+            <summary>
+            审核不通过的截图示例。用 | 分隔的 media_id 的列表，可通过获取永久素材接口拉取截图内容
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditSuccess">
+            <summary>
+            事件之小程序审核成功
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditSuccess.Event">
+            <summary>
+            事件类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditSuccess.SuccTime">
+            <summary>
+            审核成功时的时间（整型），时间戳
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.Request.PostModel">
+            <summary>
+            微信公众服务器Post过来的加密参数集合（不包括PostData）
+            <para>如需使用 NeuChar，需要在 MessageHandler 中提供 PostModel 并设置 AppId</para>
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Entities.Request.PostModel.SetSecretInfo(System.String,System.String,System.String)">
+            <summary>
+            设置服务器内部保密信息
+            </summary>
+            <param name="token"></param>
+            <param name="encodingAESKey"></param>
+            <param name="appId"></param>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageImage.MediaId">
+            <summary>
+            图片消息媒体id，可以调用多媒体文件下载接口拉取数据。
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageImage.PicUrl">
+            <summary>
+            图片链接
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.Entities.RequestMessageText.Content">
+            <summary>
+            文本消息内容
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.ResponseMessageTransfer_Customer_Service">
+            <summary>
+            响应回复多客服消息
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Entities.Watermark">
+            <summary>
+            水印
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Event">
+            <summary>
+            当RequestMsgType类型为Event时，Event属性的类型
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.WxOpen.Event.user_enter_tempsession">
+            <summary>
+            进入会话事件
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.WxOpenException">
+            <summary>
+            WxOpenException
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Helpers.EncryptHelper">
+            <summary>
+            签名及加密帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Helpers.EncryptHelper.GetSignature(System.String,System.String)">
+            <summary>
+            获得签名
+            </summary>
+            <param name="rawData"></param>
+            <param name="sessionKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Helpers.EncryptHelper.CheckSignature(System.String,System.String,System.String)">
+            <summary>
+            比较签名是否正确
+            </summary>
+            <param name="sessionId"></param>
+            <param name="rawData"></param>
+            <param name="compareSignature"></param>
+            <exception cref="T:Senparc.Weixin.WxOpen.WxOpenException">当SessionId或SessionKey无效时抛出异常</exception>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Helpers.EncryptHelper.DecodeEncryptedData(System.String,System.String,System.String)">
+            <summary>
+            解密所有消息的基础方法
+            </summary>
+            <param name="sessionKey">储存在 SessionBag 中的当前用户 会话 SessionKey</param>
+            <param name="encryptedData">接口返回数据中的 encryptedData 参数</param>
+            <param name="iv">接口返回数据中的 iv 参数，对称解密算法初始向量</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Helpers.EncryptHelper.DecodeEncryptedDataBySessionId(System.String,System.String,System.String)">
+            <summary>
+            解密消息（通过SessionId获取）
+            </summary>
+            <param name="sessionId"></param>
+            <param name="encryptedData"></param>
+            <param name="iv"></param>
+            <exception cref="T:Senparc.Weixin.WxOpen.WxOpenException">当SessionId或SessionKey无效时抛出异常</exception>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Helpers.EncryptHelper.CheckWatermark(Senparc.Weixin.WxOpen.Entities.DecodeEntityBase,System.String)">
+            <summary>
+            检查解密消息水印
+            </summary>
+            <param name="entity"></param>
+            <param name="appId"></param>
+            <returns>entity为null时也会返回false</returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Helpers.EncryptHelper.DecodeEncryptedDataToEntity``1(System.String,System.String,System.String)">
+            <summary>
+            解密到实例信息
+            </summary>
+            <typeparam name="T">DecodeEntityBase</typeparam>
+            <param name="sessionId"></param>
+            <param name="encryptedData"></param>
+            <param name="iv"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Helpers.EncryptHelper.DecodeUserInfoBySessionId(System.String,System.String,System.String)">
+            <summary>
+            解密UserInfo消息（通过SessionId获取）
+            </summary>
+            <param name="sessionId"></param>
+            <param name="encryptedData"></param>
+            <param name="iv"></param>
+            <exception cref="T:Senparc.Weixin.WxOpen.WxOpenException">当SessionId或SessionKey无效时抛出异常</exception>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Helpers.EncryptHelper.DecryptPhoneNumber(System.String,System.String,System.String)">
+            <summary>
+            解密手机号
+            </summary>
+            <param name="encryptedData"></param>
+            <param name="iv"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Helpers.EncryptHelper.DecryptRunData(System.String,System.String,System.String)">
+            <summary>
+            解密微信小程序运动步数
+            2019-04-02
+            </summary>
+            <param name="sessionId"></param>
+            <param name="encryptedData"></param>
+            <param name="iv"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Helpers.SessionHelper">
+            <summary>
+            Session帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Helpers.SessionHelper.GetNewThirdSessionName(System.Int32)">
+            <summary>
+            获取新的3rdSession名称
+            </summary>
+            <param name="bSize">Session名称长度，单位：B，建议为16的倍数，通常情况下16B已经够用（32位GUID字符串）</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.MessageContexts.DefaultWxOpenMessageContext">
+            <summary>
+            小程序上下文消息的默认实现
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageContexts.DefaultWxOpenMessageContext.GetRequestEntityMappingResult(Senparc.NeuChar.RequestMsgType,System.Xml.Linq.XDocument)">
+            <summary>
+            获取请求消息和实体之间的映射结果
+            </summary>
+            <param name="requestMsgType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageContexts.DefaultWxOpenMessageContext.GetResponseEntityMappingResult(Senparc.NeuChar.ResponseMsgType,System.Xml.Linq.XDocument)">
+            <summary>
+            获取响应消息和实体之间的映射结果
+            </summary>
+            <param name="responseMsgType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1">
+            <summary>
+            小程序MessageHandler
+            </summary>
+            <typeparam name="TMC">上下文MessageContext类型</typeparam>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.EcryptRequestDocument">
+            <summary>
+            原始的加密请求（如果不加密则为null）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.RequestMessage">
+            <summary>
+            请求实体
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.ResponseMessage">
+            <summary>
+            响应实体
+            正常情况下只有当执行Execute()方法后才可能有值。
+            也可以结合Cancel，提前给ResponseMessage赋值。
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.MessageEntityEnlightener">
+            <summary>
+            请求和响应消息定义
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.ApiEnlightener">
+            <summary>
+            Api 接口定义
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OmitRepeatedMessageFunc">
+            <summary>
+            动态去重判断委托，仅当返回值为false时，不使用消息去重功能
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.#ctor(System.IO.Stream,Senparc.Weixin.WxOpen.Entities.Request.PostModel,System.Int32,System.Boolean)">
+            <summary>
+            小程序MessageHandler构造函数
+            </summary>
+            <param name="inputStream">XML流（后期会支持JSON）</param>
+            <param name="postModel">PostModel</param>
+            <param name="maxRecordCount">上下文最多保留消息（0为保存所有）</param>
+            <param name="onlyAllowEcryptMessage">当平台同时兼容明文消息和加密消息时，只允许处理加密消息（不允许处理明文消息），默认为 False</param>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.#ctor(System.Xml.Linq.XDocument,Senparc.Weixin.WxOpen.Entities.Request.PostModel,System.Int32,System.Boolean)">
+            <summary>
+            小程序MessageHandler构造函数
+            </summary>
+            <param name="requestDocument">XML格式的请求</param>
+            <param name="postModel">PostModel</param>
+            <param name="maxRecordCount">上下文最多保留消息（0为保存所有）</param>
+            <param name="onlyAllowEcryptMessage">当平台同时兼容明文消息和加密消息时，只允许处理加密消息（不允许处理明文消息），默认为 False</param>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.#ctor(Senparc.NeuChar.Entities.RequestMessageBase,Senparc.Weixin.WxOpen.Entities.Request.PostModel,System.Int32,System.Boolean)">
+            <summary>
+            小程序MessageHandler构造函数
+            </summary>
+            <param name="requestMessageBase">RequestMessageBase</param>
+            <param name="postModel">PostModel</param>
+            <param name="maxRecordCount">上下文最多保留消息（0为保存所有）</param>
+            <param name="onlyAllowEcryptMessage">当平台同时兼容明文消息和加密消息时，只允许处理加密消息（不允许处理明文消息），默认为 False</param>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.Init(System.Xml.Linq.XDocument,Senparc.NeuChar.IEncryptPostModel)">
+            <summary>
+            初始化数据
+            </summary>
+            <param name="postDataDocument"></param>
+            <param name="postModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.BuildResponseMessageAsync(System.Threading.CancellationToken)">
+            <summary>
+            执行微信请求
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEventRequest(Senparc.Weixin.WxOpen.Entities.IRequestMessageEventBase)">
+            <summary>
+            Event事件类型请求
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_UserEnterTempSessionRequest(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_UserEnterTempSession)">
+            <summary>
+            进入客服会话事件
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_AddNearbyPoiAuditInfoRequest(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_AddNearbyPoiAuditInfo)">
+            <summary>
+            地点审核事件
+            </summary>
+            <param name="requestMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_WeAppAuditDelayRequest(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditDelay)">
+            <summary>
+            小程序审核延后通知
+            </summary>
+            <param name="requestMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_WeAppAuditFailRequest(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditFail)">
+            <summary>
+            小程序审核失败通知
+            </summary>
+            <param name="requestMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_WeAppAuditSuccessRequest(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditSuccess)">
+            <summary>
+            小程序审核成功通知
+            </summary>
+            <param name="requestMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_NicknameAuditRequest(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_NicknameAudit)">
+            <summary>
+            名称审核结果事件推送
+            </summary>
+            <param name="requestMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEventRequestAsync(Senparc.Weixin.WxOpen.Entities.IRequestMessageEventBase)">
+            <summary>
+            【异步方法】Event事件类型请求
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_UserEnterTempSessionRequestAsync(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_UserEnterTempSession)">
+            <summary>
+            【异步方法】进入客服会话事件
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_AddNearbyPoiAuditInfoRequestAsync(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_AddNearbyPoiAuditInfo)">
+            <summary>
+            【异步方法】地点审核事件
+            </summary>
+            <param name="requestMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_WeAppAuditDelayRequestAsync(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditDelay)">
+            <summary>
+            小程序审核延后通知
+            </summary>
+            <param name="requestMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_WeAppAuditFailRequestAsync(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditFail)">
+            <summary>
+            小程序审核失败通知
+            </summary>
+            <param name="requestMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_WeAppAuditSuccessRequestAsync(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_WeAppAuditSuccess)">
+            <summary>
+            小程序审核成功通知
+            </summary>
+            <param name="requestMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnEvent_NicknameAuditRequestAsync(Senparc.Weixin.WxOpen.Entities.RequestMessageEvent_NicknameAudit)">
+            <summary>
+            名称审核结果事件推送
+            </summary>
+            <param name="requestMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.DefaultResponseMessage(Senparc.NeuChar.Entities.IRequestMessageBase)">
+            <summary>
+            默认返回消息（当任何OnXX消息没有被重写，都将自动返回此默认消息）
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnTextRequest(Senparc.Weixin.WxOpen.Entities.RequestMessageText)">
+            <summary>
+            文字类型请求
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.MessageHandlers.WxOpenMessageHandler`1.OnImageRequest(Senparc.Weixin.WxOpen.Entities.RequestMessageImage)">
+            <summary>
+            图片类型请求
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.Register">
+            <summary>
+            注册小程序
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Register.RegisterWxOpenAccount(Senparc.CO2NET.RegisterServices.IRegisterService,System.String,System.String,System.String)">
+            <summary>
+            注册小程序信息
+            </summary>
+            <param name="registerService">RegisterService</param>
+            <param name="appId">微信公众号后台的【开发】>【基本配置】中的“AppID(应用ID)”</param>
+            <param name="appSecret">微信公众号后台的【开发】>【基本配置】中的“AppSecret(应用密钥)”</param>
+            <param name="name">标记AccessToken名称（如微信公众号名称），帮助管理员识别</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.Register.RegisterWxOpenAccount(Senparc.CO2NET.RegisterServices.IRegisterService,Senparc.Weixin.Entities.ISenparcWeixinSettingForWxOpen,System.String)">
+            <summary>
+            根据 SenparcWeixinSetting 自动注册小程序信息
+            </summary>
+            <param name="registerService">RegisterService</param>
+            <param name="weixinSettingForWxOpen">SenparcWeixinSetting</param>
+            <param name="name">统一标识，如果为null，则使用 SenparcWeixinSetting.ItemKey </param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WxOpen.RequestMessageFactory">
+            <summary>
+            RequestMessage消息处理方法工厂类
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.RequestMessageFactory.GetRequestEntity``1(``0,System.Xml.Linq.XDocument,Senparc.Weixin.WxOpen.Entities.Request.PostModel)">
+            <summary>
+            获取XDocument转换后的IRequestMessageBase实例。
+            如果MsgType不存在，抛出UnknownRequestMsgTypeException异常
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.RequestMessageFactory.GetRequestEntity``1(``0,System.String)">
+            <summary>
+            获取XML转换后的IRequestMessageBase实例。
+            如果MsgType不存在，抛出UnknownRequestMsgTypeException异常
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WxOpen.RequestMessageFactory.GetRequestEntity``1(``0,System.IO.Stream)">
+            <summary>
+            获取内容为XML的Stream转换后的IRequestMessageBase实例。
+            如果MsgType不存在，抛出UnknownRequestMsgTypeException异常
+            </summary>
+            <param name="stream">如Request.InputStream</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.MP.MessageHandlers.Middleware.WxOpenMessageHandlerMiddleware`1">
+            <summary>
+            小程序 MessageHandler 中间件
+            </summary>
+            <typeparam name="TMC">上下文类型</typeparam>
+        </member>
+        <member name="M:Senparc.Weixin.MP.MessageHandlers.Middleware.WxOpenMessageHandlerMiddleware`1.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,System.Func{System.IO.Stream,Senparc.Weixin.WxOpen.Entities.Request.PostModel,System.Int32,Senparc.NeuChar.MessageHandlers.MessageHandler{`0,Senparc.NeuChar.Entities.IRequestMessageBase,Senparc.NeuChar.Entities.IResponseMessageBase}},System.Action{Senparc.NeuChar.Middlewares.MessageHandlerMiddlewareOptions{Senparc.Weixin.Entities.ISenparcWeixinSettingForWxOpen}})">
+            <summary>
+            EnableRequestRewindMiddleware
+            </summary>
+            <param name="next"></param>
+        </member>
+        <member name="T:Senparc.Weixin.MP.MessageHandlers.Middleware.MessageHandlerMiddlewareExtension">
+            <summary>
+            公众号 MessageHandlerMiddleware 扩展类，用于提供简洁的注册过程
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.MP.MessageHandlers.Middleware.MessageHandlerMiddlewareExtension.UseMessageHandlerForWxOpen``1(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Http.PathString,System.Func{System.IO.Stream,Senparc.Weixin.WxOpen.Entities.Request.PostModel,System.Int32,Senparc.NeuChar.MessageHandlers.MessageHandler{``0,Senparc.NeuChar.Entities.IRequestMessageBase,Senparc.NeuChar.Entities.IResponseMessageBase}},System.Action{Senparc.NeuChar.Middlewares.MessageHandlerMiddlewareOptions{Senparc.Weixin.Entities.ISenparcWeixinSettingForWxOpen}})">
+            <summary>
+            使用 MessageHandler 配置。注意：会默认使用异步方法 messageHandler.ExecuteAsync()。
+            </summary>
+            <param name="builder"></param>
+            <param name="pathMatch">路径规则（路径开头，可带参数），此路径用于提供微信后台 Url 校验及消息推送</param>
+            <param name="messageHandler"></param>
+            <param name="options"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

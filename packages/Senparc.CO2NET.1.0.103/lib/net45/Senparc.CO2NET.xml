@@ -1,0 +1,2404 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Senparc.CO2NET</name>
+    </assembly>
+    <members>
+        <member name="T:Senparc.CO2NET.Cache.LocalCacheLock">
+            <summary>
+            本地锁
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Cache.LocalCacheLock.LockPool">
+            <summary>
+            锁存放容器   TODO：考虑分布式情况
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Cache.LocalCacheLock._rnd">
+            <summary>
+            随机数
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Cache.LocalCacheLock.lookPoolLock">
+            <summary>
+            读取LockPool时的锁
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.LocalCacheLock.CreateAndLock(Senparc.CO2NET.Cache.IBaseCacheStrategy,System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
+            <summary>
+            创建 LocalCacheLock 实例，并立即尝试获得锁
+            </summary>
+            <param name="strategy">LocalObjectCacheStrategy</param>
+            <param name="resourceName"></param>
+            <param name="key"></param>
+            <param name="retryCount"></param>
+            <param name="retryDelay"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.LocalCacheLock.Lock">
+            <summary>
+            立即等待并抢夺锁
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.LocalCacheLock.CreateAndLockAsync(Senparc.CO2NET.Cache.IBaseCacheStrategy,System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
+            <summary>
+            【异步方法】创建 LocalCacheLock 实例，并立即尝试获得锁
+            </summary>
+            <param name="strategy">LocalObjectCacheStrategy</param>
+            <param name="resourceName"></param>
+            <param name="key"></param>
+            <param name="retryCount"></param>
+            <param name="retryDelay"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.LocalObjectCacheHelper">
+            <summary>
+            全局静态数据源帮助类
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Cache.LocalObjectCacheHelper.LocalObjectCache">
+            <summary>
+            所有数据集合的列表
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.LocalObjectCacheStrategy">
+            <summary>
+            本地容器缓存策略
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.LocalObjectCacheStrategy.#ctor">
+            <summary>
+             LocalCacheStrategy的构造函数
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.LocalObjectCacheStrategy.Get``1(System.String,System.Boolean)">
+            <summary>
+            返回指定缓存键的对象，并强制指定类型
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.LocalObjectCacheStrategy.GetAsync``1(System.String,System.Boolean)">
+            <summary>
+            返回指定缓存键的对象，并强制指定类型
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.CacheStrategyDomainMappingItem">
+            <summary>
+            领域内不同类型缓存 -> 底层（CO2NET 级别） 的映射关系
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Cache.CacheStrategyDomainMappingItem.DomainExtensionCacheStrategy">
+            <summary>
+            扩展缓存策略（例如RedisContainerCacheStrategy）
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Cache.CacheStrategyDomainMappingItem.BaseObjectCacheStrategy">
+            <summary>
+            扩展缓存策略所使用的底层缓存策略（如RedisCacheStrategy）
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheStrategyDomainMappingItem.#ctor(Senparc.CO2NET.Cache.IDomainExtensionCacheStrategy)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="domainExtensionCacheStrategy">扩展缓存策略（例如RedisContainerCacheStrategy）</param>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.CacheStrategyDomainMappingCollection">
+            <summary>
+            某一个领域内的缓存策略集合
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheStrategyDomainMappingCollection.AddOrUpdate(Senparc.CO2NET.Cache.CacheStrategyDomainMappingItem)">
+            <summary>
+            添加或更新缓存策略映射
+            </summary>
+            <param name="domainCacheStrategy"></param>
+            <param name="item"></param>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.CacheStrategyDomainWarehouse">
+            <summary>
+            领域缓存仓库
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheStrategyDomainWarehouse.GetMappingCollection(System.String)">
+            <summary>
+            获取某个领域内的所有CacheStrategyDomainMappingCollection
+            </summary>
+            <param name="identityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheStrategyDomainWarehouse.RegisterCacheStrategyDomain(Senparc.CO2NET.Cache.IDomainExtensionCacheStrategy)">
+            <summary>
+            注册领域缓存
+            </summary>
+            <param name="domainCacheStrategy"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheStrategyDomainWarehouse.GetDomainExtensionCacheStrategy(Senparc.CO2NET.Cache.IBaseObjectCacheStrategy,Senparc.CO2NET.Cache.ICacheStrategyDomain)">
+            <summary>
+            获取领域缓存（指定特定 的IBaseObjectCacheStrategy 缓存策略对象）
+            </summary>
+            <param name="baseObjectCacheStrategy">IBaseObjectCacheStrategy 缓存策略对象</param>
+            <param name="cacheStrategyDomain">缓存领域</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheStrategyDomainWarehouse.ClearRegisteredDomainExtensionCacheStrategies">
+            <summary>
+            清空所有已经祖册的领域缓存对象
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheStrategyDomainWarehouse.AutoScanDomainCacheStrategy(System.Boolean,System.Func{System.Collections.Generic.IList{Senparc.CO2NET.Cache.IDomainExtensionCacheStrategy}})">
+             <summary>
+             自动注册领域缓存
+             </summary>
+             <param name="autoScanExtensionCacheStrategies">是否自动扫描全局的扩展缓存（会增加系统启动时间）</param>
+             <param name="extensionCacheStrategiesFunc"><para>需要手动注册的扩展缓存策略</para>
+             <para>（LocalContainerCacheStrategy、RedisContainerCacheStrategy、MemcacheContainerCacheStrategy已经自动注册），</para>
+             <para>如果设置为 null（注意：不适委托返回 null，是整个委托参数为 null），则自动使用反射扫描所有可能存在的扩展缓存策略</para></param>
+            <returns>返回所有添加的类型</returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.ICacheStrategyDomain">
+            <summary>
+            <para>扩展领域缓存策略</para>
+            <para>注意：实现此接口的类必须使用单例模式！</para>
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Cache.ICacheStrategyDomain.IdentityName">
+            <summary>
+            唯一名称（建议使用GUID）
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Cache.ICacheStrategyDomain.DomainName">
+            <summary>
+            域的名称
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.IDomainExtensionCacheStrategy">
+            <summary>
+            领域扩展（非 CO2NET 级别的缓存策略）接口，例如作为 LocalContainerCacheStrategy 的接口
+            <para>注意：实现此接口的类必须使用单例模式！</para>
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Cache.IDomainExtensionCacheStrategy.CacheStrategyDomain">
+            <summary>
+            领域缓存定义
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Cache.IDomainExtensionCacheStrategy.BaseCacheStrategy">
+            <summary>
+            使用的基础缓存策略
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IDomainExtensionCacheStrategy.RegisterCacheStrategyDomain(Senparc.CO2NET.Cache.IDomainExtensionCacheStrategy)">
+            <summary>
+            向底层缓存注册当前缓存策略
+            </summary>
+            <param name="extensionCacheStrategy">扩展缓存策略实例</param>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.CacheStrategyFactory">
+            <summary>
+            缓存策略工厂。
+            <para>缓存策略的注册（立即启用）和当前缓存策略获取</para>
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheStrategyFactory.RegisterObjectCacheStrategy(System.Func{Senparc.CO2NET.Cache.IBaseObjectCacheStrategy})">
+            <summary>
+            注册当前全局环境下的缓存策略，并立即启用。
+            </summary>
+            <param name="func">如果为 null，将使用默认的本地缓存策略（LocalObjectCacheStrategy.Instance）</param>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheStrategyFactory.GetObjectCacheStrategyInstance">
+            <summary>
+            获取全局缓存策略
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheStrategyFactory.GetExtensionCacheStrategyInstance(Senparc.CO2NET.Cache.ICacheStrategyDomain)">
+            <summary>
+            获取指定领域缓存的换存策略
+            </summary>
+            <param name="cacheStrategyDomain">领域缓存信息（需要为单例）CacheStrategyDomain</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.BaseCacheStrategy">
+            <summary>
+            泛型缓存策略基类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.BaseCacheStrategy.GetFinalKey(System.String,System.Boolean)">
+            <summary>
+            获取拼装后的FinalKey
+            </summary>
+            <param name="key">键</param>
+            <param name="isFullKey">是否已经是经过拼接的FullKey</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.BaseCacheStrategy.BeginCacheLock(System.String,System.String,System.Int32,System.TimeSpan)">
+            <summary>
+            获取一个同步锁
+            </summary>
+            <param name="resourceName"></param>
+            <param name="key"></param>
+            <param name="retryCount"></param>
+            <param name="retryDelay"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.BaseCacheStrategy.BeginCacheLockAsync(System.String,System.String,System.Int32,System.TimeSpan)">
+            <summary>
+            【异步方法】创建一个（分布）锁
+            </summary>
+            <param name="resourceName">资源名称</param>
+            <param name="key">Key标识</param>
+            <param name="retryCount">重试次数</param>
+            <param name="retryDelay">重试延时</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.IBaseCacheStrategy">
+            <summary>
+            最底层的缓存策略接口
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy.BeginCacheLock(System.String,System.String,System.Int32,System.TimeSpan)">
+            <summary>
+            创建一个（分布）锁
+            </summary>
+            <param name="resourceName">资源名称</param>
+            <param name="key">Key标识</param>
+            <param name="retryCount">重试次数</param>
+            <param name="retryDelay">重试延时</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy.BeginCacheLockAsync(System.String,System.String,System.Int32,System.TimeSpan)">
+            <summary>
+            【异步方法】创建一个（分布）锁
+            </summary>
+            <param name="resourceName">资源名称</param>
+            <param name="key">Key标识</param>
+            <param name="retryCount">重试次数</param>
+            <param name="retryDelay">重试延时</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.IBaseCacheStrategy`2">
+            <summary>
+            公共缓存策略接口
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.GetFinalKey(System.String,System.Boolean)">
+            <summary>
+            获取缓存中最终的键，如Container建议格式： return String.Format("{0}:{1}", "SenparcWeixinContainer", key);
+            </summary>
+            <param name="key"></param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.InsertToCache(`0,`1,System.Nullable{System.TimeSpan})">
+            <summary>
+            添加指定ID的对象
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="value">缓存值</param>
+            <param name="expiry">过期时间</param>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.Set(`0,`1,System.Nullable{System.TimeSpan},System.Boolean)">
+            <summary>
+            添加指定ID的对象
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="value">缓存值</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <param name="expiry">过期时间</param>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.RemoveFromCache(`0,System.Boolean)">
+            <summary>
+            移除指定缓存键的对象
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.Get(`0,System.Boolean)">
+            <summary>
+            返回指定缓存键的对象
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.Get``1(`0,System.Boolean)">
+            <summary>
+            返回指定缓存键的对象，并强制指定类型
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.GetAll">
+            <summary>
+            获取所有缓存信息集合
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.CheckExisted(`0,System.Boolean)">
+            <summary>
+            检查是否存在Key及对象
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.GetCount">
+            <summary>
+            获取缓存集合总数（注意：每个缓存框架的计数对象不一定一致！）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.Update(`0,`1,System.Nullable{System.TimeSpan},System.Boolean)">
+            <summary>
+            更新缓存
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="value">缓存值</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <param name="expiry">过期时间</param>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.SetAsync(`0,`1,System.Nullable{System.TimeSpan},System.Boolean)">
+            <summary>
+            【异步方法】添加指定ID的对象
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="value">缓存值</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <param name="expiry">过期时间</param>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.RemoveFromCacheAsync(`0,System.Boolean)">
+            <summary>
+            【异步方法】移除指定缓存键的对象
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.GetAsync(`0,System.Boolean)">
+            <summary>
+            【异步方法】返回指定缓存键的对象
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.GetAsync``1(`0,System.Boolean)">
+            <summary>
+            【异步方法】返回指定缓存键的对象，并强制指定类型
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.GetAllAsync">
+            <summary>
+            【异步方法】获取所有缓存信息集合
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.CheckExistedAsync(`0,System.Boolean)">
+            <summary>
+            【异步方法】检查是否存在Key及对象
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.GetCountAsync">
+            <summary>
+            【异步方法】获取缓存集合总数（注意：每个缓存框架的计数对象不一定一致！）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.IBaseCacheStrategy`2.UpdateAsync(`0,`1,System.Nullable{System.TimeSpan},System.Boolean)">
+            <summary>
+            【异步方法】更新缓存
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="value">缓存值</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <param name="expiry">过期时间</param>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.BaseCacheLock">
+            <summary>
+            缓存同步锁基类
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Cache.BaseCacheLock.DefaultRetryCount">
+            <summary>
+            默认重试次数
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Cache.BaseCacheLock.DefaultRetryDelay">
+            <summary>
+            默认每次重试间隔时间
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.BaseCacheLock.#ctor(Senparc.CO2NET.Cache.IBaseCacheStrategy,System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.TimeSpan})">
+            <summary>
+            
+            </summary>
+            <param name="strategy"></param>
+            <param name="resourceName"></param>
+            <param name="key"></param>
+            <param name="retryCount">如果传入null，默认为50</param>
+            <param name="retryDelay">如果传入null，默认为10毫秒</param>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.BaseCacheLock.GetTotalTtl(System.Int32,System.TimeSpan)">
+            <summary>
+            获取最长锁定时间（锁最长生命周期），单位：毫秒
+            </summary>
+            <param name="retryCount">重试次数，</param>
+            <param name="retryDelay">最小锁定时间周期</param>
+            <returns>单位：Milliseconds，毫秒</returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.BaseCacheLock.Finalize">
+            <summary>
+             必须，以备程序员忘记了显式调用Dispose方法
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.BaseCacheLock.Dispose(System.Boolean)">
+            <summary>
+             非密封类修饰用protected virtual
+             密封类修饰用private
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.BaseCacheLock.Lock">
+            <summary>
+            立即开始锁定，需要在子类的构造函数中执行
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.ICacheLock">
+            <summary>
+            缓存锁接口
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Cache.ICacheLock.LockSuccessful">
+            <summary>
+            是否成功获得锁
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.ICacheLock.GetTotalTtl(System.Int32,System.TimeSpan)">
+            <summary>
+            获取最长锁定时间（锁最长生命周期）
+            </summary>
+            <param name="retryCount">重试次数，</param>
+            <param name="retryDelay">最小锁定时间周期</param>
+            <returns>单位：Milliseconds，毫秒</returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.ICacheLock.Lock">
+            <summary>
+            开始锁
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.ICacheLock.UnLock">
+            <summary>
+            释放锁
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.ICacheLock.LockAsync">
+            <summary>
+            开始锁
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.ICacheLock.UnLockAsync">
+            <summary>
+            释放锁
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.CacheWrapper`1">
+            <summary>
+            用于提供给缓存储存的封装对象，包含了对象类型（Type）信息
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.CacheSerializeExtension">
+            <summary>
+            缓存序列化扩展方法，所有（分布式）缓存的序列化、反序列化过程必须使用这里的方法统一读写
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheSerializeExtension.SerializeToCache``1(``0)">
+            <summary>
+            序列化到缓存可用的对象
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheSerializeExtension.DeserializeFromCache(System.String,System.Type)">
+            <summary>
+            从缓存对象反序列化到实例
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Cache.CacheSerializeExtension.DeserializeFromCache``1(System.String)">
+            <summary>
+            从缓存对象反序列化到实例（效率更高，推荐）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Cache.IBaseObjectCacheStrategy">
+            <summary>
+            所有以 string 类型为 key ，object 为 value 的缓存策略接口
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Config">
+            <summary>
+            Senparc.CO2NET 全局设置
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Config.SenparcSetting">
+            <summary>
+            <para>全局配置</para>
+            <para>在 startup.cs 中运行 RegisterServiceExtension.AddSenparcGlobalServices() 即可自动注入</para>
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Config.IsDebug">
+            <summary>
+            指定是否是Debug状态，如果是，系统会自动输出日志
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Config.TIME_OUT">
+            <summary>
+            请求超时设置（以毫秒为单位），默认为10秒。
+            说明：此处常量专为提供给方法的参数的默认值，不是方法内所有请求的默认超时时间。
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Config.MaxJsonLength">
+            <summary>
+            JavaScriptSerializer 类接受的 JSON 字符串的最大长度
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Config.DefaultCacheNamespace">
+            <summary>
+            默认缓存键的第一级命名空间，默认值：DefaultCache
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Config.RootDictionaryPath">
+            <summary>
+            网站根目录绝对路径
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Enums">
+            <summary>
+            枚举
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Enums.DayOfWeekString">
+            <summary>
+            星期
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.CacheType">
+            <summary>
+            缓存类型
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.CacheType.Local">
+            <summary>
+            本地运行时缓存（单机）
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.CacheType.Redis">
+            <summary>
+            Redis缓存（支持分布式）
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.CacheType.Memcached">
+            <summary>
+            Memcached（支持分布式）
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Sex">
+            <summary>
+            用户信息中的性别（sex）
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.DILifecycleType">
+            <summary>
+            依赖注入的生命周期
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Exceptions.BaseException">
+            <summary>
+            异常基类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Exceptions.BaseException.#ctor(System.String,System.Boolean)">
+            <summary>
+            BaseException 构造函数
+            </summary>
+            <param name="message"></param>
+            <param name="logged"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.Exceptions.BaseException.#ctor(System.String,System.Exception,System.Boolean)">
+            <summary>
+            BaseException
+            </summary>
+            <param name="message">异常消息</param>
+            <param name="inner">内部异常信息</param>
+            <param name="logged">是否已经使用WeixinTrace记录日志，如果没有，BaseException会进行概要记录</param>
+        </member>
+        <member name="T:Senparc.CO2NET.Exceptions.CacheException">
+            <summary>
+            缓存异常
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Exceptions.CacheException.#ctor(System.String,System.Exception,System.Boolean)">
+            <summary>
+            缓存异常构造函数
+            </summary>
+            <param name="message"></param>
+            <param name="inner"></param>
+            <param name="logged"></param>
+        </member>
+        <member name="T:Senparc.CO2NET.Exceptions.FileValueException">
+            <summary>
+            FormFileData 的异常
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Exceptions.FileValueException.#ctor(Senparc.CO2NET.Utilities.HttpUtility.HttpPost.FormFileData,System.String,System.Exception,System.Boolean)">
+            <summary>
+            FormFileData 的异常
+            </summary>
+            <param name="formFileData">FormFileData实体，不可为 null</param>
+            <param name="message"></param>
+            <param name="inner"></param>
+            <param name="logged"></param>
+        </member>
+        <member name="T:Senparc.CO2NET.Exceptions.HttpException">
+            <summary>
+            缓存异常
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Exceptions.HttpException.#ctor(System.String,System.Exception,System.Boolean)">
+            <summary>
+            缓存异常构造函数
+            </summary>
+            <param name="message"></param>
+            <param name="inner"></param>
+            <param name="logged"></param>
+        </member>
+        <member name="T:Senparc.CO2NET.Exceptions.UnregisteredDomainCacheStrategyException">
+            <summary>
+            领域缓存未注册异常
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Exceptions.UnregisteredDomainCacheStrategyException.#ctor(System.Type,System.Type)">
+            <summary>
+            UnregisteredDomainCacheStrategyException 构造函数
+            </summary>
+            <param name="domainCacheStrategyType"></param>
+            <param name="objectCacheStrategyType"></param>
+        </member>
+        <member name="T:Senparc.CO2NET.ExtensionEntities.XmlDocument_XxeFixed">
+            <summary>
+            解决 XXE 漏洞，自动将 XmlResolver 设为 null
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.ExtensionEntities.XmlDocument_XxeFixed.#ctor(System.Xml.XmlResolver)">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Extensions.ObjectExtensions">
+            <summary>
+            扩展方法
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Extensions.ObjectExtensions.ToJson(System.Object,System.Boolean,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            把数据转换为Json格式（使用Newtonsoft.Json.dll）
+            </summary>
+            <param name="data">数据</param>
+            <param name="indented">是否使用缩进格式</param>
+            <param name="jsonSerializerSettings">序列化设置（默认为null）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Extensions.ObjectExtensions.IsNullOrWhiteSpace(System.String)">
+            <summary>
+            string.IsNullOrWhiteSpace()的扩展方法
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Extensions.ObjectExtensions.IsNullOrEmpty(System.String)">
+            <summary>
+            string.IsNullOrEmpty()的扩展方法
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Extensions.ObjectExtensions.FormatWith(System.String,System.Object[])">
+            <summary>
+            string.Format()的扩展方法
+            </summary>
+            <param name="format"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Extensions.WebCodingExtensions">
+            <summary>
+            用于网页的HTML、Url编码/解码
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Extensions.WebCodingExtensions.HtmlEncode(System.String)">
+            <summary>
+            封装System.Web.HttpUtility.HtmlEncode
+            </summary>
+            <param name="html"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Extensions.WebCodingExtensions.HtmlDecode(System.String)">
+            <summary>
+            封装System.Web.HttpUtility.HtmlDecode
+            </summary>
+            <param name="html"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Extensions.WebCodingExtensions.UrlEncode(System.String,System.Text.Encoding)">
+            <summary>
+            封装 System.Web.HttpUtility.UrlEncode
+            <para>注意：.NET Core 转义后字母为大写</para>
+            </summary>
+            <param name="url"></param>
+            <param name="encoding">编码，默认为 UTF8</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Extensions.WebCodingExtensions.UrlDecode(System.String,System.Text.Encoding)">
+            <summary>
+            封装System.Web.HttpUtility.UrlDecode
+            </summary>
+            <param name="url"></param>
+            <param name="encoding">编码，默认为 UTF8</param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Senparc.CO2NET.Extensions.WebCodingExtensions.AsUrlData(System.String)" -->
+        <member name="T:Senparc.CO2NET.Helpers.DateTimeHelper">
+            <summary>
+            微信日期处理帮助类
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Helpers.DateTimeHelper.BaseTime">
+            <summary>
+            Unix起始时间
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.DateTimeHelper.GetDateTimeFromXml(System.Int64)">
+            <summary>
+            转换微信DateTime时间到C#时间
+            </summary>
+            <param name="dateTimeFromXml">微信DateTime</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.DateTimeHelper.GetDateTimeFromXml(System.String)">
+            <summary>
+            转换微信DateTime时间到C#时间
+            </summary>
+            <param name="dateTimeFromXml">微信DateTime</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.DateTimeHelper.GetDateTimeOffsetFromXml(System.Int64)">
+            <summary>
+            转换微信DateTimeOffset时间到C#时间
+            </summary>
+            <param name="dateTimeFromXml">微信DateTime</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.DateTimeHelper.GetDateTimeOffsetFromXml(System.String)">
+            <summary>
+            转换微信DateTimeOffset时间到C#时间
+            </summary>
+            <param name="dateTimeFromXml">微信DateTime</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.DateTimeHelper.GetWeixinDateTime(System.DateTime)">
+            <summary>
+            获取微信DateTime（UNIX时间戳）
+            </summary>
+            <param name="dateTime">时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.DateTimeHelper.GetUnixDateTime(System.DateTimeOffset)">
+            <summary>
+            获取Unix时间戳
+            </summary>
+            <param name="dateTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.DateTimeHelper.GetUnixDateTime(System.DateTime)">
+            <summary>
+            获取Unix时间戳
+            </summary>
+            <param name="dateTime"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.EntityHelper">
+            <summary>
+            实体帮助类
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:Senparc.CO2NET.Helpers.IDictionaryExtensions" -->
+        <member name="M:Senparc.CO2NET.Helpers.IDictionaryExtensions.ToExpando(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Extension method that turns a dictionary of string and object to an ExpandoObject
+            Snagged from http://theburningmonk.com/2011/05/idictionarystring-object-to-expandoobject-extension-method/
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.FileHelper">
+            <summary>
+            文件帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.FileHelper.GetFileStream(System.String)">
+            <summary>
+            根据完整文件路径获取FileStream
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.FileHelper.DownLoadFileFromUrl(System.String,System.String)">
+            <summary>
+            从Url下载文件
+            </summary>
+            <param name="url"></param>
+            <param name="fullFilePathAndName"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.FileHelper.FileInUse(System.String)">
+            <summary>
+            判断文件是否正在被使用
+            </summary>
+            <param name="filePath">文件路径</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.GpsHelper">
+            <summary>
+            GPS 帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.GpsHelper.Distance(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            计算两点GPS坐标的距离（单位：米）
+            </summary>
+            <param name="n1">第一点的纬度坐标</param>
+            <param name="e1">第一点的经度坐标</param>
+            <param name="n2">第二点的纬度坐标</param>
+            <param name="e2">第二点的经度坐标</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.GpsHelper.Distance2(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            给定的经度1，纬度1；经度2，纬度2. 计算2个经纬度之间的距离。
+            </summary>
+            <param name="lat1">经度1</param>
+            <param name="lon1">纬度1</param>
+            <param name="lat2">经度2</param>
+            <param name="lon2">纬度2</param>
+            <returns>距离（公里、千米）</returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.GpsHelper.ConvertDegreesToRadians(System.Double)">
+            <summary>
+            将角度换算为弧度。
+            </summary>
+            <param name="degrees">角度</param>
+            <returns>弧度</returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.GpsHelper.GetLatitudeDifference(System.Double)">
+            <summary>
+            获取维度差
+            </summary>
+            <param name="km">千米</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.GpsHelper.GetLongitudeDifference(System.Double)">
+            <summary>
+            获取经度差
+            </summary>
+            <param name="km">千米</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.BaiduMapHelper">
+            <summary>
+            百度地图静态图片API，文档：http://api.map.baidu.com/lbsapi/cloud/staticimg.htm
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.BaiduMapHelper.GetBaiduStaticMap(System.Double,System.Double,System.Int32,System.Int32,System.Collections.Generic.IList{Senparc.CO2NET.Helpers.BaiduMap.BaiduMarkers},System.Int32,System.Int32)">
+             <summary>
+             获取百度地图静态图片
+             </summary>
+             <param name="lng">中心点经度</param>
+             <param name="lat">中心点维度</param>
+             <param name="scale">返回图片大小会根据此标志调整。取值范围为1或2：
+            1表示返回的图片大小为size= width * height;
+            2表示返回图片为(width*2)*(height *2)，且zoom加1
+            注：如果zoom为最大级别，则返回图片为（width*2）*（height*2），zoom不变。</param>
+             <param name="zoom">地图级别。高清图范围[3, 18]；低清图范围[3,19]</param>
+             <param name="markersList">标记列表，如果为null则不输出标记</param>
+             <param name="width">图片宽度。取值范围：(0, 1024]。</param>
+             <param name="height">图片高度。取值范围：(0, 1024]。</param>
+             <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.BaiduMap.BaiduMarkerSize">
+            <summary>
+            标记大小
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.BaiduMap.BaiduMarkers">
+            <summary>
+            百度地图标记
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.BaiduMap.BaiduMarkers.Size">
+            <summary>
+            （可选）有大中小三个值，分别为s、m、l。
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.BaiduMap.BaiduMarkers.Color">
+            <summary>
+            （可选）Color = [0x000000, 0xffffff]或使用css定义的颜色表。
+            black 0x000000 
+            silver 0xC0C0C0 
+            gray 0x808080 
+            white 0xFFFFFF 
+            maroon 0x800000
+            red 0xFF0000 
+            purple 0x800080 
+            fuchsia 0xFF00FF 
+            green 0x008000
+            lime 0x00FF00 
+            olive 0x808000 
+            yellow 0xFFFF00 
+            navy 0x000080 
+            blue 0x0000FF
+            teal 0x008080 
+            aqua 0x00FFFF
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.BaiduMap.BaiduMarkers.Label">
+            <summary>
+            （可选）指定集合 {A-Z, 0-9} 中的一个大写字母数字字符。不指定时显示A。
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.BaiduMap.BaiduMarkers.url">
+            <summary>
+            自定义icon的地址，图片格式目前仅支持png32的。设置自定义图标标注时，忽略Size、Color、Label三个属性，只设置该属性且该属性前增加-1，如markerStyles=-1, http://api.map.baidu.com/images/marker_red.png，图标大小需小于5k，超过该值会导致加载不上图标的情况发生。
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.BaiduMap.BaiduMarkers.Longitude">
+            <summary>
+            经度longitude（对应GoogleMap的X）
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.BaiduMap.BaiduMarkers.Latitude">
+            <summary>
+            纬度latitude（对应GoogleMap的Y）
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.GoogleMapHelper">
+            <summary>
+            谷歌地图帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.GoogleMapHelper.GetGoogleStaticMap(System.Int32,System.Collections.Generic.IList{Senparc.CO2NET.Helpers.GoogleMap.GoogleMapMarkers},System.String)">
+            <summary>
+            获取谷歌静态地图Url。API介绍：https://developers.google.com/maps/documentation/staticmaps/?hl=zh-CN
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.GoogleMap.GoogleMapMarkerSize">
+            <summary>
+            标记大小
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.GoogleMap.GoogleMapMarkers">
+            <summary>
+            谷歌地图标记
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.GoogleMap.GoogleMapMarkers.Size">
+            <summary>
+            （可选）指定集合 {tiny, mid, small} 中的标记大小。如果未设置 size 参数，标记将以其默认（常规）大小显示。
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.GoogleMap.GoogleMapMarkers.Color">
+            <summary>
+            （可选）指定 24 位颜色（例如 color=0xFFFFCC）或集合 {black, brown, green, purple, yellow, blue, gray, orange, red, white} 中预定义的一种颜色。
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.GoogleMap.GoogleMapMarkers.Label">
+            <summary>
+            （可选）指定集合 {A-Z, 0-9} 中的一个大写字母数字字符。
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.GoogleMap.GoogleMapMarkers.X">
+            <summary>
+            经度longitude
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.GoogleMap.GoogleMapMarkers.Y">
+            <summary>
+            纬度latitude
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.ReflectionHelper">
+            <summary>
+            反射帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.ReflectionHelper.CreateInstance``1(System.String,System.String)">
+            <summary>
+            创建对象实例
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="fullName">命名空间.类型名</param>
+            <param name="assemblyName">程序集</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.ReflectionHelper.CreateInstance``1(System.String,System.String,System.String)">
+            <summary>
+            创建对象实例
+            </summary>
+            <typeparam name="T">要创建对象的类型</typeparam>
+            <param name="assemblyName">类型所在程序集名称</param>
+            <param name="nameSpace">类型所在命名空间</param>
+            <param name="className">类型名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.ReflectionHelper.GetStaticMember(System.String,System.String,System.String,System.String)">
+            <summary>
+            获取静态类属性
+            </summary>
+            <param name="assemblyName">类型所在程序集名称</param>
+            <param name="nameSpace">类型所在命名空间</param>
+            <param name="className">类型名</param>
+            <param name="memberName">属性名称（忽略大小写）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.ReflectionHelper.GetStaticMember(System.Type,System.String)">
+            <summary>
+            获取静态类属性
+            </summary>
+            <param name="type">类型</param>
+            <param name="memberName">属性名称（忽略大小写）</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.ExpandoJsonConverter">
+            <summary>
+            Allows JSON serialization of Expando objects into expected results (e.g., "x: 1, y: 2") instead of the default dictionary serialization.
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.Serializers.JsonSetting">
+            <summary>
+            JSON输出设置
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.Serializers.JsonSetting.IgnoreNulls">
+            <summary>
+            是否忽略当前类型以及具有IJsonIgnoreNull接口，且为Null值的属性。如果为true，符合此条件的属性将不会出现在Json字符串中
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.Serializers.JsonSetting.PropertiesToIgnoreNull">
+            <summary>
+            需要特殊忽略null值的属性名称
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.Serializers.JsonSetting.TypesToIgnoreNull">
+            <summary>
+            指定类型（Class，非Interface）下的为null属性不生成到Json中
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.Serializers.JsonSetting.ExcludedAttribute">
+            <summary>
+            例外属性，即不排除的属性值
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.Serializers.JsonSetting.EnumStringAttribute">
+            <summary>
+            枚举类型显示字符串
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.Serializers.JsonSetting.#ctor(System.Boolean,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Type})">
+            <summary>
+            JSON 输出设置 构造函数
+            </summary>
+            <param name="ignoreNulls">是否忽略当前类型以及具有IJsonIgnoreNull接口，且为Null值的属性。如果为true，符合此条件的属性将不会出现在Json字符串中</param>
+            <param name="propertiesToIgnoreNull">需要特殊忽略null值的属性名称</param>
+            <param name="typesToIgnoreNull">指定类型（Class，非Interface）下的为null属性不生成到Json中</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Senparc.CO2NET.Helpers.Serializers.JsonSettingWrap.#ctor(System.Boolean,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Type})" -->
+        <member name="F:Senparc.CO2NET.Helpers.Serializers.JsonContractResolver.IgnoreNulls">
+            <summary>
+            是否忽略当前类型以及具有IJsonIgnoreNull接口，且为Null值的属性。如果为true，符合此条件的属性将不会出现在Json字符串中
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.Serializers.JsonContractResolver.PropertiesToIgnoreNull">
+            <summary>
+            需要特殊忽略null值的属性名称
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Helpers.Serializers.JsonContractResolver.TypesToIgnoreNull">
+            <summary>
+            指定类型（Class，非Interface）下的为null属性不生成到Json中
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.Serializers.JsonContractResolver.#ctor(System.Boolean,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Type})">
+            <summary>
+            JSON 输出设置 构造函数  优先级： ignoreNulls &lt; propertiesToIgnoreNull &lt; typesToIgnoreNull
+            </summary>
+            <param name="ignoreNulls">是否忽略当前类型以及具有IJsonIgnoreNull接口，且为Null值的属性。如果为true，符合此条件的属性将不会出现在Json字符串中</param>
+            <param name="propertiesToIgnoreNull">需要特殊忽略null值的属性名称</param>
+            <param name="typesToIgnoreNull">指定类型（Class，非Interface）下的为null属性不生成到Json中</param>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.SerializerHelper">
+            <summary>
+            序列化帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.SerializerHelper.GetJsonString(System.Object,Senparc.CO2NET.Helpers.Serializers.JsonSetting)">
+            <summary>
+            将对象转为JSON字符串（进行Json输出配置）
+            </summary>
+            <param name="data">需要生成JSON字符串的数据</param>
+            <param name="jsonSetting">JSON输出设置</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.SerializerHelper.GetObject``1(System.String)">
+            <summary>
+            反序列化到对象
+            </summary>
+            <typeparam name="T">反序列化对象类型</typeparam>
+            <param name="jsonString">JSON字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.SerializerHelper.GetObject(System.String,System.Type)">
+            <summary>
+            反序列化到对象
+            </summary>
+            <param name="jsonString">JSON字符串</param>
+            <param name="type">反序列化类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.SerializerHelper.EncodeUnicode(System.String)">
+            <summary>
+            将字符串转为Unicode
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.SerializerHelper.DecodeUnicode(System.String)">
+            <summary>
+            unicode解码
+            </summary>
+            <param name="unicodeStr">unicode编码字符串</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.ASCIISort">
+            <summary>
+            ASCII字典排序
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.ASCIISort.Create">
+            <summary>
+            创建新的ASCIISort实例
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.EncryptHelper">
+            <summary>
+            安全帮助类，提供SHA-1算法等
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.EncryptHelper.GetSha1(System.String)">
+            <summary>
+            采用SHA-1算法加密字符串（小写）
+            </summary>
+            <param name="encypStr">需要加密的字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.EncryptHelper.GetHmacSha256(System.String,System.String)">
+            <summary>
+            HMAC SHA256 加密
+            </summary>
+            <param name="message">加密消息原文。当为小程序SessionKey签名提供服务时，其中message为本次POST请求的数据包（通常为JSON）。特别地，对于GET请求，message等于长度为0的字符串。</param>
+            <param name="secret">秘钥（如小程序的SessionKey）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.EncryptHelper.GetMD5(System.String,System.Text.Encoding)">
+            <summary>
+            获取大写的MD5签名结果
+            </summary>
+            <param name="encypStr">需要加密的字符串</param>
+            <param name="encoding">编码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.EncryptHelper.GetMD5(System.String,System.String)">
+            <summary>
+            获取大写的MD5签名结果
+            </summary>
+            <param name="encypStr">需要加密的字符串</param>
+            <param name="charset">编码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.EncryptHelper.GetMD5(System.IO.Stream,System.Boolean,System.Text.Encoding)">
+            <summary>
+            获取MD5签名结果
+            </summary>
+            <param name="stream">Stream</param>
+            <param name="encoding">默认为：utf8</param>
+            <param name="toUpper">是否返回大写结果，true：大写，false：小写</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.EncryptHelper.GetLowerMD5(System.String,System.Text.Encoding)">
+            <summary>
+            获取小写的MD5签名结果
+            </summary>
+            <param name="encypStr">需要加密的字符串</param>
+            <param name="encoding">编码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.EncryptHelper.AESEncrypt(System.Byte[],System.Byte[],System.String)">
+            <summary>
+            AES加密（默认为CBC模式）
+            </summary>
+            <param name="inputdata">输入的数据</param>
+            <param name="iv">向量</param>
+            <param name="strKey">加密密钥</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.EncryptHelper.AESDecrypt(System.Byte[],System.Byte[],System.String)">
+            <summary>
+            AES解密（默认为CBC模式）
+            </summary>
+            <param name="inputdata">输入的数据</param>
+            <param name="iv">向量</param>
+            <param name="strKey">key</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.EncryptHelper.AESEncrypt(System.String,System.String)">
+            <summary>
+             AES 加密（无向量，CEB模式，秘钥长度=128）
+            </summary>
+            <param name="str">明文（待加密）</param>
+            <param name="key">密文</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.EncryptHelper.AESDecrypt(System.String,System.String)">
+            <summary>  
+            AES 解密（无向量，CEB模式，秘钥长度=128）
+            </summary>  
+            <param name="data">被加密的明文（注意：为Base64编码）</param>  
+            <param name="key">密钥</param>  
+            <returns>明文</returns>  
+        </member>
+        <member name="T:Senparc.CO2NET.Helpers.MutipleCacheTestHelper">
+            <summary>
+            多种缓存测试帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.MutipleCacheTestHelper.RunMutipleCache(System.Action)">
+            <summary>
+            测试多种缓存
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Helpers.MutipleCacheTestHelper.RunMutipleCache(System.Action,Senparc.CO2NET.CacheType[])">
+            <summary>
+            遍历使用多种缓存测试同一个过程（委托），确保不同的缓存策略行为一致
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.MessageQueue.SenparcMessageQueue">
+            <summary>
+            消息队列
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.MessageQueue.SenparcMessageQueue.MessageQueueDictionary">
+            <summary>
+            队列数据集合
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.MessageQueue.SenparcMessageQueue.MessageQueueSyncLock">
+            <summary>
+            同步执行锁（注意：此处不使用并发锁，也不实用缓存策略中的本地锁，否则如果在外部锁中记录日志可能会引发死循环）
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.MessageQueue.SenparcMessageQueue.FlushCacheLock">
+            <summary>
+            立即同步所有缓存执行锁（给OperateQueue()使用）
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.MessageQueue.SenparcMessageQueue.GenerateKey(System.String,System.Type,System.String,System.String)">
+            <summary>
+            生成Key
+            </summary>
+            <param name="name">队列应用名称，如“ContainerBag”</param>
+            <param name="senderType">操作对象类型</param>
+            <param name="identityKey">对象唯一标识Key</param>
+            <param name="actionName">操作名称，如“UpdateContainerBag”</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.MessageQueue.SenparcMessageQueue.OperateQueue">
+            <summary>
+            操作队列
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.MessageQueue.SenparcMessageQueue.GetCurrentKey">
+            <summary>
+            获取当前等待执行的Key
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.MessageQueue.SenparcMessageQueue.GetItem(System.String)">
+            <summary>
+            获取SenparcMessageQueueItem
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.MessageQueue.SenparcMessageQueue.Add(System.String,System.Action)">
+            <summary>
+            添加队列成员
+            </summary>
+            <param name="key"></param>
+            <param name="action"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.MessageQueue.SenparcMessageQueue.Remove(System.String,Senparc.CO2NET.MessageQueue.SenparcMessageQueueItem@)">
+            <summary>
+            移除队列成员
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="value">移除信息的 value 对象</param>
+            <returns>如果移除成功或key不存在则返回 true,否则返回 false</returns>
+        </member>
+        <member name="M:Senparc.CO2NET.MessageQueue.SenparcMessageQueue.GetCount">
+            <summary>
+            获得当前队列数量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.MessageQueue.SenparcMessageQueueItem">
+            <summary>
+            SenparcMessageQueue消息队列项
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.MessageQueue.SenparcMessageQueueItem.Key">
+            <summary>
+            队列项唯一标识
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.MessageQueue.SenparcMessageQueueItem.Action">
+            <summary>
+            队列项目命中触发时执行的委托
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.MessageQueue.SenparcMessageQueueItem.AddTime">
+            <summary>
+            此实例对象的创建时间
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.MessageQueue.SenparcMessageQueueItem.Description">
+            <summary>
+            项目说明（主要用于调试）
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.MessageQueue.SenparcMessageQueueItem.#ctor(System.String,System.Action,System.String)">
+            <summary>
+            初始化SenparcMessageQueue消息队列项
+            </summary>
+            <param name="key"></param>
+            <param name="action"></param>
+            <param name="description"></param>
+        </member>
+        <member name="T:Senparc.CO2NET.Register">
+            <summary>
+            Senparc.CO2NET 基础信息注册
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Register.ChangeDefaultCacheNamespace(Senparc.CO2NET.RegisterServices.IRegisterService,System.String)">
+            <summary>
+            修改默认缓存命名空间
+            </summary>
+            <param name="registerService">RegisterService</param>
+            <param name="customNamespace">自定义命名空间名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Register.RegisterThreads(Senparc.CO2NET.RegisterServices.IRegisterService)">
+            <summary>
+            注册 Threads 的方法（如果不注册此线程，则AccessToken、JsTicket等都无法使用SDK自动储存和管理）
+            </summary>
+            <param name="registerService">RegisterService</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Register.RegisterTraceLog(Senparc.CO2NET.RegisterServices.IRegisterService,System.Action)">
+            <summary>
+            注册 TraceLog 的方法
+            </summary>
+            <param name="registerService">RegisterService</param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Register.UseSenparcGlobal(Senparc.CO2NET.RegisterServices.IRegisterService,System.Boolean,System.Func{System.Collections.Generic.IList{Senparc.CO2NET.Cache.IDomainExtensionCacheStrategy}})">
+            <summary>
+            开始 Senparc.CO2NET 初始化参数流程
+            </summary>
+            <param name="registerService"></param>
+            <param name="autoScanExtensionCacheStrategies">是否自动扫描全局的扩展缓存（会增加系统启动时间）</param>
+            <param name="extensionCacheStrategiesFunc"><para>需要手动注册的扩展缓存策略</para>
+            <para>（LocalContainerCacheStrategy、RedisContainerCacheStrategy、MemcacheContainerCacheStrategy已经自动注册），</para>
+            <para>如果设置为 null（注意：不适委托返回 null，是整个委托参数为 null），则自动使用反射扫描所有可能存在的扩展缓存策略</para></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.RegisterServices.IRegisterService">
+            <summary>
+            快捷注册接口
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.RegisterServices.RegisterService">
+            <summary>
+            快捷注册类，IRegisterService的默认实现
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.RegisterServices.RegisterService.Start(Senparc.CO2NET.SenparcSetting)">
+            <summary>
+            开始 Senparc.CO2NET SDK 初始化参数流程
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.RegisterServices.RegisterServiceExtension">
+            <summary>
+            快捷注册类，RegisterService 扩展类
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.SenparcSetting">
+            <summary>
+            CO2NET 全局设置
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.SenparcSetting.IsDebug">
+            <summary>
+            是否出于Debug状态
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.SenparcSetting.DefaultCacheNamespace">
+            <summary>
+            默认缓存键的第一级命名空间，默认值：DefaultCache
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.SenparcSetting.SenparcUnionAgentKey">
+            <summary>
+            Senparc 统一代理标识
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.SenparcSetting.Cache_Redis_Configuration">
+            <summary>
+            Redis连接字符串
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.SenparcSetting.Cache_Memcached_Configuration">
+            <summary>
+            Memcached连接字符串
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.SenparcSetting.#ctor">
+            <summary>
+            SenparcSetting 构造函数
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.SenparcSetting.#ctor(System.Boolean)">
+            <summary>
+            SenparcSetting 构造函数
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.SenparcSetting.BuildFromWebConfig(System.Boolean)">
+            <summary>
+            从 Web.Config 文件自动生成 SenparcSetting
+            </summary>
+            <param name="isDebug">设置 CO2NET 全局的 Debug 状态 </param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Threads.SenparcMessageQueueThreadUtility">
+            <summary>
+            SenparcMessageQueue线程自动处理
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Threads.SenparcMessageQueueThreadUtility.Finalize">
+            <summary>
+            析构函数，将未处理的队列处理掉
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Threads.SenparcMessageQueueThreadUtility.Run">
+            <summary>
+            启动线程轮询
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Threads.ThreadUtility">
+            <summary>
+            线程处理类
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Threads.ThreadUtility.AsynThreadCollection">
+            <summary>
+            异步线程容器
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Threads.ThreadUtility.Register">
+            <summary>
+            注册线程
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Trace.SenparcTrace">
+            <summary>
+            Senparc.CO2NET 日志记录
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Trace.SenparcTrace.LockName">
+            <summary>
+            统一日志锁名称
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Trace.SenparcTrace.OnBaseExceptionFunc">
+            <summary>
+            记录BaseException日志时需要执行的任务
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Trace.SenparcTrace.OnLogFunc">
+            <summary>
+            执行所有日志记录操作时执行的任务（发生在记录日志之后）
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Trace.SenparcTrace.RecordAPMLog">
+            <summary>
+            是否开放每次 APM 录入的记录，默认为关闭（当 Senparc.CO2ENT.APM 启用时有效）
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Trace.SenparcTrace.AutoUnlockLogFile">
+            <summary>
+            是否自动解锁可能发生的日志文件被占用情况，如果为 true，则启用（触发时会立即进行 GC 操作，消耗部分系统资源，一般不会影响系统整体性能），如果为 false，则在文件使用冲突发生时抛出异常，放弃日志写入。
+            （注意：如果多个站点或应用程序使用相同的日志文件目录，请务必开启此项）
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Trace.SenparcTrace.Cache">
+            <summary>
+            Senparc.Weixin全局统一的缓存策略
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Trace.SenparcTrace._queue">
+            <summary>
+            队列执行逻辑
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Trace.SenparcTrace._logEndActon">
+            <summary>
+            结束日志记录
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Trace.SenparcTrace.Log(System.String)">
+            <summary>
+            系统日志
+            </summary>
+            <param name="message">日志内容</param>
+        </member>
+        <member name="M:Senparc.CO2NET.Trace.SenparcTrace.SendCustomLog(System.String,System.String)">
+            <summary>
+            自定义日志
+            </summary>
+            <param name="typeName">日志类型</param>
+            <param name="content">日志内容</param>
+        </member>
+        <member name="M:Senparc.CO2NET.Trace.SenparcTrace.SendApiLog(System.String,System.String)">
+            <summary>
+            API请求日志（接收结果）
+            </summary>
+            <param name="url"></param>
+            <param name="returnText"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.Trace.SenparcTrace.SendApiPostDataLog(System.String,System.String)">
+            <summary>
+            API请求日志（Post发送消息）
+            </summary>
+            <param name="url"></param>
+            <param name="data"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.Trace.SenparcTrace.BaseExceptionLog(System.Exception)">
+            <summary>
+            BaseException 日志
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.Trace.SenparcTrace.BaseExceptionLog(Senparc.CO2NET.Exceptions.BaseException)">
+            <summary>
+            BaseException 日志
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="T:Senparc.CO2NET.Trace.SenparcTraceItem">
+            <summary>
+            每一次跟踪日志的对象信息
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Trace.SenparcTraceItem.GetFullLog">
+            <summary>
+            获取完整单条日志的字符串信息
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Utilities.BrowserUtility">
+            <summary>
+            浏览器公共类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.BrowserUtility.GetUserAgent(System.Web.HttpRequestBase)">
+            <summary>
+            获取 Headers 中的 User-Agent 字符串
+            </summary>
+            <param name="httpRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Utilities.EntityUtility">
+            <summary>
+            实体工具类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.EntityUtility.ConvertTo``1(System.IConvertible)">
+            <summary>
+            将对象转换到指定类型
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="convertibleValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.EntityUtility.FillSystemType``1(``0,System.Reflection.PropertyInfo,System.IConvertible)">
+            <summary>
+            向属性填充值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <param name="prop"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.EntityUtility.FillSystemType``1(``0,System.Reflection.PropertyInfo,System.IConvertible,System.Type)">
+            <summary>
+            向属性填充值（强制使用指定的类型）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <param name="prop"></param>
+            <param name="value"></param>
+            <param name="specialType"></param>
+        </member>
+        <member name="T:Senparc.CO2NET.Utilities.HttpUtility.HttpPost.FormFileData">
+            <summary>
+            Form 提交
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.Utilities.HttpUtility.HttpPost.FormFileData.FILE_DICTIONARY_STREAM_FORMAT">
+            <summary>
+            Post 方法中 fileDictionary 参数的 Value 可以提供 base64 编码后的数据流，需要符合此格式
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Utilities.HttpUtility.HttpPost.FormFileData.FileName">
+            <summary>
+            Form 提交用于标记的文件名
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Utilities.HttpUtility.HttpPost.FormFileData.FileBase64">
+            <summary>
+            文件 base64 编码
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.HttpUtility.HttpPost.FormFileData.SetFileBase64FromStream(System.IO.Stream)">
+            <summary>
+            从文件流获取适用于 RequestUtility.Post 中 FileDictionary 的 Base64值
+            </summary>
+            <param name="fileStream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.HttpUtility.HttpPost.FormFileData.FillFromFileValue(System.String)">
+            <summary>
+            从 FileValue 获取 FileName、Base64 等参数
+            </summary>
+            <param name="fileValue">FileDictionary 的 Value</param>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.HttpUtility.HttpPost.FormFileData.TryLoadStream(System.IO.Stream)">
+            <summary>
+            尝试将 Base64 加载到 stream 中，会进行 Base64 检测，如果失败则返回 false
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.HttpUtility.HttpPost.FormFileData.GetAvaliableFileName(System.String)">
+            <summary>
+            获取可用的文件名
+            </summary>
+            <param name="backupName">备用名称（当前FileName为空时使用）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.HttpUtility.HttpPost.FormFileData.GetFileValue">
+            <summary>
+            获取整合之后的给 fileDictionary 使用的 Value
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.Utilities.ServerUtility">
+            <summary>
+            服务器工具类
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.Utilities.ServerUtility.AppDomainAppPath">
+            <summary>
+            dll 项目根目录
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.ServerUtility.ContentRootMapPath(System.String)">
+            <summary>
+            获取相对于网站根目录的文件路径
+            </summary>
+            <param name="virtualPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.ServerUtility.DllMapPath(System.String)">
+            <summary>
+            获取相对于dll目录的文件绝对路径
+            </summary>
+            <param name="virtualPath">虚拟路径，如~/App_Data/</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.Utilities.StreamUtility">
+            <summary>
+            流工具类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.StreamUtility.GetBase64String(System.IO.Stream)">
+            <summary>
+            获取Stream的Base64字符串
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.StreamUtility.GetStreamFromBase64String(System.String,System.String)">
+            <summary>
+            将base64String反序列化到流，或保存成文件
+            </summary>
+            <param name="base64String"></param>
+            <param name="savePath">如果为null则不保存</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.StreamUtility.SaveFileFromStream(System.IO.MemoryStream,System.String)">
+            <summary>
+            将memoryStream保存到文件
+            </summary>
+            <param name="memoryStream"></param>
+            <param name="savePath"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.StreamUtility.GetBase64StringAsync(System.IO.Stream)">
+            <summary>
+            【异步方法】获取Stream的Base64字符串
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.StreamUtility.GetStreamFromBase64StringAsync(System.String,System.String)">
+            <summary>
+            【异步方法】将base64String反序列化到流，或保存成文件
+            </summary>
+            <param name="base64String"></param>
+            <param name="savePath">如果为null则不保存</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.StreamUtility.SaveFileFromStreamAsync(System.IO.MemoryStream,System.String)">
+            <summary>
+            【异步方法】将memoryStream保存到文件
+            </summary>
+            <param name="memoryStream"></param>
+            <param name="savePath"></param>
+        </member>
+        <member name="T:Senparc.CO2NET.Utilities.XmlUtility">
+            <summary>
+            XML 工具类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.XmlUtility.Deserialize``1(System.String)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="xml">XML字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.XmlUtility.Deserialize``1(System.IO.Stream)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.XmlUtility.Serializer``1(``0)">
+            <summary>
+            序列化
+            说明：此方法序列化复杂类，如果没有声明XmlInclude等特性，可能会引发“使用 XmlInclude 或 SoapInclude 特性静态指定非已知的类型。”的错误。
+            </summary>
+            <param name="obj">对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.Utilities.XmlUtility.Convert(System.IO.Stream)">
+            <summary>
+            序列化将流转成XML字符串
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.CacheUtility.FlushCache">
+            <summary>
+            缓存立即生效方法
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.CacheUtility.FlushCache.DoFlush">
+            <summary>
+            是否立即个更新到缓存
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.CacheUtility.FlushCache.#ctor(System.Boolean)">
+             <summary>
+            
+             </summary>
+             <param name="doFlush">是否立即更新到缓存</param>
+        </member>
+        <member name="M:Senparc.CO2NET.CacheUtility.FlushCache.Dispose">
+            <summary>
+            释放，开始立即更新所有缓存
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.CacheUtility.FlushCache.CreateInstance(System.Boolean)">
+            <summary>
+            创建一个FlushCache实例
+            </summary>
+            <param name="doFlush">是否立即更新到缓存</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.HttpUtility.HttpClientHelper">
+            <summary>
+            HttpClient 相关帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.HttpClientHelper.GetContentType(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            获取 Content
+            </summary>
+            <param name="formData">提交表单字段</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.HttpUtility.SenparcHttpResponse">
+            <summary>
+            统一封装HttpResonse请求，提供Http请求过程中的调试、跟踪等扩展能力
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.HttpUtility.Get">
+            <summary>
+            Get 请求处理
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Get.GetRandomFileName">
+            <summary>
+            获取随机文件名
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Get.GetJson``1(System.String,System.Text.Encoding,System.Action{System.String,System.String})">
+            <summary>
+            GET方式请求URL，并返回T类型
+            </summary>
+            <typeparam name="T">接收JSON的数据类型</typeparam>
+            <param name="url"></param>
+            <param name="encoding"></param>
+            <param name="afterReturnText">返回JSON本文，并在进行序列化之前触发，参数分别为：url、returnText</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Get.Download(System.String,System.IO.Stream)">
+            <summary>
+            从Url下载
+            </summary>
+            <param name="url"></param>
+            <param name="stream"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Get.Download(System.String,System.String,System.Int32)">
+            <summary>
+            从Url下载，并保存到指定目录
+            </summary>
+            <param name="url">需要下载文件的Url</param>
+            <param name="filePathName">保存文件的路径，如果下载文件包含文件名，按照文件名储存，否则将分配Ticks随机文件名</param>
+            <param name="timeOut">超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Get.GetJsonAsync``1(System.String,System.Text.Encoding,System.Action{System.String,System.String})">
+            <summary>
+            【异步方法】异步GetJson
+            </summary>
+            <param name="url"></param>
+            <param name="encoding"></param>
+            <param name="afterReturnText">返回JSON本文，并在进行序列化之前触发，参数分别为：url、returnText</param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+            <exception cref="!:ErrorJsonResultException"></exception>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Get.DownloadAsync(System.String,System.IO.Stream)">
+            <summary>
+            【异步方法】异步从Url下载
+            </summary>
+            <param name="url"></param>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Get.DownloadAsync(System.String,System.String,System.Int32)">
+            <summary>
+            【异步方法】从Url下载，并保存到指定目录
+            </summary>
+            <param name="url">需要下载文件的Url</param>
+            <param name="filePathName">保存文件的路径，如果下载文件包含文件名，按照文件名储存，否则将分配Ticks随机文件名</param>
+            <param name="timeOut">超时时间</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.HttpUtility.RequestUtility">
+            <summary>
+            HTTP 请求工具类
+            </summary>
+            <summary>
+            HTTP 请求工具类
+            </summary>
+            <summary>
+            HTTP 请求工具类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpGet_Common_Net45(System.String,System.Net.CookieContainer,System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.String,System.Boolean,System.Int32)">
+            <summary>
+            .NET 4.5 版本的HttpWebRequest参数设置
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpGet(System.String,System.Text.Encoding)">
+            <summary>
+            使用Get方法获取字符串结果（没有加入Cookie）
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpGet(System.String,System.Net.CookieContainer,System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.String,System.Boolean,System.Int32)">
+            <summary>
+            使用Get方法获取字符串结果（加入Cookie）
+            </summary>
+            <param name="url"></param>
+            <param name="cookieContainer"></param>
+            <param name="encoding"></param>
+            <param name="cer">证书，如果不需要则保留null</param>
+            <param name="refererUrl">referer参数</param>
+            <param name="useAjax">是否使用Ajax</param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpResponseGet(System.String,System.Net.CookieContainer,System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.String,System.Boolean,System.Int32)">
+            <summary>
+            获取HttpWebResponse或HttpResponseMessage对象，本方法通常用于测试）
+            </summary>
+            <param name="url"></param>
+            <param name="cookieContainer"></param>
+            <param name="encoding"></param>
+            <param name="cer"></param>
+            <param name="refererUrl"></param>
+            <param name="useAjax"></param>
+            <param name="timeOut"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpGetAsync(System.String,System.Text.Encoding)">
+            <summary>
+            使用Get方法获取字符串结果（没有加入Cookie）
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpGetAsync(System.String,System.Net.CookieContainer,System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.String,System.Boolean,System.Int32)">
+            <summary>
+            使用Get方法获取字符串结果（加入Cookie）
+            </summary>
+            <param name="url"></param>
+            <param name="cookieContainer"></param>
+            <param name="encoding"></param>
+            <param name="cer">证书，如果不需要则保留null</param>
+            <param name="timeOut"></param>
+            <param name="refererUrl">referer参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpPost_Common_Net45(System.String,System.Net.CookieContainer,System.IO.Stream,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.Boolean,System.String)">
+            <summary>
+            给.NET Framework使用的HttpPost请求公共设置方法
+            </summary>
+            <param name="url"></param>
+            <param name="cookieContainer"></param>
+            <param name="postStream"></param>
+            <param name="fileDictionary">需要上传的文件，Key：对应要上传的Name，Value：本地文件名，或文件内容的Base64编码</param>
+            <param name="refererUrl"></param>
+            <param name="encoding"></param>
+            <param name="cer"></param>
+            <param name="useAjax"></param>
+            <param name="headerAddition">header附加信息</param>
+            <param name="timeOut"></param>
+            <param name="checkValidationResult"></param>
+            <param name="contentType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpPost(System.String,System.Net.CookieContainer,System.Collections.Generic.Dictionary{System.String,System.String},System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.Boolean)">
+            <summary>
+            使用Post方法获取字符串结果，常规提交
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpPost(System.String,System.Net.CookieContainer,System.IO.Stream,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.Boolean,System.String)">
+            <summary>
+            使用Post方法获取字符串结果
+            </summary>
+            <param name="url"></param>
+            <param name="cookieContainer"></param>
+            <param name="postStream"></param>
+            <param name="fileDictionary">需要上传的文件，Key：对应要上传的Name，Value：本地文件名，或文件内容的Base64编码</param>
+            <param name="encoding"></param>
+            <param name="certName">证书唯一名称，如果不需要则保留null</param>
+            <param name="cer">证书，如果不需要则保留null</param>
+            <param name="useAjax"></param>
+            <param name="headerAddition">header 附加信息</param>
+            <param name="timeOut"></param>
+            <param name="checkValidationResult">验证服务器证书回调自动验证</param>
+            <param name="contentType"></param>
+            <param name="refererUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpResponsePost(System.String,System.Net.CookieContainer,System.IO.Stream,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.Boolean,System.String)">
+            <summary>
+            使用Post方法获取HttpWebResponse或HttpResponseMessage对象，本方法独立使用时通常用于测试）
+            </summary>
+            <param name="url"></param>
+            <param name="cookieContainer"></param>
+            <param name="postStream"></param>
+            <param name="fileDictionary">需要上传的文件，Key：对应要上传的Name，Value：本地文件名，或文件内容的Base64编码</param>
+            <param name="encoding"></param>
+            <param name="certName">证书唯一名称，如果不需要则保留null</param>
+            <param name="cer">证书，如果不需要则保留null</param>
+            <param name="useAjax"></param>
+            <param name="headerAddition">header附加信息</param>
+            <param name="timeOut"></param>
+            <param name="checkValidationResult">验证服务器证书回调自动验证</param>
+            <param name="contentType"></param>
+            <param name="refererUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpPostAsync(System.String,System.Net.CookieContainer,System.Collections.Generic.Dictionary{System.String,System.String},System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.Boolean)">
+            <summary>
+            使用Post方法获取字符串结果，常规提交
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpPostAsync(System.String,System.Net.CookieContainer,System.IO.Stream,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.Boolean,System.String)">
+            <summary>
+            使用Post方法获取字符串结果
+            </summary>
+            <param name="url"></param>
+            <param name="cookieContainer"></param>
+            <param name="postStream"></param>
+            <param name="fileDictionary">需要上传的文件，Key：对应要上传的Name，Value：本地文件名，或文件内容的Base64编码</param>
+            <param name="certName">证书唯一名称，如果不需要则保留null</param>
+            <param name="cer"></param>
+            <param name="useAjax"></param>
+            <param name="headerAddition">header附加信息</param>
+            <param name="timeOut"></param>
+            <param name="checkValidationResult">验证服务器证书回调自动验证</param>
+            <param name="contentType"></param>
+            <param name="refererUrl"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpResponsePostAsync(System.String,System.Net.CookieContainer,System.IO.Stream,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32,System.Boolean,System.String)">
+            <summary>
+            使用Post方法获取HttpWebResponse或HttpResponseMessage对象，本方法独立使用时通常用于测试）
+            </summary>
+            <param name="url"></param>
+            <param name="cookieContainer"></param>
+            <param name="postStream"></param>
+            <param name="fileDictionary">需要上传的文件，Key：对应要上传的Name，Value：本地文件名，或文件内容的Base64编码</param>
+            <param name="encoding"></param>
+            <param name="certName">证书唯一名称，如果不需要则保留null</param>
+            <param name="cer">证书，如果不需要则保留null</param>
+            <param name="useAjax"></param>
+            <param name="headerAddition">header附加信息</param>
+            <param name="timeOut"></param>
+            <param name="checkValidationResult">验证服务器证书回调自动验证</param>
+            <param name="contentType"></param>
+            <param name="refererUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.SetHttpProxy(System.String,System.String,System.String,System.String)">
+            <summary>
+            设置Web代理
+            </summary>
+            <param name="host"></param>
+            <param name="port"></param>
+            <param name="username"></param>
+            <param name="password"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.RemoveHttpProxy">
+            <summary>
+            清除Web代理状态
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.CheckValidationResult(System.Object,System.Security.Cryptography.X509Certificates.X509Certificate,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors)">
+            <summary>
+            验证服务器证书
+            </summary>
+            <param name="sender"></param>
+            <param name="certificate"></param>
+            <param name="chain"></param>
+            <param name="errors"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.HttpClientHeader(System.Net.HttpWebRequest,System.String,System.Boolean,System.Collections.Generic.Dictionary{System.String,System.String},System.Int32)">
+            <summary>
+            设置HTTP头
+            </summary>
+            <param name="request"></param>
+            <param name="refererUrl"></param>
+            <param name="useAjax">是否使用Ajax</param>
+            <param name="headerAddition">header附加信息</param>
+            <param name="timeOut"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.FillFormDataStream(System.Collections.Generic.Dictionary{System.String,System.String},System.IO.Stream)">
+            <summary>
+            填充表单信息的Stream
+            </summary>
+            <param name="formData"></param>
+            <param name="stream"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.FillFormDataStreamAsync(System.Collections.Generic.Dictionary{System.String,System.String},System.IO.Stream)">
+            <summary>
+            填充表单信息的Stream
+            </summary>
+            <param name="formData"></param>
+            <param name="stream"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.RequestUtility.GetQueryString(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            组装QueryString的方法
+            参数之间用&amp;连接，首位没有符号，如：a=1&amp;b=2&amp;c=3
+            </summary>
+            <param name="formData"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.CO2NET.HttpUtility.Post">
+            <summary>
+            Post 请求处理
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Post.PostFileGetJson``1(System.String,System.Net.CookieContainer,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Action{System.String,System.String},System.Int32)">
+            <summary>
+            发起Post请求，可上传文件
+            </summary>
+            <typeparam name="T">返回数据类型（Json对应的实体）</typeparam>
+            <param name="url">请求Url</param>
+            <param name="cookieContainer">CookieContainer，如果不需要则设为null</param>
+            <param name="encoding"></param>
+            <param name="certName">证书唯一名称，如果不需要则保留null</param>
+            <param name="cer">证书，如果不需要则保留null</param>
+            <param name="useAjax"></param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="fileDictionary">需要Post的文件（Dictionary 的 Key=name，Value=绝对路径）</param>
+            <param name="postDataDictionary">需要Post的键值对（name,value）</param>
+            <param name="afterReturnText">返回JSON本文，并在进行序列化之前触发，参数分别为：url、returnText</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Post.PostGetJson``1(System.String,System.Net.CookieContainer,System.IO.Stream,System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Boolean,System.Action{System.String,System.String},System.Int32)">
+            <summary>
+            发起Post请求，可包含文件流
+            </summary>
+            <typeparam name="T">返回数据类型（Json对应的实体）</typeparam>
+            <param name="url">请求Url</param>
+            <param name="cookieContainer">CookieContainer，如果不需要则设为null</param>
+            <param name="fileStream">文件流</param>
+            <param name="encoding"></param>
+            <param name="certName">证书唯一名称，如果不需要则保留null</param>
+            <param name="cer">证书，如果不需要则保留null</param>
+            <param name="useAjax">是否使用Ajax请求</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="checkValidationResult">验证服务器证书回调自动验证</param>
+            <param name="afterReturnText">返回JSON本文，并在进行序列化之前触发，参数分别为：url、returnText</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Post.PostGetJson``1(System.String,System.Net.CookieContainer,System.Collections.Generic.Dictionary{System.String,System.String},System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Action{System.String,System.String},System.Int32)">
+            <summary>
+            Form表单Post数据，获取JSON
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="url"></param>
+            <param name="cookieContainer">CookieContainer，如果不需要则设为null</param>
+            <param name="formData">表单数据，Key对应name，Value对应value</param>
+            <param name="encoding"></param>
+            <param name="certName">证书唯一名称，如果不需要则保留null</param>
+            <param name="cer">证书，如果不需要则保留null</param>
+            <param name="useAjax">是否使用Ajax请求</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="afterReturnText">返回JSON本文，并在进行序列化之前触发，参数分别为：url、returnText</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Post.Download(System.String,System.String,System.IO.Stream)">
+            <summary>
+            使用Post方法上传数据并下载文件或结果
+            </summary>
+            <param name="url"></param>
+            <param name="data"></param>
+            <param name="stream"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Post.PostFileGetJsonAsync``1(System.String,System.Net.CookieContainer,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Action{System.String,System.String},System.Int32)">
+            <summary>
+            【异步方法】发起Post请求，可上传文件
+            </summary>
+            <typeparam name="T">返回数据类型（Json对应的实体）</typeparam>
+            <param name="url">请求Url</param>
+            <param name="cookieContainer">CookieContainer，如果不需要则设为null</param>
+            <param name="encoding"></param>
+            <param name="certName">证书唯一名称，如果不需要则保留null</param>
+            <param name="cer">证书，如果不需要则保留null</param>
+            <param name="useAjax"></param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="fileDictionary">需要Post的文件（Dictionary 的 Key=name，Value=绝对路径）</param>
+            <param name="postDataDictionary">需要Post的键值对（name,value）</param>
+            <param name="afterReturnText">返回JSON本文，并在进行序列化之前触发，参数分别为：url、returnText</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Post.PostGetJsonAsync``1(System.String,System.Net.CookieContainer,System.IO.Stream,System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Boolean,System.Action{System.String,System.String},System.Int32)">
+            <summary>
+            【异步方法】发起Post请求，可包含文件流
+            </summary>
+            <typeparam name="T">返回数据类型（Json对应的实体）</typeparam>
+            <param name="url">请求Url</param>
+            <param name="cookieContainer">CookieContainer，如果不需要则设为null</param>
+            <param name="fileStream">文件流</param>
+            <param name="encoding"></param>
+            <param name="certName">证书唯一名称，如果不需要则保留null</param>
+            <param name="cer">证书，如果不需要则保留null</param>
+            <param name="useAjax">是否使用Ajax请求</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="checkValidationResult">验证服务器证书回调自动验证</param>
+            <param name="afterReturnText">返回JSON本文，并在进行序列化之前触发，参数分别为：url、returnText</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Post.PostGetJsonAsync``1(System.String,System.Net.CookieContainer,System.Collections.Generic.Dictionary{System.String,System.String},System.Text.Encoding,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean,System.Action{System.String,System.String},System.Int32)">
+            <summary>
+            【异步方法】Form表单Post数据，获取JSON
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="url"></param>
+            <param name="cookieContainer">CookieContainer，如果不需要则设为null</param>
+            <param name="formData">表单数据，Key对应name，Value对应value</param>
+            <param name="encoding"></param>
+            <param name="certName">证书唯一名称，如果不需要则保留null</param>
+            <param name="cer">证书，如果不需要则保留null</param>
+            <param name="useAjax">是否使用Ajax请求</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="afterReturnText">返回JSON本文，并在进行序列化之前触发，参数分别为：url、returnText</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.HttpUtility.Post.DownloadAsync(System.String,System.String,System.IO.Stream)">
+            <summary>
+            【异步方法】使用Post方法上传数据并下载文件或结果
+            </summary>
+            <param name="url"></param>
+            <param name="data"></param>
+            <param name="stream"></param>
+        </member>
+        <member name="T:Senparc.CO2NET.WebProxy.CoreWebProxy">
+            <summary>
+            .NET Core 使用的 WebProxy 类
+            参考：http://www.abelliu.com/dotnet/dotnet%20core/2017/03/14/dotnetcore-proxy/
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.WebProxy.CoreWebProxy.#ctor(System.Uri,System.Net.ICredentials,System.String[])">
+            <summary>
+            WebProxy for .net core
+            </summary>
+            <param name="uri"></param>
+            <param name="credentials"></param>
+            <param name="bypassList"></param>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskExtension.CompletedTask">
+            <summary>
+            使 Task.Completed 兼容 .NET 4.5 的方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:System.SystemTime">
+            <summary>
+            时间扩展类
+            </summary>
+        </member>
+        <member name="P:System.SystemTime.Now">
+            <summary>
+            当前时间
+            </summary>
+        </member>
+        <member name="P:System.SystemTime.UtcDateTime">
+            <summary>
+            当前时间的 UTC DateTime 类型
+            </summary>
+        </member>
+        <member name="P:System.SystemTime.Today">
+            <summary>
+            当天零点时间，从 SystemTime.Now.Date 获得
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:System.SystemTime.NowTicks" -->
+        <member name="M:System.SystemTime.NowDiff(System.DateTimeOffset)">
+            <summary>
+            获取 TimeSpan
+            </summary>
+            <param name="compareTime">当前时间 - compareTime</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.SystemTime.DiffTotalMS(System.DateTimeOffset)">
+            <summary>
+            获取 TotalMilliseconds 时间差
+            </summary>
+            <param name="compareTime">当前时间 - compareTime</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.SystemTime.DiffTotalMS(System.DateTimeOffset,System.String)">
+            <summary>
+            获取 TotalMilliseconds 时间差
+            </summary>
+            <param name="compareTime">当前时间 - compareTime</param>
+            <param name="format">对 TotalMilliseconds 结果进行 ToString([format]) 中的参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.SystemTime.NowDiff(System.DateTime)">
+            <summary>
+            获取 TimeSpan
+            </summary>
+            <param name="compareTime">当前时间 - compareTime</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.SystemTime.DiffTotalMS(System.DateTime)">
+            <summary>
+            获取 TotalMilliseconds 时间差
+            </summary>
+            <param name="compareTime">当前时间 - compareTime</param>
+            <returns></returns>
+        </member>
+        <member name="M:System.SystemTime.DiffTotalMS(System.DateTime,System.String)">
+            <summary>
+            获取 TotalMilliseconds 时间差
+            </summary>
+            <param name="compareTime">当前时间 - compareTime</param>
+            <param name="format">对 TotalMilliseconds 结果进行 ToString([format]) 中的参数</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

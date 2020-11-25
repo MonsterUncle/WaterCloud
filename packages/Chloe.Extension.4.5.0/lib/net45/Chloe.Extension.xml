@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Chloe.Extension</name>
+    </assembly>
+    <members>
+        <member name="T:Chloe.DbActionBag">
+            <summary>
+            暂存 CURD 操作，最后调用 ExecuteActions 执行。
+            </summary>
+        </member>
+        <member name="M:Chloe.DbContextExtension.Update``1(Chloe.IDbContext,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            dbContext.Update&lt;User&gt;(user, a =&gt; a.Id == 1)
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="dbContext"></param>
+            <param name="entity"></param>
+            <param name="condition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.DbContextExtension.UpdateOnly``1(Chloe.IDbContext,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            dbContext.UpdateOnly&lt;User&gt;(user, a =&gt; new { a.Name, a.Age })
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="dbContext"></param>
+            <param name="entity"></param>
+            <param name="fields"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.DbContextExtension.UpdateOnly``1(Chloe.IDbContext,``0,System.String[])">
+            <summary>
+            dbContext.UpdateOnly&lt;User&gt;(user, "Name,Age", "NickName")
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="dbContext"></param>
+            <param name="entity"></param>
+            <param name="fields"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.Extension.FieldsResolver.Resolve(System.Linq.Expressions.LambdaExpression)">
+            <summary>
+            
+            </summary>
+            <param name="fieldsLambdaExpression">a => new { a.Name, a.Age } or a => new object[] { a.Name, a.Age }</param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.DbSessionExtension.ExecuteDataTable(Chloe.IDbSession,System.String,System.Object)">
+            <summary>
+            dbSession.ExecuteDataTable("select Age from Users where Id=@Id", new { Id = 1 })
+            </summary>
+            <param name="dbSession"></param>
+            <param name="cmdText"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.DbSessionExtension.ExecuteDataTable(Chloe.IDbSession,System.String,System.Data.CommandType,System.Object)">
+            <summary>
+            dbSession.ExecuteDataTable("select Age from Users where Id=@Id", CommandType.Text, new { Id = 1 })
+            </summary>
+            <param name="dbSession"></param>
+            <param name="cmdText"></param>
+            <param name="cmdType"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.DbSessionExtension.ExecuteDataSet(Chloe.IDbSession,System.String,System.Object)">
+            <summary>
+            dbSession.ExecuteDataSet("select Age from Users where Id=@Id", new { Id = 1 })
+            </summary>
+            <param name="dbSession"></param>
+            <param name="cmdText"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.DbSessionExtension.ExecuteDataSet(Chloe.IDbSession,System.String,System.Data.CommandType,System.Object)">
+            <summary>
+            dbSession.ExecuteDataSet("select Age from Users where Id=@Id", CommandType.Text, new { Id = 1 })
+            </summary>
+            <param name="dbSession"></param>
+            <param name="cmdText"></param>
+            <param name="cmdType"></param>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.QueryExtension.ToList``1(Chloe.IQuery)">
+            <summary>
+            dbContext.Query&lt;User&gt;().ToList&lt;UserModel&gt;()
+            <para>该方法调用者的 IQuery.ElementType 必须是实体类型</para> 
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.QueryExtension.MapTo``1(Chloe.IQuery)">
+            <summary>
+            dbContext.Query&lt;User&gt;().MapTo&lt;UserModel&gt;()
+            <para>该方法调用者的 IQuery.ElementType 必须是实体类型</para> 
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.QueryExtension.Ignore``1(Chloe.IQuery{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            dbContext.Query&lt;User&gt;().Ignore&lt;User&gt;(a => new { a.Name, a.Age }) or dbContext.Query&lt;User&gt;().Ignore&lt;User&gt;(a => new object[] { a.Name, a.Age })
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="source"></param>
+            <param name="fields"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.QueryExtension.Ignore``1(Chloe.IQuery{``0},System.String[])">
+            <summary>
+            dbContext.Query&lt;User&gt;().Ignore&lt;User&gt;("Name,Age", "NickName")
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="source"></param>
+            <param name="fields"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.QueryExtension.OrderBy``1(Chloe.IQuery{``0},System.String)">
+            <summary>
+            dbContext.Query&lt;User&gt;().OrderBy("Id asc,Age desc")
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="q"></param>
+            <param name="orderString">Id asc,Age desc...</param>
+            <returns></returns>
+        </member>
+        <member name="M:Chloe.QueryExtension.ThenBy``1(Chloe.IOrderedQuery{``0},System.String)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="q"></param>
+            <param name="orderString">Id asc,Age desc...</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

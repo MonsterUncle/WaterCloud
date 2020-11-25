@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Senparc.CO2NET.APM</name>
+    </assembly>
+    <members>
+        <member name="T:Senparc.CO2NET.APM.ApmThread">
+            <summary>
+            APM 线程
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.ApmThread.OpenCpuWatch">
+            <summary>
+            打开 CPU 状态监控
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.ApmThread.OpenMemoryWatch">
+            <summary>
+            打开内存状态监控
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.APM.Config">
+            <summary>
+            APM 配置
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.APM.Config.DataExpire">
+            <summary>
+            APM 信息自动过期时间（默认为20分钟）
+            </summary>
+        </member>
+        <member name="F:Senparc.CO2NET.APM.Config.EnableAPM">
+            <summary>
+            启用 APM
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.APM.DataOperation">
+            <summary>
+            DataOperation
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.APM.DataOperation.RegisterFinalKeyAsync(System.String)">
+            <summary>
+            注册 Key
+            </summary>
+            <param name="kindName"></param>
+        </member>
+        <member name="M:Senparc.CO2NET.APM.DataOperation.#ctor(System.String)">
+            <summary>
+            DataOperation 构造函数
+            </summary>
+            <param name="domain">域，统计的最小单位，可以是一个网站，也可以是一个模块</param>
+        </member>
+        <member name="M:Senparc.CO2NET.APM.DataOperation.SetAsync(System.String,System.Double,System.Object,System.Object,System.Nullable{System.DateTimeOffset})">
+            <summary>
+            设置数据
+            </summary>
+            <param name="kindName">统计类别名称</param>
+            <param name="value">统计值</param>
+            <param name="data">复杂类型数据</param>
+            <param name="tempStorage">临时储存信息</param>
+            <param name="dateTime">发生时间，默认为当前系统时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.APM.DataOperation.GetDataItemListAsync(System.String)">
+            <summary>
+            获取信息列表
+            </summary>
+            <param name="kindName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.APM.DataOperation.ReadAndCleanDataItemsAsync(System.Boolean,System.Boolean)">
+            <summary>
+            获取并清空该 Domain 下的所有数据
+            </summary>
+            <returns></returns>
+            <param name="removeReadItems">是否移除已读取的项目，默认为 true</param>
+            <param name="keepTodayData">当 removeReadItems = true 时有效，在清理的时候是否保留当天的数据</param>
+        </member>
+        <member name="T:Senparc.CO2NET.APM.DataItem">
+            <summary>
+            日志记录的最小单位
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.DataItem.KindName">
+            <summary>
+            统计类别名称
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.DataItem.DateTime">
+            <summary>
+            统计时间
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.DataItem.Value">
+            <summary>
+            统计值
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.DataItem.Data">
+            <summary>
+            复杂类型数据
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.DataItem.TempStorage">
+            <summary>
+            临时储存（不会对外传递）
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.APM.MinuteData">
+            <summary>
+            打包统计的每分钟数据
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.MinuteData.Time">
+            <summary>
+            统计时间段，精确到分钟
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.MinuteData.StartValue">
+            <summary>
+            开始数值
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.MinuteData.EndValue">
+            <summary>
+            末尾数值
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.MinuteData.HighestValue">
+            <summary>
+            最高值
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.MinuteData.LowestValue">
+            <summary>
+            最低值
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.MinuteData.SumValue">
+            <summary>
+            数值总和
+            </summary>
+        </member>
+        <member name="P:Senparc.CO2NET.APM.MinuteData.SampleSize">
+            <summary>
+            统计到的数值样本数量
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.APM.MinuteDataPack">
+            <summary>
+            包含了不同KindName的每分钟数据的集合包
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.APM.Exceptions.APMException">
+            <summary>
+            APM 异常
+            </summary>
+        </member>
+        <member name="T:Senparc.CO2NET.APM.DataHelper">
+            <summary>
+            数据帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.CO2NET.APM.DataHelper.IsLaterMinute(System.DateTimeOffset,System.DateTimeOffset)">
+            <summary>
+            确保已经到达下一分钟
+            </summary>
+            <param name="lastTime"></param>
+            <param name="currentDateTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.APM.DataHelper.GetCPUCounter">
+            <summary>
+            获取CPU信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.CO2NET.APM.DataHelper.GetOSPlatform">
+            <summary>
+            获取 系统名称
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

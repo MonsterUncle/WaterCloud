@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Senparc.Weixin.Cache.Redis</name>
+    </assembly>
+    <members>
+        <member name="T:Senparc.Weixin.Cache.Redis.RedisContainerCacheStrategy">
+            <summary>
+            Redis容器缓存策略
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Redis.RedisContainerCacheStrategy.#ctor">
+            <summary>
+            Redis 缓存策略
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Redis.RedisContainerCacheStrategy.Finalize">
+            <summary>
+            Redis 缓存策略析构函数，用于 _client 资源回收
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Redis.RedisContainerCacheStrategy.GetAll``1">
+            <summary>
+             获取所有 Bag 对象
+            </summary>
+            <typeparam name="TBag"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Redis.RedisContainerCacheStrategy.GetAllAsync``1">
+            <summary>
+             【异步方法】获取所有 Bag 对象
+            </summary>
+            <typeparam name="TBag"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.Cache.Redis.RedisHashSetContainerCacheStrategy">
+            <summary>
+            Redis容器缓存策略
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Redis.RedisHashSetContainerCacheStrategy.#ctor">
+            <summary>
+            Redis 缓存策略
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Redis.RedisHashSetContainerCacheStrategy.Finalize">
+            <summary>
+            Redis 缓存策略析构函数，用于 _client 资源回收
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Redis.RedisHashSetContainerCacheStrategy.GetAllAsync``1">
+            <summary>
+             【异步方法】获取所有 Bag 对象
+            </summary>
+            <typeparam name="TBag"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.Cache.Redis.Register">
+            <summary>
+            Senparc.Weixin.Cache.Redis 注册类
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Redis.Register.UseSenparcWeixinCacheRedis(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            注册 Senparc.Weixin.Cache.Redis
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Redis.Register.RegisterDomainCache">
+            <summary>
+            注册领域缓存
+            </summary>
+        </member>
+    </members>
+</doc>

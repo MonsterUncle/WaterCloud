@@ -1,0 +1,2148 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Senparc.Weixin</name>
+    </assembly>
+    <members>
+        <member name="T:Senparc.Weixin.Cache.LocalContainerCacheStrategy">
+            <summary>
+            本地容器缓存策略
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.LocalContainerCacheStrategy.#ctor">
+            <summary>
+            LocalCacheStrategy的构造函数
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.LocalContainerCacheStrategy.GetAll``1">
+            <summary>
+             获取所有 Bag 对象
+            </summary>
+            <typeparam name="TBag"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.LocalContainerCacheStrategy.GetAllAsync``1">
+            <summary>
+             【异步方法】获取所有 Bag 对象
+            </summary>
+            <typeparam name="TBag"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.Cache.ContainerCacheStrategyDomain">
+            <summary>
+            Container的领域缓存策略定义
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.ContainerCacheStrategyDomain.#ctor">
+            <summary>
+            LocalCacheStrategy的构造函数
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.ContainerCacheStrategyFactory.GetContainerCacheStrategyInstance">
+            <summary>
+            如果
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Senparc.Weixin.Cache.BaseContainerCacheStrategy.BaseCacheStrategy">
+            <summary>
+            数据源缓存策略
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.BaseContainerCacheStrategy.RegisterCacheStrategyDomain(Senparc.CO2NET.Cache.IDomainExtensionCacheStrategy)">
+            <summary>
+            向底层缓存注册当前缓存策略
+            </summary>
+            <param name="extensionCacheStrategy"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.BaseContainerCacheStrategy.GetAll``1">
+            <summary>
+            获取所有 Bag 对象
+            </summary>
+            <typeparam name="TBag"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.BaseContainerCacheStrategy.GetContainerBag``1(System.String,System.Boolean)">
+            <summary>
+            获取单个ContainerBag
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.BaseContainerCacheStrategy.GetAllAsync``1">
+            <summary>
+            【异步方法】获取所有 Bag 对象
+            </summary>
+            <typeparam name="TBag"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.BaseContainerCacheStrategy.GetContainerBagAsync``1(System.String,System.Boolean)">
+            <summary>
+            【异步方法】获取单个ContainerBag
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.BaseContainerCacheStrategy.UpdateContainerBagAsync(System.String,Senparc.Weixin.Containers.IBaseContainerBag,System.Nullable{System.TimeSpan},System.Boolean)">
+            <summary>
+            【异步方法】更新 ContainerBag
+            </summary>
+            <param name="key"></param>
+            <param name="bag"></param>
+            <param name="expiry"></param>
+            <param name="isFullKey"></param>
+        </member>
+        <member name="T:Senparc.Weixin.Cache.IContainerCacheStrategy">
+            <summary>
+            容器缓存策略接口（属于扩展领域缓存）
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.IContainerCacheStrategy.GetAll``1">
+            <summary>
+            获取所有ContainerBag
+            </summary>
+            <typeparam name="TBag"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.IContainerCacheStrategy.GetContainerBag``1(System.String,System.Boolean)">
+            <summary>
+            获取单个ContainerBag
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.IContainerCacheStrategy.UpdateContainerBag(System.String,Senparc.Weixin.Containers.IBaseContainerBag,System.Nullable{System.TimeSpan},System.Boolean)">
+            <summary>
+            更新ContainerBag
+            </summary>
+            <param name="key"></param>
+            <param name="containerBag"></param>
+            <param name="expiry">超时时间</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.IContainerCacheStrategy.GetAllAsync``1">
+            <summary>
+            【异步方法】获取所有ContainerBag
+            </summary>
+            <typeparam name="TBag"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.IContainerCacheStrategy.GetContainerBagAsync``1(System.String,System.Boolean)">
+            <summary>
+            【异步方法】获取单个ContainerBag
+            </summary>
+            <param name="key">缓存键</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.IContainerCacheStrategy.UpdateContainerBagAsync(System.String,Senparc.Weixin.Containers.IBaseContainerBag,System.Nullable{System.TimeSpan},System.Boolean)">
+            <summary>
+            【异步方法】更新ContainerBag
+            </summary>
+            <param name="key"></param>
+            <param name="containerBag"></param>
+            <param name="expiry">超时时间</param>
+            <param name="isFullKey">是否已经是完整的Key，如果不是，则会调用一次GetFinalKey()方法</param>
+        </member>
+        <member name="T:Senparc.Weixin.CommonAPIs.ApiHandlerWapper.ApiHandlerWapperBase">
+            <summary>
+            所有子模块ApiHandlerWapper方法调用的基础方法
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.CommonAPIs.ApiHandlerWapper.ApiHandlerWapperBase.GetConfigErrorResult``1(System.String)">
+            <summary>
+            返回配置错误结果信息（不抛出异常）
+            </summary>
+            <param name="errorMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.CommonAPIs.ApiHandlerWapper.ApiHandlerWapperBase.GetJsonErrorResult``1(Senparc.Weixin.Entities.WxJsonResult)">
+            <summary>
+            返回 JsonResult 错误结果信息（不抛出异常）
+            </summary>
+            <param name="errorMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.CommonAPIs.ApiHandlerWapper.ApiHandlerWapperBase.TryCommonApiBase``1(Senparc.Weixin.PlatformType,System.Func{System.String},System.Func{System.String,System.Boolean},System.Func{System.String,System.Boolean,Senparc.Weixin.Entities.IAccessTokenResult},System.Int32,System.Func{System.String,``0},System.String,System.Boolean)">
+            <summary>
+            TryCommonApi 方法的基类
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="platformType">平台类型，PlatformType枚举</param>
+            <param name="accessTokenContainer_GetFirstOrDefaultAppIdFunc">AccessTokenContainer中的GetFirstOrDefaultAppId()方法</param>
+            <param name="accessTokenContainer_CheckRegisteredFunc">AccessTokenContainer中的bool CheckRegistered(appId,getNew)方法</param>
+            <param name="accessTokenContainer_GetAccessTokenResultFunc">AccessTokenContainer中的AccessTokenResult GetAccessTokenResult(appId)方法</param>
+            <param name="invalidCredentialValue">"ReturnCode.获取access_token时AppSecret错误或者access_token无效"枚举的值</param>
+            <param name="fun"></param>
+            <param name="accessTokenOrAppId"></param>
+            <param name="retryIfFaild"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.CommonAPIs.ApiHandlerWapper.ApiHandlerWapperBase.TryCommonApiBaseAsync``1(Senparc.Weixin.PlatformType,System.Func{System.Threading.Tasks.Task{System.String}},System.Func{System.String,System.Threading.Tasks.Task{System.Boolean}},System.Func{System.String,System.Boolean,System.Threading.Tasks.Task{Senparc.Weixin.Entities.IAccessTokenResult}},System.Int32,System.Func{System.String,System.Threading.Tasks.Task{``0}},System.String,System.Boolean)">
+            <summary>
+            TryCommonApi 方法的基类
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="platformType">平台类型，PlatformType枚举</param>
+            <param name="accessTokenContainer_GetFirstOrDefaultAppIdAsyncFunc">AccessTokenContainer中的GetFirstOrDefaultAppId()方法</param>
+            <param name="accessTokenContainer_CheckRegisteredAsyncFunc">AccessTokenContainer中的bool CheckRegistered(appId,getNew)方法</param>
+            <param name="accessTokenContainer_GetAccessTokenResultAsyncFunc">AccessTokenContainer中的AccessTokenResult GetAccessTokenResultAsync(appId)方法（异步方法）</param>
+            <param name="invalidCredentialValue">"ReturnCode.获取access_token时AppSecret错误或者access_token无效"枚举的值</param>
+            <param name="fun"></param>
+            <param name="accessTokenOrAppId"></param>
+            <param name="retryIfFaild"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.CommonAPIs.CommonJsonSend">
+            <summary>
+            所有高级接口共用的向微信服务器发送 API 请求的方法
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.CommonAPIs.CommonJsonSend.getFailAction">
+            <summary>
+            设定条件，当API结果没有返回成功信息时抛出异常
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.CommonAPIs.CommonJsonSend.postFailAction">
+            <summary>
+            设定条件，当API结果没有返回成功信息时抛出异常
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.CommonAPIs.CommonJsonSend.Send(System.String,System.String,System.Object,Senparc.Weixin.CommonJsonSendType,System.Int32,System.Boolean,Senparc.CO2NET.Helpers.Serializers.JsonSetting)">
+            <summary>
+            向需要AccessToken的API发送消息的公共方法
+            </summary>
+            <param name="accessToken">这里的AccessToken是通用接口的AccessToken，非OAuth的。如果不需要，可以为null，此时urlFormat不要提供{0}参数</param>
+            <param name="urlFormat"></param>
+            <param name="data">如果是Get方式，可以为null</param>
+            <param name="sendType"></param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="checkValidationResult"></param>
+            <param name="jsonSetting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.CommonAPIs.CommonJsonSend.Send``1(System.String,System.String,System.Object,Senparc.Weixin.CommonJsonSendType,System.Int32,System.Boolean,Senparc.CO2NET.Helpers.Serializers.JsonSetting)">
+            <summary>
+            向需要AccessToken的API发送消息的公共方法
+            </summary>
+            <param name="accessToken">这里的AccessToken是通用接口的AccessToken，非OAuth的。如果不需要，可以为null，此时urlFormat不要提供{0}参数</param>
+            <param name="urlFormat">用accessToken参数填充{0}</param>
+            <param name="data">如果是Get方式，可以为null</param>
+            <param name="sendType"></param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="checkValidationResult">验证服务器证书回调自动验证</param>
+            <param name="jsonSetting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.CommonAPIs.CommonJsonSend.SendAsync(System.String,System.String,System.Object,Senparc.Weixin.CommonJsonSendType,System.Int32,System.Boolean,Senparc.CO2NET.Helpers.Serializers.JsonSetting)">
+            <summary>
+            向需要AccessToken的API发送消息的公共方法
+            </summary>
+            <param name="accessToken">这里的AccessToken是通用接口的AccessToken，非OAuth的。如果不需要，可以为null，此时urlFormat不要提供{0}参数</param>
+            <param name="urlFormat"></param>
+            <param name="data">如果是Get方式，可以为null</param>
+            <param name="sendType"></param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="checkValidationResult">验证服务器证书回调自动验证</param>
+            <param name="jsonSetting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.CommonAPIs.CommonJsonSend.SendAsync``1(System.String,System.String,System.Object,Senparc.Weixin.CommonJsonSendType,System.Int32,System.Boolean,Senparc.CO2NET.Helpers.Serializers.JsonSetting)">
+            <summary>
+            向需要AccessToken的API发送消息的公共方法
+            </summary>
+            <param name="accessToken">这里的AccessToken是通用接口的AccessToken，非OAuth的。如果不需要，可以为null，此时urlFormat不要提供{0}参数</param>
+            <param name="urlFormat"></param>
+            <param name="data">如果是Get方式，可以为null。在POST方式中将被转为JSON字符串提交</param>
+            <param name="sendType">发送类型，POST或GET，默认为POST</param>
+            <param name="timeOut">代理请求超时时间（毫秒）</param>
+            <param name="checkValidationResult">验证服务器证书回调自动验证</param>
+            <param name="jsonSetting">JSON字符串生成设置</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.Config">
+            <summary>
+            Senparc.Weixin 全局设置
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Config.IsDebug">
+            <summary>
+            <para>指定是否是Debug状态，如果是，系统会自动输出日志。</para>
+            <para>如果 CO2NET.Config.IsDebug 为 true，则此参数也会为 true，否则以此参数为准。</para>
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Config.DefaultSenparcWeixinSetting">
+            <summary>
+            默认微信配置
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Config.SenparcWeixinSetting">
+            <summary>
+            <para>微信全局配置</para>
+            <para>注意：在程序运行过程中修改 SenparcWeixinSetting.Items 中的微信配置值，并不能修改 Container 中的对应信息（如AppSecret），</para>
+            <para>如果需要修改微信信息（如AppSecret）应该使用 xxContainer.Register() 修改，这里的值也会随之更新。</para>
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Config.UseSandBoxPay">
+            <summary>
+            微信支付使用沙箱模式（默认为false）
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Config.TIME_OUT">
+            <summary>
+            请求超时设置（以毫秒为单位），默认为10秒。
+            说明：此处常量专为提供给方法的参数的默认值，不是方法内所有请求的默认超时时间。
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Config.RootDictionaryPath">
+            <summary>
+            网站根目录绝对路径
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Config.DefaultCacheNamespace">
+            <summary>
+            默认缓存键的第一级命名空间，默认值：DefaultCache
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Config.ThrownWhenJsonResultFaild">
+            <summary>
+            当 JsonResult 不为“成功”状态时，是否抛出异常，默认为 true
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Config.ApiMpHost">
+            <summary>
+            公众号（小程序）、开放平台 API 的服务器地址（默认为：https://api.weixin.qq.com）
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Config._apiMpFileHost">
+            <summary>
+            公众号（小程序）、开放平台【文件下载】 API 的服务器地址（默认为：https://api.weixin.qq.com）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Config.ApiMpFileHost">
+            <summary>
+            公众号（小程序）、开放平台【文件下载】 API 的服务器地址（默认为：http://file.api.weixin.qq.com）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Config.ApiWorkHost">
+            <summary>
+            企业微信API的服务器地址（默认为：https://qyapi.weixin.qq.com）
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Config.DefaultAppIdCheckFunc">
+            <summary>
+            默认的AppId检查规则
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Containers.IBaseContainer">
+            <summary>
+            IBaseContainer
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Containers.IBaseContainer`1">
+            <summary>
+            带IBaseContainerBag泛型的IBaseContainer
+            </summary>
+            <typeparam name="TBag"></typeparam>
+        </member>
+        <member name="T:Senparc.Weixin.Containers.BaseContainer`1">
+            <summary>
+            微信容器接口（如Ticket、AccessToken）
+            </summary>
+            <typeparam name="TBag"></typeparam>
+        </member>
+        <member name="P:Senparc.Weixin.Containers.BaseContainer`1.Cache">
+            <summary>
+            获取符合当前缓存策略配置的缓存的操作对象实例
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Containers.BaseContainer`1.RegisterFuncCollection">
+            <summary>
+            进行注册过程的委托集合
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.TryReRegister(System.String)">
+            <summary>
+            如果注册不成功，测尝试重新注册（前提是已经进行过注册），这种情况适用于分布式缓存被清空（重启）的情况。
+            <param name="shortKey">最简短的Key，比如AppId，不需要考虑容器前缀</param>
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.GetBagCacheKey(System.String)">
+            <summary>
+            获取ItemCollection缓存Key
+            </summary>
+            <param name="shortKey">最简短的Key，比如AppId，不需要考虑容器前缀</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.GetFirstOrDefaultAppId(Senparc.Weixin.PlatformType)">
+            <summary>
+            返回已经注册的第一个AppId
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.GetAllItems">
+            <summary>
+            获取所有容器内已经注册的项目
+            （此方法将会遍历Dictionary，当数据项很多的时候效率会明显降低）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.TryGetItem(System.String)">
+            <summary>
+            尝试获取某一项Bag
+            </summary>
+            <param name="shortKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.TryGetItem``1(System.String,System.Func{`0,``0})">
+            <summary>
+            尝试获取某一项Bag中的具体某个属性
+            </summary>
+            <param name="shortKey"></param>
+            <param name="property">具体某个属性</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.Update(System.String,`0,System.Nullable{System.TimeSpan})">
+            <summary>
+            更新数据项
+            </summary>
+            <param name="shortKey">即bag.Key</param>
+            <param name="bag">为null时删除该项</param>
+            <param name="expiry"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.Update(`0,System.Nullable{System.TimeSpan})">
+            <summary>
+            更新已经添加过的数据项
+            </summary>
+            <param name="bag">为null时删除该项</param>
+            <param name="expiry"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.Update(System.String,System.Action{`0},System.Nullable{System.TimeSpan})">
+            <summary>
+            更新数据项（本地缓存不会改变原有值的 HashCode）
+            </summary>
+            <param name="shortKey"></param>
+            <param name="partialUpdate">为null时删除该项</param>
+            <param name="expiry"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.CheckRegistered(System.String)">
+            <summary>
+            检查Key是否已经注册
+            </summary>
+            <param name="shortKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.RemoveFromCache(System.String)">
+            <summary>
+            从缓存中删除指定项
+            </summary>
+            <param name="shortKey"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.GetFirstOrDefaultAppIdAsync(Senparc.Weixin.PlatformType)">
+            <summary>
+            返回已经注册的第一个AppId
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.GetAllItemsAsync">
+            <summary>
+            获取所有容器内已经注册的项目
+            （此方法将会遍历Dictionary，当数据项很多的时候效率会明显降低）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.TryGetItemAsync(System.String)">
+            <summary>
+            尝试获取某一项Bag
+            </summary>
+            <param name="shortKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.TryGetItemAsync``1(System.String,System.Func{`0,``0})">
+            <summary>
+            尝试获取某一项Bag中的具体某个属性
+            </summary>
+            <param name="shortKey"></param>
+            <param name="property">具体某个属性</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.UpdateAsync(System.String,`0,System.Nullable{System.TimeSpan})">
+            <summary>
+            更新数据项
+            </summary>
+            <param name="shortKey">即bag.Key</param>
+            <param name="bag">为null时删除该项</param>
+            <param name="expiry"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.UpdateAsync(`0,System.Nullable{System.TimeSpan})">
+            <summary>
+            更新已经添加过的数据项
+            </summary>
+            <param name="bag">为null时删除该项</param>
+            <param name="expiry"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.UpdateAsync(System.String,System.Action{`0},System.Nullable{System.TimeSpan})">
+            <summary>
+            更新数据项（本地缓存不会改变原有值的 HashCode）
+            </summary>
+            <param name="shortKey"></param>
+            <param name="partialUpdate">为null时删除该项</param>
+            <param name="expiry"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.CheckRegisteredAsync(System.String)">
+            <summary>
+            检查Key是否已经注册
+            </summary>
+            <param name="shortKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Containers.BaseContainer`1.RemoveFromCacheAsync(System.String)">
+            <summary>
+            从缓存中删除指定项
+            </summary>
+            <param name="shortKey"></param>
+        </member>
+        <member name="T:Senparc.Weixin.Containers.IBaseContainerBag">
+            <summary>
+            IBaseContainerBag，BaseContainer容器中的Value类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Containers.IBaseContainerBag.Name">
+            <summary>
+            用于标记，方便后台管理
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Containers.IBaseContainerBag.Key">
+            <summary>
+            缓存键，形如：wx669ef95216eef885，最底层的Key，不考虑命名空间等
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Containers.IBaseContainerBag.CacheTime">
+            <summary>
+            当前对象被缓存的时间
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Containers.IBaseContainerBag_AppId">
+            <summary>
+            提供给具有 AppId 的 IBaseContainerBag 使用的接口
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Containers.IBaseContainerBag_AppId.AppId">
+            <summary>
+            AppId
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Containers.BaseContainerBag">
+            <summary>
+            BaseContainer容器中的Value类型
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Containers.BaseContainerBag.Name">
+            <summary>
+            用于标记，方便后台管理
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Containers.BaseContainerBag.Key">
+            <summary>
+            通常为AppId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Containers.BaseContainerBag.CacheTime">
+            <summary>
+            缓存时间，不使用属性变化监听
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Containers.BaseContainerRegisterFuncCollection`1">
+            <summary>
+            储存 Container 注册过程方法的集合
+            </summary>
+            <typeparam name="TBag"></typeparam>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.BindableBase">
+            <summary>
+            用于实现INotifyPropertyChanged
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Entities.BindableBase.SetProperty``1(``0@,``0,System.String)">
+            <summary>
+            设置属性
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="storage"></param>
+            <param name="value"></param>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.IAccessTokenResult">
+            <summary>
+            access_token请求后的JSON返回格式
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.IAccessTokenResult.access_token">
+            <summary>
+            获取到的凭证
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.IAccessTokenResult.expires_in">
+            <summary>
+            凭证有效时间，单位：秒
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.BaseJsonResult">
+            <summary>
+            WxJsonResult 等 Json 结果的基类（抽象类），子类必须具有不带参数的构造函数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.BaseJsonResult.errmsg">
+            <summary>
+            返回结果信息
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.BaseJsonResult.ErrorCodeValue">
+            <summary>
+            errcode的
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.IJsonResult">
+            <summary>
+            所有 JSON 格式返回值的API返回结果接口
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.IJsonResult.errmsg">
+            <summary>
+            返回结果信息
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.IJsonResult.ErrorCodeValue">
+            <summary>
+            errcode的
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.IJsonResultCallback">
+            <summary>
+            JSON 数据（序列化）回调接口
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Entities.IJsonResultCallback.SerializingCallback">
+            <summary>
+            序列化前回调
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Entities.IJsonResultCallback.SrializedCallback(System.String)">
+            <summary>
+            序列化后回调
+            </summary>
+            <param name="json"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Entities.IJsonResultCallback.DeserializingCallback(System.String)">
+            <summary>
+            反序列化前回调
+            </summary>
+            <param name="json"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Entities.IJsonResultCallback.DeserializedCallback(System.String)">
+            <summary>
+            反序列化后回调
+            </summary>
+            <param name="json"></param>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.QyJsonResult">
+            <summary>
+            企业号 JSON 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.QyJsonResult.errcode">
+            <summary>
+            返回代码
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.QyJsonResult.ErrorCodeValue">
+            <summary>
+            返回消息代码数字（同errcode枚举值）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.WorkJsonResult">
+            <summary>
+            企业微信 JSON 返回结果
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.WorkJsonResult.errcode">
+            <summary>
+            返回代码
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.WorkJsonResult.ErrorCodeValue">
+            <summary>
+            返回消息代码数字（同errcode枚举值）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.IWxJsonResult">
+            <summary>
+            包含 errorcode 的 Json 返回结果接口
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.IWxJsonResult.errcode">
+            <summary>
+            返回结果代码
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.WxJsonResult">
+            <summary>
+            公众号 JSON 返回结果（用于菜单接口等），子类必须具有不带参数的构造函数
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.WxJsonResult.ErrorCodeValue">
+            <summary>
+            返回消息代码数字（同errcode枚举值）
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Entities.WxJsonResult.#ctor">
+            <summary>
+            无参数的构造函数
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.SenparcWeixinSetting">
+            <summary>
+            <para>Senparc.Weixin JSON 配置</para>
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSetting.IsDebug">
+            <summary>
+            是否处于 Debug 状态（仅限微信范围）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSetting.Items">
+            <summary>
+            系统中所有微信设置的参数，默认已经添加一个 Key 为“Default”的对象
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSetting.Item(System.String)">
+            <summary>
+            从 Items 中获取对应键的参数
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Entities.SenparcWeixinSetting.#ctor">
+            <summary>
+            SenparcWeixinSetting 构造函数
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Entities.SenparcWeixinSetting.#ctor(System.Boolean)">
+            <summary>
+            SenparcWeixinSetting 构造函数
+            </summary>
+            <param name="isDebug">是否开启 Debug 模式</param>
+            <param name="isRoot">是否是根节点，如果是，将创建下级 Items 节点</param>
+        </member>
+        <member name="M:Senparc.Weixin.Entities.SenparcWeixinSetting.BuildFromWebConfig(System.Boolean)">
+            <summary>
+            从 Web.Config 文件自动生成 SenparcWeixinSetting
+            </summary>
+            <param name="isDebug">设置微信的 Debug 状态 </param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.SenparcWeixinSettingItem">
+            <summary>
+            Senparc.Weixin SDK 中单个公众号配置信息
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.ItemKey">
+            <summary>
+            唯一标识
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.Token">
+            <summary>
+            公众号Token
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.EncodingAESKey">
+            <summary>
+            公众号消息加密Key
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinAppId">
+            <summary>
+            公众号AppId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinAppSecret">
+            <summary>
+            公众号AppSecret
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WxOpenAppId">
+            <summary>
+            小程序AppId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WxOpenAppSecret">
+            <summary>
+            小程序AppSecret
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WxOpenToken">
+            <summary>
+            小程序 Token
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WxOpenEncodingAESKey">
+            <summary>
+            小程序EncodingAESKey 
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinCorpId">
+            <summary>
+            企业微信CorpId（全局）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinCorpAgentId">
+            <summary>
+            企业微信 AgentId（单个应用的Id），一般为数字
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinCorpSecret">
+            <summary>
+            企业微信CorpSecret（和 AgentId对应）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinCorpToken">
+            <summary>
+            Token
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinCorpEncodingAESKey">
+            <summary>
+            EncodingAESKey
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinPay_PartnerId">
+            <summary>
+            WeixinPay_PartnerId（微信支付V2）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinPay_Key">
+            <summary>
+            WeixinPay_Key（微信支付V2）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinPay_AppId">
+            <summary>
+            WeixinPay_AppId（微信支付V2）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinPay_AppKey">
+            <summary>
+            WeixinPay_AppKey（微信支付V2）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.WeixinPay_TenpayNotify">
+            <summary>
+            WeixinPay_TenpayNotify（微信支付V2）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.TenPayV3_MchId">
+            <summary>
+            MchId（商户ID）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.TenPayV3_SubMchId">
+            <summary>
+            特约商户微信支付 子商户ID，没有可留空
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.TenPayV3_Key">
+            <summary>
+            MchKey
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.TenPayV3_CertPath">
+            <summary>
+            微信支付证书位置（物理路径），在 .NET Core 下执行 TenPayV3InfoCollection.Register() 方法会为 HttpClient 自动添加证书
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.TenPayV3_CertSecret">
+            <summary>
+            微信支付证书密码，在 .NET Core 下执行 TenPayV3InfoCollection.Register() 方法会为 HttpClient 自动添加证书
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.TenPayV3_AppId">
+            <summary>
+            微信支付AppId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.TenPayV3_AppSecret">
+            <summary>
+            微信支付AppSecert
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.TenPayV3_SubAppId">
+            <summary>
+            特约商户微信支付 子商户AppID
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.TenPayV3_SubAppSecret">
+            <summary>
+            特约商户微信支付 子商户AppSecret
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.TenPayV3_TenpayNotify">
+            <summary>
+            微信支付TenpayNotify
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.TenPayV3_WxOpenTenpayNotify">
+            <summary>
+            小程序微信支付WxOpenTenpayNotify
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.Component_Appid">
+            <summary>
+            Component_Appid
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.Component_Secret">
+            <summary>
+            Component_Secret
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.Component_Token">
+            <summary>
+            全局统一的 Component_Token（非必须）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItem.Component_EncodingAESKey">
+            <summary>
+            全局统一的 Component_EncodingAESKey（非必须）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.ISenparcWeixinSettingBase">
+            <summary>
+            SenparcWeixinSetting基础接口
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingBase.ItemKey">
+            <summary>
+            唯一标识
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.ISenparcWeixinSettingForMP">
+            <summary>
+            公众号
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForMP.Token">
+            <summary>
+            公众号Token
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForMP.EncodingAESKey">
+            <summary>
+            公众号消息加密Key
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForMP.WeixinAppId">
+            <summary>
+            公众号AppId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForMP.WeixinAppSecret">
+            <summary>
+            公众号AppSecret
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.ISenparcWeixinSettingForWxOpen">
+            <summary>
+            小程序
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForWxOpen.WxOpenAppId">
+            <summary>
+            小程序AppId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForWxOpen.WxOpenAppSecret">
+            <summary>
+            小程序AppSecret
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForWxOpen.WxOpenToken">
+            <summary>
+            小程序 Token
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForWxOpen.WxOpenEncodingAESKey">
+            <summary>
+            小程序EncodingAESKey 
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.ISenparcWeixinSettingForWork">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForWork.WeixinCorpId">
+            <summary>
+            企业微信CorpId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForWork.WeixinCorpAgentId">
+            <summary>
+            企业微信 AgentId（单个应用的Id），一般为数字
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForWork.WeixinCorpSecret">
+            <summary>
+            企业微信CorpSecret（和 AgentId对应）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForWork.WeixinCorpToken">
+            <summary>
+            Token
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForWork.WeixinCorpEncodingAESKey">
+            <summary>
+            EncodingAESKey
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.ISenparcWeixinSettingForOldTenpay">
+            <summary>
+            微信支付（旧版）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForOldTenpay.WeixinPay_PartnerId">
+            <summary>
+            WeixinPay_PartnerId（微信支付V2）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForOldTenpay.WeixinPay_Key">
+            <summary>
+            WeixinPay_Key（微信支付V2）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForOldTenpay.WeixinPay_AppId">
+            <summary>
+            WeixinPay_AppId（微信支付V2）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForOldTenpay.WeixinPay_AppKey">
+            <summary>
+            WeixinPay_AppKey（微信支付V2）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForOldTenpay.WeixinPay_TenpayNotify">
+            <summary>
+            WeixinPay_TenpayNotify（微信支付V2）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3">
+            <summary>
+            微信支付V3
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3.TenPayV3_MchId">
+            <summary>
+            MchId（商户ID）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3.TenPayV3_SubMchId">
+            <summary>
+            子商户 MchId，没有可留空
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3.TenPayV3_Key">
+            <summary>
+            MchKey
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3.TenPayV3_CertPath">
+            <summary>
+            微信支付证书地址，物理路径（如 D:\\cert\\cert.p12）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3.TenPayV3_CertSecret">
+            <summary>
+            微信支付证书密码
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3.TenPayV3_AppId">
+            <summary>
+            微信支付AppId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3.TenPayV3_AppSecret">
+            <summary>
+            微信支付AppKey
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3.TenPayV3_SubAppId">
+            <summary>
+            子商户微信支付AppId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3.TenPayV3_SubAppSecret">
+            <summary>
+            子商户微信支付AppKey
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3.TenPayV3_TenpayNotify">
+            <summary>
+            微信支付TenpayNotify
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForTenpayV3.TenPayV3_WxOpenTenpayNotify">
+            <summary>
+            小程序微信支付WxOpenTenpayNotify
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.ISenparcWeixinSettingForOpen">
+            <summary>
+            开放平台
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForOpen.Component_Appid">
+            <summary>
+            Component_Appid
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForOpen.Component_Secret">
+            <summary>
+            Component_Secret
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForOpen.Component_Token">
+            <summary>
+            全局统一的 Component_Token（非必须）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.ISenparcWeixinSettingForOpen.Component_EncodingAESKey">
+            <summary>
+            全局统一的 Component_EncodingAESKey（非必须）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.ISenparcWeixinSettingForExtension">
+            <summary>
+            扩展
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.SenparcWeixinSettingItemCollection">
+            <summary>
+            SenparcWeixinSettingItem 集合
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.SenparcWeixinSettingItemCollection.Item(System.String)">
+            <summary>
+            设置或获取 SenparcWeixinSettingItem，key 不存在时会自动创建对象，因此不需要判断 key 是否存在
+            </summary>
+            <param name="key">SenparcWeixinSettingItem 标识</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.TemplateMessage.TemplateMessageData">
+            <summary>
+            模板消息数据，JSON 格式形如 { "key1": { "value": any }, "key2": { "value": any } }
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.TemplateMessage.TemplateMessageDataValue">
+            <summary>
+            模板内容，JSON 格式形如: { "value": any }
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.TemplateMessage.ITemplateMessageBase">
+            <summary>
+            模板消息数据基础类接口
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.TemplateMessage.ITemplateMessageBase.TemplateId">
+            <summary>
+            Url，为null时会自动忽略
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.TemplateMessage.ITemplateMessageBase.Url">
+            <summary>
+            Url，为null时会自动忽略
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.TemplateMessage.ITemplateMessageBase.TemplateName">
+            <summary>
+            模板名称
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Entities.TemplateMessage.TemplateMessageBase">
+            <summary>
+            模板消息数据基础类
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.TemplateMessage.TemplateMessageBase.TemplateId">
+            <summary>
+            每个公众号都不同的templateId
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.TemplateMessage.TemplateMessageBase.Url">
+            <summary>
+            Url，为null时会自动忽略
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Entities.TemplateMessage.TemplateMessageBase.TemplateName">
+            <summary>
+            模板名称
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.CommonJsonSendType">
+            <summary>
+            CommonJsonSend中的http提交类型
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.CommonJsonSendType.GET">
+            <summary>
+            GET 方法
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.CommonJsonSendType.POST">
+            <summary>
+            POST 方法
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.PlatformType">
+            <summary>
+            平台类型
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.PlatformType.MP">
+            <summary>
+            公众号
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.PlatformType.Open">
+            <summary>
+            开放平台
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.PlatformType.WxOpen">
+            <summary>
+            小程序
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.PlatformType.QY">
+            <summary>
+            企业号
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.PlatformType.Work">
+            <summary>
+            企业微信
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.ReturnCode">
+            <summary>
+            公众号返回码（JSON）
+            应该更名为ReturnCode_MP，但为减少项目中的修改，此处依旧用ReturnCode命名
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.ReturnCode.用户拒绝接受消息">
+            <summary>
+            [小程序订阅消息]用户拒绝接受消息，如果用户之前曾经订阅过，则表示用户取消了订阅关系
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.ReturnCode.模板参数不准确">
+            <summary>
+            [小程序订阅消息]模板参数不准确，可能为空或者不满足规则，errmsg会提示具体是哪个字段出错
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.ReturnCode.客服帐号名长度超过限制">
+            <summary>
+            客服帐号名长度超过限制(仅允许10个英文字符，不包括@及@后的公众号的微信号)(invalid kf_acount length)
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.ReturnCode.客服帐号名包含非法字符">
+            <summary>
+            客服帐号名包含非法字符(仅允许英文+数字)(illegal character in kf_account)
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.ReturnCode.客服帐号个数超过限制">
+            <summary>
+             	客服帐号个数超过限制(10个客服账号)(kf_account count exceeded)
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.ReturnCode.签名错误">
+            <summary>
+            小程序为“签名错误”。对应公众号： 87009, “errmsg” : “reply is not exists” //该回复不存在
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.ReturnCode_QY">
+            <summary>
+            企业号返回码
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.ReturnCode_Work">
+            <summary>
+            企业微信返回码
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.ReturnCode_Work.组织架构不合法">
+            <summary>
+            （1不是一棵树，2 多个一样的partyid，3 partyid空，4 partyid name 空，5 同一个父节点下有两个子节点 部门名字一样 可能是以上情况，请一一排查）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Language">
+            <summary>
+            语言
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Language.zh_CN">
+            <summary>
+            中文简体
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Language.zh_TW">
+            <summary>
+            中文繁体
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Language.en">
+            <summary>
+            英文
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Sex">
+            <summary>
+            用户信息中的性别（sex）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.WeixinSex">
+            <summary>
+            用户信息中的性别（sex）
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Exceptions.ErrorJsonResultException">
+            <summary>
+            JSON返回错误代码异常（比如access_token相关操作中使用）
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Exceptions.ErrorJsonResultException.JsonResult">
+            <summary>
+            JsonResult
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Exceptions.ErrorJsonResultException.Url">
+            <summary>
+            接口 URL
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Exceptions.ErrorJsonResultException.#ctor(System.String,System.Exception,Senparc.Weixin.Entities.WxJsonResult,System.String)">
+            <summary>
+            ErrorJsonResultException
+            </summary>
+            <param name="message">异常消息</param>
+            <param name="inner">内部异常</param>
+            <param name="jsonResult">WxJsonResult</param>
+            <param name="url">API地址</param>
+        </member>
+        <member name="T:Senparc.Weixin.Exceptions.MessageHandlerException">
+            <summary>
+            MessageHandler异常
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Exceptions.UnknownRequestMsgTypeException">
+            <summary>
+            未知请求类型异常
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Exceptions.UnRegisterAppIdException">
+            <summary>
+            未注册 AppId 异常
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Exceptions.WeixinException">
+            <summary>
+            微信自定义异常基类
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Exceptions.WeixinException.AccessTokenOrAppId">
+            <summary>
+            当前正在请求的公众号AccessToken或AppId
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Exceptions.WeixinException.#ctor(System.String,System.Boolean)">
+            <summary>
+            WeixinException
+            </summary>
+            <param name="message">异常消息</param>
+            <param name="logged">是否已经使用WeixinTrace记录日志，如果没有，WeixinException会进行概要记录</param>
+        </member>
+        <member name="M:Senparc.Weixin.Exceptions.WeixinException.#ctor(System.String,System.Exception,System.Boolean)">
+            <summary>
+            WeixinException
+            </summary>
+            <param name="message">异常消息</param>
+            <param name="inner">内部异常信息</param>
+            <param name="logged">是否已经使用WeixinTrace记录日志，如果没有，WeixinException会进行概要记录</param>
+        </member>
+        <member name="T:Senparc.Weixin.Exceptions.WeixinMenuException">
+            <summary>
+            菜单异常
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Exceptions.WeixinNullReferenceException">
+            <summary>
+            Null异常
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Exceptions.WeixinNullReferenceException.ParentObject">
+            <summary>
+            上一级不为null的对象（或对调试很重要的对象）。
+            如果需要调试多个对象，可以传入数组，如：new {obj1, obj2}
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Exceptions.WeixinObsoleteException">
+            <summary>
+            接口或方法过期异常
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Helpers.ContainerHelper">
+            <summary>
+            容器帮助类
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Helpers.ContainerHelper.GetCacheKeyNamespace(System.Type)">
+            <summary>
+            获取缓存Key（命名空间，形如：Container:Senparc.Weixin.MP.Containers.AccessTokenBag）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Helpers.ContainerHelper.GetItemCacheKey(System.Type,System.String)">
+            <summary>
+            获取ContainerBag缓存Key，包含命名空间（形如：Container:Senparc.Weixin.MP.Containers.AccessTokenBag:wx669ef95216eef885）
+            </summary>
+            <param name="shortKey">最简短的Key，比如AppId，不需要考虑容器前缀</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Helpers.ContainerHelper.GetItemCacheKey(Senparc.Weixin.Containers.IBaseContainerBag)">
+            <summary>
+            获取ContainerBag缓存Key，包含命名空间（形如：Container:Senparc.Weixin.MP.Containers.AccessTokenBag:wx669ef95216eef885）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="bag"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Helpers.ContainerHelper.GetItemCacheKey(Senparc.Weixin.Containers.IBaseContainerBag,System.String)">
+            <summary>
+            获取ContainerBag缓存Key，包含命名空间（形如：Container:Senparc.Weixin.MP.Containers.AccessTokenBag:wx669ef95216eef885）
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="bag"></param>
+            <param name="shortKey"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.CanBeNullAttribute">
+            <summary>
+            Indicates that the value of the marked element could be <c>null</c> sometimes,
+            so the check for <c>null</c> is necessary before its usage.
+            </summary>
+            <example><code>
+            [CanBeNull] public object Test() { return null; }
+            public void UseTest() {
+              var p = Test();
+              var s = p.ToString(); // Warning: Possible 'System.NullReferenceException'
+            }
+            </code></example>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.NotNullAttribute">
+            <summary>
+            Indicates that the value of the marked element could never be <c>null</c>.
+            </summary>
+            <example><code>
+            [NotNull] public object Foo() {
+              return null; // Warning: Possible 'null' assignment
+            }
+            </code></example>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.ItemNotNullAttribute">
+            <summary>
+            Indicates that collection or enumerable value does not contain null elements.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.ItemCanBeNullAttribute">
+            <summary>
+            Indicates that collection or enumerable value can contain null elements.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.StringFormatMethodAttribute">
+            <summary>
+            Indicates that the marked method builds string by format pattern and (optional) arguments.
+            Parameter, which contains format string, should be given in constructor. The format string
+            should be in <see cref="M:System.String.Format(System.IFormatProvider,System.String,System.Object[])"/>-like form.
+            </summary>
+            <example><code>
+            [StringFormatMethod("message")]
+            public void ShowError(string message, params object[] args) { /* do something */ }
+            public void Foo() {
+              ShowError("Failed: {0}"); // Warning: Non-existing argument in format string
+            }
+            </code></example>
+        </member>
+        <member name="M:Senparc.Weixin.Annotations.StringFormatMethodAttribute.#ctor(System.String)">
+            <param name="formatParameterName">
+            Specifies which parameter of an annotated method should be treated as format-string
+            </param>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.ValueProviderAttribute">
+            <summary>
+            For a parameter that is expected to be one of the limited set of values.
+            Specify fields of which type should be used as values for this parameter.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.InvokerParameterNameAttribute">
+            <summary>
+            Indicates that the function argument should be string literal and match one
+            of the parameters of the caller function. For example, ReSharper annotates
+            the parameter of <see cref="T:System.ArgumentNullException"/>.
+            </summary>
+            <example><code>
+            public void Foo(string param) {
+              if (param == null)
+                throw new ArgumentNullException("par"); // Warning: Cannot resolve symbol
+            }
+            </code></example>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.NotifyPropertyChangedInvocatorAttribute">
+             <summary>
+             Indicates that the method is contained in a type that implements
+             <c>System.ComponentModel.INotifyPropertyChanged</c> interface and this method
+             is used to notify that some property value changed.
+             </summary>
+             <remarks>
+             The method should be non-static and conform to one of the supported signatures:
+             <list>
+             <item><c>NotifyChanged(string)</c></item>
+             <item><c>NotifyChanged(params string[])</c></item>
+             <item><c>NotifyChanged{T}(Expression{Func{T}})</c></item>
+             <item><c>NotifyChanged{T,U}(Expression{Func{T,U}})</c></item>
+             <item><c>SetProperty{T}(ref T, T, string)</c></item>
+             </list>
+             </remarks>
+             <example><code>
+             public class Foo : INotifyPropertyChanged {
+               public event PropertyChangedEventHandler PropertyChanged;
+               [NotifyPropertyChangedInvocator]
+               protected virtual void NotifyChanged(string propertyName) { ... }
+            
+               private string _name;
+               public string Name {
+                 get { return _name; }
+                 set { _name = value; NotifyChanged("LastName"); /* Warning */ }
+               }
+             }
+             </code>
+             Examples of generated notifications:
+             <list>
+             <item><c>NotifyChanged("Property")</c></item>
+             <item><c>NotifyChanged(() =&gt; Property)</c></item>
+             <item><c>NotifyChanged((VM x) =&gt; x.Property)</c></item>
+             <item><c>SetProperty(ref myField, value, "Property")</c></item>
+             </list>
+             </example>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.ContractAnnotationAttribute">
+            <summary>
+            Describes dependency between method input and output.
+            </summary>
+            <syntax>
+            <p>Function Definition Table syntax:</p>
+            <list>
+            <item>FDT      ::= FDTRow [;FDTRow]*</item>
+            <item>FDTRow   ::= Input =&gt; Output | Output &lt;= Input</item>
+            <item>Input    ::= ParameterName: Value [, Input]*</item>
+            <item>Output   ::= [ParameterName: Value]* {halt|stop|void|nothing|Value}</item>
+            <item>Value    ::= true | false | null | notnull | canbenull</item>
+            </list>
+            If method has single input parameter, it's name could be omitted.<br/>
+            Using <c>halt</c> (or <c>void</c>/<c>nothing</c>, which is the same)
+            for method output means that the methos doesn't return normally.<br/>
+            <c>canbenull</c> annotation is only applicable for output parameters.<br/>
+            You can use multiple <c>[ContractAnnotation]</c> for each FDT row,
+            or use single attribute with rows separated by semicolon.<br/>
+            </syntax>
+            <examples><list>
+            <item><code>
+            [ContractAnnotation("=> halt")]
+            public void TerminationMethod()
+            </code></item>
+            <item><code>
+            [ContractAnnotation("halt &lt;= condition: false")]
+            public void Assert(bool condition, string text) // regular assertion method
+            </code></item>
+            <item><code>
+            [ContractAnnotation("s:null => true")]
+            public bool IsNullOrEmpty(string s) // string.IsNullOrEmpty()
+            </code></item>
+            <item><code>
+            // A method that returns null if the parameter is null,
+            // and not null if the parameter is not null
+            [ContractAnnotation("null => null; notnull => notnull")]
+            public object Transform(object data) 
+            </code></item>
+            <item><code>
+            [ContractAnnotation("s:null=>false; =>true,result:notnull; =>false, result:null")]
+            public bool TryParse(string s, out Person result)
+            </code></item>
+            </list></examples>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.LocalizationRequiredAttribute">
+            <summary>
+            Indicates that marked element should be localized or not.
+            </summary>
+            <example><code>
+            [LocalizationRequiredAttribute(true)]
+            public class Foo {
+              private string str = "my string"; // Warning: Localizable string
+            }
+            </code></example>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.CannotApplyEqualityOperatorAttribute">
+            <summary>
+            Indicates that the value of the marked type (or its derivatives)
+            cannot be compared using '==' or '!=' operators and <c>Equals()</c>
+            should be used instead. However, using '==' or '!=' for comparison
+            with <c>null</c> is always permitted.
+            </summary>
+            <example><code>
+            [CannotApplyEqualityOperator]
+            class NoEquality { }
+            class UsesNoEquality {
+              public void Test() {
+                var ca1 = new NoEquality();
+                var ca2 = new NoEquality();
+                if (ca1 != null) { // OK
+                  bool condition = ca1 == ca2; // Warning
+                }
+              }
+            }
+            </code></example>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.BaseTypeRequiredAttribute">
+            <summary>
+            When applied to a target attribute, specifies a requirement for any type marked
+            with the target attribute to implement or inherit specific type or types.
+            </summary>
+            <example><code>
+            [BaseTypeRequired(typeof(IComponent)] // Specify requirement
+            public class ComponentAttribute : Attribute { }
+            [Component] // ComponentAttribute requires implementing IComponent interface
+            public class MyComponent : IComponent { }
+            </code></example>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.UsedImplicitlyAttribute">
+            <summary>
+            Indicates that the marked symbol is used implicitly (e.g. via reflection, in external library),
+            so this symbol will not be marked as unused (as well as by other usage inspections).
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.MeansImplicitUseAttribute">
+            <summary>
+            Should be used on attributes and causes ReSharper to not mark symbols marked with such attributes
+            as unused (as well as by other usage inspections)
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.ImplicitUseKindFlags.Access">
+            <summary>Only entity marked with attribute considered used.</summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.ImplicitUseKindFlags.Assign">
+            <summary>Indicates implicit assignment to a member.</summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.ImplicitUseKindFlags.InstantiatedWithFixedConstructorSignature">
+            <summary>
+            Indicates implicit instantiation of a type with fixed constructor signature.
+            That means any unused constructor parameters won't be reported as such.
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature">
+            <summary>Indicates implicit instantiation of a type.</summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.ImplicitUseTargetFlags">
+            <summary>
+            Specify what is considered used implicitly when marked
+            with <see cref="T:Senparc.Weixin.Annotations.MeansImplicitUseAttribute"/> or <see cref="T:Senparc.Weixin.Annotations.UsedImplicitlyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.ImplicitUseTargetFlags.Members">
+            <summary>Members of entity marked with attribute are considered used.</summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.ImplicitUseTargetFlags.WithMembers">
+            <summary>Entity marked with attribute and all its members considered used.</summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.PublicAPIAttribute">
+            <summary>
+            This attribute is intended to mark publicly available API
+            which should not be removed and so is treated as used.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.InstantHandleAttribute">
+            <summary>
+            Tells code analysis engine if the parameter is completely handled when the invoked method is on stack.
+            If the parameter is a delegate, indicates that delegate is executed while the method is executed.
+            If the parameter is an enumerable, indicates that it is enumerated while the method is executed.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.PureAttribute">
+            <summary>
+            Indicates that a method does not make any observable state changes.
+            The same as <c>System.Diagnostics.Contracts.PureAttribute</c>.
+            </summary>
+            <example><code>
+            [Pure] private int Multiply(int x, int y) { return x * y; }
+            public void Foo() {
+              const int a = 2, b = 2;
+              Multiply(a, b); // Waring: Return value of pure method is not used
+            }
+            </code></example>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.PathReferenceAttribute">
+            <summary>
+            Indicates that a parameter is a path to a file or a folder within a web project.
+            Path can be relative or absolute, starting from web root (~).
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.SourceTemplateAttribute">
+            <summary>
+            An extension method marked with this attribute is processed by ReSharper code completion
+            as a 'Source Template'. When extension method is completed over some expression, it's source code
+            is automatically expanded like a template at call site.
+            </summary>
+            <remarks>
+            Template method body can contain valid source code and/or special comments starting with '$'.
+            Text inside these comments is added as source code when the template is applied. Template parameters
+            can be used either as additional method parameters or as identifiers wrapped in two '$' signs.
+            Use the <see cref="T:Senparc.Weixin.Annotations.MacroAttribute"/> attribute to specify macros for parameters.
+            </remarks>
+            <example>
+            In this example, the 'forEach' method is a source template available over all values
+            of enumerable types, producing ordinary C# 'foreach' statement and placing caret inside block:
+            <code>
+            [SourceTemplate]
+            public static void forEach&lt;T&gt;(this IEnumerable&lt;T&gt; xs) {
+              foreach (var x in xs) {
+                 //$ $END$
+              }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.MacroAttribute">
+            <summary>
+            Allows specifying a macro for a parameter of a <see cref="T:Senparc.Weixin.Annotations.SourceTemplateAttribute">source template</see>.
+            </summary>
+            <remarks>
+            You can apply the attribute on the whole method or on any of its additional parameters. The macro expression
+            is defined in the <see cref="P:Senparc.Weixin.Annotations.MacroAttribute.Expression"/> property. When applied on a method, the target
+            template parameter is defined in the <see cref="P:Senparc.Weixin.Annotations.MacroAttribute.Target"/> property. To apply the macro silently
+            for the parameter, set the <see cref="P:Senparc.Weixin.Annotations.MacroAttribute.Editable"/> property value = -1.
+            </remarks>
+            <example>
+            Applying the attribute on a source template method:
+            <code>
+            [SourceTemplate, Macro(Target = "item", Expression = "suggestVariableName()")]
+            public static void forEach&lt;T&gt;(this IEnumerable&lt;T&gt; collection) {
+              foreach (var item in collection) {
+                //$ $END$
+              }
+            }
+            </code>
+            Applying the attribute on a template method parameter:
+            <code>
+            [SourceTemplate]
+            public static void something(this Entity x, [Macro(Expression = "guid()", Editable = -1)] string newguid) {
+              /*$ var $x$Id = "$newguid$" + x.ToString();
+              x.DoSomething($x$Id); */
+            }
+            </code>
+            </example>
+        </member>
+        <member name="P:Senparc.Weixin.Annotations.MacroAttribute.Expression">
+            <summary>
+            Allows specifying a macro that will be executed for a <see cref="T:Senparc.Weixin.Annotations.SourceTemplateAttribute">source template</see>
+            parameter when the template is expanded.
+            </summary>
+        </member>
+        <member name="P:Senparc.Weixin.Annotations.MacroAttribute.Editable">
+            <summary>
+            Allows specifying which occurrence of the target parameter becomes editable when the template is deployed.
+            </summary>
+            <remarks>
+            If the target parameter is used several times in the template, only one occurrence becomes editable;
+            other occurrences are changed synchronously. To specify the zero-based index of the editable occurrence,
+            use values >= 0. To make the parameter non-editable when the template is expanded, use -1.
+            </remarks>>
+        </member>
+        <member name="P:Senparc.Weixin.Annotations.MacroAttribute.Target">
+            <summary>
+            Identifies the target parameter of a <see cref="T:Senparc.Weixin.Annotations.SourceTemplateAttribute">source template</see> if the
+            <see cref="T:Senparc.Weixin.Annotations.MacroAttribute"/> is applied on a template method.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcActionAttribute">
+            <summary>
+            ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter
+            is an MVC action. If applied to a method, the MVC action name is calculated
+            implicitly from the context. Use this attribute for custom wrappers similar to
+            <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String)</c>.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcAreaAttribute">
+            <summary>
+            ASP.NET MVC attribute. Indicates that a parameter is an MVC area.
+            Use this attribute for custom wrappers similar to
+            <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String)</c>.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcControllerAttribute">
+            <summary>
+            ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter is
+            an MVC controller. If applied to a method, the MVC controller name is calculated
+            implicitly from the context. Use this attribute for custom wrappers similar to
+            <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String, String)</c>.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcMasterAttribute">
+            <summary>
+            ASP.NET MVC attribute. Indicates that a parameter is an MVC Master. Use this attribute
+            for custom wrappers similar to <c>System.Web.Mvc.Controller.View(String, String)</c>.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcModelTypeAttribute">
+            <summary>
+            ASP.NET MVC attribute. Indicates that a parameter is an MVC model type. Use this attribute
+            for custom wrappers similar to <c>System.Web.Mvc.Controller.View(String, Object)</c>.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcPartialViewAttribute">
+            <summary>
+            ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter is an MVC
+            partial view. If applied to a method, the MVC partial view name is calculated implicitly
+            from the context. Use this attribute for custom wrappers similar to
+            <c>System.Web.Mvc.Html.RenderPartialExtensions.RenderPartial(HtmlHelper, String)</c>.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcSupressViewErrorAttribute">
+            <summary>
+            ASP.NET MVC attribute. Allows disabling inspections for MVC views within a class or a method.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcDisplayTemplateAttribute">
+            <summary>
+            ASP.NET MVC attribute. Indicates that a parameter is an MVC display template.
+            Use this attribute for custom wrappers similar to 
+            <c>System.Web.Mvc.Html.DisplayExtensions.DisplayForModel(HtmlHelper, String)</c>.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcEditorTemplateAttribute">
+            <summary>
+            ASP.NET MVC attribute. Indicates that a parameter is an MVC editor template.
+            Use this attribute for custom wrappers similar to
+            <c>System.Web.Mvc.Html.EditorExtensions.EditorForModel(HtmlHelper, String)</c>.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcTemplateAttribute">
+            <summary>
+            ASP.NET MVC attribute. Indicates that a parameter is an MVC template.
+            Use this attribute for custom wrappers similar to
+            <c>System.ComponentModel.DataAnnotations.UIHintAttribute(System.String)</c>.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcViewAttribute">
+            <summary>
+            ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter
+            is an MVC view. If applied to a method, the MVC view name is calculated implicitly
+            from the context. Use this attribute for custom wrappers similar to
+            <c>System.Web.Mvc.Controller.View(Object)</c>.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AspMvcActionSelectorAttribute">
+            <summary>
+            ASP.NET MVC attribute. When applied to a parameter of an attribute,
+            indicates that this parameter is an MVC action name.
+            </summary>
+            <example><code>
+            [ActionName("Foo")]
+            public ActionResult Login(string returnUrl) {
+              ViewBag.ReturnUrl = Url.Action("Foo"); // OK
+              return RedirectToAction("Bar"); // Error: Cannot resolve action
+            }
+            </code></example>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.RazorSectionAttribute">
+            <summary>
+            Razor attribute. Indicates that a parameter or a method is a Razor section.
+            Use this attribute for custom wrappers similar to 
+            <c>System.Web.WebPages.WebPageBase.RenderSection(String)</c>.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.CollectionAccessAttribute">
+            <summary>
+            Indicates how method invocation affects content of the collection.
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.CollectionAccessType.None">
+            <summary>Method does not use or modify content of the collection.</summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.CollectionAccessType.Read">
+            <summary>Method only reads content of the collection but does not modify it.</summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.CollectionAccessType.ModifyExistingContent">
+            <summary>Method can change content of the collection but does not add new elements.</summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.CollectionAccessType.UpdatedContent">
+            <summary>Method can add new elements to the collection.</summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AssertionMethodAttribute">
+            <summary>
+            Indicates that the marked method is assertion method, i.e. it halts control flow if
+            one of the conditions is satisfied. To set the condition, mark one of the parameters with 
+            <see cref="T:Senparc.Weixin.Annotations.AssertionConditionAttribute"/> attribute.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AssertionConditionAttribute">
+            <summary>
+            Indicates the condition parameter of the assertion method. The method itself should be
+            marked by <see cref="T:Senparc.Weixin.Annotations.AssertionMethodAttribute"/> attribute. The mandatory argument of
+            the attribute is the assertion type.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.AssertionConditionType">
+            <summary>
+            Specifies assertion type. If the assertion method argument satisfies the condition,
+            then the execution continues. Otherwise, execution is assumed to be halted.
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.AssertionConditionType.IS_TRUE">
+            <summary>Marked parameter should be evaluated to true.</summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.AssertionConditionType.IS_FALSE">
+            <summary>Marked parameter should be evaluated to false.</summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.AssertionConditionType.IS_NULL">
+            <summary>Marked parameter should be evaluated to null value.</summary>
+        </member>
+        <member name="F:Senparc.Weixin.Annotations.AssertionConditionType.IS_NOT_NULL">
+            <summary>Marked parameter should be evaluated to not null value.</summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.TerminatesProgramAttribute">
+            <summary>
+            Indicates that the marked method unconditionally terminates control flow execution.
+            For example, it could unconditionally throw exception.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.LinqTunnelAttribute">
+            <summary>
+            Indicates that method is pure LINQ method, with postponed enumeration (like Enumerable.Select,
+            .Where). This annotation allows inference of [InstantHandle] annotation for parameters
+            of delegate type by analyzing LINQ method chains.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.NoEnumerationAttribute">
+            <summary>
+            Indicates that IEnumerable, passed as parameter, is not enumerated.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.RegexPatternAttribute">
+            <summary>
+            Indicates that parameter is regular expression pattern.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.XamlItemsControlAttribute">
+            <summary>
+            XAML attribute. Indicates the type that has <c>ItemsSource</c> property and should be treated
+            as <c>ItemsControl</c>-derived type, to enable inner items <c>DataContext</c> type resolve.
+            </summary>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.XamlItemBindingOfItemsControlAttribute">
+            <summary>
+            XAML attibute. Indicates the property of some <c>BindingBase</c>-derived type, that
+            is used to bind some item of <c>ItemsControl</c>-derived type. This annotation will
+            enable the <c>DataContext</c> type resolve for XAML bindings for such properties.
+            </summary>
+            <remarks>
+            Property should have the tree ancestor of the <c>ItemsControl</c> type or
+            marked with the <see cref="T:Senparc.Weixin.Annotations.XamlItemsControlAttribute"/> attribute.
+            </remarks>
+        </member>
+        <member name="T:Senparc.Weixin.Annotations.NoReorder">
+            <summary>
+            Prevents the Member Reordering feature from tossing members of the marked class.
+            </summary>
+            <remarks>
+            The attribute must be mentioned in your member reordering patterns
+            </remarks>
+        </member>
+        <member name="T:Senparc.Weixin.RegisterServices.RegisterServiceExtension">
+            <summary>
+            快捷注册类，RegisterService 扩展类
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Tencent.Cryptography.AES_decrypt(System.String,System.String,System.String@)">
+            <summary>
+            解密方法
+            </summary>
+            <param name="Input">密文</param>
+            <param name="EncodingAESKey"></param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:Senparc.Weixin.Tencent.Cryptography.chr(System.Int32)">
+            将数字转化成ASCII码对应的字符，用于对明文进行补码
+            
+            @param a 需要转化的数字
+            @return 转化得到的字符
+        </member>
+        <member name="M:Senparc.Weixin.Tencent.WXBizMsgCrypt.EncryptRequestMsg(System.String,System.String,System.String,System.String,System.String@,System.String@)">
+            <summary>
+            模拟生成加密请求消息
+            </summary>
+            <param name="requestMsg"></param>
+            <param name="sTimeStamp"></param>
+            <param name="sNonce"></param>
+            <param name="toUserName"></param>
+            <param name="sEncryptMsg"></param>
+            <param name="msgSigature"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WeixinTrace">
+            <summary>
+            微信日志跟踪
+            </summary>
+        </member>
+        <member name="F:Senparc.Weixin.WeixinTrace.OnWeixinExceptionFunc">
+            <summary>
+            记录WeixinException日志时需要执行的任务
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WeixinTrace.Log(System.String,System.Object[])">
+            <summary>
+            记录系统日志
+            </summary>
+            <param name="messageFormat"></param>
+            <param name="param"></param>
+        </member>
+        <member name="M:Senparc.Weixin.WeixinTrace.WeixinExceptionLog(Senparc.Weixin.Exceptions.WeixinException)">
+            <summary>
+            WeixinException 日志
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:Senparc.Weixin.WeixinTrace.ErrorJsonResultExceptionLog(Senparc.Weixin.Exceptions.ErrorJsonResultException)">
+            <summary>
+            ErrorJsonResultException 日志
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="T:Senparc.Weixin.BrowserUtility.BrowserUtility">
+            <summary>
+            浏览器公共类
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.BrowserUtility.BrowserUtility.SideInWeixinBrowser(System.Web.HttpContextBase)">
+            <summary>
+            判断是否在微信内置浏览器中
+            </summary>
+            <param name="httpContext">HttpContextBase对象</param>
+            <returns>true：在微信内置浏览器内。false：不在微信内置浏览器内。</returns>
+        </member>
+        <member name="M:Senparc.Weixin.BrowserUtility.BrowserUtility.SideInWeixinMiniProgram(System.Web.HttpContextBase)">
+            <summary>
+            判断是否在微信小程序内发起请求（注意：此方法在Android下有效，在iOS下暂时无效！）
+            </summary>
+            <param name="httpContext">HttpContextBase对象</param>
+            <returns>true：在微信内置浏览器内。false：不在微信内置浏览器内。</returns>
+        </member>
+        <member name="T:Senparc.Weixin.HttpUtility.Get">
+            <summary>
+            Get 请求处理
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.HttpUtility.Get.GetRandomFileName">
+            <summary>
+            获取随机文件名
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.HttpUtility.Post">
+            <summary>
+            Post 请求处理
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.HttpUtility.Post.GetResult``1(System.String)">
+            <summary>
+            获取Post结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="returnText"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.HttpUtility.UrlUtility">
+            <summary>
+            URL工具类
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.HttpUtility.UrlUtility.GenerateOAuthCallbackUrl(System.Web.HttpContextBase,System.String)">
+            <summary>
+            生成OAuth用的CallbackUrl参数（原始状态，未整体进行UrlEncode）
+            </summary>
+            <param name="httpContext"></param>
+            <param name="oauthCallbackUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.Utilities.WeixinUtility.ApiUtility">
+            <summary>
+            微信 API 工具类
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Utilities.WeixinUtility.ApiUtility.IsAppId(System.String,Senparc.Weixin.PlatformType)">
+            <summary>
+            判断accessTokenOrAppId参数是否是AppId（或对应企业微信的AppKey）
+            </summary>
+            <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Utilities.WeixinUtility.ApiUtility.GetExpireTime(System.Int32)">
+            <summary>
+            获取过期时间
+            </summary>
+            <param name="expireInSeconds">有效时间（秒）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Utilities.WeixinUtility.ApiUtility.GetExpiryTimeSpan(System.Int32)">
+            <summary>
+            获取过期 TimeSpan
+            </summary>
+            <param name="expireInSeconds">有效时间（秒）</param>
+            <returns></returns>
+        </member>
+        <member name="T:Senparc.Weixin.WeixinRegister">
+            <summary>
+            微信注册
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.WeixinRegister.UseSenparcWeixin(Senparc.CO2NET.RegisterServices.IRegisterService,Senparc.Weixin.Entities.SenparcWeixinSetting,Senparc.CO2NET.SenparcSetting)">
+            <summary>
+            开始 Senparc.Weixin SDK 初始化参数流程
+            </summary>
+            <param name="registerService"></param>
+            <param name="senparcWeixinSetting">微信全局设置参数，必填</param>
+            <param name="senparcSetting">用于提供 SenparcSetting.Cache_Redis_Configuration 和 Cache_Memcached_Configuration 两个参数，如果不使用这两种分布式缓存可传入null</param>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.WeixinRegister.UseSenparcWeixin(Senparc.CO2NET.RegisterServices.IRegisterService,Senparc.Weixin.Entities.SenparcWeixinSetting,System.Action{Senparc.CO2NET.RegisterServices.IRegisterService})">
+            <summary>
+            开始 Senparc.Weixin SDK 初始化参数流程
+            </summary>
+            <param name="registerService"></param>
+            <param name="senparcWeixinSetting"></param>
+            <param name="registerConfigure"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

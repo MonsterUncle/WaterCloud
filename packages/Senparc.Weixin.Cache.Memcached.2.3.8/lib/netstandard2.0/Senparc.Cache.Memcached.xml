@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Senparc.Weixin.Cache.Memcached</name>
+    </assembly>
+    <members>
+        <member name="M:Senparc.Weixin.Cache.Memcached.MemcachedContainerCacheStrategy.#ctor">
+            <summary>
+            MemcachedContainerCacheStrategy 的构造函数
+            </summary>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Memcached.MemcachedContainerCacheStrategy.GetAllAsync``1">
+            <summary>
+             【异步方法】获取所有 Bag 对象
+            </summary>
+            <typeparam name="TBag"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Memcached.Register.UseSenparcWeixinCacheMemcached(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            注册 Senparc.Weixin.Cache.Memcached
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="M:Senparc.Weixin.Cache.Memcached.Register.RegisterDomainCache">
+            <summary>
+            注册领域缓存
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.MemcachedServiceCollectionExtensions.AddWeixinMemcached(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Enyim.Caching.Configuration.MemcachedClientOptions})">
+            <summary>
+            .NET Core下设置依赖注入（暂时请用CO2NET对应 AddSenparcMemcached 方法）
+            </summary>
+            <param name="services"></param>
+            <param name="setupAction"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
