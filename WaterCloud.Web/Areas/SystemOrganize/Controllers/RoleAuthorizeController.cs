@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright © 2020 WaterCloud.Framework 版权所有
  * Author: WaterCloud
  * Description: WaterCloud快速开发平台
@@ -93,6 +93,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             return ResultDTree(treeList.TreeList());
         }
         [HttpPost]
+        [IgnoreAntiforgeryToken]
         public async Task<ActionResult> GetPermissionFieldsTree(string roleId,string moduleids)
         {
             var current = _moduleService.currentuser;
