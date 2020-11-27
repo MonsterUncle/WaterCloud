@@ -143,7 +143,7 @@ namespace WaterCloud.DataBase
         /// <returns></returns>
         Task<TEntity> CheckCache<TEntity>(string cacheKey, string keyValue, long old = 0) where TEntity : class;
         /// <summary>
-        /// 缓存查询列表
+        /// 缓存查询列表(大数据表谨慎使用)
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="cacheKey"></param>

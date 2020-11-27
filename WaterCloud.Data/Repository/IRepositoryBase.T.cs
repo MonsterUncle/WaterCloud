@@ -36,6 +36,12 @@ namespace WaterCloud.DataBase
         Task<List<TEntity>> FindList(Expression<Func<TEntity, bool>> predicate, Pagination pagination);
         Task<List<T>> OrderList<T>(IQuery<T> query, Pagination pagination);
         Task<List<T>> OrderList<T>(IQuery<T> query, SoulPage<T> pagination);
+        /// <summary>
+        /// 缓存查询列表(大数据表谨慎使用)
+        /// </summary>
+        /// <param name="cacheKey"></param>
+        /// <param name="old"></param>
+        /// <returns></returns>
         Task<List<TEntity>> CheckCacheList(string cacheKey, long old = 0);
         Task<TEntity> CheckCache(string cacheKey, string keyValue, long old = 0);
     }
