@@ -1,4 +1,4 @@
-﻿using Chloe;
+using Chloe;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -59,7 +59,7 @@ namespace WaterCloud.Service.TimeService
             entity.F_CPU = computer.CPURate;
             entity.F_IIS = "0";
             entity.F_WebSite = _hostingEnvironment.ContentRootPath;
-            new ServerStateService(_context).SubmitForm(entity);
+            new ServerStateService(_context).SubmitForm(entity).GetAwaiter().GetResult();
         }
 
         public override void Dispose()
