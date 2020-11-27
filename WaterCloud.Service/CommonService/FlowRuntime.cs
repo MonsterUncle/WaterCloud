@@ -441,12 +441,9 @@ namespace WaterCloud.Service.CommonService
                 execTime = tag.TagedTime,
                 isFinish = currentNodeType == 4
             };
-
-            using (HttpContent httpContent = new StringContent(postData.ToJson(), Encoding.UTF8))
-            {
-                    httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                   client.PostAsync(currentNode.setInfo.ThirdPartyUrl, httpContent);
-            }
+            HttpContent httpContent = new StringContent(postData.ToJson(), Encoding.UTF8);
+            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            client.PostAsync(currentNode.setInfo.ThirdPartyUrl, httpContent);
         }
 
         #endregion 共有方法
