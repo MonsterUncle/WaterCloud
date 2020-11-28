@@ -43,6 +43,6 @@ namespace WaterCloud.DataBase
         /// <param name="old"></param>
         /// <returns></returns>
         Task<List<TEntity>> CheckCacheList(string cacheKey, long old = 0);
-        Task<TEntity> CheckCache(string cacheKey, string keyValue, long old = 0);
+        Task<TEntity> CheckCache(string cacheKey, object keyValue, long old = 0);
     }
 }
