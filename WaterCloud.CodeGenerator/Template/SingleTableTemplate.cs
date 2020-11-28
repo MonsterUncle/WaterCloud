@@ -131,9 +131,28 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("        /// " + remark);
                 sb.AppendLine("        /// </summary>");
                 sb.AppendLine("        /// <returns></returns>");
-                if (idColumn== column)
+                if (idColumn == column)
                 {
-                    sb.AppendLine("        [ColumnAttribute(\""+ column + "\", IsPrimaryKey = true)]");
+
+                    if (datatype == "int?")
+                    {
+                        sb.AppendLine("        [AutoIncrement]");
+                        sb.AppendLine("        [Column(\"" + column + "\", IsPrimaryKey = true)]");
+                        sb.AppendLine("        public int " + column + " { get; set; }");
+                    }
+                    else if (datatype == "long?")
+                    {
+                        sb.AppendLine("        [Column(\"" + column + "\", IsPrimaryKey = true)]");
+                        sb.AppendLine("        public long " + column + " { get; set; }");
+                    }
+                    else
+                    {
+                        sb.AppendLine("        [Column(\"" + column + "\", IsPrimaryKey = true)]");
+                    }
+                }
+                else
+                {
+                    sb.AppendLine("        public " + datatype + " " + column + " { get; set; }");
                 }
                 //switch (datatype)
                 //{
@@ -145,7 +164,7 @@ namespace WaterCloud.CodeGenerator
                 //        sb.AppendLine("        [JsonConverter(typeof(DateTimeJsonConverter))]");
                 //        break;
                 //}
-                sb.AppendLine("        public " + datatype + " " + column + " { get; set; }");
+                
             }
             sb.AppendLine("    }");
             sb.AppendLine("}");
@@ -155,7 +174,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildService
-        public string BuildService(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id")
+        public string BuildService(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id",string idType="int",string deleteMarkField="IsDelete",string createTimeField="AddTime")
         {
             var baseEntity = GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn);
             StringBuilder sb = new StringBuilder();
@@ -192,7 +211,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                //此处需修改");
             sb.AppendLine("                cachedata = cachedata.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword)).ToList();");
             sb.AppendLine("            }");
-            sb.AppendLine("            return cachedata.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();");
+            sb.AppendLine($"            return cachedata.Where(t => t.{deleteMarkField} == false).OrderByDescending(t => t.{createTimeField}).ToList();");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(string keyword = \"\")");
@@ -212,10 +231,10 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                //此处需修改");
             sb.AppendLine("                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword)).ToList();");
             sb.AppendLine("            }");
-            sb.AppendLine("            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));");
+            sb.AppendLine($"            return GetFieldsFilterData(list.Where(t => t.{deleteMarkField} == false).OrderByDescending(t => t.{createTimeField}).ToList(),className.Substring(0, className.Length - 7));");
             sb.AppendLine("        }");
             sb.AppendLine();
-            sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(SoulPage<"+ baseConfigModel.FileConfig.EntityName + "> pagination,string keyword = \"\")");
+            sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(SoulPage<"+ baseConfigModel.FileConfig.EntityName + "> pagination,string keyword = \"\","+idType+" id=\"\")");
             sb.AppendLine("        {");
             sb.AppendLine("            //获取数据权限");
             sb.AppendLine("            var list = GetDataPrivilege(\"u\", className.Substring(0, className.Length - 7));");
@@ -224,7 +243,18 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                //此处需修改");
             sb.AppendLine("                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));");
             sb.AppendLine("            }");
-            sb.AppendLine("            list = list.Where(u => u.F_DeleteMark==false);");
+            sb.AppendLine($"            list = list.Where(u => u.{deleteMarkField}==false);");
+            if (idType == "int" || idType == "long")
+            {
+                sb.AppendLine("            if(id==0)");
+            }
+            else
+            {
+                sb.AppendLine("            if(string.IsNullOrEmpty(id))");
+            }
+            sb.AppendLine("            {");
+            sb.AppendLine("                list= list.Where(u=>u." + idColumn + "==id);");
+            sb.AppendLine("            }");
             sb.AppendLine("            return GetFieldsFilterData(await repository.OrderList(list, pagination),className.Substring(0, className.Length - 7));");
             sb.AppendLine("        }");
             sb.AppendLine();
@@ -235,7 +265,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        }");
             sb.AppendLine("        #endregion");
             sb.AppendLine();
-            sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetLookForm(string keyValue)");
+            sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetLookForm(object keyValue)");
             sb.AppendLine("        {");
             sb.AppendLine("            var cachedata = await repository.CheckCache(cacheKey, keyValue);");
             sb.AppendLine("            return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));");
@@ -247,10 +277,36 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            if (string.IsNullOrEmpty(keyValue))");
             sb.AppendLine("            {");
             sb.AppendLine("                    //此处需修改");
-            sb.AppendLine("                    entity.F_DeleteMark = false;");
+            sb.AppendLine($"                    entity.{deleteMarkField} = false;");
+            sb.AppendLine($"                    entity.{createTimeField} = DateTime.Now;");
+            foreach (DataRow dr in dt.Rows)
+            {
+                string column = dr["TableColumn"].ToString();
+                if (column != idColumn)
+                {
+                    if (!baseConfigModel.PageForm.FieldList.Keys.Contains(column))
+                    {
+                        if (column != deleteMarkField && column != createTimeField)
+                        {
+                            sb.AppendLine($"                    entity.{column} = //添写初始化参数;");
+                        }
+                    }
+                }
+            }
             if (string.IsNullOrEmpty(baseEntity))
             {
-                sb.AppendLine("                entity."+ idColumn + "=Utils.GuId();");
+                if (idType == "int")
+                {
+                    sb.AppendLine("                entity." + idColumn + "=0;");
+                }
+                else if (idType == "long")
+                {
+                    sb.AppendLine("                entity." + idColumn + "=0;");
+                }
+                else
+                {
+                    sb.AppendLine("                entity." + idColumn + "=Utils.GuId();");
+                }
             }
             else
             {
@@ -264,7 +320,18 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                    //此处需修改");
             if (string.IsNullOrEmpty(baseEntity))
             {
-                sb.AppendLine("                entity." + idColumn + "=keyValue;");
+                if (idType == "int")
+                {
+                    sb.AppendLine("                entity." + idColumn + "=Convert.ToInt32(keyValue);");
+                }
+                else if (idType == "long")
+                {
+                    sb.AppendLine("                entity." + idColumn + "=Convert.ToInt64(keyValue);");
+                }
+                else
+                {
+                    sb.AppendLine("                entity." + idColumn + "=keyValue;");
+                }
             }
             else
             {
@@ -279,7 +346,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        public async Task DeleteForm(string keyValue)");
             sb.AppendLine("        {");
             sb.AppendLine("            var ids = keyValue.Split(',');");
-            sb.AppendLine("            await repository.Delete(t => ids.Contains(t." + idColumn + "));");
+            sb.AppendLine("            await repository.Delete(t => ids.Contains(t." + idColumn + ".ToString()));");
             sb.AppendLine("            foreach (var item in ids)");
             sb.AppendLine("            {");
             sb.AppendLine("            await CacheHelper.Remove(cacheKey + item);");
@@ -296,7 +363,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildController
-        public string BuildController(BaseConfigModel baseConfigModel, string idColumn="F_Id")
+        public string BuildController(BaseConfigModel baseConfigModel, string idColumn="F_Id",string idType="string",string createTimeField="AddTime")
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
@@ -364,7 +431,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("        {");
                 sb.AppendLine("            if (string.IsNullOrEmpty(pagination.field))");
                 sb.AppendLine("            {");
-                sb.AppendLine("                pagination.field = \"F_CreatorTime\";");
+                sb.AppendLine($"                pagination.field = \"{createTimeField}\";");
                 sb.AppendLine("                pagination.order = \"desc\";");
                 sb.AppendLine("            }");
                 sb.AppendLine("            var data = await _service.GetLookList(pagination,keyword);");
@@ -382,7 +449,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine();
             sb.AppendLine("        [HttpGet]");
             sb.AppendLine("        [HandlerAjaxOnly]");
-            sb.AppendLine("        public async Task<ActionResult> GetFormJson(string keyValue)");
+            sb.AppendLine($"        public async Task<ActionResult> GetFormJson({idType} keyValue)");
             sb.AppendLine("        {");
             sb.AppendLine("            var data = await _service.GetLookForm(keyValue);");
             sb.AppendLine("            return Content(data.ToJson());");
@@ -1254,7 +1321,7 @@ namespace WaterCloud.CodeGenerator
         }
         #endregion 
 
-        private string GetBaseEntity(string EntityName, DataTable dt,string idColumn="F_Id")
+        private string GetBaseEntity(string EntityName, DataTable dt,string idColumn="F_Id",string deleteMarkField="IsDelete",string AddTime="AddTime")
         {
             string entity = string.Empty;
             var columnList = dt.AsEnumerable().Select(p => p["TableColumn"].ParseToString()).ToList();
