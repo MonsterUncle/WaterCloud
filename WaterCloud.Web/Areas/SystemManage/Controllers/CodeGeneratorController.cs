@@ -137,20 +137,58 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 baseConfig.PageIndex.ButtonList=ExtList.removeNull(baseConfig.PageIndex.ButtonList);
                 baseConfig.PageIndex.ColumnList.Remove("");
                 baseConfig.PageForm.FieldList.Remove("");
+                string idType = "string";
+                string[] isDeleteMarkFieldNames = new[] { "F_DeleteMark", "IsDelete" };
+                string[] createTimeFieldNames = new[] { "F_CreatorTime", "AddTime" };
+
+                string isDeleteMarkField = "F_DeleteMark";
+                string createTimeField = "F_CreatorTime";
                 foreach (DataRow dr in dt.Rows)
                 {
+
                     if (dr["TableIdentity"].ToString() == "Y")
                     {
                         idcolumn = dr["TableColumn"].ToString();
+                        string datatype = dr["Datatype"].ToString();
+                        datatype = TableMappingHelper.GetPropertyDatatype(datatype);
+                        if (datatype == "int?")
+                        {
+                            idType = "int";
+                        }
+                        else if (datatype == "long?")
+                        {
+                            idType = "long";  
+                        }
+                        else
+                        {
+                            idType = "string";
+                        }
+                    }
+                    string columnName = dr["TableColumn"].ToString();
+                    foreach(var isDeleteMarkFieldName in isDeleteMarkFieldNames)
+                    {
+                        if (string.Compare(isDeleteMarkFieldName, columnName, true) == 0)
+                        {
+                            isDeleteMarkField = columnName;
+                        }
+                    }
+                    foreach (var createTimeFieldName in createTimeFieldNames)
+                    {
+                        if (string.Compare(createTimeFieldName, columnName, true) == 0)
+                        {
+                            createTimeField = columnName;
+                        }
                     }
                 }
+
+  
                 string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
-                string codeService = template.BuildService(baseConfig,dt, idcolumn);
-                string codeController = template.BuildController(baseConfig, idcolumn);
+                string codeService = template.BuildService(baseConfig,dt, idcolumn,idType,isDeleteMarkField,createTimeField);
+                string codeController = template.BuildController(baseConfig, idcolumn,idType, createTimeField);
                 string codeIndex = template.BuildIndex(baseConfig, idcolumn);
                 string codeForm = template.BuildForm(baseConfig);
                 string codeDetails = template.BuildDetails(baseConfig);
-                string codeMenu = template.BuildMenu(baseConfig);
+                string codeMenu = template.BuildMenu(baseConfig,idcolumn);
                 var json = new
                 {
                     CodeEntity = HttpUtility.HtmlEncode(codeEntity),
