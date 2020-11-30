@@ -148,6 +148,7 @@ namespace WaterCloud.CodeGenerator
                     else
                     {
                         sb.AppendLine("        [Column(\"" + column + "\", IsPrimaryKey = true)]");
+                        sb.AppendLine("        public " + datatype + " " + column + " { get; set; }");
                     }
                 }
                 else
