@@ -156,7 +156,7 @@ namespace WaterCloud.DataBase
             }
             return cachedata;
         }
-        public async Task<TEntity> CheckCache(string cacheKey, string keyValue, long old = 0)
+        public async Task<TEntity> CheckCache(string cacheKey, object keyValue, long old = 0)
         {
             var cachedata = await CacheHelper.Get<TEntity>(cacheKey + keyValue);
             if (cachedata == null)

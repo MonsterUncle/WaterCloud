@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright © 2020 WaterCloud.Framework 版权所有
  * Author: WaterCloud
  * Description: WaterCloud快速开发平台
@@ -43,6 +43,6 @@ namespace WaterCloud.DataBase
         /// <param name="old"></param>
         /// <returns></returns>
         Task<List<TEntity>> CheckCacheList(string cacheKey, long old = 0);
-        Task<TEntity> CheckCache(string cacheKey, string keyValue, long old = 0);
+        Task<TEntity> CheckCache(string cacheKey, object keyValue, long old = 0);
     }
 }
