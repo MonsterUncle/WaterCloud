@@ -148,6 +148,7 @@ namespace WaterCloud.CodeGenerator
                     else
                     {
                         sb.AppendLine("        [Column(\"" + column + "\", IsPrimaryKey = true)]");
+                        sb.AppendLine("        public " + datatype + " " + column + " { get; set; }");
                     }
                 }
                 else
@@ -288,7 +289,7 @@ namespace WaterCloud.CodeGenerator
                     {
                         if (column != deleteMarkField && column != createTimeField)
                         {
-                            sb.AppendLine($"                    entity.{column} = //添写初始化参数;");
+                            sb.AppendLine($"               entity.{column} = ;//添写初始化参数;");
                         }
                     }
                 }
