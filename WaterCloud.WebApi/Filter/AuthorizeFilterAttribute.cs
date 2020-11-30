@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json;
 using WaterCloud.Code;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WaterCloud.WebApi
 {
@@ -36,6 +32,13 @@ namespace WaterCloud.WebApi
 
             string token = context.HttpContext.Request.Headers[GlobalContext.SystemConfig.TokenName].ParseToString();
             OperatorModel user = OperatorProvider.Provider.GetCurrent();
+            var description =
+            (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)context.ActionDescriptor;
+
+            //添加有允许匿名的Action，可以不用登录访问，如Login/Index
+            //控制器整体忽略或者单独方法忽略
+            var anonymous = description.ControllerTypeInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
+            var methodanonymous = description.MethodInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
             if (user != null)
             {
                 // 根据传入的Token，添加token和客户参数
@@ -61,7 +64,7 @@ namespace WaterCloud.WebApi
                     }
                 }
             }
-            else
+            else if (anonymous == null && methodanonymous == null)
             {
                 AjaxResult obj = new AjaxResult();
                 obj.message = "抱歉，没有操作权限";
