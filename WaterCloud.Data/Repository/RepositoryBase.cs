@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright © 2020 WaterCloud.Framework 版权所有
  * Author: WaterCloud
  * Description: WaterCloud快速开发平台
@@ -247,7 +247,7 @@ namespace WaterCloud.DataBase
             return cachedata;
         }
 
-        public async Task<TEntity> CheckCache<TEntity>(string cacheKey, string keyValue, long old = 0) where TEntity : class
+        public async Task<TEntity> CheckCache<TEntity>(string cacheKey, object keyValue, long old = 0) where TEntity : class
         {
             var cachedata = await CacheHelper.Get<TEntity>(cacheKey + keyValue);
             if (cachedata == null)
