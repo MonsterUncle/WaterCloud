@@ -251,7 +251,7 @@ namespace WaterCloud.CodeGenerator
             }
             else
             {
-                sb.AppendLine("            if(string.IsNullOrEmpty(id))");
+                sb.AppendLine("            if(!string.IsNullOrEmpty(id))");
             }
             sb.AppendLine("            {");
             sb.AppendLine("                list= list.Where(u=>u." + idColumn + "==id);");
@@ -426,7 +426,6 @@ namespace WaterCloud.CodeGenerator
             }
             else
             {
-                sb.AppendLine("        [HttpGet]");
                 sb.AppendLine("        [HandlerAjaxOnly]");
                 sb.AppendLine("        public async Task<ActionResult> GetGridJson(SoulPage<"+ baseConfigModel.FileConfig .EntityName+ "> pagination, string keyword)");
                 sb.AppendLine("        {");
