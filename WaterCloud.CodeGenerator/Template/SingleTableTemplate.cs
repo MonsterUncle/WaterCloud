@@ -278,8 +278,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            if (string.IsNullOrEmpty(keyValue))");
             sb.AppendLine("            {");
             sb.AppendLine("                    //此处需修改");
-            sb.AppendLine($"                    entity.{deleteMarkField} = false;");
-            sb.AppendLine($"                    entity.{createTimeField} = DateTime.Now;");
+            sb.AppendLine($"                entity.{deleteMarkField} = false;");
             foreach (DataRow dr in dt.Rows)
             {
                 string column = dr["TableColumn"].ToString();
@@ -308,6 +307,7 @@ namespace WaterCloud.CodeGenerator
                 {
                     sb.AppendLine("                entity." + idColumn + "=Utils.GuId();");
                 }
+                sb.AppendLine($"                entity.{createTimeField} = DateTime.Now;");
             }
             else
             {
