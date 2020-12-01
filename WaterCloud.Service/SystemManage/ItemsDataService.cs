@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright © 2020 WaterCloud.Framework 版权所有
  * Author: WaterCloud
  * Description: WaterCloud快速开发平台
@@ -22,7 +22,7 @@ namespace WaterCloud.Service.SystemManage
         {
         }
         private string cacheKey = "watercloud_itemdetaildata_";
-        private string itemcacheKey = "watercloud_itemdata_";
+        private string itemcacheKey = "watercloud_itemsdata_";
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         public async Task<List<ItemsDetailEntity>> GetList(string itemId = "", string keyword = "")
