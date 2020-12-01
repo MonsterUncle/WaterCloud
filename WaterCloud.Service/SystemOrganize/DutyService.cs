@@ -26,7 +26,7 @@ namespace WaterCloud.Service.SystemOrganize
         /// <summary>
         /// 缓存操作类
         /// </summary>
-        private string cacheKey = "watercloud_dutydata_";// 岗位
+        private string cacheKey = "watercloud_roledata_";// 岗位
         //获取类名
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
 
