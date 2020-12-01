@@ -95,6 +95,7 @@
 2. Layui框架参考Layuimini 码云地址：https://gitee.com/zhongshaofa/layuimini
 3. Chole.ORM 文档地址：http://www.52chloe.com/Wiki/Document
 4. WaterCloud讨论交流QQ群（1065447456）
+5. 多租户可以使用Furion框架实现，码云地址：https://gitee.com/monksoul/Furion
 
 #### 捐赠支持
 
