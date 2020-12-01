@@ -73,7 +73,8 @@ namespace WaterCloud.Service.AutoJob
                                     object[] parameters = null;
                                     method.Invoke(obj, parameters);                           // 调用方法，参数为空
                                     #endregion
-                                    await autoJobService.UpdataLastRuntime(jobId);
+                                    //需要同步，不然数据库连接会断开
+                                    autoJobService.UpdataLastRuntime(jobId).GetAwaiter().GetResult();
                                 }
                             }
                         }
