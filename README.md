@@ -11,7 +11,7 @@
 ![](https://img.shields.io/badge/release-1.5.0-red)
 
 ![](https://img.shields.io/badge/.net-5.0.0-blue)
-![](https://img.shields.io/badge/Chloe-4.8.1-blue)
+![](https://img.shields.io/badge/Chloe-4.9.0-blue)
 ![](https://img.shields.io/badge/layui-2.5.5-blue)
 
 ![](https://img.shields.io/badge/Quartz-3.2.3-brightgreen)
@@ -43,7 +43,7 @@
 
 
 - .net4.5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net4.5
-- .net5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net5
+- .netcore3.1版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/netcore3.1
 - 项目演示地址：http://www.watercloud.vip/  （账号：admin 密码：0000，数据库2个小时还原一次）
 - 文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
 
