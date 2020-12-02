@@ -48,7 +48,7 @@ namespace UEditor.Core
                 }
                 client.Disconnect();
             }
-            catch (FtpException ex)
+            catch (FtpException)
             {
                 client.Disconnect();
                 //

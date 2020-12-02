@@ -1,4 +1,4 @@
-﻿/*
+/*
  Navicat Premium Data Transfer
 
  Source Server         : local
@@ -4345,7 +4345,6 @@ CREATE TABLE `sys_notice`  (
 -- ----------------------------
 -- Records of sys_notice
 -- ----------------------------
-INSERT INTO `sys_notice` VALUES ('c06787b9-2202-4f11-8aac-4b2c0091fd28', '1.5.0版本更新', '2020/11/25\n功能变更：\n框架升级从.netcore3.1升级到.net5', 0, 1, NULL, '2020-11-25 10:21:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-11-25 10:21:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('209ea3b9-08a4-4e1e-bb24-b0101692ac78', '1.2.0版本更新', '2020/11/12\nBUG修复：\n1、流程驳回bug修复\n2、流程驳回信息提示修复\n3、流程连线条件bug修复\n4、流程修改前端增加限制条件\n5、待处理流程列表显示BUG修复\n6、修复IE连接signalr异常问题', 0, 1, NULL, '2020-11-12 12:36:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-11-12 12:36:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('2907ea71-4c2f-459d-8ece-24437a2cc454', '1.1.7版本更新', '2020/10/19\n功能变更：\n1、错误页关闭直接返回登录页\n2、quarz优化\n3、ajax请求修改默认为异步\n\nBug修复：\n1、修复系统日志没有自适应问题\n2、前端修复时间null 问题\n3、修复拦截器未拦截的问题\n4、修复多线程中IDbContext复用问题\n', 0, 1, NULL, '2020-10-19 14:59:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('33c9a4f3-fc56-4207-944d-44ec68c57f8b', '1.1.9版本更新', '2020/11/10\n功能变更：\n1、流程中角色增加当前部门选项\n2、优化流程和信息提醒', 0, 1, NULL, '2020-11-10 12:34:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-11-12 12:36:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
