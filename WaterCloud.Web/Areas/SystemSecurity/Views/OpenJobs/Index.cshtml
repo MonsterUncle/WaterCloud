@@ -164,6 +164,19 @@
                         }
                     });
                 }
+                else if (obj.event === 'log') {
+                    if (entity == null) {
+                        common.modalMsg("未选中数据", "warning");
+                        return false;
+                    }
+                    common.modalOpen({
+                        title: "任务日志",
+                        url: "/SystemSecurity/OpenJobs/Details?keyValue=" + entity.data.F_Id,
+                        width: "700px",
+                        height: "600px",
+                        btn:[]
+                    });
+                }
                 else if (obj.event === 'TABLE_SEARCH') {
                     var _that = $("#searchField");
                     if (_that.hasClass("layui-hide")) {
@@ -205,7 +218,7 @@
                 <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
                 <button id="NF-enabled" authorize="yes" class="layui-btn layui-btn-sm data-enabled-btn layui-hide" lay-event="enabled"> <i class="fa fa-play-circle"></i>启动</button>
                 <button id="NF-disabled" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-disabled-btn layui-hide" lay-event="disabled"><i class="fa fa-stop-circle"></i>关闭</button>
-
+                <button id="NF-log" authorize="yes" class="layui-btn layui-btn-sm data-log-btn layui-hide" lay-event="log"><i class="layui-icon">&#xe642;</i>日志</button>
             </div>
         </script>
 
