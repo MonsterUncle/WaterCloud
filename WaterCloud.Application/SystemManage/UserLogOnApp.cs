@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright © 2020 WaterCloud.Framework 版权所有
  * Author: WaterCloud
  * Description: WaterCloud快速开发平台
@@ -69,6 +69,7 @@ namespace WaterCloud.Application.SystemManage
                 userLogOnEntity.F_Theme = entity.F_Theme;
             }
             userLogOnEntity.F_UserPassword = entity.F_UserPassword;
+            userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
             redisCache.Remove(cacheKeyOperator + "info_" + keyValue, CacheId.loginInfo);
             redisCache.Write<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue, userLogOnEntity, CacheId.loginInfo);
         }
