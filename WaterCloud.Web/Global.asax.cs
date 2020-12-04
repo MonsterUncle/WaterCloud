@@ -1,11 +1,13 @@
 ﻿#define 使用RegisterServices方式注册微信
 
 using WaterCloud.Code;
+using WaterCloud.DataBase;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.IO;
 using System.Web.Http;
 using WaterCloud.SystemTask;
+using Chloe.Infrastructure.Interception;
 #if 使用RegisterServices方式注册微信
 /* 
  * 调试方式：当前模式为“使用RegisterServices方式注册微信”（推荐），
@@ -34,6 +36,8 @@ namespace WaterCloud.Web
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            IDbCommandInterceptor interceptor = new DbCommandInterceptor();
+            DbInterception.Add(interceptor);
             // 启动的时候清除全部缓存
             ICache cache = CacheFactory.CaChe();
             //for (int i = 0; i <= 6; i++)

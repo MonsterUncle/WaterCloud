@@ -610,6 +610,10 @@
       <Project>{db19ce03-c307-43fe-a209-08aa4ae10e21}</Project>
       <Name>WaterCloud.Code</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WaterCloud.Data\WaterCloud.DataBase.csproj">
+      <Project>{f71003e8-a836-48f4-9df6-df9095cebd18}</Project>
+      <Name>WaterCloud.DataBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WaterCloud.DingDing\WaterCloud.DingTalk.csproj">
       <Project>{2036c349-0fc2-4c80-85cb-d033988e6d12}</Project>
       <Name>WaterCloud.DingTalk</Name>

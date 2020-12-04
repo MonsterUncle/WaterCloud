@@ -94,6 +94,7 @@
     <Compile Include="DBContext\MySqlConnectionFactory.cs" />
     <Compile Include="DBContext\OracleConnectionDecorator.cs" />
     <Compile Include="DBContext\OracleConnectionFactory.cs" />
+    <Compile Include="Extensions\DbCommandInterceptor.cs" />
     <Compile Include="Extensions\DbHelper.cs" />
     <Compile Include="Extensions\EntityInterfaceExtensions.cs" />
     <Compile Include="Repository\IRepositoryBase.cs" />
