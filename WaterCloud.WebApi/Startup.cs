@@ -7,6 +7,7 @@ using CSRedis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -120,6 +121,12 @@ namespace WaterCloud.WebApi
             //{
             //    builder.WithOrigins(GlobalContext.SystemConfig.AllowCorsSite.Split(',')).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
             //});
+            //允许body重用
+            app.Use(next => context =>
+            {
+                context.Request.EnableBuffering();
+                return next(context);
+            });
             app.UseSwagger(c =>
             {
                 c.RouteTemplate = "api-doc/{documentName}/swagger.json";
