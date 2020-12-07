@@ -26,8 +26,8 @@ namespace WaterCloud.Service.FlowManage
     {
         private IHttpClientFactory _httpClientFactory;
         private string cacheKey = "watercloud_flowinstancedata_";
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         private MessageService messageApp;
+        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
         public FlowinstanceService(IDbContext context, IHttpClientFactory httpClientFactory, IHubContext<MessageHub> messageHub) : base(context)
         {
             _httpClientFactory = httpClientFactory;
@@ -53,13 +53,13 @@ namespace WaterCloud.Service.FlowManage
         public async Task<List<FlowinstanceEntity>> GetLookList(string keyword = "")
         {
             var list =new List<FlowinstanceEntity>();
-            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            if (!CheckDataPrivilege())
             {
                 list = await repository.CheckCacheList(cacheKey + "list");
             }
             else
             {
-                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                var forms = GetDataPrivilege("u");
                 list = forms.ToList();
             }
             if (!string.IsNullOrEmpty(keyword))
@@ -67,13 +67,13 @@ namespace WaterCloud.Service.FlowManage
                 //此处需修改
                 list = list.Where(u => u.F_Code.Contains(keyword) || u.F_CustomName.Contains(keyword)).ToList();
             }
-            return GetFieldsFilterData(list.Where(a => a.F_EnabledMark == true).OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(list.Where(a => a.F_EnabledMark == true).OrderByDescending(t => t.F_CreatorTime).ToList());
         }
 
         public async Task<List<FlowinstanceEntity>> GetLookList(Pagination pagination, string type = "", string keyword = "")
         {
             //获取数据权限
-            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+            var list = GetDataPrivilege("u");
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
@@ -95,7 +95,7 @@ namespace WaterCloud.Service.FlowManage
             {
                 list = list.Where(u => u.F_CreatorUserId==user.UserId);
             }
-            return GetFieldsFilterData(await repository.OrderList(list.Where(a => a.F_EnabledMark == true), pagination),className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list.Where(a => a.F_EnabledMark == true), pagination));
         }
 
         public async Task<FlowinstanceEntity> GetForm(string keyValue)
@@ -108,7 +108,7 @@ namespace WaterCloud.Service.FlowManage
         public async Task<FlowinstanceEntity> GetLookForm(string keyValue)
         {
             var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(cachedata);
         }
 
         #region 获取各种节点的流程审核者

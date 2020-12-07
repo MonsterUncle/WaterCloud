@@ -22,7 +22,7 @@ namespace WaterCloud.Service.SystemSecurity
 
         private string cacheKey = "watercloud_filterip_";// IP过滤
         //获取类名
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        
         public FilterIPService(IDbContext context) : base(context)
         {
         }
@@ -40,13 +40,13 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task<List<FilterIPEntity>> GetLookList(string keyword)
         {
             var list = new List<FilterIPEntity>();
-            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            if (!CheckDataPrivilege())
             {
                 list = await repository.CheckCacheList(cacheKey + "list");
             }
             else
             {
-                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                var forms = GetDataPrivilege("u");
                 list = forms.ToList();
             }
             if (!string.IsNullOrEmpty(keyword))
@@ -54,12 +54,12 @@ namespace WaterCloud.Service.SystemSecurity
                 list = list.Where(t => t.F_StartIP.Contains(keyword)||t.F_EndIP.Contains(keyword)).ToList();
 
             }
-            return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList(), className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList());
         }
         public async Task<FilterIPEntity> GetLookForm(string keyValue)
         {
             var cachedata =await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(cachedata);
         }
         public async Task<FilterIPEntity> GetForm(string keyValue)
         {

@@ -19,7 +19,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class ModuleController : ControllerBase
     {
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
+
         public ModuleService _service { get; set; }
         public ModuleButtonService _moduleButtonService { get; set; }
 
@@ -156,11 +156,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                     moduleEntity.F_UrlAddress = null;
                 }
                 await _service.SubmitForm(moduleEntity, keyValue);
-                return await Success("操作成功。", className, keyValue);
+                return await Success("操作成功。", "", keyValue);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue);
+                return await Error(ex.Message, "", keyValue);
             }
         }
         [HttpPost]
@@ -172,11 +172,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             try
             {
                 await _service.DeleteForm(keyValue);
-                return await Success("操作成功。", className, keyValue, DbLogType.Delete);
+                return await Success("操作成功。", "", keyValue, DbLogType.Delete);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue, DbLogType.Delete);
+                return await Error(ex.Message, "", keyValue, DbLogType.Delete);
             }
         }
     }

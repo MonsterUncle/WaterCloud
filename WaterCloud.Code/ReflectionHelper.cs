@@ -64,7 +64,7 @@ namespace WaterCloud.Code
         #endregion
 
         /// <summary>
-        /// StackTrace获取模块名
+        /// StackTrace获取模块名(此方法为上上层调用)
         /// </summary>
         /// <returns></returns>
         public static string GetModuleName()
@@ -84,7 +84,7 @@ namespace WaterCloud.Code
             }
         }
         /// <summary>
-        /// StackTrace获取方法名
+        /// StackTrace获取方法名(此方法为上上上上层调用)
         /// </summary>
         /// <returns></returns>
         public static string GetClassName()

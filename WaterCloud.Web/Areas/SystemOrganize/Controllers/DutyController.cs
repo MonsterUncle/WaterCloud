@@ -26,7 +26,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     [Area("SystemOrganize")]
     public class DutyController : ControllerBase
     {
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
+
         public DutyService _service { get; set; }
         public SystemSetService _setService { get; set; }
         public virtual ActionResult Import()
@@ -108,11 +108,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             try
             {
                 await _service.SubmitForm(roleEntity, keyValue);
-                return await Success("操作成功。", className, keyValue);
+                return await Success("操作成功。", "", keyValue);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue);
+                return await Error(ex.Message, "", keyValue);
             }
         }
         [HttpPost]
@@ -123,11 +123,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             try
             {
                 await _service.DeleteForm(keyValue);
-                return await Success("操作成功。", className, keyValue, DbLogType.Delete);
+                return await Success("操作成功。", "", keyValue, DbLogType.Delete);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue, DbLogType.Delete);
+                return await Error(ex.Message, "", keyValue, DbLogType.Delete);
             }
         }
         [HttpPost]
@@ -146,11 +146,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             try
             {
                 await _service.ImportForm(filterList);
-                return await Success("导入成功。", className, "");
+                return await Success("导入成功。", "", "");
             }
             catch (Exception ex)
             {
-                return await Error("导入失败，" + ex.Message, className, "");
+                return await Error("导入失败，" + ex.Message, "", "");
             }
         }
         [HttpGet]

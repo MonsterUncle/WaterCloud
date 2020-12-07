@@ -18,7 +18,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     [Area("SystemOrganize")]
     public class DataPrivilegeRuleController :  ControllerBase
     {
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
+
         public DataPrivilegeRuleService _service { get; set; }
 
         #region 获取数据
@@ -82,11 +82,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             try
             {
                 await _service.SubmitForm(entity, keyValue);
-                return await Success("操作成功。", className, keyValue);
+                return await Success("操作成功。", "", keyValue);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue);
+                return await Error(ex.Message, "", keyValue);
             }
         }
 
@@ -98,11 +98,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             try
             {
                 await _service.DeleteForm(keyValue);
-                return await Success("操作成功。", className, keyValue, DbLogType.Delete);
+                return await Success("操作成功。", "", keyValue, DbLogType.Delete);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue, DbLogType.Delete);
+                return await Error(ex.Message, "", keyValue, DbLogType.Delete);
             }
         }
         #endregion

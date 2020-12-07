@@ -26,7 +26,7 @@ namespace WaterCloud.Service.SystemSecurity
         private IScheduler _scheduler;
         private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
         //获取类名
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        
         public OpenJobsService(IDbContext context, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory)
         {
             repository = new RepositoryBase<OpenJobEntity>(context);

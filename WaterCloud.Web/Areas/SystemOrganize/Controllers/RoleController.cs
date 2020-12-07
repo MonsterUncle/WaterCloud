@@ -19,7 +19,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     [Area("SystemOrganize")]
     public class RoleController : ControllerBase
     {
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
+
         public RoleService _service { get; set; }
 
         [HttpGet]
@@ -86,11 +86,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             try
             {
                 await _service.SubmitForm(roleEntity,string.IsNullOrEmpty(permissionbuttonIds) ?new string[0]: permissionbuttonIds.Split(','), string.IsNullOrEmpty(permissionfieldsIds) ? new string[0] : permissionfieldsIds.Split(','), keyValue);
-                return await Success("操作成功。", className, keyValue);
+                return await Success("操作成功。", "", keyValue);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue);
+                return await Error(ex.Message, "", keyValue);
             }
         }
         [HttpPost]
@@ -105,11 +105,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                     return Error("操作失败，不能删除用户当前角色");
                 }
                 await _service.DeleteForm(keyValue);
-                return await Success("操作成功。", className, keyValue, DbLogType.Delete);
+                return await Success("操作成功。", "", keyValue, DbLogType.Delete);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue, DbLogType.Delete);
+                return await Error(ex.Message, "", keyValue, DbLogType.Delete);
             }
         }
     }

@@ -25,7 +25,7 @@ namespace WaterCloud.Service.SystemOrganize
         private string cacheKey = "watercloud_userdata_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         //获取类名
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        
         public UserService(IDbContext context) : base(context)
         {
             syssetApp = new SystemSetService(context);
@@ -34,13 +34,13 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<UserEntity>> GetLookList(Pagination pagination, string keyword)
         {
             //获取数据权限
-            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+            var list = GetDataPrivilege("u");
             if (!string.IsNullOrEmpty(keyword))
             {
                 list = list.Where(u => u.F_Account.Contains(keyword) || u.F_RealName.Contains(keyword)||u.F_MobilePhone.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark == false && u.F_IsAdmin == false);
-            return GetFieldsFilterData(await repository.OrderList(list, pagination), className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list, pagination));
         }
         public async Task<List<UserEntity>> GetList(string keyword)
         {
@@ -100,7 +100,7 @@ namespace WaterCloud.Service.SystemOrganize
                 temp = cachedata.F_DepartmentId.Split(',');
                 cachedata.F_DepartmentName = string.Join(",", uniwork.IQueryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
-            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(cachedata);
         }
         public async Task DeleteForm(string keyValue)
         {

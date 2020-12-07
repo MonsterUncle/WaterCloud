@@ -24,7 +24,7 @@ namespace WaterCloud.Service.SystemManage
         private string cacheKey = "watercloud_itemdetaildata_";
         private string itemcacheKey = "watercloud_itemsdata_";
         //获取类名
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        
         public async Task<List<ItemsDetailEntity>> GetList(string itemId = "", string keyword = "")
         {
             var list = new List<ItemsDetailEntity>();
@@ -42,13 +42,13 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ItemsDetailEntity>> GetLookList(string itemId = "", string keyword = "")
         {
             var list = new List<ItemsDetailEntity>();
-            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            if (!CheckDataPrivilege())
             {
                 list = await repository.CheckCacheList(cacheKey + "list");
             }
             else
             {
-                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                var forms = GetDataPrivilege("u");
                 list = forms.ToList();
             }
             if (!string.IsNullOrEmpty(itemId))
@@ -59,7 +59,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 list = list.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword)).ToList();
             }
-            return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList(), className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList());
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {
@@ -72,7 +72,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<ItemsDetailEntity> GetLookForm(string keyValue)
         {
             var cachedata =await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(cachedata);
         }
         public async Task<ItemsDetailEntity> GetForm(string keyValue)
         {

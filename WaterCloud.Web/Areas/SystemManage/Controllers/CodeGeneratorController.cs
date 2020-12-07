@@ -17,7 +17,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     [Area("SystemManage")]
     public class CodeGeneratorController : ControllerBase
     {
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
+
         private readonly IDatabaseTableService _service;
         private readonly IDbContext _context;
         public CodeGeneratorController(IDbContext context)
@@ -239,11 +239,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                     SingleTableTemplate template = new SingleTableTemplate(_context);
                     await template.CreateCode(baseConfig, HttpUtility.UrlDecode(Code));
                 }
-                return await Success("操作成功。", className, "");
+                return await Success("操作成功。", "", "");
             }
             catch (System.Exception ex)
             {
-                return await Error(ex.Message, className, "");
+                return await Error(ex.Message, "", "");
             }
         }
         [HttpPost]
@@ -273,11 +273,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                     string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
                     await template.EntityCreateCode(baseConfig, codeEntity);
                 }
-                return await Success("操作成功。", className, "");
+                return await Success("操作成功。", "", "");
             }
             catch (System.Exception ex)
             {
-                return await Error(ex.Message, className, "");
+                return await Error(ex.Message, "", "");
             }
         }
         #endregion

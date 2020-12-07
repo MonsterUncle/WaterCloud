@@ -18,7 +18,7 @@ namespace WaterCloud.Service.SystemManage
     public class ModuleButtonService : DataFilterService<ModuleButtonEntity>, IDenpendency
     {
         //获取类名
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -42,25 +42,25 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ModuleButtonEntity>> GetLookList(string moduleId = "")
         {
             var list = new List<ModuleButtonEntity>();
-            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            if (!CheckDataPrivilege())
             {
                 list = await repository.CheckCacheList(cacheKey + "list");
             }
             else
             {
-                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                var forms = GetDataPrivilege("u");
                 list = forms.ToList();
             }
             if (!string.IsNullOrEmpty(moduleId))
             {
                 list = list.Where(t => t.F_ModuleId == moduleId).ToList();
             }
-            return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList(), className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList());
         }
         public async Task<ModuleButtonEntity> GetLookForm(string keyValue)
         {
             var cachedata =await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(cachedata);
         }
         public async Task<ModuleButtonEntity> GetForm(string keyValue)
         {

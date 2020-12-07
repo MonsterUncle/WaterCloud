@@ -20,7 +20,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
     [Area("FileManage")]
     public class UploadfileController :  ControllerBase
     {
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
+
         public UploadfileService _service {get;set;}
         public SystemSetService _setService { get; set; }
 
@@ -150,12 +150,12 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
                     file.CopyTo(fs);
                     fs.Flush();
                 }
-                await _logService.WriteLog("操作成功。",className,"",DbLogType.Visit);
+                await _logService.WriteLog("操作成功。","","",DbLogType.Visit);
                 return Content(new { code = 0, msg = "操作成功", data = new { src = entity.F_FilePath, title = fileName } }.ToJson());
             }
             catch (Exception ex)
             {
-                await _logService.WriteLog(ex.Message, className, "", DbLogType.Visit,true);
+                await _logService.WriteLog(ex.Message, "", "", DbLogType.Visit,true);
                 return Content(new { code = 400, msg = "操作失败," + ex.Message }.ToJson());
             }
         }
@@ -199,12 +199,12 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
             try
             {
                 await _service.SubmitForm(entity, keyValue);
-                await Success("操作成功。", className, keyValue);
+                await Success("操作成功。", "", keyValue);
                 return true;
             }
             catch (Exception ex)
             {
-                await Error(ex.Message, className, keyValue);
+                await Error(ex.Message, "", keyValue);
                 return false;
             }
         }
@@ -217,11 +217,11 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
             try
             {
                 await _service.DeleteForm(keyValue);
-                return await Success("操作成功。", className, keyValue, DbLogType.Delete);
+                return await Success("操作成功。", "", keyValue, DbLogType.Delete);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue, DbLogType.Delete);
+                return await Error(ex.Message, "", keyValue, DbLogType.Delete);
             }
         }
         #endregion

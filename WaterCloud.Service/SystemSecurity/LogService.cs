@@ -23,7 +23,7 @@ namespace WaterCloud.Service.SystemSecurity
         private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
         private ModuleService moduleservice;
         //获取类名
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        
         public LogService(IDbContext context) : base(context)
         {
             moduleservice = new ModuleService(context);
@@ -76,7 +76,7 @@ namespace WaterCloud.Service.SystemSecurity
                 result = result.OrderByDescending(a => a.F_CreatorTime).Skip((pagination.page - 1) * pagination.rows).Take(pagination.rows).ToList();
 
             }
-            return GetFieldsFilterData(result, className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(result);
         }
         public async Task<List<LogEntity>> GetList()
         {

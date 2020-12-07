@@ -19,7 +19,7 @@ namespace WaterCloud.Service.SystemOrganize
     public class NoticeService: DataFilterService<NoticeEntity>,IDenpendency
     {
         //获取类名
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -38,13 +38,13 @@ namespace WaterCloud.Service.SystemOrganize
             }
             //公告这里不控制
             //数据权限和缓存获取冲突
-            //if (!CheckDataPrivilege("u", className.Substring(0, className.Length - 7)))
+            //if (!CheckDataPrivilege("u"))
             //{
             //    list = await service.CheckCacheList(cacheKey + "list");
             //}
             //else
             //{
-            //    var forms = GetDataPrivilege(className.Substring(0, className.Length - 7));
+            //    var forms = GetDataPrivilege();
             //    list = list.ToList();
             //}
             //if (!string.IsNullOrEmpty(keyword))
@@ -56,18 +56,18 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<NoticeEntity>> GetLookList(Pagination pagination, string keyword = "")
         {
             //获取数据权限
-            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+            var list = GetDataPrivilege("u");
             if (!string.IsNullOrEmpty(keyword))
             {
                 list = list.Where(u => u.F_Title.Contains(keyword) || u.F_Content.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark==false);
-            return GetFieldsFilterData(await repository.OrderList(list, pagination), className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list, pagination));
         }
         public async Task<NoticeEntity> GetLookForm(string keyValue)
         {
             var cachedata =await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(cachedata);
         }
         public async Task<NoticeEntity> GetForm(string keyValue)
         {

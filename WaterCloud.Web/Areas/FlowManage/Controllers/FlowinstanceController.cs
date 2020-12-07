@@ -16,7 +16,7 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
     [Area("FlowManage")]
     public class FlowinstanceController :  ControllerBase
     {
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];
+
         public FlowinstanceService _service {get;set;}
 
         /// <summary>
@@ -102,11 +102,11 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
                     entity.F_Id = keyValue;
                     await _service.UpdateInstance(entity);
                 }
-                return await Success("操作成功。", className, keyValue);
+                return await Success("操作成功。", "", keyValue);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue);
+                return await Error(ex.Message, "", keyValue);
             }
         }
         [HttpPost]
@@ -116,11 +116,11 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
             try
             {
                 await _service.Verification(entity);
-                return await Success("操作成功。", className, entity.F_FlowInstanceId,DbLogType.Submit);
+                return await Success("操作成功。", "", entity.F_FlowInstanceId,DbLogType.Submit);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className,entity.F_FlowInstanceId, DbLogType.Submit);
+                return await Error(ex.Message, "",entity.F_FlowInstanceId, DbLogType.Submit);
             }
         }
 
@@ -132,11 +132,11 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
             try
             {
                 await _service.DeleteForm(keyValue);
-                return await Success("操作成功。", className, keyValue, DbLogType.Delete);
+                return await Success("操作成功。", "", keyValue, DbLogType.Delete);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, className, keyValue, DbLogType.Delete);
+                return await Error(ex.Message, "", keyValue, DbLogType.Delete);
             }
         }
         #endregion

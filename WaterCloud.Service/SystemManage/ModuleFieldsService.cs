@@ -20,7 +20,7 @@ namespace WaterCloud.Service.SystemManage
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         //获取类名
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        
         public ModuleFieldsService(IDbContext context) : base(context)
         {
         }
@@ -39,20 +39,20 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ModuleFieldsEntity>> GetLookList(Pagination pagination, string moduleId, string keyword = "")
         {
             //获取数据权限
-            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+            var list = GetDataPrivilege("u");
             if (!string.IsNullOrEmpty(keyword))
             {
                 list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark == false&&u.F_ModuleId== moduleId);
-            return GetFieldsFilterData(await repository.OrderList(list, pagination), className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list, pagination));
 
         }
 
         public async Task<ModuleFieldsEntity> GetLookForm(string keyValue)
         {
             var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(cachedata);
         }
         public async Task<ModuleFieldsEntity> GetForm(string keyValue)
         {

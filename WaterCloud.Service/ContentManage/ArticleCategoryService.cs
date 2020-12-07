@@ -20,7 +20,7 @@ namespace WaterCloud.Service.ContentManage
 
         }
         private string cacheKey = "watercloud_cms_articlecategorydata_";
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        
         #region 获取数据
         public async Task<List<ArticleCategoryEntity>> GetList(string keyword = "")
         {
@@ -36,13 +36,13 @@ namespace WaterCloud.Service.ContentManage
         public async Task<List<ArticleCategoryEntity>> GetLookList(string keyword = "")
         {
             var list =new List<ArticleCategoryEntity>();
-            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))
+            if (!CheckDataPrivilege())
             {
                 list = await repository.CheckCacheList(cacheKey + "list");
             }
             else
             {
-                var forms = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+                var forms = GetDataPrivilege("u");
                 list = forms.ToList();
             }
             if (!string.IsNullOrEmpty(keyword))
@@ -50,20 +50,20 @@ namespace WaterCloud.Service.ContentManage
                 //此处需修改
                 list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_Description.Contains(keyword)).ToList();
             }
-            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList(),className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList());
         }
 
         public async Task<List<ArticleCategoryEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
             //获取数据权限
-            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+            var list = GetDataPrivilege("u");
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
                 list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark==false);
-            return GetFieldsFilterData(await repository.OrderList(list, pagination),className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list, pagination));
         }
 
         public async Task<ArticleCategoryEntity> GetForm(string keyValue)
@@ -76,7 +76,7 @@ namespace WaterCloud.Service.ContentManage
         public async Task<ArticleCategoryEntity> GetLookForm(string keyValue)
         {
             var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(cachedata);
         }
 
         #region 提交数据

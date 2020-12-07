@@ -20,7 +20,7 @@ namespace WaterCloud.Service.SystemOrganize
         {
         }
         //获取类名
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        
         #region 获取数据
         public async Task<List<DataPrivilegeRuleEntity>> GetList(string keyword = "")
         {
@@ -36,19 +36,19 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<DataPrivilegeRuleEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
             //获取数据权限
-            var list = GetDataPrivilege("u", className.Substring(0, className.Length - 7));
+            var list = GetDataPrivilege("u");
             if (!string.IsNullOrEmpty(keyword))
             {
                 list = list.Where(u => u.F_ModuleCode.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark == false);
-            return GetFieldsFilterData(await repository.OrderList(list, pagination), className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(await repository.OrderList(list, pagination));
         }
 
         public async Task<DataPrivilegeRuleEntity> GetLookForm(string keyValue)
         {
             var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata, className.Substring(0, className.Length - 7));
+            return GetFieldsFilterData(cachedata);
         }
         public async Task<DataPrivilegeRuleEntity> GetForm(string keyValue)
         {
