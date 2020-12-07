@@ -1,4 +1,4 @@
-﻿/*******************************************************************************
+/*******************************************************************************
  * Copyright © 2020 WaterCloud.Framework 版权所有
  * Author: WaterCloud
  * Description: WaterCloud快速开发平台
@@ -156,24 +156,24 @@ namespace WaterCloud.DataBase
         public List<TEntity> FindList<TEntity>(Pagination pagination) where TEntity : class, new()
         {
             var tempData = dbcontext.Query<TEntity>();
-            tempData = tempData.OrderBy(pagination.sort);
             pagination.records = tempData.Count();
+            tempData = tempData.OrderBy(pagination.sort);
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
         public List<TEntity> FindList<TEntity>(Expression<Func<TEntity, bool>> predicate, Pagination pagination) where TEntity : class, new()
         {
             var tempData = dbcontext.Query<TEntity>().Where(predicate);
-            tempData = tempData.OrderBy(pagination.sort);
             pagination.records = tempData.Count();
+            tempData = tempData.OrderBy(pagination.sort);
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
         public List<T> OrderList<T>(IQuery<T> query, Pagination pagination)
         {
             var tempData = query;
-            tempData = tempData.OrderBy(pagination.sort);
             pagination.records = tempData.Count();
+            tempData = tempData.OrderBy(pagination.sort);
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
