@@ -28,7 +28,7 @@ namespace WaterCloud.CodeGenerator
             uniwork = new RepositoryBase(context);
         }
         #region GetBaseConfig
-        public BaseConfigModel GetBaseConfig(string path,string username, string tableName, string tableDescription, Dictionary<string,string> tableFieldList)
+        public BaseConfigModel GetBaseConfig(string path, string username, string tableName, string tableDescription, Dictionary<string, string> tableFieldList)
         {
             path = GetProjectRootPath(path);
 
@@ -48,7 +48,7 @@ namespace WaterCloud.CodeGenerator
             baseConfigModel.FileConfig.ControllerName = string.Format("{0}Controller", baseConfigModel.FileConfig.ClassPrefix);
             baseConfigModel.FileConfig.PageIndexName = "Index";
             baseConfigModel.FileConfig.PageFormName = "Form";
-            baseConfigModel.FileConfig.PageDetailsName ="Details";
+            baseConfigModel.FileConfig.PageDetailsName = "Details";
             #endregion
 
             #region OutputConfigModel          
@@ -75,7 +75,7 @@ namespace WaterCloud.CodeGenerator
             #region PageFormModel
             baseConfigModel.PageForm = new PageFormModel();
             baseConfigModel.PageForm.ShowMode = 1;
-            baseConfigModel.PageForm.FieldList=new Dictionary<string, string>();
+            baseConfigModel.PageForm.FieldList = new Dictionary<string, string>();
             #endregion
 
             return baseConfigModel;
@@ -83,7 +83,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildEntity
-        public string BuildEntity(BaseConfigModel baseConfigModel, DataTable dt,string idColumn = "F_Id")
+        public string BuildEntity(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id")
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
@@ -97,9 +97,9 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("{");
 
             SetClassDescription("实体类", baseConfigModel, sb);
-            baseConfigModel.TableNameUpper=TableMappingHelper.ConvertTo_Uppercase(baseConfigModel.TableName);
+            baseConfigModel.TableNameUpper = TableMappingHelper.ConvertTo_Uppercase(baseConfigModel.TableName);
             sb.AppendLine("    [TableAttribute(\"" + baseConfigModel.TableName + "\")]");
-            var baseEntity= GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn);
+            var baseEntity = GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn);
             if (string.IsNullOrEmpty(baseEntity))
             {
                 sb.AppendLine("    public class " + baseConfigModel.FileConfig.EntityName);
@@ -165,7 +165,7 @@ namespace WaterCloud.CodeGenerator
                 //        sb.AppendLine("        [JsonConverter(typeof(DateTimeJsonConverter))]");
                 //        break;
                 //}
-                
+
             }
             sb.AppendLine("    }");
             sb.AppendLine("}");
@@ -175,14 +175,14 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildService
-        public string BuildService(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id",string idType="int",string deleteMarkField="IsDelete",string createTimeField="AddTime")
+        public string BuildService(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id", string idType = "int", string deleteMarkField = "IsDelete", string createTimeField = "AddTime")
         {
             var baseEntity = GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn);
             StringBuilder sb = new StringBuilder();
             string method = string.Empty;
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Linq;");
-            sb.AppendLine("using System.Threading.Tasks;");          
+            sb.AppendLine("using System.Threading.Tasks;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using WaterCloud.Code;");
             sb.AppendLine("using Chloe;");
@@ -194,12 +194,11 @@ namespace WaterCloud.CodeGenerator
 
             SetClassDescription("服务类", baseConfigModel, sb);
 
-            sb.AppendLine("    public class " + baseConfigModel.FileConfig.ServiceName + " : DataFilterService<"+ baseConfigModel.FileConfig.EntityName + ">, IDenpendency");
-            sb.AppendLine("    {");                    
+            sb.AppendLine("    public class " + baseConfigModel.FileConfig.ServiceName + " : DataFilterService<" + baseConfigModel.FileConfig.EntityName + ">, IDenpendency");
+            sb.AppendLine("    {");
             sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
-            sb.AppendLine("        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];");
 
-            sb.AppendLine("        public "+ baseConfigModel.FileConfig.ServiceName + "(IDbContext context) : base(context)");
+            sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + "(IDbContext context) : base(context)");
             sb.AppendLine("        {");
             sb.AppendLine("        }");
 
@@ -218,13 +217,13 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(string keyword = \"\")");
             sb.AppendLine("        {");
             sb.AppendLine("            var list =new List<" + baseConfigModel.FileConfig.EntityName + ">();");
-            sb.AppendLine("            if (!CheckDataPrivilege(className.Substring(0, className.Length - 7)))");
+            sb.AppendLine("            if (!CheckDataPrivilege())");
             sb.AppendLine("            {");
             sb.AppendLine("                list = await repository.CheckCacheList(cacheKey + \"list\");");
             sb.AppendLine("            }");
             sb.AppendLine("            else");
             sb.AppendLine("            {");
-            sb.AppendLine("                var forms = GetDataPrivilege(\"u\", className.Substring(0, className.Length - 7));");
+            sb.AppendLine("                var forms = GetDataPrivilege(\"u\");");
             sb.AppendLine("                list = forms.ToList();");
             sb.AppendLine("            }");
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
@@ -232,13 +231,13 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                //此处需修改");
             sb.AppendLine("                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword)).ToList();");
             sb.AppendLine("            }");
-            sb.AppendLine($"            return GetFieldsFilterData(list.Where(t => t.{deleteMarkField} == false).OrderByDescending(t => t.{createTimeField}).ToList(),className.Substring(0, className.Length - 7));");
+            sb.AppendLine($"            return GetFieldsFilterData(list.Where(t => t.{deleteMarkField} == false).OrderByDescending(t => t.{createTimeField}).ToList());");
             sb.AppendLine("        }");
             sb.AppendLine();
-            sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(SoulPage<"+ baseConfigModel.FileConfig.EntityName + "> pagination,string keyword = \"\","+idType+" id=\"\")");
+            sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(SoulPage<" + baseConfigModel.FileConfig.EntityName + "> pagination,string keyword = \"\"," + idType + " id=\"\")");
             sb.AppendLine("        {");
             sb.AppendLine("            //获取数据权限");
-            sb.AppendLine("            var list = GetDataPrivilege(\"u\", className.Substring(0, className.Length - 7));");
+            sb.AppendLine("            var list = GetDataPrivilege(\"u\");");
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
             sb.AppendLine("            {");
             sb.AppendLine("                //此处需修改");
@@ -256,7 +255,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            {");
             sb.AppendLine("                list= list.Where(u=>u." + idColumn + "==id);");
             sb.AppendLine("            }");
-            sb.AppendLine("            return GetFieldsFilterData(await repository.OrderList(list, pagination),className.Substring(0, className.Length - 7));");
+            sb.AppendLine("            return GetFieldsFilterData(await repository.OrderList(list, pagination));");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetForm(string keyValue)");
@@ -269,7 +268,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetLookForm(object keyValue)");
             sb.AppendLine("        {");
             sb.AppendLine("            var cachedata = await repository.CheckCache(cacheKey, keyValue);");
-            sb.AppendLine("            return GetFieldsFilterData(cachedata,className.Substring(0, className.Length - 7));");
+            sb.AppendLine("            return GetFieldsFilterData(cachedata);");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        #region 提交数据");
@@ -364,19 +363,19 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildController
-        public string BuildController(BaseConfigModel baseConfigModel, string idColumn="F_Id",string idType="string",string createTimeField="AddTime")
+        public string BuildController(BaseConfigModel baseConfigModel, string idColumn = "F_Id", string idType = "string", string createTimeField = "AddTime")
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Linq;");
             sb.AppendLine("using System.Threading.Tasks;");
-            sb.AppendLine("using System.Collections.Generic;");          
+            sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using Microsoft.AspNetCore.Mvc;");
             sb.AppendLine("using WaterCloud.Code;");
             sb.AppendLine("using WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule + ";");
             sb.AppendLine("using WaterCloud.Service;");
             sb.AppendLine("using Microsoft.AspNetCore.Authorization;");
-            sb.AppendLine("using WaterCloud.Service."+ baseConfigModel.OutputConfig.OutputModule + ";");
+            sb.AppendLine("using WaterCloud.Service." + baseConfigModel.OutputConfig.OutputModule + ";");
             sb.AppendLine();
 
             sb.AppendLine("namespace WaterCloud.Web.Areas." + baseConfigModel.OutputConfig.OutputModule + ".Controllers");
@@ -387,11 +386,10 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("    [Area(\"" + baseConfigModel.OutputConfig.OutputModule + "\")]");
             sb.AppendLine("    public class " + baseConfigModel.FileConfig.ControllerName + " :  ControllerBase");
             sb.AppendLine("    {");
-            sb.AppendLine("        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[5];");
             sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + " _service {get;set;}");
             sb.AppendLine();
             sb.AppendLine("        #region 获取数据");
-            if (baseConfigModel.PageIndex.IsTree>0)
+            if (baseConfigModel.PageIndex.IsTree > 0)
             {
                 sb.AppendLine("        [HttpGet]");
                 sb.AppendLine("        [HandlerAjaxOnly]");
@@ -416,7 +414,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("            {");
                 sb.AppendLine("                //此处需修改");
                 sb.AppendLine("                TreeSelectModel treeModel = new TreeSelectModel();");
-                sb.AppendLine("                treeModel.id = item."+ idColumn + ";");
+                sb.AppendLine("                treeModel.id = item." + idColumn + ";");
                 sb.AppendLine("                treeModel.text = item.F_FullName;");
                 sb.AppendLine("                treeModel.parentId = item.F_ParentId;");
                 sb.AppendLine("                treeList.Add(treeModel);");
@@ -427,7 +425,7 @@ namespace WaterCloud.CodeGenerator
             else
             {
                 sb.AppendLine("        [HandlerAjaxOnly]");
-                sb.AppendLine("        public async Task<ActionResult> GetGridJson(SoulPage<"+ baseConfigModel.FileConfig .EntityName+ "> pagination, string keyword)");
+                sb.AppendLine("        public async Task<ActionResult> GetGridJson(SoulPage<" + baseConfigModel.FileConfig.EntityName + "> pagination, string keyword)");
                 sb.AppendLine("        {");
                 sb.AppendLine("            if (string.IsNullOrEmpty(pagination.field))");
                 sb.AppendLine("            {");
@@ -464,11 +462,11 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            try");
             sb.AppendLine("            {");
             sb.AppendLine("                await _service.SubmitForm(entity, keyValue);");
-            sb.AppendLine("                return await Success(\"操作成功。\", className, keyValue);");
+            sb.AppendLine("                return await Success(\"操作成功。\", \"\", keyValue);");
             sb.AppendLine("            }");
             sb.AppendLine("            catch (Exception ex)");
             sb.AppendLine("            {");
-            sb.AppendLine("                return await Error(ex.Message, className, keyValue);");
+            sb.AppendLine("                return await Error(ex.Message, \"\", keyValue);");
             sb.AppendLine("            }");
             sb.AppendLine("        }");
             sb.AppendLine();
@@ -480,11 +478,11 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            try");
             sb.AppendLine("            {");
             sb.AppendLine("                await _service.DeleteForm(keyValue);");
-            sb.AppendLine("                return await Success(\"操作成功。\", className, keyValue, DbLogType.Delete);");
+            sb.AppendLine("                return await Success(\"操作成功。\", \"\", keyValue, DbLogType.Delete);");
             sb.AppendLine("            }");
             sb.AppendLine("            catch (Exception ex)");
             sb.AppendLine("            {");
-            sb.AppendLine("                return await Error(ex.Message, className, keyValue, DbLogType.Delete);");
+            sb.AppendLine("                return await Error(ex.Message, \"\", keyValue, DbLogType.Delete);");
             sb.AppendLine("            }");
             sb.AppendLine("        }");
             sb.AppendLine("        #endregion");
@@ -545,7 +543,7 @@ namespace WaterCloud.CodeGenerator
             if (baseConfigModel.PageIndex.ButtonList.Contains("add"))
             {
                 KeyValue button = list.Where(p => p.Key == "add").FirstOrDefault();
-                sb.AppendLine("                 <button id=\""+ button.Value + "\" authorize class=\"layui-btn layui-btn-sm data-add-btn layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe654;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm data-add-btn layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe654;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("edit"))
             {
@@ -572,7 +570,7 @@ namespace WaterCloud.CodeGenerator
 
             #region js layui方法
             sb.AppendLine(" <script>");
-            sb.AppendLine("     layui.use(['jquery', 'form',"+ (baseConfigModel.PageIndex.IsTree == 1 ? "'treeTable'" : "'table','commonTable'") + ", 'common','optimizeSelectOption'], function () {");
+            sb.AppendLine("     layui.use(['jquery', 'form'," + (baseConfigModel.PageIndex.IsTree == 1 ? "'treeTable'" : "'table','commonTable'") + ", 'common','optimizeSelectOption'], function () {");
             sb.AppendLine("         var $ = layui.jquery,");
             sb.AppendLine("             form = layui.form,");
             sb.AppendLine("             " + (baseConfigModel.PageIndex.IsTree == 1 ? "treeTable = layui.treeTable," : "table = layui.table,commonTable = layui.commonTable"));
@@ -580,7 +578,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("         var entity;");
             sb.AppendLine("         //权限控制(js是值传递)");
             sb.AppendLine("         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);");
-            if (baseConfigModel.PageIndex.IsTree==1)
+            if (baseConfigModel.PageIndex.IsTree == 1)
             {
                 sb.AppendLine("         var queryJson;");
                 sb.AppendLine("         var rendertree = common.rendertreetable({");
@@ -591,13 +589,13 @@ namespace WaterCloud.CodeGenerator
                 {
                     sb.AppendLine("             search:false,");
                 }
-                sb.AppendLine("             url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson'+(!queryJson ? '' : '?keyword=' + queryJson),"); sb.AppendLine("             sqlkey: '"+ idColumn + "',//数据库主键");
+                sb.AppendLine("             url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson'+(!queryJson ? '' : '?keyword=' + queryJson),"); sb.AppendLine("             sqlkey: '" + idColumn + "',//数据库主键");
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 //此处需修改");
                 int cout = 1;
                 foreach (var item in baseConfigModel.PageIndex.ColumnList)
                 {
-                    if (cout==1)
+                    if (cout == 1)
                     {
                         sb.AppendLine("                 { field: '" + item.Key + "', title: '" + item.Value + "', width: 200 },");
                     }
@@ -714,32 +712,32 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                         entity = null;");
             sb.AppendLine("                   }");
             sb.AppendLine("               });");
-            sb.AppendLine( "           }");
-            sb.AppendLine( "           else if (obj.event === 'edit') {");
+            sb.AppendLine("           }");
+            sb.AppendLine("           else if (obj.event === 'edit') {");
             sb.AppendLine("               if (entity == null) {");
-            sb.AppendLine( "                   common.modalMsg(\"未选中数据\", \"warning\");");
-            sb.AppendLine( "                   return false;");
-            sb.AppendLine( "               }");
-            sb.AppendLine( "               common.modalOpen({");
-            sb.AppendLine( "                  title: \"编辑界面\",");
+            sb.AppendLine("                   common.modalMsg(\"未选中数据\", \"warning\");");
+            sb.AppendLine("                   return false;");
+            sb.AppendLine("               }");
+            sb.AppendLine("               common.modalOpen({");
+            sb.AppendLine("                  title: \"编辑界面\",");
             sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Form?keyValue=\" + entity.data." + idColumn + ",");
             sb.AppendLine("                   width: \"500px\",");
             sb.AppendLine("                   height: \"500px\",");
-            sb.AppendLine( "               });");
-            sb.AppendLine( "           }");
-            sb.AppendLine( "           else if (obj.event === 'details') {");
+            sb.AppendLine("               });");
+            sb.AppendLine("           }");
+            sb.AppendLine("           else if (obj.event === 'details') {");
             sb.AppendLine("               if (entity == null) {");
-            sb.AppendLine( "                   common.modalMsg(\"未选中数据\", \"warning\");");
-            sb.AppendLine( "                   return false;");
-            sb.AppendLine( "               }");
-            sb.AppendLine( "               common.modalOpen({");
-            sb.AppendLine( "                  title: \"查看界面\",");
+            sb.AppendLine("                   common.modalMsg(\"未选中数据\", \"warning\");");
+            sb.AppendLine("                   return false;");
+            sb.AppendLine("               }");
+            sb.AppendLine("               common.modalOpen({");
+            sb.AppendLine("                  title: \"查看界面\",");
             sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Details?keyValue=\" + entity.data." + idColumn + ",");
             sb.AppendLine("                   width: \"500px\",");
             sb.AppendLine("                   height: \"500px\",");
-            sb.AppendLine( "                  btn: []");
-            sb.AppendLine( "               });");
-            sb.AppendLine( "           }");
+            sb.AppendLine("                  btn: []");
+            sb.AppendLine("               });");
+            sb.AppendLine("           }");
             if (baseConfigModel.PageIndex.IsSearch == 1)
             {
                 sb.AppendLine("           else if (obj.event === 'TABLE_SEARCH') {");
@@ -751,9 +749,9 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                }");
                 sb.AppendLine("           }");
             }
-            sb.AppendLine( "           return false;");
-            sb.AppendLine( "       });");
-            sb.AppendLine( "   });");
+            sb.AppendLine("           return false;");
+            sb.AppendLine("       });");
+            sb.AppendLine("   });");
             sb.AppendLine("</script>");
             #endregion
 
@@ -820,7 +818,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("       form.on('submit(saveBtn)', function (data) {");
             sb.AppendLine("           // 单击之后提交按钮不可选,防止重复提交");
             sb.AppendLine("           $('.site-demo-active').addClass('layui-btn-disabled');");
-            sb.AppendLine("           $('.site-demo-active').attr('disabled', 'disabled');");                                       
+            sb.AppendLine("           $('.site-demo-active').attr('disabled', 'disabled');");
             sb.AppendLine("           var postData = data.field;");
             //if (baseConfigModel.PageForm.FieldList.Contains("F_EnabledMark"))
             //{
@@ -851,11 +849,11 @@ namespace WaterCloud.CodeGenerator
                         foreach (var item in baseConfigModel.PageForm.FieldList)
                         {
                             sb.AppendLine("                <div class=\"layui-form-item layui-hide\">");
-                            sb.AppendLine( "                   <label class=\"layui-form-label required\">"+ item.Value + "</label>");
-                            sb.AppendLine( "                   <div class=\"layui-input-block\">");
+                            sb.AppendLine("                   <label class=\"layui-form-label required\">" + item.Value + "</label>");
+                            sb.AppendLine("                   <div class=\"layui-input-block\">");
                             sb.AppendLine("                        <input type=\"text\" id=\"" + item.Key + "\" name=\"" + item.Key + "\" autocomplete=\"off\" lay-verify=\"required\" placeholder=\"请输入\" class=\"layui-input\">");
-                            sb.AppendLine( "                   </div>");
-                            sb.AppendLine( "               </div>");
+                            sb.AppendLine("                   </div>");
+                            sb.AppendLine("               </div>");
                         }
                         break;
 
@@ -905,7 +903,7 @@ namespace WaterCloud.CodeGenerator
             #region 初始化集合
             if (baseConfigModel.PageForm.FieldList == null)
             {
-                baseConfigModel.PageForm.FieldList =new Dictionary<string, string>();
+                baseConfigModel.PageForm.FieldList = new Dictionary<string, string>();
             }
             #endregion
             StringBuilder sb = new StringBuilder();
@@ -1020,7 +1018,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine();
             sb.AppendLine("  菜单路径:/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + baseConfigModel.FileConfig.PageIndexName);
             sb.AppendLine();
-            sb.AppendLine("  主键："+ idColumn);
+            sb.AppendLine("  主键：" + idColumn);
             List<KeyValue> list = GetButtonAuthorizeList();
             foreach (string btn in baseConfigModel.PageIndex.ButtonList)
             {
@@ -1321,24 +1319,24 @@ namespace WaterCloud.CodeGenerator
         }
         #endregion 
 
-        private string GetBaseEntity(string EntityName, DataTable dt,string idColumn="F_Id",string deleteMarkField="IsDelete",string AddTime="AddTime")
+        private string GetBaseEntity(string EntityName, DataTable dt, string idColumn = "F_Id", string deleteMarkField = "IsDelete", string AddTime = "AddTime")
         {
             string entity = string.Empty;
             var columnList = dt.AsEnumerable().Select(p => p["TableColumn"].ParseToString()).ToList();
 
             bool id = columnList.Where(p => p == idColumn).Any();
-            bool baseIsDelete = columnList.Where(p => p == "F_DeleteUserId").Any()&& columnList.Where(p => p == "F_DeleteTime").Any()&& columnList.Where(p => p == "F_DeleteMark").Any();
+            bool baseIsDelete = columnList.Where(p => p == "F_DeleteUserId").Any() && columnList.Where(p => p == "F_DeleteTime").Any() && columnList.Where(p => p == "F_DeleteMark").Any();
             bool baseIsCreate = columnList.Where(p => p == "F_Id").Any() && columnList.Where(p => p == "F_CreatorUserId").Any() && columnList.Where(p => p == "F_CreatorTime").Any();
             bool baseIsModifie = columnList.Where(p => p == "F_Id").Any() && columnList.Where(p => p == "F_LastModifyUserId").Any() && columnList.Where(p => p == "F_LastModifyTime").Any();
             if (!id)
             {
                 throw new Exception("数据库表必须有主键id字段");
             }
-            if (idColumn!= "F_Id")
+            if (idColumn != "F_Id")
             {
                 return null;
             }
-            entity = "IEntity<"+ EntityName + ">";
+            entity = "IEntity<" + EntityName + ">";
             if (baseIsCreate)
             {
                 entity += ",ICreationAudited";

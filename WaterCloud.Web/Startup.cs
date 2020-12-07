@@ -25,6 +25,7 @@ using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
 using System;
+using Chloe.Infrastructure.Interception;
 
 namespace WaterCloud.Web
 {
@@ -205,6 +206,9 @@ namespace WaterCloud.Web
             //}
             if (WebHostEnvironment.IsDevelopment())
             {
+                //打印sql
+                IDbCommandInterceptor interceptor = new DbCommandInterceptor();
+                DbInterception.Add(interceptor);
                 GlobalContext.SystemConfig.Debug = true;
                 app.UseDeveloperExceptionPage();
             }

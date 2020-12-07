@@ -20,9 +20,10 @@ namespace WaterCloud.Service
         protected IRepositoryBase<T> repository;
         // 用于其他表操作
         protected IRepositoryBase uniwork;
-        public DataFilterService(IDbContext context) {
-            currentuser = OperatorProvider.Provider.GetCurrent();            
-            if (currentuser != null&& !(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString))
+        public DataFilterService(IDbContext context)
+        {
+            currentuser = OperatorProvider.Provider.GetCurrent();
+            if (currentuser != null && !(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString))
             {
                 repository = new RepositoryBase<T>(currentuser.DbString, currentuser.DBProvider);
                 uniwork = new RepositoryBase(currentuser.DbString, currentuser.DBProvider);
@@ -32,7 +33,7 @@ namespace WaterCloud.Service
                 repository = new RepositoryBase<T>(context);
                 uniwork = new RepositoryBase(context);
             }
-            if (currentuser==null)
+            if (currentuser == null)
             {
                 currentuser = new OperatorModel();
             }
@@ -43,9 +44,10 @@ namespace WaterCloud.Service
         /// <param name=""parameterName>linq表达式参数的名称，如u=>u.name中的"u"</param>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
-        protected IQuery<T> GetDataPrivilege(string parametername, string moduleName, IQuery<T> query=null)
+        protected IQuery<T> GetDataPrivilege(string parametername, string moduleName = "", IQuery<T> query = null)
         {
-            if (query==null)
+            moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
+            if (query == null)
             {
                 query = repository.IQueryable();
             }
@@ -81,8 +83,9 @@ namespace WaterCloud.Service
         /// <param name=""parameterName>linq表达式参数的名称，如u=>u.name中的"u"</param>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
-        protected IQuery<TEntity> GetDataPrivilege<TEntity>(string parametername, string moduleName, IQuery<TEntity> query)
+        protected IQuery<TEntity> GetDataPrivilege<TEntity>(string parametername, string moduleName = "", IQuery<TEntity> query = null)
         {
+            moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             if (!CheckDataPrivilege(moduleName))
             {
                 return query;
@@ -110,8 +113,9 @@ namespace WaterCloud.Service
         /// </summary>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
-        protected bool CheckDataPrivilege(string moduleName)
+        protected bool CheckDataPrivilege(string moduleName = "")
         {
+            moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             if (currentuser.UserId == GlobalContext.SystemConfig.SysemUserId) return false;  //超级管理员特权
             var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             ////系统菜单也不需要数据权限 跟字段重合取消这样处理
@@ -131,7 +135,7 @@ namespace WaterCloud.Service
         /// </summary>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
-        protected SoulPage<TEntity> ChangeSoulData<TEntity>(Dictionary<string, Dictionary<string, string>> dic,SoulPage<TEntity> pagination)
+        protected SoulPage<TEntity> ChangeSoulData<TEntity>(Dictionary<string, Dictionary<string, string>> dic, SoulPage<TEntity> pagination)
         {
             List<FilterSo> filterSos = pagination.getFilterSos();
             filterSos = FormatData(dic, filterSos);
@@ -142,13 +146,13 @@ namespace WaterCloud.Service
         {
             foreach (var item in filterSos)
             {
-                if (item.mode == "condition"&&dic.ContainsKey(item.field)&&dic[item.field].ContainsKey(item.value))
+                if (item.mode == "condition" && dic.ContainsKey(item.field) && dic[item.field].ContainsKey(item.value))
                 {
                     item.value = dic[item.field][item.value];
                 }
-                if (item.children!=null&&item.children.Count>0)
+                if (item.children != null && item.children.Count > 0)
                 {
-                    item.children= FormatData(dic, item.children);
+                    item.children = FormatData(dic, item.children);
                 }
             }
             return filterSos;
@@ -159,23 +163,24 @@ namespace WaterCloud.Service
         ///<param name=""list>数据列表</param>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
-        protected List<TEntity> GetFieldsFilterData<TEntity>(List<TEntity> list, string moduleName)
+        protected List<TEntity> GetFieldsFilterData<TEntity>(List<TEntity> list, string moduleName = "")
         {
+            moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             //管理员跳过
-            if (currentuser.RoleId == "admin"|| currentuser.IsSystem)
+            if (currentuser.RoleId == "admin" || currentuser.IsSystem)
             {
                 return list;
             }
             //系统菜单跳过
             var module = uniwork.IQueryable<ModuleEntity>(u => u.F_EnCode == moduleName).FirstOrDefault();
             //判断是否需要字段权限
-            if (module.F_IsFields==false)
+            if (module.F_IsFields == false)
             {
                 return list;
             }
             var rolelist = currentuser.RoleId.Split(',');
-            var rule = uniwork.IQueryable<RoleAuthorizeEntity>(u=> rolelist.Contains(u.F_ObjectId)&&u.F_ItemType==3).Select(a=>a.F_ItemId).Distinct().ToList();
-            var fieldsList = uniwork.IQueryable<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id)||u.F_IsPublic==true)&&u.F_ModuleId==module.F_Id).Select(u => u.F_EnCode).ToList();
+            var rule = uniwork.IQueryable<RoleAuthorizeEntity>(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
+            var fieldsList = uniwork.IQueryable<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
             //反射获取主键
             PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
             var idName = "F_Id";
@@ -185,7 +190,7 @@ namespace WaterCloud.Service
             }
             fieldsList.Add(idName);
             fieldsList = fieldsList.Distinct().ToList();
-            if (list.Count==0)
+            if (list.Count == 0)
             {
                 return list;
             }
@@ -195,8 +200,9 @@ namespace WaterCloud.Service
         ///  字段权限处理
         /// </summary>
         /// <returns></returns>
-        protected TEntity GetFieldsFilterData<TEntity>(TEntity entity, string moduleName)
+        protected TEntity GetFieldsFilterData<TEntity>(TEntity entity, string moduleName = "")
         {
+            moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             List<TEntity> list = new List<TEntity>();
             list.Add(entity);
             return GetFieldsFilterData(list, moduleName)[0];
