@@ -6,6 +6,7 @@ using WaterCloud.Code;
 using Chloe;
 using WaterCloud.Domain.SystemManage;
 using Serenity.Data;
+using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -35,28 +36,19 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<FormEntity>> GetLookList(string keyword = "")
         {
-            var list =new List<FormEntity>();
-            if (!CheckDataPrivilege())
-            {
-                list = await repository.CheckCacheList(cacheKey + "list");
-            }
-            else
-            {
-                var forms = GetDataPrivilege("u");
-                list = forms.ToList();
-            }
+            var list = GetDataPrivilege("u", "", GetQuery());
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(u => u.F_Name.Contains(keyword) || u.F_Description.Contains(keyword)).ToList();
+                list = list.Where(u => u.F_Name.Contains(keyword) || u.F_Description.Contains(keyword));
             }
-            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList());
+            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList());
         }
 
         public async Task<List<FormEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
             //获取数据权限
-            var list = GetDataPrivilege("u");
+            var list = GetDataPrivilege("u","", GetQuery());
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
@@ -65,7 +57,32 @@ namespace WaterCloud.Service.SystemManage
             list = list.Where(u => u.F_DeleteMark==false);
             return GetFieldsFilterData(await repository.OrderList(list, pagination));
         }
-
+        private IQuery<FormEntity> GetQuery()
+        {
+            var query = repository.IQueryable()
+                .LeftJoin<OrganizeEntity>((a, b) => a.F_OrganizeId == b.F_Id)
+                .Select((a, b) => new FormEntity
+                {
+                    F_Id = a.F_Id,
+                    F_OrganizeName = b.F_FullName,
+                    F_CreatorTime = a.F_CreatorTime,
+                    F_CreatorUserId = a.F_CreatorUserId,
+                    F_Description = a.F_Description,
+                    F_EnabledMark = a.F_EnabledMark,
+                    F_OrganizeId = a.F_OrganizeId,
+                    F_Content=a.F_Content,
+                    F_ContentData=a.F_ContentData,
+                    F_ContentParse=a.F_ContentParse,
+                    F_DbName=a.F_DbName,
+                    F_DeleteMark=a.F_DeleteMark,
+                    F_Fields=a.F_Fields,    
+                    F_FrmType=a.F_FrmType,
+                    F_Name=a.F_Name,
+                    F_SortCode=a.F_SortCode,    
+                    F_WebId=a.F_WebId,  
+                });
+            return query;
+        }
         public async Task<FormEntity> GetForm(string keyValue)
         {
             var cachedata = await repository.CheckCache(cacheKey, keyValue);

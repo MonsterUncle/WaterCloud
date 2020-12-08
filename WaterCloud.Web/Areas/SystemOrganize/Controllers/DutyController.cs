@@ -34,7 +34,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             return View();
         }
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetGridJson(SoulPage<RoleEntity> pagination, string keyword)
+        [IgnoreAntiforgeryToken]
+        public async Task<ActionResult> GetGridJson(SoulPage<RoleExtend> pagination, string keyword)
         {
             if (string.IsNullOrEmpty(pagination.field))
             {

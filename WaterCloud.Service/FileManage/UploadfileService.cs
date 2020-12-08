@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using WaterCloud.Code;
 using Chloe;
 using WaterCloud.Domain.FileManage;
+using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service.FileManage
 {
@@ -34,36 +35,61 @@ namespace WaterCloud.Service.FileManage
 
         public async Task<List<UploadfileEntity>> GetLookList(string keyword = "")
         {
-            var list =new List<UploadfileEntity>();
-            if (!CheckDataPrivilege())
-            {
-                list = await repository.CheckCacheList(cacheKey + "list");
-            }
-            else
-            {
-                var forms = GetDataPrivilege("u");
-                list = forms.ToList();
-            }
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                //此处需修改
-                list = list.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword)).ToList();
-            }
-            return GetFieldsFilterData(list.OrderByDescending(t => t.F_CreatorTime).ToList());
-        }
-
-        public async Task<List<UploadfileEntity>> GetLookList(Pagination pagination,string keyword = "")
-        {
-            //获取数据权限
-            var list = GetDataPrivilege("u");
+            var list = GetDataPrivilege("u","", GetQuery());
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
                 list = list.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
-            return GetFieldsFilterData(await repository.OrderList(list, pagination));
+            var data = GetFieldsFilterData(list.OrderByDesc(t => t.F_CreatorTime).ToList());
+            foreach (var item in data)
+            {
+                string[] departments = item.F_OrganizeId.Split(',');
+                item.F_OrganizeName = string.Join(',', uniwork.IQueryable<OrganizeEntity>(a => departments.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
+            }
+            return data;
         }
 
+        public async Task<List<UploadfileEntity>> GetLookList(Pagination pagination,string keyword = "")
+        {
+            //获取数据权限
+            var list = GetDataPrivilege("u","", GetQuery());
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                //此处需修改
+                list = list.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
+            }
+            var data = GetFieldsFilterData(await repository.OrderList(list, pagination));
+            var orgs = uniwork.IQueryable<OrganizeEntity>().ToList();
+            foreach (var item in data)
+            {
+                string[] departments = item.F_OrganizeId.Split(',');
+                item.F_OrganizeName = string.Join(',', orgs.Where(a => departments.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
+            }
+            return data;
+        }
+        private IQuery<UploadfileEntity> GetQuery()
+        {
+            var query = repository.IQueryable()
+                .LeftJoin<UserEntity>((a, b) => a.F_CreatorUserId == b.F_Id)
+                .Select((a, b) => new UploadfileEntity
+                {
+                    F_Id = a.F_Id,
+                    F_CreatorUserName=b.F_RealName,
+                    F_CreatorTime = a.F_CreatorTime,
+                    F_CreatorUserId = a.F_CreatorUserId,
+                    F_Description = a.F_Description,
+                    F_EnabledMark = a.F_EnabledMark,
+                    F_FileExtension=a.F_FileExtension,
+                    F_FileBy=a.F_FileBy,
+                    F_FileName=a.F_FileName,
+                    F_FilePath=a.F_FilePath,
+                    F_FileSize=a.F_FileSize,
+                    F_FileType=a.F_FileType,
+                    F_OrganizeId=a.F_OrganizeId,    
+                });
+            return query;
+        }
         public async Task<UploadfileEntity> GetForm(string keyValue)
         {
             var cachedata = await repository.CheckCache(cacheKey, keyValue);

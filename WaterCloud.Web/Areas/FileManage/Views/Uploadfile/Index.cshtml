@@ -61,10 +61,7 @@
                  { field: 'F_FileExtension', title: '文件扩展名', width: 120, sort: true, hide: true },
                  { field: 'F_FileBy', title: '文件所属', width: 120, sort: true },
                  {
-                     field: 'F_OrganizeId', title: '所属部门', width: 120, sort: true,
-                     templet: function (d) {
-                         return top.clients.organize[d.F_OrganizeId] == null ? "" : top.clients.organize[d.F_OrganizeId].fullname;
-                     }
+                     field: 'F_OrganizeName', title: '所属部门', width: 120, sort: true
                  },
                  {
                      field: 'F_EnabledMark', title: '状态', width: 80,

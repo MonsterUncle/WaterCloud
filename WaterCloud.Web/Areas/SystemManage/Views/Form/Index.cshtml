@@ -53,10 +53,7 @@
                  { field: 'F_ContentData', title: '表单中的字段数据', width: 200, sort: true },
                  { field: 'F_DbName', title: '关联数据表', width: 120, sort: true },
                  {
-                     field: 'F_OrganizeId', title: '所属部门', width: 120, sort: true,
-                     templet: function (d) {
-                         return !d.F_OrganizeId ? "" : top.clients.organize[d.F_OrganizeId].fullname;
-                     }
+                     field: 'F_OrganizeName', title: '所属部门', width: 120, sort: true
                  },
                  {
                      field: 'F_EnabledMark', title: '状态', width: 80,

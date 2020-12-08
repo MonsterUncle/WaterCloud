@@ -425,6 +425,7 @@ namespace WaterCloud.CodeGenerator
             else
             {
                 sb.AppendLine("        [HandlerAjaxOnly]");
+                sb.AppendLine("        [IgnoreAntiforgeryToken]");             
                 sb.AppendLine("        public async Task<ActionResult> GetGridJson(SoulPage<" + baseConfigModel.FileConfig.EntityName + "> pagination, string keyword)");
                 sb.AppendLine("        {");
                 sb.AppendLine("            if (string.IsNullOrEmpty(pagination.field))");

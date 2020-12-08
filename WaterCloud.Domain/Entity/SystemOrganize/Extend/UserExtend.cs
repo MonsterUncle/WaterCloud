@@ -6,10 +6,10 @@ namespace WaterCloud.Domain.SystemOrganize
     /// <summary>
     /// 创 建：超级管理员
     /// 日 期：2020-08-06 08:54
-    /// 描 述：角色类别实体扩展类
+    /// 描 述：用户实体扩展类
     /// </summary>
-    [TableAttribute("sys_role")]
-    public class RoleExtend : RoleEntity
+    [TableAttribute("sys_user")]
+    public class UserExtend : UserEntity
     {
         //使用导入错误信息
         public string ErrorMsg { get; set; }
@@ -18,6 +18,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// </summary>
         /// <returns></returns>
         public string F_Remark { get; set; }
+        public string F_DutyName { get; set; }
         public string F_CompanyName { get; set; }
     }
 }

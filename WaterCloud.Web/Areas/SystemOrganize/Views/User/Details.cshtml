@@ -25,9 +25,9 @@
                 text: "F_CompanyName"
             });
             $("#F_DutyId").bindSelect({
-                data: top.clients.duty,
-                id: "encode",
-                text: "fullname",
+                url: "/SystemOrganize/Duty/GetListJson",
+                id: "F_Id",
+                text: "F_FullName"
             });
         }
         $(function () {

@@ -40,7 +40,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             return cachedata.OrderBy(t => t.F_SortCode).ToList();
         }
-        public async Task<List<RoleEntity>> GetLookList(SoulPage<RoleEntity> pagination, string keyword = "")
+        public async Task<List<RoleExtend>> GetLookList(SoulPage<RoleExtend> pagination, string keyword = "")
         {
             //反格式化显示只能用"等于"，其他不支持
             Dictionary<string, Dictionary<string, string>> dic = new Dictionary<string, Dictionary<string, string>>();
@@ -56,8 +56,9 @@ namespace WaterCloud.Service.SystemOrganize
             }
             dic.Add("F_OrganizeId", orgizeTemp);
             pagination = ChangeSoulData(dic, pagination);
+            var query= GetQuery();
             //获取数据权限
-            var list = GetDataPrivilege("u");
+            var list = GetDataPrivilege("u","", query);
             if (!string.IsNullOrEmpty(keyword))
             {
                 list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
@@ -74,6 +75,27 @@ namespace WaterCloud.Service.SystemOrganize
         {
             var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return cachedata;
+        }
+        private IQuery<RoleExtend> GetQuery()
+        {
+            var query = repository.IQueryable(u => u.F_DeleteMark == false && u.F_Category == 2)
+                .LeftJoin<SystemSetEntity>((a,b)=>a.F_OrganizeId==b.F_Id)
+                .Select((a,b)=>new RoleExtend
+                {
+                    F_Id = a.F_Id,
+                    F_AllowDelete = a.F_AllowDelete,
+                    F_AllowEdit = a.F_AllowEdit,
+                    F_Category = a.F_Category,
+                    F_CompanyName = b.F_CompanyName,
+                    F_CreatorTime = a.F_CreatorTime,
+                    F_CreatorUserId = a.F_CreatorUserId,
+                    F_Description = a.F_Description,
+                    F_DeleteMark = a.F_DeleteMark,
+                    F_EnabledMark = a.F_EnabledMark,
+                    F_EnCode = a.F_EnCode,
+                    F_FullName = a.F_FullName,
+                });
+            return query;
         }
         public async Task DeleteForm(string keyValue)
         {
