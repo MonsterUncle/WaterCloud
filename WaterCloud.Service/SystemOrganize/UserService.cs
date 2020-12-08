@@ -92,7 +92,7 @@ namespace WaterCloud.Service.SystemOrganize
                     F_DingTalkUserId=a.F_DingTalkUserId,
                     F_DingTalkUserName=a.F_DingTalkUserName,
                     F_DutyId=a.F_DutyId,
-                    F_DutyName=b.F_Description,
+                    F_DutyName=b.F_FullName,
                     F_Email=a.F_Email,
                     F_EnabledMark=a.F_EnabledMark,
                     F_Gender=a.F_Gender,
