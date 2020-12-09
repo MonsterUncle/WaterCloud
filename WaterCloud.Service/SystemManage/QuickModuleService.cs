@@ -135,17 +135,20 @@ namespace WaterCloud.Service.SystemManage
         public async Task SubmitForm(string[] permissionIds)
         {
             List<QuickModuleEntity> list = new List<QuickModuleEntity>();
-            foreach (var itemId in permissionIds)
+            if (permissionIds != null)
             {
-                QuickModuleEntity entity = new QuickModuleEntity();
-                entity.Create();
-                entity.F_ModuleId = itemId;
-                entity.F_EnabledMark = true;
-                entity.F_DeleteMark = false;
-                list.Add(entity);
+                foreach (var itemId in permissionIds)
+                {
+                    QuickModuleEntity entity = new QuickModuleEntity();
+                    entity.Create();
+                    entity.F_ModuleId = itemId;
+                    entity.F_EnabledMark = true;
+                    entity.F_DeleteMark = false;
+                    list.Add(entity);
+                }
             }
             uniwork.BeginTrans();
-            await repository.Delete(t => t.F_CreatorUserId == list[0].F_CreatorUserId);
+            await repository.Delete(t => t.F_CreatorUserId == currentuser.UserId);
             await repository.Insert(list);
             uniwork.Commit();
             var data =await CacheHelper.Get<Dictionary<string, List<QuickModuleExtend>>>(cacheKey + "list");

@@ -33,7 +33,8 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> SubmitForm(string permissionIds)
         {
-            await _moduleService.SubmitForm(permissionIds.Split(','));
+            string[] temp = string.IsNullOrEmpty(permissionIds) ? null : permissionIds.Split(',');
+            await _moduleService.SubmitForm(temp);
             return Content(new AjaxResult { state = ResultType.success.ToString(), message = "操作成功" }.ToJson());
         }
     }
