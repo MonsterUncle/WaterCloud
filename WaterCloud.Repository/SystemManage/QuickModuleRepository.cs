@@ -10,11 +10,8 @@
 using WaterCloud.DataBase;
 using WaterCloud.Entity.SystemManage;
 using WaterCloud.Domain.IRepository.SystemManage;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WaterCloud.Code;
 
 namespace WaterCloud.Repository.SystemManage
 {
@@ -122,7 +119,7 @@ namespace WaterCloud.Repository.SystemManage
         {
             using (var db =new RepositoryBase(ConnectStr, providerName).BeginTrans())
             {
-                db.Delete<QuickModuleEntity>(t => t.F_CreatorUserId == list[0].F_CreatorUserId);
+                db.Delete<QuickModuleEntity>(t => t.F_CreatorUserId == OperatorProvider.Provider.GetCurrent().UserId);
                 db.Insert(list);
                 db.Commit();
             }
