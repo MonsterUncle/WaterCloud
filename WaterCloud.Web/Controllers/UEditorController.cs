@@ -13,6 +13,7 @@ namespace WaterCloud.Web.Controllers
         }
 
         [ServiceFilter(typeof(HandlerLoginAttribute))]
+        [IgnoreAntiforgeryToken]
         public void Do()
         {
             ue.DoAction(HttpContext);
