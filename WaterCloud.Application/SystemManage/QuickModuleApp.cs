@@ -20,7 +20,7 @@ namespace WaterCloud.Application.SystemManage
     {
 		private IQuickModuleRepository service = new QuickModuleRepository();
         /// <summary>
-        /// »º´æ²Ù×÷Àà
+        /// 
         /// </summary>
         private ICache redisCache = CacheFactory.CaChe();
         private string cacheKey = "watercloud_quickmoduledata_";
@@ -38,14 +38,17 @@ namespace WaterCloud.Application.SystemManage
         public void SubmitForm(string[] permissionIds)
         {
             List<QuickModuleEntity> list = new List<QuickModuleEntity>();
-            foreach (var itemId in permissionIds)
+            if (permissionIds != null)
             {
-                QuickModuleEntity entity = new QuickModuleEntity();
-                entity.Create();
-                entity.F_ModuleId = itemId;
-                entity.F_EnabledMark = true;
-                entity.F_DeleteMark = false;
-                list.Add(entity);
+                foreach (var itemId in permissionIds)
+                {
+                    QuickModuleEntity entity = new QuickModuleEntity();
+                    entity.Create();
+                    entity.F_ModuleId = itemId;
+                    entity.F_EnabledMark = true;
+                    entity.F_DeleteMark = false;
+                    list.Add(entity);
+                }
             }
             service.SubmitForm(list);
             var data = redisCache.Read<Dictionary<string, List<QuickModuleExtend>>>(cacheKey + "list", CacheId.module);
