@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UEditor.Core\UEditor.Core.csproj" />
     <ProjectReference Include="..\WaterCloud.CodeGenerator\WaterCloud.CodeGenerator.csproj" />
     <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj" />
     <ProjectReference Include="..\WaterCloud.Service\WaterCloud.Service.csproj" />

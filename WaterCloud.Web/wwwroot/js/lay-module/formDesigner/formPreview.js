@@ -552,7 +552,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     _html += '<input class="layui-hide" hidden type="text" id="{0}" lay-verify="{2}" name="{0}" value="{1}">'.format(json.id, json.defaultValue ? json.defaultValue : '', json.required ? 'required' : '');
                     _html += '<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;width: 88%">预览图：';
                     _html += '<div class="layui-upload-list uploader-list" style="overflow: auto;" id="uploader-list-{0}">'.format(json.id);
-                    _html += '<div class="file-iteme"><img class="layui-upload-img" src="{0}"><div class="info"></div>{1}</div>'.format(json.defaultValue ? document.location.origin + "/file/" + json.defaultValue : "", json.defaultValue ? json.defaultValue:"");
+                    _html += '<div class="file-iteme"><img class="layui-upload-img" src="{0}"><div class="info"></div>{1}</div>'.format(json.defaultValue ? document.location.origin + json.defaultValue : "", json.defaultValue ? json.defaultValue:"");
                     _html += '<p id="{0}"></p>'.format(json.id+"_text");                    
                     _html += '</div>';
                     _html += '</blockquote>';
@@ -822,7 +822,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                                 common.modalMsg(res.msg, "warning");
                                 return false;
                             }
-                            $('#' + item.id).val(res.data.src);
+                            $('#' + item.id).val(res.data[0].src);
                             layer.close(layer.msg());//关闭上传提示窗口
                             //上传完毕
                             $('#uploader-list-' + item.id).html(

@@ -92,7 +92,7 @@
                     common.modalMsg(res.msg, "warning");
                     return false;
                 }
-                $('#F_Attachment').val(res.data.src);
+                $('#F_Attachment').val(res.data[0].src);
             }
             , error: function () {
                 //演示失败状态，并实现重传

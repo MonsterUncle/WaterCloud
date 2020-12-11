@@ -66,6 +66,15 @@
                 //此处需修改
                 { field: 'F_CategoryName', title: '新闻类别', width: 120 },
                 { field: 'F_Title', title: '标题', width: 160 },
+                {
+                    field: ' F_ImgUrl ', title: '封面', width: 60,
+                    templet: function (d) {
+                        var value = d.F_ImgUrl;
+                        if (!!value) {
+                            return '<img src="' + value + '" style="height: 25px; width: 25px; line- height: 25 px!important;" onclick="previewImg(this)">'
+                        }
+                    }
+                },
                 { field: 'F_Zhaiyao', title: '摘要', minWidth: 220 },
                 { field: 'F_SortCode', title: '排序', width: 80 },
                 {
@@ -161,7 +170,7 @@
                     else {
                         $('[name="NF-edit"]').removeClass("layui-hide");
                         $('[name="NF-details"]').removeClass("layui-hide");
-                        $('[name="NF-delete"]').addClass("layui-hide");
+                        $('[name="NF-delete"]').removeClass("layui-hide");
                     }
                 }
                 else {
@@ -179,7 +188,7 @@
                 else if (data.length == 1) {
                     $('[name="NF-edit"]').removeClass("layui-hide");
                     $('[name="NF-details"]').removeClass("layui-hide");
-                    $('[name="NF-delete"]').addClass("layui-hide");
+                    $('[name="NF-delete"]').removeClass("layui-hide");
                 }
                 else {
                     $('[name="NF-edit"]').addClass("layui-hide");
@@ -280,4 +289,27 @@
             return false;
         });
     });
+    function previewImg(obj) {
+        var img = new Image();
+        img.src = obj.src;
+        var height = img.height + 50; //获取图片高度
+        var width = img.width; //获取图片宽度
+        if (height > 400) { height = 600; };
+        if (width > 400) { width = 600; };
+        var imgHtml = "<img src='" + obj.src + "' />";
+        //弹出层
+        layer.open({
+            type: 1,
+            shade: 0.8,
+            offset: 'auto',
+            area: [width + 'px', height + 'px'],
+            shadeClose: true,//点击外围关闭弹窗
+            scrollbar: false,//不现实滚动条
+            title: "图片预览", //不显示标题
+            content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+            cancel: function () {
+                //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });
+            }
+        });
+    }
 </script>

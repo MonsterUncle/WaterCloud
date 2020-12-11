@@ -763,7 +763,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                    else {");
             sb.AppendLine("                        $('[name=\"NF-edit\"]').removeClass(\"layui-hide\");");
             sb.AppendLine("                        $('[name=\"NF-details\"]').removeClass(\"layui-hide\");");
-            sb.AppendLine("                        $('[name=\"NF-delete\"]').addClass(\"layui-hide\");");
+            sb.AppendLine("                        $('[name=\"NF-delete\"]').removeClass(\"layui-hide\");");
             sb.AppendLine("                    }");
             sb.AppendLine("                }");
             sb.AppendLine("                else {");
@@ -781,7 +781,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("                else if (data.length == 1) {");
             sb.AppendLine("                    $('[name=\"NF-edit\"]').removeClass(\"layui-hide\");");
             sb.AppendLine("                    $('[name=\"NF-details\"]').removeClass(\"layui-hide\");");
-            sb.AppendLine("                    $('[name=\"NF-delete\"]').addClass(\"layui-hide\");");
+            sb.AppendLine("                    $('[name=\"NF-delete\"]').removeClass(\"layui-hide\");");
             sb.AppendLine("                }");
             sb.AppendLine("                else {");
             sb.AppendLine("                    $('[name=\"NF-edit\"]').addClass(\"layui-hide\");");

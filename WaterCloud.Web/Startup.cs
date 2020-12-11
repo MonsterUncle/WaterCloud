@@ -13,7 +13,6 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Newtonsoft.Json.Serialization;
 using WaterCloud.Service.AutoJob;
-using UEditor.Core;
 using Microsoft.Extensions.FileProviders;
 using WaterCloud.DataBase;
 using System.Reflection;
@@ -90,8 +89,6 @@ namespace WaterCloud.Web
                 //服务端发保持连接请求到客户端间隔，默认15秒，改成2分钟，网页需跟着设置connection.serverTimeoutInMilliseconds = 24e4;即4分钟
                 options.KeepAliveInterval = TimeSpan.FromMinutes(2);
             });
-            //百度UEditor
-            services.AddUEditorService();
             ////注册html解析
             //services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
             ////注册特性
@@ -184,20 +181,20 @@ namespace WaterCloud.Web
         {
             //由于.Net Core默认只会从wwwroot目录加载静态文件，其他文件夹的静态文件无法正常访问。
             //而我们希望将图片上传到网站根目录的upload文件夹下，所以需要额外在Startup.cs类的Configure方法中
-            string resource = Path.Combine(Directory.GetCurrentDirectory(), "upload");
-            if (!FileHelper.IsExistDirectory(resource))
-            {
-                FileHelper.CreateFolder(resource);
-            }
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(resource),
-                RequestPath = "/upload",
-                OnPrepareResponse = ctx =>
-                {
-                    ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=36000");
-                }
-            });
+            //string resource = Path.Combine(Directory.GetCurrentDirectory(), "upload");
+            //if (!FileHelper.IsExistDirectory(resource))
+            //{
+            //    FileHelper.CreateFolder(resource);
+            //}
+            //app.UseStaticFiles(new StaticFileOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(resource),
+            //    RequestPath = "/upload",
+            //    OnPrepareResponse = ctx =>
+            //    {
+            //        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=36000");
+            //    }
+            //});
             //虚拟目录 
             //如需使用，所有URL修改，例："/Home/Index"改成'@Url.Content("~/Home/Index")'，部署访问首页必须带虚拟目录;
             //if (!string.IsNullOrEmpty(GlobalContext.SystemConfig.VirtualDirectory))

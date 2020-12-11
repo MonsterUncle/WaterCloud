@@ -31,7 +31,7 @@
                 success: function (data) {
                     common.val('adminform', data);
                     $('#F_EndTime').val(new Date(data.F_EndTime).Format("yyyy-MM-dd"));
-                    $('#demo1').attr('src', document.location.origin + "/icon/" + data.F_Logo); //图片链接
+                    $('#demo1').attr('src', data.F_Logo); //图片链接
                     common.setReadOnly('adminform');
                 }
             });

@@ -5746,7 +5746,7 @@ DISABLE ROW MOVEMENT
 -- ----------------------------
 -- Records of sys_systemset
 -- ----------------------------
-INSERT INTO "sys_systemset" VALUES ('158ce05057df1366cc6ed6843d490cac', 'favicon.ico', '水之云', '水之云', '水之云', 'admin', '0000', '0', '1', NULL, TO_TIMESTAMP('2020-06-12 16:30:00.000000', 'SYYYY-MM-DD HH24:MI:SS:FF6'), '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', TO_TIMESTAMP('2020-07-28 07:54:56.144295', 'SYYYY-MM-DD HH24:MI:SS:FF6'), '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '15298385199', 'Mr.Yu', TO_TIMESTAMP('2032-06-26 00:00:00.000000', 'SYYYY-MM-DD HH24:MI:SS:FF6'), 'Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=localjlyy)));Persist Security Info=True;User ID=system;Password=localjlyy;', 'Oracle.ManagedDataAccess.Client', 'www.jlyy.com.cn');
+INSERT INTO "sys_systemset" VALUES ('158ce05057df1366cc6ed6843d490cac', '/icon/favicon.ico', '水之云', '水之云', '水之云', 'admin', '0000', '0', '1', NULL, TO_TIMESTAMP('2020-06-12 16:30:00.000000', 'SYYYY-MM-DD HH24:MI:SS:FF6'), '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', TO_TIMESTAMP('2020-07-28 07:54:56.144295', 'SYYYY-MM-DD HH24:MI:SS:FF6'), '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '15298385199', 'Mr.Yu', TO_TIMESTAMP('2032-06-26 00:00:00.000000', 'SYYYY-MM-DD HH24:MI:SS:FF6'), 'Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=localjlyy)));Persist Security Info=True;User ID=system;Password=localjlyy;', 'Oracle.ManagedDataAccess.Client', 'www.jlyy.com.cn');
 COMMIT;
 COMMIT;
 

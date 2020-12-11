@@ -254,7 +254,7 @@ namespace WaterCloud.Web.Controllers
             var systemset =await _setService.GetForm(currentuser.CompanyId);
             //修改主页及logo参数
             init.logoInfo.title = systemset.F_LogoCode;
-            init.logoInfo.image = "../icon/"+systemset.F_Logo;
+            init.logoInfo.image = ".."+systemset.F_Logo;
             init.menuInfo = new List<MenuInfoEntity>();
             init.menuInfo = ToMenuJsonNew(await _roleAuthorizeService.GetMenuList(roleId), "0");
             sbJson.Append(init.ToJson());
