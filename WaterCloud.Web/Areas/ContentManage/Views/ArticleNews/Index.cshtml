@@ -69,9 +69,12 @@
                 {
                     field: ' F_ImgUrl ', title: '封面', width: 60,
                     templet: function (d) {
-                        var value = d.F_ImgUrl;
-                        if (!!value) {
-                            return '<img src="' + value + '" style="height: 25px; width: 25px; line- height: 25 px!important;" onclick="previewImg(this)">'
+                        if (!!d.F_ImgUrl) {
+                            return '<img src="' + d.F_ImgUrl + '" style="height: 25px; width: 25px; line- height: 25 px!important;" onclick="previewImg(this)">'
+
+                        }
+                        else {
+                            return '';
                         }
                     }
                 },
@@ -294,9 +297,9 @@
         img.src = obj.src;
         var height = img.height + 50; //获取图片高度
         var width = img.width; //获取图片宽度
-        if (height > 400) { height = 600; };
-        if (width > 400) { width = 600; };
-        var imgHtml = "<img src='" + obj.src + "' />";
+        if (height > 400) { height = 500; };
+        if (width > 400) { width = 500; };
+        var imgHtml = "<img src='" + obj.src + "' style=\"height: 457px; width: 500px; line-height: 25px!important;\"/>";
         //弹出层
         layer.open({
             type: 1,
