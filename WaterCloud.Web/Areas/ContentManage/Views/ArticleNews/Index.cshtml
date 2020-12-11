@@ -31,17 +31,17 @@
         </fieldset>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
-                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
-                <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
-                <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
-                <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+                <button id="NF-add" name="NF-add" authorize class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
+                <button id="NF-edit" name="NF-edit" authorize class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                <button id="NF-delete" name="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                <button id="NF-details" name="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
             </div>
         </script>
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
         <script type="text/html" id="currentTableBar">
-            <a id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm" lay-event="edit">修改</a>
-            <a id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete">删除</a>
-            <a id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details">查看</a>
+            <a id="NF-edit" authorize class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
+            <a id="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"><i class="layui-icon">&#xe640;</i></a>
+            <a id="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"><i class="layui-icon">&#xe60b;</i></a>
         </script>
     </div>
 </div>
@@ -62,11 +62,11 @@
             id: 'currentTableId',
             url: '/ContentManage/ArticleNews/GetGridJson',
             cols: [[
-                { type: "checkbox", width: 50, fixed: 'left' },
+                { type: "checkbox", width: 50 },
                 //此处需修改
                 { field: 'F_CategoryName', title: '新闻类别', width: 120 },
                 { field: 'F_Title', title: '标题', width: 160 },
-                { field: 'F_Zhaiyao', title: '摘要', width: 220 },
+                { field: 'F_Zhaiyao', title: '摘要', minWidth: 220 },
                 { field: 'F_SortCode', title: '排序', width: 80 },
                 {
                     field: 'F_IsTop', title: '置顶', width: 80,
@@ -92,7 +92,7 @@
                 { field: 'F_Source', title: '来源', width: 120 },
                 { field: 'F_Author', title: '作者', width: 120 },
                 {
-                    field: 'F_CreatorTime', title: '创建时间', width: 100,
+                    field: 'F_CreatorTime', title: '创建时间', width: 160,
                     templet: function (d) {
                         if (d.F_CreatorTime) {
                             var time = new Date(d.F_CreatorTime);
@@ -102,7 +102,7 @@
                     }
                 },
                 { field: 'F_CreatorUserId', title: '创建人', width: 120, hide: true },
-                { title: '操作', minWidth: 180, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
+                { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center" }
             ]]
         });
         $(function () {
@@ -146,6 +146,47 @@
         //对td的单击事件进行拦截停止，防止事件冒泡再次触发上述的单击事件（Table的单击行事件不会拦截，依然有效）
         $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox", function (e) {
             e.stopPropagation();
+        });
+        //多选框监听
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            //控制按钮
+            var data = table.checkStatus('currentTableId').data;
+            if (obj.type == "all") {
+                if (obj.checked && table.cache.currentTableId.length != 0) {
+                    if (table.cache.currentTableId.length > 1) {
+                        $('[name="NF-edit"]').addClass("layui-hide");
+                        $('[name="NF-details"]').addClass("layui-hide");
+                        $('[name="NF-delete"]').removeClass("layui-hide");
+                    }
+                    else {
+                        $('[name="NF-edit"]').removeClass("layui-hide");
+                        $('[name="NF-details"]').removeClass("layui-hide");
+                        $('[name="NF-delete"]').addClass("layui-hide");
+                    }
+                }
+                else {
+                    $('[name="NF-edit"]').addClass("layui-hide");
+                    $('[name="NF-details"]').addClass("layui-hide");
+                    $('[name="NF-delete"]').addClass("layui-hide");
+                }
+            }
+            else {
+                if (data.length > 1) {
+                    $('[name="NF-edit"]').addClass("layui-hide");
+                    $('[name="NF-details"]').addClass("layui-hide");
+                    $('[name="NF-delete"]').removeClass("layui-hide");
+                }
+                else if (data.length == 1) {
+                    $('[name="NF-edit"]').removeClass("layui-hide");
+                    $('[name="NF-details"]').removeClass("layui-hide");
+                    $('[name="NF-delete"]').addClass("layui-hide");
+                }
+                else {
+                    $('[name="NF-edit"]').addClass("layui-hide");
+                    $('[name="NF-details"]').addClass("layui-hide");
+                    $('[name="NF-delete"]').addClass("layui-hide");
+                }
+            }
         });
         //toolbar监听事件
         table.on('toolbar(currentTableFilter)', function (obj) {

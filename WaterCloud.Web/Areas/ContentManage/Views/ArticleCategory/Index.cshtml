@@ -23,17 +23,17 @@
          </fieldset>
          <script type="text/html" id="toolbarDemo">
              <div class="layui-btn-container">
-                 <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
-                 <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
-                 <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
-                 <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+                 <button id="NF-add" name="NF-add" authorize class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
+                 <button id="NF-edit" name="NF-edit" authorize class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                 <button id="NF-delete" name="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                 <button id="NF-details" name="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
              </div>
          </script>
          <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
          <script type="text/html" id="currentTableBar">
-             <a id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm" lay-event="edit">修改</a>
-             <a id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete">删除</a>
-             <a id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details">查看</a>
+             <a id="NF-edit" authorize class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
+             <a id="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"><i class="layui-icon">&#xe640;</i></a>
+             <a id="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"><i class="layui-icon">&#xe60b;</i></a>
          </script>
      </div>
  </div>
@@ -60,11 +60,11 @@
                  getIcon: 'ew-tree-icon-style2',
              },
              cols: [[
-                 { type: "checkbox", width: 50 },                 
+                 { type: "checkbox", width: 50 },
                  //此处需修改
                  { field: 'F_FullName', title: '类别名称', width: 200 },
                  { field: 'F_SortCode', title: '排序', width: 80 },
-                 { field: 'F_Description', title: '描述', width: 220 },
+                 { field: 'F_Description', title: '描述', minWidth: 220 },
                  {
                      field: 'F_EnabledMark', title: '状态', width: 80,
                      templet: function (d) {
@@ -74,7 +74,7 @@
                              return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                          }
                      }
-                 }, 
+                 },
                  {
                      field: 'F_CreatorTime', title: '创建时间', minWidth: 100,
                      templet: function (d) {
@@ -86,7 +86,7 @@
                      }
                  },
                  { field: 'F_CreatorUserId', title: '创建人', width: 120, hide: true },
-                 { title: '操作', minWidth: 180, toolbar: '#currentTableBar', align: "center", fixed: 'right' }//插件没有fixed参数
+                 { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center", fixed: 'right' }//插件没有fixed参数
              ]],
              done: function () {
                  //展开全部
@@ -100,6 +100,46 @@
                  where: { keyword: queryJson },
              });
              return false;
+         });
+         treeTable.on('checkbox(currentTableId)', function (obj) {
+             //控制按钮
+             var data = rendertree.checkStatus(false);
+             if (obj.type=="all") {
+                 if (obj.checked && rendertree.options.data.length!=0) {
+                     if (rendertree.options.data.length>1) {
+                         $('[name="NF-edit"]').addClass("layui-hide");
+                         $('[name="NF-details"]').addClass("layui-hide");
+                         $('[name="NF-delete"]').removeClass("layui-hide");
+                     }
+                     else {
+                         $('[name="NF-edit"]').removeClass("layui-hide");
+                         $('[name="NF-details"]').removeClass("layui-hide");
+                         $('[name="NF-delete"]').addClass("layui-hide");
+                     }
+                 }
+                 else {
+                     $('[name="NF-edit"]').addClass("layui-hide");
+                     $('[name="NF-details"]').addClass("layui-hide");
+                     $('[name="NF-delete"]').addClass("layui-hide");
+                 }
+             }
+             else {
+                 if (data.length > 1) {
+                     $('[name="NF-edit"]').addClass("layui-hide");
+                     $('[name="NF-details"]').addClass("layui-hide");
+                     $('[name="NF-delete"]').removeClass("layui-hide");
+                 }
+                 else if (data.length == 1) {
+                     $('[name="NF-edit"]').removeClass("layui-hide");
+                     $('[name="NF-details"]').removeClass("layui-hide");
+                     $('[name="NF-delete"]').addClass("layui-hide");
+                 }
+                 else {
+                     $('[name="NF-edit"]').addClass("layui-hide");
+                     $('[name="NF-details"]').addClass("layui-hide");
+                     $('[name="NF-delete"]').addClass("layui-hide");
+                 }
+             }
          });
          treeTable.on('row(currentTableId)', function (obj) {
              obj.tr.find("div.layui-unselect.layui-form-checkbox")[0].click();

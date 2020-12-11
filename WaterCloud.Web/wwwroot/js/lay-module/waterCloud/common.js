@@ -522,7 +522,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             readForm.find('input,textarea,select').removeAttr('lay-verify');
             readForm.find('.layui-layedit iframe').contents().find('body').prop('contenteditable', false);
         },
-        //按钮权限(控制js模板)
+        //按钮权限(控制js模板,格式必须严格,新)
         authorizeButtonNew: function (innerHTML) {
             //行操作权限控制
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
@@ -584,10 +584,11 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     }
                 }
             }
-            returnhtml = returnhtml.replace(/ layui-hide/g, '');
+            //去除隐藏
+            //returnhtml = returnhtml.replace(/ layui-hide/g, '');
             return returnhtml;
         },
-        //权限按钮(控制dom)
+        //权限按钮(控制dom,只控制button,旧)
         authorizeButton: function (id) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
             //没有就全清
@@ -604,7 +605,8 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             if (dataJson != undefined) {
                 $.each(dataJson, function (i) {
                     $element.find("#" + dataJson[i].F_EnCode).attr('authorize', 'yes');
-                    $element.find("#" + dataJson[i].F_EnCode).removeClass('layui-hide');
+                    //去除隐藏
+                    //$element.find("#" + dataJson[i].F_EnCode).removeClass('layui-hide');
                 });
             }
             $element.find("[authorize=no]").parents('button').prev('.split').remove();
