@@ -315,9 +315,9 @@
             img.src = obj.src;
             var height = img.height + 50; //获取图片高度
             var width = img.width; //获取图片宽度
-            if (height > 400) { height = 600; };
-            if (width > 400) { width = 600; };
-            var imgHtml = "<img src='" + obj.src + "' style=\"height: 457px; width: 500px; line-height: 25px!important;\"/>";
+            if (height > 500) { height = 500; };
+            if (width > 500) { width = 500; };
+            var imgHtml = "<img src='" + obj.src + "' style=\"height: " + (height - 43) + "px; width: " + width + "px; line-height: 25px!important;\"/>";
             //弹出层
             layer.open({
                 type: 1,
