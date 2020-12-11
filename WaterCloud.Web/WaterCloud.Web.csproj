@@ -13,6 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="upload\**" />
+    <Content Remove="upload\**" />
+    <EmbeddedResource Remove="upload\**" />
+    <None Remove="upload\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="6.0.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="iTextSharp.LGPLv2.Core.Fix" Version="1.4.3" />
@@ -32,7 +39,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\SystemSecurity\Views\ServerMonitoring\" />
-    <Folder Include="upload\" />
     <Folder Include="wwwroot\file\" />
     <Folder Include="wwwroot\js\lay-module\xm-select\" />
   </ItemGroup>
