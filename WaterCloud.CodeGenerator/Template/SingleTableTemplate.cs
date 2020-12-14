@@ -550,17 +550,17 @@ namespace WaterCloud.CodeGenerator
             if (baseConfigModel.PageIndex.ButtonList.Contains("edit"))
             {
                 KeyValue button = list.Where(p => p.Key == "edit").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-warm data-edit-btn\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe642;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe642;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("delete"))
             {
                 KeyValue button = list.Where(p => p.Key == "delete").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-danger data-delete-btn\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe640;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe640;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("details"))
             {
                 KeyValue button = list.Where(p => p.Key == "details").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-normal data-info-btn\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe60b;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe60b;</i>" + button.Description + "</button>");
             }
             sb.AppendLine("             </div>");
             sb.AppendLine("         </script>");
