@@ -68,6 +68,7 @@ namespace WaterCloud.CodeGenerator
             baseConfigModel.PageIndex.IsPagination = 1;
             baseConfigModel.PageIndex.IsFields = 0;
             baseConfigModel.PageIndex.IsPublic = 0;
+            baseConfigModel.PageIndex.IsCache = 0;
             baseConfigModel.PageIndex.ButtonList = new List<string>();
             baseConfigModel.PageIndex.ColumnList = tableFieldList;
             #endregion
@@ -196,8 +197,10 @@ namespace WaterCloud.CodeGenerator
 
             sb.AppendLine("    public class " + baseConfigModel.FileConfig.ServiceName + " : DataFilterService<" + baseConfigModel.FileConfig.EntityName + ">, IDenpendency");
             sb.AppendLine("    {");
-            sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
-
+            if (baseConfigModel.PageIndex.IsCache == 1)
+            {
+                sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
+            }
             sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + "(IDbContext context) : base(context)");
             sb.AppendLine("        {");
             sb.AppendLine("        }");
@@ -205,33 +208,51 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        #region 获取数据");
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetList(string keyword = \"\")");
             sb.AppendLine("        {");
-            sb.AppendLine("            var cachedata = await repository.CheckCacheList(cacheKey + \"list\");");
-            sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
-            sb.AppendLine("            {");
-            sb.AppendLine("                //此处需修改");
-            sb.AppendLine("                cachedata = cachedata.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword)).ToList();");
-            sb.AppendLine("            }");
-            sb.AppendLine($"            return cachedata.Where(t => t.{deleteMarkField} == false).OrderByDescending(t => t.{createTimeField}).ToList();");
+            if (baseConfigModel.PageIndex.IsCache == 0)
+            {
+                sb.AppendLine("            var data = repository.IQueryable();");
+                sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
+                sb.AppendLine("            {");
+                sb.AppendLine("                //此处需修改");
+                sb.AppendLine("                data = data.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));");
+                sb.AppendLine("            }");
+                sb.AppendLine($"            return data.Where(t => t.{deleteMarkField} == false).OrderByDesc(t => t.{createTimeField}).ToList();");
+            }
+            else
+            {
+                sb.AppendLine("            var cachedata = await repository.CheckCacheList(cacheKey + \"list\");");
+                sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
+                sb.AppendLine("            {");
+                sb.AppendLine("                //此处需修改");
+                sb.AppendLine("                cachedata = cachedata.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword)).ToList();");
+                sb.AppendLine("            }");
+                sb.AppendLine($"            return cachedata.Where(t => t.{deleteMarkField} == false).OrderByDescending(t => t.{createTimeField}).ToList();");
+            }
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(string keyword = \"\")");
             sb.AppendLine("        {");
-            sb.AppendLine("            var list =new List<" + baseConfigModel.FileConfig.EntityName + ">();");
-            sb.AppendLine("            if (!CheckDataPrivilege())");
-            sb.AppendLine("            {");
-            sb.AppendLine("                list = await repository.CheckCacheList(cacheKey + \"list\");");
-            sb.AppendLine("            }");
-            sb.AppendLine("            else");
-            sb.AppendLine("            {");
-            sb.AppendLine("                var forms = GetDataPrivilege(\"u\");");
-            sb.AppendLine("                list = forms.ToList();");
-            sb.AppendLine("            }");
-            sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
-            sb.AppendLine("            {");
-            sb.AppendLine("                //此处需修改");
-            sb.AppendLine("                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword)).ToList();");
-            sb.AppendLine("            }");
-            sb.AppendLine($"            return GetFieldsFilterData(list.Where(t => t.{deleteMarkField} == false).OrderByDescending(t => t.{createTimeField}).ToList());");
+            if (baseConfigModel.PageIndex.IsCache == 0)
+            {
+                sb.AppendLine("            var data = repository.IQueryable();");
+                sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
+                sb.AppendLine("            {");
+                sb.AppendLine("                //此处需修改");
+                sb.AppendLine("                data = data.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));");
+                sb.AppendLine("            }");
+                sb.AppendLine($"            return data.Where(t => t.{deleteMarkField} == false).OrderByDesc(t => t.{createTimeField}).ToList();");
+            }
+            else
+            {
+                sb.AppendLine("            var list = GetDataPrivilege(\"u\", \"\", repository.IQueryable());");
+                sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
+                sb.AppendLine("            {");
+                sb.AppendLine("                //此处需修改");
+                sb.AppendLine("                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));");
+                sb.AppendLine("            }");
+                sb.AppendLine($"            return GetFieldsFilterData(list.Where(t => t.{deleteMarkField} == false).OrderByDesc(t => t.{createTimeField}).ToList());");
+
+            }
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(SoulPage<" + baseConfigModel.FileConfig.EntityName + "> pagination,string keyword = \"\"," + idType + " id=\"\")");
@@ -260,15 +281,31 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine();
             sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetForm(string keyValue)");
             sb.AppendLine("        {");
-            sb.AppendLine("            var cachedata = await repository.CheckCache(cacheKey, keyValue);");
-            sb.AppendLine("            return cachedata;");
+            if (baseConfigModel.PageIndex.IsCache == 0)
+            {
+                sb.AppendLine("            var data = repository.FindEntity(keyValue);");
+                sb.AppendLine($"            return data;");
+            }
+            else
+            {
+                sb.AppendLine("            var cachedata = await repository.CheckCache(cacheKey, keyValue);");
+                sb.AppendLine("            return cachedata;");
+            }
             sb.AppendLine("        }");
             sb.AppendLine("        #endregion");
             sb.AppendLine();
             sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetLookForm(object keyValue)");
             sb.AppendLine("        {");
-            sb.AppendLine("            var cachedata = await repository.CheckCache(cacheKey, keyValue);");
-            sb.AppendLine("            return GetFieldsFilterData(cachedata);");
+            if (baseConfigModel.PageIndex.IsCache == 1)
+            {
+                sb.AppendLine("            var cachedata = await repository.CheckCache(cacheKey, keyValue);");
+                sb.AppendLine("            return GetFieldsFilterData(cachedata);");
+            }
+            else
+            {
+                sb.AppendLine("            var data = repository.FindEntity(keyValue);");
+                sb.AppendLine("            return GetFieldsFilterData(data);");
+            }
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        #region 提交数据");
@@ -313,7 +350,10 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                entity.Create();");
             }
             sb.AppendLine("                await repository.Insert(entity);");
-            sb.AppendLine("                await CacheHelper.Remove(cacheKey + \"list\");");
+            if (baseConfigModel.PageIndex.IsCache == 1)
+            {
+                sb.AppendLine("                await CacheHelper.Remove(cacheKey + \"list\");");
+            }
             sb.AppendLine("            }");
             sb.AppendLine("            else");
             sb.AppendLine("            {");
@@ -338,8 +378,11 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                entity.Modify(keyValue); ");
             }
             sb.AppendLine("                await repository.Update(entity);");
-            sb.AppendLine("                await CacheHelper.Remove(cacheKey + keyValue);");
-            sb.AppendLine("                await CacheHelper.Remove(cacheKey + \"list\");");
+            if (baseConfigModel.PageIndex.IsCache == 1)
+            {
+                sb.AppendLine("                await CacheHelper.Remove(cacheKey + keyValue);");
+                sb.AppendLine("                await CacheHelper.Remove(cacheKey + \"list\");");
+            }
             sb.AppendLine("            }");
             sb.AppendLine("        }");
             sb.AppendLine();
@@ -347,11 +390,14 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        {");
             sb.AppendLine("            var ids = keyValue.Split(',');");
             sb.AppendLine("            await repository.Delete(t => ids.Contains(t." + idColumn + ".ToString()));");
-            sb.AppendLine("            foreach (var item in ids)");
-            sb.AppendLine("            {");
-            sb.AppendLine("            await CacheHelper.Remove(cacheKey + item);");
-            sb.AppendLine("            }");
-            sb.AppendLine("            await CacheHelper.Remove(cacheKey + \"list\");");
+            if (baseConfigModel.PageIndex.IsCache == 1)
+            {
+                sb.AppendLine("            foreach (var item in ids)");
+                sb.AppendLine("            {");
+                sb.AppendLine("            await CacheHelper.Remove(cacheKey + item);");
+                sb.AppendLine("            }");
+                sb.AppendLine("            await CacheHelper.Remove(cacheKey + \"list\");");
+            }
             sb.AppendLine("        }");
             sb.AppendLine("        #endregion");
             sb.AppendLine();
@@ -425,7 +471,7 @@ namespace WaterCloud.CodeGenerator
             else
             {
                 sb.AppendLine("        [HandlerAjaxOnly]");
-                sb.AppendLine("        [IgnoreAntiforgeryToken]");             
+                sb.AppendLine("        [IgnoreAntiforgeryToken]");
                 sb.AppendLine("        public async Task<ActionResult> GetGridJson(SoulPage<" + baseConfigModel.FileConfig.EntityName + "> pagination, string keyword)");
                 sb.AppendLine("        {");
                 sb.AppendLine("            if (string.IsNullOrEmpty(pagination.field))");
@@ -876,7 +922,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            if (obj.event === 'delete') {");
             sb.AppendLine("                common.deleteForm({");
             sb.AppendLine("                     url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/DeleteForm\",");
-            sb.AppendLine("                     param: { keyValue: obj.data."+ idColumn + " },");
+            sb.AppendLine("                     param: { keyValue: obj.data." + idColumn + " },");
             sb.AppendLine("                     success: function () {");
             sb.AppendLine("                        obj.del();");
             sb.AppendLine("                   }");
