@@ -19,8 +19,18 @@
             cols: [[
                 { field: 'TableName', title: '表名称', width: 200, sort: true },
                 { field: 'TableKeyName', title: '主键名称', minWidth: 250 },
-                { field: 'TableKey', title: '主键字段', minWidth: 100 },
+                { field: 'TableKey', title: '主键字段', width: 150 },
                 { field: 'TableCount', title: '记录数', width: 80 },
+                {
+                    field: 'CreateTime', title: '创建时间', width: 170,
+                    templet: function (d) {
+                        if (d.CreateTime) {
+                            var time = new Date(d.CreateTime);
+                            return time.Format("yyyy-MM-dd hh:mm:ss");
+                        }
+                        return '';
+                    }
+                },
                 { field: 'Remark', title: '备注', minWidth: 150 },
             ]]
         });

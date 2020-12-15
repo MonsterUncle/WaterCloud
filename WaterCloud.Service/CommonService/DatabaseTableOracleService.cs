@@ -38,7 +38,7 @@ namespace WaterCloud.Service.CommonService
         {
             StringBuilder strSql = new StringBuilder();
             var parameter = new List<DbParam>();
-            strSql.Append(@"select TABLE_NAME TableName from sys.user_tables where table_name not like '%$%' and table_name not like '%LOGMNR%'");
+            strSql.Append(@"select TABLE_NAME TableName,CREATED CreateTime from sys.user_tables where table_name not like '%$%' and table_name not like '%LOGMNR%'");
 
             if (!tableName.IsEmpty())
             {
@@ -48,7 +48,7 @@ namespace WaterCloud.Service.CommonService
 
             IEnumerable<TableInfo> list = await FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
             pagination.records = list.Count();
-            var tempData = list.Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows).AsQueryable().ToList();
+            var tempData = list.OrderByDescending(a => a.CreateTime).Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows).AsQueryable().ToList();
             await SetTableDetail(tempData);
             return tempData;
         }
@@ -100,7 +100,7 @@ namespace WaterCloud.Service.CommonService
         {
 
             //--P-主键；R-外键；U-唯一约束
-            string strSql = @"Select  b.Constraint_Name Id,a.table_name TableName, b.Column_Name TableKey,b.Constraint_Name TableKeyName,0 TableCount
+            string strSql = @"Select  b.Constraint_Name Id,a.table_name TableName, b.Column_Name TableKey,b.Constraint_Name TableKeyName,0 TableCount,a.CREATED CreateTime
                                      From user_Constraints a,user_Cons_Columns b
                                      WHERE a.Constraint_Type = 'P'
                                      and a.Constraint_Name = b.Constraint_Name 　　
@@ -123,6 +123,7 @@ namespace WaterCloud.Service.CommonService
                 table.TableKey = string.Join(",", detailList.Where(p => p.TableName == table.TableName).Select(p => p.TableKey));
                 table.TableKeyName = detailList.Where(p => p.TableName == table.TableName).Select(p => p.TableKeyName).FirstOrDefault();
                 table.TableCount = detailList.Where(p => p.TableName == table.TableName).Select(p => p.TableCount).FirstOrDefault();
+                table.CreateTime = detailList.Where(p => p.TableName == table.TableName).Select(p => p.CreateTime).FirstOrDefault();
             }
         }
         #endregion
