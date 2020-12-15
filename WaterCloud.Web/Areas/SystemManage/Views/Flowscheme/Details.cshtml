@@ -115,6 +115,26 @@
                     },
                 });
                 return;
+            },
+            OpenArea: function (object) {
+                FlowDesignObject = object; //为NodeInfo窗口提供调用
+                top.layer.open({
+                    type: 2,
+                    area: ['450px', '250px'], //宽高
+                    maxmin: true, //开启最大化最小化按钮
+                    title: '区域设置【' + object.name + '】',
+                    content: '/SystemManage/Flowscheme/AreaInfo?Method=' + 'Details',
+                    btn: ['确定', '取消'],
+                    success: function (layero, index) {
+                        //子界面定义一个窗口方法initForm，里面调用common.val给参数赋值
+                        if (layero.find('iframe')[0].contentWindow.initForm) {
+                            var data = {};
+                            data.FlowDesignObject = FlowDesignObject;
+                            layero.find('iframe')[0].contentWindow.initForm(data);
+                        }
+                    }
+                });
+                return;
             }
         });
         /*=========流程设计（end）=====================*/

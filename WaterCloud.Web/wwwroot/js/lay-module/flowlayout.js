@@ -94,7 +94,7 @@
                             break;
                         case "node":
                             if (_node.setInfo == null) {
-                                layer.msg("请设置节点【"+_node.name+"】操作人员");
+                                layer.msg("请设置节点【" + _node.name + "】操作人员");
                                 return -1;
                             }
                             _flag = true;
@@ -137,6 +137,10 @@
             flowPanel.SetLineEx = function (id, data) {
                 flowPanel.setName(id, data.LineName, "line", data);
             }
+            flowPanel.SetAreaEx = function (id, data) {
+                flowPanel.setName(id, data.AreaName, "area", data);
+                flowPanel.setAreaColor(id, data.AreaColor);
+            }
             flowPanel.onItemDbClick = function (id, type) {
                 var obj = flowPanel.getItemInfo(id, type);
                 switch (type) {
@@ -145,6 +149,25 @@
                         break;
                     case "line":
                         options.OpenLine(obj);
+                        break;
+                    case "area":
+                        options.OpenArea(obj);
+                        break;
+                }
+                return false;
+            }
+            flowPanel.onItemRightClick = function (id, type) {
+                var obj = flowPanel.getItemInfo(id, type);
+                switch (type) {
+                    case "node":
+                        options.OpenNode(obj);
+                        break;
+                    case "line":
+                        options.OpenLine(obj);
+                        break;
+                    case "area":
+                        obj.id = id;
+                        options.OpenArea(obj);
                         break;
                 }
                 return false;
@@ -191,7 +214,7 @@
                         }
                         if (item.setInfo != undefined && item.setInfo.Taged != undefined) {
                             var tips = '<div style="text-align:left">';
-                            var tagname = { "1": "通过", "2": "不通过",  "3": "驳回" };
+                            var tagname = { "1": "通过", "2": "不通过", "3": "驳回" };
                             tips += "<p>处理人：" + item.setInfo.UserName + "</p>";
                             tips += "<p>结果：" + tagname[item.setInfo.Taged] + "</p>";
                             tips += "<p>处理时间：" + item.setInfo.TagedTime + "</p>";
@@ -343,7 +366,7 @@
                 //$('.GooFlow_item').popover({ html: true });
             }
 
-           return flowPanel;
+            return flowPanel;
         }
 
         exports('flowlayout');

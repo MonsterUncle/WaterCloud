@@ -326,9 +326,17 @@ var GooFlow = function(selector,property){
         var X,Y;
         var ev=_mouseP(e),t=_elCsys(this);
         X=ev.x-t.left+this.parentNode.scrollLeft;
-        Y=ev.y-t.top+this.parentNode.scrollTop;
-        This.addNode(new Date().getTime().toString(),{name:"node_"+This.$max,left:X,top:Y,type:This.$nowType});
-        This.$max++;
+		Y = ev.y - t.top + this.parentNode.scrollTop;
+		if (This.$nowType == "start round mix") {
+			This.addNode(new Date().getTime().toString(), { name: "开始_" + This.$max, left: X, top: Y, type: This.$nowType });//英文转成中文
+		}
+		else if (This.$nowType == "end round") {
+			This.addNode(new Date().getTime().toString(), { name: "结束_" + This.$max, left: X, top: Y, type: This.$nowType });//英文转成中文
+		}
+		else {
+			This.addNode(new Date().getTime().toString(), { name: "结点_" + This.$max, left: X, top: Y, type: This.$nowType });//英文转成中文
+		}
+		This.$max++;
     });
 
 	this.$draw=null;//画矢量线条的容器
@@ -642,7 +650,7 @@ GooFlow.prototype={
 				Y=ev.y-t.top+this.parentNode.parentNode.scrollTop;
 				var color=["red","yellow","blue","green"];
 				e.data.inthis.addArea(new Date().getTime(),
-					{name:"area_"+e.data.inthis.$max,left:X/This.$scale,top:Y/This.$scale,color:color[e.data.inthis.$max%4],width:200,height:100}
+					{ name: "区域_" + e.data.inthis.$max, left: X / This.$scale, top: Y / This.$scale, color: color[e.data.inthis.$max % 4], width: 200, height: 100 }//英文转成中文
 				);
 				e.data.inthis.$max++;
 				return false;

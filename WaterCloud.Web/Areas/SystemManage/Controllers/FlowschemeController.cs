@@ -30,6 +30,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public virtual ActionResult AreaInfo()
+        {
+            return View();
+        }
         #region 获取数据
         [HttpGet]
         [HandlerAjaxOnly]
