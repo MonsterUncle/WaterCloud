@@ -24,12 +24,17 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<FlowschemeEntity>> GetList(string keyword = "")
         {
             var cachedata = await repository.CheckCacheList(cacheKey + "list");
+
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
                 cachedata = cachedata.Where(t => t.F_SchemeCode.Contains(keyword) || t.F_SchemeName.Contains(keyword)).ToList();
             }
-            return cachedata.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
+            var list = currentuser.DepartmentId.Split(',');
+            if (list.Count() > 0)
+            {
+                return cachedata.Where(t => t.F_DeleteMark == false && (t.F_OrganizeId == "" || t.F_OrganizeId == null || list.Contains(t.F_OrganizeId))).OrderByDescending(t => t.F_CreatorTime).ToList();
+            }
+            return cachedata.Where(t => t.F_DeleteMark == false && t.F_OrganizeId == "" || t.F_OrganizeId == null).OrderByDescending(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<FlowschemeEntity>> GetLookList(string ItemId = "", string keyword = "")

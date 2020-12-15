@@ -32,7 +32,7 @@ namespace WaterCloud.WebApi.Controllers
         /// <param name="localurl">域名</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Login([FromQuery] string userName, [FromQuery] string password, [FromQuery] string localurl)
+        public async Task<AjaxResult> Login([FromQuery] string userName, [FromQuery] string password, [FromQuery] string localurl)
         {
             var apitoken = Utils.GuId();
             if (!string.IsNullOrEmpty(OperatorProvider.Provider.GetToken()))
@@ -83,7 +83,7 @@ namespace WaterCloud.WebApi.Controllers
                 logEntity.F_Result = true;
                 logEntity.F_Description = "登录成功";
                 await _logService.WriteDbLog(logEntity);
-                return Content(new AjaxResult<string> { state = ResultType.success.ToString(), message = "登录成功。",data= apitoken }.ToJson());
+                return new AjaxResult<string> { state = ResultType.success.ToString(), message = "登录成功。",data= apitoken };
             }
             catch (Exception ex)
             {
@@ -92,7 +92,7 @@ namespace WaterCloud.WebApi.Controllers
                 logEntity.F_Result = false;
                 logEntity.F_Description = "登录失败，" + ex.Message;
                 await _logService.WriteDbLog(logEntity);
-                return Content(new AjaxResult<string> { state = ResultType.error.ToString(), message = ex.Message,data= apitoken }.ToJson());
+                return new AjaxResult<string> { state = ResultType.error.ToString(), message = ex.Message,data= apitoken };
             }
         }
         private async Task<bool> CheckIP()
@@ -107,7 +107,7 @@ namespace WaterCloud.WebApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [AuthorizeFilter]
-        public async Task<ActionResult> LoginOff()
+        public async Task<AjaxResult> LoginOff()
         {
             await _logService.WriteDbLog(new LogEntity
             {
@@ -119,7 +119,7 @@ namespace WaterCloud.WebApi.Controllers
                 F_Description = "安全退出系统",
             });
             await OperatorProvider.Provider.EmptyCurrent("api_");
-            return Content(new AjaxResult { state = ResultType.success.ToString() }.ToJson());
+            return new AjaxResult { state = ResultType.success.ToString() };
         }
         #endregion
     }

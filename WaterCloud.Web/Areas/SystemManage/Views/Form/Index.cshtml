@@ -73,10 +73,10 @@
              search: false,
              height: 'full-110',
              cols: [[
-                 { field: 'F_FullName', title: '名称', width: 250 },
-                 { field: 'F_EnCode', title: '编号', width: 180 },
+                 { field: 'F_FullName', title: '部门名称', width: 250 },
+                 { field: 'F_EnCode', title: '部门编号', width: 180 },
                  {
-                     field: 'F_CategoryId', title: '分类', width: 120,
+                     field: 'F_CategoryId', title: '部门分类', width: 120,
                      templet: function (d) {
                          return top.clients.dataItems["OrganizeCategory"][d.F_CategoryId] == null ? "" : top.clients.dataItems["OrganizeCategory"][d.F_CategoryId];
                      }
