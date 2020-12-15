@@ -167,7 +167,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
         [HttpGet]
         [ServiceFilter(typeof(HandlerLoginAttribute))]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
-        public async Task<FileResult> Download(string keyValue)
+        public async Task<ActionResult> Download(string keyValue)
         {
             var data = await _service.GetForm(keyValue);
             string fileValue = "";
@@ -179,10 +179,10 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
             {
                 fileValue = "file";
             }
-            string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + fileValue + $@"/" + data.F_FilePath;
+            string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + data.F_FilePath;
             if (!FileHelper.IsExistFile(filePath))
             {
-                throw new Exception("文件不存在");
+                return Error("文件不存在");
             }
             ///定义并实例化一个内存流，以存放图片的字节数组。
             MemoryStream ms = new MemoryStream();
