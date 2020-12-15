@@ -34,12 +34,15 @@ namespace WaterCloud.Service.SystemManage
             return cachedata.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
         }
 
-        public async Task<List<FormEntity>> GetLookList(string keyword = "")
+        public async Task<List<FormEntity>> GetLookList(string ItemId="", string keyword = "")
         {
             var list = GetDataPrivilege("u", "", GetQuery());
+            if (!string.IsNullOrEmpty(ItemId))
+            {
+                list = list.Where(u => u.F_OrganizeId == ItemId || u.F_OrganizeId == null || u.F_OrganizeId == "");
+            }
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
                 list = list.Where(u => u.F_Name.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList());

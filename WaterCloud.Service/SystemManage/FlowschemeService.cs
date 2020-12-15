@@ -32,24 +32,18 @@ namespace WaterCloud.Service.SystemManage
             return cachedata.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
         }
 
-        public async Task<List<FlowschemeEntity>> GetLookList(string keyword = "")
+        public async Task<List<FlowschemeEntity>> GetLookList(string ItemId = "", string keyword = "")
         {
-            var list =new List<FlowschemeEntity>();
-            if (!CheckDataPrivilege())
+            var list = GetDataPrivilege("u");
+            if (!string.IsNullOrEmpty(ItemId))
             {
-                list = await repository.CheckCacheList(cacheKey + "list");
-            }
-            else
-            {
-                var forms = GetDataPrivilege("u");
-                list = forms.ToList();
+                list = list.Where(u => u.F_OrganizeId == ItemId || u.F_OrganizeId == null || u.F_OrganizeId == "");
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
-                list = list.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword)).ToList();
+                list = list.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword));
             }
-            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList());
+            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList());
         }
 
         public async Task<List<FlowschemeEntity>> GetLookList(Pagination pagination,string keyword = "")

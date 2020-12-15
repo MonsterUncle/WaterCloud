@@ -153,17 +153,24 @@ layui.define(["jquery", "layer", 'table', 'soulTable','common'], function (expor
             var options = $.extend(defaults, options);
             options.where.time = new Date().Format("yyyy-MM-dd hh:mm:ss");
             if (options.page) {
-                //执行搜索重载
-                table.reload(options.elem, {
-                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                        layout: ['skip', 'prev', 'page', 'next', 'limit', 'count'] //自定义分页布局
-                        , groups: 3 //只显示 1 个连续页码
-                        , first: false //不显示首页
-                        , last: false, //不显示尾页
-                        curr: options.curr
-                    }
-                    , where: options.where
-                }, 'data');
+                if (options.page == true) {
+                    table.reload(options.elem, {
+                        page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                            layout: ['skip', 'prev', 'page', 'next', 'limit', 'count'] //自定义分页布局
+                            , groups: 3 //只显示 1 个连续页码
+                            , first: false //不显示首页
+                            , last: false, //不显示尾页
+                            curr: options.curr
+                        }
+                        , where: options.where
+                    }, 'data');
+                }
+                else {
+                    table.reload(options.elem, {
+                        page: options.page
+                        , where: options.where
+                    }, 'data');
+                }
             }
             else {
                 //执行搜索重载
