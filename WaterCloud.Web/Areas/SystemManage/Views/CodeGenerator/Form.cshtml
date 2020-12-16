@@ -361,6 +361,12 @@
             else {
                 baseConfig.PageIndex.IsPublic = 0;
             }
+            if (options.indexOf("IsCache") > -1) {
+                baseConfig.PageIndex.IsCache = 1;
+            }
+            else {
+                baseConfig.PageIndex.IsCache = 0;
+            }
             baseConfig.PageIndex.ButtonList = buttonList.getValue('value');
             var cachedata = table.cache.currentTableId
             if (cachedata.length == 0) {
