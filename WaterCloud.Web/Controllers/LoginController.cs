@@ -86,22 +86,22 @@ namespace WaterCloud.Web.Controllers
             {
                 if (_setService.currentuser.UserId == null)
                 {
-                    return Content(new AjaxResult { state = ResultType.error.ToString() }.ToJson());
+                    return Content(new AlwaysResult { state = ResultType.error.ToString() }.ToJson());
                 }
                 //登录检测      
                 if ((await OperatorProvider.Provider.IsOnLine("pc_")).stateCode<=0)
                 {
                     await OperatorProvider.Provider.EmptyCurrent("pc_");
-                    return Content(new AjaxResult { state = ResultType.error.ToString() }.ToJson());
+                    return Content(new AlwaysResult { state = ResultType.error.ToString() }.ToJson());
                 }
                 else
                 {
-                    return Content(new AjaxResult { state = ResultType.success.ToString() }.ToJson());
+                    return Content(new AlwaysResult { state = ResultType.success.ToString() }.ToJson());
                 }
             }
             catch (Exception)
             {
-                return Content(new AjaxResult { state = ResultType.error.ToString() }.ToJson());
+                return Content(new AlwaysResult { state = ResultType.error.ToString() }.ToJson());
             }
 
         }
@@ -168,7 +168,7 @@ namespace WaterCloud.Web.Controllers
                 logEntity.F_Result = true;
                 logEntity.F_Description = "登录成功";
                 await _logService.WriteDbLog(logEntity);
-                return Content(new AjaxResult { state = ResultType.success.ToString(), message = "登录成功。"}.ToJson());
+                return Content(new AlwaysResult { state = ResultType.success.ToString(), message = "登录成功。"}.ToJson());
             }
             catch (Exception ex)
             {
@@ -177,7 +177,7 @@ namespace WaterCloud.Web.Controllers
                 logEntity.F_Result = false;
                 logEntity.F_Description = "登录失败，" + ex.Message;
                 await _logService.WriteDbLog(logEntity);
-                return Content(new AjaxResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
+                return Content(new AlwaysResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
             }
         }
         private async Task<bool> CheckIP()

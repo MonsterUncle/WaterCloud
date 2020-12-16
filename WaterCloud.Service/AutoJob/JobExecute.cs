@@ -73,7 +73,7 @@ namespace WaterCloud.Service.AutoJob
                                     var obj = System.Activator.CreateInstance(implementType, _context);       // 创建实例(带参数)
                                     MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
                                     object[] parameters = null;
-                                    var temp = (Task<AjaxResult>)method.Invoke(obj, parameters);     // 调用方法，参数为空
+                                    var temp = (Task<AlwaysResult>)method.Invoke(obj, parameters);     // 调用方法，参数为空
                                     #endregion
                                     //需要同步，不然数据库连接会断开
                                     _context.Update<OpenJobEntity>(t => t.F_Id == jobId, a => new OpenJobEntity

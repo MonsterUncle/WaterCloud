@@ -61,7 +61,7 @@ namespace WaterCloud.WebApi
             }
             else if (anonymous == null && methodanonymous == null)
             {
-                AjaxResult obj = new AjaxResult();
+                AlwaysResult obj = new AlwaysResult();
                 obj.message = "抱歉，没有操作权限";
                 obj.state = ResultType.error.ToString();
                 context.Result = new JsonResult(obj);

@@ -37,7 +37,7 @@ namespace WaterCloud.Web
                     {
 
                         string Message = "演示模式，不允许操作";
-                        context.Result = new JsonResult(new AjaxResult
+                        context.Result = new JsonResult(new AlwaysResult
                         {
                             state = ResultType.error.ToString(),
                             message = Message
@@ -77,33 +77,33 @@ namespace WaterCloud.Web
         {
             className = string.IsNullOrEmpty(className) ? ReflectionHelper.GetClassName() : className;
             await _logService.WriteLog(message, className, keyValue, logType);
-            return Content(new AjaxResult { state = ResultType.success.ToString(), message = message }.ToJson());
+            return Content(new AlwaysResult { state = ResultType.success.ToString(), message = message }.ToJson());
         }
         protected virtual ActionResult Success(string message)
         {
-            return Content(new AjaxResult { state = ResultType.success.ToString(), message = message }.ToJson());
+            return Content(new AlwaysResult { state = ResultType.success.ToString(), message = message }.ToJson());
         }
         protected virtual ActionResult Success<T>(string message, T data)
         {
-            return Content(new AjaxResult<T> { state = ResultType.success.ToString(), message = message, data = data }.ToJson());
+            return Content(new AlwaysResult<T> { state = ResultType.success.ToString(), message = message, data = data }.ToJson());
         }
         protected virtual ActionResult Success<T>(int total, T data)
         {
-            return Content(new AjaxResult<T> { state = 0, message = "", count = total, data = data }.ToJson());
+            return Content(new AlwaysResult<T> { state = 0, message = "", count = total, data = data }.ToJson());
         }
         protected virtual ActionResult ResultDTree(object data)
         {
-            return Content(new AjaxResultDTree { status = new StatusInfo { code = 200, message = "操作成功" }, data = data }.ToJson());
+            return Content(new DTreeResult { status = new StatusInfo { code = 200, message = "操作成功" }, data = data }.ToJson());
         }
         protected virtual async Task<ActionResult> Error(string message, string className, string keyValue = "", DbLogType? logType = null)
         {
             className = string.IsNullOrEmpty(className) ? ReflectionHelper.GetClassName() : className;
             await _logService.WriteLog(message, className, keyValue, logType, true);
-            return Content(new AjaxResult { state = ResultType.error.ToString(), message = LogHelper.ExMsgFormat(message) }.ToJson());
+            return Content(new AlwaysResult { state = ResultType.error.ToString(), message = LogHelper.ExMsgFormat(message) }.ToJson());
         }
         protected virtual ActionResult Error(string message)
         {
-            return Content(new AjaxResult { state = ResultType.error.ToString(), message = LogHelper.ExMsgFormat(message) }.ToJson());
+            return Content(new AlwaysResult { state = ResultType.error.ToString(), message = LogHelper.ExMsgFormat(message) }.ToJson());
         }
     }
 }

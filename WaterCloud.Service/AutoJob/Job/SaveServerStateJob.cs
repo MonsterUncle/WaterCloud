@@ -20,9 +20,9 @@ namespace WaterCloud.Service.AutoJob
             _hostingEnvironment = GlobalContext.HostingEnvironment;
             _server = new ServerStateService(context);
          }
-        public async Task<AjaxResult> Start()
+        public async Task<AlwaysResult> Start()
         {
-            AjaxResult obj = new AjaxResult();
+            AlwaysResult obj = new AlwaysResult();
             try
             {
                 ServerStateEntity entity = new ServerStateEntity();
