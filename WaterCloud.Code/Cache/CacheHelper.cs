@@ -19,18 +19,18 @@ namespace WaterCloud.Code
         /// <param name="expiresIn">缓存时长h</param>
         /// <param name="isSliding">是否滑动过期（如果在过期时间内有操作，则以当前时间点延长过期时间）</param>
         /// <returns></returns>
-        public static async Task<bool> Set(string key, object value, int expiresIn=-1)
+        public static async Task<bool> Set(string key, object value, int expiresIn = -1, bool isSliding = true)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
-            if (value==null)
+            if (value == null)
                 throw new ArgumentNullException(nameof(value));
             switch (cacheProvider)
             {
                 case Define.CACHEPROVIDER_REDIS:
                     if (expiresIn > 0)
                     {
-                      await BaseHelper.SetAsync(key, value, expiresIn*3600);
+                        await BaseHelper.SetAsync(key, value, expiresIn * 3600);
                     }
                     else
                     {
@@ -38,9 +38,9 @@ namespace WaterCloud.Code
                     }
                     return await Exists(key);
                 case Define.CACHEPROVIDER_MEMORY:
-                    if (expiresIn>0)
+                    if (expiresIn > 0)
                     {
-                        MemoryCacheHelper.Set(key, value, TimeSpan.FromHours(expiresIn));
+                        MemoryCacheHelper.Set(key, value, TimeSpan.FromHours(expiresIn), isSliding);
                     }
                     else
                     {
@@ -50,7 +50,7 @@ namespace WaterCloud.Code
                 default:
                     if (expiresIn > 0)
                     {
-                        MemoryCacheHelper.Set(key, value, TimeSpan.FromHours(expiresIn));
+                        MemoryCacheHelper.Set(key, value, TimeSpan.FromHours(expiresIn), isSliding);
                     }
                     else
                     {
@@ -112,11 +112,28 @@ namespace WaterCloud.Code
             switch (cacheProvider)
             {
                 case Define.CACHEPROVIDER_REDIS:
-                    return  await BaseHelper.ExistsAsync(key);
+                    return await BaseHelper.ExistsAsync(key);
                 case Define.CACHEPROVIDER_MEMORY:
                     return MemoryCacheHelper.Exists(key);
                 default:
                     return MemoryCacheHelper.Exists(key);
+            }
+        }
+        /// <summary>
+        /// 缓存续期
+        /// </summary>
+        /// <param name="key">缓存Key</param>
+        /// <param name="hour">时间小时</param>
+        /// <returns></returns>
+        public static async Task Expire(string key, int hour)
+        {
+            switch (cacheProvider)
+            {
+                case Define.CACHEPROVIDER_REDIS:
+                    await BaseHelper.ExpireAsync(key, hour * 3600);
+                    break;
+                default:
+                    break;
             }
         }
         /// <summary>
