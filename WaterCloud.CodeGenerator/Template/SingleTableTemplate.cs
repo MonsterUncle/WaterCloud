@@ -283,7 +283,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        {");
             if (baseConfigModel.PageIndex.IsCache == 0)
             {
-                sb.AppendLine("            var data = repository.FindEntity(keyValue);");
+                sb.AppendLine("            var data = await repository.FindEntity(keyValue);");
                 sb.AppendLine($"            return data;");
             }
             else
@@ -303,7 +303,7 @@ namespace WaterCloud.CodeGenerator
             }
             else
             {
-                sb.AppendLine("            var data = repository.FindEntity(keyValue);");
+                sb.AppendLine("            var data = await repository.FindEntity(keyValue);");
                 sb.AppendLine("            return GetFieldsFilterData(data);");
             }
             sb.AppendLine("        }");
