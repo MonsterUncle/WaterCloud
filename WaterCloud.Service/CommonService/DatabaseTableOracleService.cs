@@ -24,7 +24,7 @@ namespace WaterCloud.Service.CommonService
         {
             StringBuilder strSql = new StringBuilder();
             //select TABLE_NAME Id,TABLE_NAME from user_tab_comments utc where utc.table_type='TABLE'
-            strSql.Append(@"select TABLE_NAME TableName from sys.user_tables where table_name not like '%$%' and table_name not like '%LOGMNR%'");
+            strSql.Append(@"select a.TABLE_NAME TableName,b.CREATED CreateTime from sys.user_tables a left join user_objects b on b.object_name=upper(a.TABLE_NAME) where a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'");
             IEnumerable<TableInfo> list = await FindList<TableInfo>(strSql.ToString());
             if (!tableName.IsEmpty())
             {
@@ -38,8 +38,8 @@ namespace WaterCloud.Service.CommonService
         {
             StringBuilder strSql = new StringBuilder();
             var parameter = new List<DbParam>();
-            strSql.Append(@"select TABLE_NAME TableName,CREATED CreateTime from sys.user_tables where table_name not like '%$%' and table_name not like '%LOGMNR%'");
-
+            strSql.Append(@"select a.TABLE_NAME TableName,b.CREATED CreateTime from sys.user_tables a left join user_objects b on b.object_name=upper(a.TABLE_NAME) where a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'");
+            //select a.TABLE_NAME TableName,b.CREATED CreateTime from sys.user_tables a,user_objects b where b.object_name=upper(a.TABLE_NAME) and a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'
             if (!tableName.IsEmpty())
             {
                 strSql.Append(" AND TABLE_NAME like :TableName ");
@@ -62,7 +62,7 @@ namespace WaterCloud.Service.CommonService
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT  
-                                  b.column_name TableColumn,  
+                                  b.column_name TableColumn,
                                   (CASE WHEN c.COLUMN_NAME=b.column_name THEN 'Y' ELSE '' END) TableIdentity,  
                                    b.data_type Datatype,  
                                    b.data_length FieldLength,   
@@ -72,8 +72,8 @@ namespace WaterCloud.Service.CommonService
         FROM all_col_comments a, user_tab_columns b  
         LEFT JOIN user_cons_columns c on b.TABLE_NAME=c.TABLE_NAME
         WHERE a.table_name = b.table_name and a.Column_name = b.Column_name and a.table_name =:TableName
-        and c.constraint_name in (select constraint_name from  user_constraints where  constraint_type='P' and a.table_name =:TableName)
-        ");
+        and c.constraint_name in (select constraint_name from user_constraints where  constraint_type='P' and a.table_name =:TableName)
+         ORDER BY COLUMN_ID ASC");
 
             var parameter = new List<DbParam>();
             parameter.Add(new DbParam(":TableName", tableName));
@@ -100,8 +100,8 @@ namespace WaterCloud.Service.CommonService
         {
 
             //--P-主键；R-外键；U-唯一约束
-            string strSql = @"Select  b.Constraint_Name Id,a.table_name TableName, b.Column_Name TableKey,b.Constraint_Name TableKeyName,0 TableCount,a.CREATED CreateTime
-                                     From user_Constraints a,user_Cons_Columns b
+            string strSql = @"Select  b.Constraint_Name Id,a.table_name TableName, b.Column_Name TableKey,b.Constraint_Name TableKeyName,0 TableCount,c.CREATED CreateTime
+                                     From user_Constraints a,user_Cons_Columns b left join user_objects c on c.object_name=upper(b.table_name)
                                      WHERE a.Constraint_Type = 'P'
                                      and a.Constraint_Name = b.Constraint_Name 　　
 　　                                  And a.Owner = b.Owner 　　
