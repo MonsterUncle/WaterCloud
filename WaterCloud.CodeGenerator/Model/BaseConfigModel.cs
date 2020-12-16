@@ -63,11 +63,11 @@ namespace WaterCloud.CodeGenerator
         /// <summary>
         /// 是否公共
         /// </summary>
-        public int IsPublic { get; internal set; }
+        public int IsPublic { get; set; }
         /// <summary>
         /// 是否缓存
         /// </summary>
-        public int IsCache { get; internal set; }
+        public int IsCache { get; set; }
 
         /// <summary>
         /// 工具栏按钮（新增 修改 删除 查看）
