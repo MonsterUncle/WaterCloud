@@ -598,7 +598,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     _html += '<input name="{0}" value="{1}" placeholder="{3}" class="layui-input" lay-verify="required" {4} {5} {6} style="width:{2}">'
                         .format(json.id, json.defaultValue ? json.defaultValue : '', json.width, json.placeholder, _readonly, _disabled, _required);
                     $('#' + json.id + ' .layui-input-block').append(_html);
-                    form.render('radio');
+                    form.render('input');
                 },
                 /* 获取对象 */
                 jsonData: function (id, index, columncount) {
@@ -655,6 +655,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     _html += '<input type="password" name="{0}" lay-verify="pass" placeholder="{3}" value="{1}" autocomplete="off" style="width:{2}" {4} {5} {6} class="layui-input">'
                         .format(json.id, json.defaultValue ? json.defaultValue : '', json.width, json.placeholder, _readonly, _disabled, _required);
                     $('#' + json.id + ' .layui-input-block').append(_html);
+                    form.render('input');
                 },
                 /* 获取对象 */
                 jsonData: function (id, index, columncount) {
@@ -1481,6 +1482,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         }
                     }
                     that.components[_json.tag].update(_json);
+                    that.renderForm();
                 }
             });
             form.on('radio', function (data) {
@@ -1494,6 +1496,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         }
                     }
                     that.components[_json.tag].update(_json);
+                    that.renderForm();
                 }
             });
             form.on('select', function (data) {
@@ -1531,9 +1534,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         zindex: _json.zindex,
                         theme: _json.theme
                     });
+                    that.renderForm();
                 } else if (_key === 'expression') {
                     _json.expression = data.value;
                     that.components[_json.tag].update(_json);
+                    that.renderForm();
                 }
             });
             form.on('switch', function (data) {
@@ -1542,6 +1547,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 if (_key === 'readonly' || _key == 'disabled' || _key === 'required' || _key === 'half' || _key === 'text') {
                     _json[_key] = _value;
                     that.components[_json.tag].update(_json);//局部更新
+                    that.renderForm();
                 }
             });
             //options 的添加事件
@@ -2154,7 +2160,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     , end: function () {
                     }
                 });
-            }); 
+            });
             $('.aboutForm').on('click', function () {
 
                 layer.open({
@@ -2166,7 +2172,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     , shade: false
                     , resize: false
                     , success: function (layero, index) {
-                         
+
                     }
                     , end: function () {
                     }
