@@ -20,6 +20,7 @@ namespace WaterCloud.Service.SystemOrganize
         private ModuleService moduleApp;
         private ModuleButtonService moduleButtonApp;
         private ModuleFieldsService moduleFieldsApp;
+        private ItemsDataService itemsApp;
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -34,6 +35,7 @@ namespace WaterCloud.Service.SystemOrganize
             moduleApp = new ModuleService(context);
             moduleButtonApp = new ModuleButtonService(context);
             moduleFieldsApp = new ModuleFieldsService(context);
+            itemsApp = new ItemsDataService(context);
         }
 
         public async Task<List<RoleExtend>> GetList( string keyword = "")
@@ -45,8 +47,22 @@ namespace WaterCloud.Service.SystemOrganize
             }
             return cachedata.ToList();
         }
-        public async Task<List<RoleExtend>> GetLookList(Pagination pagination, string keyword = "")
+        public async Task<List<RoleExtend>> GetLookList(SoulPage<RoleExtend> pagination, string keyword = "")
         {
+            //反格式化显示只能用"等于"，其他不支持
+            Dictionary<string, Dictionary<string, string>> dic = new Dictionary<string, Dictionary<string, string>>();
+            Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
+            enabledTemp.Add("有效", "1");
+            enabledTemp.Add("无效", "0");
+            dic.Add("F_EnabledMark", enabledTemp);
+            var setList = await itemsApp.GetItemList("RoleType");
+            Dictionary<string, string> messageTypeTemp = new Dictionary<string, string>();
+            foreach (var item in setList)
+            {
+                messageTypeTemp.Add(item.F_ItemName, item.F_ItemCode);
+            }
+            dic.Add("F_Type", messageTypeTemp);
+            pagination = ChangeSoulData(dic, pagination);
             //获取数据权限
             var list = GetDataPrivilege("u","", GetQuery());
             if (!string.IsNullOrEmpty(keyword))

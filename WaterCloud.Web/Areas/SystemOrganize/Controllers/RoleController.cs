@@ -53,20 +53,17 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
             return Success(data.Count, data);
         }
-        [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)
+        [IgnoreAntiforgeryToken]
+        public async Task<ActionResult> GetGridJson(SoulPage<RoleExtend> pagination, string keyword)
         {
-            pagination.order = "asc";
-            pagination.sort = "F_EnCode";
-            //导出全部页使用
-            if (pagination.rows == 0 && pagination.page == 0)
+            if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.rows = 99999999;
-                pagination.page = 1;
+                pagination.field = "F_CreatorTime";
+                pagination.order = "desc";
             }
-            var data =await _service.GetLookList(pagination,keyword);
-            return Success(pagination.records,data);
+            var data = await _service.GetLookList(pagination, keyword);
+            return Content(pagination.setData(data).ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]

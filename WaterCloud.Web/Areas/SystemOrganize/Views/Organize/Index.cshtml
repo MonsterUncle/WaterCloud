@@ -16,8 +16,17 @@
         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
         var rendertree = common.rendertreetable({
             elem: '#currentTableId',
-            url: '/SystemOrganize/Organize/GetTreeGridJson' ,
+            url: '/SystemOrganize/Organize/GetTreeGridJson',
+            tree: {
+                iconIndex: 1,           // 折叠图标显示在第几列
+                isPidData: true,        // 是否是id、pid形式数据
+                idName: 'F_Id',  // id字段名称
+                pidName: 'F_ParentId',     // pid字段名称
+                arrowType: 'arrow2',
+                getIcon: 'ew-tree-icon-style2',
+            },
             cols: [[
+                { type: "radio", width: 50 },
                 { field: 'F_FullName', title: '名称', width: 250 },
                 { field: 'F_EnCode', title: '编号', width: 200 },
                 {
@@ -47,6 +56,7 @@
                     }
                 },
                 { field: 'F_Description', title: '备注', minWidth: 150 },
+                { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center" }
             ]],
             done: function () {
                 //展开全部
@@ -63,17 +73,17 @@
             duty = null;
             return false;
         });
-        var duty;
-        treeTable.on('row(currentTableId)', function (obj) {
-            obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
-            duty = obj;
-        })
+        //行点击事件监听，控制按钮显示
+        var oneList = ["NF-edit", "NF-details", "NF-delete"];//选择1条显示
+        common.treeTableRowClick("radio", rendertree, "currentTableId", oneList);
         /**
          * toolbar监听事件
          */
         treeTable.on('toolbar(currentTableId)', function (obj) {
+            var data = rendertree.checkStatus(false);
+            var keyValue = data.length > 0 ? data[0].F_Id : null;
+            var duty = data.length > 0 ? data[0] : null;
             if (obj.event === 'add') {  // 监听操作
-                keyValue = !!duty ? duty.data.F_Id : null;
                 common.modalOpen({
                     title: "添加机构",
                     url: "/SystemOrganize/Organize/Form?event=add&keyValue=" + keyValue,
@@ -101,7 +111,7 @@
                 }
                 common.modalOpen({
                     title: "编辑机构",
-                    url: "/SystemOrganize/Organize/Form?event=edit&keyValue=" + duty.data.F_Id,
+                    url: "/SystemOrganize/Organize/Form?event=edit&keyValue=" + keyValue,
                     width: "450px",
                     height: "520px",
                 });
@@ -113,7 +123,7 @@
                 }
                 common.modalOpen({
                     title: "查看机构",
-                    url: "/SystemOrganize/Organize/Details?keyValue=" + duty.data.F_Id,
+                    url: "/SystemOrganize/Organize/Details?keyValue=" + keyValue,
                     width: "450px",
                     height: "520px",
                     btn: []
@@ -126,6 +136,36 @@
                 } else {
                     _that.addClass('layui-hide');
                 }
+            }
+            return false;
+        });
+        treeTable.on('tool(currentTableId)', function (obj) {
+            var keyValue = obj.data.F_Id;
+            if (obj.event === 'delete') {
+                common.deleteForm({
+                    url: "/SystemOrganize/Organize/DeleteForm",
+                    param: { keyValue: keyValue },
+                    success: function () {
+                        obj.del();
+                    }
+                });
+            }
+            else if (obj.event === 'edit') {
+                common.modalOpen({
+                    title: "编辑机构",
+                    url: "/SystemOrganize/Organize/Form?event=edit&keyValue=" + keyValue,
+                    width: "450px",
+                    height: "520px",
+                });
+            }
+            else if (obj.event === 'details') {
+                common.modalOpen({
+                    title: "查看机构",
+                    url: "/SystemOrganize/Organize/Details?keyValue=" + keyValue,
+                    width: "450px",
+                    height: "520px",
+                    btn: []
+                });
             }
             return false;
         });
@@ -154,13 +194,17 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
-                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
-                <button id="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
-                <button id="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
-                <button id="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+                <button id="NF-add" name="NF-add" authorize class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
+                <button id="NF-edit" name="NF-edit" authorize class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                <button id="NF-delete" name="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                <button id="NF-details" name="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
             </div>
         </script>
-
+        <script type="text/html" id="currentTableBar">
+            <a id="NF-edit" authorize class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
+            <a id="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"><i class="layui-icon">&#xe640;</i></a>
+            <a id="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"><i class="layui-icon">&#xe60b;</i></a>
+        </script>
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
     </div>

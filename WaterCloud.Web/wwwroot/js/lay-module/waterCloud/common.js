@@ -814,6 +814,85 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             };
             return cols;
         },
+        //treetable行点击事件及按钮显示控制
+        treeTableRowClick: function (type, rendertree ,tableId, oneList, moreList) {
+            var oneList = !!oneList ? oneList : [];
+            var moreList = !!moreList ? moreList : [];
+            treeTable.on('row(' + tableId + ')', function (obj) {
+                obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
+                obj.tr.find("div.layui-unselect.layui-form-" + type)[0].click();
+                if (type =="radio") {
+                    for (var i = 0; i < oneList.length; i++) {
+                        $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
+                    }
+                    for (var i = 0; i < moreList.length; i++) {
+                        $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
+                    }
+                }
+            })
+            if (type == "checkbox") {
+                //多选框监听
+                treeTable.on(type + '(' + tableId + ')', function (obj) {
+                    //控制按钮
+                    var data = rendertree.checkStatus(false);
+                    if (obj.type == "all") {
+                        if (obj.checked && rendertree.options.data.length != 0) {
+                            if (rendertree.options.data.length > 1) {
+                                for (var i = 0; i < oneList.length; i++) {
+                                    $('[name="' + oneList[i] + '"]').addClass("layui-hide");
+                                }
+                                for (var i = 0; i < moreList.length; i++) {
+                                    $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
+                                }
+                            }
+                            else {
+                                for (var i = 0; i < oneList.length; i++) {
+                                    $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
+                                }
+                                for (var i = 0; i < moreList.length; i++) {
+                                    $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
+                                }
+                            }
+                        }
+                        else {
+                            for (var i = 0; i < oneList.length; i++) {
+                                $('[name="' + oneList[i] + '"]').addClass("layui-hide");
+                            }
+                            for (var i = 0; i < moreList.length; i++) {
+                                $('[name="' + moreList[i] + '"]').addClass("layui-hide");
+                            }
+                        }
+                    }
+                    else {
+                        if (data.length > 1) {
+                            for (var i = 0; i < oneList.length; i++) {
+                                $('[name="' + oneList[i] + '"]').addClass("layui-hide");
+                            }
+                            for (var i = 0; i < moreList.length; i++) {
+                                $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
+                            }
+                        }
+                        else if (data.length == 1) {
+                            for (var i = 0; i < oneList.length; i++) {
+                                $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
+                            }
+                            for (var i = 0; i < moreList.length; i++) {
+                                $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
+                            }
+                        }
+                        else {
+                            for (var i = 0; i < oneList.length; i++) {
+                                $('[name="' + oneList[i] + '"]').addClass("layui-hide");
+                            }
+                            for (var i = 0; i < moreList.length; i++) {
+                                $('[name="' + moreList[i] + '"]').addClass("layui-hide");
+                            }
+                        }
+                    }
+                });
+            }
+
+        },
         //表格单元格自动列宽
         //tableResize: function (id) {
         //    //动态监听表头高度变化，冻结行跟着改变高度

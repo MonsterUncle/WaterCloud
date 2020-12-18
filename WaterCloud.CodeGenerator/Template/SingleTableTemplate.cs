@@ -591,22 +591,22 @@ namespace WaterCloud.CodeGenerator
             if (baseConfigModel.PageIndex.ButtonList.Contains("add"))
             {
                 KeyValue button = list.Where(p => p.Key == "add").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm data-add-btn\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe654;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe654;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("edit"))
             {
                 KeyValue button = list.Where(p => p.Key == "edit").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe642;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-warm layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe642;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("delete"))
             {
                 KeyValue button = list.Where(p => p.Key == "delete").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe640;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-danger layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe640;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("details"))
             {
                 KeyValue button = list.Where(p => p.Key == "details").FirstOrDefault();
-                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe60b;</i>" + button.Description + "</button>");
+                sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-normal layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe60b;</i>" + button.Description + "</button>");
             }
             sb.AppendLine("             </div>");
             sb.AppendLine("         </script>");
@@ -622,11 +622,11 @@ namespace WaterCloud.CodeGenerator
                 }
                 if (baseConfigModel.PageIndex.ButtonList.Contains("delete"))
                 {
-                    sb.AppendLine("            <a id=\"NF-delete\" authorize class=\"layui-btn layui-btn-sm layui-btn-danger data-delete-btn\" lay-event=\"delete\"><i class=\"layui-icon\">&#xe640;</i></a>");
+                    sb.AppendLine("            <a id=\"NF-delete\" authorize class=\"layui-btn layui-btn-sm layui-btn-danger\" lay-event=\"delete\"><i class=\"layui-icon\">&#xe640;</i></a>");
                 }
                 if (baseConfigModel.PageIndex.ButtonList.Contains("details"))
                 {
-                    sb.AppendLine("            <a id=\"NF-details\" authorize class=\"layui-btn layui-btn-sm layui-btn-normal data-info-btn\" lay-event=\"details\"><i class=\"layui-icon\">&#xe60b;</i></a>");
+                    sb.AppendLine("            <a id=\"NF-details\" authorize class=\"layui-btn layui-btn-sm layui-btn-normal\" lay-event=\"details\"><i class=\"layui-icon\">&#xe60b;</i></a>");
                 }
                 sb.AppendLine("        </script>");
             }
@@ -663,7 +663,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("             url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson'+(!queryJson ? '' : '?keyword=' + queryJson),"); sb.AppendLine("             sqlkey: '" + idColumn + "',//数据库主键");
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 //此处需修改");
-                sb.AppendLine("                 { type: \"checkbox\", width: 50 },");
+                sb.AppendLine("                 { type: \"radio\", width: 50 },");
                 int cout = 1;
                 foreach (var item in baseConfigModel.PageIndex.ColumnList)
                 {
@@ -757,85 +757,18 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("         });");
             }
             sb.AppendLine("         wcLoading.close();");
-            sb.AppendLine("         //行点击事件");
+            sb.AppendLine("         //行点击事件监听，控制按钮显示");
             if (baseConfigModel.PageIndex.IsTree == 1)
             {
-                sb.AppendLine("         treeTable.on('row(currentTableId)', function (obj) {");
-                sb.AppendLine("             obj.tr.find(\"div.layui-unselect.layui-form-checkbox\")[0].click();");
-                sb.AppendLine("         })");
+                sb.AppendLine("         var oneList = [\"NF-edit\", \"NF-details\", \"NF-delete\"];//选择1条显示");
+                sb.AppendLine("         common.treeTableRowClick(\"radio\", rendertree, \"currentTableId\", oneList);");
             }
             else
             {
-                sb.AppendLine("        $(document).on(\"click\", \".layui-table-body table.layui-table tbody tr\", function () {");
-                sb.AppendLine("            var index = $(this).attr('data-index');");
-                sb.AppendLine("            var tableBox = $(this).parents('.layui-table-box');");
-                sb.AppendLine("            //存在固定列");
-                sb.AppendLine("            if (tableBox.find(\".layui-table-fixed.layui-table-fixed-l\").length > 0) {");
-                sb.AppendLine("                tableDiv = tableBox.find(\".layui-table-fixed.layui-table-fixed-l\");");
-                sb.AppendLine("            } else {");
-                sb.AppendLine("                tableDiv = tableBox.find(\".layui-table-body.layui-table-main\");");
-                sb.AppendLine("            }");
-                sb.AppendLine("            //单选checkbox换成radio");
-                sb.AppendLine("            var checkCell = tableDiv.find(\"tr[data-index=\" + index + \"]\").find(\"td div.laytable-cell-checkbox div.layui-form-checkbox I\");");
-                sb.AppendLine("            if (checkCell.length > 0) {");
-                sb.AppendLine("                checkCell.click();");
-                sb.AppendLine("            }");
-                sb.AppendLine("        });");
-                sb.AppendLine("        $(document).on(\"click\", \"td div.laytable-cell-checkbox div.layui-form-checkbox\", function (e) {");
-                sb.AppendLine("            e.stopPropagation();");
-                sb.AppendLine("        });");
+                sb.AppendLine("        var oneList = [\"NF-edit\", \"NF-details\"];//选择1条显示");
+                sb.AppendLine("        var morerList = [\"NF-delete\"];//选中1条以上显示");
+                sb.AppendLine("        commonTable.tableRowClick(\"checkbox\", \"currentTableFilter\", \"currentTableId\", oneList, morerList);");
             }
-            sb.AppendLine("         //多选监听事件");
-            if (baseConfigModel.PageIndex.IsTree == 1)
-            {
-                sb.AppendLine("         treeTable.on('checkbox(currentTableId)', function (obj) {");
-                sb.AppendLine("             var data = rendertree.checkStatus(false);");
-                sb.AppendLine("             if (obj.type==\"all\") {");
-                sb.AppendLine("                 if (obj.checked && rendertree.options.data.length!=0) {");
-                sb.AppendLine("                     if (rendertree.options.data.length>1) {");
-            }
-            else
-            {
-                sb.AppendLine("        table.on('checkbox(currentTableFilter)', function (obj) {");
-                sb.AppendLine("             var data = table.checkStatus('currentTableId').data");
-                sb.AppendLine("             if (obj.type==\"all\") {");
-                sb.AppendLine("                 if (obj.checked && table.cache.currentTableId.length!=0) {");
-                sb.AppendLine("                     if (table.cache.currentTableId.length>1) {");
-            }
-            sb.AppendLine("                        $('[name=\"NF-edit\"]').addClass(\"layui-hide\");");
-            sb.AppendLine("                        $('[name=\"NF-details\"]').addClass(\"layui-hide\");");
-            sb.AppendLine("                        $('[name=\"NF-delete\"]').removeClass(\"layui-hide\");");
-            sb.AppendLine("                    }");
-            sb.AppendLine("                    else {");
-            sb.AppendLine("                        $('[name=\"NF-edit\"]').removeClass(\"layui-hide\");");
-            sb.AppendLine("                        $('[name=\"NF-details\"]').removeClass(\"layui-hide\");");
-            sb.AppendLine("                        $('[name=\"NF-delete\"]').removeClass(\"layui-hide\");");
-            sb.AppendLine("                    }");
-            sb.AppendLine("                }");
-            sb.AppendLine("                else {");
-            sb.AppendLine("                    $('[name=\"NF-edit\"]').addClass(\"layui-hide\");");
-            sb.AppendLine("                    $('[name=\"NF-details\"]').addClass(\"layui-hide\");");
-            sb.AppendLine("                    $('[name=\"NF-delete\"]').addClass(\"layui-hide\");");
-            sb.AppendLine("                }");
-            sb.AppendLine("            }");
-            sb.AppendLine("            else {");
-            sb.AppendLine("                if (data.length > 1) {");
-            sb.AppendLine("                    $('[name=\"NF-edit\"]').addClass(\"layui-hide\");");
-            sb.AppendLine("                    $('[name=\"NF-details\"]').addClass(\"layui-hide\");");
-            sb.AppendLine("                    $('[name=\"NF-delete\"]').removeClass(\"layui-hide\");");
-            sb.AppendLine("                }");
-            sb.AppendLine("                else if (data.length == 1) {");
-            sb.AppendLine("                    $('[name=\"NF-edit\"]').removeClass(\"layui-hide\");");
-            sb.AppendLine("                    $('[name=\"NF-details\"]').removeClass(\"layui-hide\");");
-            sb.AppendLine("                    $('[name=\"NF-delete\"]').removeClass(\"layui-hide\");");
-            sb.AppendLine("                }");
-            sb.AppendLine("                else {");
-            sb.AppendLine("                    $('[name=\"NF-edit\"]').addClass(\"layui-hide\");");
-            sb.AppendLine("                    $('[name=\"NF-details\"]').addClass(\"layui-hide\");");
-            sb.AppendLine("                    $('[name=\"NF-delete\"]').addClass(\"layui-hide\");");
-            sb.AppendLine("                }");
-            sb.AppendLine("            }");
-            sb.AppendLine("        });");
             sb.AppendLine("         //toolbar监听事件");
             if (baseConfigModel.PageIndex.IsTree == 1)
             {
@@ -847,6 +780,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("         table.on('toolbar(currentTableFilter)', function (obj) { ");
                 sb.AppendLine("             var data = table.checkStatus('currentTableId').data;");
             }
+            sb.AppendLine("             var id = data.length > 0 ? data[0]."+ idColumn + " : null;");
             sb.AppendLine("             if (obj.event === 'add') {  // 监听添加操作");
             sb.AppendLine("                 common.modalOpen({");
             sb.AppendLine("                     title: \"添加界面\",");
@@ -879,7 +813,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("               }");
             sb.AppendLine("               common.modalOpen({");
             sb.AppendLine("                  title: \"编辑界面\",");
-            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Form?keyValue=\" + data[0]." + idColumn + ",");
+            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Form?keyValue=\" + id,");
             sb.AppendLine("                   width: \"500px\",");
             sb.AppendLine("                   height: \"500px\",");
             sb.AppendLine("               });");
@@ -891,7 +825,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("               }");
             sb.AppendLine("               common.modalOpen({");
             sb.AppendLine("                  title: \"查看界面\",");
-            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Details?keyValue=\" + data[0]." + idColumn + ",");
+            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Details?keyValue=\" +  id,");
             sb.AppendLine("                   width: \"500px\",");
             sb.AppendLine("                   height: \"500px\",");
             sb.AppendLine("                  btn: []");
@@ -919,6 +853,8 @@ namespace WaterCloud.CodeGenerator
             {
                 sb.AppendLine("        table.on('tool(currentTableFilter)', function (obj) {");
             }
+
+            sb.AppendLine("             var id = obj.data." + idColumn+";");
             sb.AppendLine("            if (obj.event === 'delete') {");
             sb.AppendLine("                common.deleteForm({");
             sb.AppendLine("                     url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/DeleteForm\",");
@@ -931,7 +867,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            else if (obj.event === 'edit') {");
             sb.AppendLine("               common.modalOpen({");
             sb.AppendLine("                  title: \"编辑界面\",");
-            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Form?keyValue=\" + obj.data." + idColumn + ",");
+            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Form?keyValue=\" + id,");
             sb.AppendLine("                   width: \"500px\",");
             sb.AppendLine("                   height: \"500px\",");
             sb.AppendLine("               });");
@@ -939,7 +875,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            else if (obj.event === 'details') {");
             sb.AppendLine("               common.modalOpen({");
             sb.AppendLine("                  title: \"查看界面\",");
-            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Details?keyValue=\" +obj.data." + idColumn + ",");
+            sb.AppendLine("                   url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/Details?keyValue=\" +id,");
             sb.AppendLine("                   width: \"500px\",");
             sb.AppendLine("                   height: \"500px\",");
             sb.AppendLine("                  btn: []");

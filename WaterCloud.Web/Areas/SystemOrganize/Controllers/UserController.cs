@@ -26,21 +26,17 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public ModuleService _moduleService { get; set; }
         public RoleService _roleService { get; set; }
         public OrganizeService _orgService { get; set; }
-
-        [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)
+        [IgnoreAntiforgeryToken]
+        public async Task<ActionResult> GetGridJson(SoulPage<UserExtend> pagination, string keyword)
         {
-            pagination.order = "asc";
-            pagination.sort = "F_DepartmentId asc";
-            //导出全部页使用
-            if (pagination.rows == 0 && pagination.page == 0)
+            if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.rows = 99999999;
-                pagination.page = 1;
+                pagination.field = "F_DepartmentId";
+                pagination.order = "asc";
             }
-            var data =await _service.GetLookList(pagination, keyword);
-            return Success(pagination.records, data);
+            var data = await _service.GetLookList(pagination, keyword);
+            return Content(pagination.setData(data).ToJson());
         }
         [HttpGet]
         public virtual ActionResult AddForm()

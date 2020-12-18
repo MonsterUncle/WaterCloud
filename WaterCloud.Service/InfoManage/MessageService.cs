@@ -7,6 +7,7 @@ using Chloe;
 using WaterCloud.Domain.InfoManage;
 using Microsoft.AspNetCore.SignalR;
 using WaterCloud.Domain.SystemOrganize;
+using WaterCloud.Service.SystemManage;
 
 namespace WaterCloud.Service.InfoManage
 {
@@ -21,8 +22,10 @@ namespace WaterCloud.Service.InfoManage
         private string cacheHubKey = "watercloud_hubuserinfo_";
         
         private readonly IHubContext<MessageHub> _messageHub;
+        private ItemsDataService itemsApp;
         public MessageService(IDbContext context, IHubContext<MessageHub> messageHub) : base(context)
         {
+            itemsApp = new ItemsDataService(context);
             _messageHub = messageHub;
         }
         #region 获取数据
@@ -66,8 +69,18 @@ namespace WaterCloud.Service.InfoManage
             return GetFieldsFilterData(query.OrderByDesc(t => t.F_CreatorTime).ToList());
         }
 
-        public async Task<List<MessageEntity>> GetLookList(Pagination pagination,string keyword = "")
+        public async Task<List<MessageEntity>> GetLookList(SoulPage<MessageEntity> pagination, string keyword = "")
         {
+            //反格式化显示只能用"等于"，其他不支持
+            Dictionary<string, Dictionary<string, string>> dic = new Dictionary<string, Dictionary<string, string>>();
+            var setList = await itemsApp.GetItemList("MessageType");
+            Dictionary<string, string> messageTypeTemp = new Dictionary<string, string>();
+            foreach (var item in setList)
+            {
+                messageTypeTemp.Add(item.F_ItemName, item.F_ItemCode);
+            }
+            dic.Add("F_MessageType", messageTypeTemp);
+            pagination = ChangeSoulData(dic, pagination);
             //获取数据权限
             var list = GetDataPrivilege("u");
             if (!string.IsNullOrEmpty(keyword))

@@ -60,8 +60,7 @@
                  getIcon: 'ew-tree-icon-style2',
              },
              cols: [[
-                 { type: "checkbox", width: 50 },
-                 //此处需修改
+                 { type: "radio", width: 50 },
                  { field: 'F_FullName', title: '类别名称', width: 200 },
                  { field: 'F_SortCode', title: '排序', width: 80 },
                  { field: 'F_Description', title: '描述', minWidth: 220 },
@@ -101,51 +100,15 @@
              });
              return false;
          });
-         treeTable.on('checkbox(currentTableId)', function (obj) {
-             //控制按钮
-             var data = rendertree.checkStatus(false);
-             if (obj.type=="all") {
-                 if (obj.checked && rendertree.options.data.length!=0) {
-                     if (rendertree.options.data.length>1) {
-                         $('[name="NF-edit"]').addClass("layui-hide");
-                         $('[name="NF-details"]').addClass("layui-hide");
-                         $('[name="NF-delete"]').removeClass("layui-hide");
-                     }
-                     else {
-                         $('[name="NF-edit"]').removeClass("layui-hide");
-                         $('[name="NF-details"]').removeClass("layui-hide");
-                         $('[name="NF-delete"]').removeClass("layui-hide");
-                     }
-                 }
-                 else {
-                     $('[name="NF-edit"]').addClass("layui-hide");
-                     $('[name="NF-details"]').addClass("layui-hide");
-                     $('[name="NF-delete"]').addClass("layui-hide");
-                 }
-             }
-             else {
-                 if (data.length > 1) {
-                     $('[name="NF-edit"]').addClass("layui-hide");
-                     $('[name="NF-details"]').addClass("layui-hide");
-                     $('[name="NF-delete"]').removeClass("layui-hide");
-                 }
-                 else if (data.length == 1) {
-                     $('[name="NF-edit"]').removeClass("layui-hide");
-                     $('[name="NF-details"]').removeClass("layui-hide");
-                     $('[name="NF-delete"]').removeClass("layui-hide");
-                 }
-                 else {
-                     $('[name="NF-edit"]').addClass("layui-hide");
-                     $('[name="NF-details"]').addClass("layui-hide");
-                     $('[name="NF-delete"]').addClass("layui-hide");
-                 }
-             }
-         });
-         treeTable.on('row(currentTableId)', function (obj) {
-             obj.tr.find("div.layui-unselect.layui-form-checkbox")[0].click();
-         })
+         //行点击事件监听，控制按钮显示
+         var oneList = ["NF-edit", "NF-details", "NF-delete"];//选择1条显示
+         //var morerList = ["NF-delete"];//选中1条以上
+         common.treeTableRowClick("radio", rendertree, "currentTableId", oneList);
+         //common.treeTableRowClick("radio", rendertree, "currentTableId", oneList, morerList);
          //toolbar监听事件
          treeTable.on('toolbar(currentTableId)', function (obj) {
+             var data = rendertree.checkStatus(false);
+             var id = data.length > 0 ? data[0].F_Id : null;
              if (obj.event === 'add') {  // 监听添加操作
                  common.modalOpen({
                      title: "添加界面",
@@ -155,7 +118,6 @@
                  });
              }
              else if (obj.event === 'delete') {
-                 var data = rendertree.checkStatus(false);
                  if (data.length == 0) {
                      common.modalMsg("未选中数据", "warning");
                      return false;
@@ -184,7 +146,7 @@
                  }
                  common.modalOpen({
                      title: "编辑界面",
-                     url: "/ContentManage/ArticleCategory/Form?keyValue=" + data[0].F_Id,
+                     url: "/ContentManage/ArticleCategory/Form?keyValue=" + id,
                      width: "500px",
                      height: "500px",
                      data: data[0],
@@ -202,7 +164,7 @@
                  }
                  common.modalOpen({
                      title: "查看界面",
-                     url: "/ContentManage/ArticleCategory/Details?keyValue=" + data[0].F_Id,
+                     url: "/ContentManage/ArticleCategory/Details?keyValue=" + id,
                      width: "500px",
                      height: "500px",
                      data: data[0],
@@ -221,6 +183,7 @@
          });
          //toolbar监听事件
          treeTable.on('tool(currentTableId)', function (obj) {
+             var id = obj.data.F_Id;
              if (obj.event === 'delete') {
                  common.deleteForm({
                      url: "/ContentManage/ArticleCategory/DeleteForm",
@@ -233,7 +196,7 @@
              else if (obj.event === 'edit') {
                  common.modalOpen({
                      title: "编辑界面",
-                     url: "/ContentManage/ArticleCategory/Form?keyValue=" + obj.data.F_Id,
+                     url: "/ContentManage/ArticleCategory/Form?keyValue=" + id,
                      width: "500px",
                      height: "500px",
                      data: obj.data,
@@ -242,7 +205,7 @@
              else if (obj.event === 'details') {
                  common.modalOpen({
                      title: "查看界面",
-                     url: "/ContentManage/ArticleCategory/Details?keyValue=" + obj.data.F_Id,
+                     url: "/ContentManage/ArticleCategory/Details?keyValue=" + id,
                      width: "500px",
                      height: "500px",
                      data: obj.data,

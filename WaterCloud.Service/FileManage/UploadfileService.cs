@@ -50,8 +50,19 @@ namespace WaterCloud.Service.FileManage
             return data;
         }
 
-        public async Task<List<UploadfileEntity>> GetLookList(Pagination pagination,string keyword = "")
+        public async Task<List<UploadfileEntity>> GetLookList(SoulPage<UploadfileEntity> pagination, string keyword = "")
         {
+            //反格式化显示只能用"等于"，其他不支持
+            Dictionary<string, Dictionary<string, string>> dic = new Dictionary<string, Dictionary<string, string>>();
+            Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
+            enabledTemp.Add("有效", "1");
+            enabledTemp.Add("无效", "0");
+            dic.Add("F_EnabledMark", enabledTemp);
+            Dictionary<string, string> fileTypeTemp = new Dictionary<string, string>();
+            fileTypeTemp.Add("图片", "1");
+            fileTypeTemp.Add("文件", "0");
+            dic.Add("F_FileType", fileTypeTemp);
+            pagination = ChangeSoulData(dic, pagination);
             //获取数据权限
             var list = GetDataPrivilege("u","", GetQuery());
             if (!string.IsNullOrEmpty(keyword))

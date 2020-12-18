@@ -70,9 +70,18 @@ namespace WaterCloud.Service.FlowManage
             return GetFieldsFilterData(list.Where(a => a.F_EnabledMark == true).OrderByDescending(t => t.F_CreatorTime).ToList());
         }
 
-        public async Task<List<FlowinstanceEntity>> GetLookList(Pagination pagination, string type = "", string keyword = "")
+        public async Task<List<FlowinstanceEntity>> GetLookList(SoulPage<FlowinstanceEntity> pagination, string type = "", string keyword = "")
         {
-            //获取数据权限
+            //反格式化显示只能用"等于"，其他不支持
+            Dictionary<string, Dictionary<string, string>> dic = new Dictionary<string, Dictionary<string, string>>();
+            Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
+            enabledTemp.Add("正在运行", "0");
+            enabledTemp.Add("审批通过", "1");
+            //enabledTemp.Add("审批通过", "2");
+            enabledTemp.Add("不同意", "3");
+            enabledTemp.Add("被驳回", "4");
+            dic.Add("F_IsFinish", enabledTemp);
+            pagination = ChangeSoulData(dic, pagination);
             var list = GetDataPrivilege("u");
             if (!string.IsNullOrEmpty(keyword))
             {

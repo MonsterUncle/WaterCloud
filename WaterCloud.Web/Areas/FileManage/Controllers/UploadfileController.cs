@@ -26,21 +26,17 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
         public SystemSetService _setService { get; set; }
 
         #region 获取数据
-        [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)
+        [IgnoreAntiforgeryToken]
+        public async Task<ActionResult> GetGridJson(SoulPage<UploadfileEntity> pagination, string keyword)
         {
-            //此处需修改
-            pagination.order = "desc";
-            pagination.sort = "F_CreatorTime desc";
-            //导出全部页使用
-            if (pagination.rows == 0 && pagination.page == 0)
+            if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.rows = 99999999;
-                pagination.page = 1;
+                pagination.field = "F_CreatorTime";
+                pagination.order = "desc";
             }
             var data = await _service.GetLookList(pagination,keyword);
-            return Success(pagination.records, data);
+            return Content(pagination.setData(data).ToJson());
         }
 
         [HttpGet]

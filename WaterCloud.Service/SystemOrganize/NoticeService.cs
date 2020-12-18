@@ -53,8 +53,15 @@ namespace WaterCloud.Service.SystemOrganize
             //}
             return list.Where(a => a.F_DeleteMark == false).ToList();
         }
-        public async Task<List<NoticeEntity>> GetLookList(Pagination pagination, string keyword = "")
+        public async Task<List<NoticeEntity>> GetLookList(SoulPage<NoticeEntity> pagination, string keyword = "")
         {
+            //反格式化显示只能用"等于"，其他不支持
+            Dictionary<string, Dictionary<string, string>> dic = new Dictionary<string, Dictionary<string, string>>();
+            Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
+            enabledTemp.Add("有效", "1");
+            enabledTemp.Add("无效", "0");
+            dic.Add("F_EnabledMark", enabledTemp);
+            pagination = ChangeSoulData(dic, pagination);
             //获取数据权限
             var list = GetDataPrivilege("u");
             if (!string.IsNullOrEmpty(keyword))

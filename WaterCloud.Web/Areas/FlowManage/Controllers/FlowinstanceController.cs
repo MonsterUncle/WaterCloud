@@ -52,21 +52,17 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
             var data =await _service.QueryHistories(keyValue);
             return Success(data.Count, data);
         }
-        [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetGridJson(Pagination pagination,string type, string keyword)
+        [IgnoreAntiforgeryToken]
+        public async Task<ActionResult> GetGridJson(SoulPage<FlowinstanceEntity> pagination, string type, string keyword)
         {
-            //此处需修改
-            pagination.order = "desc";
-            pagination.sort = "F_CreatorTime desc";
-            //导出全部页使用
-            if (pagination.rows == 0 && pagination.page == 0)
+            if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.rows = 99999999;
-                pagination.page = 1;
+                pagination.field = "F_CreatorTime";
+                pagination.order = "desc";
             }
             var data = await _service.GetLookList(pagination, type, keyword);
-            return Success(pagination.records, data);
+            return Content(pagination.setData(data).ToJson());
         }
 
         [HttpGet]

@@ -42,10 +42,10 @@
                 </fieldset>
                 <script type="text/html" id="toolbarDemo">
                     <div class="layui-btn-container" id="toolbar">
-                        <button id="NF-add" authorize class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
-                        <button id="NF-edit" authorize class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
-                        <button id="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
-                        <button id="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"> <i class="layui-icon">&#xe60b;</i>预览</button>
+                        <button id="NF-add" name="NF-add" authorize class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
+                        <button id="NF-edit" name="NF-edit" authorize class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                        <button id="NF-delete" name="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                        <button id="NF-details" name="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>预览</button>
                     </div>
                 </script>
                 <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
@@ -60,7 +60,6 @@
              commonTable = layui.commonTable,
              treeTable = layui.treeTable,
              common = layui.common;
-         var entity;
          var ItemId;
          //权限控制(js是值传递)
          toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
@@ -101,7 +100,7 @@
              search:false,
              height: 'full-160',
              cols: [[                 
-                 //此处需修改
+                 { type: "radio", width: 50 },
                  { field: 'F_Name', title: '表单名称', width: 150, sort: true },
                  { field: 'F_Description', title: '备注', minWidth: 250 },
                  { field: 'F_Fields', title: '字段数', width: 100, sort: true, hide: true },
@@ -141,7 +140,6 @@
                  where: { keyword: queryJson },
              });
              itemId = null;
-             entity = null;
              return false;
          });
          // 监听搜索操作
@@ -155,7 +153,6 @@
                  },
                  where: { ItemId: ItemId,keyword: data.field.txt_keyword }
              });
-             entity = null;
              return false;
          });
          wcLoading.close();
@@ -164,12 +161,12 @@
              ItemId = obj.data.F_Id;
              $('button[lay-filter="data-search-btn"]').click();//按钮刷新
          })
-         table.on('row(currentTableFilter)', function (obj) {
-             obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
-             entity = obj;
-         })
+         //行点击事件监听，控制按钮显示
+         var oneList = ["NF-edit", "NF-delete", "NF-details"];//选择1条显示
+         commonTable.tableRowClick("radio", "currentTableFilter", "currentTableId", oneList);
          //toolbar监听事件
          table.on('toolbar(currentTableFilter)', function (obj) {
+             var data = table.checkStatus('currentTableId').data;
              if (obj.event === 'add') {  // 监听添加操作
                  common.openNewTabByIframe({
                      title: "添加表单",
@@ -177,13 +174,13 @@
                  });
              }
              else if (obj.event === 'delete') {
-                 if (entity == null) {
+                 if (data.length == 0) {
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
                  common.deleteForm({
                      url: "/SystemManage/Form/DeleteForm",
-                     param: { keyValue: entity.data.F_Id },
+                     param: { keyValue: data[0].F_Id },
                      success: function () {
                          common.reload('data-search-btn');
                          entity = null;
@@ -191,23 +188,23 @@
                  });
              }
              else if (obj.event === 'edit') {
-                 if (entity == null) {
+                 if (data.length == 0) {
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
                  common.openNewTabByIframe({
                      title: "编辑表单",
-                     href: "/SystemManage/Form/Form?keyValue=" + entity.data.F_Id,
+                     href: "/SystemManage/Form/Form?keyValue=" + data[0].F_Id,
                  });
              }
              else if (obj.event === 'details') {
-                 if (entity == null) {
+                 if (data.length == 0) {
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
                  common.modalOpen({
                      title: "预览表单",
-                     url: "/SystemManage/Form/Details?keyValue=" + entity.data.F_Id,
+                     url: "/SystemManage/Form/Details?keyValue=" + data[0].F_Id,
                      width: "600px",
                      height: "600px",
                      btn: []
