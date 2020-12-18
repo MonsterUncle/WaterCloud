@@ -91,7 +91,7 @@ namespace WaterCloud.Web
         {
             return Content(new AlwaysResult<T> { state = 0, message = "", count = total, data = data }.ToJson());
         }
-        protected virtual ActionResult ResultDTree(object data)
+        protected virtual ActionResult DTreeResult(object data)
         {
             return Content(new DTreeResult { status = new StatusInfo { code = 200, message = "操作成功" }, data = data }.ToJson());
         }

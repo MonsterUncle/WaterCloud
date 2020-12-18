@@ -78,7 +78,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 //treeModel.self = item;
                 treeList.Add(treeModel);
             }
-            return ResultDTree(treeList.TreeList());
+            return DTreeResult(treeList.TreeList());
         }
         [HttpGet]
         [HandlerAjaxOnly]
