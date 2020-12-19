@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
@@ -98,7 +98,7 @@
                 }
                 common.deleteForm({
                     url: "/SystemOrganize/Organize/DeleteForm",
-                    param: { keyValue: duty.data.F_Id },
+                    param: { keyValue: keyValue },
                     success: function () {
                         common.reload('data-search-btn');
                     }
