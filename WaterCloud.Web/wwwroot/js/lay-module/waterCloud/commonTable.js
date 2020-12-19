@@ -137,7 +137,8 @@ layui.define(["jquery", "layer", 'table', 'soulTable','common'], function (expor
                 if (doneCallback) {
                     doneCallback(res, curr, count);
                 }
-                soulTable.render(this)
+                soulTable.render(this);
+                table.resize();
             };
             return table.render(options);
         },
@@ -265,6 +266,7 @@ layui.define(["jquery", "layer", 'table', 'soulTable','common'], function (expor
                         }
                     }
                 }
+                table.resize();
             });
         },
     }
