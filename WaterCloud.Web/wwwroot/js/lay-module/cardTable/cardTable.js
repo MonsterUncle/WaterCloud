@@ -10,15 +10,16 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		laypage = layui.laypage;
 	var _instances = {};  // 记录所有实例
 	/* 默认参数 */
-	var defaultOption = {	
+	var defaultOption = {
 		elem: "#currentTableId",// 构建的模型
 		url: "",// 数据 url 连接
 		loading: true,//是否加载
-		limit: 0,
-		linenum:4, //每行数量 2,3,4,6
-		currentPage:1,//当前页
+		limit: 0, //每页数量默认是每行数量的双倍
+		linenum: 4, //每行数量 2,3,4,6
+		currentPage: 1,//当前页
+		limits:[],     //页码
 		page: true, //是否分页
-		layout: ['count', 'prev', 'page', 'next', 'skip'],//分页控件
+		layout: ['count', 'prev', 'page', 'next','limit', 'skip'],//分页控件
 		request: {
 			pageName: 'page' //页码的参数名称，默认：page
 			, limitName: 'limit' //每页数据量的参数名，默认：limit
@@ -47,8 +48,11 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 	/** 参数设置 */
 	card.prototype.initOptions = function (opt) {
 		this.option = $.extend(true, {}, defaultOption, opt);
-		if (!this.option.limit || this.option.limit==0) {
+		if (!this.option.limit || this.option.limit == 0) {
 			this.option.limit = this.option.linenum * 2;
+		}
+		if (!this.option.limits || this.option.limits.length == 0) {
+			this.option.limits = [this.option.limit];
         }
 	};
 	card.prototype.init = function () {
@@ -101,7 +105,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 			// 初始化分页组件
 			laypage.render({
 				elem: 'cardpage'
-				, count: option.count, limit: option.limit, curr: option.currentPage
+				, count: option.count, limit: option.limit, limits:option.limits, curr: option.currentPage
 				, layout: option.layout
 				, jump: function (obj, first) {
 					option.limit = obj.limit;
