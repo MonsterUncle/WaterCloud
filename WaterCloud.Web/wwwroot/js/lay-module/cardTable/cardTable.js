@@ -14,7 +14,8 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		elem: "#currentTableId",// 构建的模型
 		url: "",// 数据 url 连接
 		loading: true,//是否加载
-		limit: 8,//每页数量
+		limit: 0,
+		linenum:4, //每行数量 2,3,4,6
 		currentPage:1,//当前页
 		page: true, //是否分页
 		layout: ['count', 'prev', 'page', 'next', 'skip'],//分页控件
@@ -46,6 +47,9 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 	/** 参数设置 */
 	card.prototype.initOptions = function (opt) {
 		this.option = $.extend(true, {}, defaultOption, opt);
+		if (!this.option.limit || this.option.limit==0) {
+			this.option.limit = this.option.linenum * 2;
+        }
 	};
 	card.prototype.init = function () {
 		var option = this.option;
@@ -84,7 +88,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 				option.count = data.count;
 				// 根据结果进行相应结构的创建
 				if (!!option.data && option.data.length > 0) {
-					html = createComponent(option.elem.substring(1),data.data);
+					html = createComponent(option.elem.substring(1),option.linenum,data.data);
 					html += "<div id='cardpage'></div>";
 				}
 				else {
@@ -114,27 +118,28 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		this.init();  // 初始化表格
     }
 
-	function createComponent(elem,data) {
+	function createComponent(elem,linenum,data) {
 		var html = "<div class='cloud-card-component'>"
-		var content = createCards(elem,data);
+		var content = createCards(elem, linenum,data);
         var page = "";
         content = content + page;
         html += content + "</div>"
         return html;
 	}
 	/** 创建指定数量的卡片 */
-	function createCards(elem,data) {	
+	function createCards(elem, linenum,data) {	
 		var content = "<div class='layui-row layui-col-space30'>";
 		for (var i = 0; i < data.length; i++) {
-			content += createCard(elem,data[i],i);
+			content += createCard(elem, linenum,data[i],i);
         }
 		content += "</div>";
 		return content;
 	}
 	/** 创建一个卡片 */
-	function createCard(elem,item,no) {
+	function createCard(elem, linenum, item, no) {
+		var line = 12 / linenum;
 		var card =
-			'<div id=' + item.id + ' onclick="cardTableCheckedCard(' + elem+',this)" class="layui-col-md3 ew-datagrid-item" data-index="' + no+'" data-number="1"> <div class="project-list-item"> <img class="project-list-item-cover" src="' +item.image + '"> <div class="project-list-item-body"> <h2>' + item.title + '</h2> <div class="project-list-item-text layui-text">' + item.remark + '</div> <div class="project-list-item-desc"> <span class="time">' +item.time + '</span> <div class="ew-head-list"></div> </div> </div > </div > </div > '
+			'<div id=' + item.id + ' onclick="cardTableCheckedCard(' + elem + ',this)" class="layui-col-md' + line + ' ew-datagrid-item" data-index="' + no+'" data-number="1"> <div class="project-list-item"> <img class="project-list-item-cover" src="' +item.image + '"> <div class="project-list-item-body"> <h2>' + item.title + '</h2> <div class="project-list-item-text layui-text">' + item.remark + '</div> <div class="project-list-item-desc"> <span class="time">' +item.time + '</span> <div class="ew-head-list"></div> </div> </div > </div > </div > '
 		return card;
 	}
 	/** 格式化返回参数 */
