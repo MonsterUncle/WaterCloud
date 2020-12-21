@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Autofac;
+using Chloe.Infrastructure.Interception;
 using CSRedis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -77,6 +78,9 @@ namespace WaterCloud.WebApi
             }).AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
             });
             services.AddControllers().AddControllersAsServices();
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(GlobalContext.HostingEnvironment.ContentRootPath + Path.DirectorySeparatorChar + "DataProtection"));
@@ -102,6 +106,9 @@ namespace WaterCloud.WebApi
         {
             if (env.IsDevelopment())
             {
+                //打印sql
+                IDbCommandInterceptor interceptor = new DbCommandInterceptor();
+                DbInterception.Add(interceptor);
                 app.UseDeveloperExceptionPage();
             }
             else
