@@ -43,4 +43,5 @@ layui.config({
     tableMerge: 'soulTable/tableMerge',//合并表格
     tableFilter: 'soulTable/tableFilter',//表格过滤
     excel: 'soulTable/excel',//表格导出
+    cardTable: 'cardTable/cardTable',//卡片表格
 });
