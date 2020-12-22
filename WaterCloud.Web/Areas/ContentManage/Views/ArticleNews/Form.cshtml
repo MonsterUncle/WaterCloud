@@ -175,9 +175,11 @@
             {
                 customInsert: function (insertImg, result, editor2) {
                     uploadResult(result);
-                    for (var i = 0; i < result.data.length; i++) {
-                        insertImg(result.data[i].src);
-                    };
+                    if (!!result.data) {
+                        for (var i = 0; i < result.data.length; i++) {
+                            insertImg(result.data[i].src);
+                        };
+                    }
                 }
             }
             editor.config.onchange = function (newHtml) {

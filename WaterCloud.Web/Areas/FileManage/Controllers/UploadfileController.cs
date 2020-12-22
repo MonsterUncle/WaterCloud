@@ -115,7 +115,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
                         fileValue = "file";
                     }
                     string filePath = "";
-                    fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + fileName.Substring(fileName.LastIndexOf("."));
+                    fileName = Utils.CreateNo() + fileName.Substring(fileName.LastIndexOf("."));
                     UploadfileEntity entity = new UploadfileEntity();
                     if (!string.IsNullOrEmpty(stemp))
                     {
