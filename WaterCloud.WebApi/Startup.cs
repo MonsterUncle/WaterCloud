@@ -110,6 +110,7 @@ namespace WaterCloud.WebApi
                 IDbCommandInterceptor interceptor = new DbCommandInterceptor();
                 DbInterception.Add(interceptor);
                 app.UseDeveloperExceptionPage();
+                GlobalContext.SystemConfig.Debug = true;
             }
             else
             {
@@ -146,7 +147,7 @@ namespace WaterCloud.WebApi
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "{controller=ApiHome}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "api/{controller=ApiHome}/{action=Index}/{id?}");
             });
             GlobalContext.ServiceProvider = app.ApplicationServices;
         }

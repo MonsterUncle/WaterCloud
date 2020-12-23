@@ -13,7 +13,7 @@ namespace WaterCloud.WebApi.Controllers
     /// <summary>
     /// 用户接口
     /// </summary>
-    [Route("[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {

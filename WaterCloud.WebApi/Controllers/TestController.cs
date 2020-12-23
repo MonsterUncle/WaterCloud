@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +13,7 @@ namespace WaterCloud.WebApi.Controllers
     /// <summary>
     /// 测试文件
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     [AuthorizeFilter]
     public class TestController : ControllerBase
@@ -33,13 +34,13 @@ namespace WaterCloud.WebApi.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody, Required(ErrorMessage = "值不能为空")] string value)
         {
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody, Required(ErrorMessage = "值不能为空")] string value)
         {
         }
 

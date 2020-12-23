@@ -24,49 +24,51 @@ namespace WaterCloud.WebApi
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-
-            string token = context.HttpContext.Request.Headers[GlobalContext.SystemConfig.TokenName].ParseToString();
-            OperatorModel user = OperatorProvider.Provider.GetCurrent();
-            var description =
-            (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)context.ActionDescriptor;
-
-            //添加有允许匿名的Action，可以不用登录访问，如Login/Index
-            //控制器整体忽略或者单独方法忽略
-            var anonymous = description.ControllerTypeInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
-            var methodanonymous = description.MethodInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
-            if (user != null)
+            if (GlobalContext.SystemConfig.Debug==false)
             {
-                // 根据传入的Token，添加token和客户参数
-                if (context.ActionArguments != null && context.ActionArguments.Count > 0)
-                {
-                    PropertyInfo property = context.ActionArguments.FirstOrDefault().Value.GetType().GetProperty("Token");
-                    if (property != null)
-                    {
-                        property.SetValue(context.ActionArguments.FirstOrDefault().Value, token, null);
-                    }
-                    switch (context.HttpContext.Request.Method.ToUpper())
-                    {
-                        case "GET":
-                            break;
+                string token = context.HttpContext.Request.Headers[GlobalContext.SystemConfig.TokenName].ParseToString();
+                OperatorModel user = OperatorProvider.Provider.GetCurrent();
+                var description =
+                (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)context.ActionDescriptor;
 
-                        case "POST":
-                            property = context.ActionArguments.FirstOrDefault().Value.GetType().GetProperty("CustomerId");
-                            if (property != null)
-                            {
-                                property.SetValue(context.ActionArguments.FirstOrDefault().Value, user.UserId, null);
-                            }
-                            break;
+                //添加有允许匿名的Action，可以不用登录访问，如Login/Index
+                //控制器整体忽略或者单独方法忽略
+                var anonymous = description.ControllerTypeInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
+                var methodanonymous = description.MethodInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
+                if (user != null)
+                {
+                    // 根据传入的Token，添加token和客户参数
+                    if (context.ActionArguments != null && context.ActionArguments.Count > 0)
+                    {
+                        PropertyInfo property = context.ActionArguments.FirstOrDefault().Value.GetType().GetProperty("Token");
+                        if (property != null)
+                        {
+                            property.SetValue(context.ActionArguments.FirstOrDefault().Value, token, null);
+                        }
+                        switch (context.HttpContext.Request.Method.ToUpper())
+                        {
+                            case "GET":
+                                break;
+
+                            case "POST":
+                                property = context.ActionArguments.FirstOrDefault().Value.GetType().GetProperty("CustomerId");
+                                if (property != null)
+                                {
+                                    property.SetValue(context.ActionArguments.FirstOrDefault().Value, user.UserId, null);
+                                }
+                                break;
+                        }
                     }
                 }
-            }
-            else if (anonymous == null && methodanonymous == null)
-            {
-                AlwaysResult obj = new AlwaysResult();
-                obj.message = "抱歉，没有操作权限";
-                obj.state = ResultType.error.ToString();
-                context.Result = new JsonResult(obj);
-                return;
-            }
+                else if (anonymous == null && methodanonymous == null)
+                {
+                    AlwaysResult obj = new AlwaysResult();
+                    obj.message = "抱歉，没有操作权限";
+                    obj.state = ResultType.error.ToString();
+                    context.Result = new JsonResult(obj);
+                    return;
+                }
+            }     
             var resultContext = await next();
 
             sw.Stop();
