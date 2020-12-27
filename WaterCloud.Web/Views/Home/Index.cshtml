@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -166,6 +166,9 @@
                         var code = document.getElementById("usercode");
                         if (data.F_IsAdmin) {
                             $('[data-clear]').removeClass('layui-hide');
+                        }
+                        else {
+                            $('[data-clear]').parent().remove();
                         }
                         code.innerHTML = data.F_Account + '<span class="layui-nav-more"></span>';
                         sessionStorage.setItem('currentUser', JSON.stringify(data));
