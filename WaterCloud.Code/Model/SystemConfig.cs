@@ -58,5 +58,6 @@ namespace WaterCloud.Code.Model
         public string TokenName { get; set; }
         //缓存过期时间
         public int LoginExpire { get; set; }
+        public string HomePage { get; set; }
     }
 }

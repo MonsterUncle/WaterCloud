@@ -250,6 +250,7 @@ namespace WaterCloud.Web.Controllers
             StringBuilder sbJson = new StringBuilder();
             InitEntity init = new InitEntity();
             init.homeInfo = new HomeInfoEntity();
+            init.homeInfo.href = GlobalContext.SystemConfig.HomePage;
             init.logoInfo = new LogoInfoEntity();
             var systemset =await _setService.GetForm(currentuser.CompanyId);
             //修改主页及logo参数
