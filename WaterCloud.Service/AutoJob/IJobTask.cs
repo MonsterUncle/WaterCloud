@@ -6,5 +6,6 @@ namespace WaterCloud.Service.AutoJob
     public interface IJobTask
     {
         Task<AlwaysResult> Start();
+
     }
 }
