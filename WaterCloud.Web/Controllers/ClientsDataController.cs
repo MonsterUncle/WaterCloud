@@ -86,7 +86,7 @@ namespace WaterCloud.Web.Controllers
         private async Task<object> GetMenuFields()
         {
             var roleId = _userService.currentuser.RoleId;
-            if (_userService.currentuser.UserCode=="admin")
+            if (roleId == null && _userService.currentuser.IsSystem)
             {
                 roleId = "admin";
             }

@@ -69,7 +69,7 @@ namespace WaterCloud.WebApi.Controllers
                 SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
                 operatorModel.DbString = setEntity.F_DbString;
                 operatorModel.DBProvider = setEntity.F_DBProvider;
-                if (userEntity.F_Account == "admin")
+                if (userEntity.F_Account == GlobalContext.SystemConfig.SysemUserCode)
                 {
                     operatorModel.IsSystem = true;
                 }
