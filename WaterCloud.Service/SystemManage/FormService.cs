@@ -45,7 +45,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 list = list.Where(u => u.F_Name.Contains(keyword) || u.F_Description.Contains(keyword));
             }
-            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList());
+            return list.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<FormEntity>> GetLookList(Pagination pagination,string keyword = "")
@@ -58,7 +58,7 @@ namespace WaterCloud.Service.SystemManage
                 list = list.Where(u => u.F_Name.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark==false);
-            return GetFieldsFilterData(await repository.OrderList(list, pagination));
+            return await repository.OrderList(list, pagination);
         }
         private IQuery<FormEntity> GetQuery()
         {

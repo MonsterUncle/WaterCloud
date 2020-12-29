@@ -43,7 +43,7 @@ namespace WaterCloud.Service.SystemOrganize
                 var forms = GetDataPrivilege("u");
                 list = forms.ToList();
             }
-            return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList());
+            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<OrganizeEntity> GetLookForm(string keyValue)
         {

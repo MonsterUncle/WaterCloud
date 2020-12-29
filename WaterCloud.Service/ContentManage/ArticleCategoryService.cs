@@ -50,7 +50,7 @@ namespace WaterCloud.Service.ContentManage
                 //此处需修改
                 list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_Description.Contains(keyword)).ToList();
             }
-            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList());
+            return list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<ArticleCategoryEntity>> GetLookList(Pagination pagination,string keyword = "")
@@ -63,7 +63,7 @@ namespace WaterCloud.Service.ContentManage
                 list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark==false);
-            return GetFieldsFilterData(await repository.OrderList(list, pagination));
+            return await repository.OrderList(list, pagination);
         }
 
         public async Task<ArticleCategoryEntity> GetForm(string keyValue)
@@ -71,13 +71,12 @@ namespace WaterCloud.Service.ContentManage
             var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
-        #endregion
-
         public async Task<ArticleCategoryEntity> GetLookForm(string keyValue)
         {
             var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata);
         }
+        #endregion
 
         #region 提交数据
         public async Task SubmitForm(ArticleCategoryEntity entity, string keyValue)

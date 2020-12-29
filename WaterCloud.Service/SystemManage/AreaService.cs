@@ -51,7 +51,7 @@ namespace WaterCloud.Service.SystemManage
             { 
                 list = list.Where(t => t.F_Layers == layers).ToList();
             }
-            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true).OrderBy(t => t.F_SortCode).ToList());
+            return list.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<AreaEntity> GetLookForm(string keyValue)
         {

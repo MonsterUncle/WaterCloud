@@ -53,7 +53,7 @@ namespace WaterCloud.Service.SystemOrganize
                 //此处需修改
                 list = list.Where(u => u.F_CompanyName.Contains(keyword) || u.F_ProjectName.Contains(keyword)).ToList();
             }
-            return GetFieldsFilterData(list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList());
+            return list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<SystemSetEntity> GetFormByHost(string host)
@@ -86,7 +86,7 @@ namespace WaterCloud.Service.SystemOrganize
                 list = list.Where(u => u.F_CompanyName.Contains(keyword) || u.F_ProjectName.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark==false);
-            return GetFieldsFilterData(await repository.OrderList(list, pagination));
+            return await repository.OrderList(list, pagination);
         }
 
         public async Task<SystemSetEntity> GetForm(string keyValue)

@@ -68,7 +68,7 @@ namespace WaterCloud.Service.FlowManage
                 //此处需修改
                 list = list.Where(u => u.F_Code.Contains(keyword) || u.F_CustomName.Contains(keyword)).ToList();
             }
-            return GetFieldsFilterData(list.Where(a => a.F_EnabledMark == true).OrderByDescending(t => t.F_CreatorTime).ToList());
+            return list.Where(a => a.F_EnabledMark == true).OrderByDescending(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<FlowinstanceEntity>> GetLookList(SoulPage<FlowinstanceEntity> pagination, string type = "", string keyword = "")
@@ -105,7 +105,7 @@ namespace WaterCloud.Service.FlowManage
             {
                 list = list.Where(u => u.F_CreatorUserId == user.UserId);
             }
-            return GetFieldsFilterData(await repository.OrderList(list.Where(a => a.F_EnabledMark == true), pagination));
+            return await repository.OrderList(list.Where(a => a.F_EnabledMark == true), pagination);
         }
 
         public async Task<FlowinstanceEntity> GetForm(string keyValue)

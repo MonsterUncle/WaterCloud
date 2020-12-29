@@ -76,7 +76,7 @@ namespace WaterCloud.Service
             }
             query = query.GenerateFilter(parametername,
                 JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
-            return query;
+            return GetFieldsFilterDataNew(query);
         }
         /// <summary>
         ///  获取当前登录用户的数据访问权限(复杂查询)

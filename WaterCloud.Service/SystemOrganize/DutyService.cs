@@ -64,7 +64,7 @@ namespace WaterCloud.Service.SystemOrganize
                 list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
             }
             list = list.Where(u => u.F_DeleteMark == false&& u.F_Category == 2);
-            return GetFieldsFilterData(await repository.OrderList(list, pagination));
+            return await repository.OrderList(list, pagination);
         }
         public async Task<RoleEntity> GetLookForm(string keyValue)
         {

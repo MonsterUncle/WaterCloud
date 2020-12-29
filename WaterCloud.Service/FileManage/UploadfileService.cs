@@ -41,7 +41,7 @@ namespace WaterCloud.Service.FileManage
                 //此处需修改
                 list = list.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
-            var data = GetFieldsFilterData(list.OrderByDesc(t => t.F_CreatorTime).ToList());
+            var data = list.OrderByDesc(t => t.F_CreatorTime).ToList();
             foreach (var item in data)
             {
                 string[] departments = item.F_OrganizeId.Split(',');
@@ -70,7 +70,7 @@ namespace WaterCloud.Service.FileManage
                 //此处需修改
                 list = list.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
-            var data = GetFieldsFilterData(await repository.OrderList(list, pagination));
+            var data = await repository.OrderList(list, pagination);
             var orgs = uniwork.IQueryable<OrganizeEntity>().ToList();
             foreach (var item in data)
             {
@@ -106,13 +106,12 @@ namespace WaterCloud.Service.FileManage
             var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
-        #endregion
-
         public async Task<UploadfileEntity> GetLookForm(string keyValue)
         {
             var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return GetFieldsFilterData(cachedata);
         }
+        #endregion
 
         #region 提交数据
         public async Task SubmitForm(UploadfileEntity entity, string keyValue)

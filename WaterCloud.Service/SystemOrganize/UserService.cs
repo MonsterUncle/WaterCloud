@@ -50,7 +50,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 list = list.Where(u => u.F_Account.Contains(keyword) || u.F_RealName.Contains(keyword)||u.F_MobilePhone.Contains(keyword));
             }
-            var data = GetFieldsFilterData(await repository.OrderList(list, pagination));
+            var data = await repository.OrderList(list, pagination);
             var roles = uniwork.IQueryable<RoleEntity>().ToList();
             var orgs = uniwork.IQueryable<OrganizeEntity>().ToList();
             foreach (var item in data)

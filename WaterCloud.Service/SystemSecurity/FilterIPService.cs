@@ -54,7 +54,7 @@ namespace WaterCloud.Service.SystemSecurity
                 list = list.Where(t => t.F_StartIP.Contains(keyword)||t.F_EndIP.Contains(keyword)).ToList();
 
             }
-            return GetFieldsFilterData(list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList());
+            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList();
         }
         public async Task<FilterIPEntity> GetLookForm(string keyValue)
         {

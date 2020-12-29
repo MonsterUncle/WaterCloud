@@ -92,7 +92,7 @@ namespace WaterCloud.Service.ContentManage
             var list = GetDataPrivilege<ArticleNewsEntity>("u", "",query);
             
             list = list.Where(u => u.F_DeleteMark==false);
-            return GetFieldsFilterData(await repository.OrderList(list, pagination));
+            return await repository.OrderList(list, pagination);
         }
         /// <summary>
         /// 获取新闻详情
