@@ -74,8 +74,9 @@ namespace WaterCloud.Service
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
                     orgs);
             }
-            return query.GenerateFilter(parametername,
+            query = query.GenerateFilter(parametername,
                 JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
+            return query;
         }
         /// <summary>
         ///  获取当前登录用户的数据访问权限(复杂查询)
@@ -105,8 +106,9 @@ namespace WaterCloud.Service
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
                     orgs);
             }
-            return query.GenerateFilter(parametername,
+            query= query.GenerateFilter(parametername,
                 JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
+            return GetFieldsFilterDataNew(query);
         }
         /// <summary>
         ///  获取当前登录用户是否需要数据控制
@@ -178,22 +180,23 @@ namespace WaterCloud.Service
             {
                 return list;
             }
+            //空list直接返回
+            if (list.Count == 0)
+            {
+                return list;
+            }
             var rolelist = currentuser.RoleId.Split(',');
             var rule = uniwork.IQueryable<RoleAuthorizeEntity>(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
             var fieldsList = uniwork.IQueryable<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
             //反射获取主键
             PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
             var idName = "F_Id";
-            if (pkProp == null)
+            if (pkProp != null)
             {
                 idName = pkProp.Name;
             }
             fieldsList.Add(idName);
             fieldsList = fieldsList.Distinct().ToList();
-            if (list.Count == 0)
-            {
-                return list;
-            }
             return DataTableHelper.ListFilter(list, fieldsList);
         }
         /// <summary>
@@ -203,9 +206,82 @@ namespace WaterCloud.Service
         protected TEntity GetFieldsFilterData<TEntity>(TEntity entity, string moduleName = "")
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
+            //管理员跳过
+            if (currentuser.RoleId == "admin" || currentuser.IsSystem)
+            {
+                return entity;
+            }
+            //系统菜单跳过
+            var module = uniwork.IQueryable<ModuleEntity>(u => u.F_EnCode == moduleName).FirstOrDefault();
+            //判断是否需要字段权限
+            if (module.F_IsFields == false)
+            {
+                return entity;
+            }
+            //空对象直接返回
+			if (entity==null)
+			{
+                return entity;
+            }
+            var rolelist = currentuser.RoleId.Split(',');
+            var rule = uniwork.IQueryable<RoleAuthorizeEntity>(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
+            var fieldsList = uniwork.IQueryable<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
+            //反射获取主键
+            PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
+            var idName = "F_Id";
+            if (pkProp != null)
+            {
+                idName = pkProp.Name;
+            }
+            fieldsList.Add(idName);
+            fieldsList = fieldsList.Distinct().ToList();
             List<TEntity> list = new List<TEntity>();
             list.Add(entity);
-            return GetFieldsFilterData(list, moduleName)[0];
+            return DataTableHelper.ListFilter(list, fieldsList)[0];
+        }
+        /// <summary>
+        ///  字段权限处理
+        /// </summary>
+        ///<param name=""list>数据列表</param>
+        /// <param name=""moduleName>菜单名称</param>
+        /// <returns></returns>
+        protected IQuery<TEntity> GetFieldsFilterDataNew<TEntity>(IQuery<TEntity> query, string moduleName = "")
+        {
+            moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
+            //管理员跳过
+            if (currentuser.RoleId == "admin" || currentuser.IsSystem)
+            {
+                return query;
+            }
+            //系统菜单跳过
+            var module = uniwork.IQueryable<ModuleEntity>(u => u.F_EnCode == moduleName).FirstOrDefault();
+            //判断是否需要字段权限
+            if (module.F_IsFields == false)
+            {
+                return query;
+            }
+            var rolelist = currentuser.RoleId.Split(',');
+            var rule = uniwork.IQueryable<RoleAuthorizeEntity>(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
+            var fieldsList = uniwork.IQueryable<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
+            //反射获取主键
+            PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
+            var idName = "F_Id";
+            if (pkProp != null)
+            {
+                idName = pkProp.Name;
+            }
+            fieldsList.Add(idName);
+            fieldsList = fieldsList.Distinct().ToList();
+            List<string> ignoreList = new List<string>();
+			foreach (var item in typeof(TEntity).GetProperties())
+			{
+				if (!fieldsList.Contains(item.Name))
+				{
+                    ignoreList.Add(item.Name);
+                }
+			}
+            query.Ignore(ignoreList.ToArray());
+            return query;
         }
     }
 }
