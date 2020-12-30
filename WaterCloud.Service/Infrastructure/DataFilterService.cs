@@ -43,6 +43,7 @@ namespace WaterCloud.Service
         /// </summary>
         /// <param name=""parameterName>linq表达式参数的名称，如u=>u.name中的"u"</param>
         /// <param name=""moduleName>菜单名称</param>
+        /// <param name=""query>查询</param>
         /// <returns></returns>
         protected IQuery<T> GetDataPrivilege(string parametername, string moduleName = "", IQuery<T> query = null)
         {
@@ -83,6 +84,7 @@ namespace WaterCloud.Service
         /// </summary>
         /// <param name=""parameterName>linq表达式参数的名称，如u=>u.name中的"u"</param>
         /// <param name=""moduleName>菜单名称</param>
+        /// <param name=""query>查询</param>
         /// <returns></returns>
         protected IQuery<TEntity> GetDataPrivilege<TEntity>(string parametername, string moduleName = "", IQuery<TEntity> query = null)
         {
@@ -106,7 +108,7 @@ namespace WaterCloud.Service
                 rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
                     orgs);
             }
-            query= query.GenerateFilter(parametername,
+            query = query.GenerateFilter(parametername,
                 JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
             return GetFieldsFilterDataNew(query);
         }
@@ -135,7 +137,8 @@ namespace WaterCloud.Service
         /// <summary>
         ///  soul数据反向模板化
         /// </summary>
-        /// <param name=""moduleName>菜单名称</param>
+        /// <param name=""dic>集合</param>
+        /// <param name=""pagination>分页</param>
         /// <returns></returns>
         protected SoulPage<TEntity> ChangeSoulData<TEntity>(Dictionary<string, Dictionary<string, string>> dic, SoulPage<TEntity> pagination)
         {
@@ -202,6 +205,8 @@ namespace WaterCloud.Service
         /// <summary>
         ///  字段权限处理
         /// </summary>
+        ///<param name=""entity>数据</param>
+        /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
         protected TEntity GetFieldsFilterData<TEntity>(TEntity entity, string moduleName = "")
         {
@@ -219,8 +224,8 @@ namespace WaterCloud.Service
                 return entity;
             }
             //空对象直接返回
-			if (entity==null)
-			{
+            if (entity == null)
+            {
                 return entity;
             }
             var rolelist = currentuser.RoleId.Split(',');
@@ -242,7 +247,7 @@ namespace WaterCloud.Service
         /// <summary>
         ///  字段权限处理
         /// </summary>
-        ///<param name=""list>数据列表</param>
+        ///<param name=""query>数据列表</param>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
         protected IQuery<TEntity> GetFieldsFilterDataNew<TEntity>(IQuery<TEntity> query, string moduleName = "")
@@ -273,13 +278,13 @@ namespace WaterCloud.Service
             fieldsList.Add(idName);
             fieldsList = fieldsList.Distinct().ToList();
             List<string> ignoreList = new List<string>();
-			foreach (var item in typeof(TEntity).GetProperties())
-			{
-				if (!fieldsList.Contains(item.Name))
-				{
+            foreach (var item in typeof(TEntity).GetProperties())
+            {
+                if (!fieldsList.Contains(item.Name))
+                {
                     ignoreList.Add(item.Name);
                 }
-			}
+            }
             query.Ignore(ignoreList.ToArray());
             return query;
         }
