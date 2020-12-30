@@ -35,35 +35,27 @@ namespace WaterCloud.Service.ContentManage
 
         public async Task<List<ArticleCategoryEntity>> GetLookList(string keyword = "")
         {
-            var list =new List<ArticleCategoryEntity>();
-            if (!CheckDataPrivilege())
-            {
-                list = await repository.CheckCacheList(cacheKey + "list");
-            }
-            else
-            {
-                var forms = GetDataPrivilege("u");
-                list = forms.ToList();
-            }
+            var query = repository.IQueryable().Where(t => t.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_Description.Contains(keyword)).ToList();
+                query = query.Where(u => u.F_FullName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
-            return list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
+            query = GetDataPrivilege("u","", query);
+            return query.OrderByDesc(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<ArticleCategoryEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
-            //获取数据权限
-            var list = GetDataPrivilege("u");
+            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_Description.Contains(keyword));
+                query = query.Where(u => u.F_FullName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
-            list = list.Where(u => u.F_DeleteMark==false);
-            return await repository.OrderList(list, pagination);
+            //权限过滤
+            query = GetDataPrivilege("u","", query);
+            return await repository.OrderList(query, pagination);
         }
 
         public async Task<ArticleCategoryEntity> GetForm(string keyValue)

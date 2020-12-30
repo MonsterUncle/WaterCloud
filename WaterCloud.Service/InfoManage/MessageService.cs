@@ -42,22 +42,14 @@ namespace WaterCloud.Service.InfoManage
 
         public async Task<List<MessageEntity>> GetLookList(string keyword = "")
         {
-            var list = new List<MessageEntity>();
-            if (!CheckDataPrivilege())
-            {
-                list = await repository.CheckCacheList(cacheKey + "list");
-            }
-            else
-            {
-                var forms = GetDataPrivilege("u");
-                list = forms.ToList();
-            }
+            var query = repository.IQueryable().Where(a => a.F_EnabledMark == true);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword)).ToList();
+                query = query.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
             }
-            return list.Where(a => a.F_EnabledMark == true).OrderByDescending(t => t.F_CreatorTime).ToList();
+            query = GetDataPrivilege("u","", query);
+            return query.OrderByDesc(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<MessageEntity>> GetUnReadListJson()
@@ -82,13 +74,14 @@ namespace WaterCloud.Service.InfoManage
             dic.Add("F_MessageType", messageTypeTemp);
             pagination = ChangeSoulData(dic, pagination);
             //获取数据权限
-            var list = GetDataPrivilege("u");
+            var query = repository.IQueryable().Where(a => a.F_EnabledMark == true);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
+                query = query.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
             }
-            return await repository.OrderList(list.Where(a => a.F_EnabledMark == true), pagination);
+            query = GetDataPrivilege("u","",query);
+            return await repository.OrderList(query, pagination);
         }
 
         public async Task<MessageEntity> GetForm(string keyValue)

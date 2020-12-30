@@ -41,25 +41,17 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<List<ItemsDetailEntity>> GetLookList(string itemId = "", string keyword = "")
         {
-            var list = new List<ItemsDetailEntity>();
-            if (!CheckDataPrivilege())
-            {
-                list = await repository.CheckCacheList(cacheKey + "list");
-            }
-            else
-            {
-                var forms = GetDataPrivilege("u");
-                list = forms.ToList();
-            }
+            var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(itemId))
             {
-                list = list.Where(t => t.F_ItemId == itemId).ToList();
+                query = query.Where(t => t.F_ItemId == itemId);
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword)).ToList();
+                query = query.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword));
             }
-            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
+            query = GetDataPrivilege("u","", query);
+            return query.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {

@@ -39,7 +39,6 @@ namespace WaterCloud.Service.SystemSecurity
         /// </summary>
         public async Task<List<OpenJobEntity>> GetLookList(Pagination pagination, string keyword = "")
         {
-            //获取数据权限
             var list = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {

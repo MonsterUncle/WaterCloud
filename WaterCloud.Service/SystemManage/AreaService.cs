@@ -37,21 +37,13 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<List<AreaEntity>> GetLookList(int layers=0)
         {
-            var list =new List<AreaEntity>();
-            if (!CheckDataPrivilege())
-            {
-                list = await repository.CheckCacheList(cacheKey + "list");
-            }
-            else
-            {
-                var forms = GetDataPrivilege("u");
-                list = forms.ToList();
-            }
+            var query =repository .IQueryable ().Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true);
             if (layers!=0)
             { 
-                list = list.Where(t => t.F_Layers == layers).ToList();
+                query = query.Where(t => t.F_Layers == layers);
             }
-            return list.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true).OrderBy(t => t.F_SortCode).ToList();
+            query = GetDataPrivilege("u","", query);
+            return query.OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<AreaEntity> GetLookForm(string keyValue)
         {

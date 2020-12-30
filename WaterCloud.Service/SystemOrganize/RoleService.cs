@@ -64,12 +64,13 @@ namespace WaterCloud.Service.SystemOrganize
             dic.Add("F_Type", messageTypeTemp);
             pagination = ChangeSoulData(dic, pagination);
             //获取数据权限
-            var list = GetDataPrivilege("u","", GetQuery());
+            var query =  GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
+                query = query.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
             }
-            return await repository.OrderList(list, pagination);
+            query = GetDataPrivilege("u", "", query);
+            return await repository.OrderList(query, pagination);
         }
         public async Task<RoleEntity> GetForm(string keyValue)
         {

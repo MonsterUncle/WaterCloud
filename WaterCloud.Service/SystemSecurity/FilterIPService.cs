@@ -39,22 +39,14 @@ namespace WaterCloud.Service.SystemSecurity
         }
         public async Task<List<FilterIPEntity>> GetLookList(string keyword)
         {
-            var list = new List<FilterIPEntity>();
-            if (!CheckDataPrivilege())
-            {
-                list = await repository.CheckCacheList(cacheKey + "list");
-            }
-            else
-            {
-                var forms = GetDataPrivilege("u");
-                list = forms.ToList();
-            }
+            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(t => t.F_StartIP.Contains(keyword)||t.F_EndIP.Contains(keyword)).ToList();
-
+                //此处需修改
+                query = query.Where(t => t.F_StartIP.Contains(keyword) || t.F_EndIP.Contains(keyword));
             }
-            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList();
+            query = GetDataPrivilege("u", "", query);
+            return query.OrderBy(t => t.F_CreatorTime).ToList();
         }
         public async Task<FilterIPEntity> GetLookForm(string keyValue)
         {

@@ -35,13 +35,14 @@ namespace WaterCloud.Service.FileManage
 
         public async Task<List<UploadfileEntity>> GetLookList(string keyword = "")
         {
-            var list = GetDataPrivilege("u","", GetQuery());
+            var query = GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
+                query = query.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
-            var data = list.OrderByDesc(t => t.F_CreatorTime).ToList();
+            query = GetDataPrivilege("u", "", query);
+            var data = query.OrderByDesc(t => t.F_CreatorTime).ToList();
             foreach (var item in data)
             {
                 string[] departments = item.F_OrganizeId.Split(',');
@@ -63,14 +64,15 @@ namespace WaterCloud.Service.FileManage
             fileTypeTemp.Add("文件", "0");
             dic.Add("F_FileType", fileTypeTemp);
             pagination = ChangeSoulData(dic, pagination);
-            //获取数据权限
-            var list = GetDataPrivilege("u","", GetQuery());
+            var query = GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
+                query = query.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
-            var data = await repository.OrderList(list, pagination);
+            //权限过滤
+            query = GetDataPrivilege("u", "", query);
+            var data = await repository.OrderList(query, pagination);
             var orgs = uniwork.IQueryable<OrganizeEntity>().ToList();
             foreach (var item in data)
             {

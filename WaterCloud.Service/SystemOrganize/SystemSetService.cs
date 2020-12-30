@@ -38,22 +38,14 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<List<SystemSetEntity>> GetLookList(string keyword = "")
         {
-            var list =new List<SystemSetEntity>();
-            if (!CheckDataPrivilege())
-            {
-                list = await repository.CheckCacheList(cacheKey + "list");
-            }
-            else
-            {
-                var forms = GetDataPrivilege("u");
-                list = forms.ToList();
-            }
+            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(u => u.F_CompanyName.Contains(keyword) || u.F_ProjectName.Contains(keyword)).ToList();
+                query = query.Where(u => u.F_CompanyName.Contains(keyword) || u.F_ProjectName.Contains(keyword));
             }
-            return list.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
+            query = GetDataPrivilege("u", "", query);
+            return query.OrderByDesc(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<SystemSetEntity> GetFormByHost(string host)
@@ -78,15 +70,14 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<List<SystemSetEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
-            //获取数据权限
-            var list = GetDataPrivilege("u");
+            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(u => u.F_CompanyName.Contains(keyword) || u.F_ProjectName.Contains(keyword));
+                query = query.Where(u => u.F_CompanyName.Contains(keyword) || u.F_ProjectName.Contains(keyword));
             }
-            list = list.Where(u => u.F_DeleteMark==false);
-            return await repository.OrderList(list, pagination);
+            query = GetDataPrivilege("u", "", query);
+            return await repository.OrderList(query, pagination);
         }
 
         public async Task<SystemSetEntity> GetForm(string keyValue)

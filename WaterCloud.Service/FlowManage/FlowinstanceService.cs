@@ -83,29 +83,30 @@ namespace WaterCloud.Service.FlowManage
             enabledTemp.Add("被驳回", "4");
             dic.Add("F_IsFinish", enabledTemp);
             pagination = ChangeSoulData(dic, pagination);
-            var list = GetDataPrivilege("u");
+            var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(u => u.F_Code.Contains(keyword) || u.F_CustomName.Contains(keyword));
+                query = query.Where(u => u.F_Code.Contains(keyword) || u.F_CustomName.Contains(keyword));
             }
             var user = currentuser;
-
             if (type == "todo")   //待办事项
             {
-                list = list.Where(u => ((u.F_MakerList == "1" || u.F_MakerList.Contains(user.UserId))) && (u.F_IsFinish == 0 || u.F_IsFinish == 4) && u.F_ActivityType < 3);
+                query = query.Where(u => ((u.F_MakerList == "1" || u.F_MakerList.Contains(user.UserId))) && (u.F_IsFinish == 0 || u.F_IsFinish == 4) && u.F_ActivityType < 3);
             }
             else if (type == "done")  //已办事项（即我参与过的流程）
             {
                 var instances = uniwork.IQueryable<FlowInstanceOperationHistory>(u => u.F_CreatorUserId == user.UserId)
                     .Select(u => u.F_InstanceId).Distinct().ToList();
-                list = list.Where(u => instances.Contains(u.F_Id));
+                query = query.Where(u => instances.Contains(u.F_Id));
             }
             else  //我的流程
             {
-                list = list.Where(u => u.F_CreatorUserId == user.UserId);
+                query = query.Where(u => u.F_CreatorUserId == user.UserId);
             }
-            return await repository.OrderList(list.Where(a => a.F_EnabledMark == true), pagination);
+            //权限过滤
+            query = GetDataPrivilege("u","",query);
+            return await repository.OrderList(query.Where(a => a.F_EnabledMark == true), pagination);
         }
 
         public async Task<FlowinstanceEntity> GetForm(string keyValue)

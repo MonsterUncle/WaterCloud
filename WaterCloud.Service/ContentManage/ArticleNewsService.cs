@@ -88,11 +88,10 @@ namespace WaterCloud.Service.ContentManage
             {
                 query = query.Where(a => a.F_CategoryId.Contains(CategoryId));
             }
-            //获取数据权限
-            var list = GetDataPrivilege<ArticleNewsEntity>("u", "",query);
-            
-            list = list.Where(u => u.F_DeleteMark==false);
-            return await repository.OrderList(list, pagination);
+            query = query.Where(u => u.F_DeleteMark == false);
+            //权限过滤
+            query = GetDataPrivilege<ArticleNewsEntity>("u", "",query);           
+            return await repository.OrderList(query, pagination);
         }
         /// <summary>
         /// 获取新闻详情

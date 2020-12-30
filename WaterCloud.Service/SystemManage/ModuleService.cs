@@ -46,17 +46,9 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<List<ModuleEntity>> GetLookList()
         {
-            var list = new List<ModuleEntity>();
-            if (!CheckDataPrivilege())
-            {
-                list = await repository.CheckCacheList(cacheKey + "list");
-            }
-            else
-            {
-                var forms = GetDataPrivilege("u");
-                list = forms.ToList();
-            }
-            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
+            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
+            query = GetDataPrivilege("u", "", query);
+            return query.OrderBy(u => u.F_SortCode).ToList();
         }
         public async Task<ModuleEntity> GetLookForm(string keyValue)
         {

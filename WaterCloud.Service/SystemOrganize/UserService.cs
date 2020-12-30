@@ -45,12 +45,13 @@ namespace WaterCloud.Service.SystemOrganize
             dic.Add("F_Gender", sexTemp);
             pagination = ChangeSoulData(dic, pagination);
             //获取数据权限
-            var list = GetDataPrivilege("u","", GetQuery().Where(u => u.F_IsAdmin == false));
+            var query = GetQuery().Where(u => u.F_IsAdmin == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(u => u.F_Account.Contains(keyword) || u.F_RealName.Contains(keyword)||u.F_MobilePhone.Contains(keyword));
+                query = query.Where(u => u.F_Account.Contains(keyword) || u.F_RealName.Contains(keyword)||u.F_MobilePhone.Contains(keyword));
             }
-            var data = await repository.OrderList(list, pagination);
+            query = GetDataPrivilege("u", "", query);
+            var data = await repository.OrderList(query, pagination);
             var roles = uniwork.IQueryable<RoleEntity>().ToList();
             var orgs = uniwork.IQueryable<OrganizeEntity>().ToList();
             foreach (var item in data)

@@ -39,13 +39,13 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ModuleFieldsEntity>> GetLookList(Pagination pagination, string moduleId, string keyword = "")
         {
             //获取数据权限
-            var list = GetDataPrivilege("u");
+            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false && u.F_ModuleId == moduleId);
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
+                query = query.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
             }
-            list = list.Where(u => u.F_DeleteMark == false && u.F_ModuleId == moduleId);
-            return await repository.OrderList(list, pagination);
+            query = GetDataPrivilege("u","", query);
+            return await repository.OrderList(query, pagination);
 
         }
 

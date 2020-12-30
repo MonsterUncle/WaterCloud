@@ -39,29 +39,29 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<FlowschemeEntity>> GetLookList(string ItemId = "", string keyword = "")
         {
-            var list = GetDataPrivilege("u");
+            var query = repository.IQueryable().Where(t => t.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(ItemId))
             {
-                list = list.Where(u => u.F_OrganizeId == ItemId || u.F_OrganizeId == null || u.F_OrganizeId == "");
+                query = query.Where(u => u.F_OrganizeId == ItemId || u.F_OrganizeId == null || u.F_OrganizeId == "");
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword));
+                query = query.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword));
             }
-            return list.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
+            query = GetDataPrivilege("u","", query);
+            return query.OrderByDesc(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<FlowschemeEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
-            //获取数据权限
-            var list = GetDataPrivilege("u");
+            var query = repository.IQueryable().Where(t => t.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword));
+                query = query.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword));
             }
-            list = list.Where(u => u.F_DeleteMark==false);
-            return await repository.OrderList(list, pagination);
+            query = GetDataPrivilege("u","", query);
+            return await repository.OrderList(query, pagination);
         }
 
         public async Task<FlowschemeEntity> GetForm(string keyValue)
