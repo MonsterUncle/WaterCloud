@@ -131,7 +131,7 @@ namespace WaterCloud.Web.Controllers
                 {
                     throw new Exception("IP受限");
                 }
-                UserEntity userEntity =await _userService.CheckLogin(username, Md5.md5(password, 32).ToLower(), localurl);
+                UserEntity userEntity =await _userService.CheckLogin(username, password, localurl);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
                 operatorModel.UserCode = userEntity.F_Account;
