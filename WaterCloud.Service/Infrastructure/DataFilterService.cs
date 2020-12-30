@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
@@ -277,6 +278,17 @@ namespace WaterCloud.Service
             }
             fieldsList.Add(idName);
             fieldsList = fieldsList.Distinct().ToList();
+            //可以构建lambda
+            //var parameter = Expression.Parameter(typeof(TEntity), "u");
+            //var bindings = fieldsList
+            //.Select(name => name.Trim())
+            //.Select(name => Expression.Bind(
+            //typeof(TEntity).GetProperty(name),
+            //Expression.Property(parameter, name)
+            //));
+            //var newT = Expression.MemberInit(Expression.New(typeof(TEntity)), bindings);
+            //var lambda = Expression.Lambda<Func<TEntity, TEntity>>(newT, parameter);
+            //query =query.Select(lambda);
             List<string> ignoreList = new List<string>();
             foreach (var item in typeof(TEntity).GetProperties())
             {
@@ -285,7 +297,7 @@ namespace WaterCloud.Service
                     ignoreList.Add(item.Name);
                 }
             }
-            query.Ignore(ignoreList.ToArray());
+            query = query.Ignore(ignoreList.ToArray());
             return query;
         }
     }

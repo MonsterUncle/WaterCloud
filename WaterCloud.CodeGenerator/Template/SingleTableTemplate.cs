@@ -232,39 +232,25 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(string keyword = \"\")");
             sb.AppendLine("        {");
-            if (baseConfigModel.PageIndex.IsCache == 0)
-            {
-                sb.AppendLine("            var data = repository.IQueryable();");
-                sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
-                sb.AppendLine("            {");
-                sb.AppendLine("                //此处需修改");
-                sb.AppendLine("                data = data.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));");
-                sb.AppendLine("            }");
-                sb.AppendLine($"            return data.Where(t => t.{deleteMarkField} == false).OrderByDesc(t => t.{createTimeField}).ToList();");
-            }
-            else
-            {
-                sb.AppendLine("            var list = GetDataPrivilege(\"u\", \"\", repository.IQueryable());");
-                sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
-                sb.AppendLine("            {");
-                sb.AppendLine("                //此处需修改");
-                sb.AppendLine("                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));");
-                sb.AppendLine("            }");
-                sb.AppendLine($"            return list.Where(t => t.{deleteMarkField} == false).OrderByDesc(t => t.{createTimeField}).ToList();");
-
-            }
+            sb.AppendLine("            var query = repository.IQueryable();");
+            sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
+            sb.AppendLine("            {");
+            sb.AppendLine("                //此处需修改");
+            sb.AppendLine("                query = query.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));");
+            sb.AppendLine("            }");
+            sb.AppendLine("             //权限过滤");
+            sb.AppendLine("             query = GetDataPrivilege(\"u\", \"\", query);");
+            sb.AppendLine($"            return query.Where(t => t.{deleteMarkField} == false).OrderByDesc(t => t.{createTimeField}).ToList();");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(SoulPage<" + baseConfigModel.FileConfig.EntityName + "> pagination,string keyword = \"\"," + idType + " id=\"\")");
             sb.AppendLine("        {");
-            sb.AppendLine("            //获取数据权限");
-            sb.AppendLine("            var list = GetDataPrivilege(\"u\");");
+            sb.AppendLine("            var query = repository.IQueryable().Where(u => u.{deleteMarkField}==false);");
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
             sb.AppendLine("            {");
             sb.AppendLine("                //此处需修改");
-            sb.AppendLine("                list = list.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));");
+            sb.AppendLine("                query = query.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));");
             sb.AppendLine("            }");
-            sb.AppendLine($"            list = list.Where(u => u.{deleteMarkField}==false);");
             if (idType == "int" || idType == "long")
             {
                 sb.AppendLine("            if(id==0)");
@@ -274,8 +260,10 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("            if(!string.IsNullOrEmpty(id))");
             }
             sb.AppendLine("            {");
-            sb.AppendLine("                list= list.Where(u=>u." + idColumn + "==id);");
+            sb.AppendLine("                query= query.Where(u=>u." + idColumn + "==id);");
             sb.AppendLine("            }");
+            sb.AppendLine("            //权限过滤");
+            sb.AppendLine("            query = GetDataPrivilege(\"u\",\"\",query);");
             sb.AppendLine("            return await repository.OrderList(list, pagination);");
             sb.AppendLine("        }");
             sb.AppendLine();

@@ -62,14 +62,14 @@ namespace WaterCloud.Service.SystemOrganize
             enabledTemp.Add("无效", "0");
             dic.Add("F_EnabledMark", enabledTemp);
             pagination = ChangeSoulData(dic, pagination);
-            //获取数据权限
-            var list = GetDataPrivilege("u");
+            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(u => u.F_Title.Contains(keyword) || u.F_Content.Contains(keyword));
+                query = query.Where(u => u.F_Title.Contains(keyword) || u.F_Content.Contains(keyword));
             }
-            list = list.Where(u => u.F_DeleteMark==false);
-            return await repository.OrderList(list, pagination);
+            //权限过滤（保证分页参数存在）
+            query = GetDataPrivilege("u", "", query);
+            return await repository.OrderList(query, pagination);
         }
         public async Task<NoticeEntity> GetLookForm(string keyValue)
         {
