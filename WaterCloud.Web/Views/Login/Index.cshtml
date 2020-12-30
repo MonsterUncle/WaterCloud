@@ -57,7 +57,7 @@
     </div>
     <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
     <script src="~/js/cookie/jquery.cookie.js"></script>
-    <script src="~/js/md5/jquery.md5.js"></script>
+    <script src="~/js/md5/base64.js"></script>
     <script src="~/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
     <script src="~/lib/jq-module/jquery.particleground.min.js" charset="utf-8"></script>
     <script src="~/js/login.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
@@ -111,7 +111,7 @@
                 if ($.cookie("remember_user")) {
                     $("#remember_user").prop("checked", true);
                     $("#username").val($.cookie("username"));
-                    $("#password").val($.cookie("password"));
+                    $("#password").val(Base64.decode($.cookie("password")));
                 }
             });
             function saveUserInfo() {
@@ -124,7 +124,7 @@
                     $.cookie("username", user_name, {
                         expires: 7
                     }); // 存储一个带7天期限的 cookie
-                    $.cookie("password", user_password, {
+                    $.cookie("password", Base64.encode(user_password), {
                         expires: 7
                     }); // 存储一个带7天期限的 cookie
                 } else {
@@ -171,7 +171,7 @@
                     $("#login_button").attr('disabled', 'disabled').html("loading...");
                     $.ajax({
                         url: "/Login/CheckLogin?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
-                        data: { username: $.trim($('#username').val()), localurl: location.host, password: $.md5($.trim($('#password').val())) },
+                        data: { username: $.trim($('#username').val()), localurl: location.host, password:$.trim($('#password').val()) },
                         type: "post",
                         dataType: "json",
                         success: function (data) {
