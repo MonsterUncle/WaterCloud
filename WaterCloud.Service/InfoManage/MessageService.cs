@@ -66,7 +66,7 @@ namespace WaterCloud.Service.InfoManage
             var tempList= repository.IQueryable(a => a.F_MessageType == 2).InnerJoin<MessageHistoryEntity>((a, b) => a.F_Id == b.F_MessageId).Select((a, b) => a.F_Id).ToList();
             hisquery.AddRange(tempList);
             var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId) || a.F_ToUserId == "") && a.F_EnabledMark == true && !hisquery.Contains(a.F_Id));
-            return GetFieldsFilterDataNew(query.OrderByDesc(t => t.F_CreatorTime)).ToList();
+            return GetFieldsFilterDataNew("a",query.OrderByDesc(t => t.F_CreatorTime)).ToList();
         }
 
         public async Task<List<MessageEntity>> GetLookList(SoulPage<MessageEntity> pagination, string keyword = "")

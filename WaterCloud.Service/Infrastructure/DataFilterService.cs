@@ -55,7 +55,7 @@ namespace WaterCloud.Service
             }
             if (!CheckDataPrivilege(moduleName))
             {
-                return GetFieldsFilterDataNew(query, moduleName);
+                return GetFieldsFilterDataNew(parametername,query, moduleName);
             }
             var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
@@ -78,7 +78,7 @@ namespace WaterCloud.Service
             }
             query = query.GenerateFilter(parametername,
                 JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
-            return GetFieldsFilterDataNew(query);
+            return GetFieldsFilterDataNew(parametername,query);
         }
         /// <summary>
         ///  获取当前登录用户的数据访问权限(复杂查询)
@@ -92,7 +92,7 @@ namespace WaterCloud.Service
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             if (!CheckDataPrivilege(moduleName))
             {
-                return GetFieldsFilterDataNew(query, moduleName);
+                return GetFieldsFilterDataNew(parametername,query, moduleName);
             }
             var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
@@ -111,7 +111,7 @@ namespace WaterCloud.Service
             }
             query = query.GenerateFilter(parametername,
                 JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
-            return GetFieldsFilterDataNew(query);
+            return GetFieldsFilterDataNew(parametername,query);
         }
         /// <summary>
         ///  获取当前登录用户是否需要数据控制
@@ -251,7 +251,7 @@ namespace WaterCloud.Service
         ///<param name=""query>数据列表</param>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
-        protected IQuery<TEntity> GetFieldsFilterDataNew<TEntity>(IQuery<TEntity> query, string moduleName = "")
+        protected IQuery<TEntity> GetFieldsFilterDataNew<TEntity>(string parametername, IQuery<TEntity> query, string moduleName = "")
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             //管理员跳过
@@ -278,26 +278,27 @@ namespace WaterCloud.Service
             }
             fieldsList.Add(idName);
             fieldsList = fieldsList.Distinct().ToList();
-            //可以构建lambda
-            //var parameter = Expression.Parameter(typeof(TEntity), "u");
-            //var bindings = fieldsList
-            //.Select(name => name.Trim())
-            //.Select(name => Expression.Bind(
-            //typeof(TEntity).GetProperty(name),
-            //Expression.Property(parameter, name)
-            //));
-            //var newT = Expression.MemberInit(Expression.New(typeof(TEntity)), bindings);
-            //var lambda = Expression.Lambda<Func<TEntity, TEntity>>(newT, parameter);
-            //query =query.Select(lambda);
-            List<string> ignoreList = new List<string>();
-            foreach (var item in typeof(TEntity).GetProperties())
-            {
-                if (!fieldsList.Contains(item.Name))
-                {
-                    ignoreList.Add(item.Name);
-                }
-            }
-            query = query.Ignore(ignoreList.ToArray());
+			//可以构建lambda
+			var parameter = Expression.Parameter(typeof(TEntity), parametername);
+			var bindings = fieldsList
+			.Select(name => name.Trim())
+			.Select(name => Expression.Bind(
+			typeof(TEntity).GetProperty(name),
+			Expression.Property(parameter, name)
+			));
+			var newT = Expression.MemberInit(Expression.New(typeof(TEntity)), bindings);
+			var lambda = Expression.Lambda<Func<TEntity, TEntity>>(newT, parameter);
+			query = query.Select(lambda);
+            //chloe扩展方法
+			//List<string> ignoreList = new List<string>();
+   //         foreach (var item in typeof(TEntity).GetProperties())
+   //         {
+   //             if (!fieldsList.Contains(item.Name))
+   //             {
+   //                 ignoreList.Add(item.Name);
+   //             }
+   //         }
+   //         query = query.Ignore(ignoreList.ToArray());
             return query;
         }
     }
