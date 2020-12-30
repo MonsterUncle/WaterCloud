@@ -54,7 +54,7 @@ namespace WaterCloud.Service
             }
             if (!CheckDataPrivilege(moduleName))
             {
-                return GetFieldsFilterDataNew(query);
+                return GetFieldsFilterDataNew(query, moduleName);
             }
             var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
@@ -91,7 +91,7 @@ namespace WaterCloud.Service
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             if (!CheckDataPrivilege(moduleName))
             {
-                return GetFieldsFilterDataNew(query);
+                return GetFieldsFilterDataNew(query, moduleName);
             }
             var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
