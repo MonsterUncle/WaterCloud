@@ -232,7 +232,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(string keyword = \"\")");
             sb.AppendLine("        {");
-            sb.AppendLine("            var query = repository.IQueryable().Where(t => t.{deleteMarkField} == false);");
+            sb.AppendLine($"            var query = repository.IQueryable().Where(t => t.{deleteMarkField} == false);");
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
             sb.AppendLine("            {");
             sb.AppendLine("                //此处需修改");
@@ -245,7 +245,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(SoulPage<" + baseConfigModel.FileConfig.EntityName + "> pagination,string keyword = \"\"," + idType + " id=\"\")");
             sb.AppendLine("        {");
-            sb.AppendLine("            var query = repository.IQueryable().Where(u => u.{deleteMarkField}==false);");
+            sb.AppendLine($"            var query = repository.IQueryable().Where(u => u.{deleteMarkField}==false);");
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
             sb.AppendLine("            {");
             sb.AppendLine("                //此处需修改");
