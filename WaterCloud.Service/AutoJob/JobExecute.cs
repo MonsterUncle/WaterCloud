@@ -22,7 +22,7 @@ namespace WaterCloud.Service.AutoJob
 
         public JobExecute(ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory)
         {
-            _scheduler = schedulerFactory.GetScheduler().Result;
+            _scheduler = schedulerFactory.GetScheduler().GetAwaiter().GetResult();
             _scheduler.JobFactory = iocJobfactory;
             _schedulerFactory = schedulerFactory;
             _iocJobfactory = iocJobfactory;

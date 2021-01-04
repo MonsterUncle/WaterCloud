@@ -156,5 +156,45 @@ namespace WaterCloud.Code
                     break;
             }
         }
+        /// <summary>
+        /// 不存在就插入
+        /// </summary>
+        /// <param name="key">缓存Key</param>
+        /// <param name="value">缓存Value</param>
+        /// <returns></returns>
+        public static async Task<bool> SetNx(string key , object value)
+        {
+            bool result = false;
+            switch (cacheProvider)
+            {
+                case Define.CACHEPROVIDER_REDIS:
+                    result= await BaseHelper.SetNxAsync(key, value);
+                    await BaseHelper.ExpireAsync(key, 3600);
+                    break;
+                case Define.CACHEPROVIDER_MEMORY:
+					if (MemoryCacheHelper.Exists(key))
+					{
+                        result = false;
+                    }
+					else
+					{
+                        result = true;
+                        MemoryCacheHelper.Set(key,value, TimeSpan.FromHours(1),false);
+                    }
+                    break;
+                default:
+                    if (MemoryCacheHelper.Exists(key))
+                    {
+                        result = false;
+                    }
+                    else
+                    {
+                        result = true;
+                        MemoryCacheHelper.Set(key, value, TimeSpan.FromHours(1), false);
+                    }
+                    break;
+            }
+            return result;
+        }
     }
 }

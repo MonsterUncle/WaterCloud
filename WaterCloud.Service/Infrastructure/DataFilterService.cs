@@ -124,7 +124,7 @@ namespace WaterCloud.Service
             if (currentuser.UserId == GlobalContext.SystemConfig.SysemUserId) return false;  //超级管理员特权
             var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             ////系统菜单也不需要数据权限 跟字段重合取消这样处理
-            //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).Result;
+            //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).GetAwaiter().GetResult();
             if (rule == null)
             {
                 return false; //没有设置数据规则，那么视为该资源允许被任何主体查看

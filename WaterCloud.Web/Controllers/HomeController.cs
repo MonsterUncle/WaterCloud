@@ -5,6 +5,7 @@
  * Website：
 *********************************************************************************/
 using Microsoft.AspNetCore.Mvc;
+using WaterCloud.Code;
 using WaterCloud.Service.SystemOrganize;
 
 namespace WaterCloud.Web.Controllers
@@ -21,7 +22,7 @@ namespace WaterCloud.Web.Controllers
             {
                 return View();
             }
-            var systemset = _setService.GetForm(_setService.currentuser.CompanyId).Result;
+            var systemset = _setService.GetForm(_setService.currentuser.CompanyId).GetAwaiter().GetResult();
             ViewBag.ProjectName = systemset.F_ProjectName;
             ViewBag.LogoIcon = ".." + systemset.F_Logo;
             return View();

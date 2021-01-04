@@ -31,7 +31,7 @@ namespace WaterCloud.Service.SystemSecurity
         {
             repository = new RepositoryBase<OpenJobEntity>(context);
             uniwork = new RepositoryBase(context);
-            _scheduler = schedulerFactory.GetScheduler().Result;
+            _scheduler = schedulerFactory.GetScheduler().GetAwaiter().GetResult();
             _scheduler.JobFactory = iocJobfactory;
         }
         /// <summary>

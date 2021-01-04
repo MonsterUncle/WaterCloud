@@ -39,7 +39,7 @@ namespace WaterCloud.Web
             {
                 WebHelper.WriteCookie("WaterCloud_login_error", "overdue");
                 //filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408" + "';if(document.all) window.event.returnValue = false;</script>");
-                OperatorProvider.Provider.EmptyCurrent("pc_");
+                OperatorProvider.Provider.EmptyCurrent("pc_").GetAwaiter().GetResult();
                 filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408");
                 return;
             }
@@ -56,7 +56,7 @@ namespace WaterCloud.Web
             //用户和角色检测
             if (!this.RoleAuthorize())
             {
-                OperatorProvider.Provider.EmptyCurrent("pc_");
+                OperatorProvider.Provider.EmptyCurrent("pc_").GetAwaiter().GetResult();
                 //filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=403" + "';if(document.all) window.event.returnValue = false;</script>");
                 filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408");
                 return;
@@ -68,23 +68,23 @@ namespace WaterCloud.Web
             try
             {
 
-                OperatorResult result = OperatorProvider.Provider.IsOnLine("pc_").Result;
+                OperatorResult result = OperatorProvider.Provider.IsOnLine("pc_").GetAwaiter().GetResult();
                 switch (result.stateCode)
                 {
                     case 1:
                         return true;
                     case 0:
-                        OperatorProvider.Provider.EmptyCurrent("pc_");
+                        OperatorProvider.Provider.EmptyCurrent("pc_").GetAwaiter().GetResult();
                         //filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408" + "';if(document.all) window.event.returnValue = false;</script>");
                         filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408");
                         return false;
                     case -1:
-                        OperatorProvider.Provider.EmptyCurrent("pc_");
+                        OperatorProvider.Provider.EmptyCurrent("pc_").GetAwaiter().GetResult();
                         //filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408" + "';if(document.all) window.event.returnValue = false;</script>");
                         filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408");
                         return false;
                     case -2:
-                        OperatorProvider.Provider.EmptyCurrent("pc_");
+                        OperatorProvider.Provider.EmptyCurrent("pc_").GetAwaiter().GetResult();
                         //filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=401" + "';if(document.all) window.event.returnValue = false;</script>");
                         filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=401");
                         return false;
@@ -106,7 +106,7 @@ namespace WaterCloud.Web
                 var current = OperatorProvider.Provider.GetCurrent();
                 var roleId = current.RoleId;
                 var userId = current.UserId;
-                return _service.RoleValidate(userId, roleId).Result;
+                return _service.RoleValidate(userId, roleId).GetAwaiter().GetResult();
             }
             catch (System.Exception)
             {

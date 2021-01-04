@@ -21,7 +21,7 @@ namespace WaterCloud.Service.AutoJob
         public JobCenter(OpenJobsService service, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory) 
         {
             _service = service;
-            _scheduler = schedulerFactory.GetScheduler().Result;
+            _scheduler = schedulerFactory.GetScheduler().GetAwaiter().GetResult();
             _scheduler.JobFactory = iocJobfactory;
         }
         public void Start()

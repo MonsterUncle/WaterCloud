@@ -132,7 +132,7 @@ namespace WaterCloud.Web
                 temp.F_AdminPassword = GlobalContext.SystemConfig.SysemUserPwd;
                 temp.F_DBProvider = GlobalContext.SystemConfig.DBProvider;
                 temp.F_DbString = GlobalContext.SystemConfig.DBConnectionString;
-                _setService.SubmitForm(temp, GlobalContext.SystemConfig.SysemMasterProject);
+                _setService.SubmitForm(temp, GlobalContext.SystemConfig.SysemMasterProject).GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
@@ -169,6 +169,7 @@ namespace WaterCloud.Web
             builder.RegisterType(typeof(HandlerLoginAttribute)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(HandlerAuthorizeAttribute)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(HandlerAdminAttribute)).InstancePerLifetimeScope();
+            builder.RegisterType(typeof(HandlerLockAttribute)).InstancePerLifetimeScope();
             ////注册ue编辑器
             //Config.ConfigFile = "config.json";
             //Config.noCache = true;
