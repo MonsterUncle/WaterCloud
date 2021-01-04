@@ -225,7 +225,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }   
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public async Task<ActionResult> CodeGenerateJson(BaseConfigModel baseConfig, string Code)
         {
             try
@@ -248,7 +247,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public async Task<ActionResult> EntityCodeGenerateJson(BaseConfigModel baseConfig, string keyValue)
         {
             try

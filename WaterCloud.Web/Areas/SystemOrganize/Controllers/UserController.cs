@@ -205,7 +205,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public async Task<ActionResult> SubmitRevisePassword(string F_UserPassword, string keyValue)
         {
             try
