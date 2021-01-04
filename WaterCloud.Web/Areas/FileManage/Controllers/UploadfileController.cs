@@ -64,6 +64,12 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
         {
             try
             {
+                //1图片，2excel
+                int[] filetypes = { 1, 2 };
+                if (!filetypes.Contains(filetype))
+                {
+                    throw new Exception("请指定文件格式");
+                }
                 string stemp = "local";
                 if (_service.currentuser.CompanyId != GlobalContext.SystemConfig.SysemMasterProject)
                 {
