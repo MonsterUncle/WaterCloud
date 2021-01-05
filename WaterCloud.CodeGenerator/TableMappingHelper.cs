@@ -111,6 +111,7 @@ namespace WaterCloud.CodeGenerator
                     break;
 
                 case "datetime":
+                case "datetime2":
                 case "date":
                 case "smalldatetime":
                 case "timestamp":
