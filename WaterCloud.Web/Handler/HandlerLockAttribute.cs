@@ -30,43 +30,35 @@ namespace WaterCloud.Web
                 filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408");
                 return;
             }
-			else
-			{
-                string token = filterContext.HttpContext.Request.Cookies[GlobalContext.SystemConfig.TokenName];
-				if (string.IsNullOrWhiteSpace(token))
-				{
+            else
+            {
+                string token = filterContext.HttpContext.Request.Cookies["pc_" + GlobalContext.SystemConfig.TokenName];
+                string cacheToken = CacheHelper.Get<string>("pc_" + GlobalContext.SystemConfig.TokenName + "_" + OperatorProvider.Provider.GetCurrent().UserId + "_" + OperatorProvider.Provider.GetCurrent().LoginTime).GetAwaiter().GetResult();
+                if (string.IsNullOrWhiteSpace(token))
+                {
                     filterContext.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "toekn不能空" });
                     return;
                 }
-                bool result= CacheHelper.SetNx(token, token).GetAwaiter().GetResult();
+                if (string.IsNullOrWhiteSpace(cacheToken))
+                {
+                    filterContext.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "toekn不能空" });
+                    return;
+                }
+                if (token != cacheToken)
+                {
+                    filterContext.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "请求异常" });
+                    return;
+                }
+                //固定加锁5秒
+                bool result = CacheHelper.SetNx(token, token, 5).GetAwaiter().GetResult();
                 if (!result)
-				{
+                {
                     filterContext.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "请求太频繁，请稍后" });
                     return;
                 }
             }
             //随机值
-            //token刷新（去除的话，变成唯一锁）
-            string cacheToken = Utils.GuId();
-            filterContext.HttpContext.Response.Cookies.Append(GlobalContext.SystemConfig.TokenName, cacheToken);
             base.OnActionExecuting(filterContext);
         }
-        //失败才刷新
-		//public override void OnActionExecuted(ActionExecutedContext context)
-		//{
-  //          var data = context.Result.ToJson().ToJObject();
-		//	if (data.ContainsKey("Content"))
-		//	{
-  //              var result = data["Content"].ToString().ToJObject();
-  //              if (result["state"].ToString() == "error")
-  //              {
-  //                  //token刷新
-  //                  string cacheToken = Utils.GuId();
-  //                  context.HttpContext.Response.Cookies.Append(GlobalContext.SystemConfig.TokenName, cacheToken);
-  //              }
-  //          }
-
-  //          base.OnActionExecuted(context);
-		//}
-	}
+    }
 }

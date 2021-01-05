@@ -15,7 +15,7 @@ namespace WaterCloud.WebApi
     public class AuthorizeFilterAttribute : ActionFilterAttribute
     {
         /// <summary>
-        /// 异步接口日志
+        /// 验证
         /// </summary>
         /// <param name="context"></param>
         /// <param name="next"></param>
@@ -24,7 +24,7 @@ namespace WaterCloud.WebApi
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            if (GlobalContext.SystemConfig.Debug==false)
+            if (!GlobalContext.SystemConfig.Debug)
             {
                 string token = context.HttpContext.Request.Headers[GlobalContext.SystemConfig.TokenName].ParseToString();
                 OperatorModel user = OperatorProvider.Provider.GetCurrent();
@@ -37,6 +37,11 @@ namespace WaterCloud.WebApi
                 var methodanonymous = description.MethodInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
                 if (user != null)
                 {
+                    //延长过期时间
+                    int LoginExpire = GlobalContext.SystemConfig.LoginExpire;
+                    string cacheKeyOperator = "watercloud_operator_";// +登录者token
+                    await CacheHelper.Expire(cacheKeyOperator + token, LoginExpire);
+                    await CacheHelper.Expire(cacheKeyOperator + "api_" + user.UserId, LoginExpire);
                     // 根据传入的Token，添加token和客户参数
                     if (context.ActionArguments != null && context.ActionArguments.Count > 0)
                     {
@@ -68,7 +73,7 @@ namespace WaterCloud.WebApi
                     context.Result = new JsonResult(obj);
                     return;
                 }
-            }     
+            }
             var resultContext = await next();
 
             sw.Stop();

@@ -161,36 +161,39 @@ namespace WaterCloud.Code
         /// </summary>
         /// <param name="key">缓存Key</param>
         /// <param name="value">缓存Value</param>
+        /// <param name="second">过期时间</param>
         /// <returns></returns>
-        public static async Task<bool> SetNx(string key , object value)
+        public static async Task<bool> SetNx(string key , object value,int second=10)
         {
             bool result = false;
             switch (cacheProvider)
             {
                 case Define.CACHEPROVIDER_REDIS:
                     result= await BaseHelper.SetNxAsync(key, value);
-                    await BaseHelper.ExpireAsync(key, 3600);
+                    await BaseHelper.ExpireAsync(key, second);
                     break;
                 case Define.CACHEPROVIDER_MEMORY:
 					if (MemoryCacheHelper.Exists(key))
 					{
                         result = false;
+                        MemoryCacheHelper.Get(key);
                     }
 					else
 					{
                         result = true;
-                        MemoryCacheHelper.Set(key,value, TimeSpan.FromHours(1),false);
+                        MemoryCacheHelper.Set(key,value, TimeSpan.FromSeconds(second),true);
                     }
                     break;
                 default:
                     if (MemoryCacheHelper.Exists(key))
                     {
                         result = false;
+                        MemoryCacheHelper.Get(key);
                     }
                     else
                     {
                         result = true;
-                        MemoryCacheHelper.Set(key, value, TimeSpan.FromHours(1), false);
+                        MemoryCacheHelper.Set(key, value, TimeSpan.FromSeconds(second), true);
                     }
                     break;
             }

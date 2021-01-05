@@ -163,6 +163,10 @@ namespace WaterCloud.Web.Controllers
                 }
                 //缓存保存用户信息
                 await OperatorProvider.Provider.AddLoginUser(operatorModel, "","pc_");
+                //防重复token
+                string token = Utils.GuId();
+                HttpContext.Response.Cookies.Append("pc_" + GlobalContext.SystemConfig.TokenName, token);
+                await CacheHelper.Set("pc_" + GlobalContext.SystemConfig.TokenName + "_" + operatorModel.UserId + "_" + operatorModel.LoginTime, token, GlobalContext.SystemConfig.LoginExpire, true);
                 logEntity.F_Account = userEntity.F_Account;
                 logEntity.F_NickName = userEntity.F_RealName;
                 logEntity.F_Result = true;

@@ -233,6 +233,7 @@ namespace WaterCloud.Code
                         await CacheHelper.Remove(cacheKeyOperator + facilityMark + operatorInfo.UserId);
                     }
                     await CacheHelper.Set(cacheKeyToken + operatorInfo.UserId, tokenMarkList);
+                    await CacheHelper.Remove(facilityMark + GlobalContext.SystemConfig.TokenName + "_" + operatorInfo.UserId + "_" + operatorInfo.LoginTime);
                 }
             }
             catch (Exception)
@@ -314,6 +315,7 @@ namespace WaterCloud.Code
                             operatorResult.stateCode = 1;
                             await CacheHelper.Expire(cacheKeyOperator + loginMark, LoginExpire);
                             await CacheHelper.Expire(cacheKeyOperator + facilityMark + operatorInfo.UserId, LoginExpire);
+                            await CacheHelper.Expire(facilityMark + GlobalContext.SystemConfig.TokenName + "_" + operatorInfo.UserId + "_" + operatorInfo.LoginTime, LoginExpire);
                         }
                     }
                 }

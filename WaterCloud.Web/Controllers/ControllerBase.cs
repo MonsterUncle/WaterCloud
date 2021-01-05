@@ -59,24 +59,18 @@ namespace WaterCloud.Web
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult Index()
         {
-            string token = Utils.GuId();
-            HttpContext.Response.Cookies.Append(GlobalContext.SystemConfig.TokenName, token);
             return View();
         }
         [HttpGet]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult Form()
         {
-            string token = Utils.GuId();
-            HttpContext.Response.Cookies.Append(GlobalContext.SystemConfig.TokenName, token);
             return View();
         }
         [HttpGet]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
         public virtual ActionResult Details()
         {
-            string token = Utils.GuId();
-            HttpContext.Response.Cookies.Append(GlobalContext.SystemConfig.TokenName, token);
             return View();
         }
         protected virtual async Task<ActionResult> Success(string message, string className = "", string keyValue = "", DbLogType? logType = null)
