@@ -613,6 +613,31 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             $element.find("[authorize=no]").parents('button').remove();
             $element.find('[authorize=no]').remove();
         },
+        //权限控制单个按钮，返回是否
+        authorizeButtonOne: function (id) {
+            var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            var isOk = false;
+            if (!top.clients || !top.clients.authorizeButton || !top.clients.authorizeButton[moduleId.split("?")[0]]) {
+                isOk = false;
+            }
+            else {
+                var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
+
+                for (var i = 0; i < dataJson.length; i++) {
+                    if (dataJson[i].F_EnCode == id) {
+                        isOk = true;
+                    }
+                }
+            }
+            if (isOk) {
+                $("#" + id).parent().removeClass('layui-hide');
+            }
+            else {
+                $("#" + id).remove();;
+                $("#" + id).parent().remove();;
+            }
+            return isOk;
+        },
         //表单权限字段
         authorizeFields: function (filter) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
