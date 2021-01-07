@@ -36,12 +36,12 @@ namespace WaterCloud.Web
                 string cacheToken = CacheHelper.Get<string>("pc_" + GlobalContext.SystemConfig.TokenName + "_" + OperatorProvider.Provider.GetCurrent().UserId + "_" + OperatorProvider.Provider.GetCurrent().LoginTime).GetAwaiter().GetResult();
                 if (string.IsNullOrWhiteSpace(token))
                 {
-                    filterContext.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "toekn不能空" });
+                    filterContext.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "token不能空" });
                     return;
                 }
                 if (string.IsNullOrWhiteSpace(cacheToken))
                 {
-                    filterContext.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "toekn不能空" });
+                    filterContext.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "token不能空" });
                     return;
                 }
                 if (token != cacheToken)

@@ -33,7 +33,7 @@ namespace WaterCloud.WebApi
                     string token = context.HttpContext.Request.Headers[GlobalContext.SystemConfig.TokenName].ParseToString();
                     if (string.IsNullOrWhiteSpace(token))
                     {
-                        context.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "toekn不能空" });
+                        context.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "token不能空" });
                         return;
                     }
                     //固定加锁5秒
