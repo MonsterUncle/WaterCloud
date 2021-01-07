@@ -34,7 +34,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public ActionResult SubmitForm(string permissionIds)
         {
             string[] temp = string.IsNullOrEmpty(permissionIds)?null:permissionIds.Split(',');
-            await _moduleService.SubmitForm(temp);
+            moduleApp.SubmitForm(temp);
             return Content(new AjaxResult { state = ResultType.success.ToString(), message = "操作成功" }.ToJson());
         }
     }
