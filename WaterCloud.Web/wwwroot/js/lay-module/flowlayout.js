@@ -13,13 +13,19 @@
             var defaultcnf = {
                 width: 500,
                 height: 400,
-
                 haveHead: false,
                 haveTool: true,
                 headLabel: true,
                 toolBtns: ["start round mix", "end round", "node", "join", "fork"],
                 haveGroup: true,
-                useOperStack: true
+                useOperStack: true,
+                needNoTag: true,
+                useName: "处理人",
+                tagName: { "1": "通过", "2": "不通过", "3": "驳回" },
+                tagClass: { "1": "#5cb85c", "2": "#d9534f", "3": "#f0ad4e" },
+                resultName: "结果",
+                timeName: "处理时间",
+                remarkName: "备注",
             };
             if (options != undefined) {
                 $.extend(defaultcnf, options);
@@ -172,21 +178,24 @@
                 }
                 return false;
             }
-            if (options.isprocessing) //如果是显示进程状态
+            if (defaultcnf.isprocessing) //如果是显示进程状态
             {
                 var tipHtml =
-                    '<div style="position:absolute;left:10px;margin-top: 10px;padding:10px;border-radius:5px;background:rgba(0,0,0,0.05);z-index:-1;display:inline-block;">';
-                tipHtml +=
-                    '<div style="display: inline-block;"><i style="padding-right:5px;color:#5cb85c;" class="layui-icon">&#xe612;</i><span>已处理</span></div>';
-                tipHtml +=
-                    '<div style="display: inline-block;margin-left: 10px;"><i style="padding-right:5px;color:#5bc0de;" class="layui-icon">&#xe612;</i><span>正在处理</span></div>';
-                tipHtml +=
-                    '<div style="display: inline-block;margin-left: 10px;"><i style="padding-right:5px;color:#d9534f;" class="layui-icon">&#xe612;</i><span>不通过</span></div>';
-                tipHtml +=
-                    '<div style="display: inline-block;margin-left: 10px;"><i style="padding-right:5px;color:#f0ad4e;" class="layui-icon">&#xe612;</i><span>驳回</span></div>';
-                tipHtml +=
-                    '<div style="display: inline-block;margin-left: 10px;"><i style="padding-right:5px;color:#999;" class="layui-icon">&#xe612;</i><span>未处理</span></div></div>';
-
+                    '<div style="position:absolute;left:10px;margin-top: 10px;padding:10px;border-radius:5px;background:rgba(0,0,0,0.05);z-index:0;display:inline-block;">';
+                if (defaultcnf.needNoTag == true) {
+                    tipHtml +=
+                        '<div style="display: inline-block;"><i style="padding-right:5px;color:#5bc0de;" class="layui-icon">&#xe612;</i><span>正在处理</span></div>';
+                }
+                if (!!defaultcnf.tagClass && Object.keys(defaultcnf.tagClass).length > 0) {
+                    for (var p in defaultcnf.tagClass) {//遍历json对象的每个key/value对,p为key
+                        tipHtml +=
+                            '<div style="display: inline-block;;margin-left: 10px;"><i style="padding-right:5px;color:' + defaultcnf.tagClass[p] + ';" class="layui-icon">&#xe612;</i><span>' + defaultcnf.tagName[p] + '</span></div>';
+                    }
+                }
+                if (defaultcnf.needNoTag == true) {
+                    tipHtml +=
+                        '<div style="display: inline-block;margin-left: 10px;"><i style="padding-right:5px;color:#999;" class="layui-icon">&#xe612;</i><span>未处理</span></div></div>';
+                }
                 $('.GooFlow_work .GooFlow_work_inner').css('background-image', 'none');
                 $('td').css('color', '#fff');
                 $frmpreview.css('background', '#fff');
@@ -200,25 +209,22 @@
                             $("#" + item.id).css("background", "#5cb85c");
                         } else {
                             if (item.id == options.activityId) {
-                                $("#" + item.id).css("background", "#5bc0de"); //正在处理
+                                $("#" + item.id).css("background", "#5bc0de");
                             }
                             if (item.setInfo != undefined && item.setInfo.Taged != undefined) {
-                                if (item.setInfo.Taged == 2) {
-                                    $("#" + item.id).css("background", "#d9534f"); //不通过
-                                } else if (item.setInfo.Taged == 1) {
-                                    $("#" + item.id).css("background", "#5cb85c"); //通过
+                                if (!!defaultcnf.tagName[item.setInfo.Taged]) {
+                                    $("#" + item.id).css("background", defaultcnf.tagClass[item.setInfo.Taged]);
                                 } else {
-                                    $("#" + item.id).css("background", "#f0ad4e"); //驳回
+                                    $("#" + item.id).css("background", "#999");
                                 }
                             }
                         }
                         if (item.setInfo != undefined && item.setInfo.Taged != undefined) {
                             var tips = '<div style="text-align:left">';
-                            var tagname = { "1": "通过", "2": "不通过", "3": "驳回" };
-                            tips += "<p>处理人：" + item.setInfo.UserName + "</p>";
-                            tips += "<p>结果：" + tagname[item.setInfo.Taged] + "</p>";
-                            tips += "<p>处理时间：" + item.setInfo.TagedTime + "</p>";
-                            tips += "<p>备注：" + item.setInfo.Description + "</p></div>";
+                            tips += "<p>" + defaultcnf.useName + "：" + item.setInfo.UserName + "</p>";
+                            tips += "<p>" + defaultcnf.resultName + "：" + defaultcnf.tagName[item.setInfo.Taged] + "</p>";
+                            tips += "<p>" + defaultcnf.timeName + "：" + item.setInfo.TagedTime + "</p>";
+                            tips += "<pre>" + defaultcnf.remarkName + "：" + item.setInfo.Description + "</pre></div>";
 
                             $('#' + item.id).hover(function () {
                                 layer.tips(tips, '#' + item.id);
