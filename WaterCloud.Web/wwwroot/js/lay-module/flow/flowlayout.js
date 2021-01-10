@@ -184,17 +184,17 @@
                     '<div style="position:absolute;left:10px;margin-top: 10px;padding:10px;border-radius:5px;background:rgba(0,0,0,0.05);z-index:0;display:inline-block;">';
                 if (defaultcnf.needNoTag==true) {
                     tipHtml +=
-                        '<div style="display: inline-block;"><i style="padding-right:5px;color:#5bc0de;" class="layui-icon">&#xe612;</i><span>正在处理</span></div>';
+                        '<div style="display: inline-block;"><i style="padding-right:5px;color:#5bc0de;" class="layui-icon">&#xe658;</i><span>正在处理</span></div>';
                 }
                 if (!!defaultcnf.tagClass && Object.keys(defaultcnf.tagClass).length > 0) {
                     for (var p in defaultcnf.tagClass) {//遍历json对象的每个key/value对,p为key
                         tipHtml +=
-                            '<div style="display: inline-block;;margin-left: 10px;"><i style="padding-right:5px;color:' + defaultcnf.tagClass[p] + ';" class="layui-icon">&#xe612;</i><span>' + defaultcnf.tagName[p] + '</span></div>';
+                            '<div style="display: inline-block;;margin-left: 10px;"><i style="padding-right:5px;color:' + defaultcnf.tagClass[p] + ';" class="layui-icon">&#xe658;</i><span>' + defaultcnf.tagName[p] + '</span></div>';
                     }
                 }
                 if (defaultcnf.needNoTag == true) {
                     tipHtml +=
-                        '<div style="display: inline-block;margin-left: 10px;"><i style="padding-right:5px;color:#999;" class="layui-icon">&#xe612;</i><span>未处理</span></div></div>';
+                        '<div style="display: inline-block;margin-left: 10px;"><i style="padding-right:5px;color:#999;" class="layui-icon">&#xe658;</i><span>未处理</span></div></div>';
                 }
                 $('.WaterFlow_work .WaterFlow_work_inner').css('background-image', 'none');
                 $('td').css('color', '#fff');
