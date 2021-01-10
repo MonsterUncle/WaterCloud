@@ -1,7 +1,5 @@
 /**
- * Gooflow在线流程图设计器
- * Version: 1.3.2
- * Copyright: foolegg126(sdlddr)
+ * WaterFlow流程图设计器
  */
 
 layui.define("jquery",
@@ -157,21 +155,21 @@ layui.define("jquery",
 		}
 	}
 //构造类：
-var GooFlow = function(selector,property){
+var WaterFlow = function(selector,property){
 	console.log('Your browser\'s navigator.userAgent is:',navigator.userAgent);
 	if (navigator.userAgent.indexOf("MSIE 8.0")>0||navigator.userAgent.indexOf("MSIE 7.0")>0||navigator.userAgent.indexOf("MSIE 6.0")>0)
-		GooFlow.prototype.useSVG="";
-	else	GooFlow.prototype.useSVG="1";
+		WaterFlow.prototype.useSVG="";
+	else	WaterFlow.prototype.useSVG="1";
 //初始化区域图的对象
 	this.$bgDiv=$(selector);//最父框架的DIV
-	this.$bgDiv.addClass("GooFlow");
-	this.$id=this.$bgDiv.attr("id")||'GooFlow_'+new Date().getTime();
+	this.$bgDiv.addClass("WaterFlow");
+	this.$id=this.$bgDiv.attr("id")||'WaterFlow_'+new Date().getTime();
 	if(property.colors && typeof property.colors ==='object'){
-		$.extend(GooFlow.color, property.colors);
+		$.extend(WaterFlow.color, property.colors);
 	}
-	this.$bgDiv.css("color",GooFlow.color.font);
-	if(GooFlow.color.main){
-		this.$bgDiv.append('<style>.GooFlow_tool_btndown{background-color:'+GooFlow.color.main+'}</style>');
+	this.$bgDiv.css("color",WaterFlow.color.font);
+	if(WaterFlow.color.main){
+		this.$bgDiv.append('<style>.WaterFlow_tool_btndown{background-color:'+WaterFlow.color.main+'}</style>');
 	}
 	var width=(property.width||this.$bgDiv.width());
 	var height=(property.height||this.$bgDiv.height());
@@ -199,17 +197,17 @@ var GooFlow = function(selector,property){
 	var headHeight=0;
 	var tmp="",titleText;
 	if(property.haveHead){
-		tmp="<div class='GooFlow_head' "+(GooFlow.color.main? "style='border-bottom-color:"+GooFlow.color.main+"'" : "") +">";
+		tmp="<div class='WaterFlow_head' "+(WaterFlow.color.main? "style='border-bottom-color:"+WaterFlow.color.main+"'" : "") +">";
 		if(property.headLabel){
       		tmp+="<label title='"+(property.initLabelText||"newFlow_1")+"' "
-        		+(GooFlow.color.main? "style='background:"+GooFlow.color.main+"'" : "")+">"
+        		+(WaterFlow.color.main? "style='background:"+WaterFlow.color.main+"'" : "")+">"
 				+(property.initLabelText||"newFlow_1")+"</label>";
 		}
 		if(property.headBtns)
 		for(var x=0;x<property.headBtns.length;++x){
 			if(!property.useOperStack&&(property.headBtns[x]==='undo'||property.headBtns[x]==='redo'))	continue;
-			titleText=GooFlow.remarks.headBtns[property.headBtns[x]]? " title='"+GooFlow.remarks.headBtns[property.headBtns[x]]+"'":"";
-			tmp+="<a href='javascript:void(0)' class='GooFlow_head_btn'"+titleText+"><i class='ico_"+property.headBtns[x]+"'></i></a>"
+			titleText=WaterFlow.remarks.headBtns[property.headBtns[x]]? " title='"+WaterFlow.remarks.headBtns[property.headBtns[x]]+"'":"";
+			tmp+="<a href='javascript:void(0)' class='WaterFlow_head_btn'"+titleText+"><i class='ico_"+property.headBtns[x]+"'></i></a>"
 		}
 		tmp+="</div>";
 		this.$head=$(tmp);
@@ -250,30 +248,30 @@ var GooFlow = function(selector,property){
 	}
 	var toolWidth=0;
 	if(property.haveTool){
-		this.$bgDiv.append("<div class='GooFlow_tool'"+(property.haveHead? "":" style='margin-top:3px'")+"><div style='height:"+(height-headHeight-(property.haveHead? 5:8))+"px' class='GooFlow_tool_div'></div></div>");
-		this.$tool=this.$bgDiv.find(".GooFlow_tool div");
+		this.$bgDiv.append("<div class='WaterFlow_tool'"+(property.haveHead? "":" style='margin-top:3px'")+"><div style='height:"+(height-headHeight-(property.haveHead? 5:8))+"px' class='WaterFlow_tool_div'></div></div>");
+		this.$tool=this.$bgDiv.find(".WaterFlow_tool div");
 		//未加代码：加入绘图工具按钮
-		var titleCursor=GooFlow.remarks.toolBtns["cursor"]? " title='"+GooFlow.remarks.toolBtns["cursor"]+"'":"";
-        var titleDirect=GooFlow.remarks.toolBtns["direct"]? " title='"+GooFlow.remarks.toolBtns["direct"]+"'":"";
-        var titleDashed=GooFlow.remarks.toolBtns["dashed"]? " title='"+GooFlow.remarks.toolBtns["dashed"]+"'":"";
+		var titleCursor=WaterFlow.remarks.toolBtns["cursor"]? " title='"+WaterFlow.remarks.toolBtns["cursor"]+"'":"";
+        var titleDirect=WaterFlow.remarks.toolBtns["direct"]? " title='"+WaterFlow.remarks.toolBtns["direct"]+"'":"";
+        var titleDashed=WaterFlow.remarks.toolBtns["dashed"]? " title='"+WaterFlow.remarks.toolBtns["dashed"]+"'":"";
 		this.$tool.append("<div style='margin-bottom:4px'><span/><span/><span/></div>"
-	  		+"<a href='javascript:void(0)'"+titleCursor+" type='cursor' class='GooFlow_tool_btndown' id='"+this.$id+"_btn_cursor'><i class='ico_cursor'/></a>"
-     		+"<a href='javascript:void(0)'"+titleDirect+" type='direct' class='GooFlow_tool_btn' id='"+this.$id+"_btn_direct'><i class='ico_direct'/></a>"
-			+(property.haveDashed? "<a href='javascript:void(0)'"+titleDashed+" type='dashed' class='GooFlow_tool_btn' id='"+this.$id+"_btn_dashed'><i class='ico_dashed'/></a>":"")
+	  		+"<a href='javascript:void(0)'"+titleCursor+" type='cursor' class='WaterFlow_tool_btndown' id='"+this.$id+"_btn_cursor'><i class='ico_cursor'/></a>"
+     		+"<a href='javascript:void(0)'"+titleDirect+" type='direct' class='WaterFlow_tool_btn' id='"+this.$id+"_btn_direct'><i class='ico_direct'/></a>"
+			+(property.haveDashed? "<a href='javascript:void(0)'"+titleDashed+" type='dashed' class='WaterFlow_tool_btn' id='"+this.$id+"_btn_dashed'><i class='ico_dashed'/></a>":"")
     	);
 		if(property.toolBtns&&property.toolBtns.length>0){
 			tmp="<span/>";
 			for(var i=0;i<property.toolBtns.length;++i){
                 var tmpType=property.toolBtns[i].split(" ")[0];
-                titleText=GooFlow.remarks.toolBtns[tmpType]? " title='"+GooFlow.remarks.toolBtns[tmpType]+"'":'';
-				tmp+="<a href='javascript:void(0)'"+titleText+" type='"+property.toolBtns[i]+"' id='"+this.$id+"_btn_"+tmpType+"' class='GooFlow_tool_btn'><i class='ico_"+property.toolBtns[i]+"'/></a>";//加入自定义按钮
+                titleText=WaterFlow.remarks.toolBtns[tmpType]? " title='"+WaterFlow.remarks.toolBtns[tmpType]+"'":'';
+				tmp+="<a href='javascript:void(0)'"+titleText+" type='"+property.toolBtns[i]+"' id='"+this.$id+"_btn_"+tmpType+"' class='WaterFlow_tool_btn'><i class='ico_"+property.toolBtns[i]+"'/></a>";//加入自定义按钮
 			}
 			this.$tool.append(tmp);
 		}
 		//加入区域划分框工具开关按钮
 		if(property.haveGroup){
-            var titleGroup=GooFlow.remarks.toolBtns["group"]? " title='"+GooFlow.remarks.toolBtns["group"]+"'":"";
-            this.$tool.append("<span/><a href='javascript:void(0)'"+titleGroup+" type='group' class='GooFlow_tool_btn' id='"+this.$id+"_btn_group'><i class='ico_group'/></a>");
+            var titleGroup=WaterFlow.remarks.toolBtns["group"]? " title='"+WaterFlow.remarks.toolBtns["group"]+"'":"";
+            this.$tool.append("<span/><a href='javascript:void(0)'"+titleGroup+" type='group' class='WaterFlow_tool_btn' id='"+this.$id+"_btn_group'><i class='ico_group'/></a>");
 		}
 		toolWidth=31;
 		this.$nowType="cursor";
@@ -297,11 +295,11 @@ var GooFlow = function(selector,property){
 	//确定工作区在设计器中的位置、宽高
 	width=width-toolWidth-9;
 	height=height-headHeight-(property.haveHead? 5:8);
-	this.$bgDiv.append("<div class='GooFlow_work' style='"+(property.haveHead? "top:28px;":"")+(property.haveTool? "left:34px":"")+"'></div>");
-	this.$workArea=$("<div class='GooFlow_work_inner' style='width:"+width+"px;height:"+height+"px'></div>")
+	this.$bgDiv.append("<div class='WaterFlow_work' style='"+(property.haveHead? "top:28px;":"")+(property.haveTool? "left:34px":"")+"'></div>");
+	this.$workArea=$("<div class='WaterFlow_work_inner' style='width:"+width+"px;height:"+height+"px'></div>")
 		.attr({"unselectable":"on","onselectstart":'return false',"onselect":'document.selection.empty()'});
-	this.$bgDiv.children(".GooFlow_work").append(this.$workArea);
-	//计算工作区相对GooFlow父框架的绝对定位运算值，并保存
+	this.$bgDiv.children(".WaterFlow_work").append(this.$workArea);
+	//计算工作区相对WaterFlow父框架的绝对定位运算值，并保存
 	this.t={top:property.haveHead? 28:3,left:property.haveTool?34:3};
 
     //绑定工作区事件
@@ -312,7 +310,7 @@ var GooFlow = function(selector,property){
         if(type==="cursor"){
             var tar=$(e.target);
             var n=tar.prop("tagName");
-            if(n==="svg"||(n==="DIV"&&tar.prop("class").indexOf("GooFlow_work")>-1)||n==="LABEL"){
+            if(n==="svg"||(n==="DIV"&&tar.prop("class").indexOf("WaterFlow_work")>-1)||n==="LABEL"){
             	console.log(n);
                 if(This.$lineOper && This.$lineOper.data("tid")){
                     This.focusItem(This.$lineOper.data("tid"),false);
@@ -326,15 +324,15 @@ var GooFlow = function(selector,property){
         var X,Y;
         var ev=_mouseP(e),t=_elCsys(this);
         X=ev.x-t.left+this.parentNode.scrollLeft;
-		Y = ev.y - t.top + this.parentNode.scrollTop;
-		if (This.$nowType == "start round mix") {
-			This.addNode(new Date().getTime().toString(), { name: "开始_" + This.$max, left: X, top: Y, type: This.$nowType });//英文转成中文
+        Y=ev.y-t.top+this.parentNode.scrollTop;
+		if (This.$nowType.indexOf("start")>-1) {
+			This.addNode(new Date().getTime().toString(), { name: "开始_" + This.$max, left: X, top: Y, type: This.$nowType });
 		}
-		else if (This.$nowType == "end round") {
-			This.addNode(new Date().getTime().toString(), { name: "结束_" + This.$max, left: X, top: Y, type: This.$nowType });//英文转成中文
+		else if (This.$nowType.indexOf("end") > -1) {
+			This.addNode(new Date().getTime().toString(), { name: "结束_" + This.$max, left: X, top: Y, type: This.$nowType });
 		}
 		else {
-			This.addNode(new Date().getTime().toString(), { name: "结点_" + This.$max, left: X, top: Y, type: This.$nowType });//英文转成中文
+			This.addNode(new Date().getTime().toString(), { name: "结点_" + This.$max, left: X, top: Y, type: This.$nowType });
 		}
 		This.$max++;
     });
@@ -398,7 +396,7 @@ var GooFlow = function(selector,property){
 	}
 };
 
-GooFlow.prototype={
+WaterFlow.prototype={
 	useSVG:"", //浏览器是否能用SVG？
 	_getSvgMarker:function(id,color){
 		var m=document.createElementNS("http://www.w3.org/2000/svg","marker");
@@ -419,19 +417,19 @@ GooFlow.prototype={
 	},
 	//初始化连线层
 	_initDraw:function(id,width,height){
-		if(GooFlow.prototype.useSVG!==""){
+		if(WaterFlow.prototype.useSVG!==""){
 			this.$draw=document.createElementNS("http://www.w3.org/2000/svg","svg");//可创建带有指定命名空间的元素节点
 			this.$workArea.prepend(this.$draw);
 			var defs=document.createElementNS("http://www.w3.org/2000/svg","defs");
 			this.$draw.appendChild(defs);
-			defs.appendChild(GooFlow.prototype._getSvgMarker("arrow1",GooFlow.color.line));
-			defs.appendChild(GooFlow.prototype._getSvgMarker("arrow2",GooFlow.color.mark));
-			defs.appendChild(GooFlow.prototype._getSvgMarker("arrow3",GooFlow.color.mark));
+			defs.appendChild(WaterFlow.prototype._getSvgMarker("arrow1",WaterFlow.color.line));
+			defs.appendChild(WaterFlow.prototype._getSvgMarker("arrow2",WaterFlow.color.mark));
+			defs.appendChild(WaterFlow.prototype._getSvgMarker("arrow3",WaterFlow.color.mark));
 		}
 		else{
 			this.$draw = document.createElement("v:group");
 			this.$draw.coordsize = width+","+height;
-			this.$workArea.prepend("<div class='GooFlow_work_vml' style='position:relative;width:"+width+"px;height:"+height+"px'></div>");
+			this.$workArea.prepend("<div class='WaterFlow_work_vml' style='position:relative;width:"+width+"px;height:"+height+"px'></div>");
 			this.$workArea.children("div")[0].insertBefore(this.$draw,null);
 		}
 		this.$draw.id = id;
@@ -440,7 +438,7 @@ GooFlow.prototype={
 	
 		//绑定连线的点击选中以及双击编辑事件
 		var tmpClk=null;
-		if(GooFlow.prototype.useSVG!=="")  tmpClk="g";
+		if(WaterFlow.prototype.useSVG!=="")  tmpClk="g";
 		else  tmpClk="PolyLine";
 		//绑定选中事件
 		$(this.$draw).on("click",tmpClk,{inthis:this},function(e){
@@ -460,7 +458,7 @@ GooFlow.prototype={
 			var This=e.data.inthis;
             if(typeof This.onItemDbClick==='function' && This.onItemDbClick(this.id,"line")===false)	return;
 			var oldTxt,x,y,from,to;
-			if(GooFlow.prototype.useSVG!==""){
+			if(WaterFlow.prototype.useSVG!==""){
 				oldTxt=this.childNodes[2].textContent;
 				from=this.getAttribute("from").split(",");
 				to=this.getAttribute("to").split(",");
@@ -493,12 +491,12 @@ GooFlow.prototype={
 	},
 	//初始化区域块（泳道）层
 	_initGroup:function(width,height){
-		this.$group=$("<div class='GooFlow_work_group' style='width:"+width+"px;height:"+height+"px'></div>");//存放背景区域的容器
+		this.$group=$("<div class='WaterFlow_work_group' style='width:"+width+"px;height:"+height+"px'></div>");//存放背景区域的容器
 		this.$workArea.prepend(this.$group);
 		if(!this.$editable)	return;
 
         //绑定右键事件
-        this.$group.on("contextmenu",".GooFlow_area",{inthis:this},function(e){
+        this.$group.on("contextmenu",".WaterFlow_area",{inthis:this},function(e){
 			var This=e.data.inthis;
             if(typeof This.onItemRightClick==='function' && This.onItemRightClick(this.id,"area")===false){
                 window.event? window.event.returnValue=false : e.preventDefault();
@@ -650,7 +648,7 @@ GooFlow.prototype={
 				Y=ev.y-t.top+this.parentNode.parentNode.scrollTop;
 				var color=["red","yellow","blue","green"];
 				e.data.inthis.addArea(new Date().getTime(),
-					{ name: "区域_" + e.data.inthis.$max, left: X / This.$scale, top: Y / This.$scale, color: color[e.data.inthis.$max % 4], width: 200, height: 100 }//英文转成中文
+					{ name:"区域_"+e.data.inthis.$max,left:X/This.$scale,top:Y/This.$scale,color:color[e.data.inthis.$max%4],width:200,height:100}
 				);
 				e.data.inthis.$max++;
 				return false;
@@ -660,12 +658,12 @@ GooFlow.prototype={
 	//初始化节点绘制层
 	_initWorkForNode:function(){
 		//绑定点击事件
-		this.$workArea.on("click",".GooFlow_item",{inthis:this},function(e){
+		this.$workArea.on("click",".WaterFlow_item",{inthis:this},function(e){
 			e.data.inthis.focusItem(this.id,true);
 			$(this).removeClass("item_mark");
 		});
 		//绑定右键事件
-		this.$workArea.on("contextmenu",".GooFlow_item",{inthis:this},function(e){
+		this.$workArea.on("contextmenu",".WaterFlow_item",{inthis:this},function(e){
 			var This=e.data.inthis;
 			if(typeof This.onItemRightClick==='function' && This.onItemRightClick(this.id,"node")===false){
 				window.event? window.event.returnValue=false : e.preventDefault();
@@ -682,12 +680,12 @@ GooFlow.prototype={
 			});
 		};
 		this.$workArea.on("dblclick",".ico",{inthis:this},function(e){
-			var id=$(this).parents(".GooFlow_item").attr("id");
+			var id=$(this).parents(".WaterFlow_item").attr("id");
 			var This=e.data.inthis;
 			if(typeof This.onItemDbClick==='function' && This.onItemDbClick(id,"node")===false)	return false;
 		});
 		//绑定双击(包括双击编辑)事件
-		this.$workArea.on("dblclick",".GooFlow_item > .span",{inthis:this},function(e){
+		this.$workArea.on("dblclick",".WaterFlow_item > .span",{inthis:this},function(e){
 			var id=this.parentNode.id;
 			var This=e.data.inthis;
 			if(typeof This.onItemDbClick==='function' && This.onItemDbClick(id,"node")===false)	return false;
@@ -701,7 +699,7 @@ GooFlow.prototype={
 			tmpDbClickFunc(This);
 		});
 		this.$workArea.on("dblclick",".ico + td",{inthis:this},function(e){
-			var id=$(this).parents(".GooFlow_item").attr("id");
+			var id=$(this).parents(".WaterFlow_item").attr("id");
 			var This=e.data.inthis;
 			if(typeof This.onItemDbClick==='function' && This.onItemDbClick(id,"node")===false)	return false;
 			if(!This.$editable)	return;
@@ -722,7 +720,7 @@ GooFlow.prototype={
 			if(e.button===2)return false;
 			var This=e.data.inthis;
 			if(This.$nowType==="direct"||This.$nowType==="dashed")	return;
-			var Dom=$(this).parents(".GooFlow_item");
+			var Dom=$(this).parents(".WaterFlow_item");
 			var id=Dom.attr("id");
 			This.focusItem(id,true);
 
@@ -768,21 +766,21 @@ GooFlow.prototype={
 			}
 		});
 		//绑定鼠标覆盖/移出事件
-		this.$workArea.on("mouseenter",".GooFlow_item",{inthis:this},function(e){
-			if((e.data.inthis.$nowType!=="direct"&&e.data.inthis.$nowType!=="dashed")&&!document.getElementById("GooFlow_tmp_line"))	return;
-			$(this).addClass("item_mark").addClass("crosshair").css("border-color",GooFlow.color.mark);
+		this.$workArea.on("mouseenter",".WaterFlow_item",{inthis:this},function(e){
+			if((e.data.inthis.$nowType!=="direct"&&e.data.inthis.$nowType!=="dashed")&&!document.getElementById("WaterFlow_tmp_line"))	return;
+			$(this).addClass("item_mark").addClass("crosshair").css("border-color",WaterFlow.color.mark);
 		});
-		this.$workArea.on("mouseleave",".GooFlow_item",{inthis:this},function(e){
-			if((e.data.inthis.$nowType!=="direct"&&e.data.inthis.$nowType!=="dashed")&&!document.getElementById("GooFlow_tmp_line"))	return;
+		this.$workArea.on("mouseleave",".WaterFlow_item",{inthis:this},function(e){
+			if((e.data.inthis.$nowType!=="direct"&&e.data.inthis.$nowType!=="dashed")&&!document.getElementById("WaterFlow_tmp_line"))	return;
 			$(this).removeClass("item_mark").removeClass("crosshair");
 			if(this.id===e.data.inthis.$focus){
-				$(this).css("border-color",GooFlow.color.line);
+				$(this).css("border-color",WaterFlow.color.line);
 			}else{
-				$(this).css("border-color",GooFlow.color.node);
+				$(this).css("border-color",WaterFlow.color.node);
 			}
 		});
 		//绑定连线时确定初始点
-		this.$workArea.on("mousedown",".GooFlow_item",{inthis:this},function(e){
+		this.$workArea.on("mousedown",".WaterFlow_item",{inthis:this},function(e){
 			if(e.button===2)return false;
 			var This=e.data.inthis;
 			if(This.$nowType!=="direct"&&This.$nowType!=="dashed")	return;
@@ -791,11 +789,11 @@ GooFlow.prototype={
 			X=ev.x-t.left+This.$workArea[0].parentNode.scrollLeft;
 			Y=ev.y-t.top+This.$workArea[0].parentNode.scrollTop;
 			This.$workArea.data("lineStart",{"x":X,"y":Y,"id":this.id}).css("cursor","crosshair");
-			var line=GooFlow.prototype.drawLine("GooFlow_tmp_line",[X,Y],[X,Y],true,true,1);
+			var line=WaterFlow.prototype.drawLine("WaterFlow_tmp_line",[X,Y],[X,Y],true,true,1);
 			This.$draw.appendChild(line);
 		});
 		//绑定连线时确定结束点
-		this.$workArea.on("mouseup",".GooFlow_item",{inthis:this},function(e){
+		this.$workArea.on("mouseup",".WaterFlow_item",{inthis:this},function(e){
 			var This=e.data.inthis;
 			if((This.$nowType!=="direct"&&This.$nowType!=="dashed")&&!This.$mpTo.data("p"))	return;
 			var lineStart=This.$workArea.data("lineStart");
@@ -817,10 +815,10 @@ GooFlow.prototype={
 				if(!This.$nodeData[this.id].marked){
 					$(this).removeClass("item_mark");
 					if(this.id!==This.$focus){
-						$(this).css("border-color",GooFlow.color.node);
+						$(this).css("border-color",WaterFlow.color.node);
 					}
 					else{
-						$(this).css("border-color",GooFlow.color.line);
+						$(this).css("border-color",WaterFlow.color.line);
 					}
 				}
 			}
@@ -833,7 +831,7 @@ GooFlow.prototype={
 			return false;
 		});
 		//绑定结点的RESIZE功能
-		this.$workArea.on("mousedown",".GooFlow_item > div > div[class!=rs_close]",{inthis:this},function(e){
+		this.$workArea.on("mousedown",".WaterFlow_item > div > div[class!=rs_close]",{inthis:this},function(e){
 			if(!e)e=window.event;
 			if(e.button===2)return false;
 			var cursor=$(this).css("cursor");
@@ -884,15 +882,15 @@ GooFlow.prototype={
 	},
 	//加入手动扩展编辑区功能，一次扩展200px
 	_initExpendFunc:function(){
-		var titleExendRight=GooFlow.remarks.extendRight? ' title="'+GooFlow.remarks.extendRight+'"':'';
-        var titleExendBottom=GooFlow.remarks.extendBottom? ' title="'+GooFlow.remarks.extendBottom+'"':'';
-		this.$workArea.append('<div class="Gooflow_extend_right"'+titleExendRight+'></div><div class="Gooflow_extend_bottom"'+titleExendBottom+'></div>');
-	    this.$workArea.children(".Gooflow_extend_right").on("click",{inthis:this},function(e){
+		var titleExendRight=WaterFlow.remarks.extendRight? ' title="'+WaterFlow.remarks.extendRight+'"':'';
+        var titleExendBottom=WaterFlow.remarks.extendBottom? ' title="'+WaterFlow.remarks.extendBottom+'"':'';
+		this.$workArea.append('<div class="WaterFlow_extend_right"'+titleExendRight+'></div><div class="WaterFlow_extend_bottom"'+titleExendBottom+'></div>');
+	    this.$workArea.children(".WaterFlow_extend_right").on("click",{inthis:this},function(e){
 			var This=e.data.inthis;
 			var w = This.$workArea.width()+This.$workExtendStep;
 			var h = This.$workArea.height();
 			This.$workArea.css({width:w+"px"});
-			if(GooFlow.prototype.useSVG===""){
+			if(WaterFlow.prototype.useSVG===""){
 				This.$draw.coordsize = w+","+h;
 			}
 			This.$draw.style.width = w + "px";
@@ -904,12 +902,12 @@ GooFlow.prototype={
             This.$workArea.parent().css("overflow","scroll");
 			return false;
 	    });
-	    this.$workArea.children(".Gooflow_extend_bottom").on("click",{inthis:this},function(e){
+	    this.$workArea.children(".WaterFlow_extend_bottom").on("click",{inthis:this},function(e){
 			var This=e.data.inthis;
 			var w = This.$workArea.width();
 			var h = This.$workArea.height()+This.$workExtendStep;
 			This.$workArea.css({height:h+"px"});
-			if(GooFlow.prototype.useSVG===""){
+			if(WaterFlow.prototype.useSVG===""){
 				This.$draw.coordsize = w+","+h;
 			}
 			This.$draw.style.height = h + "px";
@@ -931,7 +929,7 @@ GooFlow.prototype={
 			var pe=This.$mpTo.data("p").split(",");
 			$(this).hide();
 			This.$workArea.data("lineEnd",{"x":pe[0],"y":pe[1],"id":This.$lineData[This.$lineOper.data("tid")].to}).css("cursor","crosshair");
-			var line=GooFlow.prototype.drawLine("GooFlow_tmp_line",[ps[0],ps[1]],[pe[0],pe[1]],true,true,1);
+			var line=WaterFlow.prototype.drawLine("WaterFlow_tmp_line",[ps[0],ps[1]],[pe[0],pe[1]],true,true,1);
 			This.$draw.appendChild(line);
 			return false;
 	    });
@@ -942,7 +940,7 @@ GooFlow.prototype={
 			var pe=This.$mpTo.data("p").split(",");
 			$(this).hide();
 			This.$workArea.data("lineStart",{"x":ps[0],"y":ps[1],"id":This.$lineData[This.$lineOper.data("tid")].from}).css("cursor","crosshair");
-			var line=GooFlow.prototype.drawLine("GooFlow_tmp_line",[ps[0],ps[1]],[pe[0],pe[1]],true,true,1);
+			var line=WaterFlow.prototype.drawLine("WaterFlow_tmp_line",[ps[0],ps[1]],[pe[0],pe[1]],true,true,1);
 			This.$draw.appendChild(line);
 			return false;
 	    });
@@ -961,9 +959,9 @@ GooFlow.prototype={
 			var X,Y;
 			X=ev.x-t.left+this.parentNode.scrollLeft;
 			Y=ev.y-t.top+this.parentNode.scrollTop;
-			var line=document.getElementById("GooFlow_tmp_line");
+			var line=document.getElementById("WaterFlow_tmp_line");
 			if(lineStart){
-				if(GooFlow.prototype.useSVG!==""){
+				if(WaterFlow.prototype.useSVG!==""){
 					line.childNodes[0].setAttribute("d","M "+lineStart.x+" "+lineStart.y+" L "+X+" "+Y);
 					line.childNodes[1].setAttribute("d","M "+lineStart.x+" "+lineStart.y+" L "+X+" "+Y);
 					if(line.childNodes[1].getAttribute("marker-end")==='url("#arrow2")')
@@ -972,7 +970,7 @@ GooFlow.prototype={
 				}
 				else	line.points.value=lineStart.x+","+lineStart.y+" "+X+","+Y;
 			}else if(lineEnd){
-				if(GooFlow.prototype.useSVG!==""){
+				if(WaterFlow.prototype.useSVG!==""){
 					line.childNodes[0].setAttribute("d","M "+X+" "+Y+" L "+lineEnd.x+" "+lineEnd.y);
 					line.childNodes[1].setAttribute("d","M "+X+" "+Y+" L "+lineEnd.x+" "+lineEnd.y);
 					if(line.childNodes[1].getAttribute("marker-end")==='url("#arrow2")')
@@ -985,7 +983,7 @@ GooFlow.prototype={
 		this.$workArea.mouseup({inthis:this},function(e){
 			var This=e.data.inthis;
 			if((This.$nowType!=="direct"&&This.$nowType!=="dashed")&&!This.$mpTo.data("p"))	return;
-			var tmp=document.getElementById("GooFlow_tmp_line");
+			var tmp=document.getElementById("WaterFlow_tmp_line");
 			if(tmp){
 				$(this).css("cursor","auto").removeData("lineStart").removeData("lineEnd");
 				This.$mpTo.hide().removeData("p");
@@ -999,7 +997,7 @@ GooFlow.prototype={
 
 		this.$textArea=$("<textarea></textarea>");
 		this.$bgDiv.append(this.$textArea);
-		this.$lineMove=$('<div class="GooFlow_linemove" style="display:none"></div>');//操作折线时的移动框
+		this.$lineMove=$('<div class="WaterFlow_linemove" style="display:none"></div>');//操作折线时的移动框
 		this.$workArea.append(this.$lineMove);
 		this.$lineMove.on("mousedown",{inthis:this},function(e){
 			if(e.button===2)return false;
@@ -1053,7 +1051,7 @@ GooFlow.prototype={
 		});
 
 		//选定一条转换线后出现的浮动操作栏，有改变线的样式和删除线等按钮。
-		this.$lineOper=$("<div class='GooFlow_line_oper' style='display:none'><i class='b_l1'></i><i class='b_l2'></i><i class='b_l3'></i><i class='b_x'></i></div>");//选定线时显示的操作框
+		this.$lineOper=$("<div class='WaterFlow_line_oper' style='display:none'><i class='b_l1'></i><i class='b_l2'></i><i class='b_l3'></i><i class='b_x'></i></div>");//选定线时显示的操作框
 		this.$workArea.parent().append(this.$lineOper);
 		this.$lineOper.on("click",{inthis:this},function(e){
 			if(!e)e=window.event;
@@ -1073,8 +1071,8 @@ GooFlow.prototype={
 			}
 		});
 		//新增移动线两个端点至新的结点功能移动功能，这里要提供移动用的DOM
-		this.$mpFrom=$("<div class='GooFlow_line_mp' style='display:none'></div>");
-		this.$mpTo=$("<div class='GooFlow_line_mp' style='display:none'></div>");
+		this.$mpFrom=$("<div class='WaterFlow_line_mp' style='display:none'></div>");
+		this.$mpTo=$("<div class='WaterFlow_line_mp' style='display:none'></div>");
 		this.$workArea.append(this.$mpFrom).append(this.$mpTo);
 		this._initLinePointsChg();
 
@@ -1118,7 +1116,7 @@ GooFlow.prototype={
 					this._checkStack();
 				}
 			};
-			//将外部的方法加入到GooFlow对象的事务操作堆栈中,在过后的undo/redo操作中可以进行控制，一般用于对流程图以外的附加信息进行编辑的事务撤销/重做控制；
+			//将外部的方法加入到WaterFlow对象的事务操作堆栈中,在过后的undo/redo操作中可以进行控制，一般用于对流程图以外的附加信息进行编辑的事务撤销/重做控制；
 			//传参func为要执行方法对象,jsonPara为外部方法仅有的一个面向字面的JSON传参,由JSON对象带入所有要传的信息；
 			//提示:为了让外部方法能够被UNDO/REDO,需要在编写这些外部方法实现时,加入对该方法执行后效果回退的另一个执行方法的pushExternalOper
 			this.pushExternalOper=function(func,jsonPara){
@@ -1196,14 +1194,14 @@ GooFlow.prototype={
     },
 	//设定扩展工作区宽高的长条按钮的说明文字
 	setExtWorkRemarks:function(remark){
-		this.$workArea.children(".Gooflow_extend_right").attr("title",remark.extendRight);
-		this.$workArea.children(".Gooflow_extend_bottom").attr("title",remark.extendBottom);
+		this.$workArea.children(".WaterFlow_extend_right").attr("title",remark.extendRight);
+		this.$workArea.children(".WaterFlow_extend_bottom").attr("title",remark.extendBottom);
 	},
 
 	//切换左边工具栏按钮,传参TYPE表示切换成哪种类型的按钮
 	switchToolBtn:function(type){
 		if(this.$tool!=null){
-			this.$tool.children("#"+this.$id+"_btn_"+this.$nowType.split(" ")[0]).attr("class","GooFlow_tool_btn");
+			this.$tool.children("#"+this.$id+"_btn_"+this.$nowType.split(" ")[0]).attr("class","WaterFlow_tool_btn");
 		}
 		if(this.$nowType==="group"){
 			this.$workArea.prepend(this.$group);
@@ -1211,7 +1209,7 @@ GooFlow.prototype={
 		}
 		this.$nowType=type;
 		if(this.$tool!=null){
-			this.$tool.children("#"+this.$id+"_btn_"+type.split(" ")[0]).attr("class","GooFlow_tool_btndown");
+			this.$tool.children("#"+this.$id+"_btn_"+type.split(" ")[0]).attr("class","WaterFlow_tool_btndown");
 		}
 		if(this.$nowType==="group"){
 			this.blurItem();
@@ -1239,20 +1237,20 @@ GooFlow.prototype={
 				if(typeof this.onItemBlur==='function' && this.onItemBlur(this.$focus,"node")===false)	return false;
 				jq.removeClass("item_focus").children("div:eq(0)").css("display","none");
 				if(this.$nodeData[this.$focus].marked){
-					jq.addClass("item_mark").css("border-color",GooFlow.color.mark);
+					jq.addClass("item_mark").css("border-color",WaterFlow.color.mark);
 				}
 			}
 			else{
 				if(typeof this.onItemBlur==='function' && this.onItemBlur(this.$focus,"line")===false)	return false;
-				if(GooFlow.prototype.useSVG!==""){
+				if(WaterFlow.prototype.useSVG!==""){
 					if(!this.$lineData[this.$focus].marked){
-						jq[0].childNodes[1].setAttribute("stroke",GooFlow.color.line);
+						jq[0].childNodes[1].setAttribute("stroke",WaterFlow.color.line);
 						jq[0].childNodes[1].setAttribute("marker-end","url(#arrow1)");
 					}
 				}
 				else{
 					if(!this.$lineData[this.$focus].marked){
-                        jq[0].strokeColor=GooFlow.color.line;
+                        jq[0].strokeColor=WaterFlow.color.line;
 					}
 				}
 				if(this.$editable){
@@ -1278,22 +1276,22 @@ GooFlow.prototype={
         this.$focus=id;
 		if(jq.prop("tagName")==="DIV"){
 			jq.addClass("item_focus");
-			if(GooFlow.color.line){
-        		jq.css("border-color",GooFlow.color.line);
+			if(WaterFlow.color.line){
+        		jq.css("border-color",WaterFlow.color.line);
 			}
 			if(this.$editable)jq.children("div:eq(0)").css("display","block");
 			//this.$workArea.append(jq);
 		}else{//如果是连接线
-			if(GooFlow.prototype.useSVG!==""){
-				jq[0].childNodes[1].setAttribute("stroke",GooFlow.color.mark);
+			if(WaterFlow.prototype.useSVG!==""){
+				jq[0].childNodes[1].setAttribute("stroke",WaterFlow.color.mark);
 				jq[0].childNodes[1].setAttribute("marker-end","url(#arrow2)");
 			}
 			else{
-                jq[0].strokeColor=GooFlow.color.mark;
+                jq[0].strokeColor=WaterFlow.color.mark;
 			}
 			if(!this.$editable)	return;
 			var x,y,from,to,n;
-			if(GooFlow.prototype.useSVG!==""){
+			if(WaterFlow.prototype.useSVG!==""){
 				from=jq.attr("from").split(",");
 				to=jq.attr("to").split(",");
 				n=[from[0],from[1],to[0],to[1]];
@@ -1367,30 +1365,29 @@ GooFlow.prototype={
 			this.pushOper("delNode",[id]);
 		}
 		var mark=json.marked? " item_mark":"";
-		if(json.type.indexOf(" round")<0){
-			if(!json.width||json.width<104)json.width=104;
-			if(!json.height||json.height<26)json.height=26;
-			if(!json.top||json.top<0)json.top=0;
-			if(!json.left||json.left<0)json.left=0;
-
-			this.$nodeDom[id]=$("<div class='GooFlow_item"+mark+"' id='"+id+"' style='top:"+json.top*this.$scale+"px;left:"+json.left*this.$scale+"px'><table cellspacing='1' style='width:"+(json.width*this.$scale-2)+"px;height:"+(json.height*this.$scale-2)+"px;'><tr><td class='ico'><i class='ico_"+json.type+"'></i></td><td><div>"+json.name+"</div></td></tr></table><div style='display:none'><div class='rs_bottom'></div><div class='rs_right'></div><div class='rs_rb'></div><div class='rs_close'></div></div></div>");
+		if (!json.width || json.width < 120) json.width = 120;
+		if (!json.top || json.top < 0) json.top = 0;
+		if (!json.left || json.left < 0) json.left = 0;
+		if (json.type.indexOf(" round") < 0) {
+			if (!json.height || json.height < 40) json.height = 40;
+			this.$nodeDom[id] = $("<div class='WaterFlow_item" + mark + "' id='" + id + "' style='top:" + json.top * this.$scale + "px;left:" + json.left * this.$scale + "px'><table cellspacing='1' style='width:" + (json.width * this.$scale - 2) + "px;height:" + (json.height * this.$scale - 2) + "px;'><tr><td class='ico'><i class='ico_" + json.type + "'></i></td><td><div>" + json.name + "</div></td></tr></table><div style='display:none'><div class='rs_bottom'></div><div class='rs_right'></div><div class='rs_rb'></div><div class='rs_close'></div></div></div>");
 		}
-		else{
-			json.width=26;json.height=26;
-			this.$nodeDom[id]=$("<div class='GooFlow_item item_round"+mark+"' id='"+id+"' style='top:"+json.top*this.$scale+"px;left:"+json.left*this.$scale+"px'><table cellspacing='0' style='width:"+(json.width*this.$scale-2)+"px;height:"+(json.height*this.$scale-2)+"px;'><tr><td class='ico'><i class='ico_"+json.type+"'></i></td></tr></table><div  style='display:none'><div class='rs_close'></div></div><div class='span'>"+json.name+"</div></div>");
+		else {
+			if (!json.height || json.height < 30) json.height = 30;
+			this.$nodeDom[id] = $("<div class='WaterFlow_item item_round" + mark + "' id='" + id + "' style='top:" + json.top * this.$scale + "px;left:" + json.left * this.$scale + "px'><table cellspacing='1' style='width:" + (json.width * this.$scale - 2) + "px;height:" + (json.height * this.$scale - 2) + "px;'><tr><td class='ico'><i class='ico_" + json.type + "'></i></td><td><div>" + json.name + "</div></td></tr></table><div style='display:none'><div class='rs_bottom'></div><div class='rs_right'></div><div class='rs_rb'></div><div class='rs_close'></div></div></div>");
 		}
-		if(GooFlow.color.node){
+		if(WaterFlow.color.node){
 			if(json.type.indexOf(" mix")>-1){
-				this.$nodeDom[id].css({"background-color":GooFlow.color.mix,"border-color":GooFlow.color.mix});
-				if(GooFlow.color.mixFont){
-					this.$nodeDom[id].find("td:eq(1)").css("color",GooFlow.color.mixFont);
-					this.$nodeDom[id].find(".span").css("color",GooFlow.color.mixFont);
+				this.$nodeDom[id].css({"background-color":WaterFlow.color.mix,"border-color":WaterFlow.color.mix});
+				if(WaterFlow.color.mixFont){
+					this.$nodeDom[id].find("td:eq(1)").css("color",WaterFlow.color.mixFont);
+					this.$nodeDom[id].find(".span").css("color",WaterFlow.color.mixFont);
 				}
 			}else{
-				this.$nodeDom[id].css({"background-color":GooFlow.color.node,"border-color":GooFlow.color.node});
+				this.$nodeDom[id].css({"background-color":WaterFlow.color.node,"border-color":WaterFlow.color.node});
 			}
-			if(mark&&GooFlow.color.mark){
-				this.$nodeDom[id].css({"border-color":GooFlow.color.mark});
+			if(mark&&WaterFlow.color.mark){
+				this.$nodeDom[id].css({"border-color":WaterFlow.color.mark});
 			}
 		}
 		if(json.type.indexOf(" mix")>-1){
@@ -1471,7 +1468,7 @@ GooFlow.prototype={
 			if(typeof this.onItemRename==='function' && this.onItemRename(id,name,"node")===false)	return;
 			oldName=this.$lineData[id].name;
 			this.$lineData[id].name=name;
-			if(GooFlow.prototype.useSVG!==""){
+			if(WaterFlow.prototype.useSVG!==""){
 				this.$lineDom[id].childNodes[2].textContent=name;
 			}
 			else{
@@ -1637,7 +1634,7 @@ GooFlow.prototype={
             height+=this.$workExtendStep;
         }
         this.$workArea.css({height:height+"px",width:width+"px"});
-        if(GooFlow.prototype.useSVG===""){
+        if(WaterFlow.prototype.useSVG===""){
             this.$draw.coordsize = width+","+height;
         }
         this.$draw.style.width = width + "px";
@@ -1665,7 +1662,7 @@ GooFlow.prototype={
 			}
 		})
 	},
-	//把画好的整个流程图导出到一个变量中(其实也可以直接访问GooFlow对象的$nodeData,$lineData,$areaData这三个JSON属性)
+	//把画好的整个流程图导出到一个变量中(其实也可以直接访问WaterFlow对象的$nodeData,$lineData,$areaData这三个JSON属性)
 	exportData:function(){
 		var ret={};
 		ret.title=this.$title;
@@ -1786,7 +1783,7 @@ GooFlow.prototype={
 	drawLine:function(id,sp,ep,mark,dash,$scale){
 		var line,text;
         var x=(ep[0]+sp[0])/2, y=(ep[1]+sp[1])/2;
-		if(GooFlow.prototype.useSVG!==""){
+		if(WaterFlow.prototype.useSVG!==""){
 			line=document.createElementNS("http://www.w3.org/2000/svg","g");
 			var hi=document.createElementNS("http://www.w3.org/2000/svg","path");
 			var path=document.createElementNS("http://www.w3.org/2000/svg","path");
@@ -1806,26 +1803,26 @@ GooFlow.prototype={
 			path.setAttribute("fill","none");
 			if(dash)	path.setAttribute("style", "stroke-dasharray:6,5");
 			if(mark){
-				path.setAttribute("stroke",GooFlow.color.mark);
+				path.setAttribute("stroke",WaterFlow.color.mark);
 				path.setAttribute("marker-end","url(#arrow2)");
 			}
 			else{
-				path.setAttribute("stroke",GooFlow.color.line);
+				path.setAttribute("stroke",WaterFlow.color.line);
 				path.setAttribute("marker-end","url(#arrow1)");
 			}
 			line.appendChild(hi);
 			line.appendChild(path);
 			line.style.cursor="crosshair";
-			if(id!==""&&id!=="GooFlow_tmp_line"){
+			if(id!==""&&id!=="WaterFlow_tmp_line"){
 				text=document.createElementNS("http://www.w3.org/2000/svg","text");
-				text.setAttribute("fill",GooFlow.color.lineFont);
+				text.setAttribute("fill",WaterFlow.color.lineFont);
 				line.appendChild(text);
 
 				text.setAttribute("text-anchor","middle");
 				text.setAttribute("x",x+'');
 				text.setAttribute("y",y+'');
 				text.style.cursor="text";
-                text.style.fontSize=14*$scale+"px";
+                text.style.fontSize=16*$scale+"px";
                 line.style.cursor="pointer";
 			}
 		}else{
@@ -1837,7 +1834,7 @@ GooFlow.prototype={
 			line.strokeWeight="1.2";
 			line.stroke.EndArrow="Block";
 			line.style.cursor="crosshair";
-			if(id!==""&&id!=="GooFlow_tmp_line"){
+			if(id!==""&&id!=="WaterFlow_tmp_line"){
 				text=document.createElement("div");
 				//text.innerHTML=id;
 				line.appendChild(text);
@@ -1845,14 +1842,14 @@ GooFlow.prototype={
 				if(y<0) y=y*-1;
 				text.style.left=x+"px";
 				text.style.top=y-6+"px";
-                text.style.color=GooFlow.color.lineFont;
-                text.style.fontSize=14*$scale+"px";
+                text.style.color=WaterFlow.color.lineFont;
+                text.style.fontSize=16*$scale+"px";
 				line.style.cursor="pointer";
 			}
 			if(dash)	line.stroke.dashStyle="Dash";
-			if(mark)	line.strokeColor=GooFlow.color.mark;
-			else	line.strokeColor=GooFlow.color.line;
-			line.fillColor=GooFlow.color.line;
+			if(mark)	line.strokeColor=WaterFlow.color.mark;
+			else	line.strokeColor=WaterFlow.color.line;
+			line.fillColor=WaterFlow.color.line;
 		}
 		return line;
 	},
@@ -1860,7 +1857,7 @@ GooFlow.prototype={
 	drawPoly:function(id,sp,m1,m2,ep,mark,dash,$scale){
 		var poly,strPath, text;
 		var x=(m2[0]+m1[0])/2, y=(m2[1]+m1[1])/2;
-		if(GooFlow.prototype.useSVG!==""){
+		if(WaterFlow.prototype.useSVG!==""){
 			poly=document.createElementNS("http://www.w3.org/2000/svg","g");
 			var hi=document.createElementNS("http://www.w3.org/2000/svg","path");
 			var path=document.createElementNS("http://www.w3.org/2000/svg","path");
@@ -1885,17 +1882,17 @@ GooFlow.prototype={
 			path.setAttribute("fill","none");
             if(dash)	path.setAttribute("style", "stroke-dasharray:6,5");
 			if(mark){
-				path.setAttribute("stroke",GooFlow.color.mark);
+				path.setAttribute("stroke",WaterFlow.color.mark);
 				path.setAttribute("marker-end","url(#arrow2)");
 			}
 			else{
-				path.setAttribute("stroke",GooFlow.color.line);
+				path.setAttribute("stroke",WaterFlow.color.line);
 				path.setAttribute("marker-end","url(#arrow1)");
 			}
 			poly.appendChild(hi);
 			poly.appendChild(path);
 			text=document.createElementNS("http://www.w3.org/2000/svg","text");
-			text.setAttribute("fill",GooFlow.color.lineFont);
+			text.setAttribute("fill",WaterFlow.color.lineFont);
 			poly.appendChild(text);
 			text.setAttribute("text-anchor","middle");
 			text.setAttribute("x",x+'');
@@ -1923,13 +1920,13 @@ GooFlow.prototype={
 			if(y<0) y=y*-1;
 			text.style.left=x+"px";
 			text.style.top=y-4+"px";
-            text.style.color=GooFlow.color.lineFont;
+            text.style.color=WaterFlow.color.lineFont;
             if(dash)	poly.stroke.dashStyle="Dash";
-			if(mark)	poly.strokeColor=GooFlow.color.mark;
-			else	poly.strokeColor=GooFlow.color.line;
+			if(mark)	poly.strokeColor=WaterFlow.color.mark;
+			else	poly.strokeColor=WaterFlow.color.line;
 		}
         poly.style.cursor="pointer";
-        text.style.fontSize=14*$scale+"px";
+        text.style.fontSize=16*$scale+"px";
 		return poly;
 	},
 	//原lineData已经设定好的情况下，只在绘图工作区画一条线的页面元素
@@ -1945,11 +1942,11 @@ GooFlow.prototype={
 		if(!res)	return;
 
 		if(lineData.type==="sl")
-			this.$lineDom[id]=GooFlow.prototype.drawLine(id,res.start,res.end,lineData.marked,lineData.dash, this.$scale);
+			this.$lineDom[id]=WaterFlow.prototype.drawLine(id,res.start,res.end,lineData.marked,lineData.dash, this.$scale);
 		else
-			this.$lineDom[id]=GooFlow.prototype.drawPoly(id,res.start,res.m1,res.m2,res.end,lineData.marked,lineData.dash, this.$scale);
+			this.$lineDom[id]=WaterFlow.prototype.drawPoly(id,res.start,res.m1,res.m2,res.end,lineData.marked,lineData.dash, this.$scale);
 		this.$draw.appendChild(this.$lineDom[id]);
-		if(GooFlow.prototype.useSVG===""){
+		if(WaterFlow.prototype.useSVG===""){
 			this.$lineDom[id].childNodes[1].innerHTML=lineData.name;
 			if(lineData.type!=="sl"){
 				var Min=(res.start[0]>res.end[0]? res.end[0]:res.start[0]);
@@ -2038,13 +2035,13 @@ GooFlow.prototype={
 		  if(other==null)	continue;
 		  this.$draw.removeChild(this.$lineDom[i]);
 		  if(this.$lineData[i].type==="sl"){
-		  	this.$lineDom[i]=GooFlow.prototype.drawLine(i,res.start,res.end,this.$lineData[i].marked,this.$lineData[i].dash, this.$scale);
+		  	this.$lineDom[i]=WaterFlow.prototype.drawLine(i,res.start,res.end,this.$lineData[i].marked,this.$lineData[i].dash, this.$scale);
 		  }
 		  else{
-			this.$lineDom[i]=GooFlow.prototype.drawPoly(i,res.start,res.m1,res.m2,res.end,this.$lineData[i].marked,this.$lineData[i].dash, this.$scale);
+			this.$lineDom[i]=WaterFlow.prototype.drawPoly(i,res.start,res.m1,res.m2,res.end,this.$lineData[i].marked,this.$lineData[i].dash, this.$scale);
 		  }
 		  this.$draw.appendChild(this.$lineDom[i]);
-		  if(GooFlow.prototype.useSVG===""){
+		  if(WaterFlow.prototype.useSVG===""){
 			this.$lineDom[i].childNodes[1].innerHTML=this.$lineData[i].name;
 			if(this.$lineData[i].type!=="sl"){
 				var Min=(res.start[0]>res.end[0]? res.end[0]:res.start[0]);
@@ -2090,9 +2087,9 @@ GooFlow.prototype={
 		  res=calcStartEnd(this.$nodeData[from],this.$nodeData[to], this.$scale);
 		  if(!res)	return;
 		  this.$draw.removeChild(this.$lineDom[id]);
-		  this.$lineDom[id]=GooFlow.prototype.drawLine(id,res.start,res.end,this.$lineData[id].marked,this.$lineData[id].dash, this.$scale);
+		  this.$lineDom[id]=WaterFlow.prototype.drawLine(id,res.start,res.end,this.$lineData[id].marked,this.$lineData[id].dash, this.$scale);
 		  this.$draw.appendChild(this.$lineDom[id]);
-		  if(GooFlow.prototype.useSVG===""){
+		  if(WaterFlow.prototype.useSVG===""){
 		  	this.$lineDom[id].childNodes[1].innerHTML=this.$lineData[id].name;
 			this.$lineDom[id].childNodes[1].style.left=
 			((res.end[0]-res.start[0])*(res.end[0]>res.start[0]? 1:-1)-this.$lineDom[id].childNodes[1].offsetWidth)/2+4;
@@ -2120,9 +2117,9 @@ GooFlow.prototype={
 		this.$lineData[id].M=M;
 		var ps=calcPolyPoints(this.$nodeData[from],this.$nodeData[to],this.$lineData[id].type,this.$lineData[id].M, this.$scale);
 		this.$draw.removeChild(this.$lineDom[id]);
-		this.$lineDom[id]=GooFlow.prototype.drawPoly(id,ps.start,ps.m1,ps.m2,ps.end,this.$lineData[id].marked,this.$lineData[id].dash, this.$scale);
+		this.$lineDom[id]=WaterFlow.prototype.drawPoly(id,ps.start,ps.m1,ps.m2,ps.end,this.$lineData[id].marked,this.$lineData[id].dash, this.$scale);
 		this.$draw.appendChild(this.$lineDom[id]);
-		if(GooFlow.prototype.useSVG===""){
+		if(WaterFlow.prototype.useSVG===""){
 			this.$lineDom[id].childNodes[1].innerHTML=this.$lineData[id].name;
 			var Min=(ps.start[0]>ps.end[0]? ps.end[0]:ps.start[0]);
 			if(Min>ps.m2[0])	Min=ps.m2[0];
@@ -2204,7 +2201,7 @@ GooFlow.prototype={
 			if(typeof this.onItemMark==='function' && this.onItemMark(id,"node",mark)===false)	return;
 				this.$nodeData[id].marked=mark||false;
 			if(mark){
-				this.$nodeDom[id].addClass("item_mark").css("border-color",GooFlow.color.mark);
+				this.$nodeDom[id].addClass("item_mark").css("border-color",WaterFlow.color.mark);
 			}
 			else{
 				this.$nodeDom[id].removeClass("item_mark");
@@ -2215,23 +2212,23 @@ GooFlow.prototype={
 			if(!this.$lineData[id])	return;
 			if(this.onItemMark!=null&&!this.onItemMark(id,"line",mark))	return;
 			this.$lineData[id].marked=mark||false;
-			if(GooFlow.prototype.useSVG!==""){
+			if(WaterFlow.prototype.useSVG!==""){
 				if(mark){
-					this.$lineDom[id].childNodes[1].setAttribute("stroke",GooFlow.color.mark);
+					this.$lineDom[id].childNodes[1].setAttribute("stroke",WaterFlow.color.mark);
 					this.$lineDom[id].childNodes[1].setAttribute("marker-end","url(#arrow2)");
                     this.$lineDom[id].childNodes[1].setAttribute("stroke-width",2.4);
 				}else{
-					this.$lineDom[id].childNodes[1].setAttribute("stroke",GooFlow.color.line);
+					this.$lineDom[id].childNodes[1].setAttribute("stroke",WaterFlow.color.line);
 					this.$lineDom[id].childNodes[1].setAttribute("marker-end","url(#arrow1)");
                     this.$lineDom[id].childNodes[1].setAttribute("stroke-width",1.4);
 				}
 			}else{
 				if(mark){
-                    this.$lineDom[id].strokeColor=GooFlow.color.mark;
+                    this.$lineDom[id].strokeColor=WaterFlow.color.mark;
                     this.$lineDom[id].strokeWeight="2.4";
 				}
 				else{
-                    this.$lineDom[id].strokeColor=GooFlow.color.line;
+                    this.$lineDom[id].strokeColor=WaterFlow.color.line;
                     this.$lineDom[id].strokeWeight="1.2";
 				}
 			}
@@ -2339,7 +2336,7 @@ GooFlow.prototype={
 		if(this.$undoStack&&this.$editable){
 			this.pushOper("delArea",[id]);
 		}
-		this.$areaDom[id]=$("<div id='"+id+"' class='GooFlow_area area_"+json.color
+		this.$areaDom[id]=$("<div id='"+id+"' class='WaterFlow_area area_"+json.color
 			+"' style='top:"+json.top*this.$scale+"px;left:"+json.left*this.$scale+"px'><div class='bg' style='width:"+(json.width*this.$scale)+"px;height:"+(json.height*this.$scale)+"px'></div>"
 			+"<label>"+json.name+"</label><i></i><div><div class='rs_bottom'></div><div class='rs_right'></div><div class='rs_rb'></div><div class='rs_close'></div></div></div>");
 		this.$areaData[id]=json;
@@ -2378,7 +2375,7 @@ GooFlow.prototype={
 		}
 		
 		this.$workArea.css({height:h+"px",width:w+"px"});
-		if(GooFlow.prototype.useSVG===""){
+		if(WaterFlow.prototype.useSVG===""){
 			this.$draw.coordsize = w+","+h;
 		}
 		this.$draw.style.width = w + "px";
@@ -2404,7 +2401,7 @@ GooFlow.prototype={
         W=this.$workArea.width()/factor;
         H=this.$workArea.height()/factor;
         this.$workArea.css({"height":H+"px","width":W+"px"});
-        if(GooFlow.prototype.useSVG!==""){
+        if(WaterFlow.prototype.useSVG!==""){
 
         }else{
             this.$draw.coordsize = W+","+H;
@@ -2416,7 +2413,7 @@ GooFlow.prototype={
         }
         //缩放节点
         var isWebkit = navigator.userAgent.toLowerCase().indexOf('webkit') > -1;
-        this.$workArea.children(".GooFlow_item").each(function(){
+        this.$workArea.children(".WaterFlow_item").each(function(){
             var This=$(this);
             P=This.position();
             This.css({ "left":P.left/factor+"px", "top":P.top/factor+"px" });
@@ -2440,7 +2437,7 @@ GooFlow.prototype={
             }
             This.find("td[class='ico']").children("i").css(newSize);
 
-            tmp=14*scale;
+            tmp=16*scale;
             if(This.parent().find(".span").length===1){
                 This.parent().css("border-radius",W/2+"px");
                 This=This.parent().find(".span");
@@ -2449,8 +2446,8 @@ GooFlow.prototype={
                 This=This.find("td:eq(1) div");
                 newSize={};
                 if(tmp<12&&isWebkit){
-                    newSize["font-size"]="14px";
-                    newSize["transform"]="scale("+(tmp/14)+")";
+                    newSize["font-size"]="16px";
+                    newSize["transform"]="scale("+(tmp/16)+")";
                     var mW=(W/scale-18-(W-18*scale))/2;
                     var mH=(H/scale-H)/2;
                     newSize["margin"]=-mH+"px "+(-mW)+"px";
@@ -2464,7 +2461,7 @@ GooFlow.prototype={
 		});
         //缩放区域图
 		var ifs=16*scale+2;
-		this.$group.children(".GooFlow_area").each(function(){
+		this.$group.children(".WaterFlow_area").each(function(){
             var This=$(this);
             P=This.position();
             This.css({ "left":P.left/factor+"px", "top":P.top/factor+"px" });
@@ -2473,7 +2470,7 @@ GooFlow.prototype={
             H=This.outerHeight()/factor;
             This.css({ "width":W+"px", "height":H+"px" });
             This.next("label").css({
-				"font-size": 14*scale+"px",
+				"font-size": 16*scale+"px",
 				"left": ifs+3+"px"
             }).next("i").css({
 				"font-size": ifs-2+"px",
@@ -2493,10 +2490,10 @@ GooFlow.prototype={
 	}
 };
 //默认的颜色样式
-GooFlow.color={
+WaterFlow.color={
 	//main:"#20A0FF",
 	font:"#15428B",
-	node:"#C0CCDA",
+	node:"#A1DCEB",
 	line:"#1D8CE0",
 	lineFont:"#777",
 	mark:"#ff8800",
@@ -2504,32 +2501,32 @@ GooFlow.color={
 	mixFont:"#777"
 };
 	//默认的文字说明注释内容
-GooFlow.remarks={
+WaterFlow.remarks={
     headBtns:{},
 	toolBtns:{},
     extendRight:undefined,
     extendBottom:undefined
 };
-//当不想使用jquery插件式初始化方法时，另一种通过直接调用GooFlow内部构造方法进行的初始化
-GooFlow.init=function(selector,property){
-	return new GooFlow(selector,property);
+//当不想使用jquery插件式初始化方法时，另一种通过直接调用WaterFlow内部构造方法进行的初始化
+WaterFlow.init=function(selector,property){
+	return new WaterFlow(selector,property);
 };
-//在初始化出一个对象前的公用方法：覆盖设定GooFlow默认的颜色定义
-GooFlow.setColors=function(colors){
-	$.extend(GooFlow.color,colors);
+//在初始化出一个对象前的公用方法：覆盖设定WaterFlow默认的颜色定义
+WaterFlow.setColors=function(colors){
+	$.extend(WaterFlow.color,colors);
 };
-//扩展GooFlow方法的扩展用接口，一般用在CMD,AMD
-GooFlow.extend=function(json){
+//扩展WaterFlow方法的扩展用接口，一般用在CMD,AMD
+WaterFlow.extend=function(json){
 	for(var funcName in json){
-		GooFlow.prototype[funcName]=json[funcName];
+		WaterFlow.prototype[funcName]=json[funcName];
 	}
 };
 //将此类的构造函数加入至JQUERY对象中
 $.extend({
-	createGooFlow:function(selector,property){
-		return new GooFlow(selector,property);
+	createWaterFlow:function(selector,property){
+		return new WaterFlow(selector,property);
 	}
 });
 
-        exports('gooflow');
+        exports('waterflow');
     });

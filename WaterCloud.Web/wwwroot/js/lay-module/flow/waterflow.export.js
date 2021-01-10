@@ -1,18 +1,18 @@
 /*
- * 专门负责导出流程图文件并让用户下载的扩展包方法
+ * 导出流程图文件并下载的扩展包方法
  */
 ;(function ( global, factory ) {
 	'use strict';
 	if ( typeof define !== 'undefined' && define.amd ) { // export as AMD...
-		define( ['jquery','GooFlow'], factory );
+		define( ['jquery','WaterFlow'], factory );
 	}
 	else if ( typeof module !== 'undefined' && module.exports ) { // ...or as browserify
-		factory( require('jquery'), require('GooFlow') );
+		factory( require('jquery'), require('WaterFlow') );
 	}else
-		factory( global.$, global.GooFlow );
+		factory( global.$, global.WaterFlow );
 
-}( typeof window !== 'undefined' ? window : this, function ( $,GooFlow ) {
-	if(GooFlow.prototype.exportDiagram && typeof GooFlow.prototype.exportDiagram==='function'){
+}( typeof window !== 'undefined' ? window : this, function ( $,WaterFlow ) {
+	if(WaterFlow.prototype.exportDiagram && typeof WaterFlow.prototype.exportDiagram==='function'){
 		return;//防止多次载入
 	}
     var Cmder = {
@@ -229,7 +229,7 @@
         },
 
         _analyseLine:function(lineDom){ //only for IE
-            var fontFamily = $(".GooFlow").css("font-family");
+            var fontFamily = $(".WaterFlow").css("font-family");
             //基本样式
             var path = lineDom.childNodes[1];
             var property={
@@ -336,7 +336,7 @@
 	};
 
 	//扩展定义导出流程图文件功能的方法
-	GooFlow.prototype.exportDiagram=function(fileName) {
+	WaterFlow.prototype.exportDiagram=function(fileName) {
 		var areaEl={};
 		var iconImage = undefined;
 		var bgUrl = null;

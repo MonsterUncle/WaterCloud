@@ -31,8 +31,8 @@ layui.config({
     optimizeSelectOption: 'optimizeSelectOption/optimizeSelectOption', //  下拉框遮挡
     dtree: 'dtree/dtree', //  树形扩展
     xmSelect:'xm-select/xm-select', //select多选扩展
-    flowlayout:'flowlayout', //flow流程插件
-    gooflow: 'flow/gooflow' ,//flow流程插件
+    flowlayout:'flow/flowlayout', //flow流程插件
+    waterflow: 'flow/waterflow' ,//flow流程插件
     formDesigner: 'formDesigner/formDesigner', //表单设计器
     formField: 'formDesigner/formField', //表单设计器
     formPreview: 'formDesigner/formPreview', //表单设计器

@@ -5,22 +5,22 @@
 ;(function ( global, factory ) {
 	'use strict';
 	if ( typeof define !== 'undefined' && define.amd ) { // export as AMD...
-		define( ['jquery','GooFlow'], factory );
+		define( ['jquery','WaterFlow'], factory );
 	}
 	else if ( typeof module !== 'undefined' && module.exports ) { // ...or as browserify
-		factory( require('jquery'), require('GooFlow') );
+		factory( require('jquery'), require('WaterFlow') );
 	}else
-		factory( global.$, global.GooFlow );
+		factory( global.$, global.WaterFlow );
 
-}( typeof window !== 'undefined' ? window : this, function ( $,GooFlow ) {
-	if(GooFlow.prototype.print && typeof GooFlow.prototype.print==='function'){
+}( typeof window !== 'undefined' ? window : this, function ( $,WaterFlow ) {
+	if(WaterFlow.prototype.print && typeof WaterFlow.prototype.print==='function'){
 		return;//防止多次载入
 	}
 /*
  * printThis v1.12.2
  * @desc Printing plug-in for jQuery
  * @author Jason Day
- * 精简版 only for GooFlow
+ * 精简版 only for WaterFlow
  */
     (function($) {
 
@@ -183,7 +183,7 @@
     ////////////////printThis.js END!
 
 	//扩展定义打印预览或另存为PDF功能的方法
-	GooFlow.prototype.print=function(scale){
+	WaterFlow.prototype.print=function(scale){
 		var max=this._suitSize();
 		if(!scale)  scale=1.0;
 		max.width+=100;max.height+=100;
@@ -191,17 +191,17 @@
 		printDiv.css({
 			width:max.width+"px",height:max.height+"px"
 		});
-		printDiv.children(".GooFlow_work_group").css({width:max.width+"px",height:max.height+"px"});
+		printDiv.children(".WaterFlow_work_group").css({width:max.width+"px",height:max.height+"px"});
 		printDiv.children("svg").css({width:max.width+"px",height:max.height+"px"});
-		printDiv.children(".GooFlow_work_vml").css({width:max.width+"px",height:max.height+"px"});
-		printDiv=printDiv.wrap('<div class="GooFlow GooFlow_work" style="width:'
+		printDiv.children(".WaterFlow_work_vml").css({width:max.width+"px",height:max.height+"px"});
+		printDiv=printDiv.wrap('<div class="WaterFlow WaterFlow_work" style="width:'
 			+max.width+'px;height:'+max.height+'px; overflow:hidden"></div>').parent();
-		if(GooFlow.color.font){
-			printDiv.css("color",GooFlow.color.font);
+		if(WaterFlow.color.font){
+			printDiv.css("color",WaterFlow.color.font);
 		}
 		printDiv.css({"transform-origin": "top left", transform:"scale("+scale+")"}).printThis({
 			base:document.URL, pageTitle:this.$title
 		});
 	};
-	return GooFlow;
+	return WaterFlow;
 }));

@@ -31,7 +31,7 @@
                 $.extend(defaultcnf, options);
             }
 
-            var flowPanel = $.createGooFlow($(this), defaultcnf);
+            var flowPanel = $.createWaterFlow($(this), defaultcnf);
             flowPanel.setNodeRemarks({
                 cursor: "选择指针",
                 direct: "转换连线",
@@ -100,7 +100,7 @@
                             break;
                         case "node":
                             if (_node.setInfo == null) {
-                                layer.msg("请设置节点【" + _node.name + "】操作人员");
+                                layer.msg("请设置节点【"+_node.name+"】操作人员");
                                 return -1;
                             }
                             _flag = true;
@@ -182,7 +182,7 @@
             {
                 var tipHtml =
                     '<div style="position:absolute;left:10px;margin-top: 10px;padding:10px;border-radius:5px;background:rgba(0,0,0,0.05);z-index:0;display:inline-block;">';
-                if (defaultcnf.needNoTag == true) {
+                if (defaultcnf.needNoTag==true) {
                     tipHtml +=
                         '<div style="display: inline-block;"><i style="padding-right:5px;color:#5bc0de;" class="layui-icon">&#xe612;</i><span>正在处理</span></div>';
                 }
@@ -196,11 +196,11 @@
                     tipHtml +=
                         '<div style="display: inline-block;margin-left: 10px;"><i style="padding-right:5px;color:#999;" class="layui-icon">&#xe612;</i><span>未处理</span></div></div>';
                 }
-                $('.GooFlow_work .GooFlow_work_inner').css('background-image', 'none');
+                $('.WaterFlow_work .WaterFlow_work_inner').css('background-image', 'none');
                 $('td').css('color', '#fff');
                 $frmpreview.css('background', '#fff');
                 $('.ico').remove();
-                $('.GooFlow_item').css('border', '0px');
+                $('.WaterFlow_item').css('border', '0px');
                 $frmpreview.append(tipHtml);
                 $.each(options.nodeData,
                     function (i, item) {
@@ -221,10 +221,10 @@
                         }
                         if (item.setInfo != undefined && item.setInfo.Taged != undefined) {
                             var tips = '<div style="text-align:left">';
-                            tips += "<p>" + defaultcnf.useName + "：" + item.setInfo.UserName + "</p>";
+                            tips += "<p>" + defaultcnf.useName+"：" + item.setInfo.UserName + "</p>";
                             tips += "<p>" + defaultcnf.resultName + "：" + defaultcnf.tagName[item.setInfo.Taged] + "</p>";
-                            tips += "<p>" + defaultcnf.timeName + "：" + item.setInfo.TagedTime + "</p>";
-                            tips += "<pre>" + defaultcnf.remarkName + "：" + item.setInfo.Description + "</pre></div>";
+                            tips += "<p>" + defaultcnf.timeName +"：" + item.setInfo.TagedTime + "</p>";
+                            tips += "<pre>" + defaultcnf.remarkName +"：" + item.setInfo.Description + "</pre></div>";
 
                             $('#' + item.id).hover(function () {
                                 layer.tips(tips, '#' + item.id);
@@ -369,10 +369,10 @@
                             $('#' + item.id).attr('data-content', "该节点未被设置");
                         }
                     });
-                //$('.GooFlow_item').popover({ html: true });
+                //$('.WaterFlow_item').popover({ html: true });
             }
 
-            return flowPanel;
+           return flowPanel;
         }
 
         exports('flowlayout');
