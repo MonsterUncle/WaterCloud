@@ -83,7 +83,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                     throw new Exception("请上传Excel");
                 }
                 string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + "file" + $@"/";
-                fileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + fileName.Substring(fileName.LastIndexOf("."));
+                fileName = Utils.CreateNo() + fileName.Substring(fileName.LastIndexOf("."));
                 string fileFullName = filePath + fileName;
                 if (!Directory.Exists(filePath))
                 {

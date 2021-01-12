@@ -40,11 +40,11 @@
             search: false,
             cols: [[
                 { type: 'checkbox', fixed: "left", width: 70 },
-                { field: 'ErrorMsg', title: '错误信息', width: 150 },
-                { field: 'F_FullName', title: '岗位名称', width: 120, sort: true },
-                { field: 'F_EnCode', title: '岗位编号', width: 120, sort: true },
+                { field: 'ErrorMsg', title: '错误信息', width: 150, sort: true, filter: true },
+                { field: 'F_FullName', title: '岗位名称', width: 120, sort: true, filter: true },
+                { field: 'F_EnCode', title: '岗位编号', width: 120, sort: true, filter: true },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80,
+                    field: 'F_EnabledMark', title: '状态', width: 80, sort: true, filter: true,
                     templet: function (d) {
                         if (d.F_EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
@@ -53,7 +53,7 @@
                         }
                     }
                 },
-                { field: 'F_Description', title: '备注', minWidth: 150, sort: true },
+                { field: 'F_Description', title: '备注', minWidth: 150, sort: true, filter: true },
             ]]
         });
         //普通图片上传
