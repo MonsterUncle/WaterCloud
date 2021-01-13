@@ -75,11 +75,11 @@ namespace WaterCloud.Web
                 return DBContexHelper.Contex();
             });
             #region 注入 Quartz调度类
-            services.AddSingleton<JobCenter>();
             services.AddSingleton<JobExecute>();
             //注册ISchedulerFactory的实例。
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             services.AddSingleton<IJobFactory, IOCJobFactory>();
+            services.AddHostedService<JobCenter>();
             #endregion
             //注入SignalR实时通讯，默认用json传输
             services.AddSignalR(options =>
@@ -233,9 +233,6 @@ namespace WaterCloud.Web
                 endpoints.MapControllerRoute("default", "{controller=Login}/{action=Index}/{id?}");
             });
             GlobalContext.ServiceProvider = app.ApplicationServices;
-            //获取前面注入的Quartz调度类
-            var quartz = app.ApplicationServices.GetRequiredService<JobCenter>();
-            quartz.Start();
         }
     }
 }
