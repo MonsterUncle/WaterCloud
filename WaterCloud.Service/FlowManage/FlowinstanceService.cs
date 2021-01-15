@@ -29,7 +29,7 @@ namespace WaterCloud.Service.FlowManage
         private MessageService messageApp;
         private string flowCreator;
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public FlowinstanceService(IDbContext context, IHttpClientFactory httpClientFactory, IHubContext<MessageHub> messageHub) : base(context)
+        public FlowinstanceService(IDbContext context, IHttpClientFactory httpClientFactory, IHubContext<MessageHub> messageHub = null) : base(context)
         {
             _httpClientFactory = httpClientFactory;
             messageApp = new MessageService(context, messageHub);

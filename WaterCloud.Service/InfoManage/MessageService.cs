@@ -23,7 +23,7 @@ namespace WaterCloud.Service.InfoManage
         
         private readonly IHubContext<MessageHub> _messageHub;
         private ItemsDataService itemsApp;
-        public MessageService(IDbContext context, IHubContext<MessageHub> messageHub) : base(context)
+        public MessageService(IDbContext context, IHubContext<MessageHub> messageHub = null) : base(context)
         {
             itemsApp = new ItemsDataService(context);
             _messageHub = messageHub;
@@ -106,7 +106,10 @@ namespace WaterCloud.Service.InfoManage
                 string msg = entity.ToJson();
                 entity.F_ToUserName = "所有人";
                 entity.F_ToUserId = "";
-                await _messageHub.Clients.Group(currentuser.CompanyId).SendAsync("ReceiveMessage",msg);
+                if (_messageHub != null)
+                {
+                    await _messageHub.Clients.Group(currentuser.CompanyId).SendAsync("ReceiveMessage", msg);
+                }
             }
             else
             {
@@ -121,7 +124,10 @@ namespace WaterCloud.Service.InfoManage
                         continue;
                     }
                     string msg = entity.ToJson();
-                    await _messageHub.Clients.Client(connectionID).SendAsync("ReceiveMessage", msg);
+                    if (_messageHub != null)
+                    {
+                        await _messageHub.Clients.Client(connectionID).SendAsync("ReceiveMessage", msg);
+                    }
                 }
             }
             await repository.Insert(entity);
