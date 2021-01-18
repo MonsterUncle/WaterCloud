@@ -23,12 +23,14 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         #region 获取数据
         [HttpGet]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [ServiceFilter(typeof(HandlerAdminAttribute))]
         public virtual ActionResult SetForm()
         {
             return View();
         }
         [HttpGet]
         [HandlerAjaxOnly]
+        [ServiceFilter(typeof(HandlerAdminAttribute))]
         public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)
         {
             //此处需修改
@@ -55,12 +57,24 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
             else
             {
-                return Content(data.Where(a => a.F_Id == _service.currentuser.CompanyId).ToJson());
+                data = data.Where(a => a.F_Id == _service.currentuser.CompanyId).ToList();
+				foreach (var item in data)
+				{
+                    item.F_AdminAccount = null;
+                    item.F_AdminPassword = null;
+                    item.F_DBProvider = null;
+                    item.F_DbString = null;
+                    item.F_HostUrl = null;
+                    item.F_PrincipalMan = null;
+                    item.F_MobilePhone = null;
+                }
+                return Content(data.ToJson());
             }
         }
 
         [HttpGet]
         [HandlerAjaxOnly]
+        [ServiceFilter(typeof(HandlerAdminAttribute))]
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
             var data = await _service.GetForm(keyValue);
@@ -68,6 +82,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
+        [ServiceFilter(typeof(HandlerAdminAttribute))]
         public async Task<ActionResult> GetSetFormJson()
         {
             var data = await _service.GetForm(_service.currentuser.CompanyId);
@@ -78,6 +93,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         #region 提交数据
         [HttpPost]
         [HandlerAjaxOnly]
+        [ServiceFilter(typeof(HandlerAdminAttribute))]
         public async Task<ActionResult> SubmitForm(SystemSetEntity entity, string keyValue)
         {
             try
@@ -92,6 +108,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
+        [ServiceFilter(typeof(HandlerAdminAttribute))]
         public async Task<ActionResult> SetSubmitForm(SystemSetEntity entity)
         {
             var keyValue = _service.currentuser.CompanyId;
@@ -111,6 +128,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [ServiceFilter(typeof(HandlerAdminAttribute))]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
             try
