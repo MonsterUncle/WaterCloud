@@ -1,4 +1,4 @@
-﻿/*
+/*
  Navicat Premium Data Transfer
 
  Source Server         : local
@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 25/11/2020 09:27:11
+ Date: 19/01/2021 09:29:13
 */
 
 SET NAMES utf8mb4;
@@ -35,11 +35,11 @@ CREATE TABLE `cms_articlecategory`  (
   `F_IsHot` tinyint NULL DEFAULT NULL COMMENT '是否热门',
   `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
   `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '删除标志',
-  `F_CreatorTime` datetime(0) NULL DEFAULT NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime(0) NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
@@ -73,11 +73,11 @@ CREATE TABLE `cms_articlenews`  (
   `F_Author` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '作者',
   `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
   `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '逻辑删除标志',
-  `F_CreatorTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
-  `F_LastModifyTime` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最后修改人',
-  `F_DeleteTime` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
+  `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除人',
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
@@ -114,7 +114,7 @@ CREATE TABLE `oms_flowinstance`  (
   `F_MakerList` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '执行人',
   `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门',
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
-  `F_CreatorTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
   `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
   `F_FrmContent` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '表单元素json',
@@ -140,7 +140,7 @@ CREATE TABLE `oms_flowinstancehis`  (
   `F_ToNodeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '结束节点名称',
   `F_TransitionSate` tinyint(1) NOT NULL COMMENT '转化状态',
   `F_IsFinish` tinyint(1) NOT NULL COMMENT '是否结束',
-  `F_CreatorTime` datetime(0) NOT NULL COMMENT '转化时间',
+  `F_CreatorTime` datetime NOT NULL COMMENT '转化时间',
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人Id',
   `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人名称',
   PRIMARY KEY (`F_Id`) USING BTREE
@@ -158,7 +158,7 @@ CREATE TABLE `oms_flowinstanceinfo`  (
   `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键Id',
   `F_InstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '实例进程Id',
   `F_Content` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作内容',
-  `F_CreatorTime` datetime(0) NOT NULL COMMENT '创建时间',
+  `F_CreatorTime` datetime NOT NULL COMMENT '创建时间',
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
   `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
   PRIMARY KEY (`F_Id`) USING BTREE
@@ -176,11 +176,11 @@ CREATE TABLE `oms_formtest`  (
   `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ID',
   `F_UserName` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '请假人姓名',
   `F_RequestType` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '请假分类，病假，事假，公休等',
-  `F_StartTime` datetime(0) NULL DEFAULT NULL COMMENT '开始时间',
-  `F_EndTime` datetime(0) NULL DEFAULT NULL COMMENT '结束时间',
+  `F_StartTime` datetime NULL DEFAULT NULL COMMENT '开始时间',
+  `F_EndTime` datetime NULL DEFAULT NULL COMMENT '结束时间',
   `F_RequestComment` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请假说明',
   `F_Attachment` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '附件，用于提交病假证据等',
-  `F_CreatorTime` datetime(0) NOT NULL COMMENT '创建时间',
+  `F_CreatorTime` datetime NOT NULL COMMENT '创建时间',
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
   `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
   `F_FlowInstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属流程ID',
@@ -198,11 +198,11 @@ DROP TABLE IF EXISTS `oms_message`;
 CREATE TABLE `oms_message`  (
   `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键Id',
   `F_MessageType` int NULL DEFAULT NULL COMMENT '信息类型（通知、私信、处理）',
-  `F_ToUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收件人主键',
-  `F_ToUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收件人',
+  `F_ToUserId` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收件人主键',
+  `F_ToUserName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收件人',
   `F_MessageInfo` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
-  `F_CreatorTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
   `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
   `F_HrefTarget` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '跳转类型',
@@ -223,7 +223,7 @@ DROP TABLE IF EXISTS `oms_messagehis`;
 CREATE TABLE `oms_messagehis`  (
   `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键Id',
   `F_MessageId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '信息Id',
-  `F_CreatorTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
   `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
   PRIMARY KEY (`F_Id`) USING BTREE
@@ -248,7 +248,7 @@ CREATE TABLE `oms_uploadfile`  (
   `F_Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门',
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
-  `F_CreatorTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
   `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
   PRIMARY KEY (`F_Id`) USING BTREE,
@@ -274,11 +274,11 @@ CREATE TABLE `sys_area`  (
   `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '删除标志',
   `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '有效标志',
   `F_Description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '描述',
-  `F_CreatorTime` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
+  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建日期',
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_LastModifyTime` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最后修改用户',
-  `F_DeleteTime` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
+  `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除用户',
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '行政区域表' ROW_FORMAT = DYNAMIC;
@@ -3663,11 +3663,11 @@ CREATE TABLE `sys_dataprivilegerule`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
   UNIQUE INDEX `XK_DataPrivilegeRule_1`(`F_ModuleId`) USING BTREE COMMENT '唯一键'
@@ -3688,16 +3688,16 @@ CREATE TABLE `sys_dbbackup`  (
   `F_FileName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_FileSize` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_FilePath` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_BackupTime` timestamp(0) NULL DEFAULT NULL,
+  `F_BackupTime` timestamp NULL DEFAULT NULL,
   `F_SortCode` int NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
@@ -3719,11 +3719,11 @@ CREATE TABLE `sys_filterip`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
@@ -3751,14 +3751,14 @@ CREATE TABLE `sys_flowscheme`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL COMMENT '删除标记',
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
   `F_Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `F_CreatorTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
   `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
-  `F_LastModifyTime` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '修改时间',
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改用户主键',
   `F_LastModifyUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改用户',
   `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门',
-  `F_DeleteTime` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
+  `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除人',
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工作流模板信息表' ROW_FORMAT = COMPACT;
@@ -3766,7 +3766,6 @@ CREATE TABLE `sys_flowscheme`  (
 -- ----------------------------
 -- Records of sys_flowscheme
 -- ----------------------------
-INSERT INTO `sys_flowscheme` VALUES ('0f4924b8-22a6-4f28-958c-488265d0bcc1', '1595465800213', '复杂表单流程', NULL, NULL, NULL, '{\"title\":\"newFlow_1\",\"nodes\":[{\"name\":\"node_1\",\"left\":358,\"top\":22,\"type\":\"start round mix\",\"id\":\"1595465816935\",\"width\":26,\"height\":26,\"alt\":true},{\"name\":\"第一级\",\"left\":360,\"top\":94,\"type\":\"node\",\"id\":\"1595465820221\",\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeName\":\"第一级\",\"NodeCode\":\"1595465820221\",\"NodeRejectType\":\"0\",\"NodeDesignate\":\"ALL_USER\",\"NodeConfluenceType\":\"all\",\"ThirdPartyUrl\":\"\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[]}}},{\"name\":\"第二级\",\"left\":383,\"top\":170,\"type\":\"node\",\"id\":\"1595465821942\",\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeName\":\"第二级\",\"NodeCode\":\"1595465821942\",\"NodeRejectType\":\"0\",\"NodeDesignate\":\"ALL_USER\",\"NodeConfluenceType\":\"all\",\"ThirdPartyUrl\":\"\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[]}}},{\"name\":\"node_4\",\"left\":420,\"top\":254,\"type\":\"end round\",\"id\":\"1595465823573\",\"width\":26,\"height\":26,\"alt\":true}],\"lines\":[{\"type\":\"sl\",\"from\":\"1595465816935\",\"to\":\"1595465820221\",\"id\":\"1595465828057\",\"name\":\"\",\"dash\":false},{\"type\":\"sl\",\"from\":\"1595465820221\",\"to\":\"1595465821942\",\"id\":\"1595465829568\",\"name\":\"\",\"dash\":false},{\"type\":\"sl\",\"from\":\"1595465821942\",\"to\":\"1595465823573\",\"id\":\"1595465830589\",\"name\":\"\",\"dash\":false}],\"areas\":[],\"initNum\":9}', '8faff4e5-b729-44d2-ac26-e899a228f63d', 1, 0, 1, 0, 1, '复杂表单流程', '2020-07-23 08:58:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-07-23 08:58:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_form
@@ -3784,11 +3783,11 @@ CREATE TABLE `sys_form`  (
   `F_SortCode` int NULL DEFAULT NULL COMMENT '排序码',
   `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
   `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '逻辑删除标志',
-  `F_CreatorTime` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
-  `F_LastModifyTime` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最后修改人',
-  `F_DeleteTime` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
+  `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除人',
   `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
   `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属组织',
@@ -3800,7 +3799,6 @@ CREATE TABLE `sys_form`  (
 -- ----------------------------
 -- Records of sys_form
 -- ----------------------------
-INSERT INTO `sys_form` VALUES ('8faff4e5-b729-44d2-ac26-e899a228f63d', '系统内置的复杂请假条表单', 1, 'FormTest', 11, 'F_Id,F_UserName,F_RequestType,F_StartTime,F_EndTime,F_RequestComment,F_Attachment,F_FlowInstanceId,F_CreatorTime,F_CreatorUserId,F_CreatorUserName', '', '', 0, 1, 0, '2019-07-29 01:03:36', '6ba79766-faa0-4259-8139-a4a6d35784e0', '2020-07-23 08:49:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2019-07-29 01:03:36', '6ba79766-faa0-4259-8139-a4a6d35784e0', '企业版内置的复杂请假条表单', '', NULL);
 
 -- ----------------------------
 -- Table structure for sys_items
@@ -3817,11 +3815,11 @@ CREATE TABLE `sys_items`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
   UNIQUE INDEX `IX_Sys_Items`(`F_EnCode`) USING BTREE COMMENT '唯一键'
@@ -3861,11 +3859,11 @@ CREATE TABLE `sys_itemsdetail`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
   UNIQUE INDEX `IX_Sys_ItemsDetail`(`F_ItemId`, `F_ItemCode`) USING BTREE COMMENT '唯一键'
@@ -3938,7 +3936,7 @@ INSERT INTO `sys_itemsdetail` VALUES ('fa6c1873-888c-4b70-a2cc-59fccbb22078', '0
 DROP TABLE IF EXISTS `sys_log`;
 CREATE TABLE `sys_log`  (
   `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_Date` timestamp(0) NULL DEFAULT NULL,
+  `F_Date` timestamp NULL DEFAULT NULL,
   `F_Account` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_NickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_Type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -3947,10 +3945,10 @@ CREATE TABLE `sys_log`  (
   `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_ModuleName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_Result` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_KeyValue` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_KeyValue` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `F_CompanyId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
@@ -3982,11 +3980,11 @@ CREATE TABLE `sys_module`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
   UNIQUE INDEX `IX_Sys_Module`(`F_FullName`) USING BTREE COMMENT '唯一键'
@@ -4031,9 +4029,11 @@ INSERT INTO `sys_module` VALUES ('a5b323e7-db24-468f-97d7-a17bf5396742', '87dc2d
 INSERT INTO `sys_module` VALUES ('bcd52760-009f-4673-80e5-ff166aa07687', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, 'ContentManage', '内容管理', 'fa fa-building-o', NULL, 'expand', 1, 1, 0, 0, 0, 0, 6, 0, 1, '', '2020-06-08 20:07:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-08-12 11:18:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_module` VALUES ('c14ab4f2-a1cf-4abd-953b-bacd70e78e8c', '873e2274-6884-4849-b636-7f04cca8242c', 2, 'AreaTool', '省市县区选择器', 'fa fa-rocket', '../page/area.html', 'expand', 1, 0, 0, 0, 0, 0, 6, 0, 1, '', '2020-06-23 11:08:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-02 08:42:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_module` VALUES ('c87cd44f-d064-4d3c-a43e-de01a7a8785e', '5f9873e9-0308-4a8e-84b7-1c4c61f37654', 3, 'Flowinstance', '我的流程', 'fa fa-user-o', '/FlowManage/Flowinstance/Index', 'iframe', 1, 0, 0, 0, 0, 0, 0, 0, 1, '', '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-24 15:59:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_module` VALUES ('ca45b5ae-0252-4783-a23d-8633fc35e7e3', '873e2274-6884-4849-b636-7f04cca8242c', 3, 'cardTable', '卡片表格', 'fa fa-cc-mastercard', '../page/cardTable.html', 'expand', 1, 0, 0, 0, 0, 0, 7, 0, 1, '', '2020-12-21 10:34:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-12-21 10:34:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_module` VALUES ('d419160a-0a54-4da2-98fe-fc57f2461a2d', '873e2274-6884-4849-b636-7f04cca8242c', 2, 'IconTool', '图标列表', 'fa fa-dot-circle-o', '../page/icon.html', 'expand', 1, 0, 0, 0, 0, 0, 0, 0, 1, '', '2020-06-23 11:03:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-02 08:40:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_module` VALUES ('d742c96e-b61c-4cea-afeb-81805789687b', '462027E0-0848-41DD-BCC3-025DCAE65555', 2, 'ItemsType', '字典分类', 'fa fa-align-justify', '/SystemManage/ItemsType/Index', 'iframe', 0, 0, 0, 0, 0, 0, 6, 0, 1, '', '2020-04-27 16:51:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-15 14:57:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_module` VALUES ('e3188a69-de3a-40ef-a5ff-5eaf460f5d20', '73FD1267-79BA-4E23-A152-744AF73117E9', 3, 'OpenJobs', '定时任务', 'fa fa-paper-plane-o', '/SystemSecurity/OpenJobs/Index', 'iframe', 1, 0, 0, 0, 0, 0, 3, 0, 1, '', '2020-05-26 13:55:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-08 10:13:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_module` VALUES ('e5dc1c07-4234-46d1-bddb-d0442196c6b6', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, 'Baidu', '新窗口', 'fa fa-window-maximize', 'https://www.baidu.com', 'blank', 1, 0, 0, 0, 0, 0, 100, 0, 1, '', '2021-01-11 12:23:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-01-11 12:24:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_module` VALUES ('e9190a56-e173-4483-8a3e-f17b86e4766e', 'a5b323e7-db24-468f-97d7-a17bf5396742', 3, 'Message', '通知管理', 'fa fa-info-circle', '/InfoManage/Message/Index', 'iframe', 1, 0, 0, 0, 0, 0, 1, 0, 1, '', '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-08-03 16:13:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_module` VALUES ('ed757a25-82d5-43cc-89f4-ed26a51fb4f0', '462027E0-0848-41DD-BCC3-025DCAE65555', 2, 'ModuleButton', '菜单按钮', 'fa fa-arrows-alt', '/SystemManage/ModuleButton/Index', 'iframe', 0, 0, 0, 0, 0, 0, 3, 0, 1, '', '2020-04-27 16:56:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-15 14:55:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_module` VALUES ('ee136db7-178a-4bb0-b878-51287a5e2e2b', '5f9873e9-0308-4a8e-84b7-1c4c61f37654', 3, 'DoneFlow', '已处理流程', 'fa fa-history', '/FlowManage/Flowinstance/DoneFlow', 'iframe', 1, 0, 0, 0, 0, 0, 2, 0, 1, '', '2020-07-15 15:05:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
@@ -4064,11 +4064,11 @@ CREATE TABLE `sys_modulebutton`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
   UNIQUE INDEX `IX_Sys_ModuleButton`(`F_ModuleId`, `F_Layers`, `F_EnCode`) USING BTREE COMMENT '唯一键'
@@ -4161,6 +4161,7 @@ INSERT INTO `sys_modulebutton` VALUES ('b83c84e4-6264-4b8e-b319-a49fbf34860d', '
 INSERT INTO `sys_modulebutton` VALUES ('ba72435b-1185-4108-8020-7310c5a70233', '01849cc9-c6da-4184-92f8-34875dac1d42', '0', 1, 'NF-details', '查看数据表', NULL, 2, 'details', '/SystemManage/CodeGenerator/Details', 0, 0, 0, 0, 2, 0, 1, NULL, NULL, NULL, '2020-05-06 13:12:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('c8eed325-56ad-4210-b610-3e3bb68eb0be', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, 'NF-edit', '修改', NULL, 2, 'edit', '/FlowManage/Flowinstance/Form', 0, 0, 0, 0, 1, 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('cba403cb-6418-44b7-868d-19e04af673ce', 'd742c96e-b61c-4cea-afeb-81805789687b', '0', 1, 'NF-delete', '删除分类', NULL, 2, 'delete', '/SystemManage/ItemsType/DeleteForm', 0, 0, 0, 0, 4, 0, 1, NULL, NULL, NULL, '2020-04-27 16:52:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('cc115cef-c2d1-4b97-adbc-ea885aea6190', 'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', '0', 1, 'NF-log', '日志', NULL, 1, 'log', '/SystemSecurity/OpenJobs/Details', NULL, 0, 0, 0, 6, 0, 1, '', '2020-12-02 13:14:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('cd65e50a-0bea-45a9-b82e-f2eacdbd209e', '252229DB-35CA-47AE-BDAE-C9903ED5BA7B', '0', 1, 'NF-add', '新建机构', NULL, 1, 'add', '/SystemManage/Organize/Form', 0, 0, 0, 0, 1, 0, 1, NULL, NULL, NULL, '2020-04-07 14:22:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('d1086ccf-e605-44a4-9777-629810cec02d', '152a8e93-cebb-4574-ae74-2a86595ff986', '0', 1, 'NF-edit', '修改字段', NULL, 2, 'edit', '/SystemManage/ModuleFields/Form', 0, 0, 0, 0, 1, 0, 1, '', '2020-05-21 14:39:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-21 15:15:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('d26da420-7e73-41ef-8361-86551b8dd1bb', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', '0', 1, 'NF-add', '新增', NULL, 1, 'add', '/SystemOrganize/SystemSet/Form', 0, 0, 0, 0, 0, 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-16 08:12:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
@@ -4198,11 +4199,11 @@ CREATE TABLE `sys_modulefields`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_IsPublic` tinyint(1) NULL DEFAULT 0,
   PRIMARY KEY (`F_Id`) USING BTREE,
@@ -4331,12 +4332,12 @@ CREATE TABLE `sys_notice`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
   UNIQUE INDEX `IX_Sys_Notice`(`F_Title`) USING BTREE COMMENT '唯一键'
@@ -4345,27 +4346,6 @@ CREATE TABLE `sys_notice`  (
 -- ----------------------------
 -- Records of sys_notice
 -- ----------------------------
-INSERT INTO `sys_notice` VALUES ('c06787b9-2202-4f11-8aac-4b2c0091fd28', '1.5.0版本更新', '2020/11/25\n功能变更：\n框架升级从.netcore3.1升级到.net5', 0, 1, NULL, '2020-11-25 10:21:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-11-25 10:21:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('209ea3b9-08a4-4e1e-bb24-b0101692ac78', '1.2.0版本更新', '2020/11/12\nBUG修复：\n1、流程驳回bug修复\n2、流程驳回信息提示修复\n3、流程连线条件bug修复\n4、流程修改前端增加限制条件\n5、待处理流程列表显示BUG修复\n6、修复IE连接signalr异常问题', 0, 1, NULL, '2020-11-12 12:36:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-11-12 12:36:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('2907ea71-4c2f-459d-8ece-24437a2cc454', '1.1.7版本更新', '2020/10/19\n功能变更：\n1、错误页关闭直接返回登录页\n2、quarz优化\n3、ajax请求修改默认为异步\n\nBug修复：\n1、修复系统日志没有自适应问题\n2、前端修复时间null 问题\n3、修复拦截器未拦截的问题\n4、修复多线程中IDbContext复用问题\n', 0, 1, NULL, '2020-10-19 14:59:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('33c9a4f3-fc56-4207-944d-44ec68c57f8b', '1.1.9版本更新', '2020/11/10\n功能变更：\n1、流程中角色增加当前部门选项\n2、优化流程和信息提醒', 0, 1, NULL, '2020-11-10 12:34:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-11-12 12:36:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('3e086bf5-4ee7-42e7-84ea-c5710ccf0370', '1.0.2版本更新', '2020/8/10\n功能变更：\n1、更新流程2张表和信息历史表名称长度\n2、修改清空缓存功能，只对管理员开放，成功跳转登录页\n3、增加oracle数据库脚本\n4、信息和流程删除设置为假删\n5、更新tableselect插件\n6、修改系统设置提交关闭问题\n7、选择弹框增加清除方法\n8、选择弹框增加双击事件\n9、区域查询把下级数据也加进去\nbug修复：\n1、通知中心加载问题修复；\n2、修复oracle数据库查询服务bug\n3、修复流程新增缺少F_EnabledMark字段问题\n4、修复用户查看明细显示问题\n5、模板修复树生成问题\n6、修复选择组织、角色、用户弹窗 鉴权异常\n7、修复用户中角色和部门显示问题\n8、二次确认框解决确认没有关闭的问题\n9、修复检测图片 gif异常问题\n', 0, 1, NULL, '2020-08-12 11:11:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('4767b688-83aa-4fd8-b3f6-85175185ec85', '1.0.6版本更新', '2020/8/27\n功能变更：\n1、删除多余字体文件\n2、修复选择弹窗机构显示异常问题，\n3、增加pdf导出示例，在岗位管理里\n4、验证码颜色背景改成白色\n5、表格权限字段，不存在就跳过\n6、common中table和treetable增加字段权限开关，默认开启\nBUG修复：\n1、修改modalOpen方法 高度宽度不对问题\n2、修复登录日志异常问题，\n3、pdf导出样式修改', 0, 1, NULL, '2020-08-20 16:50:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-08-27 14:48:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('4fd29410-5e7c-4e3e-a2b9-3cb478863b87', '1.1.4版本更新', '2020/9/4\n功能变更：\n1、下拉选择样式调整，打开窗体大小调整\n2、首页用户增加下拉箭头\n3、过滤插件微调，防止静态数据去请求后端\n4、前端格式化显示的数据筛选功能调整，后端反格式化数据，只支持\"等于\"\nBug修复：\n1、layui table合计行小数问题修复', 0, 1, NULL, '2020-09-09 11:50:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('6b84edc3-9314-4935-b0bf-10339a25842e', '1.1.5版本更新', '2020/9/9\n功能变更：\n1、日志方法独立出来，简化控制层代码，保留原日志方法，相应模板修改\nBug修复：\n1、修复代码生成新增字段bug', 0, 1, NULL, '2020-09-09 11:52:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('741a5ebd-6f38-40fa-9fbd-d17b340022bf', '1.3.0版本更新', '2020/11/23\n功能变更：\n1、插件更新\n2、流程中compare全转小写\n3、layui-form-label手机端样式修改\n4、代码生成主页显示调整\n5、增加搜索工具按钮\n6、优化按钮显示，宽度小于500隐藏打印按钮\n7、常用参数修改，配置文件增加管理员账号信息等参数\n8、程序启动修改管理员账户\n9、框架新增调用chloe的rollback方法\n10、首页改动\n\nBUG修复：\n1、修复流程发起人无法修改的bug\n2、修复流程处理的IE异常\n3、修复流程中的图片显示异常问题\n4、修复流程执行过程中，线条丢失参数M的问题\n5、修复流程图第一次打开自适应问题\n6、修复异常日志添加问题，事务没有回滚，无法添加的问题\n7、修复直接访问首页websocket异常的问题\n8、修复用户资料，没有更新的问题', 0, 1, NULL, '2020-11-23 10:09:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-11-24 12:24:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('7edd0b8f-97f1-4b36-8be4-d8dc9c2cbcc0', '1.0.3版本更新', '2020/8/12\n功能变更：\n1、upload报错信息改为动态信息；\n2、upload上传地址修改；\n3、导入文件路径修改，增加日期\n4、修改弹窗，改为top.layer.open，修改相应界面\n6、去掉界面中的isMax参数\n7、弹窗大小取消判断\nbug修复：\n1、修复多列模板样式问题；', 0, 1, NULL, '2020-08-12 11:15:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('873db213-2d22-4c00-af03-2d1898f13481', '1.0.0版本说明', '2020/7/23 \n功能变更：\n1、增加表单设计；\n2、增加流程设计；\n3、增加流程中心；\n4、增加文件管理。\n4、去除Respository实现类和接口\n5、代码生成增加实体生成功能\nbug修复：\n1、tab iframe刷新tab iframe问题；\n2、流程中心处理界面显示问题。\n3、修复公告换行问题', 0, 1, NULL, '2020-07-23 11:44:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-08-12 11:11:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('8e72d2de-ded5-481c-9e8b-e8b7ed7ab248', '1.1.1版本更新', '2020/8/31\n功能变更：\n1、新增soul-table后台筛选，岗位管理实现\n2、搜索框样式调整 删除margin\nBUG修复：\n1、修复ClientsData null异常问题\n2、数据权限显示问题修复\n3、数据权限null判断修复', 0, 1, NULL, '2020-09-02 09:04:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('9165dd75-8902-4a63-aad1-2a5286be5169', '1.1.3版本更新', '2020/9/2\nBUG修复：\n1、访问控制显示问题修复', 0, 1, NULL, '2020-09-09 11:47:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-09-09 11:50:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('9ce8d03c-7405-4d32-b798-9f8d355d813a', '1.1.8版本更新', '2020/11/02\n功能变更：\n1、增加数据库超时\n2、操作日志增加配置（redis/sql）\n3、操作日志移除数据权限\n4、默认配置设置为不用redis\n\nBug修复：\n1、修复前端浏览器时间解析异常问题，时间格式统一为“yyyy/MM/dd HH:mm:ss”\n2、 修复定时任务反射异常问题，反射取指定前后缀的dll', 0, 1, NULL, '2020-11-02 16:49:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('a4dbbfd5-19b3-40bd-80a4-71ece63fa16e', '1.0.4版本更新', '2020/8/12\n功能变更：\n1、upload增加excel类别；\n2、岗位管理增加导入导出功能；\n3、菜单全移入常规管理以便二次开发使用新模块\n4、数据库更新、增加导入导出按钮，菜单更新', 0, 1, NULL, '2020-08-12 11:24:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('b2ac5f2c-a2b7-4ca9-86d8-6439bf8186a4', '1.1.6版本更新', '2020/9/29\n功能变更：\n1、chat.js增加重连log提示\n2、soultable和table从common中独立出来\n3、控制器删除多余引用\n4、前端删除多余模块\n\nBug修复：\n1、修复缓存浅copy问题\n2、修复日志，没有模块异常问题（方式className直接传文字即可）\n3、修改JsonHelper中的方法，去掉Serenity引用\n4、修复ToJson时间问题', 0, 1, NULL, '2020-09-29 14:23:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-09-29 14:42:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('b91e62b1-effc-491f-b470-f7ecab0219fc', '1.4.0版本更新', '2020/11/25\n功能变更：\n1、增加全局模型认证\n2、信息界面显示微调\n3、Domain增加模型验证、模板调整\n4、更新数据库记录的数据连接\n5、主题保存到localstorage中\n6、设置全局ValidateAntiForgeryToken\n7、js修改参数提交方式，删除原特性\n8、导入实例去掉搜索图标\n9、代码优化\n\nBUG修复：\n1、修复导入案例中删除异常问题\n2、修复上传文件没有保存问题\n3、修复获取session异常问题', 0, 1, NULL, '2020-11-25 09:20:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('cde8cdbb-86df-419e-9074-a38911936df7', '1.1.2版本更新', '2020/9/1\n功能变更：\n1、loading优化\n2、去除内容管理 url验证\n3、模板调整，分页参数使用soul的\n4、筛选的实现\n5、有效标识改成文字显示', 0, 1, NULL, '2020-09-02 09:08:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-09-09 11:35:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('db12ad90-1c30-41ae-89c2-8b835ecacbd9', '1.0.1版本更新', '2020/8/3\n功能变更：\n1、增加信息中心；\n2、完善通知功能（除私信）；\nbug修复：\n1、当前用户信息对象为空问题；\n2、流程中心部分问题；\n3、代码生成实体生成显示问题；', 0, 1, NULL, '2020-08-03 17:22:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-08-12 11:11:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('dbc4780d-b56d-4e57-ad46-8ddc218983f6', '1.1.0版本更新', '2020/8/27\n功能变更：\n1、去除引用tablePlug插件\n2、下拉框遮挡引用改为optimizeSelectOption\n3、删除多余sqlkey、删除Id列\n4、修改tree折叠列\n5、引入soul-table插件，table增加自动列宽、右键菜单、拖动列、tips显示、导出数据功能\n6、新增formatDate方法\n7、table和treetable去掉hideAlways参数', 0, 1, NULL, '2020-08-27 14:51:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-09-02 09:11:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('eaa34917-4924-4661-bd17-28d2be9a855a', '1.0.5版本更新', '2020/8/17\n功能变更：\n1、增加字典管理分类查询功能\n2、增加字段管理分类的滚动条\n3、模板生成表单，input增加默认显示\n4、自定义测试表单，添加创建人名称\nBUG修复：\n1、修复首次启动更新信息的问题\n2、修复表单设计中date 点击不出现的bug\n3、权限bug修复\n4、修复弹窗超出界面bug\n5、修改addform返回有效的数据\n6、submitPost方法取消关闭loading修复\n7、模板修复是否树的引用\n8、修改modalOpen方法 增加返回值index\n9、修改modalOpen方法 高度宽度不对问题\n10、修复获取用户信息bug', 0, 1, NULL, '2020-08-20 16:48:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-08-20 16:49:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_openjob
@@ -4376,26 +4356,44 @@ CREATE TABLE `sys_openjob`  (
   `F_FileName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_JobGroup` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_StarRunTime` timestamp(0) NULL DEFAULT NULL,
-  `F_EndRunTime` timestamp(0) NULL DEFAULT NULL,
+  `F_StarRunTime` timestamp NULL DEFAULT NULL,
+  `F_EndRunTime` timestamp NULL DEFAULT NULL,
   `F_CronExpress` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastRunTime` timestamp(0) NULL DEFAULT NULL COMMENT '最后一次执行时间',
+  `F_LastRunTime` timestamp NULL DEFAULT NULL COMMENT '最后一次执行时间',
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_openjob
 -- ----------------------------
-INSERT INTO `sys_openjob` VALUES ('1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'WaterCloud.Service.AutoJob.SaveServerStateJob', '服务器状态', 'WaterCloud', '2020-11-25 09:15:42', '2020-11-25 09:15:41', '0 */10 * * * ?', 0, 1, '每10分钟更新一次服务器状态', '2020-05-26 14:50:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-11-25 09:15:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '2020-11-25 09:20:02');
+INSERT INTO `sys_openjob` VALUES ('1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'WaterCloud.Service.AutoJob.SaveServerStateJob', '服务器状态', 'WaterCloud', '2021-01-11 12:22:37', '2021-01-11 12:22:36', '0 */10 * * * ?', 0, 1, '每10分钟更新一次服务器状态', '2020-05-26 14:50:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-01-11 12:22:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '2021-01-10 13:20:00');
+
+-- ----------------------------
+-- Table structure for sys_openjoblog
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_openjoblog`;
+CREATE TABLE `sys_openjoblog`  (
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `F_JobId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务Id',
+  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '任务信息',
+  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '执行时间',
+  `F_EnabledMark` tinyint NOT NULL COMMENT '执行状态',
+  `F_JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务名称',
+  PRIMARY KEY (`F_Id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_openjoblog
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_organize
@@ -4423,11 +4421,11 @@ CREATE TABLE `sys_organize`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
   UNIQUE INDEX `IX_Sys_Organize`(`F_EnCode`) USING BTREE COMMENT '唯一键'
@@ -4436,14 +4434,6 @@ CREATE TABLE `sys_organize`  (
 -- ----------------------------
 -- Records of sys_organize
 -- ----------------------------
-INSERT INTO `sys_organize` VALUES ('253EDA1F-F158-4F3F-A778-B7E538E052A2', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Manufacturing', '生产部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 7, 0, 1, '', '2016-06-10 00:00:00', NULL, '2020-05-28 10:54:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_organize` VALUES ('554C61CE-6AE0-44EB-B33D-A462BE7EB3E1', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Ministry', '技术部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 5, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_organize` VALUES ('5AB270C0-5D33-4203-A54F-4552699FDA3C', '0', 1, 'Company', '上海东鞋贸易有限公司', NULL, 'Company', '郭总', NULL, NULL, NULL, NULL, NULL, NULL, '上海市松江区', 0, 0, 1, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_organize` VALUES ('5B417E2B-4B96-4F37-8BAA-10E5A812D05E', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Market', '市场部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_organize` VALUES ('80E10CD5-7591-40B8-A005-BCDE1B961E76', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Administration', '行政部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 2, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_organize` VALUES ('BD830AEF-0A2E-4228-ACF8-8843C39D41D8', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Purchase', '采购部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 6, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_organize` VALUES ('DFA2FB91-C909-44A3-9282-BF946102E1C9', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'HumanResourse', '人事部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 8, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_organize` VALUES ('F02A66CA-3D8B-491B-8A17-C9ACA3E3B5DD', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Financials', '财务部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 4, 0, 1, NULL, '2016-06-10 00:00:00', NULL, '2020-05-12 12:29:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_quickmodule
@@ -4455,11 +4445,11 @@ CREATE TABLE `sys_quickmodule`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
   UNIQUE INDEX `IX_Sys_QuickModule`(`F_ModuleId`, `F_CreatorUserId`) USING BTREE COMMENT '唯一键'
@@ -4486,11 +4476,11 @@ CREATE TABLE `sys_role`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
   UNIQUE INDEX `IX_Sys_Role`(`F_EnCode`) USING BTREE COMMENT '唯一键'
@@ -4499,25 +4489,6 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('0052A230-EA7B-4F3A-A1C9-1611FF26481A', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, 'manager', '经理', NULL, 0, 0, 3, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('05691457-5284-4FEE-8D7E-C35141F3FF39', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, '10024', '总经理助理', NULL, 0, 0, 16, 0, 1, NULL, '2016-07-12 00:00:00', NULL, '2020-04-03 14:07:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_role` VALUES ('0CD2A952-2EE0-4CAF-9757-617D5075745B', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, 'president', '董事长', NULL, 0, 0, 10, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('23ED024E-0AAA-4C8D-9216-D1AB93348D26', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, 'employee', '员工', NULL, 0, 0, 1, 0, 1, NULL, '2016-07-12 00:00:00', NULL, '2016-07-18 15:18:56', NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('2B3406F9-B7FF-4D23-BC61-D8EEB6C88D5B', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, '10023', '行业顾问', NULL, 0, 0, 15, 0, 1, NULL, '2016-07-12 00:00:00', NULL, '2020-04-03 14:45:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_role` VALUES ('3263446A-D303-4C42-B436-6F46BF7CE86A', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, '10019', '总裁', NULL, 0, 0, 12, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('3A2FD4D7-E73C-44E4-8AED-B6EE5980779E', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, '10025', '大堂经理', NULL, 0, 0, 17, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('796E9C6A-8432-4BA6-8CF6-EFFAB6F2098C', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, 'general', '总经理', NULL, 0, 0, 6, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('7E2639BA-02B9-417A-9AAA-CF6DCF8487E0', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, '10022', '力资源专员', NULL, 0, 0, 14, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('8c119bce-0d70-4a56-8389-214d8e14e107', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 1, '0002', '0002', '1', 0, 0, 2, 0, 1, '', '2020-05-12 12:29:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('91E09653-D3DE-416A-BF6C-E91E60B4B4CF', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, 'chairman', '主任', NULL, 0, 0, 7, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('B2624F67-E092-461A-AAAD-13592A9429D9', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, '10018', '行政助理', NULL, 0, 0, 11, 0, 1, NULL, '2016-07-12 00:00:00', NULL, '2020-04-22 14:27:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_role` VALUES ('C609D4D6-81F7-4647-BF2F-81BD4CED2C19', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, 'fileattache', '档案专员', NULL, 0, 0, 8, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('CB116AA3-88CC-4CF7-B0BC-7C55EC502183', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, '10020', '首席执行官', NULL, 0, 0, 13, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('CEEA79E8-2E19-4294-8447-13247053DE04', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, 'director', '总监', NULL, 0, 0, 4, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('D335A5B8-7DED-495C-B8FC-EE933FB30779', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, 'charge', '主管', NULL, 0, 0, 2, 0, 1, NULL, '2016-07-12 00:00:00', NULL, '2016-07-18 15:17:22', NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('d71324b7-e7eb-47b2-bdea-f0293d36bb7f', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 1, '0003', '0003', '1', 0, 0, 1, 0, 1, '', '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('EA56E457-5024-49AF-9410-D5D71D24F14B', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, 'vicegeneral', '副总经理', NULL, 0, 0, 5, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_role` VALUES ('F03EA699-9A0A-4EE9-9D33-27B9A7DFF09B', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 2, 'engineer', '高级工程师', NULL, 0, 0, 9, 0, 1, NULL, '2016-07-12 00:00:00', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_roleauthorize
@@ -4530,7 +4501,7 @@ CREATE TABLE `sys_roleauthorize`  (
   `F_ObjectType` int NULL DEFAULT NULL,
   `F_ObjectId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_SortCode` int NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
@@ -4574,15 +4545,15 @@ CREATE TABLE `sys_systemset`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_PrincipalMan` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_EndTime` timestamp(0) NULL DEFAULT NULL,
+  `F_EndTime` timestamp NULL DEFAULT NULL,
   `F_DbString` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `F_DBProvider` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_HostUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -4592,7 +4563,7 @@ CREATE TABLE `sys_systemset`  (
 -- ----------------------------
 -- Records of sys_systemset
 -- ----------------------------
-INSERT INTO `sys_systemset` VALUES ('d69fd66a-6a77-4011-8a25-53a79bdf5001', '/icon/favicon.ico', 'WaterCloud', '水之云信息系统', '水之云', 'admin', '0000', 0, 1, '', '2020-06-12 16:30:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-11-25 09:15:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '13621551864', 'MonsterUncle', '2032-06-26 00:00:00', 'data source=localhost;database=watercloudnetdb;uid=root;pwd=root;', 'MySql.Data.MySqlClient', 'localhost');
+INSERT INTO `sys_systemset` VALUES ('d69fd66a-6a77-4011-8a25-53a79bdf5001', '/icon/favicon.ico', 'WaterCloud', '水之云信息系统', '水之云', 'admin', '0000', 0, 1, '', '2020-06-12 16:30:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-01-11 12:22:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '136xxxxxxxx', 'xxxx', '2032-06-26 00:00:00', 'data source=localhost;database=watercloudnetdb;uid=root;pwd=root;', 'MySql.Data.MySqlClient', 'localhost');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -4605,7 +4576,7 @@ CREATE TABLE `sys_user`  (
   `F_NickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_HeadIcon` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_Gender` tinyint(1) NULL DEFAULT NULL,
-  `F_Birthday` timestamp(0) NULL DEFAULT NULL,
+  `F_Birthday` timestamp NULL DEFAULT NULL,
   `F_MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_WeChat` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -4624,11 +4595,11 @@ CREATE TABLE `sys_user`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp(0) NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp(0) NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp(0) NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_DingTalkUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_DingTalkUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -4654,14 +4625,14 @@ CREATE TABLE `sys_userlogon`  (
   `F_UserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_UserPassword` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_UserSecretkey` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_AllowStartTime` timestamp(0) NULL DEFAULT NULL,
-  `F_AllowEndTime` timestamp(0) NULL DEFAULT NULL,
-  `F_LockStartDate` timestamp(0) NULL DEFAULT NULL,
-  `F_LockEndDate` timestamp(0) NULL DEFAULT NULL,
-  `F_FirstVisitTime` timestamp(0) NULL DEFAULT NULL,
-  `F_PreviousVisitTime` timestamp(0) NULL DEFAULT NULL,
-  `F_LastVisitTime` timestamp(0) NULL DEFAULT NULL,
-  `F_ChangePasswordDate` timestamp(0) NULL DEFAULT NULL,
+  `F_AllowStartTime` timestamp NULL DEFAULT NULL,
+  `F_AllowEndTime` timestamp NULL DEFAULT NULL,
+  `F_LockStartDate` timestamp NULL DEFAULT NULL,
+  `F_LockEndDate` timestamp NULL DEFAULT NULL,
+  `F_FirstVisitTime` timestamp NULL DEFAULT NULL,
+  `F_PreviousVisitTime` timestamp NULL DEFAULT NULL,
+  `F_LastVisitTime` timestamp NULL DEFAULT NULL,
+  `F_ChangePasswordDate` timestamp NULL DEFAULT NULL,
   `F_MultiUserLogin` tinyint(1) NULL DEFAULT NULL,
   `F_LogOnCount` int NULL DEFAULT NULL,
   `F_UserOnLine` tinyint(1) NULL DEFAULT NULL,
@@ -4678,6 +4649,6 @@ CREATE TABLE `sys_userlogon`  (
 -- ----------------------------
 -- Records of sys_userlogon
 -- ----------------------------
-INSERT INTO `sys_userlogon` VALUES ('9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'e69ec66f911cc15cfd6b53d05ce37915', '677f2d0df2eaa9b0', NULL, NULL, NULL, NULL, NULL, '2020-04-17 14:47:44', '2020-04-17 14:59:58', NULL, 0, 360, 0, NULL, NULL, 0, NULL, NULL, 'evrcyibdv42f3ykhfy1yz3ur', 0);
+INSERT INTO `sys_userlogon` VALUES ('9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '53f6542fade60b5ce89c40f2d4f63d3d', 'f9cd56029f3affb9', NULL, NULL, NULL, NULL, NULL, '2020-04-17 14:47:44', '2020-04-17 14:59:58', NULL, 0, 360, 0, NULL, NULL, 0, NULL, NULL, 'evrcyibdv42f3ykhfy1yz3ur', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
