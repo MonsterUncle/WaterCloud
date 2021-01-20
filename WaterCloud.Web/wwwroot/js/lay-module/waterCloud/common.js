@@ -918,6 +918,19 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             }
 
         },
+        //form参数过滤方法，值不存在直接删除
+        removeEmpty: function (filter, formdate) {
+            var element = $('div[lay-filter=' + filter + ']');
+            if (!!formdate) {
+                for (var key in formdate) {
+                    var $id = element.find('#' + key);
+                    if (!!$id && formdate[key] != 0 && formdate[key]!=false && !formdate[key]) {
+                        $id.parent().parent().remove();
+                    }
+                };
+                return false;
+            }
+        },
         //表格单元格自动列宽
         //tableResize: function (id) {
         //    //动态监听表头高度变化，冻结行跟着改变高度
