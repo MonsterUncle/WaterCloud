@@ -53,22 +53,14 @@ namespace WaterCloud.Service.FlowManage
 
         public async Task<List<FlowinstanceEntity>> GetLookList(string keyword = "")
         {
-            var list = new List<FlowinstanceEntity>();
-            if (!CheckDataPrivilege())
-            {
-                list = await repository.CheckCacheList(cacheKey + "list");
-            }
-            else
-            {
-                var forms = GetDataPrivilege("u");
-                list = forms.ToList();
-            }
+            var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                list = list.Where(u => u.F_Code.Contains(keyword) || u.F_CustomName.Contains(keyword)).ToList();
+                query = query.Where(u => u.F_Code.Contains(keyword) || u.F_CustomName.Contains(keyword));
             }
-            return list.Where(a => a.F_EnabledMark == true).OrderByDescending(t => t.F_CreatorTime).ToList();
+            query = GetDataPrivilege("u", "", query);
+            return query.Where(a => a.F_EnabledMark == true).OrderByDesc(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<FlowinstanceEntity>> GetLookList(SoulPage<FlowinstanceEntity> pagination, string type = "", string keyword = "")
