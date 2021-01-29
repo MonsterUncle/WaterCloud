@@ -57,7 +57,7 @@ namespace WaterCloud.Service.InfoManage
             var hisquery = uniwork.IQueryable<MessageHistoryEntity>(a => a.F_CreatorUserId == currentuser.UserId).Select(a => a.F_MessageId).ToList();
             var tempList= repository.IQueryable(a => a.F_MessageType == 2).InnerJoin<MessageHistoryEntity>((a, b) => a.F_Id == b.F_MessageId).Select((a, b) => a.F_Id).ToList();
             hisquery.AddRange(tempList);
-            var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId) || a.F_ToUserId == "") && a.F_EnabledMark == true && !hisquery.Contains(a.F_Id));
+            var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId) || a.F_ToUserId == "") && a.F_EnabledMark == true).Where(a => !hisquery.Contains(a.F_Id));
             return GetFieldsFilterDataNew("a",query.OrderByDesc(t => t.F_CreatorTime)).ToList();
         }
 
