@@ -1,4 +1,4 @@
-/*
+﻿/*
  Navicat Premium Data Transfer
 
  Source Server         : local
@@ -4650,5 +4650,5 @@ CREATE TABLE `sys_userlogon`  (
 -- Records of sys_userlogon
 -- ----------------------------
 INSERT INTO `sys_userlogon` VALUES ('9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '53f6542fade60b5ce89c40f2d4f63d3d', 'f9cd56029f3affb9', NULL, NULL, NULL, NULL, NULL, '2020-04-17 14:47:44', '2020-04-17 14:59:58', NULL, 0, 360, 0, NULL, NULL, 0, NULL, NULL, 'evrcyibdv42f3ykhfy1yz3ur', 0);
-
+UPDATE `watercloudnetdb`.`sys_module` SET `F_ParentId` = '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', `F_Layers` = 2, `F_EnCode` = 'SmartScreen', `F_FullName` = '自适应大屏', `F_Icon` = 'fa fa-tv', `F_UrlAddress` = '../page/smartscreen.html', `F_Target` = 'blank', `F_IsMenu` = 1, `F_IsExpand` = 0, `F_IsFields` = 0, `F_IsPublic` = 0, `F_AllowEdit` = 0, `F_AllowDelete` = 0, `F_SortCode` = 100, `F_DeleteMark` = 0, `F_EnabledMark` = 1, `F_Description` = '', `F_CreatorTime` = '2021-01-11 12:23:59', `F_CreatorUserId` = '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', `F_LastModifyTime` = '2021-01-29 10:58:13', `F_LastModifyUserId` = '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', `F_DeleteTime` = NULL, `F_DeleteUserId` = NULL WHERE `F_Id` = 'e5dc1c07-4234-46d1-bddb-d0442196c6b6';
 SET FOREIGN_KEY_CHECKS = 1;

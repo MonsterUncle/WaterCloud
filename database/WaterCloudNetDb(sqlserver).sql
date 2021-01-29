@@ -12,7 +12,7 @@
  Target Server Version : 15002000
  File Encoding         : 65001
 
- Date: 19/01/2021 09:39:43
+ Date: 29/01/2021 11:14:03
 */
 
 
@@ -12442,7 +12442,7 @@ GO
 INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', N'73FD1267-79BA-4E23-A152-744AF73117E9', N'3', N'OpenJobs', N'定时任务', N'fa fa-paper-plane-o', N'/SystemSecurity/OpenJobs/Index', N'iframe', N'1', N'0', N'0', N'0', N'0', N'0', N'3', N'0', N'1', N'', N'2020-05-26 13:55:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2020-07-08 10:13:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
 GO
 
-INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'e5dc1c07-4234-46d1-bddb-d0442196c6b6', N'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', N'2', N'Baidu', N'新窗口', N'fa fa-window-maximize', N'https://www.baidu.com', N'blank', N'1', N'0', N'0', N'0', N'0', N'0', N'100', N'0', N'1', N'', N'2021-01-11 12:23:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2021-01-11 12:24:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
+INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'e5dc1c07-4234-46d1-bddb-d0442196c6b6', N'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', N'2', N'SmartScreen', N'自适应大屏', N'fa fa-tv', N'../page/smartscreen.html', N'blank', N'1', N'0', N'0', N'0', N'0', N'0', N'100', N'0', N'1', N'', N'2021-01-11 12:23:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2021-01-29 10:58:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
 GO
 
 INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'e9190a56-e173-4483-8a3e-f17b86e4766e', N'a5b323e7-db24-468f-97d7-a17bf5396742', N'3', N'Message', N'通知管理', N'fa fa-info-circle', N'/InfoManage/Message/Index', N'iframe', N'1', N'0', N'0', N'0', N'0', N'0', N'1', N'0', N'1', N'', N'2020-07-29 16:44:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2020-08-03 16:13:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
@@ -13262,6 +13262,9 @@ GO
 -- ----------------------------
 -- Records of sys_openjob
 -- ----------------------------
+INSERT INTO [dbo].[sys_openjob] ([F_Id], [F_FileName], [F_JobName], [F_JobGroup], [F_StarRunTime], [F_EndRunTime], [F_CronExpress], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_LastRunTime]) VALUES (N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'WaterCloud.Service.AutoJob.SaveServerStateJob', N'服务器状态', N'WaterCloud', N'2021-01-11 12:22:37.0000000', N'2021-01-11 12:22:36.0000000', N'0 */10 * * * ?', N'0', N'1', N'每10分钟更新一次服务器状态', N'2020-05-26 14:50:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2021-01-11 12:22:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'2021-01-10 13:20:00.0000000')
+GO
+
 
 -- ----------------------------
 -- Table structure for sys_openjoblog
@@ -13529,7 +13532,7 @@ GO
 -- ----------------------------
 -- Records of sys_systemset
 -- ----------------------------
-INSERT INTO [dbo].[sys_systemset] ([F_Id], [F_Logo], [F_LogoCode], [F_ProjectName], [F_CompanyName], [F_AdminAccount], [F_AdminPassword], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_MobilePhone], [F_PrincipalMan], [F_EndTime], [F_DbString], [F_DBProvider], [F_HostUrl]) VALUES (N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'/icon/favicon.ico', N'WaterCloud', N'水之云信息系统', N'水之云', N'admin', N'0000', N'0', N'1', N'', N'2020-06-12 16:30:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2021-01-19 09:31:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'136xxxxxxxx', N'xxxx', N'2032-06-26 00:00:00.0000000', N'data source=localhost;database=watercloudnetdb;uid=root;pwd=root;', N'MySql.Data.MySqlClient', N'localhost')
+INSERT INTO [dbo].[sys_systemset] ([F_Id], [F_Logo], [F_LogoCode], [F_ProjectName], [F_CompanyName], [F_AdminAccount], [F_AdminPassword], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_MobilePhone], [F_PrincipalMan], [F_EndTime], [F_DbString], [F_DBProvider], [F_HostUrl]) VALUES (N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'/icon/favicon.ico', N'WaterCloud', N'水之云信息系统', N'水之云', N'admin', N'0000', N'0', N'1', N'', N'2020-06-12 16:30:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2021-01-11 12:22:36.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'136xxxxxxxx', N'xxxx', N'2032-06-26 00:00:00.0000000', N'data source=localhost;database=watercloudnetdb;uid=root;pwd=root;', N'MySql.Data.MySqlClient', N'localhost')
 GO
 
 
@@ -13632,14 +13635,14 @@ GO
 -- ----------------------------
 -- Records of sys_userlogon
 -- ----------------------------
-INSERT INTO [dbo].[sys_userlogon] ([F_Id], [F_UserId], [F_UserPassword], [F_UserSecretkey], [F_AllowStartTime], [F_AllowEndTime], [F_LockStartDate], [F_LockEndDate], [F_FirstVisitTime], [F_PreviousVisitTime], [F_LastVisitTime], [F_ChangePasswordDate], [F_MultiUserLogin], [F_LogOnCount], [F_UserOnLine], [F_Question], [F_AnswerQuestion], [F_CheckIPAddress], [F_Language], [F_Theme], [F_LoginSession], [F_ErrorNum]) VALUES (N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'e7a037f241e6079c36d33b84d49997e7', N'f83c5c0d9a6d61e6', NULL, NULL, NULL, NULL, NULL, N'2020-04-17 14:47:44.0000000', N'2020-04-17 14:59:58.0000000', NULL, N'0', N'360', N'0', NULL, NULL, N'0', NULL, NULL, N'evrcyibdv42f3ykhfy1yz3ur', N'0')
+INSERT INTO [dbo].[sys_userlogon] ([F_Id], [F_UserId], [F_UserPassword], [F_UserSecretkey], [F_AllowStartTime], [F_AllowEndTime], [F_LockStartDate], [F_LockEndDate], [F_FirstVisitTime], [F_PreviousVisitTime], [F_LastVisitTime], [F_ChangePasswordDate], [F_MultiUserLogin], [F_LogOnCount], [F_UserOnLine], [F_Question], [F_AnswerQuestion], [F_CheckIPAddress], [F_Language], [F_Theme], [F_LoginSession], [F_ErrorNum]) VALUES (N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'53f6542fade60b5ce89c40f2d4f63d3d', N'f9cd56029f3affb9', NULL, NULL, NULL, NULL, NULL, N'2020-04-17 14:47:44.0000000', N'2020-04-17 14:59:58.0000000', NULL, N'0', N'360', N'0', NULL, NULL, N'0', NULL, NULL, N'evrcyibdv42f3ykhfy1yz3ur', N'0')
 GO
 
 
 -- ----------------------------
 -- Primary Key structure for table cms_articlecategory
 -- ----------------------------
-ALTER TABLE [dbo].[cms_articlecategory] ADD CONSTRAINT [PK__cms_arti__2C6EC723AE611444] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[cms_articlecategory] ADD CONSTRAINT [PK__cms_arti__2C6EC72322A1CDF6] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13648,7 +13651,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table cms_articlenews
 -- ----------------------------
-ALTER TABLE [dbo].[cms_articlenews] ADD CONSTRAINT [PK__cms_arti__2C6EC723730C3492] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[cms_articlenews] ADD CONSTRAINT [PK__cms_arti__2C6EC723D04AEA85] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13657,7 +13660,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_flowinstance
 -- ----------------------------
-ALTER TABLE [dbo].[oms_flowinstance] ADD CONSTRAINT [PK__oms_flow__2C6EC72323C26207] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_flowinstance] ADD CONSTRAINT [PK__oms_flow__2C6EC723BAFE3B87] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13666,7 +13669,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_flowinstancehis
 -- ----------------------------
-ALTER TABLE [dbo].[oms_flowinstancehis] ADD CONSTRAINT [PK__oms_flow__2C6EC723DF846E75] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_flowinstancehis] ADD CONSTRAINT [PK__oms_flow__2C6EC723227127CC] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13675,7 +13678,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_flowinstanceinfo
 -- ----------------------------
-ALTER TABLE [dbo].[oms_flowinstanceinfo] ADD CONSTRAINT [PK__oms_flow__2C6EC72394BD46B6] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_flowinstanceinfo] ADD CONSTRAINT [PK__oms_flow__2C6EC7239F528189] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13684,7 +13687,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_formtest
 -- ----------------------------
-ALTER TABLE [dbo].[oms_formtest] ADD CONSTRAINT [PK__oms_form__2C6EC723BD7BBEBE] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_formtest] ADD CONSTRAINT [PK__oms_form__2C6EC723C6AF7BF1] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13693,7 +13696,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_message
 -- ----------------------------
-ALTER TABLE [dbo].[oms_message] ADD CONSTRAINT [PK__oms_mess__2C6EC723D0DA63C3] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_message] ADD CONSTRAINT [PK__oms_mess__2C6EC723C72A74D7] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13702,7 +13705,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_messagehis
 -- ----------------------------
-ALTER TABLE [dbo].[oms_messagehis] ADD CONSTRAINT [PK__oms_mess__2C6EC72304420BA5] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_messagehis] ADD CONSTRAINT [PK__oms_mess__2C6EC72308CB0FEA] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13728,7 +13731,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_uploadfile
 -- ----------------------------
-ALTER TABLE [dbo].[oms_uploadfile] ADD CONSTRAINT [PK__oms_uplo__2C6EC723970CDBD0] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_uploadfile] ADD CONSTRAINT [PK__oms_uplo__2C6EC7232A998643] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13737,7 +13740,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_area
 -- ----------------------------
-ALTER TABLE [dbo].[sys_area] ADD CONSTRAINT [PK__sys_area__2C6EC723493B9F1D] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_area] ADD CONSTRAINT [PK__sys_area__2C6EC723DFAF144E] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13763,7 +13766,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_dataprivilegerule
 -- ----------------------------
-ALTER TABLE [dbo].[sys_dataprivilegerule] ADD CONSTRAINT [PK__sys_data__2C6EC7239B70D058] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_dataprivilegerule] ADD CONSTRAINT [PK__sys_data__2C6EC723050B8105] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13772,7 +13775,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_dbbackup
 -- ----------------------------
-ALTER TABLE [dbo].[sys_dbbackup] ADD CONSTRAINT [PK__sys_dbba__2C6EC72364A14ECD] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_dbbackup] ADD CONSTRAINT [PK__sys_dbba__2C6EC7235868F911] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13781,7 +13784,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_filterip
 -- ----------------------------
-ALTER TABLE [dbo].[sys_filterip] ADD CONSTRAINT [PK__sys_filt__2C6EC72303F8C439] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_filterip] ADD CONSTRAINT [PK__sys_filt__2C6EC7233738B547] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13790,7 +13793,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_flowscheme
 -- ----------------------------
-ALTER TABLE [dbo].[sys_flowscheme] ADD CONSTRAINT [PK__sys_flow__2C6EC7230F406C8F] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_flowscheme] ADD CONSTRAINT [PK__sys_flow__2C6EC723AB110D7C] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13816,7 +13819,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_form
 -- ----------------------------
-ALTER TABLE [dbo].[sys_form] ADD CONSTRAINT [PK__sys_form__2C6EC723EDB9FE22] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_form] ADD CONSTRAINT [PK__sys_form__2C6EC72347F16EAC] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13842,7 +13845,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_items
 -- ----------------------------
-ALTER TABLE [dbo].[sys_items] ADD CONSTRAINT [PK__sys_item__2C6EC723E59032F7] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_items] ADD CONSTRAINT [PK__sys_item__2C6EC723D5555293] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13869,7 +13872,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_itemsdetail
 -- ----------------------------
-ALTER TABLE [dbo].[sys_itemsdetail] ADD CONSTRAINT [PK__sys_item__2C6EC7238FA801BC] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_itemsdetail] ADD CONSTRAINT [PK__sys_item__2C6EC72358CD2561] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13878,7 +13881,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_log
 -- ----------------------------
-ALTER TABLE [dbo].[sys_log] ADD CONSTRAINT [PK__sys_log__2C6EC723FAFF39BF] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_log] ADD CONSTRAINT [PK__sys_log__2C6EC72304CD2E68] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13904,7 +13907,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_module
 -- ----------------------------
-ALTER TABLE [dbo].[sys_module] ADD CONSTRAINT [PK__sys_modu__2C6EC723BCC1D150] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_module] ADD CONSTRAINT [PK__sys_modu__2C6EC723A3B28625] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13932,7 +13935,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_modulebutton
 -- ----------------------------
-ALTER TABLE [dbo].[sys_modulebutton] ADD CONSTRAINT [PK__sys_modu__2C6EC72358AE0EE3] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_modulebutton] ADD CONSTRAINT [PK__sys_modu__2C6EC723EEBD6B52] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13959,7 +13962,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_modulefields
 -- ----------------------------
-ALTER TABLE [dbo].[sys_modulefields] ADD CONSTRAINT [PK__sys_modu__2C6EC723C6FC2254] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_modulefields] ADD CONSTRAINT [PK__sys_modu__2C6EC723BE0242D2] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13985,7 +13988,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_notice
 -- ----------------------------
-ALTER TABLE [dbo].[sys_notice] ADD CONSTRAINT [PK__sys_noti__2C6EC7236EA6EEF5] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_notice] ADD CONSTRAINT [PK__sys_noti__2C6EC7230510C57D] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -13994,7 +13997,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_openjob
 -- ----------------------------
-ALTER TABLE [dbo].[sys_openjob] ADD CONSTRAINT [PK__sys_open__2C6EC72331A86808] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_openjob] ADD CONSTRAINT [PK__sys_open__2C6EC72332511B61] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -14003,7 +14006,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_openjoblog
 -- ----------------------------
-ALTER TABLE [dbo].[sys_openjoblog] ADD CONSTRAINT [PK__sys_open__2C6EC723A9151BB0] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_openjoblog] ADD CONSTRAINT [PK__sys_open__2C6EC7237ED0E4CF] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -14029,7 +14032,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_organize
 -- ----------------------------
-ALTER TABLE [dbo].[sys_organize] ADD CONSTRAINT [PK__sys_orga__2C6EC723D0FE27DE] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_organize] ADD CONSTRAINT [PK__sys_orga__2C6EC7230DE40CB1] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -14056,7 +14059,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_quickmodule
 -- ----------------------------
-ALTER TABLE [dbo].[sys_quickmodule] ADD CONSTRAINT [PK__sys_quic__2C6EC723E27B3538] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_quickmodule] ADD CONSTRAINT [PK__sys_quic__2C6EC723932DBC38] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -14082,7 +14085,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_role
 -- ----------------------------
-ALTER TABLE [dbo].[sys_role] ADD CONSTRAINT [PK__sys_role__2C6EC723FC6D66B8] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_role] ADD CONSTRAINT [PK__sys_role__2C6EC723A9E1162E] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -14091,7 +14094,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_roleauthorize
 -- ----------------------------
-ALTER TABLE [dbo].[sys_roleauthorize] ADD CONSTRAINT [PK__sys_role__2C6EC72387D7807E] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_roleauthorize] ADD CONSTRAINT [PK__sys_role__2C6EC723F7430C74] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -14118,7 +14121,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_serverstate
 -- ----------------------------
-ALTER TABLE [dbo].[sys_serverstate] ADD CONSTRAINT [PK__sys_serv__2C6EC7238E7CC0F0] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_serverstate] ADD CONSTRAINT [PK__sys_serv__2C6EC723517CB8DC] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -14127,7 +14130,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_systemset
 -- ----------------------------
-ALTER TABLE [dbo].[sys_systemset] ADD CONSTRAINT [PK__sys_syst__2C6EC72378F4E613] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_systemset] ADD CONSTRAINT [PK__sys_syst__2C6EC7235A2C4A1F] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -14153,7 +14156,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_user
 -- ----------------------------
-ALTER TABLE [dbo].[sys_user] ADD CONSTRAINT [PK__sys_user__2C6EC723B7DD51EA] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_user] ADD CONSTRAINT [PK__sys_user__2C6EC7235BDAECDD] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -14162,7 +14165,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_userlogon
 -- ----------------------------
-ALTER TABLE [dbo].[sys_userlogon] ADD CONSTRAINT [PK__sys_user__2C6EC723E5BB648A] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_userlogon] ADD CONSTRAINT [PK__sys_user__2C6EC72325764DDB] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
