@@ -51,6 +51,8 @@
     <None Include="wwwroot\js\lay-module\flow\fonts\iconflow.svg" />
     <None Include="wwwroot\js\lay-module\flow\fonts\iconfont.js" />
     <None Include="wwwroot\js\lay-module\formDesigner\Sortable\.circleci\config.yml" />
+    <None Include="wwwroot\lib\echarts\echarts.min.js" />
+    <None Include="wwwroot\lib\echarts\jquery.min.js" />
   </ItemGroup>
 
   <ItemGroup>
