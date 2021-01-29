@@ -10,10 +10,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="/lib/layui-v2.5.5/css/layui.css" media="all">
-    <script type="text/javascript" src="/lib/echarts/jquery.min.js"></script>
-    <link rel="stylesheet" href="/css/smartscreen.css">
-    <script type="text/javascript" src="/lib/echarts/echarts.min.js"></script>
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <script type="text/javascript" src="../lib/echarts/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/smartscreen.css">
+    <script type="text/javascript" src="../lib/echarts/echarts.min.js"></script>
 
 </head>
 <script>
@@ -34,7 +34,7 @@
 
 <body>
     <div class="loading">
-        <div class="loadbox"><img src="/picture/loading.gif"> 页面加载中...</div>
+        <div class="loadbox"><img src="../picture/loading.gif"> 页面加载中...</div>
     </div>
     <div class="head">
         <h1>智慧大屏-水之云出品</h1>
@@ -74,9 +74,9 @@
                         </ul>
                     </div>
                     <div class="map">
-                        <div class="map1"><img src="/picture/lbx.png"></div>
-                        <div class="map2"><img src="/picture/jt.png"></div>
-                        <div class="map3"><img src="/picture/map.png"></div>
+                        <div class="map1"><img src="../picture/lbx.png"></div>
+                        <div class="map2"><img src="../picture/jt.png"></div>
+                        <div class="map3"><img src="../picture/map.png"></div>
                     </div>
                 </div>
                 <div class="boxall">
@@ -105,9 +105,9 @@
         </div>
     </div>
     <div class="back"></div>
-    <script src="/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
-    <script src="/js/lay-config.js" charset="utf-8"></script>
-    <script src="/js/framework-ui.js"></script>
+    <script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js" charset="utf-8"></script>
+    <script src="../js/framework-ui.js"></script>
     <script>
         var t = null;
         var type = !$.request("type") ? 0 : $.request("type");
@@ -125,7 +125,7 @@
                 setTimeout(function () {
                     for (var i = 0; i < data.viewList.length; i++) {
                         if (window.location.host.indexOf(data.viewList[i]) > -1) {
-                            var href = i + 1 == data.viewList.length ? data.viewLis[0] : data.viewLis[i + 1];
+                            var href = i + 1 == data.viewList.length ? data.viewList[0] : data.viewList[i + 1];
                             window.location.href = href.indexOf("?") != -1 ? href + "&type=" + type : href + "?type=" + type;
                         }
                     }
