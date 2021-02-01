@@ -13,26 +13,25 @@ using System.IO;
 using System.Reflection;
 using WaterCloud.Domain.InfoManage;
 using WaterCloud.Service.InfoManage;
-using Microsoft.AspNetCore.SignalR;
 
 namespace WaterCloud.Service.FlowManage
 {
-    /// <summary>
-    /// 创 建：超级管理员
-    /// 日 期：2020-07-14 09:18
-    /// 描 述：我的流程服务类
-    /// </summary>
-    public class FlowinstanceService : DataFilterService<FlowinstanceEntity>, IDenpendency
+	/// <summary>
+	/// 创 建：超级管理员
+	/// 日 期：2020-07-14 09:18
+	/// 描 述：我的流程服务类
+	/// </summary>
+	public class FlowinstanceService : DataFilterService<FlowinstanceEntity>, IDenpendency
     {
         private IHttpClientFactory _httpClientFactory;
         private string cacheKey = "watercloud_flowinstancedata_";
         private MessageService messageApp;
         private string flowCreator;
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public FlowinstanceService(IDbContext context, IHttpClientFactory httpClientFactory, IHubContext<MessageHub> messageHub = null) : base(context)
+        public FlowinstanceService(IDbContext context, IHttpClientFactory httpClientFactory) : base(context)
         {
             _httpClientFactory = httpClientFactory;
-            messageApp = new MessageService(context, messageHub);
+            messageApp = new MessageService(context, httpClientFactory);
         }
         #region 获取数据
         public async Task<List<FlowinstanceEntity>> GetList(string keyword = "")

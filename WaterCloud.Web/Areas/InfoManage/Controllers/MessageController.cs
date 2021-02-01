@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Code;
 using WaterCloud.Domain.InfoManage;
@@ -78,6 +79,14 @@ namespace WaterCloud.Web.Areas.InfoManage.Controllers
             {
                 return await Error(ex.Message, "", "");
             }
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [IgnoreAntiforgeryToken]
+        public async Task<ActionResult> SendWebSocketMsg([FromBody] MessageEntity messageEntity)
+        {
+            await _service.SendWebSocketMsg(messageEntity);
+            return Success("发送成功！");
         }
         [HttpPost]
         [HandlerAjaxOnly]

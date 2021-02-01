@@ -67,11 +67,11 @@ namespace WaterCloud.Code
         /// StackTrace获取模块名(此方法为上上层调用)
         /// </summary>
         /// <returns></returns>
-        public static string GetModuleName()
+        public static string GetModuleName(int count = 2)
         {
             try
             {
-                string className = new StackFrame(2, true).GetMethod().DeclaringType.FullName;
+                string className = new StackFrame(count, true).GetMethod().DeclaringType.FullName;
                 className = className.Split('+')[0];
                 className = className.Split('.').LastOrDefault();
                 string moduleName = className.Substring(0, className.Length - 7);
@@ -87,11 +87,11 @@ namespace WaterCloud.Code
         /// StackTrace获取方法名(此方法为上上上上层调用)
         /// </summary>
         /// <returns></returns>
-        public static string GetClassName()
+        public static string GetClassName(int count = 4)
         {
             try
             {
-                string className = new StackFrame(4, true).GetMethod().DeclaringType.FullName;
+                string className = new StackFrame(count, true).GetMethod().DeclaringType.FullName;
                 className = className.Split('+')[0];
                 className = className.Split('.').LastOrDefault();
                 return className;

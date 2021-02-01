@@ -59,5 +59,6 @@ namespace WaterCloud.Code.Model
         //缓存过期时间
         public int LoginExpire { get; set; }
         public string HomePage { get; set; }
+        public string MainProgram { get; set; }
     }
 }

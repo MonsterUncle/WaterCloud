@@ -68,6 +68,7 @@ namespace WaterCloud.WebApi
             });
             //代替HttpContext.Current
             services.AddHttpContextAccessor();
+            services.AddHttpClient();
             services.AddOptions();
             //跨域
             services.AddCors();
