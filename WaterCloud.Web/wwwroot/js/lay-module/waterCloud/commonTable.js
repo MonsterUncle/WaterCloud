@@ -188,6 +188,9 @@ layui.define(["jquery", "layer", 'table', 'soulTable','common'], function (expor
             var moreList = !!moreList ? moreList : [];
             //type是checkbox或者radio
             $(document).on("click", ".layui-table-body table.layui-table tbody tr", function () {
+                var obj = event ? event.target : event.srcElement;
+                // 获取事件名称
+                var tag = obj.tagName;
                 var index = $(this).attr('data-index');
                 var tableBox = $(this).parents('.layui-table-box');
                 //存在固定列
@@ -198,7 +201,9 @@ layui.define(["jquery", "layer", 'table', 'soulTable','common'], function (expor
                 }
                 var checkCell = tableDiv.find("tr[data-index=" + index + "]").find("td div.laytable-cell-" + type + " div.layui-form-" + type + " I");
                 if (checkCell.length > 0) {
-                    checkCell.click();
+                    if (tag == 'DIV') {
+                        checkCell.click();
+                    }
                 }
             });
             //对td的单击事件进行拦截停止，防止事件冒泡再次触发上述的单击事件（Table的单击行事件不会拦截，依然有效）
