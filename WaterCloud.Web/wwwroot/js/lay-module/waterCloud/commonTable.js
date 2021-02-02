@@ -201,7 +201,8 @@ layui.define(["jquery", "layer", 'table', 'soulTable','common'], function (expor
                 }
                 var checkCell = tableDiv.find("tr[data-index=" + index + "]").find("td div.laytable-cell-" + type + " div.layui-form-" + type + " I");
                 if (checkCell.length > 0) {
-                    if (tag == 'DIV') {
+                    //div和td生效
+                    if (tag == 'DIV' || tag == "TD") {
                         checkCell.click();
                     }
                 }
