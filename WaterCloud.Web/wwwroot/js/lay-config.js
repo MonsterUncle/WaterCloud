@@ -3,15 +3,17 @@
  * author:Mr.Chung
  * description:此处放layui自定义扩展
  */
-
+var version;
 window.rootPath = (function (src) {
     src = document.scripts[document.scripts.length - 1].src;
+    //获取版本号
+    version = src.substring(src.lastIndexOf("?v=") + 3, src.length);
     return src.substring(0, src.lastIndexOf("/") + 1);
 })();
 
 layui.config({
     base: rootPath + "lay-module/",
-    version: false
+    version: version
 }).extend({
     miniAdmin: "layuimini/miniAdmin", // layuimini后台扩展
     miniMenu: "layuimini/miniMenu", // layuimini菜单扩展
