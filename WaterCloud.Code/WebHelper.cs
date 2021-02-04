@@ -607,17 +607,21 @@ namespace WaterCloud.Code
         #region IP位置查询
         public static string GetIpLocation(string ipAddress)
         {
-            string ipLocation = string.Empty;
+            string ipLocation = "未知";
             try
             {
                 if (!IsInnerIP(ipAddress))
                 {
                     ipLocation = GetIpLocationFromPCOnline(ipAddress);
                 }
+				else
+				{
+                    ipLocation = "本地局域网";
+                }
             }
             catch (Exception)
             {
-                return string.Empty;
+                return ipLocation;
             }
             return ipLocation;
         }
@@ -672,8 +676,6 @@ namespace WaterCloud.Code
                 string ipLocation = "未知";
                 if (!string.IsNullOrEmpty(httpResult.Html))
                 {
-                    var resultArr = httpResult.Html.Split(' ');
-                    ipLocation = resultArr[0].Replace("省", "  ").Replace("市", "");
                     ipLocation = ipLocation.Trim();
                 }
                 return ipLocation;

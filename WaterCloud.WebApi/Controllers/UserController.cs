@@ -64,8 +64,7 @@ namespace WaterCloud.WebApi.Controllers
                 }
                 else
                 {
-                    operatorModel.LoginIPAddressName = WebHelper.IsInnerIP(operatorModel.LoginIPAddress) ? "本地局域网" : WebHelper.GetIpLocation(operatorModel.LoginIPAddress);
-                    operatorModel.LoginIPAddressName = string.IsNullOrEmpty(operatorModel.LoginIPAddressName) ? "本地局域网" : operatorModel.LoginIPAddressName;
+                    operatorModel.LoginIPAddressName = WebHelper.GetIpLocation(operatorModel.LoginIPAddress);
                 }
                 operatorModel.LoginTime = DateTime.Now;
                 operatorModel.DdUserId = userEntity.F_DingTalkUserId;

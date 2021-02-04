@@ -154,8 +154,7 @@ namespace WaterCloud.Service.SystemSecurity
                     }
 					else
 					{
-                        logEntity.F_IPAddressName = WebHelper.IsInnerIP(logEntity.F_IPAddress) ? "本地局域网" : WebHelper.GetIpLocation(logEntity.F_IPAddress);
-                        logEntity.F_IPAddressName = string.IsNullOrEmpty(logEntity.F_IPAddressName) ? "本地局域网" : logEntity.F_IPAddressName;
+                        logEntity.F_IPAddressName = WebHelper.GetIpLocation(logEntity.F_IPAddress);
                     }
                     logEntity.F_CompanyId = GlobalContext.SystemConfig.SysemMasterProject;
                 }
@@ -185,8 +184,7 @@ namespace WaterCloud.Service.SystemSecurity
                 }
                 else
                 {
-                    logEntity.F_IPAddressName = WebHelper.IsInnerIP(logEntity.F_IPAddress) ? "本地局域网" : WebHelper.GetIpLocation(logEntity.F_IPAddress);
-                    logEntity.F_IPAddressName = string.IsNullOrEmpty(logEntity.F_IPAddressName) ? "本地局域网" : logEntity.F_IPAddressName;
+                    logEntity.F_IPAddressName = WebHelper.GetIpLocation(logEntity.F_IPAddress);
                 }
                 logEntity.F_CompanyId = GlobalContext.SystemConfig.SysemMasterProject;
                 logEntity.Create();
