@@ -60,5 +60,6 @@ namespace WaterCloud.Code.Model
         public int LoginExpire { get; set; }
         public string HomePage { get; set; }
         public string MainProgram { get; set; }
+        public bool? LocalLAN { get; set; }
     }
 }

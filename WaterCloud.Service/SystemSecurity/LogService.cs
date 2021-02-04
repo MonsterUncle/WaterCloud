@@ -147,8 +147,16 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 if (currentuser == null || string.IsNullOrEmpty(currentuser.UserId))
                 {
-                    logEntity.F_IPAddress = LoginProvider=="WebApi"? "未连接未知": WebHelper.Ip;
-                    logEntity.F_IPAddressName = "本地局域网";
+                    logEntity.F_IPAddress = WebHelper.Ip;
+					if (GlobalContext.SystemConfig.LocalLAN != false)
+					{
+                        logEntity.F_IPAddressName = "本地局域网";
+                    }
+					else
+					{
+                        logEntity.F_IPAddressName = WebHelper.IsInnerIP(logEntity.F_IPAddress) ? "本地局域网" : WebHelper.GetIpLocation(logEntity.F_IPAddress);
+                        logEntity.F_IPAddressName = string.IsNullOrEmpty(logEntity.F_IPAddressName) ? "本地局域网" : logEntity.F_IPAddressName;
+                    }
                     logEntity.F_CompanyId = GlobalContext.SystemConfig.SysemMasterProject;
                 }
                 else
@@ -170,8 +178,16 @@ namespace WaterCloud.Service.SystemSecurity
             }
             catch (Exception)
             {
-                logEntity.F_IPAddress = LoginProvider == "WebApi" ? "未连接未知" : WebHelper.Ip;
-                logEntity.F_IPAddressName = "本地局域网";
+                logEntity.F_IPAddress = WebHelper.Ip;
+                if (GlobalContext.SystemConfig.LocalLAN != false)
+                {
+                    logEntity.F_IPAddressName = "本地局域网";
+                }
+                else
+                {
+                    logEntity.F_IPAddressName = WebHelper.IsInnerIP(logEntity.F_IPAddress) ? "本地局域网" : WebHelper.GetIpLocation(logEntity.F_IPAddress);
+                    logEntity.F_IPAddressName = string.IsNullOrEmpty(logEntity.F_IPAddressName) ? "本地局域网" : logEntity.F_IPAddressName;
+                }
                 logEntity.F_CompanyId = GlobalContext.SystemConfig.SysemMasterProject;
                 logEntity.Create();
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)

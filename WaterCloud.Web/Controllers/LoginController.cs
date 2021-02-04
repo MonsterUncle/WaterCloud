@@ -140,7 +140,15 @@ namespace WaterCloud.Web.Controllers
                 operatorModel.DepartmentId = userEntity.F_DepartmentId;
                 operatorModel.RoleId = userEntity.F_RoleId;
                 operatorModel.LoginIPAddress = WebHelper.Ip;
-                operatorModel.LoginIPAddressName = "本地局域网";//Net.GetLocation(operatorModel.LoginIPAddress);
+                if (GlobalContext.SystemConfig.LocalLAN != false)
+                {
+                    operatorModel.LoginIPAddressName = "本地局域网";
+                }
+                else
+                {
+                    operatorModel.LoginIPAddressName = WebHelper.IsInnerIP(operatorModel.LoginIPAddress) ? "本地局域网" : WebHelper.GetIpLocation(operatorModel.LoginIPAddress);
+                    operatorModel.LoginIPAddressName = string.IsNullOrEmpty(operatorModel.LoginIPAddressName) ? "本地局域网" : operatorModel.LoginIPAddressName;
+                }
                 operatorModel.LoginTime = DateTime.Now;
                 operatorModel.DdUserId = userEntity.F_DingTalkUserId;
                 operatorModel.WxOpenId = userEntity.F_WxOpenId;
