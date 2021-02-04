@@ -122,6 +122,7 @@ namespace WaterCloud.Service.InfoManage
                 messageEntity= await repository.Insert(entity);
             }
             //通过http发送消息
+            messageEntity.companyId = currentuser.CompanyId;
             var mouduleName = ReflectionHelper.GetModuleName(1);
             var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == mouduleName).FirstOrDefault();
             var url = module.F_UrlAddress.Substring(0, module.F_UrlAddress.Length - 5) + "SendWebSocketMsg";
