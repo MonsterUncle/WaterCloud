@@ -25,7 +25,6 @@ layui.config({
     tableSelect: 'tableSelect/tableSelect', // table选择扩展
     iconPickerFa: 'iconPicker/iconPickerFa', // fa图标选择扩展
     echarts: 'echarts/echarts', // echarts图表扩展
-    echartsTheme: 'echarts/echartsTheme', // echarts图表主题扩展
     wangEditor: 'wangEditor/wangEditor', // wangEditor富文本扩展
     layarea: 'layarea/layarea', //  省市县区三级联动下拉选择器
     common: 'waterCloud/common', //  工具类
