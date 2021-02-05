@@ -676,7 +676,7 @@ namespace WaterCloud.Code
                 string ipLocation = "未知";
                 if (!string.IsNullOrEmpty(httpResult.Html))
                 {
-                    ipLocation = ipLocation.Trim();
+                    ipLocation = httpResult.Html.Trim();
                 }
                 return ipLocation;
             }
