@@ -1,32 +1,39 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
-using WaterCloud.Service.SystemManage;
 using WaterCloud.Code;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
-using System.Security.Policy;
-using Serenity.Web;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Service.SystemOrganize;
-using Chloe;
-using WaterCloud.DataBase;
+using System.Reflection;
 /// <summary>
 /// 权限验证
 /// </summary>
 namespace WaterCloud.Web
 {
-    public class HandlerAuthorizeAttribute : ActionFilterAttribute
+	public class HandlerAuthorizeAttribute : ActionFilterAttribute
     {
         private readonly RoleAuthorizeService _service;
+        private string _authorize { get; set; }
         public HandlerAuthorizeAttribute(RoleAuthorizeService service)
         {
             _service = service;
+            _authorize = string.Empty;
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            //反射获取Authorize中的参数 控制器方法前加[Authorize("SystemManage:Area:Delete")]
+            var description = (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)filterContext.ActionDescriptor;
+            var methodanonymous = (AuthorizeAttribute)description.MethodInfo.GetCustomAttribute(typeof(AuthorizeAttribute));
+			if (methodanonymous!=null)
+			{
+                _authorize = methodanonymous._authorize;
+            }
             if (OperatorProvider.Provider.GetCurrent() != null&& OperatorProvider.Provider.GetCurrent().IsSystem)
             {
+                return;
+            }
+			if (!string.IsNullOrEmpty(_authorize)&&AuthorizeCheck(filterContext))
+			{
                 return;
             }
             if (!ActionAuthorize(filterContext))
@@ -50,6 +57,26 @@ namespace WaterCloud.Web
                 var roleId = result.userInfo.RoleId;
                 var action = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext.Request.Path;
                 return _service.ActionValidate(roleId, action).GetAwaiter().GetResult();
+            }
+            catch (System.Exception)
+            {
+
+                return false;
+            }
+
+        }
+        private bool AuthorizeCheck(ActionExecutingContext filterContext)
+        {
+            try
+            {
+                OperatorResult result = OperatorProvider.Provider.IsOnLine("pc_").GetAwaiter().GetResult();
+                if (result.stateCode <= 0)
+                {
+
+                    return false;
+                }
+                var roleId = result.userInfo.RoleId;
+                return _service.ActionValidate(roleId, _authorize,true).GetAwaiter().GetResult();
             }
             catch (System.Exception)
             {
