@@ -13,7 +13,6 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using Newtonsoft.Json.Serialization;
 using WaterCloud.Service.AutoJob;
-using Microsoft.Extensions.FileProviders;
 using WaterCloud.DataBase;
 using System.Reflection;
 using System.Linq;
@@ -28,7 +27,7 @@ using Chloe.Infrastructure.Interception;
 
 namespace WaterCloud.Web
 {
-    public class Startup
+	public class Startup
     {
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment WebHostEnvironment { get; set; }

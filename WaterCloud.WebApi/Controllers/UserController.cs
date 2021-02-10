@@ -113,7 +113,7 @@ namespace WaterCloud.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeFilter]
+        [LoginFilter]
         public async Task<AlwaysResult> LoginOff()
         {
             await _logService.WriteDbLog(new LogEntity

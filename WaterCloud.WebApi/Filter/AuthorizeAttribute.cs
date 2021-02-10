@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WaterCloud.Web
+namespace WaterCloud.WebApi
 {
 	public class AuthorizeAttribute : ValidationAttribute
     {

@@ -101,6 +101,8 @@ namespace WaterCloud.WebApi
             builder.RegisterAssemblyTypes(typeof(Program).Assembly)
             .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
             .PropertiesAutowired();
+            //注册特性
+            builder.RegisterType(typeof(AuthorizeFilterAttribute)).InstancePerLifetimeScope();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

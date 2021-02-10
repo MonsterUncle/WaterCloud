@@ -15,7 +15,7 @@ namespace WaterCloud.WebApi.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [AuthorizeFilter]
+    [LoginFilter]
     public class TestController : ControllerBase
     {
         // GET: api/<controller>
