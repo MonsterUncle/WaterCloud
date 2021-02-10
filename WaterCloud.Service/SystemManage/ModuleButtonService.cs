@@ -85,6 +85,10 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
         {
+            if (!string.IsNullOrEmpty(moduleButtonEntity.F_Authorize))
+            {
+                moduleButtonEntity.F_Authorize = moduleButtonEntity.F_Authorize.ToLower();
+            }
             if (!string.IsNullOrEmpty(keyValue))
             {
                 moduleButtonEntity.Modify(keyValue);
