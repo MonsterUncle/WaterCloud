@@ -21,6 +21,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 defaultToolbar: ['filter', 'exports', 'print'],//默认工具栏
                 search: true,//搜索按钮
                 loading: false,
+                checkOther:false,//关闭复选框联动
                 tree: {
                     iconIndex: 0,           // 折叠图标显示在第几列  多选等记得修改
                     isPidData: true,        // 是否是id、pid形式数据
