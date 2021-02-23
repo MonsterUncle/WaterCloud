@@ -142,10 +142,12 @@
                             $("#frmPreview").load(document.location.origin + '/form/' + data.F_WebId + '.html');
                             $('#commonform').addClass('layui-hide');
                             $('#frmPreview').removeClass('layui-hide');
+                            $('#frmPreview').parent().removeClass('layui-hide');
                         }
                         else {
                             $('#commonform').removeClass('layui-hide');
                             $('#frmPreview').addClass('layui-hide');
+                            $('#frmPreview').parent().addClass('layui-hide');
                             //表单设计器
                             formDesigner.render({
                                 data: JSON.parse(data.F_Content),
@@ -212,10 +214,12 @@
             if (postData.F_FrmType != 0) {
                 $('#commonform').addClass('layui-hide');
                 $('#frmPreview').removeClass('layui-hide');
+                $('#frmPreview').parent().removeClass('layui-hide');
             }
             else {
                 $('#commonform').removeClass('layui-hide');
                 $('#frmPreview').addClass('layui-hide');
+                $('#frmPreview').parent().addClass('layui-hide');
             }
             step.next('#adminform');
             return false;

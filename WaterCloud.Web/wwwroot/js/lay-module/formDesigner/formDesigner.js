@@ -1,10 +1,11 @@
-layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField']
+layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField','formPreview']
     , function (exports) {
         var $ = layui.jquery
             , layer = layui.layer
             , laytpl = layui.laytpl
             , setter = layui.cache
             , element = layui.element
+            , formPreview = layui.formPreview
             , slider = layui.slider
             , laydate = layui.laydate
             , rate = layui.rate
@@ -302,50 +303,35 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
 
             , MOD_NAME = 'formDesigner'
             , TP_MAIN = ['<div class="layui-layout layui-layout-admin">'
-                //, '<div class="layui-header">'
-                //, '<div class="layui-logo">Layui 表单设计器</div>'
-                //, '<!-- 头部区域（可配合layui已有的水平导航） -->'
-                //, '<ul class="layui-nav layui-layout-left">'
-                //, '<li class="layui-nav-item"><a href=""></a></li>'
-                //, '</ul>'
-                //, '<ul class="layui-nav layui-layout-right">'
-                //, '<li class="layui-nav-item">'
-                //, '<a id="btnImportJson" href="#" class="importJson">导入数据</a>'
-                //, '</li>'
-                //, '<li class="layui-nav-item">'
-                //, '<a id="btnExportJson" href="#" class="exportJson">导出数据</a>'
-                //, '</li>'
-                //, '<li class="layui-nav-item">'
-                //, '<a id="btnTemplateList" href="#" class="templateList">模板</a>'
-                //, '</li>'
-                //, '<li class="layui-nav-item">'
-                //, '<a href="#" class="previewForm">预览</a>'
-                //, '</li>'
-                //, '<li class="layui-nav-item">'
-                //, '<a href="#" class="generateCode">生成代码</a>'
-                //, '</li>'
-                //, '<li class="layui-nav-item">'
-                //, '<a target="_blank" href="http://form.fishpro.com.cn">'
-                //, '官网'
-                //, '</a>'
-                //, '<dl class="layui-nav-child">'
-                //, '<dd><a href="">基本资料</a></dd>'
-                //, '<dd><a href="">安全设置</a></dd>'
-                //, '</dl>'
-                //, '</li>'
-                //, '<li class="layui-nav-item"><a href="#" class="aboutForm">关于</a></li>'
-                //, '</ul>'
-                //, '</div>'
+                , '<div class="layui-header" style="height:25px">'
+                , '<div class="layui-logo" style="line-height:25px">Layui 表单设计器</div>'
+                , '<!-- 头部区域（可配合layui已有的水平导航） -->'
+                , '<ul class="layui-nav layui-layout-right">'
+                , '<li class="layui-nav-item" style="line-height:25px">'
+                , '<a id="btnImportJson" href="#" class="importJson">导入数据</a>'
+                , '</li>'
+                , '<li class="layui-nav-item" style="line-height:25px">'
+                , '<a id="btnExportJson" href="#" class="exportJson">导出数据</a>'
+                , '</li>'
+                , '<li class="layui-nav-item" style="line-height:25px">'
+                , '<a id="btnTemplateList" href="#" class="templateList">模板</a>'
+                , '</li>'
+                , '<li class="layui-nav-item" style="line-height:25px">'
+                , '<a href="#" class="previewForm">预览</a>'
+                , '</li>'
+                , '</ul>'
+                , '</div>'
                 , '<div class="layui-col-md3 layui-col-sm3">'
                 , '<!-- 左侧导航区域（可配合layui已有的垂直导航） -->'
-                , '<h3>组件</h3>'
-                , '<div class="components-list" style="position:absolute; height:450px; overflow:auto" id="components-form-list">'
+                , '<h3 class="coltitle">组件</h3>'
+                , '<div class="components-list" style="position:absolute; height:440px; overflow:auto;border:1px dotted #999" id="components-form-list">'
                 , '</div>'
                 , '</div>'
                 , '<div class="layui-col-md6 layui-col-sm6">'
+                , '<h3 class="coltitle">设计</h3>'
                 , '<!-- 内容主体区域 -->'
-                , '<form class="layui-form" style="position:absolute; height:450px; overflow:auto">'
-                , '<div class="layui-form" id="formDesignerForm" lay-filter="formDesignerForm">'
+                , '<form class="layui-form">'
+                , '<div class="layui-form" id="formDesignerForm" lay-filter="formDesignerForm" style="position:absolute; height:410px; overflow:auto">'
                 , '<div class="layui-row layui-empty">'
                 , '从左侧拖拽控件到此设计区域来添加字段'
                 , '</div>'
@@ -353,9 +339,9 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 , '</div>'
                 , '</div>'
                 , '<div class="layui-col-md3 layui-col-sm3">'
-                , '<h3>属性</h3>'
+                , '<h3 class="coltitle">属性</h3>'
                 , '<!-- 属性导航 -->'
-                , '<form class="layui-form" style="position:absolute; height:450px; overflow:auto">'
+                , '<form class="layui-form" style="position:absolute; height:440px; overflow:auto;border:1px dotted #999">'
                 , '<div id="columnProperty">'
                 , '</div>'
                 , '</form>'
@@ -2084,7 +2070,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         options.data = JSON.parse(options.data);
                     }
                     //注意这里的一个bug，newIndex 第一次拖动也是1 第二次拖动也是1
-                    if (options.data.length === 0) { evt.newIndex = 0; }
+                    if (options.data==null||options.data.length === 0) { evt.newIndex = 0; }
 
                     if (evt.item.dataset.id !== undefined) {
                         /*根据id的新算法 复制一份副本 删除json中的节点 再插入节点*/
@@ -2161,23 +2147,6 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     }
                 });
             });
-            $('.aboutForm').on('click', function () {
-
-                layer.open({
-                    type: 1
-                    , title: '关于 FWR-Layui-表单设计器'
-                    , id: 'Lay_layer_aboutusview'
-                    , content: $('.aboutusview')
-                    , area: ['800px', '640px']
-                    , shade: false
-                    , resize: false
-                    , success: function (layero, index) {
-
-                    }
-                    , end: function () {
-                    }
-                });
-            });
             $('#copy-html-code').on('click', function () {
                 var Url2 = document.getElementById("generate-code-view");
                 Url2.select(); // 选择对象
@@ -2190,76 +2159,6 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 that.renderForm();
                 layer.closeAll();
                 layer.msg('导入成功');
-            });
-            $('.generateCode').on('click', function () {
-                options.htmlCode.script = '';
-                var _htmlelem = $('<div style="height:100%;width:100%;"></div>');
-                that.generateHtml(options.data, _htmlelem);
-                //构件 html  
-                var TP_HTML_CODE = ['<!DOCTYPE html>'
-                    , '<html>'
-                    , '<head>'
-                    , '<meta charset="utf-8">'
-                    , '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">'
-                    , '<title>表单设计器代码</title>'
-                    , '<link rel="stylesheet" href="~/lib//layui-v2.5.5/css/layui.css" />'
-                    , '</head>'
-                    , '<body>'
-                    , '<div id="testdemo" style="margin: 10px 20px;"><form  class="layui-form" style="height:100%;" id="formPreviewForm" lay-filter="previewForm">'
-                    , '' + _htmlelem.html() + ''
-                    , '<div class="layui-form-item">'
-                    , '<div class="layui-input-block">'
-                    , '<button type="submit" class="layui-btn" lay-submit="" lay-filter="formPreviewForm">立即提交</button>'
-                    , '<button type="reset" class="layui-btn layui-btn-primary">重置</button>'
-                    , '</div>'
-                    , '</div>'
-                    , '</form></div>'
-                    , '<script type="text/javascript" src="~/lib//layui-v2.5.5/layui.js"></script>'
-                    , '<script>'
-                    , 'layui.use(["layer", "laytpl", "element", "form", "slider", "laydate", "rate", "colorpicker", "layedit", "carousel", "upload"], function () {'
-                    , 'var $ = layui.jquery'
-                    , ', layer = layui.layer'
-                    , ', laytpl = layui.laytpl'
-                    , ', setter = layui.cache'
-                    , ', element = layui.element'
-                    , ', slider = layui.slider'
-                    , ', laydate = layui.laydate'
-                    , ', rate = layui.rate'
-                    , ', colorpicker = layui.colorpicker'
-                    , ', carousel = layui.carousel'
-                    , ', form = layui.form'
-                    , ', upload = layui.upload'
-                    , ', layedit = layui.layedit;'
-                    , options.htmlCode.script
-                    , '});'
-                    , '</script>'
-                    , '</body>'
-                    , '</html>'].join('')
-                var tabsize = 4;
-                var tabchar = ' ';
-                if (tabsize == 1) {
-                    tabchar = '\t';
-                }
-
-
-                document.getElementById('generate-code-view').value = style_html(TP_HTML_CODE, tabsize, tabchar, 400);
-                layer.open({
-                    type: 1
-                    , title: 'HTML代码'
-                    , id: 'Lay_layer_htmlcodeview'
-                    , content: $('.htmlcodeview')
-                    , area: ['800px', '640px']
-                    , shade: false
-                    , resize: false
-                    , success: function (layero, index) {
-                        layer.style(index, {
-                            marginLeft: -220
-                        });
-                    }
-                    , end: function () {
-                    }
-                });
-
             });
             $('.previewForm').on('click', function () {
                 window.localStorage.setItem('layui_form_json', JSON.stringify(options.data));
@@ -2277,13 +2176,24 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     area: ['100%', '100%'],
                     offset: 'auto', //右下角弹出 
                     anim: 2,
-                    content: ['./preview.html', 'yes'], //iframe的url，no代表不显示滚动条
+                    content: ['../../page/preview.html', 'yes'], //iframe的url，no代表不显示滚动条
                     end: function () { //此处用于演示
                         //加载结束
                     }
                 });
             });
-
+            $('.templateList').on('click', function () {
+                $.ajax({
+                    url: document.location.origin + '/json/demo.json',
+                    dataType: "json",
+                    async: true,
+                    type: "GET",
+                    success: function (result) {
+                        options.data = result;
+                        that.renderForm();
+                    }
+                });
+            });
             that.renderForm();
         };
 
@@ -2394,99 +2304,6 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
             });
         };
 
-        /* 生成 Html 代码 */
-        Class.prototype.generateHtml = function (jsondata, elem) {
-            var that = this
-                , options = that.config;
-            $.each(jsondata, function (index, item) {
-                elem.append(that.components[item.tag].render(item, true));
-                if (item.tag === 'grid') {
-                    $.each(item.columns, function (index2, item2) {
-                        //获取当前的 DOM 对象
-                        var elem2 = $('#' + item.id + ' .widget-col-list').filter('.column' + index2);
-                        if (item2.list.length > 0) {
-                            that.generateHtml(item2.list, elem2);
-                        }
-                    });
-                } else if (item.tag === 'slider') {
-                    //定义初始值
-                    options.htmlCode.script += ['slider.render({',
-                        , 'elem: "#' + item.tag + item.id + '" ,'
-                        , 'value: ' + item.defaultValue + ','
-                        , 'min: ' + item.minValue + ','
-                        , 'max: ' + item.maxValue + ','
-                        , 'step: ' + item.stepValue + ''
-                        , '});'].join('');
-
-                } else if (item.tag === 'date') {
-                    options.htmlCode.script += ['laydate.render({'
-                        , 'elem: "#' + item.tag + item.id + '" ,'
-                        , 'type:"' + item.datetype + '",'
-                        , 'range:' + item.range, ','
-                        , 'format:"' + item.dateformat + '",'
-                        , 'value:' + item.defaultValue + ','
-                        , 'isInitValue:' + item.isInitValue + ','
-                        , 'min:"' + item.minValue + '",'
-                        , 'max:"' + item.maxValue + '",'
-                        , 'position:"' + item.position + '",'
-                        , 'zindex:' + item.zindex + ','
-                        , 'theme:"' + item.theme + '"});'].join('');
-
-
-                } else if (item.tag === 'rate') {
-                    options.htmlCode.script += ['rate.render({'
-                        , 'elem: "#' + item.tag + item.id + '" ,'
-                        , 'value: ' + item.defaultValue + ','
-                        , 'text: ' + item.text + ','
-                        , 'length: ' + item.rateLength + ','
-                        , 'half: ' + item.half + ','
-                        , 'readonly: ' + item.readonly + ','
-                        , '});'].join('');
-                } else if (item.tag === 'colorpicker') {
-                    options.htmlCode.script += ['colorpicker.render({'
-                        , 'elem: "#' + item.tag + item.id + '" ,'
-                        , 'done: function (color) {'
-                        , '}'
-                        , '});'].join('');
-                } else if (item.tag === 'editor') {
-                    options.htmlCode.script += ['layedit.build(' + item.tag + item.id + ', {'
-                        , 'height: "' + item.height + '"'
-                        , '});'].join('');
-
-                } else if (item.tag === 'carousel') {
-                    options.htmlCode.script += ['carousel.render({'
-                        , 'elem: "#' + item.tag + item.id + '" '
-                        , ',width: "' + item.width + '"'
-                        , ',arrow: "' + item.arrow + '"'
-                        , '});'].join('');
-
-                } else if (item.tag === 'image') {
-                    options.htmlCode.script += ['upload.render({'
-                        , 'elem: "#' + item.tag + item.id + '" '
-                        , ', url: "https://httpbin.org/post"'
-                        , ', multiple: true'
-                        , ', before: function (obj) {'
-                        , 'layer.msg("图片上传中...", {'
-                        , 'icon: 16,'
-                        , 'shade: 0.01,'
-                        , 'time: 0'
-                        , '})'
-                        , '}'
-                        , ', done: function (res) {'
-                        , 'layer.close(layer.msg());'
-                        , '$("#uploader-list-' + item.id + '").append('
-                        , '\'<div class="file-iteme"><div class="handle"><i class="layui-icon layui-icon-delete"></i></div><img style="width: 100px;height: 100px;" src="\'+ res.data.src + \'">'
-                        , '<div class="info">\'+ res.data.title+\'</div>'
-                        , '</div>\''
-                        , ');'
-                        , '}'
-                        , '});'].join('');
-
-                }
-            });
-        };
-
-
         /* 重新渲染设计区*/
         Class.prototype.renderForm = function () {
             var that = this
@@ -2527,18 +2344,14 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
         Class.prototype.renderPreview = function () {
             var that = this
                 , options = that.config;
-
         };
 
         Class.prototype.reload = function (id
             , options) {
             var that = this;
             options = options || {};//如果是空的话，就赋值 {} 
-
-
             that.render();
         }
-
 
         //核心入口 初始化一个 formDesigner类
         formDesigner.render = function (options) {
