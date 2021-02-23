@@ -253,23 +253,23 @@
             <fieldset class="table-search-fieldset">
                 <div class="layui-form layuimini-form" lay-filter="adminform">
                     <div class="layui-form-item">
-                        <div class="layui-inline layui-hide">
+                        <div class="layui-col-md4 layui-hide">
                             <label class="layui-form-label required">模块编号</label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <select id="F_ModuleId" name="F_ModuleId" lay-filter="F_ModuleId" lay-verify="required" lay-search>
                                     <option value="">请选择</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="layui-inline layui-hide">
+                        <div class="layui-col-md4 layui-hide">
                             <label class="layui-form-label required">排序</label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
                             </div>
                         </div>
-                        <div class="layui-inline layui-hide">
+                        <div class="layui-col-md4 layui-hide">
                             <label class="layui-form-label">选项</label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-block">
                                 <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
                             </div>
                         </div>
