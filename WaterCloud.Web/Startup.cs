@@ -99,6 +99,13 @@ namespace WaterCloud.Web
             //////定时任务（已废除）
             ////services.AddBackgroundServices();
             #endregion
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+            builder =>
+            {
+                builder.AllowAnyMethod().AllowAnyHeader()
+                       .WithOrigins(Configuration.GetSection("SystemConfig:ApiSite").Value.Split(","))
+                       .AllowCredentials();
+            }));
             services.AddHttpClient();
 
             services.AddControllersWithViews(options =>
@@ -201,6 +208,8 @@ namespace WaterCloud.Web
             //{
             //    app.UsePathBase(new PathString(GlobalContext.SystemConfig.VirtualDirectory)); // 让 Pathbase 中间件成为第一个处理请求的中间件， 才能正确的模拟虚拟路径
             //}
+            //实时通讯跨域
+            app.UseCors("CorsPolicy");
             if (WebHostEnvironment.IsDevelopment())
             {
                 //打印sql

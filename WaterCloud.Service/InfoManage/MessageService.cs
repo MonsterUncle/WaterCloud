@@ -131,7 +131,7 @@ namespace WaterCloud.Service.InfoManage
             var result = _httpClientFactory.CreateClient().PostAsync(GlobalContext.SystemConfig.MainProgram + url, httpContent).GetAwaiter().GetResult();
 
         }
-        public async System.Threading.Tasks.Task SendWebSocketMsg(MessageEntity messageEntity)
+        public async Task SendWebSocketMsg(MessageEntity messageEntity)
         {
             if (!string.IsNullOrEmpty(messageEntity.companyId) && messageEntity.F_ToUserId.Length == 0)
             {
@@ -143,12 +143,15 @@ namespace WaterCloud.Service.InfoManage
                 foreach (var item in users)
                 {
                     //存在就私信
-                    var connectionID = await CacheHelper.Get<string>(cacheHubKey + item);
-                    if (connectionID == null)
+                    var connectionIDs = await CacheHelper.Get<List<string>>(cacheHubKey + item);
+                    if (connectionIDs == null)
                     {
                         continue;
                     }
-                    await _messageHub.Clients.Client(connectionID).SendAsync("ReceiveMessage", messageEntity.ToJson());
+					foreach (var connectionID in connectionIDs)
+					{
+                        await _messageHub.Clients.Client(connectionID).SendAsync("ReceiveMessage", messageEntity.ToJson());
+                    }
                 }
             }
         }

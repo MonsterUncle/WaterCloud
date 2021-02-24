@@ -43,17 +43,27 @@ namespace WaterCloud.Code
         private string LoginUserMarkKey = "watercloud_Mark";
         public string GetProvider(string key)
         {
+            string value;
             switch (LoginProvider)
             {
                 case Define.PROVIDER_COOKIE:
-                    return WebHelper.GetCookie(key).ToString();
+                    value= WebHelper.GetCookie(key).ToString();
+					if (string.IsNullOrEmpty(value))
+                        value = GetToken();
+                    break;
                 case Define.PROVIDER_SESSION:
-                    return WebHelper.GetSession(key).ToString();
+                    value = WebHelper.GetSession(key).ToString();
+                    if (string.IsNullOrEmpty(value))
+                        value = GetToken();
+                    break;
                 case Define.PROVIDER_WEBAPI:
-                    return GetToken();
+                    value = GetToken();
+                    break;
                 default:
-                    return GetToken();
+                    value = GetToken();
+                    break;
             }
+            return value;
         }
         public void SetProvider(string key, string value)
         {
