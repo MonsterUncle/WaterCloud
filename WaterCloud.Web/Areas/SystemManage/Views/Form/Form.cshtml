@@ -151,7 +151,8 @@
                             //表单设计器
                             formDesigner.render({
                                 data: JSON.parse(data.F_Content),
-                                elem: '#formdesigner'
+                                elem: '#formdesigner',
+                                headerHide:false
                             });
                         }
                     }
@@ -163,7 +164,8 @@
                     success: function (result) {
                         formDesigner.render({
                             data: result,
-                            elem: '#formdesigner'
+                            elem: '#formdesigner',
+                            headerHide: false
                         });
                     }
                 });

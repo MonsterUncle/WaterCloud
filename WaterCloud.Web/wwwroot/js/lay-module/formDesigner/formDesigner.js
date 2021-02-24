@@ -526,6 +526,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
             , data: []
             , dataSource: {}
             , selectItem: undefined
+            , headerHide: true
             , htmlCode: {
                 css: ''
                 , html: ''
@@ -2006,7 +2007,9 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         , lang[item]);
                 });
             _listhtml += '</div>';
-
+            if (options.headerHide == true) {
+                TP_MAIN = TP_MAIN.replace('layui-header', 'layui-header layui-hide');
+            }
             options.elem.html(TP_MAIN);
             $('#components-form-list').append(_listhtml);
             $('body').append(TP_HTML_VIEW);

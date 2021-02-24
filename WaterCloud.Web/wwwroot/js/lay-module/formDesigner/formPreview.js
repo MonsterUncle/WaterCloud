@@ -788,8 +788,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 } else if (item.tag === 'image') {
                     var uploadInst = upload.render({
                         elem: '#' + item.id+'_'+item.tag
-                        , url: '/FileManage/Uploadfile/Upload' //需要替换成自己的接口--todo
-                        , data: { filetype: 1, fileby: '流程表单' }
+                        , url: options.uploadUrl //需要替换成自己的接口--todo
+                        , data: options.uploadData
                         , multiple: false
                         , before: function (obj) {
                             layer.msg('图片上传中...', {
@@ -868,6 +868,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
         formPreview.render = function (options) {
             var defaults = {
                 readonly: true,//主键
+                uploadUrl: '/FileManage/Uploadfile/Upload',
+                uploadData: { filetype: 1, fileby: '流程表单' }
             };
             options = $.extend(defaults, options);
             var ins = new Class(options);
