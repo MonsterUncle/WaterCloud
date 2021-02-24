@@ -112,24 +112,6 @@
                 });
             }
         });
-        ////渲染多选
-        //var outputModule = common.radioSelectRender({
-        //    el: '#OutputModule',
-        //    name: 'outputmodule',
-        //    remoteMethod: function (val, cb, show) {
-        //        common.ajax({
-        //            url: '/SystemManage/Module/GetSelectJson',
-        //            data: { keyword: val },
-        //            dataType: "json",
-        //            success: function (data) {
-        //                cb(data);
-        //            },
-        //            error: function () {
-        //                cb([]);
-        //            }
-        //        });
-        //    }
-        //});
         //按钮选择
         var buttonList = common.multipleSelectRender({
             el: '#ButtonList',
@@ -143,45 +125,6 @@
                 { text: '查看按钮', id: 'details', selected: true },
             ]
         });
-        //var templist;
-        ////字段选择
-        //var columnList = common.multipleSelectRender({
-        //    el: '#ColumnList',
-        //    name: 'columnlist',
-        //    layVerify: 'required',
-        //    layVerType: 'msg',
-        //    pageSize: 3,//分页大小
-        //    //model: {
-        //    //    label: {
-        //    //        type: 'setnum', //自定义与下面的对应
-        //    //        setnum: {
-        //    //            template(data, sels) {
-        //    //                return "已选中 " + sels.length + " 项, 共 " + data.length + " 项"
-        //    //            }
-        //    //        },
-        //    //    }
-        //    //},
-        //    remoteMethod: function (val, cb, show) {
-        //        common.ajax({
-        //            url: '/SystemManage/CodeGenerator/GetTableFieldFilterSelectJson',
-        //            dataType: "json",
-        //            data: { keyValue: keyValue, keyword: val },
-        //            success: function (data) {
-        //                templist = data;
-        //                cb(data);
-        //            },
-        //            error: function () {
-        //                cb([]);
-        //            }
-        //        });
-        //    }
-        //});
-        ////清空沙雕ie存的方法
-        //columnList.setValue([]);
-        ////赋值
-        //for (var i = 0; i < templist.length; i++) {
-        //    columnList.append([templist[i].id]);
-        //}
         commonTable.rendertable({
             elem: '#currentTableId',
             id: 'currentTableId',
@@ -262,9 +205,6 @@
                     break;
                 }
             }
-            table.reload('currentTableId', {
-                data: cachedata
-            });
         });
         form.on('switch(Sorted)', function (data) {
             // 得到开关的value值，实际是需要修改的ID值。
@@ -277,9 +217,6 @@
                     break;
                 }
             }
-            table.reload('currentTableId', {
-                data: cachedata
-            });
         });
         form.on('switch(Filter)', function (data) {
             // 得到开关的value值，实际是需要修改的ID值。
@@ -292,9 +229,6 @@
                     break;
                 }
             }
-            table.reload('currentTableId', {
-                data: cachedata
-            });
         });
         form.on('switch(Show)', function (data) {
             // 得到开关的value值，实际是需要修改的ID值。
@@ -307,9 +241,6 @@
                     break;
                 }
             }
-            table.reload('currentTableId', {
-                data: cachedata
-            });
         });
         var entity;
         table.on('row(currentTableFilter)', function (obj) {
