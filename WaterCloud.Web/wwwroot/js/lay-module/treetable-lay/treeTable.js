@@ -521,17 +521,19 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
             d.LAY_CHECKED = checked;  // 同时更新数据
             d.LAY_INDETERMINATE = false;
             // 联动操作
-            if (d[options.tree.childName] && d[options.tree.childName].length > 0) {
-                that.checkSubCB($tr, checked);  // 联动子级
-            }
-            var indent = parseInt($tr.data('indent'));
-            $tr.prevAll('tr').each(function () {
-                var tInd = parseInt($(this).data('indent'));
-                if (tInd < indent) {
-                    that.checkParentCB($(this));  // 联动父级
-                    indent = tInd;
+            if (options.checkOther) {
+                if (d[options.tree.childName] && d[options.tree.childName].length > 0) {
+                    that.checkSubCB($tr, checked);  // 联动子级
                 }
-            });
+                var indent = parseInt($tr.data('indent'));
+                $tr.prevAll('tr').each(function () {
+                    var tInd = parseInt($(this).data('indent'));
+                    if (tInd < indent) {
+                        that.checkParentCB($(this));  // 联动父级
+                        indent = tInd;
+                    }
+                });
+            }
             that.checkChooseAllCB();  // 联动全选框
             // 回调事件
             layui.event.call(this, MOD_NAME, 'checkbox(' + components.filter + ')',
