@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Code;
@@ -27,12 +28,10 @@ namespace WaterCloud.WebApi.Controllers
         /// <summary>
         /// 用户登录
         /// </summary>
-        /// <param name="userName">用户</param>
-        /// <param name="password">密码</param>
-        /// <param name="localurl">域名</param>
+        /// <param name="request">请求对象</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<AlwaysResult> Login([FromQuery] string userName, [FromQuery] string password, [FromQuery] string localurl)
+        public async Task<AlwaysResult> Login([FromBody]LoginRequest request)
         {
             var apitoken = Utils.GuId();
             if (!string.IsNullOrEmpty(OperatorProvider.Provider.GetToken()))
@@ -49,7 +48,7 @@ namespace WaterCloud.WebApi.Controllers
                 {
                     throw new Exception("IP受限");
                 }
-                UserEntity userEntity = await _userService.CheckLogin(userName, Md5.md5(password, 32).ToLower(), localurl);
+                UserEntity userEntity = await _userService.CheckLogin(request.userName, Md5.md5(request.password, 32).ToLower(), request.localurl);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
                 operatorModel.UserCode = userEntity.F_Account;
@@ -94,8 +93,8 @@ namespace WaterCloud.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                logEntity.F_Account = userName;
-                logEntity.F_NickName = userName;
+                logEntity.F_Account = request.userName;
+                logEntity.F_NickName = request.userName;
                 logEntity.F_Result = false;
                 logEntity.F_Description = "登录失败，" + ex.Message;
                 await _logService.WriteDbLog(logEntity);
@@ -127,6 +126,30 @@ namespace WaterCloud.WebApi.Controllers
             });
             await OperatorProvider.Provider.EmptyCurrent("api_");
             return new AlwaysResult { state = ResultType.success.ToString() };
+        }
+        #endregion
+
+        #region 请求对象
+        /// <summary>
+        /// 登录请求对象
+        /// </summary>
+        public class LoginRequest
+        {
+            /// <summary>
+            /// 用户名
+            /// </summary>
+            [Required(ErrorMessage = "用户名不能为空")]
+            public string userName { get; set; }
+            /// <summary>
+            /// 密码
+            /// </summary>
+            [Required(ErrorMessage = "密码不能为空")]
+            public string password { get; set; }
+            /// <summary>
+            /// 域名
+            /// </summary>
+            public string localurl { get; set; }
+
         }
         #endregion
     }

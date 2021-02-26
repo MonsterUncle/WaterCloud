@@ -85,6 +85,14 @@ namespace WaterCloud.Code
         {
 			try
 			{
+				if (GlobalContext.ServiceProvider==null)
+				{
+                    return null;
+				}
+				if (GlobalContext.ServiceProvider.GetService<IHttpContextAccessor>()==null)
+				{
+                    return null;
+                }
                 //查请求头
                 string token = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Headers[GlobalContext.SystemConfig.TokenName].ParseToString();
                 if (!String.IsNullOrEmpty(token)) return token;
