@@ -575,9 +575,6 @@
             return false;
         });
         form.on('submit(formStep4)', function (data) {
-            // 单击之后提交按钮不可选,防止重复提交
-            $('.site-demo-active').addClass('layui-btn-disabled');
-            $('.site-demo-active').attr('disabled', 'disabled');
             var postData = baseConfig;
             postData.Code = encodeURIComponent(JSON.stringify(codeList));
             common.submitForm({

@@ -115,22 +115,15 @@
         //toolbar监听事件
         table.on('toolbar(currentTableFilter)', function (obj) {
             if (obj.event === 'save') {
-                // 单击之后提交按钮不可选,防止重复提交
-                $('.site-demo-active').addClass('layui-btn-disabled');
-                $('.site-demo-active').attr('disabled', 'disabled');
                 var postData = {};
                 var cachedata = table.cache.currentTableId;
                 if (cachedata.length == 0) {
                     common.modalMsg("未导入数据", "warning");
-                    $('.site-demo-active').removeClass('layui-btn-disabled');
-                    $('.site-demo-active').removeAttr('disabled');
                     return false;
                 }
                 for (var i = 0; i < cachedata.length; i++) {
                     if (cachedata[i].F_EnabledMark == false) {
                         common.modalMsg("存在错误数据", "warning");
-                        $('.site-demo-active').removeClass('layui-btn-disabled');
-                        $('.site-demo-active').removeAttr('disabled');
                         return false;
                     }
                 }

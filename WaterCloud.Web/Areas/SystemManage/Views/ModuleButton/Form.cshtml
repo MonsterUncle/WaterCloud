@@ -57,9 +57,6 @@
                 common.modalMsg("请输入连接或者权限", "warning");
                 return false;
             }
-            // 单击之后提交按钮不可选,防止重复提交
-            $('.site-demo-active').addClass('layui-btn-disabled');
-            $('.site-demo-active').attr('disabled', 'disabled');
             var postData = data.field;
             if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
             //if (!postData["F_Split"]) postData["F_Split"] = false;

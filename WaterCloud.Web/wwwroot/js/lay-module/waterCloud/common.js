@@ -236,11 +236,17 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 url: "",
                 param: [],
                 success: null,
-                close: true
+                close: true,
+                preventReuse:'.site-demo-active'//防止重复的参数
             };
             var options = $.extend(defaults, options);
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
+            // 单击之后提交按钮不可选,防止重复提交
+            if (!!options.preventReuse) {
+                $(options.preventReuse).addClass('layui-btn-disabled');
+                $(options.preventReuse).attr('disabled', 'disabled');
+            }
             window.setTimeout(function () {
                 if ($('[name=__RequestVerificationToken]').length > 0) {
                     var csrfToken = $('[name=__RequestVerificationToken]').val();
@@ -272,15 +278,19 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                             }
                         } else {
                             obj.modalAlert(data.message, data.state);
-                            $('.site-demo-active').removeClass('layui-btn-disabled');
-                            $('.site-demo-active').removeAttr('disabled');
+                            if (!!options.preventReuse) {
+                                $(options.preventReuse).removeClass('layui-btn-disabled');
+                                $(options.preventReuse).removeAttr('disabled');
+                            }
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         parent.layer.close(index);
                         obj.modalAlert(errorThrown, "error");
-                        $('.site-demo-active').removeClass('layui-btn-disabled');
-                        $('.site-demo-active').removeAttr('disabled');
+                        if (!!options.preventReuse) {
+                            $(options.preventReuse).removeClass('layui-btn-disabled');
+                            $(options.preventReuse).removeAttr('disabled');
+                        }
                     },
                     beforeSend: function () {
                     },

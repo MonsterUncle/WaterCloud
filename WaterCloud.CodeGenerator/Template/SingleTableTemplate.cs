@@ -958,9 +958,6 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("");
             sb.AppendLine("       //监听提交");
             sb.AppendLine("       form.on('submit(saveBtn)', function (data) {");
-            sb.AppendLine("           // 单击之后提交按钮不可选,防止重复提交");
-            sb.AppendLine("           $('.site-demo-active').addClass('layui-btn-disabled');");
-            sb.AppendLine("           $('.site-demo-active').attr('disabled', 'disabled');");
             sb.AppendLine("           var postData = data.field;");
             //if (baseConfigModel.PageForm.FieldList.Contains("F_EnabledMark"))
             //{
