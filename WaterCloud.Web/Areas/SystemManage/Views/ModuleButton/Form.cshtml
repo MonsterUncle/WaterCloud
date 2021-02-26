@@ -53,7 +53,7 @@
         });
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            if (!data.field.F_UrlAddress || !data.field.F_Authorize) {
+            if (!data.field.F_UrlAddress && !data.field.F_Authorize) {
                 common.modalMsg("请输入连接或者权限", "warning");
                 return false;
             }
