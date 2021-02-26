@@ -2073,7 +2073,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         options.data = JSON.parse(options.data);
                     }
                     //注意这里的一个bug，newIndex 第一次拖动也是1 第二次拖动也是1
-                    if (options.data==null||options.data.length === 0) { evt.newIndex = 0; }
+                    if (options.data == null || options.data.length === 0) { evt.newIndex = 0; }
 
                     if (evt.item.dataset.id !== undefined) {
                         /*根据id的新算法 复制一份副本 删除json中的节点 再插入节点*/
@@ -2117,7 +2117,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     , title: 'JSON 数据导出'
                     , id: 'Lay_layer_htmlcodeview'
                     , content: $('.htmlcodeview')
-                    , area: ['800px', '640px']
+                    , area: ['800px', '600px']
                     , shade: false
                     , resize: false
                     , success: function (layero, index) {
@@ -2138,7 +2138,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     , title: 'JSON模板数据导入'
                     , id: 'Lay_layer_importjsoncodeview'
                     , content: $('.importjsoncodeview')
-                    , area: ['800px', '640px']
+                    , area: ['800px', '600px']
                     , shade: false
                     , resize: false
                     , success: function (layero, index) {
