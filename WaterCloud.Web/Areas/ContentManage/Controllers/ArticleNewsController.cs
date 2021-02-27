@@ -57,7 +57,7 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
                 pagination.field = "F_CreatorTime";
                 pagination.order = "desc";
             }
-            var data = await _service.GetLookList(pagination, keyword);
+            var data = await _service.GetLookList(pagination, keyword,CategoryId);
             return Content(pagination.setData(data).ToJson());
         }
 
