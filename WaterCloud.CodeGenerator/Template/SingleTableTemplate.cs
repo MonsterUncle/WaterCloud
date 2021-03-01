@@ -699,7 +699,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                 { type: \"radio\", width: 50 },");
                 foreach (var item in baseConfigModel.PageIndex.ColumnList.Where(a => a.isShow == true))
                 {
-                    sb.AppendLine("                 { field: '" + item.title + "', title: '" + item.field + "', " + (item.isAotuWidth == true ? "minWidth" : "width") + ": " + item.width + (!string.IsNullOrEmpty(item.templet) ? ",templet:" + item.templet.Trim() : "") + " },");
+                    sb.AppendLine("                 { field: '" + item.field + "', title: '" + item.title + "', " + (item.isAotuWidth == true ? "minWidth" : "width") + ": " + item.width + (!string.IsNullOrEmpty(item.templet) ? ",templet:" + item.templet.Trim() : "") + " },");
                 }
                 switch (buttonCount)
                 {
@@ -746,7 +746,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                 { type: \"checkbox\", width: 50 },");
                 foreach (var item in baseConfigModel.PageIndex.ColumnList.Where(a => a.isShow == true))
                 {
-                    sb.AppendLine("                 { field: '" + item.title + "', title: '" + item.field + "', " + (item.isAotuWidth == true ? "minWidth" : "width") + ": " + item.width + (item.isSorted == true ? ",sort: true" : "") + (item.isFilter == true ? ",filter: " + (!string.IsNullOrEmpty(item.filterType) ? ("{type: '" + item.filterType + "'}") : "true") : "") + (!string.IsNullOrEmpty(item.templet) ? ",templet:" + item.templet : "") + " },");
+                    sb.AppendLine("                 { field: '" + item.field + "', title: '" + item.title + "', " + (item.isAotuWidth == true ? "minWidth" : "width") + ": " + item.width + (item.isSorted == true ? ",sort: true" : "") + (item.isFilter == true ? ",filter: " + (!string.IsNullOrEmpty(item.filterType) ? ("{type: '" + item.filterType + "'}") : "true") : "") + (!string.IsNullOrEmpty(item.templet) ? ",templet:" + item.templet : "") + " },");
                 }
                 sb.AppendLine("                { title: '操作', width: 170, toolbar: '#currentTableBar', align: \"center\" }");
                 sb.AppendLine("             ]]");
