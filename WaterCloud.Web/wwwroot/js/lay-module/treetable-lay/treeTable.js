@@ -500,7 +500,7 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
             that.removeAllChecked();
             d.LAY_CHECKED = true;  // 同时更新数据
             d.LAY_INDETERMINATE = false;
-            layui.event.call(this, MOD_NAME, 'checkbox(' + components.filter + ')',
+            layui.event.call(this, MOD_NAME, 'radio(' + components.filter + ')',
                 { checked: true, data: d, type: 'one' });
         });
 
