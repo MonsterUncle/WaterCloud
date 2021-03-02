@@ -151,13 +151,19 @@
                 var obj = flowPanel.getItemInfo(id, type);
                 switch (type) {
                     case "node":
-                        options.OpenNode(obj);
+                        if ('OpenNode' in options) {
+                            options.OpenNode(obj);
+                        }
                         break;
                     case "line":
-                        options.OpenLine(obj);
+                        if ('OpenLine' in options) {
+                            options.OpenLine(obj);
+                        }
                         break;
                     case "area":
-                        options.OpenArea(obj);
+                        if ('OpenArea' in options) {
+                            options.OpenArea(obj);
+                        }
                         break;
                 }
                 return false;
@@ -166,14 +172,19 @@
                 var obj = flowPanel.getItemInfo(id, type);
                 switch (type) {
                     case "node":
-                        options.OpenNode(obj);
+                        if ('OpenNode' in options) {
+                            options.OpenNode(obj);
+                        }
                         break;
                     case "line":
-                        options.OpenLine(obj);
+                        if ('OpenLine' in options) {
+                            options.OpenLine(obj);
+                        }
                         break;
                     case "area":
-                        obj.id = id;
-                        options.OpenArea(obj);
+                        if ('OpenArea' in options) {
+                            options.OpenArea(obj);
+                        }
                         break;
                 }
                 return false;
