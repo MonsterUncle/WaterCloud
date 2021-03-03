@@ -121,7 +121,10 @@ namespace WaterCloud.Service.SystemManage
                             icon = module.F_Icon
                         });
                     }
-
+					else
+					{
+                        await repository.Delete(a => a.F_Id == item.F_Id);
+                    }
                 }
             }
             if (quicks.Count > 0)
