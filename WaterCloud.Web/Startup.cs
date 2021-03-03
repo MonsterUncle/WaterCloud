@@ -67,8 +67,6 @@ namespace WaterCloud.Web
                 services.AddSingleton(redisDB1);
                 services.AddSingleton(redisDB2);
             }
-            //清理缓存
-            CacheHelper.FlushAll().GetAwaiter().GetResult();
             #region 依赖注入
             //注入数据库连接
             services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
@@ -146,6 +144,8 @@ namespace WaterCloud.Web
             {
                 LogHelper.Write(ex);
             }
+            //清理缓存
+            CacheHelper.FlushAll().GetAwaiter().GetResult();
         }
         //AutoFac注入
         public void ConfigureContainer(ContainerBuilder builder)
