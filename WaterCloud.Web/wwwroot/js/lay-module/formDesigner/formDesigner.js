@@ -1,4 +1,4 @@
-layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField','formPreview']
+layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField', 'formPreview']
     , function (exports) {
         var $ = layui.jquery
             , layer = layui.layer
@@ -324,6 +324,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 , '<div class="layui-col-md3 layui-col-sm3">'
                 , '<!-- 左侧导航区域（可配合layui已有的垂直导航） -->'
                 , '<h3 class="coltitle">组件</h3>'
+                , '<div id="generateSetValue" class="layui-hide"></div>'
                 , '<div class="components-list" style="position:absolute; height:440px; overflow:auto;border:1px dotted #999" id="components-form-list">'
                 , '</div>'
                 , '</div>'
@@ -2155,6 +2156,9 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 Url2.select(); // 选择对象
                 document.execCommand("Copy"); // 执行
                 layer.msg('复制成功');
+            });
+            $('#generateSetValue').on('click', function () {
+                document.getElementById('generate-code-view').value = JSON.stringify(options.data, null, 4);
             });
             $('#import-json-code').on('click', function () {
                 var _value = document.getElementById("import-json-code-view").value;

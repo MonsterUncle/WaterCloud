@@ -232,6 +232,7 @@
             var formeditor = '';
             if (postData.F_FrmType != 1) {
                 //获取表单设计器里的内容
+                $('#generateSetValue').click();
                 formeditor = document.getElementById('generate-code-view').value;
                 if (!formeditor) {
                     common.modalMsg("请编辑设计器", "warning");

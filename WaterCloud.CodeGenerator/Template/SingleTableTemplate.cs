@@ -138,7 +138,6 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("        /// <summary>");
                 sb.AppendLine("        /// " + remark);
                 sb.AppendLine("        /// </summary>");
-                sb.AppendLine("        /// <returns></returns>");
                 if (idColumn == column)
                 {
 
