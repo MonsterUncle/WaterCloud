@@ -43,7 +43,7 @@
 
 
 - .net4.5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net4.5
-- .netcore3.1版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/netcore3.1
+- .netcore3.1版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/core3.1
 - 项目演示地址：http://www.watercloud.vip/  （账号：admin 密码：0000，数据库2个小时还原一次）
 - 文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
 
