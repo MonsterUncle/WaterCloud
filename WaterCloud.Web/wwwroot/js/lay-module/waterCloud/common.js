@@ -439,9 +439,6 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                         });
                     }, 500);
                 }
-                else {
-                    parent.layer.close(index);
-                }
             });
 
         },
