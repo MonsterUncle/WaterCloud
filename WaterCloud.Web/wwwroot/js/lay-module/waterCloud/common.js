@@ -278,10 +278,10 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                             }
                         } else {
                             obj.modalAlert(data.message, data.state);
-                            if (!!options.preventReuse) {
-                                $(options.preventReuse).removeClass('layui-btn-disabled');
-                                $(options.preventReuse).removeAttr('disabled');
-                            }
+                        }
+                        if (!!options.preventReuse) {
+                            $(options.preventReuse).removeClass('layui-btn-disabled');
+                            $(options.preventReuse).removeAttr('disabled');
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
