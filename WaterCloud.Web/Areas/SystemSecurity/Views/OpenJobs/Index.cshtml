@@ -129,16 +129,12 @@
                         common.modalMsg("任务未启动，无法关闭！", "warning");
                         return false;
                     }
-                    common.modalConfirm("注：您确定要【关闭】该项任务吗？", function (r) {
-                        if (r) {
-                            common.submitForm({
-                                url: "/SystemSecurity/OpenJobs/ChangeStatus",
-                                param: { keyValue: data[0].F_Id, status: 0},
-                                close: false,
-                                success: function () {
-                                    common.reload('data-search-btn');
-                                }
-                            })
+                    common.submitPost({
+                        prompt: "注：您确定要【关闭】该项任务吗？",
+                        url: "/SystemSecurity/OpenJobs/ChangeStatus",
+                        param: { keyValue: data[0].F_Id, status: 0 },
+                        success: function () {
+                            common.reload('data-search-btn');
                         }
                     });
                 }
@@ -151,16 +147,12 @@
                         common.modalMsg("任务已启动，无法启动！", "warning");
                         return false;
                     }
-                    common.modalConfirm("注：您确定要【启动】该项任务吗？", function (r) {
-                        if (r) {
-                            common.submitForm({
-                                url: "/SystemSecurity/OpenJobs/ChangeStatus",
-                                param: { keyValue: data[0].F_Id, status: 1 },
-                                close: false,
-                                success: function () {
-                                    common.reload('data-search-btn');
-                                }
-                            })
+                    common.submitPost({
+                        prompt: "注：您确定要【启动】该项任务吗？",
+                        url: "/SystemSecurity/OpenJobs/ChangeStatus",
+                        param: { keyValue: data[0].F_Id, status: 1 },
+                        success: function () {
+                            common.reload('data-search-btn');
                         }
                     });
                 }
@@ -211,16 +203,12 @@
                         common.modalMsg("任务未启动，无法关闭！", "warning");
                         return false;
                     }
-                    common.modalConfirm("注：您确定要【关闭】该项任务吗？", function (r) {
-                        if (r) {
-                            common.submitForm({
-                                url: "/SystemSecurity/OpenJobs/ChangeStatus",
-                                param: { keyValue: obj.data.F_Id, status: 0 },
-                                close: false,
-                                success: function () {
-                                    common.reload('data-search-btn');
-                                }
-                            })
+                    common.submitPost({
+                        prompt: "注：您确定要【关闭】该项任务吗？",
+                        url: "/SystemSecurity/OpenJobs/ChangeStatus",
+                        param: { keyValue: obj.data.F_Id, status: 0 },
+                        success: function () {
+                            common.reload('data-search-btn');
                         }
                     });
                 }
@@ -229,16 +217,12 @@
                         common.modalMsg("任务已启动，无法启动！", "warning");
                         return false;
                     }
-                    common.modalConfirm("注：您确定要【启动】该项任务吗？", function (r) {
-                        if (r) {
-                            common.submitForm({
-                                url: "/SystemSecurity/OpenJobs/ChangeStatus",
-                                param: { keyValue: obj.data.F_Id, status: 1 },
-                                close: false,
-                                success: function () {
-                                    common.reload('data-search-btn');
-                                }
-                            })
+                    common.submitPost({
+                        prompt: "注：您确定要【启动】该项任务吗？",
+                        url: "/SystemSecurity/OpenJobs/ChangeStatus",
+                        param: { keyValue: obj.data.F_Id, status: 1 },
+                        success: function () {
+                            common.reload('data-search-btn');
                         }
                     });
                 }

@@ -113,16 +113,12 @@
                     common.modalMsg("未选中数据", "warning");
                     return false;
                 }
-                common.modalConfirm("注：您确定要【禁用】该项账户吗？", function (r) {
-                    if (r) {
-                        common.submitForm({
-                            url: "/SystemOrganize/User/DisabledAccount",
-                            param: { keyValue: id },
-                            close: false,
-                            success: function () {
-                                common.reload('data-search-btn');
-                            }
-                        })
+                common.submitPost({
+                    prompt: "注：您确定要【禁用】该项账户吗？",
+                    url: "/SystemOrganize/User/DisabledAccount",
+                    param: { keyValue: id },
+                    success: function () {
+                        common.reload('data-search-btn');
                     }
                 });
             }
@@ -131,16 +127,12 @@
                     common.modalMsg("未选中数据", "warning");
                     return false;
                 }
-                common.modalConfirm("注：您确定要【启用】该项账户吗？", function (r) {
-                    if (r) {
-                        common.submitForm({
-                            url: "/SystemOrganize/User/EnabledAccount",
-                            param: { keyValue: id },
-                            close: false,
-                            success: function () {
-                                common.reload('data-search-btn');
-                            }
-                        })
+                common.submitPost({
+                    prompt: "注：您确定要【启用】该项账户吗？",
+                    url: "/SystemOrganize/User/EnabledAccount",
+                    param: { keyValue: id },
+                    success: function () {
+                        common.reload('data-search-btn');
                     }
                 });
             }
@@ -216,30 +208,22 @@
                 });
             }
             else if (obj.event === 'disabled') {
-                common.modalConfirm("注：您确定要【禁用】该项账户吗？", function (r) {
-                    if (r) {
-                        common.submitForm({
-                            url: "/SystemOrganize/User/DisabledAccount",
-                            param: { keyValue: id },
-                            close: false,
-                            success: function () {
-                                common.reload('data-search-btn');
-                            }
-                        })
+                common.submitPost({
+                    prompt: "注：您确定要【禁用】该项账户吗？",
+                    url: "/SystemOrganize/User/DisabledAccount",
+                    param: { keyValue: id },
+                    success: function () {
+                        common.reload('data-search-btn');
                     }
                 });
             }
             else if (obj.event === 'enabled') {
-                common.modalConfirm("注：您确定要【启用】该项账户吗？", function (r) {
-                    if (r) {
-                        common.submitForm({
-                            url: "/SystemOrganize/User/EnabledAccount",
-                            param: { keyValue: id },
-                            close: false,
-                            success: function () {
-                                common.reload('data-search-btn');
-                            }
-                        })
+                common.submitPost({
+                    prompt: "注：您确定要【启用】该项账户吗？",
+                    url: "/SystemOrganize/User/EnabledAccount",
+                    param: { keyValue: id },
+                    success: function () {
+                        common.reload('data-search-btn');
                     }
                 });
             }
