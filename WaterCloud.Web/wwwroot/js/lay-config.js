@@ -45,4 +45,5 @@ layui.config({
     tableFilter: 'soulTable/tableFilter',//表格过滤
     excel: 'soulTable/excel',//表格导出
     cardTable: 'cardTable/cardTable',//卡片表格
+    cron: 'cron/cron',//cron表达式
 });
