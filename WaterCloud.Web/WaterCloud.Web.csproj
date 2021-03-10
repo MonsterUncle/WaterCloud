@@ -48,6 +48,7 @@
     <None Include="Areas\SystemManage\Views\Area\Form.cshtml" />
     <None Include="Areas\SystemManage\Views\Area\Index.cshtml" />
     <None Include="Views\Home\Message.cshtml" />
+    <None Include="wwwroot\js\lay-module\cron\cron.js" />
     <None Include="wwwroot\js\lay-module\flow\fonts\iconflow.svg" />
     <None Include="wwwroot\js\lay-module\flow\fonts\iconfont.js" />
     <None Include="wwwroot\js\lay-module\formDesigner\Sortable\.circleci\config.yml" />
