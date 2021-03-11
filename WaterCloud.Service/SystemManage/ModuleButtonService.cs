@@ -39,14 +39,19 @@ namespace WaterCloud.Service.SystemManage
             }
             return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
         }
-        public async Task<List<ModuleButtonEntity>> GetLookList(string moduleId = "")
+        public async Task<List<ModuleButtonEntity>> GetLookList(string moduleId = "", string keyword = "")
         {
             var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(moduleId))
             {
                 query = query.Where(t => t.F_ModuleId == moduleId);
             }
-            query = GetDataPrivilege("u","", query);
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                //此处需修改
+                query = query.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
+            }
+            query = GetDataPrivilege("u", "", query);
             return query.OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<ModuleButtonEntity> GetLookForm(string keyValue)

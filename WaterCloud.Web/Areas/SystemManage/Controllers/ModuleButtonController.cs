@@ -40,9 +40,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTreeGridJson(string moduleId)
+        public async Task<ActionResult> GetTreeGridJson(string moduleId, string keyword)
         {
-            var data =await _service.GetLookList(moduleId);
+            var data = await _service.GetLookList(moduleId, keyword);
             return Success(data.Count, data);
         }
         [HttpGet]

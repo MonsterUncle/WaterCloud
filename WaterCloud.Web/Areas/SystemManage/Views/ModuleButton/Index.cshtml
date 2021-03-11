@@ -83,12 +83,11 @@
         });
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
-            var queryJson = data.field.txt_keyword;
             //执行搜索重载
             commonTable.reloadtable({
                 elem: 'currentTableId',
                 curr: 1,
-                queryJson: queryJson
+                where: { keyword: data.field.txt_keyword }
             });
             module = null;
             return false;
