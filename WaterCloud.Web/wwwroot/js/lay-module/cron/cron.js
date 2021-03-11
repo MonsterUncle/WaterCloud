@@ -4,7 +4,7 @@
  @ License：MIT
  */
 
-layui.define(["form"], function (exports) {
+layui.define(['form', 'element'], function (exports) {
   //假如该组件依赖 layui.form
   var $ = layui.$,
     form = layui.form,
