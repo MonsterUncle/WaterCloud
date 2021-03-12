@@ -1001,23 +1001,23 @@ namespace WaterCloud.CodeGenerator
                         {
                             if (i % 2 != 0)
                             {
-                                sb.AppendLine("                       <div class=\"layui-form-item\">");
+                                sb.AppendLine("                <div class=\"layui-form-item\">");
                             }
-                            i++;
                             sb.AppendLine("                    <div class=\"layui-col-md6 layui-col-xs6 layui-hide\">");
                             sb.AppendLine("                        <label class=\"layui-form-label required\">" + item.Value + "</label>");
                             sb.AppendLine("                        <div class=\"layui-input-block\">");
                             sb.AppendLine("                            <input type=\"text\" id=\"" + item.Key + "\" name=\"" + item.Key + "\" autocomplete=\"off\" lay-verify=\"required\" placeholder=\"请输入\" class=\"layui-input\">");
                             sb.AppendLine("                        </div>");
                             sb.AppendLine("                    </div>");
-                            if (i % 2 == 1)
+                            if (i % 2 == 0 )
                             {
-                                sb.AppendLine("                       </div>");
+                                sb.AppendLine("                </div>");
                             }
                             else if (i == baseConfigModel.PageForm.FieldList.Count)
                             {
-                                sb.AppendLine("                       </div>");
+                                sb.AppendLine("                </div>");
                             }
+                            i++;
                         }
                         break;
                 }
@@ -1118,23 +1118,23 @@ namespace WaterCloud.CodeGenerator
                         {
                             if (i % 2 != 0)
                             {
-                                sb.AppendLine("                       <div class=\"layui-form-item\">");
+                                sb.AppendLine("                <div class=\"layui-form-item\">");
                             }
-                            i++;
                             sb.AppendLine("                    <div class=\"layui-col-md6 layui-col-xs6 layui-hide\">");
                             sb.AppendLine("                        <label class=\"layui-form-label required\">" + item.Value + "</label>");
                             sb.AppendLine("                        <div class=\"layui-input-block\">");
                             sb.AppendLine("                            <input type=\"text\" id=\"" + item.Key + "\" name=\"" + item.Key + "\" lay-verify=\"required\" class=\"layui-input\">");
                             sb.AppendLine("                        </div>");
                             sb.AppendLine("                    </div>");
-                            if (i % 2 == 1)
+                            if (i % 2 == 0)
                             {
-                                sb.AppendLine("                       </div>");
+                                sb.AppendLine("                </div>");
                             }
                             else if (i == baseConfigModel.PageForm.FieldList.Count)
                             {
-                                sb.AppendLine("                       </div>");
+                                sb.AppendLine("                </div>");
                             }
+                            i++;
                         }
                         break;
                 }
