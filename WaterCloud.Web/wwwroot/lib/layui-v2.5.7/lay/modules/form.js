@@ -26,7 +26,7 @@ layui.define('layer', function (exports) {
                     email: [/(^$)|^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/, "邮箱格式不正确"],
                     url: [/(^$)|(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/, "链接格式不正确"],
                     number: function (value ) {
-                        if (!value || isNaN(value)) return "只能填写数字"
+                        if (!!value && isNaN(value)) return "只能填写数字"
                     },
                     integer: [/^\d*$/, "只能填写整数"],
                     date: [/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/, "日期格式不正确"],
