@@ -82,7 +82,11 @@ namespace WaterCloud.Web
             //注册ISchedulerFactory的实例。
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             services.AddSingleton<IJobFactory, IOCJobFactory>();
-            services.AddHostedService<JobCenter>();
+            //是否开启后台任务
+            if (Configuration.GetSection("SystemConfig:OpenQuarz").Value == "True")
+            {
+                services.AddHostedService<JobCenter>();
+            }
             #endregion
             //注入SignalR实时通讯，默认用json传输
             services.AddSignalR(options =>
