@@ -318,8 +318,7 @@
             $('#messageClearBtn1').click(function () {
                 var thisObj = $(this);
                 common.ajax({
-                    url: "/InfoManage/Message/ReadAllMsgForm",
-                    param: { type: 0 },
+                    url: "/InfoManage/Message/ReadAllMsgForm?type=0",
                     type: "POST",
                     success: function () {
                         $('#message1').html("通知(0)");
@@ -330,8 +329,7 @@
             $('#messageClearBtn2').click(function () {
                 var thisObj = $(this);
                 common.ajax({
-                    url: "/InfoManage/Message/ReadAllMsgForm",
-                    param: { type: 1 },
+                    url: "/InfoManage/Message/ReadAllMsgForm?type=1",
                     type: "POST",
                     success: function () {
                         $('#message2').html("私信(0)");
@@ -343,8 +341,7 @@
             $('#messageClearBtn3').click(function () {
                 var thisObj = $(this);
                 common.ajax({
-                    url: "/InfoManage/Message/ReadAllMsgForm",
-                    param: { type: 2 },
+                    url: "/InfoManage/Message/ReadAllMsgForm?type=2",
                     type: "POST",
                     success: function () {
                         $('#message3').html("待办(0)");
