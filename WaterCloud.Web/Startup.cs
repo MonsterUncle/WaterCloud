@@ -67,8 +67,8 @@ namespace WaterCloud.Web
                 services.AddSingleton(redisDB1);
                 services.AddSingleton(redisDB2);
             }
-            //雪花id初始化工作区(api和web请使用不同),示例IDGenerator.NextId()
-            var options = new IDGeneratorOptions(ushort.Parse(Configuration.GetSection("SystemConfig:WorkRoom").Value));
+            //雪花id初始化,示例IDGenerator.NextId()
+            var options = new IDGeneratorOptions(ushort.Parse(Configuration.GetSection("SystemConfig:WorkId").Value));
             IDGenerator.SetIdGenerator(options);
 
             #region 依赖注入
