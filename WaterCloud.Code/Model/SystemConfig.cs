@@ -61,5 +61,9 @@ namespace WaterCloud.Code.Model
         public string HomePage { get; set; }
         public string MainProgram { get; set; }
         public bool? LocalLAN { get; set; }
+        /// <summary>
+        /// 雪花id工作区
+        /// </summary>
+        public int WorkRoom { get; set; }
     }
 }
