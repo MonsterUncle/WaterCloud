@@ -67,6 +67,10 @@ namespace WaterCloud.Web
                 services.AddSingleton(redisDB1);
                 services.AddSingleton(redisDB2);
             }
+            //雪花id初始化工作区(api和web请使用不同),示例IDGenerator.NextId()
+            var options = new IDGeneratorOptions(1);
+            IDGenerator.SetIdGenerator(options);
+
             #region 依赖注入
             //注入数据库连接
             services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
