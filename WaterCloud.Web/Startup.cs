@@ -111,7 +111,7 @@ namespace WaterCloud.Web
             builder =>
             {
                 builder.AllowAnyMethod().AllowAnyHeader()
-                       .WithOrigins(Configuration.GetSection("SystemConfig:ApiSite").Value.Split(","))
+                       .WithOrigins(Configuration.GetSection("SystemConfig:AllowCorsSite").Value.Split(","))
                        .AllowCredentials();
             }));
             services.AddHttpClient();
