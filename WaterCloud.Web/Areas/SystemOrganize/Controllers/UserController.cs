@@ -99,7 +99,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetUserFormJson()
         {
-            var data =await _service.GetForm(_service.currentuser.UserId);
+            var data =await _service.GetFormExtend(_service.currentuser.UserId);
             if (!string.IsNullOrEmpty(data.F_DepartmentId))
             {
                 List<string> str = new List<string>();

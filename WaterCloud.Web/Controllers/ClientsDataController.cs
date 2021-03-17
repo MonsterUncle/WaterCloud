@@ -197,7 +197,7 @@ namespace WaterCloud.Web.Controllers
             {
                 return Content("");
             }
-            var data =await _userService.GetForm(currentuser.UserId);
+            var data =await _userService.GetFormExtend(currentuser.UserId);
             var msglist= await _msgService.GetUnReadListJson();
             data.MsgCout = msglist.Count();
             return Content(data.ToJson());

@@ -58,9 +58,9 @@ namespace WaterCloud.Web
                 var action = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext.Request.Path;
                 return _service.ActionValidate(roleId, action).GetAwaiter().GetResult();
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
+                LogHelper.WriteWithTime(ex);
                 return false;
             }
 
@@ -78,9 +78,9 @@ namespace WaterCloud.Web
                 var roleId = result.userInfo.RoleId;
                 return _service.ActionValidate(roleId, _authorize,true).GetAwaiter().GetResult();
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
+                LogHelper.WriteWithTime(ex);
                 return false;
             }
 

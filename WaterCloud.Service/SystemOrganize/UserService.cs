@@ -146,9 +146,14 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<UserEntity> GetForm(string keyValue)
         {
-            var cachedata =await repository.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
+            return cachedata;
+        }
+        public async Task<UserEntity> GetFormExtend(string keyValue)
+        {
+            var cachedata = await repository.CheckCache(cacheKey, keyValue);
             string[] temp;
-            if (cachedata.F_RoleId!=null)
+            if (cachedata.F_RoleId != null)
             {
                 temp = cachedata.F_RoleId.Split(',');
                 cachedata.F_RoleName = string.Join(",", uniwork.IQueryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());

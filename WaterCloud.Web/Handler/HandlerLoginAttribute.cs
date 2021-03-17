@@ -92,9 +92,9 @@ namespace WaterCloud.Web
                         return false;
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
+                LogHelper.WriteWithTime(ex);
                 return false;
             }
 
@@ -108,9 +108,9 @@ namespace WaterCloud.Web
                 var userId = current.UserId;
                 return _service.RoleValidate(userId, roleId).GetAwaiter().GetResult();
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
+                LogHelper.WriteWithTime(ex);
                 return false;
             }
         }
