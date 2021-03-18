@@ -93,7 +93,7 @@
                     success: function (data) {
                         common.val('stepForm', data);
                         $('#F_ImgUrlPic').attr('src', data.F_ImgUrl); //图片链接
-                        editor.txt.text(entitiestoUtf16($("#F_Description").val()));
+                        editor.txt.text($("#F_Description").val());
                         common.setReadOnly('adminform');
                     }
                 });

@@ -275,7 +275,7 @@
                         success: function (data) {
                             common.val('stepForm', data);
                             $('#F_ImgUrlPic').attr('src', data.F_ImgUrl); //图片链接
-                            editor.txt.text(entitiestoUtf16($("#F_Description").val()));
+                            editor.txt.text($("#F_Description").val());
 
                         }
                     });
@@ -299,7 +299,7 @@
                 if (!postData["F_IsHot"]) postData["F_IsHot"] = false;
                 if (!postData["F_IsRed"]) postData["F_IsRed"] = false;
                 if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-                postData["F_Description"] = utf16toEntities(postData["F_Description"]);
+                postData["F_Description"] = postData["F_Description"];
                 common.submitForm({
                     url: '/ContentManage/ArticleNews/SubmitForm?keyValue=' + keyValue,
                     param: postData,
