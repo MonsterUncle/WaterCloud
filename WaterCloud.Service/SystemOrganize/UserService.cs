@@ -124,6 +124,8 @@ namespace WaterCloud.Service.SystemOrganize
                     F_WeChat=a.F_WeChat,
                     F_WxNickName=a.F_WxNickName,
                     F_WxOpenId=a.F_WxOpenId,
+                    F_DepartmentName="",
+                    F_RoleName=""
                 });
             return query;
         }
