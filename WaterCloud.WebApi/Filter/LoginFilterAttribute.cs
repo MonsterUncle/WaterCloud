@@ -6,6 +6,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Filters;
 using WaterCloud.Code;
 using Microsoft.AspNetCore.Authorization;
+using WaterCloud.Service.SystemOrganize;
 
 namespace WaterCloud.WebApi
 {
@@ -14,6 +15,11 @@ namespace WaterCloud.WebApi
     /// </summary>
     public class LoginFilterAttribute : ActionFilterAttribute
     {
+        private readonly RoleAuthorizeService _service;
+        public LoginFilterAttribute(RoleAuthorizeService service)
+        {
+            _service = service;
+        }
         /// <summary>
         /// 验证
         /// </summary>
@@ -35,7 +41,7 @@ namespace WaterCloud.WebApi
                 //控制器整体忽略或者单独方法忽略
                 var anonymous = description.ControllerTypeInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
                 var methodanonymous = description.MethodInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
-                if (user != null)
+                if (user != null && RoleAuthorize())
                 {
                     //延长过期时间
                     int LoginExpire = GlobalContext.SystemConfig.LoginExpire;
@@ -78,6 +84,18 @@ namespace WaterCloud.WebApi
 
             sw.Stop();
 
+        }
+        private bool RoleAuthorize()
+        {
+            try
+            {
+                return _service.RoleValidate().GetAwaiter().GetResult();
+            }
+            catch (System.Exception ex)
+            {
+                LogHelper.WriteWithTime(ex);
+                return false;
+            }
         }
     }
 }

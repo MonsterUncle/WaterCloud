@@ -64,7 +64,7 @@ namespace WaterCloud.WebApi
         {
             try
             {
-                return _service.ActionValidate(roleId, _authorize, true).GetAwaiter().GetResult();
+                return _service.ActionValidate(_authorize, true).GetAwaiter().GetResult();
             }
             catch (System.Exception)
             {

@@ -131,15 +131,15 @@ namespace WaterCloud.Service.SystemOrganize
             }
             return data.OrderByDescending(t => t.F_CreatorTime).ToList();
         }
-        public async Task<bool> ActionValidate(string roleId, string action,bool isAuthorize=false)
+        public async Task<bool> ActionValidate(string action,bool isAuthorize=false)
         {
-            var authorizeurldata = new List<AuthorizeActionModel>();
-            var rolelist = roleId.Split(',');
-            var user =await userApp.GetForm(currentuser.UserId);
+            var user = await userApp.GetForm(currentuser.UserId);
             if (user == null || user.F_EnabledMark == false)
             {
                 return false;
             }
+            var authorizeurldata = new List<AuthorizeActionModel>();
+            var rolelist = user.F_RoleId.Split(',');
             var cachedata =await CacheHelper.Get<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey + "authorize_list");
             if (cachedata == null)
             {
@@ -153,7 +153,7 @@ namespace WaterCloud.Service.SystemOrganize
                     moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
                     var buttondata = await moduleButtonApp.GetList();
                     buttondata = buttondata.Where(a => a.F_EnabledMark == true).ToList();
-                    var role = await roleApp.GetForm(roleId);
+                    var role = await roleApp.GetForm(roles);
                     if (role != null && role.F_EnabledMark == true)
                     {
                         var authdata = new List<AuthorizeActionModel>();
@@ -210,15 +210,20 @@ namespace WaterCloud.Service.SystemOrganize
             }
             return false;
         }
-        public async Task<bool> RoleValidate(string userId,string roleId)
+        public async Task<bool> RoleValidate()
         {
-            var authorizeurldata = new List<AuthorizeActionModel>();
-            var rolelist = roleId.Split(',');
-            var user = await userApp.GetForm(userId);
+            var current = OperatorProvider.Provider.GetCurrent();
+            if (current == null || string.IsNullOrEmpty(current.UserId))
+            {
+                return false;
+            }
+            var user = await userApp.GetForm(current.UserId);
             if (user == null || user.F_EnabledMark == false)
             {
                 return false;
             }
+            var authorizeurldata = new List<AuthorizeActionModel>();
+            var rolelist = user.F_RoleId.Split(',');
             var cachedata = await CacheHelper.Get<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + "authorize_list");
             if (cachedata == null)
             {
@@ -232,7 +237,7 @@ namespace WaterCloud.Service.SystemOrganize
                     moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
                     var buttondata = await moduleButtonApp.GetList();
                     buttondata = buttondata.Where(a => a.F_EnabledMark == true).ToList();
-                    var role = await roleApp.GetForm(roleId);
+                    var role = await roleApp.GetForm(roles);
                     if (role != null && role.F_EnabledMark == true)
                     {
                         var authdata = new List<AuthorizeActionModel>();

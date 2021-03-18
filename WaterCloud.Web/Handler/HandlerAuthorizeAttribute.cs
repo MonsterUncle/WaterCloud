@@ -54,9 +54,8 @@ namespace WaterCloud.Web
 
                     return false;
                 }
-                var roleId = result.userInfo.RoleId;
                 var action = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext.Request.Path;
-                return _service.ActionValidate(roleId, action).GetAwaiter().GetResult();
+                return _service.ActionValidate(action).GetAwaiter().GetResult();
             }
             catch (System.Exception ex)
             {
@@ -75,8 +74,7 @@ namespace WaterCloud.Web
 
                     return false;
                 }
-                var roleId = result.userInfo.RoleId;
-                return _service.ActionValidate(roleId, _authorize,true).GetAwaiter().GetResult();
+                return _service.ActionValidate(_authorize,true).GetAwaiter().GetResult();
             }
             catch (System.Exception ex)
             {

@@ -48,7 +48,7 @@ namespace WaterCloud.Web
             {
                 return;
             }
-            //管理员跳过检测
+            //管理员跳过检测(管理员授权或者关闭需要清理缓存保证安全)
             if (OperatorProvider.Provider.GetCurrent().IsSystem)
             {
                 return;
@@ -103,10 +103,7 @@ namespace WaterCloud.Web
         {
             try
             {
-                var current = OperatorProvider.Provider.GetCurrent();
-                var roleId = current.RoleId;
-                var userId = current.UserId;
-                return _service.RoleValidate(userId, roleId).GetAwaiter().GetResult();
+                return _service.RoleValidate().GetAwaiter().GetResult();
             }
             catch (System.Exception ex)
             {
