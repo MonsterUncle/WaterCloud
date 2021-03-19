@@ -153,7 +153,7 @@ namespace WaterCloud.Web
                 LogHelper.Write(ex);
             }
             //清理缓存
-            CacheHelper.FlushAll().GetAwaiter().GetResult();
+            //CacheHelper.FlushAll().GetAwaiter().GetResult();
         }
         //AutoFac注入
         public void ConfigureContainer(ContainerBuilder builder)
