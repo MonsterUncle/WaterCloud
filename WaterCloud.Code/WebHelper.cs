@@ -459,6 +459,10 @@ namespace WaterCloud.Code
                     {
                         return hostAddress.ToString();
                     }
+                    else if (hostAddress.AddressFamily == AddressFamily.InterNetworkV6)
+                    {
+                        return hostAddress.MapToIPv4().ToString();
+                    }
                 }
             }
             catch (Exception)
