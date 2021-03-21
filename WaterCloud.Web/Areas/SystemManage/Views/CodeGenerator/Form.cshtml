@@ -370,7 +370,7 @@
                     $(tr).insertAfter($(tr).next());
                     // 上移之后，数据交换
                     tbData[tr.index()] = tem;
-                    tbData[tr.next().index()] = tem2;
+                    tbData[tr.prev().index()] = tem2;
                 }
             }
             return false;
