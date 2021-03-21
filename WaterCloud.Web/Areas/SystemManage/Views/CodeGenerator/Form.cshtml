@@ -329,6 +329,50 @@
                     }
                 });
             }
+            else if (obj.event === 'moveOn') {
+                if (entity == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                var tbData = table.cache.currentTableId; //是一个Array
+                var tr = entity.tr;
+                if ($(tr).prev().html() == null) {
+                    layer.msg("已经是最顶部了");
+                    return;
+                } else {
+                    // 未上移前，记录本行和下一行的数据
+                    var tem = tbData[tr.index()];
+                    var tem2 = tbData[tr.prev().index()];
+
+                    // 将本身插入到目标tr之前
+                    $(tr).insertBefore($(tr).prev());
+                    // 上移之后，数据交换
+                    tbData[tr.index()] = tem;
+                    tbData[tr.next().index()] = tem2;
+                }
+            }
+            else if (obj.event === 'moveDown') {
+                if (entity == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                var tbData = table.cache.currentTableId; //是一个Array
+                var tr = entity.tr;
+                if ($(tr).next().html() == null) {
+                    layer.msg("已经是最底部了");
+                    return;
+                } else {
+                    // 未上移前，记录本行和下一行的数据
+                    var tem = tbData[tr.index()];
+                    var tem2 = tbData[tr.next().index()];
+
+                    // 将本身插入到目标tr之前
+                    $(tr).insertAfter($(tr).next());
+                    // 上移之后，数据交换
+                    tbData[tr.index()] = tem;
+                    tbData[tr.next().index()] = tem2;
+                }
+            }
             return false;
         });
         form.on('select(n_columns)', function (data) {
@@ -736,6 +780,8 @@
                             <button class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</button>
                             <button class="layui-btn layui-btn-sm data-edit-btn" lay-event="sort"><i class="layui-icon">&#xe61a;</i>设为排序</button>
                             <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="moveOn"> <i class="layui-icon">&#xe619;</i>上移</button>
+                            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="moveDown"> <i class="layui-icon">&#xe61a;</i>下移</button>
                         </div>
                     </script>
                     <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
