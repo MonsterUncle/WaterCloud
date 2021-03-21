@@ -78,6 +78,8 @@ namespace WaterCloud.CodeGenerator
             baseConfigModel.PageIndex.KeywordColum.Add("F_FullName");
             baseConfigModel.PageIndex.ParentColum = "F_ParentId";
             baseConfigModel.PageIndex.TreeColum = "F_FullName";
+            baseConfigModel.PageIndex.DeleteColum = "F_DeleteMark";
+            baseConfigModel.PageIndex.CreateColum = "F_CreatorTime";
             #endregion
 
             #region PageFormModel
@@ -182,7 +184,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildService
-        public string BuildService(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id", string idType = "int", string deleteMarkField = "IsDelete", string createTimeField = "AddTime")
+        public string BuildService(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id", string idType = "int")
         {
             var baseEntity = GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn);
             StringBuilder sb = new StringBuilder();
@@ -231,7 +233,7 @@ namespace WaterCloud.CodeGenerator
                     }
                 }
                 sb.AppendLine("            }");
-                sb.AppendLine($"            return data.Where(t => t.{deleteMarkField} == false).OrderByDesc(t => t.{createTimeField}).ToList();");
+                sb.AppendLine("            return data."+(string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum)?"": $"Where(t => t.{baseConfigModel.PageIndex.DeleteColum} == false).") + (baseConfigModel.PageIndex.IsAsc == true ? "OrderBy" : "OrderByDesc") + $"(t => t.{baseConfigModel.PageIndex.SortColumn}).ToList();");
             }
             else
             {
@@ -250,13 +252,13 @@ namespace WaterCloud.CodeGenerator
                     }
                 }
                 sb.AppendLine("            }");
-                sb.AppendLine($"            return data.Where(t => t.{deleteMarkField} == false).OrderByDescending(t => t.{createTimeField}).ToList();");
+                sb.AppendLine("            return data." + (string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum) ? "" : $"Where(t => t.{baseConfigModel.PageIndex.DeleteColum} == false).") + (baseConfigModel.PageIndex.IsAsc == true ? "OrderBy" : "OrderByDesc") + $"(t => t.{baseConfigModel.PageIndex.SortColumn}).ToList();");
             }
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(string keyword = \"\")");
             sb.AppendLine("        {");
-            sb.AppendLine($"            var query = repository.IQueryable().Where(t => t.{deleteMarkField} == false);");
+            sb.AppendLine($"            var query = repository.IQueryable()" + (string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum) ? ";" : $".Where(t => t.{baseConfigModel.PageIndex.DeleteColum} == false);"));
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
             sb.AppendLine("            {");
             sb.AppendLine("                //此处需修改");
@@ -274,12 +276,12 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            }");
             sb.AppendLine("             //权限过滤");
             sb.AppendLine("             query = GetDataPrivilege(\"u\", \"\", query);");
-            sb.AppendLine($"            return query.OrderByDesc(t => t.{createTimeField}).ToList();");
+            sb.AppendLine($"            return query." + (baseConfigModel.PageIndex.IsAsc == true ? "OrderBy" : "OrderByDesc") + $"(t => t.{baseConfigModel.PageIndex.SortColumn}).ToList();");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(SoulPage<" + baseConfigModel.FileConfig.EntityName + "> pagination,string keyword = \"\"," + idType + " id=\"\")");
             sb.AppendLine("        {");
-            sb.AppendLine($"            var query = repository.IQueryable().Where(u => u.{deleteMarkField}==false);");
+            sb.AppendLine($"            var query = repository.IQueryable()" + (string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum) ? ";" : $".Where(t => t.{baseConfigModel.PageIndex.DeleteColum} == false);"));
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
             sb.AppendLine("            {");
             for (int i = 0; i < baseConfigModel.PageIndex.KeywordColum.Count; i++)
@@ -296,7 +298,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            }");
             if (idType == "int" || idType == "long")
             {
-                sb.AppendLine("            if(id==0)");
+                sb.AppendLine("            if(id == 0)");
             }
             else
             {
@@ -310,7 +312,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            return await repository.OrderList(query, pagination);");
             sb.AppendLine("        }");
             sb.AppendLine();
-            sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetForm(string keyValue)");
+            sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + $"> GetForm({idType} keyValue)");
             sb.AppendLine("        {");
             if (baseConfigModel.PageIndex.IsCache == false)
             {
@@ -325,7 +327,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        }");
             sb.AppendLine("        #endregion");
             sb.AppendLine();
-            sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + "> GetLookForm(object keyValue)");
+            sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + $"> GetLookForm({idType} keyValue)");
             sb.AppendLine("        {");
             if (baseConfigModel.PageIndex.IsCache == true)
             {
@@ -340,15 +342,25 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        #region 提交数据");
-            sb.AppendLine("        public async Task SubmitForm(" + baseConfigModel.FileConfig.EntityName + " entity, string keyValue)");
+            sb.AppendLine("        public async Task SubmitForm(" + baseConfigModel.FileConfig.EntityName + $" entity, {idType} keyValue)");
             sb.AppendLine("        {");
-            sb.AppendLine("            if (string.IsNullOrEmpty(keyValue))");
+            if (idType == "int" || idType == "long")
+            {
+                sb.AppendLine("            if(keyValue == 0)");
+            }
+            else
+            {
+                sb.AppendLine("            if(!string.IsNullOrEmpty(keyValue))");
+            }
             sb.AppendLine("            {");
             sb.AppendLine("                    //初始值添加");
-            sb.AppendLine($"                entity.{deleteMarkField} = false;");
+			if (!string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum))
+			{
+                sb.AppendLine($"                entity.{baseConfigModel.PageIndex.DeleteColum} = false;");
+            }
             foreach (var item in baseConfigModel.PageIndex.ColumnList)
             {
-                if (item.field != idColumn&& item.field != deleteMarkField && item.field != createTimeField && !string.IsNullOrEmpty(item.value))
+                if (item.field != idColumn&& item.field != baseConfigModel.PageIndex.DeleteColum && item.field != baseConfigModel.PageIndex.CreateColum && !string.IsNullOrEmpty(item.value))
                 {
                     sb.AppendLine($"                entity.{item.field} = {item.value};");
                 }
@@ -357,17 +369,20 @@ namespace WaterCloud.CodeGenerator
             {
                 if (idType == "int")
                 {
-                    sb.AppendLine("                entity." + idColumn + "=0;");
+                    sb.AppendLine("                entity." + idColumn + " = 0;");
                 }
                 else if (idType == "long")
                 {
-                    sb.AppendLine("                entity." + idColumn + "=0;");
+                    sb.AppendLine("                entity." + idColumn + " = 0;");
                 }
                 else
                 {
-                    sb.AppendLine("                entity." + idColumn + "=Utils.GuId();");
+                    sb.AppendLine("                entity." + idColumn + " = Utils.GuId();");
                 }
-                sb.AppendLine($"                entity.{createTimeField} = DateTime.Now;");
+                if (!string.IsNullOrEmpty(baseConfigModel.PageIndex.CreateColum))
+                {
+                    sb.AppendLine($"                entity.{baseConfigModel.PageIndex.CreateColum} = DateTime.Now;");
+                }
             }
             else
             {
@@ -386,15 +401,15 @@ namespace WaterCloud.CodeGenerator
             {
                 if (idType == "int")
                 {
-                    sb.AppendLine("                entity." + idColumn + "=Convert.ToInt32(keyValue);");
+                    sb.AppendLine("                entity." + idColumn + " = Convert.ToInt32(keyValue);");
                 }
                 else if (idType == "long")
                 {
-                    sb.AppendLine("                entity." + idColumn + "=Convert.ToInt64(keyValue);");
+                    sb.AppendLine("                entity." + idColumn + " = Convert.ToInt64(keyValue);");
                 }
                 else
                 {
-                    sb.AppendLine("                entity." + idColumn + "=keyValue;");
+                    sb.AppendLine("                entity." + idColumn + " = keyValue;");
                 }
             }
             else
@@ -528,7 +543,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        #region 提交数据");
             sb.AppendLine("        [HttpPost]");
             sb.AppendLine("        [HandlerAjaxOnly]");
-            sb.AppendLine("        public async Task<ActionResult> SubmitForm(" + baseConfigModel.FileConfig.EntityName + " entity, string keyValue)");
+            sb.AppendLine("        public async Task<ActionResult> SubmitForm(" + baseConfigModel.FileConfig.EntityName + $" entity, {idType} keyValue)");
             sb.AppendLine("        {");
             sb.AppendLine("            try");
             sb.AppendLine("            {");
@@ -1457,7 +1472,7 @@ namespace WaterCloud.CodeGenerator
         }
         #endregion 
 
-        private string GetBaseEntity(string EntityName, DataTable dt, string idColumn = "F_Id", string deleteMarkField = "IsDelete", string AddTime = "AddTime")
+        private string GetBaseEntity(string EntityName, DataTable dt, string idColumn = "F_Id")
         {
             string entity = string.Empty;
             var columnList = dt.AsEnumerable().Select(p => p["TableColumn"].ParseToString()).ToList();

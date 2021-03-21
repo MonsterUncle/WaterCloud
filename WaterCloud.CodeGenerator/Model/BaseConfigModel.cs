@@ -94,6 +94,14 @@ namespace WaterCloud.CodeGenerator
         /// 模糊查询字段
         /// </summary>
         public List<string> KeywordColum { get; set; }
+        /// <summary>
+        /// 删除字段字段
+        /// </summary>
+        public string DeleteColum { get; set; }
+        /// <summary>
+        /// 创建时间字段
+        /// </summary>
+        public string CreateColum { get; set; }
         public bool? IsAsc { get; set; }
         public List<ColumnField> ColumnList { get; set; }
 

@@ -395,6 +395,8 @@
             baseConfig.PageIndex.SortColumn = data.field.SortColumn;
             baseConfig.PageIndex.ParentColum = data.field.ParentColum;
             baseConfig.PageIndex.TreeColum = data.field.TreeColum;
+            baseConfig.PageIndex.CreateColum = data.field.CreateColum;
+            baseConfig.PageIndex.DeleteColum = data.field.DeleteColum;
             baseConfig.PageIndex.KeywordColum = data.field.KeywordColum.split(',');
             baseConfig.PageIndex.IsAsc = !data.field.IsAsc || data.field.IsAsc != "true" ? false : true;
             baseConfig.PageIndex.ColumnList = [];
@@ -665,57 +667,69 @@
                                     <input type="checkbox" name="IsPublic" id="IsPublic" checked="" value="true" title="是否公共">
                                 </div>
                             </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-col-md6 layui-col-xs6">
-                                    <label class="layui-form-label required">按钮选项</label>
-                                    <div class="layui-input-block">
-                                        <div id="ButtonList" name="ButtonList" class="xm-select-demo">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="layui-col-md6 layui-col-xs6">
-                                    <label class="layui-form-label required">模糊查询字段</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" id="KeywordColum" name="KeywordColum" lay-verify="required" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-col-md6 layui-col-xs6">
-                                    <label class="layui-form-label required">排序字段</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" id="SortColumn" name="SortColumn" readonly lay-verify="required" class="layui-input">
-                                    </div>
-                                </div>
-                                <div class="layui-col-md6 layui-col-xs6">
-                                    <label class="layui-form-label">排序</label>
-                                    <div class="layui-input-block">
-                                        <input type="checkbox" name="IsAsc" id="IsAsc" checked="" value="true" title="顺序">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-col-md6 layui-col-xs6">
-                                    <label class="layui-form-label">父级字段</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" id="ParentColum" name="ParentColum" class="layui-input">
-                                    </div>
-                                </div>
-                                <div class="layui-col-md6 layui-col-xs6">
-                                    <label class="layui-form-label">树形显示字段</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" id="TreeColum" name="TreeColum" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group-bottom text-right">
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-col-md6 layui-col-xs6">
+                                <label class="layui-form-label required">按钮选项</label>
                                 <div class="layui-input-block">
-                                    <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
-                                    <button class="layui-btn" lay-submit lay-filter="formStep2">下一步</button>
+                                    <div id="ButtonList" name="ButtonList" class="xm-select-demo">
+                                    </div>
                                 </div>
                             </div>
-</form>
+                            <div class="layui-col-md6 layui-col-xs6">
+                                <label class="layui-form-label required">模糊查询字段</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="KeywordColum" name="KeywordColum" lay-verify="required" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-col-md3 layui-col-xs3">
+                                <label class="layui-form-label required">排序字段</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="SortColumn" name="SortColumn" readonly lay-verify="required" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-col-md3 layui-col-xs3">
+                                <label class="layui-form-label">排序</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="IsAsc" id="IsAsc" checked="" value="true" title="顺序">
+                                </div>
+                            </div>
+                            <div class="layui-col-md3 layui-col-xs3">
+                                <label class="layui-form-label">删除字段</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="DeleteColum" name="DeleteColum" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-col-md3 layui-col-xs3">
+                                <label class="layui-form-label">创建字段</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="CreateColum" name="CreateColum" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-col-md6 layui-col-xs6">
+                                <label class="layui-form-label">父级字段</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="ParentColum" name="ParentColum" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-xs6">
+                                <label class="layui-form-label">树形显示字段</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="TreeColum" name="TreeColum" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group-bottom text-right">
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                <button class="layui-btn" lay-submit lay-filter="formStep2">下一步</button>
+                            </div>
+                        </div>
+                    </form>
                     <script type="text/html" id="toolbarDemo">
                         <div class="layui-btn-container" id="toolbar">
                             <button class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>

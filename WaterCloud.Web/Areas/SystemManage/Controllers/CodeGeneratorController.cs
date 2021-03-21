@@ -116,9 +116,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 ColumnField field = new ColumnField();
                 field.field = item.TableColumn;
                 field.title = string.IsNullOrEmpty(item.Remark) ? item.TableColumn : item.Remark;
-                field.isFilter = false;
+                field.isFilter = true;
                 field.isAotuWidth = false;
-                field.isSorted = false;
+                field.isSorted = true;
                 field.isShow = true;
                 field.width = 100;
                 dic.Add(field);
@@ -146,12 +146,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 baseConfig.PageIndex.ColumnList = baseConfig.PageIndex.ColumnList.Where(a => a.field != "").ToList();
                 baseConfig.PageForm.FieldList.Remove("");
                 string idType = "string";
-                //扩展删除字段和创建时间字段
-                string[] isDeleteMarkFieldNames = new[] { "F_DeleteMark", "IsDelete" };
-                string[] createTimeFieldNames = new[] { "F_CreatorTime", "AddTime" };
-
-                string isDeleteMarkField = "F_DeleteMark";
-                string createTimeField = "F_CreatorTime";
                 foreach (DataRow dr in dt.Rows)
                 {
 
@@ -174,25 +168,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                         }
                     }
                     string columnName = dr["TableColumn"].ToString();
-                    foreach (var isDeleteMarkFieldName in isDeleteMarkFieldNames)
-                    {
-                        if (string.Compare(isDeleteMarkFieldName, columnName, true) == 0)
-                        {
-                            isDeleteMarkField = columnName;
-                        }
-                    }
-                    foreach (var createTimeFieldName in createTimeFieldNames)
-                    {
-                        if (string.Compare(createTimeFieldName, columnName, true) == 0)
-                        {
-                            createTimeField = columnName;
-                        }
-                    }
                 }
 
 
                 string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
-                string codeService = template.BuildService(baseConfig, dt, idcolumn, idType, isDeleteMarkField, createTimeField);
+                string codeService = template.BuildService(baseConfig, dt, idcolumn, idType);
                 string codeController = template.BuildController(baseConfig, idcolumn, idType);
                 string codeIndex = template.BuildIndex(baseConfig, idcolumn);
                 string codeForm = template.BuildForm(baseConfig);
