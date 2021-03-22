@@ -194,8 +194,22 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         _html += '  <label class="layui-form-label">{0}</label>'.format(lang[key]);
                         _html += '  <div class="layui-input-block">';
                         _html += '<select name="{0}" lay-verify="required">'.format(key);
-                        var _strs = ["yyyy年M月", "yyyy-MM-dd", "dd/MM/yyyy", "yyyyMMdd", "yyyy-MM-dd HH:mm:ss", "yyy年MM月dd日 HH时mm分ss秒"];
-                        for (var i = 0; i < _datetype.length; i++) {
+                        var _strs = [];
+                        switch (json.datetype) {
+                            case "date":
+                                _strs = ["yyyy年MM月dd日","yyyy-MM-dd", "yyyy/MM/dd", "yyyyMMdd"];
+                                break;
+                            case "datetime":
+                                _strs = ["yyyy-MM-dd HH:mm:ss", "yyyy/MM/dd HH:mm:ss", "yyy年MM月dd日 HH时mm分ss秒"];
+                                break;
+                            case "year":
+                                _strs = ["yyyy", "yyyy年"];
+                                break;
+                            case "month":
+                                _strs = ["yyyy年MM月", "yyyy-MM", "yyyy/MM", "yyyyMM"];
+                                break;
+                        }
+                        for (var i = 0; i < _strs.length; i++) {
                             if (_strs[i] === json.dateformat) {
                                 _html += '<option value="{0}" selected="">{0}</option>'.format(_strs[i]);
                             } else {
@@ -1505,9 +1519,41 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
 
                     that.renderForm();
 
-                } else if (_key === 'dateformat' || _key === 'datetype') {
+                } else if (_key === 'dateformat') {
                     //更新 data 数据
                     _json.dateformat = data.value;
+
+                    laydate.render({
+                        elem: '#' + _json.tag + _json.id,
+                        type: _json.datetype,
+                        range: _json.range,
+                        format: _json.dateformat,
+                        value: _json.defaultValue,
+                        isInitValue: _json.isInitValue,
+                        min: _json.minValue,
+                        max: _json.maxValue,
+                        position: _json.position,
+                        zindex: _json.zindex,
+                        theme: _json.theme
+                    });
+                    that.renderForm();
+                } else if (_key === 'datetype') {
+                    //更新 data 数据
+                    _json.datetype = data.value;
+                    switch (_json.datetype) {
+                        case "date":
+                            _json.dateformat = "yyyy-MM-dd";
+                            break;
+                        case "datetime":
+                            _json.dateformat = "yyyy-MM-dd HH:mm:ss";
+                            break;
+                        case "year":
+                            _json.dateformat = "yyyy";
+                            break;
+                        case "month":
+                            _json.dateformat = "yyyy-MM";
+                            break;
+                    }
 
                     laydate.render({
                         elem: '#' + _json.tag + _json.id,
