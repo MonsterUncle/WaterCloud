@@ -53,7 +53,7 @@
                  items: ['column', 'condition', 'editCondition', 'excel']
              },
              cols: [[                 
-                 { type: "radio", width: 50 },
+                 { type: "radio", width: 50, fixed: 'left' },
                  { field: 'F_FilePath', title: '文件路径', width: 120, sort: true, hide: true, filter: true },
                  { field: 'F_FileName', title: '文件名称', width: 180, sort: true, filter: true },
                  {
@@ -94,7 +94,7 @@
                  },
                  { field: 'F_CreatorUserName', title: '创建用户', width: 120, sort: true, filter: true },
                  { field: 'F_Description', title: '文件备注', minWidth: 150, sort: true, filter: true },
-                 { title: '操作', width: 130, toolbar: '#currentTableBar', align: "center" }
+                 { title: '操作', width: 130, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
              ]]
          });
          // 监听搜索操作

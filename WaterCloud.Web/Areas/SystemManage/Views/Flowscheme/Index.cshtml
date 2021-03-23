@@ -64,29 +64,28 @@
          var ItemId;
          //权限控制(js是值传递)
          toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-         var rendertree = common.rendertreetable({
+         var options = {
              elem: '#currentTable',
-             id: 'currentTable',
              url: '/SystemOrganize/Organize/GetTreeGridJson',
              defaultToolbar: [],
              toolbar: false,
              search: false,
-             height: 'full-110',
+             treeColIndex: 0,
+             height: 'full-130',
+             treeIdName: 'F_Id',  // id字段名称
+             treePidName: 'F_ParentId',     // pid字段名称
              cols: [[
-                 { field: 'F_FullName', title: '部门名称', width: 250 },
-                 { field: 'F_EnCode', title: '部门编号', width: 180 },
+                 { field: 'F_FullName', title: '部门名称', width: 250, filter: true },
+                 { field: 'F_EnCode', title: '部门编号', width: 180, filter: true },
                  {
-                     field: 'F_CategoryId', title: '部门分类', width: 120,
+                     field: 'F_CategoryId', title: '部门分类', width: 120, filter: true,
                      templet: function (d) {
                          return top.clients.dataItems["OrganizeCategory"][d.F_CategoryId] == null ? "" : top.clients.dataItems["OrganizeCategory"][d.F_CategoryId];
                      }
                  }
              ]],
-             done: function () {
-                 //展开全部
-                 rendertree.expandAll();
-             }
-         });
+         };
+         commonTable.rendertreetable(options);
          commonTable.rendertable({
              elem: '#currentTableId',
              id: 'currentTableId',
@@ -99,7 +98,7 @@
                  , last: false //不显示尾页
              },
              search: false,
-             height: 'full-160',
+             height: 'full-130',
              cols: [[              
                  { type: "radio", width: 50 },
                  { field: 'F_SchemeCode', title: '流程编号', width: 150, sort: true },
@@ -133,9 +132,8 @@
          form.on('submit(temp-search-btn)', function (data) {
              var queryJson = data.field.temp_keyword;
              //执行搜索重载
-             common.reloadtreetable(rendertree, {
-                 where: { keyword: queryJson },
-             });
+             options.where = { keyword: queryJson };
+             commonTable.reloadtabletree(options);
              itemId = null;
              return false;
          });
@@ -158,7 +156,7 @@
          //行点击事件监听，控制按钮显示
          var oneList = ["NF-edit", "NF-delete", "NF-details"];//选择1条显示
          commonTable.tableRowClick("radio", "currentTableFilter", "currentTableId", oneList);
-         treeTable.on('row(currentTable)', function (obj) {
+         table.on('row(currentTable)', function (obj) {
              obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
              ItemId = obj.data.F_Id;
              $('button[lay-filter="data-search-btn"]').click();//按钮刷新

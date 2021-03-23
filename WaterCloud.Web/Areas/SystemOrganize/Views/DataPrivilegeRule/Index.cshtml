@@ -43,6 +43,7 @@
              common = layui.common;
          wcLoading.close();
          //权限控制(js是值传递)
+         currentTableBar.innerHTML = common.authorizeButtonNew(currentTableBar.innerHTML);
          toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
          commonTable.rendertable({
              elem: '#currentTableId',
@@ -52,7 +53,7 @@
                  clearFilter: false
              },
              cols: [[
-                 { type: "radio", width: 50 },
+                 { type: "radio", width: 50, fixed: 'left' },
                  { field: 'F_ModuleCode', title: '模块编号', width: 120, sort: true, filter: true },
                  { field: 'F_PrivilegeRules', title: '权限规则', width: 200, sort: true, filter: true },
                  { field: 'F_SortCode', title: '排序号', width: 120, sort: true, filter: true },
@@ -77,7 +78,7 @@
                      }
                  },
                  { field: 'F_Description', title: '备注', minWidth: 150, sort: true, filter: true },
-                 { title: '操作', width: 130, toolbar: '#currentTableBar', align: "center" }
+                 { title: '操作', width: 130, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
              ]]
          });
          // 监听搜索操作

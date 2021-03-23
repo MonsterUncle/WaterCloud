@@ -85,13 +85,25 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTreeGridJson(string keyword)
+        public async Task<ActionResult> GetTreeGridJson(string keyword,string ids)
         {
             var data =await _service.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
             }
+			if (!string.IsNullOrEmpty(ids))
+			{
+                var str = ids.Split(',');
+				foreach (var item in str)
+				{
+                    if (data.Where(a => a.F_Id == item).Count() > 0)
+                    {
+                        var temp = data.Find(a => a.F_Id == item);
+                        temp.LAY_CHECKED = true;
+                    }
+				}
+			}
             return Success(data.Count, data);
         }
         [HttpGet]

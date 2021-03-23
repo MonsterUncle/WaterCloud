@@ -52,7 +52,7 @@
                  items: ['column', 'condition', 'editCondition', 'excel']
              },
              cols: [[       
-                 { type: "checkbox", width: 50 },
+                 { type: "checkbox", width: 50, fixed: 'left' },
                  {
                      field: 'F_MessageType', title: '信息类型', width: 120, sort: true, filter: true,
                      templet: function (d) {
@@ -74,7 +74,7 @@
                  },
                  { field: 'F_CreatorUserId', title: '创建用户主键', width: 120, sort: true, hide: true, filter: true },
                  { field: 'F_CreatorUserName', title: '创建用户', width: 120, sort: true, filter: true },
-                 { title: '操作', width: 90, toolbar: '#currentTableBar', align: "center" }
+                 { title: '操作', width: 90, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
              ]]
          });
          // 监听搜索操作

@@ -53,6 +53,7 @@
                     },
                 ]]
             });
+            commonTable.tableRowClick("checkbox", "currentTableFilter", "currentTableId");
             // 监听双击事件
             table.on('rowDouble(currentTableFilter)', function (obj) {
                 var pvalue = obj.data.F_Id;

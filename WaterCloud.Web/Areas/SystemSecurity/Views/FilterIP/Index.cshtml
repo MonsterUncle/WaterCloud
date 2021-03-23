@@ -19,7 +19,7 @@
             url: '/SystemSecurity/FilterIP/GetGridJson',
             page: false,
             cols: [[
-                { type: "checkbox", width: 50 },
+                { type: "checkbox", width: 50, fixed: 'left' },
                 {
                     field: 'F_Type', title: '策略类型', width: 120, sort: true,
                     templet: function (d) {
@@ -53,7 +53,7 @@
                     }
                 },
                 { field: 'F_Description', title: '备注', minWidth: 150 },
-                { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center" }
+                { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]]
         });
         // 监听搜索操作

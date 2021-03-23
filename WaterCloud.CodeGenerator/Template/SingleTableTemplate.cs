@@ -680,10 +680,10 @@ namespace WaterCloud.CodeGenerator
 
             #region js layui方法
             sb.AppendLine(" <script>");
-            sb.AppendLine("     layui.use(['jquery', 'form'," + (baseConfigModel.PageIndex.IsTree == true ? "'treeTable'" : "'table','commonTable'") + ", 'common','optimizeSelectOption'], function () {");
+            sb.AppendLine("     layui.use(['jquery', 'form','table','commonTable', 'common','optimizeSelectOption'], function () {");
             sb.AppendLine("         var $ = layui.jquery,");
             sb.AppendLine("             form = layui.form,");
-            sb.AppendLine("             " + (baseConfigModel.PageIndex.IsTree == true ? "treeTable = layui.treeTable," : "table = layui.table,commonTable = layui.commonTable"));
+            sb.AppendLine("             table = layui.table,commonTable = layui.commonTable");
             sb.AppendLine("             common = layui.common;");
             sb.AppendLine("         //权限控制(js是值传递)");
             sb.AppendLine("         currentTableBar.innerHTML = common.authorizeButtonNew(currentTableBar.innerHTML);");
@@ -691,53 +691,47 @@ namespace WaterCloud.CodeGenerator
             if (baseConfigModel.PageIndex.IsTree == true)
             {
                 sb.AppendLine("         var queryJson;");
-                sb.AppendLine("         var rendertree = common.rendertreetable({");
+                sb.AppendLine("         var options = {");
                 sb.AppendLine("             elem: '#currentTableId',");
                 sb.AppendLine("             treeIdName: '" + idColumn + "',");
+                sb.AppendLine("             treePidName: '" + baseConfigModel.PageIndex.ParentColum + "',");
                 sb.AppendLine("             //此处需修改 父Id修改");
                 if (baseConfigModel.PageIndex.IsSearch != true)
                 {
                     sb.AppendLine("             search:false,");
                 }
+                sb.AppendLine("             treeColIndex: 1,           // 折叠图标显示在第几列");
                 sb.AppendLine("             url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson'+(!queryJson ? '' : '?keyword=' + queryJson),"); sb.AppendLine("             sqlkey: '" + idColumn + "',//数据库主键");
-                sb.AppendLine("             tree: {");
-                sb.AppendLine("                 iconIndex: 1,           // 折叠图标显示在第几列");
-                sb.AppendLine("                 isPidData: true,        // 是否是id、pid形式数据");
-                sb.AppendLine($"                 idName: '{idColumn}',  // id字段名称");
-                sb.AppendLine($"                 pidName: '{baseConfigModel.PageIndex.ParentColum}',     // pid字段名称");
-                sb.AppendLine("                 arrowType: 'arrow2',");
-                sb.AppendLine("                 getIcon: 'ew-tree-icon-style2',");
-                sb.AppendLine("             },");
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 //此处需修改");
-                sb.AppendLine("                 { type: \"radio\", width: 50 },");
+                sb.AppendLine("                 { type: \"radio\", width: 50, fixed: 'left' },");
                 foreach (var item in baseConfigModel.PageIndex.ColumnList.Where(a => a.isShow == true))
                 {
-                    sb.AppendLine("                 { field: '" + item.field + "', title: '" + item.title + "', " + (item.isAotuWidth == true ? "minWidth" : "width") + ": " + item.width + (!string.IsNullOrEmpty(item.templet) ? ",templet:" + item.templet.Trim() : "") + " },");
+                    sb.AppendLine("                 { field: '" + item.field + "', title: '" + item.title + "', " + (item.isAotuWidth == true ? "minWidth" : "width") + ": " + item.width + (item.isFilter == true ? ",filter: " + (!string.IsNullOrEmpty(item.filterType) ? ("{type: '" + item.filterType + "'}") : "true") : "") + (!string.IsNullOrEmpty(item.templet) ? ",templet:" + item.templet.Trim() : "") + " },");
                 }
                 switch (buttonCount)
                 {
                     case 1:
-                        sb.AppendLine("                { title: '操作', width: 90, toolbar: '#currentTableBar', align: \"center\" }");
+                        sb.AppendLine("                { title: '操作', width: 90, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
                         break;
                     case 2:
-                        sb.AppendLine("                { title: '操作', width: 130, toolbar: '#currentTableBar', align: \"center\" }");
+                        sb.AppendLine("                { title: '操作', width: 130, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
                         break;
                     case 3:
-                        sb.AppendLine("                { title: '操作', width: 170, toolbar: '#currentTableBar', align: \"center\" }");
+                        sb.AppendLine("                { title: '操作', width: 170, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
                         break;
                     default:
                         break;
                 }
                 sb.AppendLine("             ]]");
                 sb.AppendLine("         });");
+                sb.AppendLine("         commonTable.reloadtabletree(options);");
                 sb.AppendLine("         // 监听搜索操作");
                 sb.AppendLine("         form.on('submit(data-search-btn)', function (data) {");
                 sb.AppendLine("             var queryJson = data.field.txt_keyword;");
                 sb.AppendLine("             //执行搜索重载");
-                sb.AppendLine("             common.reloadtreetable(rendertree, {");
-                sb.AppendLine("                 where: { keyword: queryJson },");
-                sb.AppendLine("             }); ");
+                sb.AppendLine("             options.where={ keyword: queryJson }");
+                sb.AppendLine("             commonTable.reloadtabletree(options);");
                 sb.AppendLine("             return false;");
                 sb.AppendLine("         });");
             }
@@ -757,12 +751,25 @@ namespace WaterCloud.CodeGenerator
                 }
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 //此处需修改");
-                sb.AppendLine("                 { type: \"checkbox\", width: 50 },");
+                sb.AppendLine("                 { type: \"checkbox\", width: 50, fixed: 'left' },");
                 foreach (var item in baseConfigModel.PageIndex.ColumnList.Where(a => a.isShow == true))
                 {
                     sb.AppendLine("                 { field: '" + item.field + "', title: '" + item.title + "', " + (item.isAotuWidth == true ? "minWidth" : "width") + ": " + item.width + (item.isSorted == true ? ",sort: true" : "") + (item.isFilter == true ? ",filter: " + (!string.IsNullOrEmpty(item.filterType) ? ("{type: '" + item.filterType + "'}") : "true") : "") + (!string.IsNullOrEmpty(item.templet) ? ",templet:" + item.templet : "") + " },");
                 }
-                sb.AppendLine("                { title: '操作', width: 170, toolbar: '#currentTableBar', align: \"center\" }");
+                switch (buttonCount)
+                {
+                    case 1:
+                        sb.AppendLine("                { title: '操作', width: 90, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
+                        break;
+                    case 2:
+                        sb.AppendLine("                { title: '操作', width: 130, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
+                        break;
+                    case 3:
+                        sb.AppendLine("                { title: '操作', width: 170, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
+                        break;
+                    default:
+                        break;
+                }
                 sb.AppendLine("             ]]");
                 sb.AppendLine("         });");
                 sb.AppendLine("         // 监听搜索操作");
@@ -785,7 +792,7 @@ namespace WaterCloud.CodeGenerator
             if (baseConfigModel.PageIndex.IsTree == true)
             {
                 sb.AppendLine("         var oneList = [\"NF-edit\", \"NF-details\", \"NF-delete\"];//选择1条显示");
-                sb.AppendLine("         common.treeTableRowClick(\"radio\", rendertree, \"currentTableId\", oneList);");
+                sb.AppendLine("         commonTable.tableRowClick(\"radio\", \"currentTableFilter\", \"currentTableId\", oneList);");
             }
             else
             {
@@ -794,16 +801,8 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("        commonTable.tableRowClick(\"checkbox\", \"currentTableFilter\", \"currentTableId\", oneList, morerList);");
             }
             sb.AppendLine("         //toolbar监听事件");
-            if (baseConfigModel.PageIndex.IsTree == true)
-            {
-                sb.AppendLine("         treeTable.on('toolbar(currentTableId)', function (obj) { ");
-                sb.AppendLine("             var data = rendertree.checkStatus(false);");
-            }
-            else
-            {
-                sb.AppendLine("         table.on('toolbar(currentTableFilter)', function (obj) { ");
-                sb.AppendLine("             var data = table.checkStatus('currentTableId').data;");
-            }
+            sb.AppendLine("         table.on('toolbar(currentTableFilter)', function (obj) { ");
+            sb.AppendLine("             var data = table.checkStatus('currentTableId').data;");
             sb.AppendLine("             var id = data.length > 0 ? data[0]." + idColumn + " : null;");
             sb.AppendLine("             if (obj.event === 'add') {  // 监听添加操作");
             sb.AppendLine("                 common.modalOpen({");
@@ -869,15 +868,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("           return false;");
             sb.AppendLine("       });");
             sb.AppendLine("        //toolrow监听事件");
-            if (baseConfigModel.PageIndex.IsTree == true)
-            {
-                sb.AppendLine("        treeTable.on('tool(currentTableId)', function (obj) {");
-            }
-            else
-            {
-                sb.AppendLine("        table.on('tool(currentTableFilter)', function (obj) {");
-            }
-
+            sb.AppendLine("        table.on('tool(currentTableFilter)', function (obj) {");
             sb.AppendLine("             var id = obj.data." + idColumn + ";");
             sb.AppendLine("            if (obj.event === 'delete') {");
             sb.AppendLine("                common.deleteForm({");

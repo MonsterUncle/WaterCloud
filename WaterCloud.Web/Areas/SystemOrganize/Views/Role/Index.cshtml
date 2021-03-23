@@ -11,6 +11,7 @@
         //加载数据
         wcLoading.close();
         //权限控制(js是值传递)
+        currentTableBar.innerHTML = common.authorizeButtonNew(currentTableBar.innerHTML);
         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
         commonTable.rendertable({
             elem: '#currentTableId',
@@ -20,7 +21,7 @@
                 clearFilter: false
             },
             cols: [[
-                { type: "radio", width: 50 },
+                { type: "radio", width: 50, fixed: 'left' },
                 { field: 'F_FullName', title: '角色名称', width: 200, sort: true, filter: true },
                 { field: 'F_EnCode', title: '角色编号', width: 200, sort: true, filter: true },
                 {
@@ -53,7 +54,7 @@
                     }
                 },
                 { field: 'F_Description', title: '备注', minWidth: 150, sort: true, filter: true },
-                { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center" }
+                { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center", fixed: 'right'}
             ]]
         });
         // 监听搜索操作

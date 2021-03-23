@@ -3,40 +3,34 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'treeTable', 'optimizeSelectOption', 'layer'], function () {
+    layui.use(['jquery', 'form', 'table', 'common', 'commonTable', 'optimizeSelectOption'], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
-            layer = layui.layer,
-            treeTable = layui.treeTable,
+            commonTable = layui.commonTable,
             common = layui.common;
         //加载数据
         wcLoading.close();
         //权限控制(js是值传递)
+        currentTableBar.innerHTML = common.authorizeButtonNew(currentTableBar.innerHTML);
         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-        var rendertree = common.rendertreetable({
+        var options = {
             elem: '#currentTableId',
             url: '/SystemOrganize/Organize/GetTreeGridJson',
-            tree: {
-                iconIndex: 1,           // 折叠图标显示在第几列
-                isPidData: true,        // 是否是id、pid形式数据
-                idName: 'F_Id',  // id字段名称
-                pidName: 'F_ParentId',     // pid字段名称
-                arrowType: 'arrow2',
-                getIcon: 'ew-tree-icon-style2',
-            },
+            treeIdName: 'F_Id',  // id字段名称
+            treePidName: 'F_ParentId',     // pid字段名称
             cols: [[
-                { type: "radio", width: 50 },
-                { field: 'F_FullName', title: '名称', width: 250 },
-                { field: 'F_EnCode', title: '编号', width: 200 },
+                { type: "radio", width: 50, fixed: 'left' },
+                { field: 'F_FullName', title: '名称', width: 250, filter: true },
+                { field: 'F_EnCode', title: '编号', width: 200, filter: true },
                 {
-                    field: 'F_CategoryId', title: '分类', width: 120,
+                    field: 'F_CategoryId', title: '分类', width: 120, filter: true,
                     templet: function (d) {
                         return top.clients.dataItems["OrganizeCategory"][d.F_CategoryId] == null ? "" : top.clients.dataItems["OrganizeCategory"][d.F_CategoryId];
                     }
                 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80,
+                    field: 'F_EnabledMark', title: '状态', width: 80, filter: true,
                     templet: function (d) {
                         if (d.F_EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
@@ -44,9 +38,9 @@
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                         }
                     }
-                }, 
+                },
                 {
-                    field: 'F_CreatorTime', title: '创建时间', width: 120,
+                    field: 'F_CreatorTime', title: '创建时间', width: 120,filter: { type: 'date[yyyy-MM-dd]' },
                     templet: function (d) {
                         if (d.F_CreatorTime) {
                             var time = new Date(d.F_CreatorTime);
@@ -55,32 +49,27 @@
                         return '';
                     }
                 },
-                { field: 'F_Description', title: '备注', minWidth: 150 },
-                { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center" }
+                { field: 'F_Description', title: '备注', minWidth: 150, filter: true },
+                { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]],
-            done: function () {
-                //展开全部
-                rendertree.expandAll(); 
-            }
-        });
-            
+        };
+        commonTable.rendertreetable(options);         
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             queryJson = data.field.txt_keyword;
-            common.reloadtreetable(rendertree, {
-                where: { keyword: queryJson },
-            }); 
+            options.where = { keyword: queryJson };
+            commonTable.rendertreetable(options); 
             duty = null;
             return false;
         });
         //行点击事件监听，控制按钮显示
         var oneList = ["NF-edit", "NF-details", "NF-delete"];//选择1条显示
-        common.treeTableRowClick("radio", rendertree, "currentTableId", oneList);
+        commonTable.tableRowClick("radio", "currentTableFilter", "currentTableId", oneList);
         /**
          * toolbar监听事件
          */
-        treeTable.on('toolbar(currentTableId)', function (obj) {
-            var data = rendertree.checkStatus(false);
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            var data = table.checkStatus('currentTableId').data;
             var keyValue = data.length > 0 ? data[0].F_Id : null;
             var duty = data.length > 0 ? data[0] : null;
             if (obj.event === 'add') {  // 监听操作
@@ -139,7 +128,7 @@
             }
             return false;
         });
-        treeTable.on('tool(currentTableId)', function (obj) {
+        table.on('tool(currentTableFilter)', function (obj) {
             var keyValue = obj.data.F_Id;
             if (obj.event === 'delete') {
                 common.deleteForm({

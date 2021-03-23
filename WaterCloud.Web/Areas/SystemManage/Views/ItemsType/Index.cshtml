@@ -3,29 +3,22 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'treeTable', 'layer', 'optimizeSelectOption'], function () {
+    layui.use(['jquery', 'form', 'table', 'common', 'commonTable', 'optimizeSelectOption'], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
-            layer = layui.layer,
-            treeTable = layui.treeTable,
+            commonTable = layui.commonTable,
             common = layui.common;
         //加载数据
         wcLoading.close();
         //权限控制(js是值传递)
         currentTableBar.innerHTML = common.authorizeButtonNew(currentTableBar.innerHTML);
         toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
-        var rendertree = common.rendertreetable({
+        var options = {
             elem: '#currentTableId',
             url: '/SystemManage/ItemsType/GetGridJson',
-            tree: {
-                iconIndex: 1,           // 折叠图标显示在第几列
-                isPidData: true,        // 是否是id、pid形式数据
-                idName: 'F_Id',  // id字段名称
-                pidName: 'F_ParentId',     // pid字段名称
-                arrowType: 'arrow2',
-                getIcon: 'ew-tree-icon-style2',
-            },
+            treeIdName: 'F_Id',  // id字段名称
+            treePidName: 'F_ParentId',     // pid字段名称
             cols: [[
                 { type: "radio", width: 50 },
                 { field: 'F_FullName', title: '名称', width: 200 },
@@ -54,11 +47,8 @@
                 { field: 'F_Description', title: '备注', minWidth: 150 },
                 { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center" }
             ]],
-            done: function () {
-                //展开全部
-                rendertree.expandAll();
-            }
-        });
+        };
+        commonTable.rendertreetable(options);
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             queryJson = data.field.txt_keyword;
@@ -70,12 +60,12 @@
         //行点击事件监听，控制按钮显示
         var oneList = ["NF-edit", "NF-details", "NF-delete"];//选择1条显示
         //var morerList = ["NF-delete"];//选中1条以上
-        common.treeTableRowClick("radio", rendertree, "currentTableId", oneList);
+        commonTable.tableRowClick("radio", "currentTableFilter", "currentTableId", oneList);
         /**
          * toolbar监听事件
          */
-        treeTable.on('toolbar(currentTableId)', function (obj) {
-            var data = rendertree.checkStatus(false);
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            var data = table.checkStatus('currentTableId').data;
             if (obj.event === 'add') {  // 监听操作
                 keyValue = data.length > 0 ? data[0].F_Id : null;
                 common.modalOpen({
@@ -134,7 +124,7 @@
             return false;
         });
         //toolbar监听事件
-        treeTable.on('tool(currentTableId)', function (obj) {
+        table.on('tool(currentTableFilter)', function (obj) {
             if (obj.event === 'delete') {
                 common.deleteForm({
                     url: "/SystemManage/ItemsType/DeleteForm",

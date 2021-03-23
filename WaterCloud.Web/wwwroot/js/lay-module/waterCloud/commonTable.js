@@ -4,10 +4,11 @@
  * version:1.6
  * description:watercloud 主体框架扩展
  */
-layui.define(["jquery", "layer", 'table', 'soulTable','common'], function (exports) {
+layui.define(["jquery", "layer", 'table', 'soulTable', 'common', 'tabletree'], function (exports) {
     var $ = layui.jquery,
         layer = layui.layer,     
         soulTable = layui.soulTable,       
+        tabletree = layui.tabletree,       
         common = layui.common,       
         table = layui.table;
 
@@ -179,6 +180,146 @@ layui.define(["jquery", "layer", 'table', 'soulTable','common'], function (expor
                     where: options.where
                 }, 'data');
             }
+            //关闭加载
+            layer.closeAll('loading');
+        },
+        //tabletree渲染封装里面有字段权限
+        rendertreetable: function (options) {
+            //样式不协调，先不加
+            var defaults = {
+                elem: '#currentTableId',//主键
+                toolbar: '#toolbarDemo',//工具栏
+                defaultToolbar: ['filter', 'exports', 'print'],//默认工具栏
+                search: true,//搜索按钮
+                loading: false,
+                treeIdName: 'F_Id',  // id字段名称
+                treePidName: 'F_ParentId',     // pid字段名称
+                filter:true,
+                treeColIndex: 1,
+                treeSpid: 0,
+                limit: 99999,//每页数据 默认
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['count'] //自定义分页布局
+                    , first: false //不显示首页
+                    , last: false //不显示尾页
+                },
+                height: 'full-60',
+                method: 'get',//请求方法
+                cellMinWidth: 60,//最小宽度
+                authorizeFields: true, // 字段权限开关
+                overflow: { // 默认所有表格都超出
+                    type: 'tips'
+                    , hoverTime: 300 // 悬停时间，单位ms, 悬停 hoverTime 后才会显示，默认为 0
+                    , color: 'black' // 字体颜色
+                    , bgColor: 'white' // 背景色
+                    , header: true, // 表头支持 overflow
+                    total: true // 合计行支持 overflow
+                },
+                contextmenu: {
+                    header: [
+                        {
+                            name: '复制',
+                            icon: 'layui-icon layui-icon-template',
+                            click: function (obj) {
+                                soulTable.copy(obj.text)
+                                layer.msg('复制成功！')
+                            }
+                        },
+                        {
+                            name: '导出excel',
+                            icon: 'layui-icon layui-icon-download-circle',
+                            click: function () {
+                                soulTable.export(this.id)
+                            }
+                        },
+                        {
+                            name: '重载表格',
+                            icon: 'layui-icon layui-icon-refresh-1',
+                            click: function () {
+                                table.reload(this.id)
+                            }
+                        }
+                    ],
+                    // 表格内容右键菜单配置
+                    body: [
+                        {
+                            name: '复制',
+                            icon: 'layui-icon layui-icon-template',
+                            click: function (obj) {
+                                soulTable.copy(obj.text)
+                                layer.msg('复制成功！')
+                            }
+                        }
+                    ],
+                    // 合计栏右键菜单配置
+                    total: [{
+                        name: '复制',
+                        icon: 'layui-icon layui-icon-template',
+                        click: function (obj) {
+                            soulTable.copy(obj.text)
+                            layer.msg('复制成功！')
+                        }
+                    }]
+                },
+                excel: {
+                    filename: '表格信息' + new Date().formatDate() + '.xlsx',
+                },
+                parseData: function (res) { //res 即为原始返回的数据
+                    return {
+                        "code": res.state, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.count, //解析数据长度
+                        "data": res.data //解析数据列表
+                    };
+                }
+            };
+            var doneCallback = options.done;
+            var options = $.extend(defaults, options);
+            if (document.body.clientWidth < 500 && !!options.defaultToolbar) {
+                for (var i = 0; i < options.defaultToolbar.length; i++) {
+                    if (options.defaultToolbar[i] == "print") {
+                        options.defaultToolbar.splice(i, 1);
+                    }
+                }
+            }
+            //搜索框按钮
+            if (options.search) {
+                options.defaultToolbar = !options.defaultToolbar ? [] : options.defaultToolbar;
+                options.defaultToolbar.push({
+                    title: '搜索',
+                    layEvent: 'TABLE_SEARCH',
+                    icon: 'layui-icon-search'
+                });
+            }
+            //ie缓存问题
+            options.url = common.urlAddTime(options.url);
+            //字段权限
+            if (options.authorizeFields) {
+                options.cols = common.tableAuthorizeFields(options.cols);
+            }
+            options.done = function (res, curr, count) {
+                //关闭加载
+                //layer.closeAll('loading');
+                if (doneCallback) {
+                    doneCallback(res, curr, count);
+                }
+                table.resize();
+            };
+            tabletree.render(options);
+            return options;
+        },
+        //treetable刷新
+        reloadtreetable: function (tree, options) {
+            var loading = layer.load(0, { shade: false });
+            var defaults = {
+                where: {}
+            };
+            var options = $.extend(defaults, options);
+            options.where.time = new Date().Format("yyyy-MM-dd hh:mm:ss");
+            //执行搜索重载
+            tabletree.reload({
+                where: options.where
+            });
             //关闭加载
             layer.closeAll('loading');
         },

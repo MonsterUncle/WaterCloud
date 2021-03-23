@@ -49,7 +49,7 @@
             url: '/FlowManage/Flowinstance/GetGridJson',
             where: { type: 'todo' },
             cols: [[
-                { type: "radio", width: 50 },
+                { type: "radio", width: 50, fixed: 'left' },
                 {
                     field: 'F_IsFinish', title: '流程状态', width: 120, sort: true, filter: true,
                     templet: function (d) {
@@ -82,7 +82,7 @@
                     }
                 },
                 { field: 'F_CreatorUserName', title: '创建人', width: 120, sort: true, filter: true },
-                { title: '操作', width: 130, toolbar: '#currentTableBar', align: "center" }
+                { title: '操作', width: 130, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]]
         });
         // 监听搜索操作

@@ -40,7 +40,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             return Content(treeList.TreeSelectJson());
         }
-        [HttpGet]
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetTreeGridJson(string keyword)
         {
