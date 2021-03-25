@@ -17,6 +17,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		limit: 0, //每页数量默认是每行数量的双倍
 		linenum: 4, //每行数量 2,3,4,6
 		currentPage: 1,//当前页
+		data:[],       //静态数据
 		limits:[],     //页码
 		page: true, //是否分页
 		layout: ['count', 'prev', 'page', 'next','limit', 'skip'],//分页控件
@@ -65,7 +66,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		$(option.elem).html(html);
 		// 根 据 请 求 方 式 获 取 数 据
 		html = "";
-		if (url != null) {
+		if (!!url) {
 			if (url.indexOf("?") >= 0) {
 				url = url + '&v=1.0.0';
 			}
@@ -84,27 +85,41 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 			var data = getData(url);
 			data = initData(data, option);
 			if (data.code != option.response.statusCode) {
-				html = "<p>" + data.msg + "</p>";
-			}
-			else {
+				option.data = [];
+				option.count = 0;
+            } else {
 				option.data = data.data;
-				option.count = data.count;
-				// 根据结果进行相应结构的创建
-				if (!!option.data && option.data.length > 0) {
-					html = createComponent(option.elem.substring(1),option.linenum,data.data);
-					html += "<div id='cardpage'></div>";
-				}
-				else {
-					html = "<p>没有数据</p>";
-				}
+				option.count = option.data.length;
 			}
+
+		}
+		else {
+			if (!option.alldata) {
+				option.alldata = option.data;
+            }
+			if (option.page) {
+				var data = [];
+				option.count = option.alldata.length;
+				for (var i = (option.currentPage - 1) * option.limit; i < option.currentPage * option.limit; i++) {
+					data.push(option.alldata[i]);
+				}
+				option.data = data;
+			}
+		}
+		// 根据结果进行相应结构的创建
+		if (!!option.data && option.data.length > 0) {
+			html = createComponent(option.elem.substring(1), option.linenum, option.data);
+			html += "<div id='cardpage'></div>";
+		}
+		else {
+			html = "<p>没有数据</p>";
 		}
 		$(option.elem).html(html);
 		if (option.page) {
 			// 初始化分页组件
 			laypage.render({
 				elem: 'cardpage'
-				, count: option.count, limit: option.limit, limits:option.limits, curr: option.currentPage
+				, count: option.count, limit: option.limit, limits: option.limits, curr: option.currentPage
 				, layout: option.layout
 				, jump: function (obj, first) {
 					option.limit = obj.limit;
@@ -114,7 +129,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 					}
 				}
 			});
-        }
+		}
 	}
 	card.prototype.reload = function (opt) {
 		this.initOptions(this.option ? $.extend(true, this.option, opt) : opt);
@@ -197,7 +212,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		reload: function (id, opt) {
 			_instances[id].reload(opt);
 		},
-		/* 获取选中参数 */
+		/* 获取选中数据 */
 		getChecked: function (id) {
 			var option = _instances[id].option;
 			var data = option.checkedItem;
@@ -208,6 +223,21 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 			item[option.request.remarkName] = data.remark;
 			item[option.request.timeName] = data.time;
 			return item;
+		},
+		/* 获取表格数据 */
+		getAllData: function (id) {
+			var option = _instances[id].option;
+			var data = [];
+			for (var i = 0; i < option.data.length; i++) {
+				var item = {};
+				item[option.request.idName] = data.id;
+				item[option.request.imageName] = data.image;
+				item[option.request.titleName] = data.title;
+				item[option.request.remarkName] = data.remark;
+				item[option.request.timeName] = data.time;
+				data.push(item);
+            }
+			return data;
 		},
 	}
 	exports(MOD_NAME, tt);
