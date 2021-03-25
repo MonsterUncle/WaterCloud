@@ -66,6 +66,12 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		// 根 据 请 求 方 式 获 取 数 据
 		html = "";
 		if (url != null) {
+			if (url.indexOf("?") >= 0) {
+				url = url + '&v=1.0.0';
+			}
+			else {
+				url = url + '?v=1.0.0';
+			}
 			if (!!option.page) {
 				url = url + '&' + option.request.limitName + '=' + option.limit;
 				url = url + '&' + option.request.pageName + '=' + option.currentPage;

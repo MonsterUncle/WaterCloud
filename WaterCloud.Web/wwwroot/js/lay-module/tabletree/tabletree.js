@@ -86,7 +86,7 @@ layui.define(['layer', 'table','soulTable'], function (exports) {
                     iconHtml += '<span class="treeTable-empty"></span>';
                 }
                 if (isDir) {
-                    iconHtml += '<i class="layui-icon layui-icon-triangle-d"></i><i class="layui-icon tree-icon-folder"></i>';
+                    iconHtml += '<i class="layui-icon tree-table-arrow"></i><i class="layui-icon tree-icon-folder"></i>';
                 } else {
                     iconHtml += '<i class="layui-icon tree-icon-file"></i>';
                 }
