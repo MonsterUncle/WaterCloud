@@ -47,4 +47,5 @@ layui.config({
     cardTable: 'cardTable/cardTable',//卡片表格
     cron: 'cron/cron',//cron表达式
     tabletree: 'tabletree/tabletree',//基于layui的树形扩展
+    mobileTable: 'mobileTable/mobileTable',
 });
