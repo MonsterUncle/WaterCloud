@@ -154,7 +154,7 @@ namespace WaterCloud.Service.SystemOrganize
                     item.ErrorMsg = "编号不存在";
                     continue;
                 }
-                else if (repository.IQueryable(a => a.F_EnCode == item.F_EnCode).Count() > 0 || list.Where(a => a.F_EnCode == item.F_EnCode).Count() > 2)
+                else if (repository.IQueryable(a => a.F_EnCode == item.F_EnCode).Count() > 0 || list.Where(a => a.F_EnCode == item.F_EnCode).Count() > 1)
                 {
                     str.Add("编号重复");
                     item.F_EnabledMark = false;

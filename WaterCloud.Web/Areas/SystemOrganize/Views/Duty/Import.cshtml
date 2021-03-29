@@ -24,6 +24,7 @@
             form = layui.form,
             upload = layui.upload,
             commonTable = layui.commonTable,
+            soulTable = layui.soulTable,
             common = layui.common;
         var dataJson = [];
         commonTable.rendertable({
@@ -57,6 +58,7 @@
             ]]
         });
         //普通图片上传
+        var index;
         var uploadInst = upload.render({
             elem: '#import'
             , url: "/SystemOrganize/Duty/CheckFile" //改成您自己的上传接口
@@ -70,11 +72,11 @@
                 }
                 // 2、动态添加的其它参数
                 //this.data.type = outerType
-            }
-            , done: function (res) {
-                var index = parent.layer.load(0, {
+                index = parent.layer.load(0, {
                     shade: [0.5, '#000'], //0.1透明度的背景
                 });
+            }
+            , done: function (res) {
                 //如果上传失败
                 if (res.code > 0) {
                     //失败状态，并实现重传
@@ -96,6 +98,7 @@
             }
             , error: function () {
                 //演示失败状态，并实现重传
+                parent.layer.close(index);
                 var demoText = $('#demoText');
                 demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
                 demoText.find('.demo-reload').on('click', function () {
@@ -149,7 +152,7 @@
                             shade: [0.5, '#000'], //0.1透明度的背景
                         });
                         try {
-                            var cachedata = table.cache.currentTableId;
+                            var cachedata = soulTable.cache['currentTableId'];
                             for (var i = 0; i < data.length; i++) {
                                 for (let j = cachedata.length - 1; j >= 0; j--) {
                                     if (cachedata[j].F_Id === data[i].F_Id) {
