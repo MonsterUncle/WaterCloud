@@ -7,12 +7,13 @@ layui.define(['layer', 'table','soulTable'], function (exports) {
     var tabletree = {
         // 渲染树形表格
         render: function (param) {
+            var id = param.elem.substring(1);
             var isclick = true;
-            if (!!_instances[param.elem.substring(1)]) {
+            if (!!_instances[id]) {
                 isclick = false;
             }
             else {
-                _instances[param.elem.substring(1)] = param;
+                _instances[id] = param;
             }
             // 检查参数
             if (!tabletree.checkParam(param)) {
@@ -26,7 +27,6 @@ layui.define(['layer', 'table','soulTable'], function (exports) {
                     tabletree.init(param, res.data);
                 });
             }
-            var id = param.elem.substring(1);
             if (isclick) {
                 // 给图标列绑定事件
                 $('body').on('click', '.treeTable .treeTable-icon', function () {
@@ -38,6 +38,7 @@ layui.define(['layer', 'table','soulTable'], function (exports) {
                     }
 
                     $('div[lay-id=' + id + ']').find('.layui-table-main tbody tr').each(function () {
+
 
                     });
                 });
