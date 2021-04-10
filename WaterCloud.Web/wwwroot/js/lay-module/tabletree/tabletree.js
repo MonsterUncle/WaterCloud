@@ -7,6 +7,13 @@ layui.define(['layer', 'table','soulTable'], function (exports) {
     var tabletree = {
         // 渲染树形表格
         render: function (param) {
+            var isclick = true;
+            if (!!_instances[param.elem.substring(1)]) {
+                isclick = false;
+            }
+            else {
+                _instances[param.elem.substring(1)] = param;
+            }
             // 检查参数
             if (!tabletree.checkParam(param)) {
                 return;
@@ -20,19 +27,21 @@ layui.define(['layer', 'table','soulTable'], function (exports) {
                 });
             }
             var id = param.elem.substring(1);
-            // 给图标列绑定事件
-            $('body').on('click', '.treeTable .treeTable-icon', function () {
-                var treeLinkage = $(this).parents('.treeTable').attr('treeLinkage');
-                if ('true' == treeLinkage) {
-                    tabletree.toggleRows($(this), true, id);
-                } else {
-                    tabletree.toggleRows($(this), false, id);
-                }
+            if (isclick) {
+                // 给图标列绑定事件
+                $('body').on('click', '.treeTable .treeTable-icon', function () {
+                    var treeLinkage = $(this).parents('.treeTable').attr('treeLinkage');
+                    if ('true' == treeLinkage) {
+                        tabletree.toggleRows($(this), true, id);
+                    } else {
+                        tabletree.toggleRows($(this), false, id);
+                    }
 
-                $('div[lay-id=' + id +']').find('.layui-table-main tbody tr').each(function () {
+                    $('div[lay-id=' + id + ']').find('.layui-table-main tbody tr').each(function () {
 
+                    });
                 });
-            });
+            }
         },
         // 渲染表格
         init: function (param, data) {
