@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
@@ -55,6 +55,7 @@
                     common.submitForm({
                         url: '/SystemOrganize/SystemSet/SetSubmitForm',
                         param: postData,
+                        close: false,
                         success: function () {
                             common.parentreload('data-search-btn');
                         }
