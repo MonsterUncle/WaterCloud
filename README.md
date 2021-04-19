@@ -33,7 +33,7 @@
 
 - .net5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net5
 - .netcore3.1版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/core3.1
-- .net5版项目演示地址：http://www.watercloud.ltd/  （账号：admin 密码：0000，数据库2个小时还原一次）
+- .net5版项目演示地址：http://106.75.169.226:5000/  （账号：admin 密码：0000，数据库2个小时还原一次）
 - .net5版文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
 
 #### 版本
