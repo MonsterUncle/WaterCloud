@@ -233,7 +233,7 @@ namespace WaterCloud.CodeGenerator
                     }
                 }
                 sb.AppendLine("            }");
-                sb.AppendLine("            return data." + (string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum) ? "" : $"Where(t => t.{baseConfigModel.PageIndex.DeleteColum} == false).") + (baseConfigModel.PageIndex.IsAsc == true ? "OrderBy" : "OrderByDesc") + $"(t => t.{baseConfigModel.PageIndex.SortColumn}).ToList();");
+                sb.AppendLine("            return data."+(string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum)?"": $"Where(t => t.{baseConfigModel.PageIndex.DeleteColum} == false).") + (baseConfigModel.PageIndex.IsAsc == true ? "OrderBy" : "OrderByDesc") + $"(t => t.{baseConfigModel.PageIndex.SortColumn}).ToList();");
             }
             else
             {
@@ -342,7 +342,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        #region 提交数据");
-            sb.AppendLine("        public async Task SubmitForm(" + baseConfigModel.FileConfig.EntityName + $" entity, {idType} keyValue" + (idType == "int" || idType == "long" ? "=0)" : ")"));
+            sb.AppendLine("        public async Task SubmitForm(" + baseConfigModel.FileConfig.EntityName + $" entity, {idType} keyValue"+ (idType == "int" || idType == "long"?"=0)":")"));
             sb.AppendLine("        {");
             if (idType == "int" || idType == "long")
             {
@@ -354,13 +354,13 @@ namespace WaterCloud.CodeGenerator
             }
             sb.AppendLine("            {");
             sb.AppendLine("                    //初始值添加");
-            if (!string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum))
-            {
+			if (!string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum))
+			{
                 sb.AppendLine($"                entity.{baseConfigModel.PageIndex.DeleteColum} = false;");
             }
             foreach (var item in baseConfigModel.PageIndex.ColumnList)
             {
-                if (item.field != idColumn && item.field != baseConfigModel.PageIndex.DeleteColum && item.field != baseConfigModel.PageIndex.CreateColum && !string.IsNullOrEmpty(item.value))
+                if (item.field != idColumn&& item.field != baseConfigModel.PageIndex.DeleteColum && item.field != baseConfigModel.PageIndex.CreateColum && !string.IsNullOrEmpty(item.value))
                 {
                     sb.AppendLine($"                entity.{item.field} = {item.value};");
                 }
@@ -1009,13 +1009,13 @@ namespace WaterCloud.CodeGenerator
                             {
                                 sb.AppendLine("                <div class=\"layui-form-item\">");
                             }
-                            sb.AppendLine("                    <div class=\"layui-col-md6 layui-hide\">");
+                            sb.AppendLine("                    <div class=\"layui-col-md6 layui-col-sm6 layui-hide\">");
                             sb.AppendLine("                        <label class=\"layui-form-label required\">" + item.Value + "</label>");
                             sb.AppendLine("                        <div class=\"layui-input-block\">");
                             sb.AppendLine("                            <input type=\"text\" id=\"" + item.Key + "\" name=\"" + item.Key + "\" autocomplete=\"off\" lay-verify=\"required\" placeholder=\"请输入\" class=\"layui-input\">");
                             sb.AppendLine("                        </div>");
                             sb.AppendLine("                    </div>");
-                            if (i % 2 == 0)
+                            if (i % 2 == 0 )
                             {
                                 sb.AppendLine("                </div>");
                             }
@@ -1126,7 +1126,7 @@ namespace WaterCloud.CodeGenerator
                             {
                                 sb.AppendLine("                <div class=\"layui-form-item\">");
                             }
-                            sb.AppendLine("                    <div class=\"layui-col-md6 layui-hide\">");
+                            sb.AppendLine("                    <div class=\"layui-col-md6 layui-col-sm6 layui-hide\">");
                             sb.AppendLine("                        <label class=\"layui-form-label required\">" + item.Value + "</label>");
                             sb.AppendLine("                        <div class=\"layui-input-block\">");
                             sb.AppendLine("                            <input type=\"text\" id=\"" + item.Key + "\" name=\"" + item.Key + "\" lay-verify=\"required\" class=\"layui-input\">");
