@@ -2,7 +2,7 @@
 using Chloe.MySql;
 using Chloe.Oracle;
 using Chloe.SqlServer;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using WaterCloud.Code;
 
 namespace WaterCloud.DataBase
@@ -22,7 +22,7 @@ namespace WaterCloud.DataBase
             {
                 case Define.DBTYPE_SQLSERVER:
                     SqlConnection.ClearAllPools();
-                    context = new MsSqlContext(ConnectStr);
+                    context = new MsSqlContext(new MSSqlConnectionFactory(ConnectStr));
                     context.Session.CommandTimeout = int.Parse(DBCommandTimeout);
                     break;
                 case Define.DBTYPE_MYSQL:
