@@ -20,7 +20,7 @@
             treeIdName: 'F_Id',  // id字段名称
             treePidName: 'F_ParentId',     // pid字段名称
             cols: [[
-                { type: "radio", width: 50, fixed: 'left' },
+                { type: "radio", width: 50, fixed: 'left'  },
                 { field: 'F_FullName', title: '名称', width: 200 },
                 { field: 'F_EnCode', title: '编号', width: 120 },
                 { field: 'F_SortCode', title: '排序', width: 60 },
@@ -45,7 +45,7 @@
                     }
                 },
                 { field: 'F_Description', title: '备注', minWidth: 150 },
-                { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center", fixed: 'right'}
+                { title: '操作', width: 170, toolbar: '#currentTableBar', align: "center", fixed: 'right'  }
             ]],
         };
         commonTable.rendertreetable(options);
@@ -69,7 +69,7 @@
                 keyValue = data.length > 0 ? data[0].F_Id : null;
                 common.modalOpen({
                     title: "添加分类",
-                    url: "/SystemManage/ItemsType/Form?event=add&keyValue=" + keyValue,
+                    url: "/SystemManage/ItemsType/Form?event=add&keyValue=" + (!!keyValue ? keyValue : ""),
                     width: "450px",
                     height: "380px",
                 });
