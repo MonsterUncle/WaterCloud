@@ -34,7 +34,7 @@
                     <div class="layui-form-item">
                         <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                         <div class="code">
-                            <input id="captcha" type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha">
+                            <input id="captcha" type="text" name="captcha" lay-verify="captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha">
                             <canvas id="canvas" width="100" height="43"></canvas>
                         </div>
                     </div>
@@ -157,16 +157,16 @@
                         layer.msg('密码不能为空');
                         return false;
                     }
-                    var num = show_num.join("");
-                    if (data.captcha == '') {
-                        layer.msg('验证码不能为空');
-                        return false;
-                    }
-                    else if (num != data.captcha.toLowerCase()) {
-                        layer.msg('验证码错误');
-                        draw(show_num)
-                        return false;
-                    }
+                    //var num = show_num.join("");
+                    //if (data.captcha == '') {
+                    //    layer.msg('验证码不能为空');
+                    //    return false;
+                    //}
+                    //else if (num != data.captcha.toLowerCase()) {
+                    //    layer.msg('验证码错误');
+                    //    draw(show_num)
+                    //    return false;
+                    //}
                     $("#login_button").empty();
                     $("#login_button").attr('disabled', 'disabled').html("loading...");
                     $.ajax({

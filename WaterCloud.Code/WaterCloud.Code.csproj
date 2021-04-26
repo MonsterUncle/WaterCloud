@@ -50,4 +50,13 @@
     <PackageReference Include="ZKWeb.System.Drawing" Version="4.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.Exchange.WebServices">
+      <HintPath>..\Microsoft.Exchange.WebServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.DirectoryServices">
+      <HintPath>..\System.DirectoryServices.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
