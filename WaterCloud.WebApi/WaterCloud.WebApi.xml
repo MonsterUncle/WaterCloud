@@ -4,22 +4,6 @@
         <name>WaterCloud.WebApi</name>
     </assembly>
     <members>
-        <member name="T:WaterCloud.WebApi.Controllers.SendEmailsController">
-            <summary>
-            邮件发送 Create by BanNian
-            </summary>
-        </member>
-        <member name="M:WaterCloud.WebApi.Controllers.SendEmailsController.SendGYDJ(System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            工艺点检异常邮件推送
-            </summary>
-            <param name="AssetID">资产编号</param>
-            <param name="AssetName">资产名称</param>
-            <param name="TrueName">操作人</param>
-            <param name="UserDep">部门</param>
-            <param name="sj">发送人</param>
-            <returns></returns>
-        </member>
         <member name="T:WaterCloud.WebApi.Controllers.TestController">
             <summary>
             测试文件

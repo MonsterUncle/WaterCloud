@@ -18,13 +18,4 @@
     <ProjectReference Include="..\WaterCloud.Domain\WaterCloud.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="EPPlus">
-      <HintPath>..\EPPlus.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Exchange.WebServices">
-      <HintPath>..\Microsoft.Exchange.WebServices.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
