@@ -39,14 +39,14 @@ namespace WaterCloud.DataBase
                 }
                 else if (property.PropertyType == typeof(Nullable<int>))
                 {
-                    int i;
+                    int? i;
                     try
                     {
                         i = int.Parse(filterObj.Value);
                     }
                     catch (Exception)
                     {
-                        i = -99999;
+                        i = null;
                     }
                     right = Expression.Constant(string.IsNullOrEmpty(filterObj.Value) ? null : i, typeof(int?));
                 }
@@ -349,14 +349,14 @@ namespace WaterCloud.DataBase
                 }
                 else if (property.PropertyType == typeof(Nullable<int>))
                 {
-                    int i;
+                    int? i;
                     try
                     {
                         i = int.Parse(filterObj.value);
                     }
                     catch (Exception)
                     {
-                        i = -99999;
+                        i = null;
                     }
                     right = Expression.Constant(string.IsNullOrEmpty(filterObj.value) ? null : i, typeof(int?));
                 }
