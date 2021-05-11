@@ -2,12 +2,11 @@
 using Chloe.MySql;
 using Chloe.Oracle;
 using Chloe.SqlServer;
-using Microsoft.Data.SqlClient;
 using WaterCloud.Code;
 
 namespace WaterCloud.DataBase
 {
-    public class DBContexHelper
+	public class DBContexHelper
     {
         private static string dbType = GlobalContext.SystemConfig.DBProvider;
         private static string dbConnectionString = GlobalContext.SystemConfig.DBConnectionString;
