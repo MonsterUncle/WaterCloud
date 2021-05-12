@@ -70,7 +70,7 @@ namespace WaterCloud.Service.SystemManage
                 {
                     F_Id = a.F_Id.SelectAll(),
                     F_OrganizeName = b.F_FullName,
-                });
+                }).MergeTable();
             return query;
         }
         public async Task<FormEntity> GetForm(string keyValue)

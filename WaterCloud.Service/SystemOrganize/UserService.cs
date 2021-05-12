@@ -127,7 +127,7 @@ namespace WaterCloud.Service.SystemOrganize
                     F_WxOpenId=a.F_WxOpenId,
                     F_DepartmentName="",
                     F_RoleName=""
-                });
+                }).MergeTable();
             return query;
         }
         public async Task SubmitUserForm(UserEntity userEntity)

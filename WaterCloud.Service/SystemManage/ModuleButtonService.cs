@@ -176,7 +176,7 @@ namespace WaterCloud.Service.SystemManage
                 F_ParentId = a.F_ParentId,
                 F_SortCode = a.F_SortCode,
                 F_Split = a.F_Split,
-            });
+            }).MergeTable();
             if (!string.IsNullOrEmpty(moduleId))
             {
                 query = query.Where(a => a.F_ModuleId == moduleId);

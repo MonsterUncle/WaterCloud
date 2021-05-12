@@ -90,7 +90,7 @@ namespace WaterCloud.Service.FileManage
                 {
                     F_Id = a.F_Id.SelectAll(),
                     F_CreatorUserName =b.F_RealName,   
-                });
+                }).MergeTable();
             return query;
         }
         public async Task<UploadfileEntity> GetForm(string keyValue)

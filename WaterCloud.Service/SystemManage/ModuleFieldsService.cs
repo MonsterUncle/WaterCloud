@@ -142,7 +142,7 @@ namespace WaterCloud.Service.SystemManage
                 F_LastModifyUserId = a.F_LastModifyUserId,
                 F_ModuleId = b.F_UrlAddress,
                 F_IsPublic = a.F_IsPublic
-            });
+            }).MergeTable();
             if (!string.IsNullOrEmpty(moduleId))
             {
                 query = query.Where(a => a.F_ModuleId == moduleId);

@@ -56,7 +56,7 @@ namespace WaterCloud.Service.ContentManage
             {
                 F_Id = a.F_Id.SelectAll(),
                 F_CategoryName = b.F_FullName,
-            });
+            }).MergeTable();
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query.Where(a => a.F_Title.Contains(keyword));
@@ -84,7 +84,7 @@ namespace WaterCloud.Service.ContentManage
             {
                 F_Id = a.F_Id.SelectAll(),
                 F_CategoryName = b.F_FullName,
-            });
+            }).MergeTable();
             if (!string.IsNullOrEmpty(keyValue))
             {
                 query = query.Where(a => a.F_Id == keyValue);

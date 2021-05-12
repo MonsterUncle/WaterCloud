@@ -105,7 +105,7 @@ namespace WaterCloud.Service.SystemOrganize
                     F_SortCode=a.F_SortCode,
                     F_Type=a.F_Type,
                     F_CompanyName = b.F_CompanyName,
-                });
+                }).MergeTable();
             return query;
         }
         public async Task DeleteForm(string keyValue)

@@ -86,7 +86,7 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     F_Id = a.F_Id.SelectAll(),
                     F_CompanyName = b.F_CompanyName,
-                });
+                }).MergeTable();
             return query;
         }
         public async Task DeleteForm(string keyValue)
