@@ -11,7 +11,7 @@
 ![](https://img.shields.io/badge/release-2.8.0-red)
 
 ![](https://img.shields.io/badge/.net-5.0.0-blue)
-![](https://img.shields.io/badge/Chloe-4.12.0-blue)
+![](https://img.shields.io/badge/SqlSugar-5.0.2.9.0-blue)
 ![](https://img.shields.io/badge/layui-2.5.7-blue)
 
 ![](https://img.shields.io/badge/Quartz-3.2.4-brightgreen)
@@ -25,7 +25,7 @@
 #### 介绍
 
 - 请勿用于违反我国法律的web平台、如诈骗等非法平台网站。
-- WaterCloud是一套基于ASP.NET 5.0  MVC+Chloe+LayUI的框架，源代码完全开源，可以帮助你解决C#.NET项目的重复工作！
+- WaterCloud是一套基于ASP.NET 5.0  MVC+SqlSugar+LayUI的框架，源代码完全开源，可以帮助你解决C#.NET项目的重复工作！
 - 采用主流框架，容易上手，简单易学，学习成本低。
 - 可完全实现二次开发让开发更多关注业务逻辑。既能快速提高开发效率，帮助公司节省人力成本，同时又不失灵活性。
 - 支持SQLServer、MySQL、Oracle 等多数据库类型。模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。
@@ -73,7 +73,7 @@
 
 - 核心框架：ASP.NET 5.0、WEB API
 - 定时任务：QuartZ，实现web控制(WaterCloud.Service/AutoJob/Job下新建job，web端创建定时任务)
-- 持久层框架：Chloe（支持多种数据库，复杂查询操作）
+- 持久层框架：SqlSugar（支持多种数据库，复杂查询操作）
 - 安全支持：过滤器、Sql注入、请求伪造
 - 服务端验证：实体模型验证
 - 缓存框架：Redis/Memory（单点登录控制）
@@ -88,6 +88,7 @@
 2. Asp.net 5.0；
 3. Mysql或者SQLSERVER2005及以上版本，database文件夹下有sql文件可执行；
 4. 请使用VS2019及以上版本打开解决方案。
+5. sqlsugar sys_systemset新增字段F_DbNumber varchar(50)。
 
 #### 使用说明
 
