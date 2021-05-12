@@ -1,8 +1,9 @@
-﻿using Chloe;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using SqlSugar;
 using System;
 using System.Threading.Tasks;
 using WaterCloud.Code;
+using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service.SystemSecurity;
 
@@ -12,10 +13,10 @@ namespace WaterCloud.Service.AutoJob
     {
         private IWebHostEnvironment _hostingEnvironment;
         private ServerStateService _server;
-        public SaveServerStateJob(IDbContext context)
+        public SaveServerStateJob(IUnitOfWork unitOfWork)
         {
             _hostingEnvironment = GlobalContext.HostingEnvironment;
-            _server = new ServerStateService(context);
+            _server = new ServerStateService(unitOfWork.GetDbClient());
          }
         public async Task<AlwaysResult> Start()
         {

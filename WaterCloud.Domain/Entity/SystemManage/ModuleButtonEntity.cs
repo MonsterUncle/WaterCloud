@@ -4,16 +4,16 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using Chloe.Annotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations;
 using System;
 
 namespace WaterCloud.Domain.SystemManage
 {
-    [TableAttribute("sys_modulebutton")]
+    [SugarTable("sys_modulebutton")]
     public class ModuleButtonEntity : IEntity<ModuleButtonEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         [Required(ErrorMessage = "模块不能为空")]
         public string F_ModuleId { get; set; }

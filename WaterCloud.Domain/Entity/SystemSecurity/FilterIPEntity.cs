@@ -4,17 +4,17 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using Chloe.Annotations;
+using SqlSugar;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace WaterCloud.Domain.SystemSecurity
 {
-    [TableAttribute("sys_filterip")]
+    [SugarTable("sys_filterip")]
 
     public class FilterIPEntity : IEntity<FilterIPEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         [Required(ErrorMessage = "类型不能为空")]
         public bool? F_Type { get; set; }

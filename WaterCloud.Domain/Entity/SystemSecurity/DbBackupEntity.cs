@@ -4,16 +4,16 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using Chloe.Annotations;
+using SqlSugar;
 using System;
 
 namespace WaterCloud.Domain.SystemSecurity
 {
-    [TableAttribute("sys_dbbackup")]
+    [SugarTable("sys_dbbackup")]
 
     public class DbBackupEntity : ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         public string F_BackupType { get; set; }
         public string F_DbName { get; set; }

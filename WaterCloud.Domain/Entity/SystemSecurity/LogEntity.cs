@@ -4,16 +4,16 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using Chloe.Annotations;
+using SqlSugar;
 using System;
 
 namespace WaterCloud.Domain.SystemSecurity
 {
-    [TableAttribute("sys_log")]
+    [SugarTable("sys_log")]
 
     public class LogEntity : IEntity<LogEntity>, ICreationAudited
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         public DateTime? F_Date { get; set; }
         public string F_Account { get; set; }

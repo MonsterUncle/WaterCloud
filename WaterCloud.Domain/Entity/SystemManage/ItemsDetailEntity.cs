@@ -6,14 +6,14 @@
 *********************************************************************************/
 using System;
 using System.ComponentModel.DataAnnotations;
-using Chloe.Annotations;
+using SqlSugar;
 
 namespace WaterCloud.Domain.SystemManage
 {
-    [TableAttribute("sys_itemsdetail")]
+    [SugarTable("sys_itemsdetail")]
     public class ItemsDetailEntity : IEntity<ItemsDetailEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         [Required(ErrorMessage = "分类不能为空")]
         public string F_ItemId { get; set; }

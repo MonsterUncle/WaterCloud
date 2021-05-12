@@ -38,7 +38,7 @@ namespace WaterCloud.Code
                 var columnPropertyList = new List<PropertyInfo>();
                 foreach (var column in columns)
                 {
-                    var columnProperty = properties.Where(p => p.Name == column).FirstOrDefault();
+                    var columnProperty = properties.Where(p => p.Name == column).First();
                     if (columnProperty != null)
                     {
                         columnPropertyList.Add(columnProperty);

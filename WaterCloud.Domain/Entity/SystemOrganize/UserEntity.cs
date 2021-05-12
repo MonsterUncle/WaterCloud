@@ -4,16 +4,17 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using Chloe.Annotations;
+using SqlSugar;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Serenity.Data.Mapping;
 
 namespace WaterCloud.Domain.SystemOrganize
 {
-    [TableAttribute("sys_user")]
+    [SugarTable("sys_user")]
     public class UserEntity : IEntity<UserEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         [Required(ErrorMessage = "账户不能为空")]
         public string F_Account { get; set; }
@@ -59,16 +60,16 @@ namespace WaterCloud.Domain.SystemOrganize
         public string F_WxOpenId { get; set; }
         public string F_WxNickName { get; set; }
         public string F_HeadImgUrl { get; set; }
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         //多选显示字段
         public string F_DepartmentName { get; set; }
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         //多选显示字段
         public string F_RoleName { get; set; }
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         //tablecheck字段
         public bool LAY_CHECKED { get; set; }
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         //tablecheck字段
         public int MsgCout { get; set; }
     }

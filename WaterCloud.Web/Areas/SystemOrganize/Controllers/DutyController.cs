@@ -72,7 +72,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 {
                     throw new Exception("文件大小必须小于100M");
                 }
-                var file = files.FirstOrDefault();
+                var file = files.First();
                 var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                 if (string.IsNullOrEmpty(fileName))
                 {

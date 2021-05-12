@@ -9,28 +9,27 @@ using WaterCloud.Domain.SystemSecurity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WaterCloud.Service.SystemManage;
 using System.Linq;
 using Quartz;
 using WaterCloud.Service.AutoJob;
-using Chloe;
 using Quartz.Spi;
 using WaterCloud.DataBase;
+using SqlSugar;
 
 namespace WaterCloud.Service.SystemSecurity
 {
     public class OpenJobsService : IDenpendency
     {
-        private IRepositoryBase<OpenJobEntity> repository;
-        private IRepositoryBase uniwork;
+        private RepositoryBase<OpenJobEntity> repository;
+        private UnitOfWork uniwork;
         private IScheduler _scheduler;
         private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
         //获取类名
         
-        public OpenJobsService(IDbContext context, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory)
+        public OpenJobsService(ISqlSugarClient context, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory)
         {
-            repository = new RepositoryBase<OpenJobEntity>(context);
-            uniwork = new RepositoryBase(context);
+            uniwork = new UnitOfWork(context);
+            repository = new RepositoryBase<OpenJobEntity>(uniwork);
             _scheduler = schedulerFactory.GetScheduler().GetAwaiter().GetResult();
             _scheduler.JobFactory = iocJobfactory;
         }
@@ -52,7 +51,7 @@ namespace WaterCloud.Service.SystemSecurity
         {
             if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
-                return uniwork.IQueryable<OpenJobLogEntity>().Where(a => a.F_JobId == keyValue).OrderByDesc(a => a.F_CreatorTime).ToList();
+                return repository.Db.Queryable<OpenJobLogEntity>().Where(a => a.F_JobId == keyValue).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToList();
             }
             else
             {
@@ -149,7 +148,7 @@ namespace WaterCloud.Service.SystemSecurity
         {
             if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
-                await uniwork.Delete<OpenJobLogEntity>(a => a.F_JobId == keyValue);
+                await repository.Db.Deleteable<OpenJobLogEntity>(a => a.F_JobId == keyValue).ExecuteCommandAsync();
             }
             else
             {

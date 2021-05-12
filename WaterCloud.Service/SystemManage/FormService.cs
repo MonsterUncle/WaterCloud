@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using WaterCloud.Code;
-using Chloe;
+using SqlSugar;
 using WaterCloud.Domain.SystemManage;
-using Serenity.Data;
 using WaterCloud.Domain.SystemOrganize;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -19,7 +19,7 @@ namespace WaterCloud.Service.SystemManage
     {
         private string cacheKey = "watercloud_formdata_";
         
-        public FormService(IDbContext context) : base(context)
+        public FormService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         #region 获取数据
@@ -36,54 +36,40 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<FormEntity>> GetLookList(string ItemId="", string keyword = "")
         {
-            var query = GetQuery().Where(u => u.F_DeleteMark == false);
+            var query = GetQuery().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(ItemId))
             {
-                query = query.Where(u => u.F_OrganizeId == ItemId || u.F_OrganizeId == null || u.F_OrganizeId == "");
+                query = query.Where(a => a.F_OrganizeId == ItemId || a.F_OrganizeId == null || a.F_OrganizeId == "");
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(u => u.F_Name.Contains(keyword) || u.F_Description.Contains(keyword));
+                query = query.Where(a => a.F_Name.Contains(keyword) || a.F_Description.Contains(keyword));
             }
-            query = GetDataPrivilege("u", "", query);
-            return query.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
+            query = GetDataPrivilege("a", "", query);
+            return query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToList();
         }
 
         public async Task<List<FormEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
             //获取数据权限
-            var query = GetQuery().Where(u => u.F_DeleteMark == false);
+            var query = GetQuery().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(u => u.F_Name.Contains(keyword) || u.F_Description.Contains(keyword));
+                query = query.Where(a => a.F_Name.Contains(keyword) || a.F_Description.Contains(keyword));
             }
-            query = GetDataPrivilege("u", "", query);
+            query = GetDataPrivilege("a", "", query);
             return await repository.OrderList(query, pagination);
         }
-        private IQuery<FormEntity> GetQuery()
+        private ISugarQueryable<FormEntity> GetQuery()
         {
-            var query = repository.IQueryable()
-                .LeftJoin<OrganizeEntity>((a, b) => a.F_OrganizeId == b.F_Id)
+            var query = repository.Db.Queryable<FormEntity, OrganizeEntity>((a,b)=>new JoinQueryInfos(
+                    JoinType.Left,a.F_OrganizeId==b.F_Id            
+                ))
                 .Select((a, b) => new FormEntity
                 {
-                    F_Id = a.F_Id,
+                    F_Id = a.F_Id.SelectAll(),
                     F_OrganizeName = b.F_FullName,
-                    F_CreatorTime = a.F_CreatorTime,
-                    F_CreatorUserId = a.F_CreatorUserId,
-                    F_Description = a.F_Description,
-                    F_EnabledMark = a.F_EnabledMark,
-                    F_OrganizeId = a.F_OrganizeId,
-                    F_Content=a.F_Content,
-                    F_ContentData=a.F_ContentData,
-                    F_ContentParse=a.F_ContentParse,
-                    F_DbName=a.F_DbName,
-                    F_DeleteMark=a.F_DeleteMark,
-                    F_Fields=a.F_Fields,    
-                    F_FrmType=a.F_FrmType,
-                    F_Name=a.F_Name,
-                    F_SortCode=a.F_SortCode,    
-                    F_WebId=a.F_WebId,  
                 });
             return query;
         }

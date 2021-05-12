@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemOrganize;
-using Chloe;
 using WaterCloud.DataBase;
+using SqlSugar;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -15,14 +15,12 @@ namespace WaterCloud.Service.SystemOrganize
     /// </summary>
     public class SystemSetService : DataFilterService<SystemSetEntity>, IDenpendency
     {
-        private IDbContext _context;
         private string cacheKey = "watercloud_systemsetdata_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         private string cacheKeyUser = "watercloud_userdata_";
         
-        public SystemSetService(IDbContext context) : base(context)
+        public SystemSetService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _context = context;
         }
         #region 获取数据
         public async Task<List<SystemSetEntity>> GetList(string keyword = "")
@@ -45,7 +43,7 @@ namespace WaterCloud.Service.SystemOrganize
                 query = query.Where(u => u.F_CompanyName.Contains(keyword) || u.F_ProjectName.Contains(keyword));
             }
             query = GetDataPrivilege("u", "", query);
-            return query.OrderByDesc(t => t.F_CreatorTime).ToList();
+            return query.OrderBy(a => a.F_CreatorTime, OrderByType.Desc).ToList();
         }
 
         public async Task<SystemSetEntity> GetFormByHost(string host)
@@ -65,7 +63,7 @@ namespace WaterCloud.Service.SystemOrganize
                 cachedata = await repository.CheckCacheList(cacheKey + "list");
                 cachedata = cachedata.Where(t => t.F_Id == GlobalContext.SystemConfig.SysemMasterProject).ToList();
             }
-            return cachedata.Where(t => t.F_DeleteMark == false).FirstOrDefault();
+            return cachedata.Where(t => t.F_DeleteMark == false).First();
         }
 
         public async Task<List<SystemSetEntity>> GetLookList(Pagination pagination,string keyword = "")
@@ -96,7 +94,6 @@ namespace WaterCloud.Service.SystemOrganize
         #region 提交数据
         public async Task SubmitForm(SystemSetEntity entity, string keyValue)
         {
-            IRepositoryBase ibs = new RepositoryBase(_context);
             if (string.IsNullOrEmpty(keyValue))
             {
                 entity.F_DeleteMark = false;
@@ -112,40 +109,37 @@ namespace WaterCloud.Service.SystemOrganize
                 if (currentuser.UserId != GlobalContext.SystemConfig.SysemUserId || currentuser.UserId == null)
                 {
                     var setentity = await repository.FindEntity(entity.F_Id);
-                    uniwork.BeginTrans();
-                    var user = uniwork.IQueryable<UserEntity>(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).FirstOrDefault();
-                    var userinfo = uniwork.IQueryable<UserLogOnEntity>(a => a.F_UserId == user.F_Id).FirstOrDefault();
+                    unitofwork.BeginTrans();
+                    var user = repository.Db.Queryable<UserEntity>().Where(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).First();
+                    var userinfo = repository.Db.Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
                     userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                     userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
-                    await uniwork.Update<UserEntity>(a => a.F_Id == user.F_Id, a => new UserEntity
+                    await repository.Db.Updateable<UserEntity>(a => new UserEntity
                     {
                         F_Account = entity.F_AdminAccount
-                    });
+                    }).Where(a => a.F_Id == user.F_Id).ExecuteCommandAsync();
                     await CacheHelper.Remove(cacheKeyUser + user.F_Id);
-                    await uniwork.Update<UserLogOnEntity>(a => a.F_Id == userinfo.F_Id, a => new UserLogOnEntity
+                    await repository.Db.Updateable<UserLogOnEntity>(a => new UserLogOnEntity
                     {
                         F_UserPassword = userinfo.F_UserPassword,
                         F_UserSecretkey = userinfo.F_UserSecretkey
-                    });
-                    await uniwork.Update(entity);
-                    uniwork.Commit();
+                    }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
+                    await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns:true).ExecuteCommandAsync();
+                    unitofwork.Commit();
                 }
                 else
                 {
                     entity.F_AdminAccount = null;
                     entity.F_AdminPassword = null;
                 }
-                await ibs.Update(entity);
+                await unitofwork.GetDbClient().Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
                 await CacheHelper.Remove(cacheKey + keyValue);
                 await CacheHelper.Remove(cacheKey + "list");
             }
-            var set=await ibs.FindEntity<SystemSetEntity>(entity.F_Id);
-            var tempkey=new RepositoryBase(DBContexHelper.Contex(set.F_DbString, set.F_DBProvider)).IQueryable<UserEntity>().Where(a => a.F_IsAdmin == true && a.F_OrganizeId == keyValue).FirstOrDefault().F_Id;
+            var set=await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
+            unitofwork.GetDbClient().ChangeDatabase(set.F_DBNumber);
+            var tempkey= unitofwork.GetDbClient().Queryable<UserEntity>().Where(a => a.F_IsAdmin == true && a.F_OrganizeId == keyValue).First().F_Id;
             await CacheHelper.Remove(cacheKeyOperator + "info_" + tempkey);
-            if (currentuser.UserId == null)
-            {
-                _context.Dispose();
-            }
         }
 
         public async Task DeleteForm(string keyValue)

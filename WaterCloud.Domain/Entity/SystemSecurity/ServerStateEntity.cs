@@ -8,17 +8,17 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
-using Chloe.Annotations;
+using SqlSugar;
 
 namespace WaterCloud.Domain.SystemSecurity
 {
 	/// <summary>
 	/// ServerState Entity Model
 	/// </summary>
-	[TableAttribute("sys_serverstate")]
+	[SugarTable("sys_serverstate")]
     public class ServerStateEntity : IEntity<ServerStateEntity>
     {
-						[ColumnAttribute("F_Id", IsPrimaryKey = true)]
+						[SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
 			public  String  F_Id { get; set; }
 					
 			public  String  F_WebSite { get; set; }

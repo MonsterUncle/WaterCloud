@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Autofac;
-using Chloe.Infrastructure.Interception;
 using CSRedis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -17,12 +16,14 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using WaterCloud.Code;
 using WaterCloud.Code.Model;
-using WaterCloud.DataBase;
 using WaterCloud.Service;
+using SqlSugar;
+using WaterCloud.DataBase;
+using System.Collections.Generic;
 
 namespace WaterCloud.WebApi
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
@@ -65,14 +66,22 @@ namespace WaterCloud.WebApi
             var options = new IDGeneratorOptions(ushort.Parse(Configuration.GetSection("SystemConfig:WorkId").Value));
             IDGenerator.SetIdGenerator(options);
             //注入数据库连接
-            services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
+            // 注册 SqlSugar 客户端
+            services.AddScoped<ISqlSugarClient>(u =>
             {
-                return DBContexHelper.Contex();
+                var config = DBContexHelper.Contex();
+                config.ConfigId = "0";
+                List<ConnectionConfig> list = new List<ConnectionConfig>();
+                list.Add(config);
+                var sqlSugarClient = new SqlSugarClient(list);
+                return sqlSugarClient;
             });
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             //代替HttpContext.Current
             services.AddHttpContextAccessor();
             services.AddHttpClient();
             services.AddOptions();
+            services.AddDirectoryBrowser();
             //跨域
             services.AddCors();
             services.AddControllers(options =>
@@ -113,9 +122,6 @@ namespace WaterCloud.WebApi
         {
             if (env.IsDevelopment())
             {
-                //打印sql
-                IDbCommandInterceptor interceptor = new DbCommandInterceptor();
-                DbInterception.Add(interceptor);
                 app.UseDeveloperExceptionPage();
                 GlobalContext.SystemConfig.Debug = true;
             }

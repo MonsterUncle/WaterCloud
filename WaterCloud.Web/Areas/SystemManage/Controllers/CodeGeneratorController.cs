@@ -10,20 +10,21 @@ using System.Linq;
 using WaterCloud.Service;
 using System.Threading.Tasks;
 using WaterCloud.Code.Extend;
-using Chloe;
+using WaterCloud.DataBase;
+using SqlSugar;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
-    [Area("SystemManage")]
+	[Area("SystemManage")]
     public class CodeGeneratorController : ControllerBase
     {
 
         private readonly IDatabaseTableService _service;
-        private readonly IDbContext _context;
-        public CodeGeneratorController(IDbContext context)
+        private readonly IUnitOfWork _unitOfWork;
+        public CodeGeneratorController(ISqlSugarClient context)
         {
             string dbType = GlobalContext.SystemConfig.DBProvider;
-            _context = context;
+            _unitOfWork = new UnitOfWork(context);
             switch (dbType)
             {
                 case Define.DBTYPE_SQLSERVER:
@@ -124,7 +125,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 dic.Add(field);
             }
             string serverPath = GlobalContext.HostingEnvironment.ContentRootPath;
-            data = new SingleTableTemplate(_context).GetBaseConfig(serverPath, _logService.currentuser.UserName, keyValue, tableDescription, dic);
+            data = new SingleTableTemplate(_unitOfWork.GetDbClient()).GetBaseConfig(serverPath, _logService.currentuser.UserName, keyValue, tableDescription, dic);
             return Content(data.ToJson());
         }
         #endregion
@@ -138,7 +139,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             try
             {
                 List<TableFieldInfo> list = await _service.GetTableFieldList(baseConfig.TableName);
-                SingleTableTemplate template = new SingleTableTemplate(_context);
+                SingleTableTemplate template = new SingleTableTemplate(_unitOfWork.GetDbClient());
                 DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
                 string idcolumn = string.Empty;
                 Dictionary<string, string> dic = new Dictionary<string, string>();
@@ -223,7 +224,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 }
                 else
                 {
-                    SingleTableTemplate template = new SingleTableTemplate(_context);
+                    SingleTableTemplate template = new SingleTableTemplate(_unitOfWork.GetDbClient());
                     await template.CreateCode(baseConfig, HttpUtility.UrlDecode(Code));
                 }
                 return await Success("操作成功。", "", "");
@@ -246,7 +247,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 else
                 {
                     List<TableFieldInfo> list = await _service.GetTableFieldList(baseConfig.TableName);
-                    SingleTableTemplate template = new SingleTableTemplate(_context);
+                    SingleTableTemplate template = new SingleTableTemplate(_unitOfWork.GetDbClient());
                     DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
                     string idcolumn = string.Empty;
                     foreach (DataRow dr in dt.Rows)

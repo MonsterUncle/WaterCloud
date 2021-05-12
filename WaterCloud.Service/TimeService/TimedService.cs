@@ -1,4 +1,4 @@
-using Chloe;
+using SqlSugar;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemSecurity;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.TimeService
 {
@@ -30,17 +31,17 @@ namespace WaterCloud.Service.TimeService
 
         private readonly ILogger _logger;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         //定时器
         private Timer _timer;
 
         //private Timer _timer;
 
-        public TimedService(ILogger<TimedService> logger, IWebHostEnvironment hostingEnvironment, IDbContext context)
+        public TimedService(ILogger<TimedService> logger, IWebHostEnvironment hostingEnvironment, IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _hostingEnvironment=hostingEnvironment;
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -59,7 +60,7 @@ namespace WaterCloud.Service.TimeService
             entity.F_CPU = computer.CPURate;
             entity.F_IIS = "0";
             entity.F_WebSite = _hostingEnvironment.ContentRootPath;
-            new ServerStateService(_context).SubmitForm(entity).GetAwaiter().GetResult();
+            new ServerStateService(_unitOfWork.GetDbClient()).SubmitForm(entity).GetAwaiter().GetResult();
         }
 
         public override void Dispose()

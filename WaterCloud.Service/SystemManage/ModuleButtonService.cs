@@ -10,8 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Chloe;
+using SqlSugar;
 using WaterCloud.Domain.SystemOrganize;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -26,7 +27,7 @@ namespace WaterCloud.Service.SystemManage
         private string cacheKey = "watercloud_modulebuttondata_";
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
-        public ModuleButtonService(IDbContext context) : base(context)
+        public ModuleButtonService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public async Task<List<ModuleButtonEntity>> GetList(string moduleId = "")
@@ -83,7 +84,7 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<ModuleButtonEntity>> GetListByRole(string roleid)
         {
-            var moduleList = uniwork.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 2).Select(a => a.F_ItemId).ToList();
+            var moduleList = repository.Db.Queryable<RoleAuthorizeEntity>().Where(a => a.F_ObjectId == roleid && a.F_ItemType == 2).Select(a => a.F_ItemId).ToList();
             var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
             return query.OrderBy(a => a.F_SortCode).ToList();
         }
@@ -106,7 +107,7 @@ namespace WaterCloud.Service.SystemManage
                 moduleButtonEntity.F_DeleteMark = false;
                 moduleButtonEntity.F_AllowEdit = false;
                 moduleButtonEntity.F_AllowDelete = false;
-                var module = await uniwork.FindEntity<ModuleEntity>(a => a.F_Id == moduleButtonEntity.F_ModuleId);
+                var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.F_Id == moduleButtonEntity.F_ModuleId).FirstAsync();
                 if (module.F_Target != "iframe" && module.F_Target != "expand")
                 {
                     throw new Exception("菜单不能创建按钮");
@@ -124,7 +125,7 @@ namespace WaterCloud.Service.SystemManage
             string[] ArrayId = Ids.Split(',');
             var data =await this.GetList();
             List<ModuleButtonEntity> entitys = new List<ModuleButtonEntity>();
-            var module = await uniwork.FindEntity<ModuleEntity>(a => a.F_Id == moduleId);
+            var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.F_Id == moduleId).FirstAsync();
             if (module.F_Target != "iframe" && module.F_Target != "expand")
             {
                 throw new Exception("菜单不能创建按钮");
@@ -145,8 +146,10 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<ModuleButtonEntity>> GetListNew(string moduleId = "")
         {
-            var query = repository.IQueryable(a => a.F_EnabledMark == true && a.F_DeleteMark == false)
-            .InnerJoin<ModuleEntity>((a, b) => a.F_ModuleId == b.F_Id && b.F_EnabledMark == true && a.F_DeleteMark == false)
+            var query = repository.Db.Queryable<ModuleButtonEntity, ModuleEntity>((a,b)=>new JoinQueryInfos(
+                JoinType.Inner, a.F_ModuleId == b.F_Id && b.F_EnabledMark == true && b.F_DeleteMark == false
+
+                )).Where(a => a.F_EnabledMark == true && a.F_DeleteMark == false)
             .Select((a, b) => new ModuleButtonEntity
             {
                 F_Id = a.F_Id,

@@ -3,9 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using WaterCloud.Code;
-using Chloe;
 using WaterCloud.Domain.FileManage;
 using WaterCloud.Domain.SystemOrganize;
+using SqlSugar;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.FileManage
 {
@@ -18,7 +19,7 @@ namespace WaterCloud.Service.FileManage
     {
         private string cacheKey = "watercloud_uploadfiledata_";
         
-        public UploadfileService(IDbContext context) : base(context)
+        public UploadfileService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         #region 获取数据
@@ -42,11 +43,11 @@ namespace WaterCloud.Service.FileManage
                 query = query.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             query = GetDataPrivilege("u", "", query);
-            var data = query.OrderByDesc(t => t.F_CreatorTime).ToList();
+            var data = query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToList();
             foreach (var item in data)
             {
                 string[] departments = item.F_OrganizeId.Split(',');
-                item.F_OrganizeName = string.Join(',', uniwork.IQueryable<OrganizeEntity>(a => departments.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
+                item.F_OrganizeName = string.Join(',', repository.Db.Queryable<OrganizeEntity>().Where(a => departments.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
             }
             return data;
         }
@@ -73,7 +74,7 @@ namespace WaterCloud.Service.FileManage
             //权限过滤
             query = GetDataPrivilege("u", "", query);
             var data = await repository.OrderList(query, pagination);
-            var orgs = uniwork.IQueryable<OrganizeEntity>().ToList();
+            var orgs = repository.Db.Queryable<OrganizeEntity>().ToList();
             foreach (var item in data)
             {
                 string[] departments = item.F_OrganizeId.Split(',');
@@ -81,25 +82,14 @@ namespace WaterCloud.Service.FileManage
             }
             return data;
         }
-        private IQuery<UploadfileEntity> GetQuery()
+        private ISugarQueryable<UploadfileEntity> GetQuery()
         {
-            var query = repository.IQueryable()
-                .LeftJoin<UserEntity>((a, b) => a.F_CreatorUserId == b.F_Id)
+            var query = repository.Db.Queryable<UploadfileEntity, UserEntity>((a,b)=>new JoinQueryInfos(
+                    JoinType.Left, a.F_CreatorUserId == b.F_Id))
                 .Select((a, b) => new UploadfileEntity
                 {
-                    F_Id = a.F_Id,
-                    F_CreatorUserName=b.F_RealName,
-                    F_CreatorTime = a.F_CreatorTime,
-                    F_CreatorUserId = a.F_CreatorUserId,
-                    F_Description = a.F_Description,
-                    F_EnabledMark = a.F_EnabledMark,
-                    F_FileExtension=a.F_FileExtension,
-                    F_FileBy=a.F_FileBy,
-                    F_FileName=a.F_FileName,
-                    F_FilePath=a.F_FilePath,
-                    F_FileSize=a.F_FileSize,
-                    F_FileType=a.F_FileType,
-                    F_OrganizeId=a.F_OrganizeId,    
+                    F_Id = a.F_Id.SelectAll(),
+                    F_CreatorUserName =b.F_RealName,   
                 });
             return query;
         }

@@ -33,8 +33,8 @@ namespace WaterCloud.Code
             var typeY = y.GetType();
             foreach (var filedName in comparintFiledName)
             {
-                var xPropertyInfo = (from p in typeX.GetProperties() where p.Name.Equals(filedName) select p).FirstOrDefault();
-                var yPropertyInfo = (from p in typeY.GetProperties() where p.Name.Equals(filedName) select p).FirstOrDefault();
+                var xPropertyInfo = (from p in typeX.GetProperties() where p.Name.Equals(filedName) select p).First();
+                var yPropertyInfo = (from p in typeY.GetProperties() where p.Name.Equals(filedName) select p).First();
 
                 result = result
                     && xPropertyInfo != null && yPropertyInfo != null

@@ -1,8 +1,6 @@
-﻿using Chloe;
-using System;
+﻿using SqlSugar;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +11,9 @@ using WaterCloud.Domain;
 
 namespace WaterCloud.Service.CommonService
 {
-    public class DatabaseTableOracleService : RepositoryBase, IDatabaseTableService
+    public class DatabaseTableOracleService : UnitOfWork, IDatabaseTableService
     {
-        public DatabaseTableOracleService(IDbContext context) : base(context)
+        public DatabaseTableOracleService(ISqlSugarClient context) : base(context)
         {
 
         }
@@ -25,7 +23,7 @@ namespace WaterCloud.Service.CommonService
             StringBuilder strSql = new StringBuilder();
             //select TABLE_NAME Id,TABLE_NAME from user_tab_comments utc where utc.table_type='TABLE'
             strSql.Append(@"select a.TABLE_NAME TableName,b.CREATED CreateTime from sys.user_tables a left join user_objects b on b.object_name=upper(a.TABLE_NAME) where a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'");
-            IEnumerable<TableInfo> list = await FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list = await GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
             if (!tableName.IsEmpty())
             {
                 list = list.Where(p => p.TableName.Contains(tableName));
@@ -37,16 +35,15 @@ namespace WaterCloud.Service.CommonService
         public async Task<List<TableInfo>> GetTablePageList(string tableName, Pagination pagination)
         {
             StringBuilder strSql = new StringBuilder();
-            var parameter = new List<DbParam>();
+            var parameter = new List<SugarParameter>();
             strSql.Append(@"select a.TABLE_NAME TableName,b.CREATED CreateTime from sys.user_tables a left join user_objects b on b.object_name=upper(a.TABLE_NAME) where a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'");
             //select a.TABLE_NAME TableName,b.CREATED CreateTime from sys.user_tables a,user_objects b where b.object_name=upper(a.TABLE_NAME) and a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'
+            var query= GetDbClient().SqlQueryable<TableInfo>(strSql.ToString());
             if (!tableName.IsEmpty())
             {
-                strSql.Append(" AND TABLE_NAME like :TableName ");
-                parameter.Add(new DbParam(":TableName", '%' + tableName + '%'));
+                query = query.Where(a => a.TableName.Contains(tableName));
             }
-
-            IEnumerable<TableInfo> list = await FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
+            IEnumerable<TableInfo> list = await query.ToListAsync();
             pagination.records = list.Count();
             var tempData = list.OrderByDescending(a => a.CreateTime).Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows).AsQueryable().ToList();
             await SetTableDetail(tempData);
@@ -60,8 +57,7 @@ namespace WaterCloud.Service.CommonService
         /// <returns></returns>
         public async Task<List<TableFieldInfo>> GetTableFieldList(string tableName)
         {
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append(@"SELECT  
+            string strSql = @"SELECT  
                                   b.column_name TableColumn,
                                   (CASE WHEN c.COLUMN_NAME=b.column_name THEN 'Y' ELSE '' END) TableIdentity,  
                                    b.data_type Datatype,  
@@ -69,15 +65,11 @@ namespace WaterCloud.Service.CommonService
                                    b.NULLABLE IsNullable,   
                                    '' FieldDefault,
                                    a.comments Remark
-        FROM all_col_comments a, user_tab_columns b  
-        LEFT JOIN user_cons_columns c on b.TABLE_NAME=c.TABLE_NAME
-        WHERE a.table_name = b.table_name and a.Column_name = b.Column_name and a.table_name =:TableName
-        and c.constraint_name in (select constraint_name from user_constraints where  constraint_type='P' and a.table_name =:TableName)
-         ORDER BY COLUMN_ID ASC");
-
-            var parameter = new List<DbParam>();
-            parameter.Add(new DbParam(":TableName", tableName));
-            var list = await FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
+                    FROM all_col_comments a, user_tab_columns b  
+                    LEFT JOIN user_cons_columns c on b.TABLE_NAME=c.TABLE_NAME" + $"WHERE a.table_name = b.table_name and a.Column_name = b.Column_name and a.table_name ={tableName}"
+                    + @"and c.constraint_name in (select constraint_name from user_constraints where  constraint_type='P' and a.table_name =:TableName)
+                        ORDER BY COLUMN_ID ASC";
+            var list = await GetDbClient().SqlQueryable<TableFieldInfo>(strSql).ToListAsync();
             return list.ToList();
         }
         #endregion
@@ -107,7 +99,7 @@ namespace WaterCloud.Service.CommonService
 　　                                  And a.Owner = b.Owner 　　
 　　                                  And a.table_name = b.table_name AND a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'";
 
-            IEnumerable<TableInfo> list = await FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list = await GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
             return list.ToList();
         }
 
@@ -121,9 +113,9 @@ namespace WaterCloud.Service.CommonService
             foreach (TableInfo table in list)
             {
                 table.TableKey = string.Join(",", detailList.Where(p => p.TableName == table.TableName).Select(p => p.TableKey));
-                table.TableKeyName = detailList.Where(p => p.TableName == table.TableName).Select(p => p.TableKeyName).FirstOrDefault();
-                table.TableCount = detailList.Where(p => p.TableName == table.TableName).Select(p => p.TableCount).FirstOrDefault();
-                table.CreateTime = detailList.Where(p => p.TableName == table.TableName).Select(p => p.CreateTime).FirstOrDefault();
+                table.TableKeyName = detailList.Where(p => p.TableName == table.TableName).Select(p => p.TableKeyName).First();
+                table.TableCount = detailList.Where(p => p.TableName == table.TableName).Select(p => p.TableCount).First();
+                table.CreateTime = detailList.Where(p => p.TableName == table.TableName).Select(p => p.CreateTime).First();
             }
         }
         #endregion

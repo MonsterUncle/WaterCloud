@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemManage;
-using Chloe;
+using SqlSugar;
 using WaterCloud.Domain.SystemOrganize;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -21,7 +22,7 @@ namespace WaterCloud.Service.SystemManage
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         //获取类名
 
-        public ModuleFieldsService(IDbContext context) : base(context)
+        public ModuleFieldsService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         #region 获取数据
@@ -95,7 +96,7 @@ namespace WaterCloud.Service.SystemManage
             string[] ArrayId = ids.Split(',');
             var data = await this.GetList();
             List<ModuleFieldsEntity> entitys = new List<ModuleFieldsEntity>();
-            var module = await uniwork.FindEntity<ModuleEntity>(a => a.F_Id == moduleId);
+            var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.F_Id == moduleId).FirstAsync();
             if (string.IsNullOrEmpty(module.F_UrlAddress) || module.F_Target != "iframe")
             {
                 throw new Exception("框架页才能创建按钮");
@@ -115,15 +116,16 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<ModuleFieldsEntity>> GetListByRole(string roleid)
         {
-            var moduleList = uniwork.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 3).Select(a => a.F_ItemId).ToList();
+            var moduleList = repository.Db.Queryable<RoleAuthorizeEntity>().Where(a => a.F_ObjectId == roleid && a.F_ItemType == 3).Select(a => a.F_ItemId).ToList();
             var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
-            return query.OrderByDesc(a => a.F_CreatorTime).ToList();
+            return query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToList();
         }
 
         internal async Task<List<ModuleFieldsEntity>> GetListNew(string moduleId = "")
         {
-            var query = repository.IQueryable(a => a.F_EnabledMark == true)
-            .InnerJoin<ModuleEntity>((a, b) => a.F_ModuleId == b.F_Id && b.F_EnabledMark == true)
+            var query = repository.Db.Queryable<ModuleFieldsEntity, ModuleEntity>((a,b) => new JoinQueryInfos (
+                JoinType.Inner,a.F_ModuleId==b.F_Id && b.F_EnabledMark == true
+                ))
             .Select((a, b) => new ModuleFieldsEntity
             {
                 F_Id = a.F_Id,
@@ -145,7 +147,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 query = query.Where(a => a.F_ModuleId == moduleId);
             }
-            return query.OrderByDesc(a => a.F_CreatorTime).ToList();
+            return query.OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToList();
         }
         #endregion
 

@@ -6,14 +6,15 @@
 *********************************************************************************/
 using System.Threading.Tasks;
 using WaterCloud.Code;
-using Chloe;
+using SqlSugar;
 using WaterCloud.Domain.FlowManage;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.FlowManage
 {
     public class FormTestService : DataFilterService<FormTestEntity>, IDenpendency,ICustomerForm
     {
-        public FormTestService(IDbContext context) : base(context)
+        public FormTestService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public async Task Add(string flowInstanceId, string frmData)

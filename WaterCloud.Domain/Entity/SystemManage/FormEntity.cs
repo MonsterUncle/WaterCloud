@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Chloe.Annotations;
+using SqlSugar;
+using Serenity.Data.Mapping;
 
 namespace WaterCloud.Domain.SystemManage
 {
@@ -9,14 +10,14 @@ namespace WaterCloud.Domain.SystemManage
     /// 日 期：2020-07-08 14:33
     /// 描 述：表单设计实体类
     /// </summary>
-    [TableAttribute("sys_form")]
+    [SugarTable("sys_form")]
     public class FormEntity : IEntity<FormEntity>,ICreationAudited,IModificationAudited,IDeleteAudited
     {
         /// <summary>
         /// 表单模板Id
         /// </summary>
         /// <returns></returns>
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         /// <summary>
         /// 表单名称
@@ -117,7 +118,7 @@ namespace WaterCloud.Domain.SystemManage
         /// </summary>
         /// <returns></returns>
         public string F_DbName { get; set; }
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         public string F_OrganizeName { get; set; }
     }
 }

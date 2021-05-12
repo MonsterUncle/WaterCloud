@@ -51,10 +51,10 @@ namespace WaterCloud.WebApi
                     // 根据传入的Token，添加token和客户参数
                     if (context.ActionArguments != null && context.ActionArguments.Count > 0)
                     {
-                        PropertyInfo property = context.ActionArguments.FirstOrDefault().Value.GetType().GetProperty("Token");
+                        PropertyInfo property = context.ActionArguments.First().Value.GetType().GetProperty("Token");
                         if (property != null)
                         {
-                            property.SetValue(context.ActionArguments.FirstOrDefault().Value, token, null);
+                            property.SetValue(context.ActionArguments.First().Value, token, null);
                         }
                         switch (context.HttpContext.Request.Method.ToUpper())
                         {
@@ -62,10 +62,10 @@ namespace WaterCloud.WebApi
                                 break;
 
                             case "POST":
-                                property = context.ActionArguments.FirstOrDefault().Value.GetType().GetProperty("CustomerId");
+                                property = context.ActionArguments.First().Value.GetType().GetProperty("CustomerId");
                                 if (property != null)
                                 {
-                                    property.SetValue(context.ActionArguments.FirstOrDefault().Value, user.UserId, null);
+                                    property.SetValue(context.ActionArguments.First().Value, user.UserId, null);
                                 }
                                 break;
                         }

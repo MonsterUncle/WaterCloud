@@ -4,18 +4,19 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using WaterCloud.Code;
 using WaterCloud.Domain.ContentManage;
-using Chloe;
+using WaterCloud.DataBase;
+using SqlSugar;
 
 namespace WaterCloud.Service.ContentManage
 {
-    /// <summary>
-    /// 创 建：超级管理员
-    /// 日 期：2020-06-09 19:42
-    /// 描 述：新闻管理服务类
-    /// </summary>
-    public class ArticleNewsService : DataFilterService<ArticleNewsEntity>, IDenpendency
+	/// <summary>
+	/// 创 建：超级管理员
+	/// 日 期：2020-06-09 19:42
+	/// 描 述：新闻管理服务类
+	/// </summary>
+	public class ArticleNewsService : DataFilterService<ArticleNewsEntity>, IDenpendency
     {
-        public ArticleNewsService(IDbContext context) : base(context)
+        public ArticleNewsService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
 
         }
@@ -48,37 +49,13 @@ namespace WaterCloud.Service.ContentManage
             dic.Add("F_IsHot", isTrue);
             pagination = ChangeSoulData(dic, pagination);
             //获取新闻列表
-            var query = repository.IQueryable(a => a.F_EnabledMark == true)
-            .LeftJoin<ArticleCategoryEntity>((a, b) => a.F_CategoryId == b.F_Id && b.F_EnabledMark == true)
+            var query = repository.Db.Queryable<ArticleNewsEntity, ArticleCategoryEntity>((a,b) => new JoinQueryInfos(
+                JoinType.Left,a.F_CategoryId==b.F_Id && b.F_EnabledMark == true
+                ))
             .Select((a, b) => new ArticleNewsEntity
             {
-                F_Id = a.F_Id,
-                F_CategoryId = a.F_CategoryId,
+                F_Id = a.F_Id.SelectAll(),
                 F_CategoryName = b.F_FullName,
-                F_Title = a.F_Title,
-                F_LinkUrl = a.F_LinkUrl,
-                F_ImgUrl = a.F_ImgUrl,
-                F_SeoTitle = a.F_SeoTitle,
-                F_SeoKeywords = a.F_SeoKeywords,
-                F_SeoDescription = a.F_SeoDescription,
-                F_Tags = a.F_Tags,
-                F_Zhaiyao = a.F_Zhaiyao,
-                F_Description = a.F_Description,
-                F_SortCode = a.F_SortCode,
-                F_IsTop = a.F_IsTop,
-                F_IsHot = a.F_IsHot,
-                F_IsRed = a.F_IsRed,
-                F_Click = a.F_Click,
-                F_Source = a.F_Source,
-                F_Author = a.F_Author,
-                F_EnabledMark = a.F_EnabledMark,
-                F_CreatorTime = a.F_CreatorTime,
-                F_CreatorUserId = a.F_CreatorUserId,
-                F_DeleteMark = a.F_DeleteMark,
-                F_DeleteTime = a.F_DeleteTime,
-                F_DeleteUserId = a.F_DeleteUserId,
-                F_LastModifyTime = a.F_LastModifyTime,
-                F_LastModifyUserId = a.F_LastModifyUserId,
             });
             if (!string.IsNullOrEmpty(keyword))
             {
@@ -88,9 +65,9 @@ namespace WaterCloud.Service.ContentManage
             {
                 query = query.Where(a => a.F_CategoryId.Contains(CategoryId));
             }
-            query = query.Where(u => u.F_DeleteMark == false);
+            query = query.Where(a => a.F_DeleteMark == false);
             //权限过滤
-            query = GetDataPrivilege<ArticleNewsEntity>("u", "",query);           
+            query = GetDataPrivilege<ArticleNewsEntity>("a", "",query);           
             return await repository.OrderList(query, pagination);
         }
         /// <summary>
@@ -100,44 +77,20 @@ namespace WaterCloud.Service.ContentManage
         /// <returns></returns>
         public async Task<ArticleNewsEntity> GetForm(string keyValue)
         {
-            var query = repository.IQueryable(a => a.F_EnabledMark == true)
-                .LeftJoin<ArticleCategoryEntity>((a, b) => a.F_CategoryId == b.F_Id && b.F_EnabledMark == true)
-                .Select((a, b) => new ArticleNewsEntity
-                {
-                    F_Id = a.F_Id,
-                    F_CategoryId = a.F_CategoryId,
-                    F_CategoryName = b.F_FullName,
-                    F_Title = a.F_Title,
-                    F_LinkUrl = a.F_LinkUrl,
-                    F_ImgUrl = a.F_ImgUrl,
-                    F_SeoTitle = a.F_SeoTitle,
-                    F_SeoKeywords = a.F_SeoKeywords,
-                    F_SeoDescription = a.F_SeoDescription,
-                    F_Tags = a.F_Tags,
-                    F_Zhaiyao = a.F_Zhaiyao,
-                    F_Description = a.F_Description,
-                    F_SortCode = a.F_SortCode,
-                    F_IsTop = a.F_IsTop,
-                    F_IsHot = a.F_IsHot,
-                    F_IsRed = a.F_IsRed,
-                    F_Click = a.F_Click,
-                    F_Source = a.F_Source,
-                    F_Author = a.F_Author,
-                    F_EnabledMark = a.F_EnabledMark,
-                    F_CreatorTime = a.F_CreatorTime,
-                    F_CreatorUserId = a.F_CreatorUserId,
-                    F_DeleteMark = a.F_DeleteMark,
-                    F_DeleteTime = a.F_DeleteTime,
-                    F_DeleteUserId = a.F_DeleteUserId,
-                    F_LastModifyTime = a.F_LastModifyTime,
-                    F_LastModifyUserId = a.F_LastModifyUserId,
-                });
+            var query = repository.Db.Queryable<ArticleNewsEntity, ArticleCategoryEntity>((a, b) => new JoinQueryInfos(
+                JoinType.Left, a.F_CategoryId == b.F_Id && b.F_EnabledMark == true
+                ))
+            .Select((a, b) => new ArticleNewsEntity
+            {
+                F_Id = a.F_Id.SelectAll(),
+                F_CategoryName = b.F_FullName,
+            });
             if (!string.IsNullOrEmpty(keyValue))
             {
                 query = query.Where(a => a.F_Id == keyValue);
             }
             //字段权限处理
-            return GetFieldsFilterData(query.FirstOrDefault());
+            return GetFieldsFilterData(query.First());
         }
         #endregion
 
@@ -146,7 +99,7 @@ namespace WaterCloud.Service.ContentManage
         {
             if (string.IsNullOrEmpty(entity.F_Zhaiyao))
             {
-                entity.F_Zhaiyao = WaterCloud.Code.TextHelper.GetSubString(WaterCloud.Code.WebHelper.NoHtml(entity.F_Description),255);
+                entity.F_Zhaiyao = TextHelper.GetSubString(WebHelper.NoHtml(entity.F_Description),255);
             }
             if (string.IsNullOrEmpty(entity.F_SeoTitle))
             {

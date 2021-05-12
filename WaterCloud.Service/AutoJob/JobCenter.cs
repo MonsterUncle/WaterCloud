@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Chloe;
+using SqlSugar;
 using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Spi;

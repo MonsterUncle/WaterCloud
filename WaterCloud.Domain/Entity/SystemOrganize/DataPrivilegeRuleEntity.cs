@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Chloe.Annotations;
+using SqlSugar;
 
 namespace WaterCloud.Domain.SystemOrganize
 {
@@ -9,14 +9,14 @@ namespace WaterCloud.Domain.SystemOrganize
     /// 日 期：2020-06-01 09:44
     /// 描 述：数据权限实体类
     /// </summary>
-    [TableAttribute("sys_dataprivilegerule")]
+    [SugarTable("sys_dataprivilegerule")]
     public class DataPrivilegeRuleEntity : IEntity<DataPrivilegeRuleEntity>,ICreationAudited,IModificationAudited,IDeleteAudited
     {
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         /// <summary>
         /// 

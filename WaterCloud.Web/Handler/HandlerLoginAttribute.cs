@@ -1,13 +1,7 @@
-﻿using WaterCloud.Service.SystemManage;
-using WaterCloud.Code;
+﻿using WaterCloud.Code;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Http;
-using Serenity.Web;
 using Microsoft.AspNetCore.Mvc;
-using System.Web;
 using WaterCloud.Service.SystemOrganize;
-using Chloe;
-using WaterCloud.DataBase;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 /// <summary>
@@ -15,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 /// </summary>
 namespace WaterCloud.Web
 {
-    public class HandlerLoginAttribute : ActionFilterAttribute
+	public class HandlerLoginAttribute : ActionFilterAttribute
     {
         private readonly RoleAuthorizeService _service;
         public HandlerLoginAttribute(RoleAuthorizeService service)

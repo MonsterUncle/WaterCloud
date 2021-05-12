@@ -10,18 +10,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
-using Chloe;
+using SqlSugar;
 using System.IO;
 using WaterCloud.Service.SystemManage;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemOrganize
 {
     public class DutyService : DataFilterService<RoleEntity>, IDenpendency
     {
         private SystemSetService setApp;
-        public DutyService(IDbContext context) :base(context)
+        public DutyService(IUnitOfWork unitOfWork) :base(unitOfWork)
         {
-            setApp = new SystemSetService(context);
+            setApp = new SystemSetService(unitOfWork);
         }
         /// <summary>
         /// 缓存操作类
@@ -59,10 +60,10 @@ namespace WaterCloud.Service.SystemOrganize
             var query= GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
             }
-            query = query.Where(u => u.F_DeleteMark == false&& u.F_Category == 2);
-            query = GetDataPrivilege("u", "", query);
+            query = query.Where(a => a.F_DeleteMark == false&& a.F_Category == 2);
+            query = GetDataPrivilege("a", "", query);
             return await repository.OrderList(query, pagination);
         }
         public async Task<RoleEntity> GetLookForm(string keyValue)
@@ -75,30 +76,22 @@ namespace WaterCloud.Service.SystemOrganize
             var cachedata = await repository.CheckCache(cacheKey, keyValue);
             return cachedata;
         }
-        private IQuery<RoleExtend> GetQuery()
+        private ISugarQueryable<RoleExtend> GetQuery()
         {
-            var query = repository.IQueryable(u => u.F_DeleteMark == false && u.F_Category == 2)
-                .LeftJoin<SystemSetEntity>((a,b)=>a.F_OrganizeId==b.F_Id)
+            var query = repository.Db.Queryable<RoleEntity,SystemSetEntity>((a,b)=>new JoinQueryInfos(
+                JoinType.Left, a.F_OrganizeId == b.F_Id
+
+                )).Where(a => a.F_DeleteMark == false && a.F_Category == 2)
                 .Select((a,b)=>new RoleExtend
                 {
-                    F_Id = a.F_Id,
-                    F_AllowDelete = a.F_AllowDelete,
-                    F_AllowEdit = a.F_AllowEdit,
-                    F_Category = a.F_Category,
+                    F_Id = a.F_Id.SelectAll(),
                     F_CompanyName = b.F_CompanyName,
-                    F_CreatorTime = a.F_CreatorTime,
-                    F_CreatorUserId = a.F_CreatorUserId,
-                    F_Description = a.F_Description,
-                    F_DeleteMark = a.F_DeleteMark,
-                    F_EnabledMark = a.F_EnabledMark,
-                    F_EnCode = a.F_EnCode,
-                    F_FullName = a.F_FullName,
                 });
             return query;
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (uniwork.IQueryable<UserEntity>(a => a.F_DutyId == keyValue).Count() > 0)
+            if (repository.Db.Queryable<UserEntity>().Where(a => a.F_DutyId == keyValue).Count() > 0)
             {
                 throw new Exception("岗位使用中，无法删除");
             }
@@ -178,7 +171,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 item.Create();
             }
-            await uniwork.Insert(filterList);
+            await repository.Db.Insertable(filterList).ExecuteCommandAsync();
         }
     }
 }

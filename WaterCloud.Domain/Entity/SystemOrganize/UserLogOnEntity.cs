@@ -4,16 +4,16 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using Chloe.Annotations;
+using SqlSugar;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace WaterCloud.Domain.SystemOrganize
 {
-    [TableAttribute("sys_userlogon")]
+    [SugarTable("sys_userlogon")]
     public class UserLogOnEntity
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         public string F_UserId { get; set; }
         [Required(ErrorMessage = "密码不能为空")]

@@ -1,5 +1,4 @@
-﻿using Chloe;
-using Chloe.Annotations;
+﻿using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,19 +19,16 @@ namespace WaterCloud.Service
         // 用于当前表操作
         protected IRepositoryBase<T> repository;
         // 用于其他表操作
-        protected IRepositoryBase uniwork;
-        public DataFilterService(IDbContext context)
+        protected IUnitOfWork unitofwork;
+        public DataFilterService(IUnitOfWork unitOfWork)
         {
             currentuser = OperatorProvider.Provider.GetCurrent();
-            if (currentuser != null && !(currentuser.DBProvider == GlobalContext.SystemConfig.DBProvider && currentuser.DbString == GlobalContext.SystemConfig.DBConnectionString))
+            unitofwork = unitOfWork;
+            repository = new RepositoryBase<T>(unitOfWork);
+            if (currentuser != null)
             {
-                repository = new RepositoryBase<T>(currentuser.DbString, currentuser.DBProvider);
-                uniwork = new RepositoryBase(currentuser.DbString, currentuser.DBProvider);
-            }
-            else
-            {
-                repository = new RepositoryBase<T>(context);
-                uniwork = new RepositoryBase(context);
+                unitOfWork.GetDbClient().ChangeDatabase(currentuser.DbNumber);
+                repository = new RepositoryBase<T>(unitOfWork);
             }
             if (currentuser == null)
             {
@@ -46,7 +42,7 @@ namespace WaterCloud.Service
         /// <param name=""moduleName>菜单名称</param>
         /// <param name=""query>查询</param>
         /// <returns></returns>
-        protected IQuery<T> GetDataPrivilege(string parametername, string moduleName = "", IQuery<T> query = null)
+        protected ISugarQueryable<T> GetDataPrivilege(string parametername, string moduleName = "", ISugarQueryable<T> query = null)
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             if (query == null)
@@ -57,7 +53,7 @@ namespace WaterCloud.Service
             {
                 return GetFieldsFilterDataNew(parametername,query, moduleName);
             }
-            var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
+            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().Where(u => u.F_ModuleCode == moduleName).First();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
@@ -87,14 +83,14 @@ namespace WaterCloud.Service
         /// <param name=""moduleName>菜单名称</param>
         /// <param name=""query>查询</param>
         /// <returns></returns>
-        protected IQuery<TEntity> GetDataPrivilege<TEntity>(string parametername, string moduleName = "", IQuery<TEntity> query = null)
+        protected ISugarQueryable<TEntity> GetDataPrivilege<TEntity>(string parametername, string moduleName = "", ISugarQueryable<TEntity> query = null)
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             if (!CheckDataPrivilege(moduleName))
             {
                 return GetFieldsFilterDataNew(parametername,query, moduleName);
             }
-            var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
+            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().Where(u => u.F_ModuleCode == moduleName).First();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
@@ -122,7 +118,7 @@ namespace WaterCloud.Service
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             if (currentuser.UserId == GlobalContext.SystemConfig.SysemUserId) return false;  //超级管理员特权
-            var rule = uniwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
+            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().Where(u => u.F_ModuleCode == moduleName).First();
             ////系统菜单也不需要数据权限 跟字段重合取消这样处理
             //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).GetAwaiter().GetResult();
             if (rule == null)
@@ -178,7 +174,7 @@ namespace WaterCloud.Service
                 return list;
             }
             //系统菜单跳过
-            var module = uniwork.IQueryable<ModuleEntity>(u => u.F_EnCode == moduleName).FirstOrDefault();
+            var module = repository.Db.Queryable<ModuleEntity>().Where(u => u.F_EnCode == moduleName).First();
             //判断是否需要字段权限
             if (module.F_IsFields == false)
             {
@@ -190,10 +186,10 @@ namespace WaterCloud.Service
                 return list;
             }
             var rolelist = currentuser.RoleId.Split(',');
-            var rule = uniwork.IQueryable<RoleAuthorizeEntity>(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
-            var fieldsList = uniwork.IQueryable<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
+            var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
+            var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
             //反射获取主键
-            PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
+            PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(SugarColumn), false).Length > 0).First();
             var idName = "F_Id";
             if (pkProp != null)
             {
@@ -218,7 +214,7 @@ namespace WaterCloud.Service
                 return entity;
             }
             //系统菜单跳过
-            var module = uniwork.IQueryable<ModuleEntity>(u => u.F_EnCode == moduleName).FirstOrDefault();
+            var module = repository.Db.Queryable<ModuleEntity>().Where(u => u.F_EnCode == moduleName).First();
             //判断是否需要字段权限
             if (module.F_IsFields == false)
             {
@@ -230,10 +226,10 @@ namespace WaterCloud.Service
                 return entity;
             }
             var rolelist = currentuser.RoleId.Split(',');
-            var rule = uniwork.IQueryable<RoleAuthorizeEntity>(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
-            var fieldsList = uniwork.IQueryable<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
+            var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
+            var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
             //反射获取主键
-            PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
+            PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(SugarColumn), false).Length > 0).First();
             var idName = "F_Id";
             if (pkProp != null)
             {
@@ -251,7 +247,7 @@ namespace WaterCloud.Service
         ///<param name=""query>数据列表</param>
         /// <param name=""moduleName>菜单名称</param>
         /// <returns></returns>
-        protected IQuery<TEntity> GetFieldsFilterDataNew<TEntity>(string parametername, IQuery<TEntity> query, string moduleName = "")
+        protected ISugarQueryable<TEntity> GetFieldsFilterDataNew<TEntity>(string parametername, ISugarQueryable<TEntity> query, string moduleName = "")
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             //管理员跳过
@@ -260,17 +256,17 @@ namespace WaterCloud.Service
                 return query;
             }
             //系统菜单跳过
-            var module = uniwork.IQueryable<ModuleEntity>(u => u.F_EnCode == moduleName).FirstOrDefault();
+            var module = repository.Db.Queryable<ModuleEntity>().Where(u => u.F_EnCode == moduleName).First();
             //判断是否需要字段权限
             if (module.F_IsFields == false)
             {
                 return query;
             }
             var rolelist = currentuser.RoleId.Split(',');
-            var rule = uniwork.IQueryable<RoleAuthorizeEntity>(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
-            var fieldsList = uniwork.IQueryable<ModuleFieldsEntity>(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
+            var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
+            var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
             //反射获取主键
-            PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(ColumnAttribute), false).Length > 0).FirstOrDefault();
+            PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(SugarColumn), false).Length > 0).First();
             var idName = "F_Id";
             if (pkProp != null)
             {

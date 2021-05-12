@@ -9,17 +9,17 @@
 //-----------------------------------------------------------------------
 using System;
 using System.ComponentModel.DataAnnotations;
-using Chloe.Annotations;
+using SqlSugar;
 
 namespace WaterCloud.Domain.SystemOrganize
 {
 	/// <summary>
 	/// Notice Entity Model
 	/// </summary>
-	[TableAttribute("sys_notice")]
+	[SugarTable("sys_notice")]
     public class NoticeEntity : IEntity<NoticeEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-		[ColumnAttribute("F_Id", IsPrimaryKey = true)]
+		[SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
 		public String F_Id { get; set; }
 		[Required(ErrorMessage = "标题不能为空")]
 		public String F_Title { get; set; }

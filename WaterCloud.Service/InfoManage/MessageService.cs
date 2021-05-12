@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using WaterCloud.Code;
-using Chloe;
+using SqlSugar;
 using WaterCloud.Domain.InfoManage;
 using Microsoft.AspNetCore.SignalR;
 using WaterCloud.Domain.SystemOrganize;
@@ -11,6 +11,7 @@ using WaterCloud.Service.SystemManage;
 using System.Net.Http;
 using WaterCloud.Domain.SystemManage;
 using System.Text;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.InfoManage
 {
@@ -26,9 +27,9 @@ namespace WaterCloud.Service.InfoManage
         private readonly IHubContext<MessageHub> _messageHub;
         private ItemsDataService itemsApp;
         private IHttpClientFactory _httpClientFactory;
-        public MessageService(IDbContext context, IHttpClientFactory httpClientFactory, IHubContext<MessageHub> messageHub = null) : base(context)
+        public MessageService(IUnitOfWork unitOfWork, IHttpClientFactory httpClientFactory, IHubContext<MessageHub> messageHub = null) : base(unitOfWork)
         {
-            itemsApp = new ItemsDataService(context);
+            itemsApp = new ItemsDataService(unitOfWork);
             _messageHub = messageHub;
             _httpClientFactory = httpClientFactory;
         }
@@ -41,7 +42,7 @@ namespace WaterCloud.Service.InfoManage
                 //此处需修改
                 query = query.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
             }
-            return query.Where(a => a.F_EnabledMark == true).OrderByDesc(t => t.F_CreatorTime).ToList();
+            return query.Where(a => a.F_EnabledMark == true).OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToList();
         }
 
         public async Task<List<MessageEntity>> GetLookList(string keyword = "")
@@ -53,16 +54,18 @@ namespace WaterCloud.Service.InfoManage
                 query = query.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
             }
             query = GetDataPrivilege("u","", query);
-            return query.OrderByDesc(t => t.F_CreatorTime).ToList();
+            return query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToList();
         }
 
         public async Task<List<MessageEntity>> GetUnReadListJson()
         {
-            var hisquery = uniwork.IQueryable<MessageHistoryEntity>(a => a.F_CreatorUserId == currentuser.UserId).Select(a => a.F_MessageId).ToList();
-            var tempList= repository.IQueryable(a => a.F_MessageType == 2).InnerJoin<MessageHistoryEntity>((a, b) => a.F_Id == b.F_MessageId).Select((a, b) => a.F_Id).ToList();
+            var hisquery = repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_CreatorUserId == currentuser.UserId).Select(a => a.F_MessageId).ToList();
+            var tempList= repository.Db.Queryable<MessageEntity, MessageHistoryEntity>((a,b) => new JoinQueryInfos(
+                JoinType.Inner,a.F_Id==b.F_MessageId&&a.F_MessageType==2
+                )).Select(a => a.F_Id).ToList();
             hisquery.AddRange(tempList);
             var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId) || a.F_ToUserId == "") && a.F_EnabledMark == true).Where(a => !hisquery.Contains(a.F_Id));
-            return GetFieldsFilterDataNew("a",query.OrderByDesc(t => t.F_CreatorTime)).ToList();
+            return GetFieldsFilterDataNew("a",query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc)).ToList();
         }
 
         public async Task<List<MessageEntity>> GetLookList(SoulPage<MessageEntity> pagination, string keyword = "")
@@ -118,13 +121,13 @@ namespace WaterCloud.Service.InfoManage
             else
             {
                 var users = entity.F_ToUserId.Split(",");
-                entity.F_ToUserName = string.Join(",", uniwork.IQueryable<UserEntity>(a => users.Contains(a.F_Id)).Select(a => a.F_RealName).ToList());
+                entity.F_ToUserName = string.Join(",", repository.Db.Queryable<UserEntity>().Where(a => users.Contains(a.F_Id)).Select(a => a.F_RealName).ToList());
                 messageEntity= await repository.Insert(entity);
             }
             //通过http发送消息
             messageEntity.companyId = currentuser.CompanyId;
             var mouduleName = ReflectionHelper.GetModuleName(1);
-            var module = uniwork.IQueryable<ModuleEntity>(a => a.F_EnCode == mouduleName).FirstOrDefault();
+            var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == mouduleName).First();
             var url = module.F_UrlAddress.Substring(0, module.F_UrlAddress.Length - 5) + "SendWebSocketMsg";
             HttpContent httpContent = new StringContent(messageEntity.ToJson(), Encoding.UTF8);
             httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
@@ -159,12 +162,12 @@ namespace WaterCloud.Service.InfoManage
         {
             var unList=await GetUnReadListJson();
             var strList = unList.Where(a => a.F_MessageType == type&&a.F_ClickRead==true).Select(a=>a.F_Id).ToList();
-            uniwork.BeginTrans();
+            unitofwork.BeginTrans();
             foreach (var item in strList)
             {
                await ReadMsgForm(item);
             }
-            uniwork.Commit();
+            unitofwork.Commit();
         }
 
         public async Task ReadMsgForm(string keyValue)
@@ -173,7 +176,7 @@ namespace WaterCloud.Service.InfoManage
             msghis.Create();
             msghis.F_CreatorUserName = currentuser.UserName;
             msghis.F_MessageId = keyValue;
-            await uniwork.Insert(msghis);
+            await repository.Db.Insertable(msghis).ExecuteCommandAsync();
         }
 
         public async Task<bool> CheckMsg(string keyValue)
@@ -187,7 +190,7 @@ namespace WaterCloud.Service.InfoManage
             {
                 return true;
             }
-            if (uniwork.IQueryable<MessageHistoryEntity>(a => a.F_MessageId == keyValue && a.F_CreatorUserId == currentuser.UserId).Count() > 0)
+            if (repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == keyValue && a.F_CreatorUserId == currentuser.UserId).Count() > 0)
             {
                 return true;
             }

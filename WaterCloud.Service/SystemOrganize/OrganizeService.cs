@@ -10,7 +10,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using WaterCloud.Code;
-using Chloe;
+using SqlSugar;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -23,7 +24,7 @@ namespace WaterCloud.Service.SystemOrganize
         private string cacheKey = "watercloud_organizedata_";
         //获取类名
         
-        public OrganizeService(IDbContext context) : base(context)
+        public OrganizeService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public async Task<List<OrganizeEntity>> GetList()
@@ -55,7 +56,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             else
             {
-                if (uniwork.IQueryable<UserEntity>(a=>a.F_OrganizeId==keyValue).Count()>0|| uniwork.IQueryable<UserEntity>(a => a.F_DepartmentId == keyValue).Count()>0)
+                if (repository.Db.Queryable<UserEntity>().Where(a=>a.F_OrganizeId==keyValue).Count()>0|| repository.Db.Queryable<UserEntity>().Where(a => a.F_DepartmentId == keyValue).Count()>0)
                 {
                     throw new Exception("组织使用中，无法删除");
                 }

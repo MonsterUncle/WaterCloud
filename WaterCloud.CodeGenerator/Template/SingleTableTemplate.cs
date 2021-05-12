@@ -9,8 +9,8 @@ using Newtonsoft.Json.Linq;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemManage;
 using System.Threading.Tasks;
-using Chloe;
 using WaterCloud.DataBase;
+using SqlSugar;
 
 namespace WaterCloud.CodeGenerator
 {
@@ -22,10 +22,10 @@ namespace WaterCloud.CodeGenerator
         private string quickcacheKey = "watercloud_quickmoduledata_";
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
-        private IRepositoryBase uniwork;
-        public SingleTableTemplate(IDbContext context)
+        private UnitOfWork uniwork;
+        public SingleTableTemplate(ISqlSugarClient context)
         {
-            uniwork = new RepositoryBase(context);
+            uniwork = new UnitOfWork(context);
         }
         #region GetBaseConfig
         public BaseConfigModel GetBaseConfig(string path, string username, string tableName, string tableDescription, List<ColumnField> tableFieldList)
@@ -194,7 +194,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("using System.Threading.Tasks;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using WaterCloud.Code;");
-            sb.AppendLine("using Chloe;");
+            sb.AppendLine("using SqlSugar;");
             sb.AppendLine("using WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule + ";");
             sb.AppendLine();
 
@@ -209,7 +209,7 @@ namespace WaterCloud.CodeGenerator
             {
                 sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
             }
-            sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + "(IDbContext context) : base(context)");
+            sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + "(ISqlSugarClient context) : base(context)");
             sb.AppendLine("        {");
             sb.AppendLine("        }");
 
@@ -629,22 +629,22 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("             <div class=\"layui-btn-container\" id=\"toolbar\">");
             if (baseConfigModel.PageIndex.ButtonList.Contains("add"))
             {
-                KeyValue button = list.Where(p => p.Key == "add").FirstOrDefault();
+                KeyValue button = list.Where(p => p.Key == "add").First();
                 sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe654;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("edit"))
             {
-                KeyValue button = list.Where(p => p.Key == "edit").FirstOrDefault();
+                KeyValue button = list.Where(p => p.Key == "edit").First();
                 sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-warm layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe642;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("delete"))
             {
-                KeyValue button = list.Where(p => p.Key == "delete").FirstOrDefault();
+                KeyValue button = list.Where(p => p.Key == "delete").First();
                 sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-danger layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe640;</i>" + button.Description + "</button>");
             }
             if (baseConfigModel.PageIndex.ButtonList.Contains("details"))
             {
-                KeyValue button = list.Where(p => p.Key == "details").FirstOrDefault();
+                KeyValue button = list.Where(p => p.Key == "details").First();
                 sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-normal layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe60b;</i>" + button.Description + "</button>");
             }
             sb.AppendLine("             </div>");
@@ -1166,7 +1166,7 @@ namespace WaterCloud.CodeGenerator
             List<KeyValue> list = GetButtonAuthorizeList();
             foreach (string btn in baseConfigModel.PageIndex.ButtonList)
             {
-                KeyValue button = list.Where(p => p.Key == btn).FirstOrDefault();
+                KeyValue button = list.Where(p => p.Key == btn).First();
                 string form = "";
                 switch (btn)
                 {
@@ -1272,7 +1272,7 @@ namespace WaterCloud.CodeGenerator
                 string menuUrl = "/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + baseConfigModel.FileConfig.PageIndexName;
                 ModuleEntity moduleEntity = new ModuleEntity();
                 moduleEntity.Create();
-                moduleEntity.F_Layers = (await uniwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Layers + 1; ;
+                moduleEntity.F_Layers = uniwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).First().F_Layers + 1; ;
                 moduleEntity.F_FullName = baseConfigModel.FileConfig.ClassDescription;
                 moduleEntity.F_UrlAddress = menuUrl;
                 moduleEntity.F_EnCode = baseConfigModel.FileConfig.ClassPrefix;
@@ -1285,14 +1285,14 @@ namespace WaterCloud.CodeGenerator
                 moduleEntity.F_AllowDelete = false;
                 moduleEntity.F_EnabledMark = true;
                 moduleEntity.F_DeleteMark = false;
-                moduleEntity.F_ParentId = (await uniwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Id;
-                var parentModule = await uniwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
-                moduleEntity.F_SortCode = (uniwork.IQueryable<ModuleEntity>(a => a.F_ParentId == parentModule.F_Id).Max(a => a.F_SortCode) ?? 0) + 1;
+                moduleEntity.F_ParentId = uniwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).First().F_Id;
+                var parentModule = await uniwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).FirstAsync();
+                moduleEntity.F_SortCode = (uniwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_ParentId == parentModule.F_Id).Max(a => a.F_SortCode) ?? 0) + 1;
                 List<ModuleButtonEntity> moduleButtonList = new List<ModuleButtonEntity>();
                 int sort = 0;
                 foreach (var item in baseConfigModel.PageIndex.ButtonList)
                 {
-                    KeyValue button = buttonAuthorizeList.Where(p => p.Key == item).FirstOrDefault();
+                    KeyValue button = buttonAuthorizeList.Where(p => p.Key == item).First();
                     string form = "";
                     switch (item)
                     {
@@ -1341,11 +1341,11 @@ namespace WaterCloud.CodeGenerator
                     moduleFieldsList.Add(moduleFields);
                 }
                 uniwork.BeginTrans();
-                await uniwork.Insert(moduleEntity);
-                await uniwork.Insert(moduleButtonList);
+                await uniwork.GetDbClient().Insertable(moduleEntity).ExecuteCommandAsync();
+                await uniwork.GetDbClient().Insertable(moduleButtonList).ExecuteCommandAsync();
                 if (moduleFieldsList.Count > 0)
                 {
-                    await uniwork.Insert(moduleFieldsList);
+                    await uniwork.GetDbClient().Insertable(moduleFieldsList).ExecuteCommandAsync();
                 }
                 uniwork.Commit();
                 await CacheHelper.Remove(fieldscacheKey + "list");

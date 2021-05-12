@@ -10,8 +10,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using WaterCloud.Code;
-using Chloe;
+using SqlSugar;
 using WaterCloud.Domain.SystemOrganize;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -29,7 +30,7 @@ namespace WaterCloud.Service.SystemManage
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         //获取类名
 
-        public ModuleService(IDbContext context) : base(context)
+        public ModuleService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
 
@@ -40,7 +41,7 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<List<ModuleEntity>> GetBesidesList()
         {
-            var moduleList = uniwork.IQueryable<DataPrivilegeRuleEntity>().Select(a => a.F_ModuleId).ToList();
+            var moduleList = repository.Db.Queryable<DataPrivilegeRuleEntity>().Select(a => a.F_ModuleId).ToList();
             var query = repository.IQueryable().Where(a => !moduleList.Contains(a.F_Id) && a.F_EnabledMark == true && a.F_Target == "iframe");
             return query.OrderBy(a => a.F_SortCode).ToList();
         }
@@ -68,11 +69,11 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
-                uniwork.BeginTrans();
+                unitofwork.BeginTrans();
                 await repository.Delete(a => a.F_Id == keyValue);
-                await uniwork.Delete<ModuleButtonEntity>(a => a.F_ModuleId == keyValue);
-                await uniwork.Delete<ModuleFieldsEntity>(a => a.F_ModuleId == keyValue);
-                uniwork.Commit();
+                await repository.Db.Deleteable<ModuleButtonEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
+                await repository.Db.Deleteable<ModuleFieldsEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
+                unitofwork.Commit();
                 await CacheHelper.Remove(cacheKey + keyValue);
                 await CacheHelper.Remove(cacheKey + "list");
                 await CacheHelper.Remove(quickcacheKey + "list");
@@ -88,7 +89,7 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<ModuleEntity>> GetListByRole(string roleid)
         {
-            var moduleList = uniwork.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
+            var moduleList = repository.Db.Queryable<RoleAuthorizeEntity>().Where(a => a.F_ObjectId == roleid && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
             var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
             return query.OrderBy(a => a.F_SortCode).ToList();
         }

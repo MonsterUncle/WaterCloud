@@ -9,20 +9,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WaterCloud.Code;
-using Chloe;
+using SqlSugar;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
     public class ItemsDataService : DataFilterService<ItemsDetailEntity>,IDenpendency
     {
+        private ItemsTypeService itemApp;
         /// <summary>
         /// 缓存操作类
         /// </summary>
-        public ItemsDataService(IDbContext context) : base(context)
+        public ItemsDataService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
+            itemApp = new ItemsTypeService(unitOfWork);
         }
         private string cacheKey = "watercloud_itemdetaildata_";
-        private string itemcacheKey = "watercloud_itemsdata_";
         //获取类名
         
         public async Task<List<ItemsDetailEntity>> GetList(string itemId = "", string keyword = "")
@@ -55,7 +57,7 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {
-            var itemcachedata =await uniwork.CheckCacheList<ItemsEntity>(itemcacheKey + "list");
+            var itemcachedata = await itemApp.GetList();
             var item = itemcachedata.Find(a => a.F_EnCode == enCode);
             var cachedata =await repository.CheckCacheList(cacheKey + "list");
             cachedata = cachedata.Where(a => a.F_DeleteMark == false && a.F_EnabledMark == true && a.F_ItemId == item.F_Id).OrderBy(a => a.F_SortCode).ToList();

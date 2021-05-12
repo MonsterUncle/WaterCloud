@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WaterCloud.Service.SystemManage;
 using System.Linq;
-using Chloe;
+using SqlSugar;
 using WaterCloud.Domain.SystemManage;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemSecurity
 {
@@ -24,9 +25,9 @@ namespace WaterCloud.Service.SystemSecurity
         private ModuleService moduleservice;
         //获取类名
         
-        public LogService(IDbContext context) : base(context)
+        public LogService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            moduleservice = new ModuleService(context);
+            moduleservice = new ModuleService(unitOfWork);
         }
         public async Task<List<LogEntity>> GetList(Pagination pagination, int timetype, string keyword="")
         {
@@ -167,7 +168,7 @@ namespace WaterCloud.Service.SystemSecurity
                 logEntity.Create();
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
-                    uniwork.Rollback();
+                    unitofwork.Rollback();
                     await repository.Insert(logEntity);
                 }
                 else
@@ -203,12 +204,12 @@ namespace WaterCloud.Service.SystemSecurity
         {
             try
             {
-                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).First();
                 if (moduleitem==null)
                 {
                     throw new Exception();
                 }
-                var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
+                var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).First();
                 return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type.ToString());
             }
             catch (Exception)
@@ -220,12 +221,12 @@ namespace WaterCloud.Service.SystemSecurity
         {
             try
             {
-                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).First();
                 if (moduleitem == null)
                 {
                     throw new Exception();
                 }
-                var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).FirstOrDefault();
+                var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).First();
                 return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type);
 
             }
@@ -247,7 +248,7 @@ namespace WaterCloud.Service.SystemSecurity
             }
             else
             {
-                var temp= (await moduleservice.GetList()).Where(a =>a.F_Id==module.F_ParentId).FirstOrDefault();
+                var temp= (await moduleservice.GetList()).Where(a =>a.F_Id==module.F_ParentId).First();
                 return await CreateModule(temp ,str);
             }
         }

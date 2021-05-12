@@ -8,17 +8,17 @@
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
-using Chloe.Annotations;
+using SqlSugar;
 
 namespace WaterCloud.Domain.SystemManage
 {
 	/// <summary>
 	/// QuickModule Entity Model
 	/// </summary>
-	[TableAttribute("sys_quickmodule")]
+	[SugarTable("sys_quickmodule")]
     public class QuickModuleEntity : IEntity<QuickModuleEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-						[ColumnAttribute("F_Id", IsPrimaryKey = true)]
+						[SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
 			public  String  F_Id { get; set; }
 					
 			public  String  F_ModuleId { get; set; }

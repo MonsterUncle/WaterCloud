@@ -12,19 +12,20 @@ using System;
 using System.Collections.Generic;
 using WaterCloud.Code;
 using System.Threading.Tasks;
-using Chloe;
 using WaterCloud.DataBase;
+using SqlSugar;
 
 namespace WaterCloud.Service.SystemSecurity
 {
     public class ServerStateService:IDenpendency
     {
-        private IRepositoryBase<ServerStateEntity> repository;
-        private IRepositoryBase uniwork;
-        public ServerStateService(IDbContext context)
+        private RepositoryBase<ServerStateEntity> repository;
+        private UnitOfWork uniwork;
+        public ServerStateService(ISqlSugarClient context)
         {
-            repository = new RepositoryBase<ServerStateEntity>(context);
-            uniwork = new RepositoryBase(context);
+            uniwork = new UnitOfWork(context);
+            repository = new RepositoryBase<ServerStateEntity>(uniwork);
+
         }
         public async Task<List<ServerStateEntity>> GetList(int timetype)
         {
@@ -53,7 +54,7 @@ namespace WaterCloud.Service.SystemSecurity
 
 		public async Task SubmitForm(ServerStateEntity entity)
         {
-            var old = repository.IQueryable(a => a.F_WebSite == entity.F_WebSite && a.F_Date == DateTime.Now.Date).FirstOrDefault();
+            var old = repository.IQueryable(a => a.F_WebSite == entity.F_WebSite && a.F_Date == DateTime.Now.Date).First();
             if (old != null)
             {
                 entity.F_Id = old.F_Id;

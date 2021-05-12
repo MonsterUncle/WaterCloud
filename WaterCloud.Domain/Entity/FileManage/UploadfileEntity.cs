@@ -1,5 +1,6 @@
 ﻿using System;
-using Chloe.Annotations;
+using Serenity.Data.Mapping;
+using SqlSugar;
 
 namespace WaterCloud.Domain.FileManage
 {
@@ -8,14 +9,14 @@ namespace WaterCloud.Domain.FileManage
     /// 日 期：2020-07-22 12:04
     /// 描 述：文件管理实体类
     /// </summary>
-    [TableAttribute("oms_uploadfile")]
+    [SugarTable("oms_uploadfile")]
     public class UploadfileEntity : IEntity<UploadfileEntity>,ICreationAudited
     {
         /// <summary>
         /// 主键Id
         /// </summary>
         /// <returns></returns>
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         /// <summary>
         /// 文件路径
@@ -77,7 +78,7 @@ namespace WaterCloud.Domain.FileManage
         /// </summary>
         /// <returns></returns>
         public string F_CreatorUserName { get; set; }
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         public string F_OrganizeName { get; set; }
     }
 }

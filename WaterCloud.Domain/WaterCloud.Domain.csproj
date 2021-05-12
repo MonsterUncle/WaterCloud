@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SqlSugarCore" Version="5.0.2.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj" />
     <ProjectReference Include="..\WaterCloud.Data\WaterCloud.DataBase.csproj" />
   </ItemGroup>

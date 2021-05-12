@@ -12,8 +12,9 @@ using System.Collections.Generic;
 using WaterCloud.Code;
 using System.Threading.Tasks;
 using System.Linq;
-using Chloe;
+using SqlSugar;
 using WaterCloud.Domain.SystemOrganize;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -24,27 +25,30 @@ namespace WaterCloud.Service.SystemManage
         /// </summary>
 
         private string cacheKey = "watercloud_quickmoduledata_";
-        public QuickModuleService(IDbContext context) : base(context)
+        public QuickModuleService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public async Task<object> GetTransferList(string userId)
         {
             var quicklist = repository.IQueryable(t => t.F_CreatorUserId == userId && t.F_EnabledMark == true).ToList();
             List<ModuleEntity> quicks = new List<ModuleEntity>();
-            var user = await uniwork.FindEntity<UserEntity>(userId);
+            var user = await repository.Db.Queryable<UserEntity>().InSingleAsync(userId);
             var roleId = user.F_RoleId;
             if (user.F_Account == GlobalContext.SystemConfig.SysemUserCode || user.F_IsAdmin == true)
             {
                 roleId = "admin";
             }
             var rolelist = roleId.Split(',');
-            var modulelist = uniwork.IQueryable<RoleAuthorizeEntity>(a => roleId.Contains(a.F_ObjectId) && a.F_ItemType == 1).InnerJoin<ModuleEntity>((a,b)=> a.F_ItemId == b.F_Id && b.F_IsMenu == true).Select((a, b) => a.F_ItemId).ToList();
+            var modulelist = repository.Db.Queryable<RoleAuthorizeEntity,ModuleEntity>((a,b)=>new JoinQueryInfos(
+                JoinType.Inner, a.F_ItemId == b.F_Id && b.F_IsMenu == true
+
+                )).Where(a => roleId.Contains(a.F_ObjectId) && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
             if (roleId == "admin")
             {
-                modulelist = uniwork.IQueryable<ModuleEntity>(a => a.F_EnabledMark == true && a.F_IsMenu == true && a.F_DeleteMark == false).Select(a => a.F_Id).ToList();
+                modulelist = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnabledMark == true && a.F_IsMenu == true && a.F_DeleteMark == false).Select(a => a.F_Id).ToList();
             }
             modulelist = modulelist.Distinct().ToList();
-            quicks = uniwork.IQueryable<ModuleEntity>(a => (modulelist.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_IsMenu == true && a.F_EnabledMark == true && a.F_UrlAddress != null)
+            quicks = repository.Db.Queryable<ModuleEntity>().Where(a => (modulelist.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_IsMenu == true && a.F_EnabledMark == true && a.F_UrlAddress != null)
                 .Select(a => new ModuleEntity
                 {
                     F_Id = a.F_Id,
@@ -67,27 +71,30 @@ namespace WaterCloud.Service.SystemManage
             var quicklist = repository.IQueryable(t => t.F_CreatorUserId == userId && t.F_EnabledMark == true);
             List<QuickModuleExtend> list = new List<QuickModuleExtend>();
             List<QuickModuleEntity> quicks = new List<QuickModuleEntity>();
-            uniwork.BeginTrans();
+            unitofwork.BeginTrans();
             if (quicklist.Count() == 0)
             {
-                var user = await uniwork.FindEntity<UserEntity>(userId);
+                var user = await repository.Db.Queryable<UserEntity>().InSingleAsync(userId);
                 var roleId = user.F_RoleId;
                 if (user.F_Account == GlobalContext.SystemConfig.SysemUserCode || user.F_IsAdmin == true)
                 {
                     roleId = "admin";
                 }
                 var rolelist = roleId.Split(',');
-                var modulelist = uniwork.IQueryable<RoleAuthorizeEntity>(a => roleId.Contains(a.F_ObjectId) && a.F_ItemType == 1).InnerJoin<ModuleEntity>((a, b) => a.F_ItemId == b.F_Id && b.F_IsMenu == true).Select((a, b) => a.F_ItemId).ToList();
+                var modulelist = repository.Db.Queryable<RoleAuthorizeEntity, ModuleEntity>((a, b) => new JoinQueryInfos(
+                 JoinType.Inner, a.F_ItemId == b.F_Id && b.F_IsMenu == true
+
+                 )).Where(a => roleId.Contains(a.F_ObjectId) && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
                 if (roleId == "admin")
                 {
-                    modulelist = uniwork.IQueryable<ModuleEntity>(a => a.F_EnabledMark == true && a.F_IsMenu == true && a.F_DeleteMark == false).Select(a => a.F_Id).ToList();
+                    modulelist = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnabledMark == true && a.F_IsMenu == true && a.F_DeleteMark == false).Select(a => a.F_Id).ToList();
                 }
-                var temp = uniwork.IQueryable<ModuleEntity>(a => a.F_IsPublic == true && a.F_IsMenu == true && a.F_EnabledMark == true && a.F_DeleteMark == false).Select(a => a.F_Id).ToList();
+                var temp = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_IsPublic == true && a.F_IsMenu == true && a.F_EnabledMark == true && a.F_DeleteMark == false).Select(a => a.F_Id).ToList();
                 modulelist.AddRange(temp);
                 modulelist = modulelist.Distinct().ToList();
                 foreach (var item in modulelist)
                 {
-                    var module = await uniwork.FindEntity<ModuleEntity>(a => a.F_Id == item && a.F_EnabledMark == true);
+                    var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.F_Id == item && a.F_EnabledMark == true).FirstAsync();
                     if (module != null && module.F_UrlAddress != null && list.Count < 8)
                     {
                         list.Add(new QuickModuleExtend
@@ -110,7 +117,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 foreach (var item in quicklist.ToList())
                 {
-                    var module = await uniwork.FindEntity<ModuleEntity>(a => a.F_Id == item.F_ModuleId && a.F_EnabledMark == true);
+                    var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.F_Id == item.F_ModuleId && a.F_EnabledMark == true).FirstAsync();
                     if (module != null)
                     {
                         list.Add(new QuickModuleExtend
@@ -129,9 +136,9 @@ namespace WaterCloud.Service.SystemManage
             }
             if (quicks.Count > 0)
             {
-                await uniwork.Insert(quicks);
+                await repository.Db.Insertable(quicks).ExecuteCommandAsync();
             }
-            uniwork.Commit();
+            unitofwork.Commit();
             return list;
         }
 
@@ -150,10 +157,10 @@ namespace WaterCloud.Service.SystemManage
                     list.Add(entity);
                 }
             }
-            uniwork.BeginTrans();
+            unitofwork.BeginTrans();
             await repository.Delete(t => t.F_CreatorUserId == currentuser.UserId);
             await repository.Insert(list);
-            uniwork.Commit();
+            unitofwork.Commit();
             var data =await CacheHelper.Get<Dictionary<string, List<QuickModuleExtend>>>(cacheKey + "list");
             if (data != null&&data.ContainsKey(currentuser.UserId))
             {

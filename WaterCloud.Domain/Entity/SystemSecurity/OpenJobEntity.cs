@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using System.ComponentModel;
-using Chloe.Annotations;
+using SqlSugar;
 using System.ComponentModel.DataAnnotations;
 
 namespace WaterCloud.Domain.SystemSecurity
@@ -17,10 +17,10 @@ namespace WaterCloud.Domain.SystemSecurity
     /// <summary>
 	/// 定时任务
 	/// </summary>
-    [Table("sys_openjob")]
+    [SugarTable("sys_openjob")]
     public partial class OpenJobEntity : IEntity<OpenJobEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         /// <summary>
         /// 任务名称

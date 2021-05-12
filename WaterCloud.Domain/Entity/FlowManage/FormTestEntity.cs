@@ -5,14 +5,14 @@
  * Website：
 *********************************************************************************/
 using System;
-using Chloe.Annotations;
+using SqlSugar;
 
 namespace WaterCloud.Domain.FlowManage
 {
-    [TableAttribute("oms_formtest")]
+    [SugarTable("oms_formtest")]
     public class FormTestEntity : IEntity<FormTestEntity>, ICreationAudited
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         public string F_UserName { get; set; }
         public string F_RequestType { get; set; }

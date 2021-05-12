@@ -14,17 +14,17 @@ using WaterCloud.Domain.SystemSecurity;
 using System.Threading.Tasks;
 using WaterCloud.Service.SystemOrganize;
 using WaterCloud.Domain.SystemOrganize;
-using Chloe;
+using SqlSugar;
 
 namespace WaterCloud.Web.Controllers
 {
-    public class LoginController : Controller
+	public class LoginController : Controller
     {
         public FilterIPService _filterIPService { get; set; }
         public UserService _userService { get; set; }
         public LogService _logService { get; set; }
         public SystemSetService _setService { get; set; }
-        public IDbContext _context { get; set; }
+        public ISqlSugarClient _context { get; set; }
         [HttpGet]
         public virtual async Task<ActionResult> Index()
         {
@@ -158,8 +158,7 @@ namespace WaterCloud.Web.Controllers
                 operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
                 SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
-                operatorModel.DbString = setEntity.F_DbString;
-                operatorModel.DBProvider = setEntity.F_DBProvider;
+                operatorModel.DbNumber = setEntity.F_DBNumber;
                 if (userEntity.F_Account == GlobalContext.SystemConfig.SysemUserCode)
                 {
                     operatorModel.IsSystem = true;

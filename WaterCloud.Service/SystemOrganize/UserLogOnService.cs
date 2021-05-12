@@ -4,10 +4,11 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using Chloe;
+using SqlSugar;
 using System;
 using System.Threading.Tasks;
 using WaterCloud.Code;
+using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service.SystemOrganize
@@ -19,7 +20,7 @@ namespace WaterCloud.Service.SystemOrganize
         /// </summary>
 
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
-        public UserLogOnService(IDbContext context) : base(context)
+        public UserLogOnService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
 
@@ -30,7 +31,7 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task RevisePassword(string userPassword,string keyValue)
         {
             UserLogOnEntity entity = new UserLogOnEntity();
-            entity = repository.IQueryable(a => a.F_UserId == keyValue).FirstOrDefault() ;
+            entity = repository.IQueryable(a => a.F_UserId == keyValue).First() ;
             if (entity == null)
             {
                 entity = new UserLogOnEntity();
@@ -79,7 +80,7 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task ReviseSelfPassword(string userPassword, string keyValue)
         {
             UserLogOnEntity entity = new UserLogOnEntity();
-            entity = repository.IQueryable(a => a.F_UserId == keyValue).FirstOrDefault();
+            entity = repository.IQueryable(a => a.F_UserId == keyValue).First();
             entity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
             entity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.F_UserSecretkey).ToLower(), 32).ToLower();
             await repository.Update(entity);

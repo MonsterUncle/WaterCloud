@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Chloe.Annotations;
+using SqlSugar;
 using WaterCloud.Domain;
 
 namespace WaterCloud.Domain.SystemManage

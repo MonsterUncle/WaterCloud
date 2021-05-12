@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Chloe.Annotations;
+using Serenity.Data.Mapping;
+using SqlSugar;
 
 namespace WaterCloud.Domain.FlowManage
 {
@@ -9,14 +10,14 @@ namespace WaterCloud.Domain.FlowManage
     /// 日 期：2020-07-14 09:18
     /// 描 述：我的流程实体类
     /// </summary>
-    [TableAttribute("oms_flowinstance")]
+    [SugarTable("oms_flowinstance")]
     public class FlowinstanceEntity : IEntity<FlowinstanceEntity>, ICreationAudited
     {
         /// <summary>
         /// 主键Id
         /// </summary>
         /// <returns></returns>
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         /// <summary>
         /// 流程实例模板Id
@@ -154,7 +155,7 @@ namespace WaterCloud.Domain.FlowManage
         /// 如果下个执行节点是运行时指定执行者。需要传指定的类型
         /// <para>取值为RUNTIME_SPECIAL_ROLE、RUNTIME_SPECIAL_USER</para>
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         public string NextNodeDesignateType { get; set; }
 
         /// <summary>
@@ -162,13 +163,13 @@ namespace WaterCloud.Domain.FlowManage
         /// <para>如果NodeDesignateType为RUNTIME_SPECIAL_ROLE，则该值为指定的角色</para>
         /// <para>如果NodeDesignateType为RUNTIME_SPECIAL_USER，则该值为指定的用户</para>
         /// </summary>
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         public string[] NextNodeDesignates { get; set; }
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         public string NextMakerName { get; set; }
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         public string CurrentMakerName { get; set; }
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         public string CurrentNodeDesignateType { get; set; }
     }
 }

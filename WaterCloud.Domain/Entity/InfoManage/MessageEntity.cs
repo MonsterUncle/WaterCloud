@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Chloe.Annotations;
+using Serenity.Data.Mapping;
+using SqlSugar;
 
 namespace WaterCloud.Domain.InfoManage
 {
@@ -9,14 +10,14 @@ namespace WaterCloud.Domain.InfoManage
     /// 日 期：2020-07-29 16:41
     /// 描 述：通知管理实体类
     /// </summary>
-    [TableAttribute("oms_message")]
+    [SugarTable("oms_message")]
     public class MessageEntity : IEntity<MessageEntity>,ICreationAudited
     {
         /// <summary>
         /// 主键Id
         /// </summary>
         /// <returns></returns>
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         /// <summary>
         /// 信息类型（通知、私信、处理）
@@ -80,7 +81,7 @@ namespace WaterCloud.Domain.InfoManage
         /// </summary>
         /// <returns></returns>
         public bool? F_ClickRead { get; set; }
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         public string companyId { get; set; }
     }
 }

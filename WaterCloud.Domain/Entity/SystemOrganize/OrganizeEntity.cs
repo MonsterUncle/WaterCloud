@@ -4,16 +4,17 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using Chloe.Annotations;
+using Serenity.Data.Mapping;
+using SqlSugar;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace WaterCloud.Domain.SystemOrganize
 {
-    [TableAttribute("sys_organize")]
+    [SugarTable("sys_organize")]
     public class OrganizeEntity : IEntity<OrganizeEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         [Required(ErrorMessage = "父级不能为空")]
         public string F_ParentId { get; set; }
@@ -47,7 +48,7 @@ namespace WaterCloud.Domain.SystemOrganize
         public string F_LastModifyUserId { get; set; }
         public DateTime? F_DeleteTime { get; set; }
         public string F_DeleteUserId { get; set; }
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         //tablecheck字段
         public bool LAY_CHECKED { get; set; }
     }

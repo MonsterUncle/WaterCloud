@@ -23,7 +23,8 @@ using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
 using System;
-using Chloe.Infrastructure.Interception;
+using SqlSugar;
+using System.Collections.Generic;
 
 namespace WaterCloud.Web
 {
@@ -73,10 +74,17 @@ namespace WaterCloud.Web
 
             #region 依赖注入
             //注入数据库连接
-            services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
+            // 注册 SqlSugar 客户端
+            services.AddScoped<ISqlSugarClient>(u =>
             {
-                return DBContexHelper.Contex();
+                var config = DBContexHelper.Contex();
+                config.ConfigId = "0";
+                List<ConnectionConfig> list = new List<ConnectionConfig>();
+                list.Add(config);
+                var sqlSugarClient = new SqlSugarClient(list);
+                return sqlSugarClient;
             });
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
             #region 注入 Quartz调度类
             services.AddSingleton<JobExecute>();
             //注册ISchedulerFactory的实例。
@@ -139,7 +147,7 @@ namespace WaterCloud.Web
             //更新数据库管理员和主系统
             try
             {
-                using (var context = DBContexHelper.Contex())
+                using (var context = new UnitOfWork(new SqlSugarClient(DBContexHelper.Contex())))
                 {
                     var _setService = new Service.SystemOrganize.SystemSetService(context);
                     Domain.SystemOrganize.SystemSetEntity temp = new Domain.SystemOrganize.SystemSetEntity();
@@ -224,9 +232,6 @@ namespace WaterCloud.Web
             app.UseCors("CorsPolicy");
             if (WebHostEnvironment.IsDevelopment())
             {
-                //打印sql
-                IDbCommandInterceptor interceptor = new DbCommandInterceptor();
-                DbInterception.Add(interceptor);
                 GlobalContext.SystemConfig.Debug = true;
                 app.UseDeveloperExceptionPage();
             }

@@ -3,11 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using WaterCloud.Code;
-using Chloe;
+using SqlSugar;
 using WaterCloud.Domain.SystemManage;
 using WaterCloud.Service.CommonService;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Domain.FlowManage;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -20,7 +21,7 @@ namespace WaterCloud.Service.SystemManage
     {
         private string cacheKey = "watercloud_flowschemedata_";
         
-        public FlowschemeService(IDbContext context) : base(context)
+        public FlowschemeService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         #region 获取数据
@@ -52,7 +53,7 @@ namespace WaterCloud.Service.SystemManage
                 query = query.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword));
             }
             query = GetDataPrivilege("u","", query);
-            return query.OrderByDesc(t => t.F_CreatorTime).ToList();
+            return query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToList();
         }
 
         public async Task<List<FlowschemeEntity>> GetLookList(Pagination pagination,string keyword = "")
@@ -83,7 +84,7 @@ namespace WaterCloud.Service.SystemManage
         {
             var cachedata = await repository.CheckCache(cacheKey, keyValue);
             var temp = cachedata.MapTo<FlowschemeExtend>();
-            var form = await uniwork.FindEntity<FormEntity>(cachedata.F_FrmId);
+            var form = await repository.Db.Queryable<FormEntity>().InSingleAsync(cachedata.F_FrmId);
             temp.F_WebId = form.F_WebId;
             temp.F_FrmContentData = form.F_ContentData;
             temp.F_FrmContent = form.F_Content;
@@ -97,7 +98,7 @@ namespace WaterCloud.Service.SystemManage
                 if (temp.NextNodeDesignateType == Setinfo.SPECIAL_USER)
                 {
                     temp.NextNodeDesignates = runtime.nextNode.setInfo.NodeDesignateData.users;
-                    temp.NextMakerName = string.Join(',', uniwork.IQueryable<UserEntity>(a => temp.NextNodeDesignates.Contains(a.F_Id)).Select(a => a.F_RealName).ToList());
+                    temp.NextMakerName = string.Join(',', repository.Db.Queryable<UserEntity>().Where(a => temp.NextNodeDesignates.Contains(a.F_Id)).Select(a => a.F_RealName).ToList());
                 }
                 else if (temp.NextNodeDesignateType == Setinfo.SPECIAL_ROLE)
                 {
@@ -106,11 +107,11 @@ namespace WaterCloud.Service.SystemManage
                     List<string> users = new List<string>();
                     foreach (var item in temp.NextNodeDesignates)
                     {
-                        var usertemp = uniwork.IQueryable<UserEntity>(a => a.F_RoleId.Contains(item)).ToList();
+                        var usertemp = repository.Db.Queryable<UserEntity>().Where(a => a.F_RoleId.Contains(item)).ToList();
                         var tempList = new List<UserEntity>();
                         if (runtime.nextNode.setInfo.NodeDesignateData.currentDepart)
                         {
-                            var currentDepartment = uniwork.FindEntity<UserEntity>(currentuser.UserId).GetAwaiter().GetResult().F_DepartmentId.Split(',').ToList();
+                            var currentDepartment = repository.Db.Queryable<UserEntity>().InSingle(currentuser.UserId).F_DepartmentId.Split(',').ToList();
                             foreach (var user in usertemp)
                             {
                                 var nextCurrentDepartment = user.F_DepartmentId.Split(',').ToList();
@@ -128,7 +129,7 @@ namespace WaterCloud.Service.SystemManage
                         users.AddRange(tempFinal);
                     }
                     users = users.Distinct().ToList();
-                    temp.NextMakerName = string.Join(',', uniwork.IQueryable<UserEntity>(a => users.Contains(a.F_Id)).Select(a => a.F_RealName).ToList());
+                    temp.NextMakerName = string.Join(',', repository.Db.Queryable<UserEntity>().Where(a => users.Contains(a.F_Id)).Select(a => a.F_RealName).ToList());
                 }
             }
             return temp;

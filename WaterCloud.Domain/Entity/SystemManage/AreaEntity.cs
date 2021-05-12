@@ -6,14 +6,15 @@
 *********************************************************************************/
 using System;
 using System.ComponentModel.DataAnnotations;
-using Chloe.Annotations;
+using SqlSugar;
+using Serenity.Data.Mapping;
 
 namespace WaterCloud.Domain.SystemManage
 {
-    [TableAttribute("sys_area")]
+    [SugarTable("sys_area")]
     public class AreaEntity : IEntity<AreaEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         [Required(ErrorMessage = "父级不能为空")]
         public string F_ParentId { get; set; }
@@ -36,7 +37,7 @@ namespace WaterCloud.Domain.SystemManage
         public DateTime? F_DeleteTime { get; set; }
         public string F_DeleteUserId { get; set; }
 
-        [NotMapped]
+        [SugarColumn(IsIgnore=true)]
         //使用懒加载加此字段
         public bool haveChild { get; set; }
     }

@@ -1,21 +1,12 @@
-﻿using WaterCloud.Service.SystemManage;
-using WaterCloud.Code;
+﻿using WaterCloud.Code;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Http;
-using Serenity.Web;
 using Microsoft.AspNetCore.Mvc;
-using System.Web;
-using WaterCloud.Service.SystemOrganize;
-using Chloe;
-using WaterCloud.DataBase;
-using System.Reflection;
-using Microsoft.AspNetCore.Authorization;
 /// <summary>
 /// 防重复锁
 /// </summary>
 namespace WaterCloud.Web
 {
-    public class HandlerLockAttribute : ActionFilterAttribute
+	public class HandlerLockAttribute : ActionFilterAttribute
     {
         public HandlerLockAttribute()
         {

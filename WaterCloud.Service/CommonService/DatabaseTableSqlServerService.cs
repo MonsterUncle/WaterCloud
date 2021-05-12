@@ -1,4 +1,4 @@
-﻿using Chloe;
+﻿using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,9 +13,9 @@ using WaterCloud.Domain;
 
 namespace WaterCloud.Service.CommonService
 {
-    public class DatabaseTableSqlServerService : RepositoryBase, IDatabaseTableService
+    public class DatabaseTableSqlServerService : UnitOfWork, IDatabaseTableService
     {
-        public DatabaseTableSqlServerService(IDbContext context) : base(context)
+        public DatabaseTableSqlServerService(ISqlSugarClient context) : base(context)
         {
 
         }
@@ -24,7 +24,7 @@ namespace WaterCloud.Service.CommonService
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT id Id,name TableName FROM sysobjects WHERE (xtype = 'u' or xtype='V') order by name");
-            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list =await GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
             if (!tableName.IsEmpty())
             {
                 list = list.Where(p => p.TableName.Contains(tableName));
@@ -36,16 +36,13 @@ namespace WaterCloud.Service.CommonService
         public async Task<List<TableInfo>> GetTablePageList(string tableName, Pagination pagination)
         {
             StringBuilder strSql = new StringBuilder();
-            var parameter = new List<DbParam>();
             strSql.Append(@"SELECT id Id,name TableName,crdate CreateTime FROM sysobjects WHERE (xtype = 'u' or xtype='V')");
-
+            var query = GetDbClient().SqlQueryable<TableInfo>(strSql.ToString());
             if (!tableName.IsEmpty())
             {
-                strSql.Append(" AND name like @TableName ");
-                parameter.Add(new DbParam("@TableName", '%' + tableName + '%'));
+                query = query.Where(a => a.TableName.Contains(tableName));
             }
-
-            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
+            IEnumerable<TableInfo> list = await query.ToListAsync();
             pagination.records = list.Count();
             var tempData = list.OrderByDescending(a=>a.CreateTime).Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows).AsQueryable().ToList();
             await SetTableDetail(tempData);
@@ -66,12 +63,9 @@ namespace WaterCloud.Service.CommonService
 										                    WHERE sc.object_id = a.id AND sc.name = b.name)
                             FROM sysobjects a, syscolumns b  
                             LEFT OUTER JOIN syscomments e ON b.cdefault = e.id  
-                            LEFT OUTER JOIN (Select g.id, g.colid FROM sysindexes f, sysindexkeys g Where (f.id=g.id)AND(f.indid=g.indid)AND(f.indid>0)AND(f.indid<255)AND(f.status&2048)<>0) h ON (b.id=h.id)AND(b.colid=h.colid)  
-                            Where (a.id=b.id)AND(a.id=object_id(@TableName))   
-                                  ORDER BY b.colid");
-            var parameter = new List<DbParam>();
-            parameter.Add(new DbParam("@TableName", tableName));
-            var list =await FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
+                            LEFT OUTER JOIN (Select g.id, g.colid FROM sysindexes f, sysindexkeys g Where (f.id=g.id)AND(f.indid=g.indid)AND(f.indid>0)AND(f.indid<255)AND(f.status&2048)<>0) h ON (b.id=h.id)AND(b.colid=h.colid)"  
+                            +$"Where (a.id=b.id)AND(a.id=object_id({tableName})) ORDER BY b.colid");
+            var list =await GetDbClient().SqlQueryable<TableFieldInfo>(strSql.ToString()).ToListAsync();
             return list.ToList();
         }
         #endregion
@@ -101,7 +95,7 @@ namespace WaterCloud.Service.CommonService
                                            AND sysindexkeys.indid = sysindexes.indid 
                                            AND syscolumns.colid = sysindexkeys.colid";
 
-            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list = await GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
             return list.ToList();
         }
 
@@ -115,9 +109,9 @@ namespace WaterCloud.Service.CommonService
             foreach (TableInfo table in list)
             {
                 table.TableKey = string.Join(",", detailList.Where(p => p.Id == table.Id).Select(p => p.TableKey));
-                table.TableKeyName = detailList.Where(p => p.Id == table.Id).Select(p => p.TableKeyName).FirstOrDefault();
-                table.TableCount = detailList.Where(p => p.Id == table.Id).Select(p => p.TableCount).FirstOrDefault();
-                table.CreateTime = detailList.Where(p => p.Id == table.Id).Select(p => p.CreateTime).FirstOrDefault();
+                table.TableKeyName = detailList.Where(p => p.Id == table.Id).Select(p => p.TableKeyName).First();
+                table.TableCount = detailList.Where(p => p.Id == table.Id).Select(p => p.TableCount).First();
+                table.CreateTime = detailList.Where(p => p.Id == table.Id).Select(p => p.CreateTime).First();
             }
         }
         #endregion

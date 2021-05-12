@@ -4,16 +4,16 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using Chloe.Annotations;
+using SqlSugar;
 using System;
 
 namespace WaterCloud.Domain.SystemOrganize
 {
-    [TableAttribute("sys_roleauthorize")]
+    [SugarTable("sys_roleauthorize")]
 
     public class RoleAuthorizeEntity : IEntity<RoleAuthorizeEntity>, ICreationAudited
     {
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         public int? F_ItemType { get; set; }
         public string F_ItemId { get; set; }

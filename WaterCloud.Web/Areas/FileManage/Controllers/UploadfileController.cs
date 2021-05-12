@@ -172,15 +172,6 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
         public async Task<ActionResult> Download(string keyValue)
         {
             var data = await _service.GetForm(keyValue);
-            string fileValue = "";
-            if (data.F_FileBy == "公司logo")
-            {
-                fileValue = "icon";
-            }
-            else
-            {
-                fileValue = "file";
-            }
             string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + data.F_FilePath;
             if (!FileHelper.IsExistFile(filePath))
             {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Chloe.Annotations;
+using SqlSugar;
 
 namespace WaterCloud.Domain.ContentManage
 {
@@ -9,14 +9,14 @@ namespace WaterCloud.Domain.ContentManage
     /// 日 期：2020-06-09 19:42
     /// 描 述：新闻类别实体类
     /// </summary>
-    [TableAttribute("cms_articlecategory")]
+    [SugarTable("cms_articlecategory")]
     public class ArticleCategoryEntity : IEntity<ArticleCategoryEntity>,ICreationAudited,IModificationAudited,IDeleteAudited
     {
         /// <summary>
         /// 主键Id
         /// </summary>
         /// <returns></returns>
-        [ColumnAttribute("F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
         public string F_Id { get; set; }
         /// <summary>
         /// 类别名称

@@ -1,5 +1,5 @@
 ﻿using System;
-using Chloe.Annotations;
+using SqlSugar;
 
 namespace WaterCloud.Domain.SystemOrganize
 {
@@ -8,7 +8,7 @@ namespace WaterCloud.Domain.SystemOrganize
     /// 日 期：2020-08-06 08:54
     /// 描 述：角色类别实体扩展类
     /// </summary>
-    [TableAttribute("sys_role")]
+    [SugarTable("sys_role")]
     public class RoleExtend : RoleEntity
     {
         //使用导入错误信息

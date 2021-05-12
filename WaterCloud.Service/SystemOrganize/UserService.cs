@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Chloe;
+using SqlSugar;
 using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemOrganize
@@ -26,9 +26,9 @@ namespace WaterCloud.Service.SystemOrganize
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         //获取类名
         
-        public UserService(IDbContext context) : base(context)
+        public UserService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            syssetApp = new SystemSetService(context);
+            syssetApp = new SystemSetService(unitOfWork);
         }
 
         public async Task<List<UserExtend>> GetLookList(SoulPage<UserExtend> pagination, string keyword)
@@ -45,15 +45,15 @@ namespace WaterCloud.Service.SystemOrganize
             dic.Add("F_Gender", sexTemp);
             pagination = ChangeSoulData(dic, pagination);
             //获取数据权限
-            var query = GetQuery().Where(u => u.F_IsAdmin == false);
+            var query = GetQuery().Where(a => a.F_IsAdmin == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(u => u.F_Account.Contains(keyword) || u.F_RealName.Contains(keyword)||u.F_MobilePhone.Contains(keyword));
+                query = query.Where(a => a.F_Account.Contains(keyword) || a.F_RealName.Contains(keyword)||a.F_MobilePhone.Contains(keyword));
             }
-            query = GetDataPrivilege("u", "", query);
+            query = GetDataPrivilege("a", "", query);
             var data = await repository.OrderList(query, pagination);
-            var roles = uniwork.IQueryable<RoleEntity>().ToList();
-            var orgs = uniwork.IQueryable<OrganizeEntity>().ToList();
+            var roles = repository.Db.Queryable<RoleEntity>().ToList();
+            var orgs = repository.Db.Queryable<OrganizeEntity>().ToList();
             foreach (var item in data)
             {
                 string[] roleIds = item.F_RoleId.Split(',');
@@ -65,14 +65,14 @@ namespace WaterCloud.Service.SystemOrganize
         }
         public async Task<List<UserExtend>> GetList(string keyword)
         {
-            var cachedata = GetQuery().Where(t => t.F_IsAdmin == false);
+            var cachedata = GetQuery().Where(a => a.F_IsAdmin == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                cachedata = cachedata.Where(t => t.F_Account.Contains(keyword) || t.F_RealName.Contains(keyword) || t.F_MobilePhone.Contains(keyword));
+                cachedata = cachedata.Where(a => a.F_Account.Contains(keyword) || a.F_RealName.Contains(keyword) || a.F_MobilePhone.Contains(keyword));
             }
-            var data = cachedata.OrderBy(t => t.F_Account).ToList();
-            var roles = uniwork.IQueryable<RoleEntity>().ToList();
-            var orgs = uniwork.IQueryable<OrganizeEntity>().ToList();
+            var data = cachedata.OrderBy(a => a.F_Account).ToList();
+            var roles = repository.Db.Queryable<RoleEntity>().ToList();
+            var orgs = repository.Db.Queryable<OrganizeEntity>().ToList();
             foreach (var item in data)
             {
                 string[] roleIds = item.F_RoleId.Split(',');
@@ -82,11 +82,12 @@ namespace WaterCloud.Service.SystemOrganize
             }
             return data;
         }
-        private IQuery<UserExtend> GetQuery()
+        private ISugarQueryable<UserExtend> GetQuery()
         {
-            var query = repository.IQueryable(t => t.F_DeleteMark == false)
-                .LeftJoin<RoleEntity>((a, b) => a.F_DutyId == b.F_Id)
-                .LeftJoin<SystemSetEntity>((a,b,c)=>a.F_OrganizeId==c.F_Id)
+            var query = repository.Db.Queryable<UserEntity, RoleEntity, SystemSetEntity>((a,b,c)=>new JoinQueryInfos(
+                JoinType.Left, a.F_DutyId == b.F_Id,
+                JoinType.Left, a.F_OrganizeId == c.F_Id
+                )).Where(a => a.F_DeleteMark == false)
                 .Select((a, b,c) => new UserExtend
                 {
                     F_Id = a.F_Id,
@@ -158,12 +159,12 @@ namespace WaterCloud.Service.SystemOrganize
             if (cachedata.F_RoleId != null)
             {
                 temp = cachedata.F_RoleId.Split(',');
-                cachedata.F_RoleName = string.Join(",", uniwork.IQueryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                cachedata.F_RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
             if (cachedata.F_DepartmentId != null)
             {
                 temp = cachedata.F_DepartmentId.Split(',');
-                cachedata.F_DepartmentName = string.Join(",", uniwork.IQueryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                cachedata.F_DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
 
             return cachedata;
@@ -175,21 +176,21 @@ namespace WaterCloud.Service.SystemOrganize
             if (cachedata.F_RoleId != null)
             {
                 temp = cachedata.F_RoleId.Split(',');
-                cachedata.F_RoleName = string.Join(",", uniwork.IQueryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                cachedata.F_RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
             if (cachedata.F_DepartmentId != null)
             {
                 temp = cachedata.F_DepartmentId.Split(',');
-                cachedata.F_DepartmentName = string.Join(",", uniwork.IQueryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                cachedata.F_DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
             return GetFieldsFilterData(cachedata);
         }
         public async Task DeleteForm(string keyValue)
         {
-            uniwork.BeginTrans();
+            unitofwork.BeginTrans();
             await repository.Delete(t => t.F_Id == keyValue);
-            await uniwork.Delete<UserLogOnEntity>(t => t.F_UserId == keyValue);
-            uniwork.Commit();
+            await repository.Db.Deleteable<UserLogOnEntity>(t => t.F_UserId == keyValue).ExecuteCommandAsync();
+            unitofwork.Commit();
             await CacheHelper.Remove(cacheKey + keyValue);
             await CacheHelper.Remove(cacheKey + "list");
         }
@@ -211,7 +212,7 @@ namespace WaterCloud.Service.SystemOrganize
                 userLogOnEntity.F_LogOnCount = 0;
                 await CacheHelper.Remove(cacheKey + "list");
             }
-            uniwork.BeginTrans();
+            unitofwork.BeginTrans();
             if (!string.IsNullOrEmpty(keyValue))
             {
                 await repository.Update(userEntity);
@@ -223,9 +224,9 @@ namespace WaterCloud.Service.SystemOrganize
                 userLogOnEntity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                 userLogOnEntity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userLogOnEntity.F_UserPassword, 32).ToLower(), userLogOnEntity.F_UserSecretkey).ToLower(), 32).ToLower();
                 await repository.Insert(userEntity);
-                await uniwork.Insert(userLogOnEntity);
+                await repository.Db.Insertable(userLogOnEntity).ExecuteCommandAsync();
             }
-            uniwork.Commit();
+            unitofwork.Commit();
         }
         public async Task UpdateForm(UserEntity userEntity)
         {
@@ -244,11 +245,12 @@ namespace WaterCloud.Service.SystemOrganize
             //根据登录公司查找公司
             if (!string.IsNullOrEmpty(localurl))
             {
-                var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).FirstOrDefault();
+                var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).First();
                 if (setTemp!=null)
                 {
-                    repository = new RepositoryBase<UserEntity>(setTemp.F_DbString,setTemp.F_DBProvider);
-                    uniwork = new RepositoryBase(setTemp.F_DbString, setTemp.F_DBProvider);
+                    unitofwork.GetDbClient().ChangeDatabase(setTemp.F_DBNumber);
+                    repository = new RepositoryBase<UserEntity>(unitofwork);
+                    unitofwork = new UnitOfWork(setTemp.F_DbString, setTemp.F_DBProvider);
                 }
             }
             UserEntity userEntity =await repository.FindEntity(t => t.F_Account == username);
@@ -261,7 +263,7 @@ namespace WaterCloud.Service.SystemOrganize
                     if (userLogOnEntity==null)
                     {
                         userLogOnEntity = new OperatorUserInfo();
-                        UserLogOnEntity entity =await uniwork.FindEntity<UserLogOnEntity>(userEntity.F_Id);
+                        UserLogOnEntity entity =await repository.Db.Queryable<UserLogOnEntity>().InSingleAsync(userEntity.F_Id);
                         userLogOnEntity.F_UserPassword = entity.F_UserPassword;
                         userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
                         userLogOnEntity.F_AllowEndTime = entity.F_AllowEndTime;
@@ -288,7 +290,7 @@ namespace WaterCloud.Service.SystemOrganize
                         if (userEntity.F_Account != GlobalContext.SystemConfig.SysemUserCode)
                         {
                             var list = userEntity.F_RoleId.Split(',');
-                            var rolelist =uniwork.IQueryable<RoleEntity>(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
+                            var rolelist =repository.Db.Queryable<RoleEntity>().Where(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
                             if (rolelist.Count() == 0)
                             {
                                 throw new Exception("账户未设置权限,请联系管理员");
