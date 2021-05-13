@@ -58,7 +58,7 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
         {
             if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.field = "F_CreatorTime";
+                pagination.field = "F_Id";
                 pagination.order = "desc";
             }
             var data = await _service.GetLookList(pagination, type, keyword);
