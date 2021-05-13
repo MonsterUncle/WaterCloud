@@ -61,9 +61,5 @@ namespace WaterCloud.Code.Model
         public string HomePage { get; set; }
         public string MainProgram { get; set; }
         public bool? LocalLAN { get; set; }
-        /// <summary>
-        /// 雪花id配置
-        /// </summary>
-        public int WorkId { get; set; }
     }
 }
