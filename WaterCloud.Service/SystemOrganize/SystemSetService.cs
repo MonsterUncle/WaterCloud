@@ -16,7 +16,6 @@ namespace WaterCloud.Service.SystemOrganize
     public class SystemSetService : DataFilterService<SystemSetEntity>, IDenpendency
     {
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
-        private string cacheKeyUser = "watercloud_userdata_";
         
         public SystemSetService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -114,7 +113,6 @@ namespace WaterCloud.Service.SystemOrganize
                     {
                         F_Account = entity.F_AdminAccount
                     }).Where(a => a.F_Id == user.F_Id).ExecuteCommandAsync();
-                    await CacheHelper.Remove(cacheKeyUser + user.F_Id);
                     await repository.Db.Updateable<UserLogOnEntity>(a => new UserLogOnEntity
                     {
                         F_UserPassword = userinfo.F_UserPassword,

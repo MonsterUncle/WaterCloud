@@ -16,11 +16,6 @@ namespace WaterCloud.CodeGenerator
 {
     public class SingleTableTemplate
     {
-        private string buttoncacheKey = "watercloud_modulebuttondata_";
-        private string fieldscacheKey = "watercloud_modulefieldsdata_";
-        private string cacheKey = "watercloud_moduleldata_";
-        private string quickcacheKey = "watercloud_quickmoduledata_";
-        private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         private UnitOfWork uniwork;
         public SingleTableTemplate(ISqlSugarClient context)
@@ -1348,14 +1343,7 @@ namespace WaterCloud.CodeGenerator
                     await uniwork.GetDbClient().Insertable(moduleFieldsList).ExecuteCommandAsync();
                 }
                 uniwork.Commit();
-                await CacheHelper.Remove(fieldscacheKey + "list");
-                await CacheHelper.Remove(buttoncacheKey + "list");
-                await CacheHelper.Remove(cacheKey + "list");
-                await CacheHelper.Remove(quickcacheKey + "list");
-                await CacheHelper.Remove(initcacheKey + "list");
-                await CacheHelper.Remove(initcacheKey + "modulebutton_list");
-                await CacheHelper.Remove(initcacheKey + "modulefields_list");
-                await CacheHelper.Remove(authorizecacheKey + "list");
+                await CacheHelper.Remove(authorizecacheKey+ OperatorProvider.Provider.GetCurrent().DbNumber+ "_list");
                 FileHelper.CreateFile(indexPath, codeIndex);
                 result.Add(new KeyValue { Key = "列表页", Value = indexPath, Description = "生成成功！" });
             }

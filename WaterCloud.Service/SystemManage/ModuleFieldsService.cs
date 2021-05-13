@@ -17,9 +17,6 @@ namespace WaterCloud.Service.SystemManage
     /// </summary>
     public class ModuleFieldsService : DataFilterService<ModuleFieldsEntity>, IDenpendency
     {
-        private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
-        //获取类名
-
         public ModuleFieldsService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
@@ -79,7 +76,6 @@ namespace WaterCloud.Service.SystemManage
         public async Task DeleteForm(string keyValue)
         {
             await repository.Delete(t => t.F_Id == keyValue);
-            await CacheHelper.Remove(authorizecacheKey + "list");
         }
 
         public async Task SubmitCloneFields(string moduleId, string ids)
@@ -90,7 +86,7 @@ namespace WaterCloud.Service.SystemManage
             var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.F_Id == moduleId).FirstAsync();
             if (string.IsNullOrEmpty(module.F_UrlAddress) || module.F_Target != "iframe")
             {
-                throw new Exception("框架页才能创建按钮");
+                throw new Exception("框架页才能创建字段");
             }
             foreach (string item in ArrayId)
             {
@@ -100,7 +96,6 @@ namespace WaterCloud.Service.SystemManage
                 entitys.Add(moduleFieldsEntity);
             }
             await repository.Insert(entitys);
-            await CacheHelper.Remove(authorizecacheKey + "list");
         }
 
         public async Task<List<ModuleFieldsEntity>> GetListByRole(string roleid)

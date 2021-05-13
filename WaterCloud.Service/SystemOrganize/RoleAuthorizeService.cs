@@ -140,7 +140,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             var authorizeurldata = new List<AuthorizeActionModel>();
             var rolelist = user.F_RoleId.Split(',');
-            var cachedata =await CacheHelper.Get<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey +"_"+repository.Db.CurrentConnectionConfig.ConfigId+ "_list");
+            var cachedata =await CacheHelper.Get<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey +repository.Db.CurrentConnectionConfig.ConfigId+ "_list");
             if (cachedata == null)
             {
                 cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
