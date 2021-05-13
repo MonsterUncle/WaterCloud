@@ -42,8 +42,9 @@
 - 租户管理(未实现，理论阶段)
 
 
-- .net4.5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net4.5
-- .netcore3.1版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/core3.1
+- .net5-SqlSugar版地址：https://gitee.com/qian_wei_hong/WaterCloud
+- .net4.5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net4.5-Chloe
+- .netcore3.1版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/core3.1-Chloe
 - 项目演示地址：http://106.75.169.226:5000/  （账号：admin 密码：0000，数据库2个小时还原一次）
 - 文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
 
