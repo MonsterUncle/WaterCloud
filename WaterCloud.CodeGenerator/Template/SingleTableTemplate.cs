@@ -194,6 +194,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using WaterCloud.Code;");
             sb.AppendLine("using SqlSugar;");
+            sb.AppendLine("using WaterCloud.DataBase;");
             sb.AppendLine("using WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule + ";");
             sb.AppendLine();
 
