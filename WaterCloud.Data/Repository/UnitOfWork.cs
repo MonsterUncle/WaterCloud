@@ -20,10 +20,14 @@ namespace WaterCloud.DataBase
     /// </summary>
     public class UnitOfWork: IUnitOfWork,IDisposable
     {
-        private static int commandTimeout = GlobalContext.SystemConfig.CommandTimeout;
         private readonly ISqlSugarClient _context;
         public UnitOfWork(ISqlSugarClient context)
         {
+            int commandTimeout =30;
+			if (GlobalContext.SystemConfig!=null)
+			{
+                commandTimeout = GlobalContext.SystemConfig.CommandTimeout;
+            }
             _context = context;
             _context.Ado.CommandTimeOut = commandTimeout;
             _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
@@ -36,6 +40,11 @@ namespace WaterCloud.DataBase
         public UnitOfWork(string ConnectStr, string providerName)
         {
             _context = new SqlSugarClient(DBContexHelper.Contex(ConnectStr, providerName));
+            int commandTimeout = 30;
+            if (GlobalContext.SystemConfig != null)
+            {
+                commandTimeout = GlobalContext.SystemConfig.CommandTimeout;
+            }
             _context.Ado.CommandTimeOut = commandTimeout;
             _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
             {

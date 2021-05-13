@@ -24,12 +24,11 @@ namespace WaterCloud.Service
         {
             currentuser = OperatorProvider.Provider.GetCurrent();
             unitofwork = unitOfWork;
-            repository = new RepositoryBase<T>(unitOfWork);
             if (currentuser != null)
             {
                 unitOfWork.GetDbClient().ChangeDatabase(currentuser.DbNumber);
-                repository = new RepositoryBase<T>(unitOfWork);
-            }
+			}
+            repository = new RepositoryBase<T>(unitOfWork);
             if (currentuser == null)
             {
                 currentuser = new OperatorModel();

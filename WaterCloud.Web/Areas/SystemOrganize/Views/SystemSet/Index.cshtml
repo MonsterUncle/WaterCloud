@@ -50,7 +50,7 @@
              id: 'currentTableId',
              url: '/SystemOrganize/SystemSet/GetGridJson',
              cols: [[
-                 { type: "radio", width: 50, fixed: 'left'},
+                 { type: "radio", width: 50, fixed: 'left' },
                  { field: 'F_ProjectName', title: '项目名称', width: 120, sort: true },
                  { field: 'F_CompanyName', title: '公司名称', width: 120, sort: true },
                  { field: 'F_PrincipalMan', title: '联系人', width: 120, sort: true },
@@ -61,6 +61,7 @@
                  { field: 'F_DbString', title: '连接字符串', width: 120, sort: true },
                  { field: 'F_DBProvider', title: '数据库类型', width: 120, sort: true },
                  { field: 'F_HostUrl', title: '域名', width: 120, sort: true },
+                 { field: 'F_DbNumber', title: '数据库序号', width: 120, sort: true },
                  {
                      field: 'F_CreatorTime', title: '创建时间', minWidth: 120, sort: true,
                      templet: function (d) {

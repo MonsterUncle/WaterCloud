@@ -70,18 +70,68 @@ namespace WaterCloud.Web
             }
             //连续guid初始化,示例IDGenerator.NextId()
             services.AddSingleton<IDistributedIDGenerator, SequentialGuidIDGenerator>();
-
-            #region 依赖注入
-            //注入数据库连接
-            // 注册 SqlSugar 客户端
-            services.AddScoped<ISqlSugarClient>(u =>
+			//更新数据库管理员和主系统,获取所有数据库连接
+            #region 数据库模式
+			List<ConnectionConfig> list = new List<ConnectionConfig>();
+            var defaultConfig = DBContexHelper.Contex(Configuration.GetSection("SystemConfig:DBConnectionString").Value, Configuration.GetSection("SystemConfig:DBProvider").Value);
+            defaultConfig.ConfigId = "0";
+            list.Add(defaultConfig);
+			if (Configuration.GetSection("SystemConfig:SqlMode").Value== "TenantSql")
+			{
+                try
+                {
+                    using (var context = new UnitOfWork(new SqlSugarClient(defaultConfig)))
+                    {
+                        var _setService = new Service.SystemOrganize.SystemSetService(context);
+                        var sqls = _setService.GetList().GetAwaiter().GetResult();
+                        foreach (var item in sqls.Where(a => a.F_EnabledMark == true && a.F_EndTime > DateTime.Now.Date && a.F_DBNumber != "0"))
+                        {
+                            var config = DBContexHelper.Contex(item.F_DbString, item.F_DBProvider);
+                            config.ConfigId = item.F_DBNumber;
+                            list.Add(config);
+                        }
+                        Domain.SystemOrganize.SystemSetEntity temp = new Domain.SystemOrganize.SystemSetEntity();
+                        temp.F_AdminAccount = GlobalContext.SystemConfig.SysemUserCode;
+                        temp.F_AdminPassword = GlobalContext.SystemConfig.SysemUserPwd;
+                        temp.F_DBProvider = GlobalContext.SystemConfig.DBProvider;
+                        temp.F_DbString = GlobalContext.SystemConfig.DBConnectionString;
+                        temp.F_DBNumber = "0";
+                        _setService.SubmitForm(temp, GlobalContext.SystemConfig.SysemMasterProject).GetAwaiter().GetResult();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Write(ex);
+                }
+            }
+			else
+			{
+                try
+                {
+                    var configs= Configuration.GetSection("SystemConfig:SqlConfig");
+					for (int i = 1; i < 9999; i++)
+					{
+						if (!configs.GetSection(i.ToString()).Exists())
+						{
+                            break;
+						}
+                        var config = DBContexHelper.Contex(configs.GetSection(i.ToString()).GetSection("DBConnectionString").Value, configs.GetSection(i.ToString()).GetSection("DBProvider").Value);
+                        config.ConfigId = i.ToString();
+                        list.Add(config);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Write(ex);
+                }
+            }
+			#endregion
+			#region 依赖注入
+			//注入数据库连接
+			// 注册 SqlSugar 客户端 多租户模式
+			services.AddScoped<ISqlSugarClient>(u =>
             {
-                var config = DBContexHelper.Contex();
-                config.ConfigId = "0";
-                List<ConnectionConfig> list = new List<ConnectionConfig>();
-                list.Add(config);
-                var sqlSugarClient = new SqlSugarClient(list);
-                return sqlSugarClient;
+                return new SqlSugarClient(list);
             });
             services.AddScoped<IUnitOfWork,UnitOfWork>();
             #region 注入 Quartz调度类
@@ -143,24 +193,6 @@ namespace WaterCloud.Web
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
-            //更新数据库管理员和主系统
-            try
-            {
-                using (var context = new UnitOfWork(new SqlSugarClient(DBContexHelper.Contex())))
-                {
-                    var _setService = new Service.SystemOrganize.SystemSetService(context);
-                    Domain.SystemOrganize.SystemSetEntity temp = new Domain.SystemOrganize.SystemSetEntity();
-                    temp.F_AdminAccount = GlobalContext.SystemConfig.SysemUserCode;
-                    temp.F_AdminPassword = GlobalContext.SystemConfig.SysemUserPwd;
-                    temp.F_DBProvider = GlobalContext.SystemConfig.DBProvider;
-                    temp.F_DbString = GlobalContext.SystemConfig.DBConnectionString;
-                    _setService.SubmitForm(temp, GlobalContext.SystemConfig.SysemMasterProject).GetAwaiter().GetResult();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex);
-            }
             //清理缓存
             //CacheHelper.FlushAll().GetAwaiter().GetResult();
         }

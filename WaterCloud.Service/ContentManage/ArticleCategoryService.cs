@@ -16,12 +16,10 @@ namespace WaterCloud.Service.ContentManage
     /// </summary>
     public class ArticleCategoryService : DataFilterService<ArticleCategoryEntity>, IDenpendency
     {
+        private string cacheKey = "watercloud_cms_articlecategorydata_";
         public ArticleCategoryService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-
-        }
-        private string cacheKey = "watercloud_cms_articlecategorydata_";
-        
+        }   
         #region 获取数据
         public async Task<List<ArticleCategoryEntity>> GetList(string keyword = "")
         {

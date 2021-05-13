@@ -69,10 +69,10 @@ namespace WaterCloud.Service.FileManage
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
+                query = query.Where(a => a.F_FileName.Contains(keyword) || a.F_Description.Contains(keyword));
             }
             //权限过滤
-            query = GetDataPrivilege("u", "", query);
+            query = GetDataPrivilege("a", "", query);
             var data = await repository.OrderList(query, pagination);
             var orgs = repository.Db.Queryable<OrganizeEntity>().ToList();
             foreach (var item in data)
@@ -88,8 +88,19 @@ namespace WaterCloud.Service.FileManage
                     JoinType.Left, a.F_CreatorUserId == b.F_Id))
                 .Select((a, b) => new UploadfileEntity
                 {
-                    F_Id = a.F_Id.SelectAll(),
-                    F_CreatorUserName =b.F_RealName,   
+                    F_Id = a.F_Id,
+                    F_CreatorUserName = b.F_RealName,
+                    F_CreatorTime = a.F_CreatorTime,
+                    F_CreatorUserId = a.F_CreatorUserId,
+                    F_Description = a.F_Description,
+                    F_EnabledMark = a.F_EnabledMark,
+                    F_FileExtension = a.F_FileExtension,
+                    F_FileBy = a.F_FileBy,
+                    F_FileName = a.F_FileName,
+                    F_FilePath = a.F_FilePath,
+                    F_FileSize = a.F_FileSize,
+                    F_FileType = a.F_FileType,
+                    F_OrganizeId = a.F_OrganizeId,
                 }).MergeTable();
             return query;
         }

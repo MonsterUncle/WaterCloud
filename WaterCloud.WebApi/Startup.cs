@@ -65,16 +65,60 @@ namespace WaterCloud.WebApi
             //连续guid初始化,示例IDGenerator.NextId()
             services.AddSingleton<IDistributedIDGenerator, SequentialGuidIDGenerator>();
 
+            #region 数据库模式
+            List<ConnectionConfig> list = new List<ConnectionConfig>();
+            var defaultConfig = DBContexHelper.Contex(Configuration.GetSection("SystemConfig:DBConnectionString").Value, Configuration.GetSection("SystemConfig:DBProvider").Value);
+            defaultConfig.ConfigId = "0";
+            list.Add(defaultConfig);
+            if (Configuration.GetSection("SystemConfig:SqlMode").Value == "TenantSql")
+            {
+                try
+                {
+                    using (var context = new UnitOfWork(new SqlSugarClient(defaultConfig)))
+                    {
+                        var _setService = new Service.SystemOrganize.SystemSetService(context);
+                        var sqls = _setService.GetList().GetAwaiter().GetResult();
+                        foreach (var item in sqls.Where(a => a.F_EnabledMark == true && a.F_EndTime > DateTime.Now.Date && a.F_DBNumber != "0"))
+                        {
+                            var config = DBContexHelper.Contex(item.F_DbString, item.F_DBProvider);
+                            config.ConfigId = item.F_DBNumber;
+                            list.Add(config);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Write(ex);
+                }
+            }
+            else
+            {
+                try
+                {
+                    var configs = Configuration.GetSection("SystemConfig:SqlConfig");
+                    for (int i = 1; i < 9999; i++)
+                    {
+                        if (!configs.GetSection(i.ToString()).Exists())
+                        {
+                            break;
+                        }
+                        var config = DBContexHelper.Contex(configs.GetSection(i.ToString()).GetSection("DBConnectionString").Value, configs.GetSection(i.ToString()).GetSection("DBProvider").Value);
+                        config.ConfigId = i.ToString();
+                        list.Add(config);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Write(ex);
+                }
+            }
+            #endregion
+
             //注入数据库连接
             // 注册 SqlSugar 客户端
             services.AddScoped<ISqlSugarClient>(u =>
             {
-                var config = DBContexHelper.Contex();
-                config.ConfigId = "0";
-                List<ConnectionConfig> list = new List<ConnectionConfig>();
-                list.Add(config);
-                var sqlSugarClient = new SqlSugarClient(list);
-                return sqlSugarClient;
+                return new SqlSugarClient(list);
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             //代替HttpContext.Current
