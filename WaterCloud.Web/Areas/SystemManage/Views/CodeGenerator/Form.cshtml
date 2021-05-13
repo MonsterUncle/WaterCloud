@@ -388,7 +388,7 @@
             baseConfig.PageIndex.IsPagination = !data.field.IsPagination || data.field.IsPagination != "true" ? false : true;
             baseConfig.PageIndex.IsFields = !data.field.IsFields || data.field.IsFields != "true" ? false : true;
             baseConfig.PageIndex.IsPublic = !data.field.IsPublic || data.field.IsPublic != "true" ? false : true;
-            baseConfig.PageIndex.IsCache = !data.field.IsCache || data.field.IsCache != "true" ? false : true;
+            baseConfig.PageIndex.IsCache = false;
             baseConfig.PageIndex.ButtonList = buttonList.getValue('value');
             var cachedata = table.cache.currentTableId
             if (cachedata.length == 0) {
@@ -662,7 +662,6 @@
                                 <label class="layui-form-label required">页面选项</label>
                                 <div class="layui-input-block">
                                     <input type="checkbox" name="IsMunu" id="IsMunu" checked="checked" value="true" title="菜单显示">
-                                    <input type="checkbox" name="IsCache" id="IsCache" checked="" value="true" title="缓存">
                                     <input type="checkbox" name="IsTree" id="IsTree" checked="" value="true" lay-filter="IsTree" title="树形表格">
                                     <input type="checkbox" name="IsSearch" id="IsSearch" checked="checked" value="true" title="搜索框">
                                     <input type="checkbox" name="IsPagination" id="IsPagination" checked="checked" value="true" title="分页">
@@ -690,7 +689,7 @@
                             <div class="layui-col-md3 layui-col-xs3">
                                 <label class="layui-form-label required">排序字段</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="SortColumn" name="SortColumn" readonly lay-verify="required" class="layui-input">
+                                    <input type="text" id="SortColumn" name="SortColumn" lay-verify="required" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-col-md3 layui-col-xs3">

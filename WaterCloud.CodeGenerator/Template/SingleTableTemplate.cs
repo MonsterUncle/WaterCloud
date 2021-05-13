@@ -70,7 +70,7 @@ namespace WaterCloud.CodeGenerator
             baseConfigModel.PageIndex.IsPublic = false;
             baseConfigModel.PageIndex.IsCache = false;
             baseConfigModel.PageIndex.IsAsc = false;
-            baseConfigModel.PageIndex.SortColumn = "F_CreatorTime";
+            baseConfigModel.PageIndex.SortColumn = "F_Id";
             baseConfigModel.PageIndex.ButtonList = new List<string>();
             baseConfigModel.PageIndex.ColumnList = tableFieldList;
             baseConfigModel.PageIndex.KeywordColum = new List<string>();
@@ -100,7 +100,7 @@ namespace WaterCloud.CodeGenerator
             //sb.AppendLine("using Newtonsoft.Json;");
             //sb.AppendLine("using WaterCloud.Code;");
             sb.AppendLine("using System.ComponentModel.DataAnnotations;");
-            sb.AppendLine("using Chloe.Annotations;");
+            sb.AppendLine("using SqlSugar;");
             sb.AppendLine();
 
             sb.AppendLine("namespace WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule);
@@ -108,7 +108,7 @@ namespace WaterCloud.CodeGenerator
 
             SetClassDescription("实体类", baseConfigModel, sb);
             baseConfigModel.TableNameUpper = TableMappingHelper.ConvertTo_Uppercase(baseConfigModel.TableName);
-            sb.AppendLine("    [TableAttribute(\"" + baseConfigModel.TableName + "\")]");
+            sb.AppendLine("    [SugarTable(\"" + baseConfigModel.TableName + "\")]");
             var baseEntity = GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn);
             if (string.IsNullOrEmpty(baseEntity))
             {
@@ -145,18 +145,17 @@ namespace WaterCloud.CodeGenerator
 
                     if (datatype == "int?")
                     {
-                        sb.AppendLine("        [AutoIncrement]");
-                        sb.AppendLine("        [Column(\"" + column + "\", IsPrimaryKey = true)]");
+                        sb.AppendLine("        [SugarColumn(ColumnName=\"" + column + "\", IsPrimaryKey = true , IsIdentity = true)]");
                         sb.AppendLine("        public int " + column + " { get; set; }");
                     }
                     else if (datatype == "long?")
                     {
-                        sb.AppendLine("        [Column(\"" + column + "\", IsPrimaryKey = true)]");
+                        sb.AppendLine("        [SugarColumn(ColumnName=\"" + column + "\", IsPrimaryKey = true)]");
                         sb.AppendLine("        public long " + column + " { get; set; }");
                     }
                     else
                     {
-                        sb.AppendLine("        [Column(\"" + column + "\", IsPrimaryKey = true)]");
+                        sb.AppendLine("        [SugarColumn(ColumnName=\"" + column + "\", IsPrimaryKey = true)]");
                         sb.AppendLine("        public " + datatype + " " + column + " { get; set; }");
                     }
                 }
@@ -209,7 +208,7 @@ namespace WaterCloud.CodeGenerator
             {
                 sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
             }
-            sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + "(ISqlSugarClient context) : base(context)");
+            sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + "(IUnitOfWork unitOfWork) : base(unitOfWork)");
             sb.AppendLine("        {");
             sb.AppendLine("        }");
 
@@ -233,7 +232,7 @@ namespace WaterCloud.CodeGenerator
                     }
                 }
                 sb.AppendLine("            }");
-                sb.AppendLine("            return data."+(string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum)?"": $"Where(t => t.{baseConfigModel.PageIndex.DeleteColum} == false).") + (baseConfigModel.PageIndex.IsAsc == true ? "OrderBy" : "OrderByDesc") + $"(t => t.{baseConfigModel.PageIndex.SortColumn}).ToList();");
+                sb.AppendLine("            return await data."+(string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum)?"": $"Where(t => t.{baseConfigModel.PageIndex.DeleteColum} == false).OrderBy(") + $"t => t.{baseConfigModel.PageIndex.SortColumn}"+ (baseConfigModel.PageIndex.IsAsc == true ? "" : " , OrderByType.Desc") + ").ToListAsync();");
             }
             else
             {
@@ -276,19 +275,19 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            }");
             sb.AppendLine("             //权限过滤");
             sb.AppendLine("             query = GetDataPrivilege(\"u\", \"\", query);");
-            sb.AppendLine($"            return query." + (baseConfigModel.PageIndex.IsAsc == true ? "OrderBy" : "OrderByDesc") + $"(t => t.{baseConfigModel.PageIndex.SortColumn}).ToList();");
+            sb.AppendLine("             return await query.OrderBy(" + $"t => t.{baseConfigModel.PageIndex.SortColumn}" + (baseConfigModel.PageIndex.IsAsc == true ? "" : " , OrderByType.Desc") + ").ToListAsync();");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<List<" + baseConfigModel.FileConfig.EntityName + ">> GetLookList(SoulPage<" + baseConfigModel.FileConfig.EntityName + "> pagination,string keyword = \"\"," + idType + " id=\"\")");
             sb.AppendLine("        {");
-            sb.AppendLine($"            var query = repository.IQueryable()" + (string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum) ? ";" : $".Where(t => t.{baseConfigModel.PageIndex.DeleteColum} == false);"));
+            sb.AppendLine($"            var query = repository.IQueryable()" + (string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum) ? ";" : $".Where(a => a.{baseConfigModel.PageIndex.DeleteColum} == false);"));
             sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
             sb.AppendLine("            {");
             for (int i = 0; i < baseConfigModel.PageIndex.KeywordColum.Count; i++)
             {
                 if (i == 0)
                 {
-                    sb.AppendLine($"                query = query.Where(t => t.{baseConfigModel.PageIndex.KeywordColum[i]}.Contains(keyword)" + (i == baseConfigModel.PageIndex.KeywordColum.Count - 1 ? ");" : ""));
+                    sb.AppendLine($"                query = query.Where(a => a.{baseConfigModel.PageIndex.KeywordColum[i]}.Contains(keyword)" + (i == baseConfigModel.PageIndex.KeywordColum.Count - 1 ? ");" : ""));
                 }
                 else
                 {
@@ -305,10 +304,10 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("            if(!string.IsNullOrEmpty(id))");
             }
             sb.AppendLine("            {");
-            sb.AppendLine("                query= query.Where(u=>u." + idColumn + "==id);");
+            sb.AppendLine("                query= query.Where(a=>a." + idColumn + "==id);");
             sb.AppendLine("            }");
             sb.AppendLine("            //权限过滤");
-            sb.AppendLine("            query = GetDataPrivilege(\"u\",\"\",query);");
+            sb.AppendLine("            query = GetDataPrivilege(\"a\",\"\",query);");
             sb.AppendLine("            return await repository.OrderList(query, pagination);");
             sb.AppendLine("        }");
             sb.AppendLine();

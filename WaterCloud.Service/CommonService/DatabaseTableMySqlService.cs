@@ -56,7 +56,7 @@ namespace WaterCloud.Service.CommonService
 	                               (CASE IS_NULLABLE WHEN 'NO' THEN 'N' ELSE 'Y' END) IsNullable,
                                    IFNULL(COLUMN_DEFAULT,'') FieldDefault,
                                    COLUMN_COMMENT Remark
-                             FROM information_schema.columns WHERE table_schema='" + GetDatabase() + $"' AND table_name={tableName}");
+                             FROM information_schema.columns WHERE table_schema='" + GetDatabase() + $"' AND table_name='{tableName}'");
             var list = await GetDbClient().SqlQueryable<TableFieldInfo>(strSql.ToString()).ToListAsync();
             return list;
         }

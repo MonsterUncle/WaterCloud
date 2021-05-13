@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Serenity.Data.Mapping;
 using SqlSugar;
 
 namespace WaterCloud.Domain.ContentManage
