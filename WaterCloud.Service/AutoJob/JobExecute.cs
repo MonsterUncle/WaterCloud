@@ -70,7 +70,7 @@ namespace WaterCloud.Service.AutoJob
                                         .Contains(typeof(IJobTask)))).ToArray();
                                     string filename = dbJobEntity.F_FileName;
                                     var implementType = types.Where(x => x.IsClass && x.FullName == filename).First();
-                                    var obj = System.Activator.CreateInstance(implementType, _context);       // 创建实例(带参数)
+                                    var obj = System.Activator.CreateInstance(implementType,new UnitOfWork(_context));       // 创建实例(带参数)
                                     MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
                                     object[] parameters = null;
                                     var temp = (Task<AlwaysResult>)method.Invoke(obj, parameters);     // 调用方法，参数为空
