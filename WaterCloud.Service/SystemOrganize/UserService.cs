@@ -231,14 +231,13 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<UserEntity> CheckLogin(string username, string password,string localurl)
         {
             //根据登录公司查找公司
-            if (!string.IsNullOrEmpty(localurl))
+            if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
             {
                 var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).First();
                 if (setTemp!=null)
                 {
                     unitofwork.GetDbClient().ChangeDatabase(setTemp.F_DBNumber);
                     repository = new RepositoryBase<UserEntity>(unitofwork);
-                    unitofwork = new UnitOfWork(setTemp.F_DbString, setTemp.F_DBProvider);
                 }
             }
             UserEntity userEntity =await repository.FindEntity(t => t.F_Account == username);

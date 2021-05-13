@@ -121,7 +121,7 @@ namespace WaterCloud.Web.Controllers
             LogEntity logEntity = new LogEntity();
             logEntity.F_ModuleName ="系统登录";
             logEntity.F_Type = DbLogType.Login.ToString();
-            if (GlobalContext.SystemConfig.Debug)
+            if (GlobalContext.SystemConfig.SqlMode==Define.SQL_MORE)
             {
                 localurl = "";
             }

@@ -61,5 +61,9 @@ namespace WaterCloud.Code.Model
         public string HomePage { get; set; }
         public string MainProgram { get; set; }
         public bool? LocalLAN { get; set; }
+        /// <summary>
+        /// 数据库模式
+        /// </summary>
+        public string SqlMode { get; set; }
     }
 }
