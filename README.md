@@ -8,10 +8,10 @@
 
 [![star](https://gitee.com/qian_wei_hong/WaterCloud/badge/star.svg)](https://gitee.com/qian_wei_hong/WaterCloud/stargazers) 
 [![fork](https://gitee.com/qian_wei_hong/WaterCloud/badge/fork.svg)](https://gitee.com/qian_wei_hong/WaterCloud/members)
-![](https://img.shields.io/badge/release-2.8.0-red)
+![](https://img.shields.io/badge/release-2.9.0-red)
 
 ![](https://img.shields.io/badge/.net-5.0.0-blue)
-![](https://img.shields.io/badge/SqlSugar-5.0.2.9.0-blue)
+![](https://img.shields.io/badge/SqlSugar-5.0.2.9-blue)
 ![](https://img.shields.io/badge/layui-2.5.7-blue)
 
 ![](https://img.shields.io/badge/Quartz-3.2.4-brightgreen)
@@ -88,13 +88,12 @@
 2. Asp.net 5.0；
 3. Mysql或者SQLSERVER2005及以上版本，database文件夹下有sql文件可执行；
 4. 请使用VS2019及以上版本打开解决方案。
-5. sqlsugar sys_systemset新增字段F_DbNumber varchar(50)。
 
 #### 使用说明
 
 1. 前端参考Layui 官方文档：https://www.layui.com/doc/
 2. Layui框架参考Layuimini 码云地址：https://gitee.com/zhongshaofa/layuimini
-3. Chole.ORM 文档地址：http://www.52chloe.com/Wiki/Document
+3. SqlSugar.ORM 文档地址：https://www.donet5.com/home/doc
 4. WaterCloud讨论交流QQ群（1065447456）[![](https://pub.idqqimg.com/wpa/images/group.png)](https://jq.qq.com/?_wv=1027&k=51RHQVG)
 5. 多租户可以使用Furion框架实现，码云地址：https://gitee.com/monksoul/Furion
 
