@@ -39,10 +39,9 @@ namespace WaterCloud.Service.InfoManage
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
                 query = query.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
             }
-            return query.Where(a => a.F_EnabledMark == true).OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToList();
+            return await query.Where(a => a.F_EnabledMark == true).OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetLookList(string keyword = "")
@@ -50,11 +49,10 @@ namespace WaterCloud.Service.InfoManage
             var query = repository.IQueryable().Where(a => a.F_EnabledMark == true);
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
                 query = query.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
             }
             query = GetDataPrivilege("u","", query);
-            return query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToList();
+            return await query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetUnReadListJson()
@@ -65,7 +63,7 @@ namespace WaterCloud.Service.InfoManage
                 )).Select(a => a.F_Id).ToList();
             hisquery.AddRange(tempList);
             var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId) || a.F_ToUserId == "") && a.F_EnabledMark == true).Where(a => !hisquery.Contains(a.F_Id));
-            return GetFieldsFilterDataNew("a",query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc)).ToList();
+            return await GetFieldsFilterDataNew("a", query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc)).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetLookList(SoulPage<MessageEntity> pagination, string keyword = "")

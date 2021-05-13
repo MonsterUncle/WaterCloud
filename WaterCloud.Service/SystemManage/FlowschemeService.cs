@@ -19,31 +19,29 @@ namespace WaterCloud.Service.SystemManage
     /// </summary>
     public class FlowschemeService : DataFilterService<FlowschemeEntity>, IDenpendency
     {
-        private string cacheKey = "watercloud_flowschemedata_";
-        
         public FlowschemeService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         #region 获取数据
         public async Task<List<FlowschemeEntity>> GetList(string keyword = "")
         {
-            var cachedata = await repository.CheckCacheList(cacheKey + "list");
+            var query = repository.IQueryable();
 
             if (!string.IsNullOrEmpty(keyword))
             {
-                cachedata = cachedata.Where(t => t.F_SchemeCode.Contains(keyword) || t.F_SchemeName.Contains(keyword)).ToList();
+                query = query.Where(t => t.F_SchemeCode.Contains(keyword) || t.F_SchemeName.Contains(keyword));
             }
             var list = currentuser.DepartmentId.Split(',');
             if (list.Count() > 0)
             {
-                return cachedata.Where(t => t.F_DeleteMark == false && (t.F_OrganizeId == "" || t.F_OrganizeId == null || list.Contains(t.F_OrganizeId))).OrderByDescending(t => t.F_CreatorTime).ToList();
+                return await query.Where(t => t.F_DeleteMark == false && (t.F_OrganizeId == "" || t.F_OrganizeId == null || list.Contains(t.F_OrganizeId))).OrderBy(t => t.F_Id,OrderByType.Desc).ToListAsync();
             }
-            return cachedata.Where(t => t.F_DeleteMark == false && t.F_OrganizeId == "" || t.F_OrganizeId == null).OrderByDescending(t => t.F_CreatorTime).ToList();
+            return await query.Where(t => t.F_DeleteMark == false && t.F_OrganizeId == "" || t.F_OrganizeId == null).OrderBy(t => t.F_Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<FlowschemeEntity>> GetLookList(string ItemId = "", string keyword = "")
         {
-            var query = repository.IQueryable().Where(t => t.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(ItemId))
             {
                 query = query.Where(u => u.F_OrganizeId == ItemId || u.F_OrganizeId == null || u.F_OrganizeId == "");
@@ -53,15 +51,14 @@ namespace WaterCloud.Service.SystemManage
                 query = query.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword));
             }
             query = GetDataPrivilege("u","", query);
-            return query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToList();
+            return await query.OrderBy(u => u.F_CreatorTime,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<FlowschemeEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
-            var query = repository.IQueryable().Where(t => t.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
                 query = query.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword));
             }
             query = GetDataPrivilege("u","", query);
@@ -70,19 +67,19 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<FlowschemeEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         #endregion
 
         public async Task<FlowschemeEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data = await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
         public async Task<FlowschemeExtend> GetFormExtend(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
+            var cachedata = await repository.FindEntity(keyValue);
             var temp = cachedata.MapTo<FlowschemeExtend>();
             var form = await repository.Db.Queryable<FormEntity>().InSingleAsync(cachedata.F_FrmId);
             temp.F_WebId = form.F_WebId;
@@ -142,15 +139,12 @@ namespace WaterCloud.Service.SystemManage
                     //此处需修改
                 entity.Create();
                 await repository.Insert(entity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                     //此处需修改
                 entity.Modify(keyValue); 
                 await repository.Update(entity);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
         }
 
@@ -158,11 +152,6 @@ namespace WaterCloud.Service.SystemManage
         {
             var ids = keyValue.Split(',');
             await repository.Delete(t => ids.Contains(t.F_Id));
-            foreach (var item in ids)
-            {
-            await CacheHelper.Remove(cacheKey + item);
-            }
-            await CacheHelper.Remove(cacheKey + "list");
         }
         #endregion
 

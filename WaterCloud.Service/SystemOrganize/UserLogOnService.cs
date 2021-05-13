@@ -18,7 +18,6 @@ namespace WaterCloud.Service.SystemOrganize
         /// <summary>
         /// 缓存操作类
         /// </summary>
-
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         public UserLogOnService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {

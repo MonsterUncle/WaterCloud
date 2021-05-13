@@ -20,7 +20,6 @@ namespace WaterCloud.Service.SystemSecurity
     public class LogService : DataFilterService<LogEntity>, IDenpendency
     {
         //登录信息保存方式
-        private string LoginProvider = GlobalContext.SystemConfig.LoginProvider;
         private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
         private ModuleService moduleservice;
         //获取类名

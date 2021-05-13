@@ -16,22 +16,19 @@ namespace WaterCloud.Service.FileManage
     /// 描 述：文件管理服务类
     /// </summary>
     public class UploadfileService : DataFilterService<UploadfileEntity>, IDenpendency
-    {
-        private string cacheKey = "watercloud_uploadfiledata_";
-        
+    {       
         public UploadfileService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         #region 获取数据
         public async Task<List<UploadfileEntity>> GetList(string keyword = "")
         {
-            var cachedata = await repository.CheckCacheList(cacheKey + "list");
+            var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
-                cachedata = cachedata.Where(t => t.F_FileName.Contains(keyword) || t.F_Description.Contains(keyword)).ToList();
+                query = query.Where(t => t.F_FileName.Contains(keyword) || t.F_Description.Contains(keyword));
             }
-            return cachedata.OrderByDescending(t => t.F_CreatorTime).ToList();
+            return await query.OrderBy(t => t.F_Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<UploadfileEntity>> GetLookList(string keyword = "")
@@ -39,11 +36,10 @@ namespace WaterCloud.Service.FileManage
             var query = GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
                 query = query.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             query = GetDataPrivilege("u", "", query);
-            var data = query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToList();
+            var data = await query.OrderBy(t => t.F_Id,OrderByType.Desc).ToListAsync();
             foreach (var item in data)
             {
                 string[] departments = item.F_OrganizeId.Split(',');
@@ -106,13 +102,13 @@ namespace WaterCloud.Service.FileManage
         }
         public async Task<UploadfileEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         public async Task<UploadfileEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data = await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
         #endregion
 
@@ -124,15 +120,12 @@ namespace WaterCloud.Service.FileManage
                     //此处需修改
                 entity.Create();
                 await repository.Insert(entity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                     //此处需修改
                 entity.Modify(keyValue); 
                 await repository.Update(entity);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
         }
 
@@ -140,11 +133,6 @@ namespace WaterCloud.Service.FileManage
         {
             var ids = keyValue.Split(',');
             await repository.Delete(t => ids.Contains(t.F_Id));
-            foreach (var item in ids)
-            {
-            await CacheHelper.Remove(cacheKey + item);
-            }
-            await CacheHelper.Remove(cacheKey + "list");
         }
         #endregion
 

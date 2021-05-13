@@ -28,7 +28,6 @@ namespace WaterCloud.Service.SystemOrganize
         /// <summary>
         /// 缓存操作类
         /// </summary>
-
         private string cacheKey = "watercloud_authorizeurldata_";// +权限
         public RoleAuthorizeService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -41,9 +40,9 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<List<RoleAuthorizeEntity>> GetList(string ObjectId)
         {
-            var cachedata =await repository.CheckCacheList(cacheKey + "list");
-            cachedata = cachedata.Where(t => t.F_ObjectId == ObjectId).ToList();
-            return cachedata.ToList();
+            var query = repository.IQueryable();
+            query = query.Where(t => t.F_ObjectId == ObjectId);
+            return await query.ToListAsync();
         }
         public async Task<List<ModuleEntity>> GetMenuList(string roleId)
         {
@@ -63,7 +62,7 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     return data;
                 }
-                var authorizedata =(await repository.CheckCacheList(cacheKey + "list")).Where(t => rolelist.Contains(t.F_ObjectId) && t.F_ItemType == 1).GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
+                var authorizedata = repository.IQueryable().Where(t => rolelist.Contains(t.F_ObjectId) && t.F_ItemType == 1).Distinct().ToList();
                 foreach (var item in authorizedata)
                 {
                     ModuleEntity moduleEntity = moduledata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic==false);
@@ -91,7 +90,7 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     return data;
                 }
-                var authorizedata = (await repository.CheckCacheList(cacheKey + "list")).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 2).ToList();
+                var authorizedata = repository.IQueryable().Where(t => t.F_ObjectId == roleId && t.F_ItemType == 2).ToList();
                 foreach (var item in authorizedata)
                 {
                     ModuleButtonEntity moduleButtonEntity = buttondata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false);
@@ -119,7 +118,7 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     return data;
                 }
-                var authorizedata = (await repository.CheckCacheList(cacheKey + "list")).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 3).ToList();
+                var authorizedata = repository.IQueryable().Where(t => t.F_ObjectId == roleId && t.F_ItemType == 3).ToList();
                 foreach (var item in authorizedata)
                 {
                     ModuleFieldsEntity moduleFieldsEntity = fieldsdata.Where(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false).First();
@@ -141,7 +140,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             var authorizeurldata = new List<AuthorizeActionModel>();
             var rolelist = user.F_RoleId.Split(',');
-            var cachedata =await CacheHelper.Get<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey + "authorize_list");
+            var cachedata =await CacheHelper.Get<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey +"_"+repository.Db.CurrentConnectionConfig.ConfigId+ "_list");
             if (cachedata == null)
             {
                 cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
@@ -190,8 +189,8 @@ namespace WaterCloud.Service.SystemOrganize
                         authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
                         cachedata.Add(roles, authdata);
                         authorizeurldata.AddRange(authdata);
-                        await CacheHelper.Remove(cacheKey + "authorize_list");
-                        await CacheHelper.Set(cacheKey + "authorize_list", cachedata);
+                        await CacheHelper.Remove(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+                        await CacheHelper.Set(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list", cachedata);
                     }
                 }
                 else
@@ -225,7 +224,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             var authorizeurldata = new List<AuthorizeActionModel>();
             var rolelist = user.F_RoleId.Split(',');
-            var cachedata = await CacheHelper.Get<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + "authorize_list");
+            var cachedata = await CacheHelper.Get<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
             if (cachedata == null)
             {
                 cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
@@ -274,8 +273,8 @@ namespace WaterCloud.Service.SystemOrganize
                         authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
                         cachedata.Add(roles, authdata);
                         authorizeurldata.AddRange(authdata);
-                        await CacheHelper.Remove(cacheKey + "authorize_list");
-                        await CacheHelper.Set(cacheKey + "authorize_list", cachedata);
+                        await CacheHelper.Remove(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+                        await CacheHelper.Set(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list", cachedata);
                     }
                 }
                 else

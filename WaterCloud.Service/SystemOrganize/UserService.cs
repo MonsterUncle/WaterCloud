@@ -21,8 +21,6 @@ namespace WaterCloud.Service.SystemOrganize
         /// <summary>
         /// 缓存操作类
         /// </summary>
-
-        private string cacheKey = "watercloud_userdata_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         //获取类名
         
@@ -133,57 +131,54 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task SubmitUserForm(UserEntity userEntity)
         {
             await repository.Update(userEntity);
-            await CacheHelper.Remove(cacheKey + userEntity.F_Id);
-            await CacheHelper.Remove(cacheKey + "list");
         }
 
         public async Task<List<UserEntity>> GetUserList(string keyword)
         {
-            var cachedata =await repository.CheckCacheList(cacheKey + "list");
+            var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                cachedata = cachedata.Where(t => t.F_Account.Contains(keyword) || t.F_RealName.Contains(keyword) || t.F_MobilePhone.Contains(keyword)).ToList();
+                query = query.Where(t => t.F_Account.Contains(keyword) || t.F_RealName.Contains(keyword) || t.F_MobilePhone.Contains(keyword));
             }
-            return cachedata.Where(t => t.F_EnabledMark ==true && t.F_DeleteMark == false).OrderBy(t => t.F_Account).ToList();
+            return await query.Where(t => t.F_EnabledMark ==true && t.F_DeleteMark == false).OrderBy(t => t.F_Account).ToListAsync();
         }
 
         public async Task<UserEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         public async Task<UserEntity> GetFormExtend(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
+            var data = await repository.FindEntity(keyValue);
             string[] temp;
-            if (cachedata.F_RoleId != null)
+            if (data.F_RoleId != null)
             {
-                temp = cachedata.F_RoleId.Split(',');
-                cachedata.F_RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                temp = data.F_RoleId.Split(',');
+                data.F_RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
-            if (cachedata.F_DepartmentId != null)
+            if (data.F_DepartmentId != null)
             {
-                temp = cachedata.F_DepartmentId.Split(',');
-                cachedata.F_DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                temp = data.F_DepartmentId.Split(',');
+                data.F_DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
-
-            return cachedata;
+            return data;
         }
         public async Task<UserEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
+            var data = await repository.FindEntity(keyValue);
             string[] temp;
-            if (cachedata.F_RoleId != null)
+            if (data.F_RoleId != null)
             {
-                temp = cachedata.F_RoleId.Split(',');
-                cachedata.F_RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                temp = data.F_RoleId.Split(',');
+                data.F_RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
-            if (cachedata.F_DepartmentId != null)
+            if (data.F_DepartmentId != null)
             {
-                temp = cachedata.F_DepartmentId.Split(',');
-                cachedata.F_DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                temp = data.F_DepartmentId.Split(',');
+                data.F_DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
-            return GetFieldsFilterData(cachedata);
+            return GetFieldsFilterData(data);
         }
         public async Task DeleteForm(string keyValue)
         {
@@ -191,16 +186,12 @@ namespace WaterCloud.Service.SystemOrganize
             await repository.Delete(t => t.F_Id == keyValue);
             await repository.Db.Deleteable<UserLogOnEntity>(t => t.F_UserId == keyValue).ExecuteCommandAsync();
             unitofwork.Commit();
-            await CacheHelper.Remove(cacheKey + keyValue);
-            await CacheHelper.Remove(cacheKey + "list");
         }
         public async Task SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
                 userEntity.Modify(keyValue);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
@@ -210,7 +201,6 @@ namespace WaterCloud.Service.SystemOrganize
                  userLogOnEntity.F_ErrorNum = 0;
                 userLogOnEntity.F_UserOnLine = false;
                 userLogOnEntity.F_LogOnCount = 0;
-                await CacheHelper.Remove(cacheKey + "list");
             }
             unitofwork.BeginTrans();
             if (!string.IsNullOrEmpty(keyValue))
@@ -231,8 +221,6 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task UpdateForm(UserEntity userEntity)
         {
             await repository.Update(userEntity);
-            await CacheHelper.Remove(cacheKey + userEntity.F_Id);
-            await CacheHelper.Remove(cacheKey + "list");
         }
         /// <summary>
         /// 登录判断

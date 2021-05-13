@@ -49,7 +49,7 @@ namespace WaterCloud.Service.SystemSecurity
                     break;
             }
             expression = expression.And(t => t.F_Date >= startTime && t.F_Date <= endTime);
-            return repository.IQueryable(expression).ToList();
+            return await repository.IQueryable(expression).ToListAsync();
         }
 
 		public async Task SubmitForm(ServerStateEntity entity)

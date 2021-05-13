@@ -21,12 +21,6 @@ namespace WaterCloud.Service.SystemManage
         /// <summary>
         /// 缓存操作类
         /// </summary>
-
-        private string cacheKey = "watercloud_moduleldata_";
-        private string quickcacheKey = "watercloud_quickmoduledata_";
-        private string initcacheKey = "watercloud_init_";
-        private string modulebuttoncacheKey = "watercloud_modulebuttondata_";
-        private string modulefieldscacheKey = "watercloud_modulefieldsdata_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         //获取类名
 
@@ -36,30 +30,30 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<ModuleEntity>> GetList()
         {
-            var cachedata = await repository.CheckCacheList(cacheKey + "list");
-            return cachedata.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
+            var query = repository.IQueryable();
+            return await query.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToListAsync();
         }
         public async Task<List<ModuleEntity>> GetBesidesList()
         {
             var moduleList = repository.Db.Queryable<DataPrivilegeRuleEntity>().Select(a => a.F_ModuleId).ToList();
             var query = repository.IQueryable().Where(a => !moduleList.Contains(a.F_Id) && a.F_EnabledMark == true && a.F_Target == "iframe");
-            return query.OrderBy(a => a.F_SortCode).ToList();
+            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<List<ModuleEntity>> GetLookList()
         {
             var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
             query = GetDataPrivilege("u", "", query);
-            return query.OrderBy(u => u.F_SortCode).ToList();
+            return await query.OrderBy(u => u.F_SortCode).ToListAsync();
         }
         public async Task<ModuleEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data = await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
         public async Task<ModuleEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         public async Task DeleteForm(string keyValue)
         {
@@ -74,16 +68,8 @@ namespace WaterCloud.Service.SystemManage
                 await repository.Db.Deleteable<ModuleButtonEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
                 await repository.Db.Deleteable<ModuleFieldsEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
                 unitofwork.Commit();
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
-                await CacheHelper.Remove(quickcacheKey + "list");
-                await CacheHelper.Remove(initcacheKey + "list");
-                await CacheHelper.Remove(initcacheKey + "modulebutton_list");
-                await CacheHelper.Remove(initcacheKey + "modulefields_list");
                 await CacheHelper.Remove(authorizecacheKey + "list");
                 await CacheHelper.Remove(authorizecacheKey + "authorize_list");
-                await CacheHelper.Remove(modulebuttoncacheKey + "list");
-                await CacheHelper.Remove(modulefieldscacheKey + "list");
             }
         }
 
@@ -91,7 +77,7 @@ namespace WaterCloud.Service.SystemManage
         {
             var moduleList = repository.Db.Queryable<RoleAuthorizeEntity>().Where(a => a.F_ObjectId == roleid && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
             var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
-            return query.OrderBy(a => a.F_SortCode).ToList();
+            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
         }
 
         public async Task SubmitForm(ModuleEntity moduleEntity, string keyValue)
@@ -104,23 +90,14 @@ namespace WaterCloud.Service.SystemManage
             {
                 moduleEntity.Modify(keyValue);
                 await repository.Update(moduleEntity);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 moduleEntity.Create();
                 await repository.Insert(moduleEntity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
-            await CacheHelper.Remove(quickcacheKey + "list");
-            await CacheHelper.Remove(initcacheKey + "list");
-            await CacheHelper.Remove(initcacheKey + "modulebutton_list");
-            await CacheHelper.Remove(initcacheKey + "modulefields_list");
             await CacheHelper.Remove(authorizecacheKey + "list");
             await CacheHelper.Remove(authorizecacheKey + "authorize_list");
-            await CacheHelper.Remove(modulebuttoncacheKey + "list");
-            await CacheHelper.Remove(modulefieldscacheKey + "list");
         }
     }
 }

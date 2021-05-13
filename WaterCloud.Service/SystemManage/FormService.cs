@@ -17,21 +17,18 @@ namespace WaterCloud.Service.SystemManage
     /// </summary>
     public class FormService : DataFilterService<FormEntity>, IDenpendency
     {
-        private string cacheKey = "watercloud_formdata_";
-        
         public FormService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         #region 获取数据
         public async Task<List<FormEntity>> GetList(string keyword = "")
         {
-            var cachedata = await repository.CheckCacheList(cacheKey + "list");
+            var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
-                cachedata = cachedata.Where(t => t.F_Name.Contains(keyword) || t.F_Description.Contains(keyword)).ToList();
+                query = query.Where(t => t.F_Name.Contains(keyword) || t.F_Description.Contains(keyword));
             }
-            return cachedata.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
+            return await query.Where(t => t.F_DeleteMark == false).OrderBy(t => t.F_Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<FormEntity>> GetLookList(string ItemId="", string keyword = "")
@@ -46,7 +43,7 @@ namespace WaterCloud.Service.SystemManage
                 query = query.Where(a => a.F_Name.Contains(keyword) || a.F_Description.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
-            return query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToList();
+            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<FormEntity>> GetLookList(Pagination pagination,string keyword = "")
@@ -55,7 +52,6 @@ namespace WaterCloud.Service.SystemManage
             var query = GetQuery().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                //此处需修改
                 query = query.Where(a => a.F_Name.Contains(keyword) || a.F_Description.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
@@ -75,16 +71,15 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<FormEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
-        #endregion
-
         public async Task<FormEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data = await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
+        #endregion
 
         #region 提交数据
         public async Task SubmitForm(FormEntity entity, string keyValue)
@@ -107,15 +102,12 @@ namespace WaterCloud.Service.SystemManage
                 entity.F_DeleteMark = false;
                 entity.Create();
                 await repository.Insert(entity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                     //此处需修改
                 entity.Modify(keyValue); 
                 await repository.Update(entity);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
         }
 
@@ -123,11 +115,6 @@ namespace WaterCloud.Service.SystemManage
         {
             var ids = keyValue.Split(',');
             await repository.Delete(t => ids.Contains(t.F_Id));
-            foreach (var item in ids)
-            {
-            await CacheHelper.Remove(cacheKey + item);
-            }
-            await CacheHelper.Remove(cacheKey + "list");
         }
         #endregion
 

@@ -24,8 +24,7 @@ namespace WaterCloud.Service.SystemSecurity
         private UnitOfWork uniwork;
         private IScheduler _scheduler;
         private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
-        //获取类名
-        
+
         public OpenJobsService(ISqlSugarClient context, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory)
         {
             uniwork = new UnitOfWork(context);

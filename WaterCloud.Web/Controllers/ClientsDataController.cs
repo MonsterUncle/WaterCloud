@@ -27,8 +27,6 @@ namespace WaterCloud.Web.Controllers
         /// <summary>
         /// 缓存操作类
         /// </summary>
-        private string cacheKey = "watercloud_quickmoduledata_";
-        private string initcacheKey = "watercloud_init_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         public QuickModuleService _quickModuleService { get; set; }
         public NoticeService _noticeService { get; set; }
@@ -110,26 +108,8 @@ namespace WaterCloud.Web.Controllers
                 return null;
             }
             var userId = currentuser.UserId;
-            var data =await CacheHelper.Get<Dictionary<string,List<QuickModuleExtend>>>(cacheKey + "list");
-            if (data==null)
-            {
-                data = new Dictionary<string, List<QuickModuleExtend>>();
-                data.Add(userId,await _quickModuleService.GetQuickModuleList(userId));
-            }
-            else
-            {
-                if (data.ContainsKey(userId))
-                {
-                    data[userId] =await _quickModuleService.GetQuickModuleList(userId);
-                }
-                else
-                {
-                    data.Add(userId,await _quickModuleService.GetQuickModuleList(userId));
-                }
-            }
-            await CacheHelper.Remove(cacheKey + "list");
-            await CacheHelper.Set(cacheKey + "list", data);
-            return data[userId];
+            var data = await _quickModuleService.GetQuickModuleList(userId);
+            return data;
         }
         /// <summary>
         /// 获取公告信息
@@ -148,31 +128,12 @@ namespace WaterCloud.Web.Controllers
         public async Task<ActionResult> GetInitDataJson()
         {
             var currentuser = _userService.currentuser;
-            var userId = currentuser.UserId;
             if (currentuser.UserId == null)
             {
                 return Content("");
             }
-            Dictionary<string, string > data =await CacheHelper.Get<Dictionary<string, string>>(initcacheKey + "list");
-            if (data == null)
-            {
-                data =new Dictionary <string, string>();
-                data.Add(userId, await this.GetMenuListNew());
-            }
-            else
-            {
-                if (data.ContainsKey(userId))
-                {
-                    data[userId] = await this.GetMenuListNew();
-                }
-                else
-                {
-                    data.Add(userId, await this.GetMenuListNew());
-                }
-            }
-            await CacheHelper.Remove(initcacheKey + "list");
-            await CacheHelper.Set(initcacheKey + "list",data);
-            return Content(data[userId]);
+            var data = await GetMenuListNew();
+            return Content(data);
         }
         /// <summary>
         /// 获取公告信息请求方法
@@ -343,7 +304,6 @@ namespace WaterCloud.Web.Controllers
                 roleId = "admin";
             }
             var rolelist = roleId.Split(',');
-            Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>> dictionary = await CacheHelper.Get<Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>>(initcacheKey + "modulebutton_list");
             var dictionarylist = new Dictionary<string, List<ModuleButtonEntity>>();
             if (currentuser.UserId == null)
             {
@@ -368,25 +328,7 @@ namespace WaterCloud.Web.Controllers
                         dictionarylist.Add(item.F_ModuleId, buttonList);
                     }
                 }
-                if (dictionary == null)
-                {
-                    dictionary = new Dictionary<string, Dictionary<string, List<ModuleButtonEntity>>>();
-                    dictionary.Add(roles, dictionarytemp);
-                }
-                else
-                {
-                    if (dictionary.ContainsKey(roles))
-                    {
-                        dictionary[roles] = dictionarytemp;
-                    }
-                    else
-                    {
-                        dictionary.Add(roles, dictionarytemp);
-                    }
-                }
             }
-            await CacheHelper.Remove(initcacheKey + "modulebutton_list");
-            await CacheHelper.Set(initcacheKey + "modulebutton_list", dictionary);
             return dictionarylist;
         }
         /// <summary>
@@ -402,7 +344,6 @@ namespace WaterCloud.Web.Controllers
                 roleId = "admin";
             }
             var rolelist = roleId.Split(',');
-            Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>> dictionary = await CacheHelper.Get<Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>>>(initcacheKey + "modulefields_list");
             var dictionarylist = new Dictionary<string, List<ModuleFieldsEntity>>();
             if (currentuser.UserId == null)
             {
@@ -427,25 +368,7 @@ namespace WaterCloud.Web.Controllers
                         dictionarylist.Add(item.F_ModuleId, buttonList);
                     }
                 }
-                if (dictionary == null)
-                {
-                    dictionary = new Dictionary<string, Dictionary<string, List<ModuleFieldsEntity>>>();
-                    dictionary.Add(roles, dictionarytemp);
-                }
-                else
-                {
-                    if (dictionary.ContainsKey(roles))
-                    {
-                        dictionary[roles] = dictionarytemp;
-                    }
-                    else
-                    {
-                        dictionary.Add(roles, dictionarytemp);
-                    }
-                }
             }
-            await CacheHelper.Remove(initcacheKey + "modulefields_list");
-            await CacheHelper.Set(initcacheKey + "modulefields_list", dictionary);
             return dictionarylist;
         }
     }
