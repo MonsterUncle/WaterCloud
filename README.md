@@ -31,24 +31,20 @@
 - 页面为响应式设计，支持电脑、平板、智能手机等设备，微信浏览器以及各种常见浏览器。
 - 适用范围：可以开发OA、ERP、BPM、CRM、WMS、TMS、MIS、BI、电商平台后台、物流管理系统、快递管理系统、教务管理系统等各类管理软件。
 
-- .net5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net5
-- .netcore3.1版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/core3.1
-- .net5版项目演示地址：http://106.75.169.226:5000/  （账号：admin 密码：0000，数据库2个小时还原一次）
-- .net5版文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
+
+- .net5-Chloe版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net5-Chloe
+- .net4.5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net4.5-Chloe
+- .netcore3.1版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/core3.1-Chloe
+- .net5-SqlSugar版项目演示地址：http://106.75.169.226:5000/  （账号：admin 密码：0000，数据库2个小时还原一次）
+- .net5-SqlSugar版文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
 
 #### 版本
 
 1、Asp.NET 4.5
 基于.net 4.5 MVC+Chloe+Layui mini 地址：https://gitee.com/qian_wei_hong/WaterCloud_NET4.5
 
-2、Asp.NET Core 3.1
-基于Asp .NET Core 3.1 MVC+Chloe+Layui mini 地址：https://gitee.com/qian_wei_hong/WaterCloud
-- 去除微信、钉钉接口；
-- 日志使用Log；
-- Redis没有分库，数据库默认使用0；
-- 定时器未实现；
-- 模板未实现；
-
+2、Asp.NET 5
+基于Asp .NET 5 MVC+SqlSugar+Layui mini 地址：https://gitee.com/qian_wei_hong/WaterCloud
 
 
 #### 前端以及后端使用技术介绍
