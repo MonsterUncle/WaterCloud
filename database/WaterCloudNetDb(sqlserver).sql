@@ -1,4 +1,4 @@
-/*
+﻿/*
  Navicat Premium Data Transfer
 
  Source Server         : 本地mssql
@@ -1114,7 +1114,7 @@ CREATE TABLE [dbo].[oms_uploadfile] (
   [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_FilePath] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FileName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NOT NULL,
-  [F_FileType] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FileType] int  NULL,
   [F_FileSize] int  NULL,
   [F_FileExtension] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FileBy] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,

@@ -1,4 +1,4 @@
-/*
+﻿/*
  Navicat Premium Data Transfer
 
  Source Server         : local
@@ -241,7 +241,7 @@ CREATE TABLE `oms_uploadfile`  (
   `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
   `F_FilePath` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件路径',
   `F_FileName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '文件名称',
-  `F_FileType` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件类型（0 文件，1 图片）',
+  `F_FileType` int NULL DEFAULT NULL COMMENT '文件类型（0 文件，1 图片）',
   `F_FileSize` int NULL DEFAULT NULL COMMENT '文件大小',
   `F_FileExtension` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件扩展名',
   `F_FileBy` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件所属',
