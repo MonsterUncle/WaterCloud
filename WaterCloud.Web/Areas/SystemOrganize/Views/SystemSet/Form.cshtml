@@ -88,7 +88,8 @@
         wcLoading.close();
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-                postData = data.field;
+            postData = data.field;
+            postData.keyValue = keyValue;
                 if (isUpload) {
                     $("#hideupload1").trigger('click');
                 }

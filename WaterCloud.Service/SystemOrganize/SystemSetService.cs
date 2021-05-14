@@ -67,7 +67,7 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<List<SystemSetEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
-            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false&&u.F_DbNumber!="0");
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
