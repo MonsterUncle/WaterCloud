@@ -65,7 +65,7 @@ namespace WaterCloud.Service.CommonService
                             FROM sysobjects a, syscolumns b  
                             LEFT OUTER JOIN syscomments e ON b.cdefault = e.id  
                             LEFT OUTER JOIN (Select g.id, g.colid FROM sysindexes f, sysindexkeys g Where (f.id=g.id)AND(f.indid=g.indid)AND(f.indid>0)AND(f.indid<255)AND(f.status&2048)<>0) h ON (b.id=h.id)AND(b.colid=h.colid)"  
-                            +$"Where (a.id=b.id)AND(a.id=object_id({tableName})) ORDER BY b.colid");
+                            +$"Where (a.id=b.id)AND(a.id=object_id('{tableName}'))");
             var list =await _unitOfWork.GetDbClient().SqlQueryable<TableFieldInfo>(strSql.ToString()).ToListAsync();
             return list.ToList();
         }
