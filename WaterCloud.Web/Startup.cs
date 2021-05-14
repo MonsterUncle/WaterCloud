@@ -25,6 +25,7 @@ using Quartz.Spi;
 using System;
 using SqlSugar;
 using System.Collections.Generic;
+using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Web
 {
@@ -82,21 +83,13 @@ namespace WaterCloud.Web
                 {
                     using (var context = new UnitOfWork(new SqlSugarClient(defaultConfig)))
                     {
-                        var _setService = new Service.SystemOrganize.SystemSetService(context);
-                        var sqls = _setService.GetList().GetAwaiter().GetResult();
+                        var sqls = context.GetDbClient().Queryable<SystemSetEntity>().ToList();
                         foreach (var item in sqls.Where(a => a.F_EnabledMark == true && a.F_EndTime > DateTime.Now.Date && a.F_DbNumber != "0"))
                         {
                             var config = DBContexHelper.Contex(item.F_DbString, item.F_DBProvider);
                             config.ConfigId = item.F_DbNumber;
                             list.Add(config);
                         }
-                        Domain.SystemOrganize.SystemSetEntity temp = new Domain.SystemOrganize.SystemSetEntity();
-                        temp.F_AdminAccount = GlobalContext.SystemConfig.SysemUserCode;
-                        temp.F_AdminPassword = GlobalContext.SystemConfig.SysemUserPwd;
-                        temp.F_DBProvider = GlobalContext.SystemConfig.DBProvider;
-                        temp.F_DbString = GlobalContext.SystemConfig.DBConnectionString;
-                        temp.F_DbNumber = "0";
-                        _setService.SubmitForm(temp, GlobalContext.SystemConfig.SysemMasterProject).GetAwaiter().GetResult();
                     }
                 }
                 catch (Exception ex)

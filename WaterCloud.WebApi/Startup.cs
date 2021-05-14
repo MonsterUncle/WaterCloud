@@ -78,10 +78,10 @@ namespace WaterCloud.WebApi
                     {
                         var _setService = new Service.SystemOrganize.SystemSetService(context);
                         var sqls = _setService.GetList().GetAwaiter().GetResult();
-                        foreach (var item in sqls.Where(a => a.F_EnabledMark == true && a.F_EndTime > DateTime.Now.Date && a.F_DBNumber != "0"))
+                        foreach (var item in sqls.Where(a => a.F_EnabledMark == true && a.F_EndTime > DateTime.Now.Date && a.F_DbNumber != "0"))
                         {
                             var config = DBContexHelper.Contex(item.F_DbString, item.F_DBProvider);
-                            config.ConfigId = item.F_DBNumber;
+                            config.ConfigId = item.F_DbNumber;
                             list.Add(config);
                         }
                     }

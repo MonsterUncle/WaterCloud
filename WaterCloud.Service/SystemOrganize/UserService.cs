@@ -232,6 +232,7 @@ namespace WaterCloud.Service.SystemOrganize
             //根据登录公司查找公司
             if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
             {
+                unitofwork.GetDbClient().ChangeDatabase("0");
                 var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).First();
                 if (setTemp!=null)
                 {
@@ -273,7 +274,7 @@ namespace WaterCloud.Service.SystemOrganize
                     string dbPassword = Md5.md5(DESEncrypt.Encrypt(password.ToLower(), userLogOnEntity.F_UserSecretkey).ToLower(), 32).ToLower();
                     if (dbPassword == userLogOnEntity.F_UserPassword)
                     {
-                        if (userEntity.F_Account != GlobalContext.SystemConfig.SysemUserCode)
+                        if (userEntity.F_IsAdmin != true)
                         {
                             var list = userEntity.F_RoleId.Split(',');
                             var rolelist =repository.Db.Queryable<RoleEntity>().Where(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();

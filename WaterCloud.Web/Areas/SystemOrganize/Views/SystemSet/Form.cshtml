@@ -132,6 +132,7 @@
             url: "/SystemOrganize/RoleAuthorize/GetPermissionTree?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"), // 使用url加载（可与data加载同时存在）
             request: { roleId: keyValue }
         });
+        var isUpload = false;
         var role;
         form.on('submit(formStep)', function (data) {
             role = data.field;

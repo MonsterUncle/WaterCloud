@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using WaterCloud.Service.SystemOrganize;
 using WaterCloud.Domain.SystemOrganize;
 using SqlSugar;
+using System.Linq;
 
 namespace WaterCloud.Web.Controllers
 {
@@ -49,6 +50,25 @@ namespace WaterCloud.Web.Controllers
                 return View();
             }
 
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public async Task<ActionResult> GetListJsonByLogin(string keyword)
+        {
+            var data = await _setService.GetList(keyword);
+            data = data.Where(a => a.F_DbNumber != "0").ToList();
+            foreach (var item in data)
+            {
+                item.F_AdminAccount = null;
+                item.F_AdminPassword = null;
+                item.F_DBProvider = null;
+                item.F_DbString = null;
+                item.F_PrincipalMan = null;
+                item.F_MobilePhone = null;
+                item.F_CompanyName = null;
+                item.F_LogoCode= null;
+            }
+            return Content(data.ToJson());
         }
         /// <summary>
         /// 验证码获取（此接口已弃用）
@@ -160,7 +180,7 @@ namespace WaterCloud.Web.Controllers
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
                 SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
                 operatorModel.DbNumber = setEntity.F_DbNumber;
-                if (userEntity.F_Account == GlobalContext.SystemConfig.SysemUserCode)
+                if (userEntity.F_IsAdmin == true)
                 {
                     operatorModel.IsSystem = true;
                 }

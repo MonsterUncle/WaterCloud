@@ -203,21 +203,8 @@ namespace WaterCloud.Service.SystemOrganize
                     await repository.Db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
                 }
                 //更新主库
-                if (currentuser.UserId == GlobalContext.SystemConfig.SysemUserId || currentuser.UserId == null)
+                if (currentuser.IsAdmin == true)
                 {
-                    var user = repository.Db.Queryable<UserEntity>().Where(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).First();
-                    var userinfo = repository.Db.Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
-                    userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                    userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
-                    await repository.Db.Updateable<UserEntity>(a => new UserEntity
-                    {
-                        F_Account = entity.F_AdminAccount
-                    }).Where(a => a.F_Id == user.F_Id).ExecuteCommandAsync();
-                    await repository.Db.Updateable<UserLogOnEntity>(a => new UserLogOnEntity
-                    {
-                        F_UserPassword = userinfo.F_UserPassword,
-                        F_UserSecretkey = userinfo.F_UserSecretkey
-                    }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
                     await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
                 }
                 else
@@ -246,12 +233,31 @@ namespace WaterCloud.Service.SystemOrganize
                     }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
                     await unitofwork.GetDbClient().Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
                     //更新菜单
-                    await unitofwork.GetDbClient().Deleteable<ModuleEntity>().ExecuteCommandAsync();
-                    await unitofwork.GetDbClient().Deleteable<ModuleButtonEntity>().ExecuteCommandAsync();
-                    await unitofwork.GetDbClient().Deleteable<ModuleFieldsEntity>().ExecuteCommandAsync();
-                    await unitofwork.GetDbClient().Insertable(modules).ExecuteCommandAsync();
-                    await unitofwork.GetDbClient().Insertable(modulebtns).ExecuteCommandAsync();
-                    await unitofwork.GetDbClient().Insertable(modulefileds).ExecuteCommandAsync();
+                    if (roleAuthorizeEntitys.Count > 0)
+                    {
+                        await unitofwork.GetDbClient().Deleteable<ModuleEntity>().ExecuteCommandAsync();
+                        await unitofwork.GetDbClient().Deleteable<ModuleButtonEntity>().ExecuteCommandAsync();
+                        await unitofwork.GetDbClient().Deleteable<ModuleFieldsEntity>().ExecuteCommandAsync();
+                        await unitofwork.GetDbClient().Insertable(modules).ExecuteCommandAsync();
+                        await unitofwork.GetDbClient().Insertable(modulebtns).ExecuteCommandAsync();
+                        await unitofwork.GetDbClient().Insertable(modulefileds).ExecuteCommandAsync();
+                    }
+                }
+				else
+				{
+                    var user = repository.Db.Queryable<UserEntity>().Where(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).First();
+                    var userinfo = repository.Db.Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
+                    userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                    userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
+                    await repository.Db.Updateable<UserEntity>(a => new UserEntity
+                    {
+                        F_Account = entity.F_AdminAccount
+                    }).Where(a => a.F_Id == user.F_Id).ExecuteCommandAsync();
+                    await repository.Db.Updateable<UserLogOnEntity>(a => new UserLogOnEntity
+                    {
+                        F_UserPassword = userinfo.F_UserPassword,
+                        F_UserSecretkey = userinfo.F_UserSecretkey
+                    }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
                 }
             }
             unitofwork.Commit();

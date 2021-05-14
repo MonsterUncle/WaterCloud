@@ -111,13 +111,13 @@
                 }
             };
             $(function () {
-                if (SqlMode ="TenantSql") {
-                    $('wchost').parent().removeClass('layui-hide');
+                if (SqlMode =='TenantSql') {
+                    $('#wchost').parent().removeClass('layui-hide');
                 }
                 $.login.init();
                 $.login.checkLogin();
                 $("#wchost").bindSelect({
-                    url: "/SystemOrganize/SystemSet/GetListJson",
+                    url: "/Login/GetListJsonByLogin",
                     id: "F_HostUrl",
                     text: "F_ProjectName"
                 });
