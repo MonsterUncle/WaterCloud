@@ -56,7 +56,7 @@ namespace WaterCloud.Web.Controllers
         public async Task<ActionResult> GetListJsonByLogin(string keyword)
         {
             var data = await _setService.GetList(keyword);
-            data = data.Where(a => a.F_DbNumber != "0").ToList();
+            data = data.OrderBy(a=>a.F_DbNumber).ToList();
             foreach (var item in data)
             {
                 item.F_AdminAccount = null;
