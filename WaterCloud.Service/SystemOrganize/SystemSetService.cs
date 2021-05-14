@@ -98,6 +98,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 entity.F_DeleteMark = false;
                 entity.Create();
+                unitofwork.GetDbClient().ChangeDatabase("0");
                 await repository.Insert(entity);
 				//新建数据库和表
 				using (var db = new SqlSugarClient(DBContexHelper.Contex(entity.F_DbString, entity.F_DBProvider)))
