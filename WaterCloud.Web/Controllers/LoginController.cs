@@ -158,7 +158,7 @@ namespace WaterCloud.Web.Controllers
                 operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
                 SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
-                operatorModel.DbNumber = setEntity.F_DBNumber;
+                operatorModel.DbNumber = setEntity.F_DbNumber;
                 if (userEntity.F_Account == GlobalContext.SystemConfig.SysemUserCode)
                 {
                     operatorModel.IsSystem = true;

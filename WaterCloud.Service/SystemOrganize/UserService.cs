@@ -235,7 +235,7 @@ namespace WaterCloud.Service.SystemOrganize
                 var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).First();
                 if (setTemp!=null)
                 {
-                    unitofwork.GetDbClient().ChangeDatabase(setTemp.F_DBNumber);
+                    unitofwork.GetDbClient().ChangeDatabase(setTemp.F_DbNumber);
                     repository = new RepositoryBase<UserEntity>(unitofwork);
                 }
             }

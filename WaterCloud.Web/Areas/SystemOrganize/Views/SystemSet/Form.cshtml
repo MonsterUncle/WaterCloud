@@ -53,7 +53,7 @@
                 postData.F_Logo = res.data[0].src;
                 //上传成功
                 common.submitForm({
-                    url: '/SystemOrganize/SystemSet/SetSubmitForm',
+                    url: '/SystemOrganize/SystemSet/SubmitForm',
                     param: postData,
                     success: function () {
                         common.parentreload('data-search-btn');
@@ -94,7 +94,7 @@
                 }
                 else {
                     common.submitForm({
-                        url: '/SystemOrganize/SystemSet/SetSubmitForm',
+                        url: '/SystemOrganize/SystemSet/SubmitForm',
                         param: postData,
                         success: function () {
                             common.parentreload('data-search-btn');
@@ -162,7 +162,7 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label required">系统账户</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_AdminAccount" name="F_AdminAccount" maxlength="50" autocomplete="off" readonly lay-verify="required" class="layui-input">
+                            <input type="text" id="F_AdminAccount" name="F_AdminAccount" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
@@ -174,15 +174,19 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">有效</label>
+                        <label class="layui-form-label required">数据库类型</label>
                         <div class="layui-input-block">
-                            <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
+                            <select id="F_DBProvider" name="F_DBProvider" lay-verify="required">
+                                <option value="MySql">MySql</option>
+                                <option value="MSSql">MSSql</option>
+                                <option value="Oracle">Oracle</option>
+                            </select>
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">到期时间</label>
+                        <label class="layui-form-label required">连接字符串</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_EndTime" name="F_EndTime" autocomplete="off" lay-verify="required" class="layui-input">
+                            <input type="password" id="F_DbString" name="F_DbString" maxlength="255" autocomplete="off" lay-verify="required" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -197,6 +201,20 @@
                         <label class="layui-form-label required">数据库序号</label>
                         <div class="layui-input-block">
                             <input id="F_DbNumber" name="F_DbNumber" class="layui-input" autocomplete="off" maxlength="50" lay-verify="required" placeholder="请输入数据库序号">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                        <label class="layui-form-label required">有效</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
+                        </div>
+                    </div>
+                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                        <label class="layui-form-label required">到期时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="F_EndTime" name="F_EndTime" autocomplete="off" lay-verify="required" class="layui-input">
                         </div>
                     </div>
                 </div>

@@ -27,23 +27,9 @@ namespace WaterCloud.DataBase
         {
             get
             {
-                if (GlobalContext.SystemConfig != null)
+                if (typeof(TEntity).GetTypeInfo().GetCustomAttributes(typeof(SugarTable), true).FirstOrDefault((x => x.GetType() == typeof(SugarTable))) is SugarTable sugarTable && !string.IsNullOrEmpty(sugarTable.TableDescription))
                 {
-                    if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
-                    {
-                        var current = OperatorProvider.Provider.GetCurrent();
-                        if (current != null && !string.IsNullOrEmpty(current.DbNumber))
-                        {
-                            _dbBase.ChangeDatabase(current.DbNumber);
-                        }
-                    }
-					else
-					{
-                        if (typeof(TEntity).GetTypeInfo().GetCustomAttributes(typeof(SugarTable), true).FirstOrDefault((x => x.GetType() == typeof(SugarTable))) is SugarTable sugarTable && !string.IsNullOrEmpty(sugarTable.TableDescription))
-                        {
-                            _dbBase.ChangeDatabase(sugarTable.TableDescription.ToLower());
-                        }
-                    }
+                    _dbBase.ChangeDatabase(sugarTable.TableDescription.ToLower());
                 }
                 return _dbBase;
             }

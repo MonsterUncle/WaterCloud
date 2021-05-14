@@ -129,6 +129,6 @@ namespace WaterCloud.Domain.SystemOrganize
         public string F_DBProvider { get; set; }
         [Required(ErrorMessage = "域名不能为空")]
         public string F_HostUrl { get; set; }
-        public string F_DBNumber { get; set; }
+        public string F_DbNumber { get; set; }
     }
 }

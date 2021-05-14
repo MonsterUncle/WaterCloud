@@ -5,6 +5,9 @@ using WaterCloud.Code;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.DataBase;
 using SqlSugar;
+using System.IO;
+using System;
+using System.Reflection;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -90,12 +93,29 @@ namespace WaterCloud.Service.SystemOrganize
         #region 提交数据
         public async Task SubmitForm(SystemSetEntity entity, string keyValue)
         {
+            unitofwork.BeginTrans();
             if (string.IsNullOrEmpty(keyValue))
             {
                 entity.F_DeleteMark = false;
                 entity.Create();
                 await repository.Insert(entity);
-                //新建数据库类
+				//新建数据库和表
+				using (var db = new SqlSugarClient(DBContexHelper.Contex(entity.F_DbString, entity.F_DBProvider)))
+				{
+                    db.DbMaintenance.CreateDatabase();
+                    var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
+                    //反射取指定前后缀的dll
+                    var referencedAssemblies = Directory.GetFiles(path, "WaterCloud.Domain.dll").Select(Assembly.LoadFrom).ToArray();
+                    var types = referencedAssemblies.SelectMany(a => a.GetTypes().ToArray());
+                    var implementType = types.Where(x => x.IsClass);
+					foreach (var item in implementType)
+					{
+						if (item.GetCustomAttributes(typeof(SugarTable), true).FirstOrDefault((x => x.GetType() == typeof(SugarTable))) is SugarTable sugarTable)
+						{
+                            db.CodeFirst.SetStringDefaultLength(50).InitTables(item);
+                        } 
+                    }
+                }
                 //新建菜单
                 //新建账户,密码
                 //新建租户权限 同时增加定时器 定时同步租户菜单
@@ -135,8 +155,7 @@ namespace WaterCloud.Service.SystemOrganize
                 if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
 				{
                     var tenant = await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
-                    unitofwork.GetDbClient().ChangeDatabase(tenant.F_DBNumber);
-                    unitofwork.CurrentBeginTrans();
+                    unitofwork.GetDbClient().ChangeDatabase(tenant.F_DbNumber);
                     var user = unitofwork.GetDbClient().Queryable<UserEntity>().Where(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).First();
                     var userinfo = unitofwork.GetDbClient().Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
                     userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
@@ -151,12 +170,14 @@ namespace WaterCloud.Service.SystemOrganize
                         F_UserSecretkey = userinfo.F_UserSecretkey
                     }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
                     await unitofwork.GetDbClient().Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
+                    //更新租户权限
                     //更新菜单
-                    unitofwork.CurrentCommit();
+
                 }
             }
+            unitofwork.Commit();
             var set=await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
-            unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT?set.F_DBNumber:"0");
+            unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT?set.F_DbNumber:"0");
             var tempkey= unitofwork.GetDbClient().Queryable<UserEntity>().Where(a => a.F_IsAdmin == true).First().F_Id;
             await CacheHelper.Remove(cacheKeyOperator + "info_" + tempkey);
         }

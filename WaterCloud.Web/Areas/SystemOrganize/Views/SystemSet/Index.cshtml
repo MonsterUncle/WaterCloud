@@ -36,7 +36,7 @@
      </div>
  </div>
  <script>
-     layui.use(['jquery', 'form', 'table', 'common', 'layer', 'optimizeSelectOption'], function () {
+     layui.use(['jquery', 'form', 'table', 'common','commonTable', 'layer', 'optimizeSelectOption'], function () {
          var form = layui.form,
              commonTable = layui.commonTable,
              table = layui.table,
@@ -60,8 +60,8 @@
                  { field: 'F_AdminAccount', title: '系统账户', width: 120, sort: true },
                  { field: 'F_DbString', title: '连接字符串', width: 120, sort: true },
                  { field: 'F_DBProvider', title: '数据库类型', width: 120, sort: true },
-                 { field: 'F_HostUrl', title: '域名', width: 120, sort: true },
                  { field: 'F_DbNumber', title: '数据库序号', width: 120, sort: true },
+                 { field: 'F_HostUrl', title: '域名', width: 120, sort: true },
                  {
                      field: 'F_CreatorTime', title: '创建时间', minWidth: 120, sort: true,
                      templet: function (d) {

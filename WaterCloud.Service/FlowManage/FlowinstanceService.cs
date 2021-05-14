@@ -208,7 +208,7 @@ namespace WaterCloud.Service.FlowManage
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
             await messageApp.SubmitForm(msg);
-            unitofwork.CurrentBeginTrans();
+            unitofwork.CurrentCommit();
 
             wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
 
