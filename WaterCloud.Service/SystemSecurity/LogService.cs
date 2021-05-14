@@ -21,12 +21,11 @@ namespace WaterCloud.Service.SystemSecurity
     {
         //登录信息保存方式
         private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
-        private ModuleService moduleservice;
+        public ModuleService moduleservice { get; set; }
         //获取类名
-        
+
         public LogService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            moduleservice = new ModuleService(unitOfWork);
         }
         public async Task<List<LogEntity>> GetList(Pagination pagination, int timetype, string keyword="")
         {

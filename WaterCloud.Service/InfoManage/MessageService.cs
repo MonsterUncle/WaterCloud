@@ -23,15 +23,12 @@ namespace WaterCloud.Service.InfoManage
     public class MessageService : DataFilterService<MessageEntity>, IDenpendency
     {
         private string cacheHubKey = "watercloud_hubuserinfo_";
-        
-        private readonly IHubContext<MessageHub> _messageHub;
-        private ItemsDataService itemsApp;
-        private IHttpClientFactory _httpClientFactory;
-        public MessageService(IUnitOfWork unitOfWork, IHttpClientFactory httpClientFactory, IHubContext<MessageHub> messageHub = null) : base(unitOfWork)
+
+        public IHubContext<MessageHub> _messageHub { get; set; }
+        public ItemsDataService itemsApp { get; set; }
+        public IHttpClientFactory _httpClientFactory { get; set; }
+        public MessageService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            itemsApp = new ItemsDataService(unitOfWork);
-            _messageHub = messageHub;
-            _httpClientFactory = httpClientFactory;
         }
         #region 获取数据
         public async Task<List<MessageEntity>> GetList(string keyword = "")

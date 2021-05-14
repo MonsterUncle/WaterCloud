@@ -27,6 +27,11 @@ namespace WaterCloud.DataBase
 			if (GlobalContext.SystemConfig!=null)
 			{
                 commandTimeout = GlobalContext.SystemConfig.CommandTimeout;
+                var current = OperatorProvider.Provider.GetCurrent();
+                if (GlobalContext.SystemConfig.SqlMode==Define.SQL_TENANT && current != null && !string.IsNullOrEmpty(current.DbNumber))
+                {
+                    (context as SqlSugarClient).ChangeDatabase(current.DbNumber);
+                }
             }
             _context = context;
             _context.Ado.CommandTimeOut = commandTimeout;

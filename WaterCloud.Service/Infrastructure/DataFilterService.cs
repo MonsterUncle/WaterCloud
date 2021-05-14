@@ -12,7 +12,7 @@ using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service
 {
-    public class DataFilterService<T> where T : class, new()
+    public class DataFilterService<T>: RepositoryBase<T> where T : class, new()
     {
         // 用户信息
         public OperatorModel currentuser;
@@ -20,15 +20,11 @@ namespace WaterCloud.Service
         protected IRepositoryBase<T> repository;
         // 用于其他表操作
         protected IUnitOfWork unitofwork;
-        public DataFilterService(IUnitOfWork unitOfWork)
+        public DataFilterService(IUnitOfWork unitOfWork):base(unitOfWork)
         {
             currentuser = OperatorProvider.Provider.GetCurrent();
             unitofwork = unitOfWork;
-            if (currentuser != null)
-            {
-                unitOfWork.GetDbClient().ChangeDatabase(currentuser.DbNumber);
-			}
-            repository = new RepositoryBase<T>(unitOfWork);
+            repository = this;
             if (currentuser == null)
             {
                 currentuser = new OperatorModel();

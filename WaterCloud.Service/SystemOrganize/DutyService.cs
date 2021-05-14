@@ -19,10 +19,9 @@ namespace WaterCloud.Service.SystemOrganize
 {
     public class DutyService : DataFilterService<RoleEntity>, IDenpendency
     {
-        private SystemSetService setApp;
+        public SystemSetService setApp { get; set; }
         public DutyService(IUnitOfWork unitOfWork) :base(unitOfWork)
         {
-            setApp = new SystemSetService(unitOfWork);
         }
 
         public async Task<List<RoleEntity>> GetList(string keyword = "")

@@ -21,13 +21,12 @@ namespace WaterCloud.Service.SystemSecurity
     public class OpenJobsService : IDenpendency
     {
         private RepositoryBase<OpenJobEntity> repository;
-        private UnitOfWork uniwork;
         private IScheduler _scheduler;
         private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
 
-        public OpenJobsService(ISqlSugarClient context, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory)
+        public OpenJobsService(UnitOfWork unitOfWork, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory)
         {
-            uniwork = new UnitOfWork(context);
+            var uniwork = unitOfWork;
             repository = new RepositoryBase<OpenJobEntity>(uniwork);
             _scheduler = schedulerFactory.GetScheduler().GetAwaiter().GetResult();
             _scheduler.JobFactory = iocJobfactory;

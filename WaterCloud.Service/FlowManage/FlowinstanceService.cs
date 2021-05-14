@@ -24,14 +24,12 @@ namespace WaterCloud.Service.FlowManage
 	/// </summary>
 	public class FlowinstanceService : DataFilterService<FlowinstanceEntity>, IDenpendency
     {
-        private IHttpClientFactory _httpClientFactory;
-        private MessageService messageApp;
+        public IHttpClientFactory _httpClientFactory { get; set; }
+        public MessageService messageApp { get; set; }
         private string flowCreator;
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public FlowinstanceService(IUnitOfWork unitOfWork, IHttpClientFactory httpClientFactory) : base(unitOfWork)
+        public FlowinstanceService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _httpClientFactory = httpClientFactory;
-            messageApp = new MessageService(unitOfWork, httpClientFactory);
         }
         #region 获取数据
         public async Task<List<FlowinstanceEntity>> GetList(string keyword = "")

@@ -21,23 +21,23 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
 
         private readonly IDatabaseTableService _service;
         private readonly IUnitOfWork _unitOfWork;
-        public CodeGeneratorController(ISqlSugarClient context)
+        public CodeGeneratorController(IUnitOfWork unitOfWork)
         {
             string dbType = GlobalContext.SystemConfig.DBProvider;
-            _unitOfWork = new UnitOfWork(context);
+            _unitOfWork = unitOfWork;
             switch (dbType)
             {
                 case Define.DBTYPE_SQLSERVER:
-                    _service = new DatabaseTableSqlServerService(context);
+                    _service = new DatabaseTableSqlServerService(unitOfWork);
                     break;
                 case Define.DBTYPE_MYSQL:
-                    _service = new DatabaseTableMySqlService(context);
+                    _service = new DatabaseTableMySqlService(unitOfWork);
                     break;
                 case Define.DBTYPE_ORACLE:
-                    _service = new DatabaseTableOracleService(context);
+                    _service = new DatabaseTableOracleService(unitOfWork);
                     break;
                 default:
-                    _service = new DatabaseTableMySqlService(context);
+                    _service = new DatabaseTableMySqlService(unitOfWork);
                     break;
             }
         }

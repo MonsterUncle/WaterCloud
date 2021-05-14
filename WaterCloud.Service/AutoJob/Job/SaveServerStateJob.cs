@@ -16,7 +16,7 @@ namespace WaterCloud.Service.AutoJob
         public SaveServerStateJob(IUnitOfWork unitOfWork)
         {
             _hostingEnvironment = GlobalContext.HostingEnvironment;
-            _server = new ServerStateService(unitOfWork.GetDbClient());
+            _server = new ServerStateService(unitOfWork);
          }
         public async Task<AlwaysResult> Start()
         {

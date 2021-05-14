@@ -42,7 +42,7 @@ namespace WaterCloud.Service.AutoJob
                     jobId = jobData["F_Id"].ToString();
                     using (var _context= new SqlSugarClient(DBContexHelper.Contex()))
                     {
-                        OpenJobsService autoJobService = new OpenJobsService(_context, _schedulerFactory,_iocJobfactory);
+                        OpenJobsService autoJobService = new OpenJobsService(new UnitOfWork(_context), _schedulerFactory,_iocJobfactory);
                         // 获取数据库中的任务
                         dbJobEntity = await autoJobService.GetForm(jobId);
                         if (dbJobEntity != null)

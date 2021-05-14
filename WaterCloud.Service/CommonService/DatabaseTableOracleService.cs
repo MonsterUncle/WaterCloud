@@ -11,11 +11,12 @@ using WaterCloud.Domain;
 
 namespace WaterCloud.Service.CommonService
 {
-    public class DatabaseTableOracleService : UnitOfWork, IDatabaseTableService
+    public class DatabaseTableOracleService : IDatabaseTableService
     {
-        public DatabaseTableOracleService(ISqlSugarClient context) : base(context)
+        private IUnitOfWork _unitOfWork;
+        public DatabaseTableOracleService(IUnitOfWork unitOfWork)
         {
-
+            _unitOfWork = unitOfWork;
         }
         #region 获取数据
         public async Task<List<TableInfo>> GetTableList(string tableName)
@@ -23,7 +24,7 @@ namespace WaterCloud.Service.CommonService
             StringBuilder strSql = new StringBuilder();
             //select TABLE_NAME Id,TABLE_NAME from user_tab_comments utc where utc.table_type='TABLE'
             strSql.Append(@"select a.TABLE_NAME TableName,b.CREATED CreateTime from sys.user_tables a left join user_objects b on b.object_name=upper(a.TABLE_NAME) where a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'");
-            IEnumerable<TableInfo> list = await GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
+            IEnumerable<TableInfo> list = await _unitOfWork.GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
             if (!tableName.IsEmpty())
             {
                 list = list.Where(p => p.TableName.Contains(tableName));
@@ -38,7 +39,7 @@ namespace WaterCloud.Service.CommonService
             var parameter = new List<SugarParameter>();
             strSql.Append(@"select a.TABLE_NAME TableName,b.CREATED CreateTime from sys.user_tables a left join user_objects b on b.object_name=upper(a.TABLE_NAME) where a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'");
             //select a.TABLE_NAME TableName,b.CREATED CreateTime from sys.user_tables a,user_objects b where b.object_name=upper(a.TABLE_NAME) and a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'
-            var query= GetDbClient().SqlQueryable<TableInfo>(strSql.ToString());
+            var query= _unitOfWork.GetDbClient().SqlQueryable<TableInfo>(strSql.ToString());
             if (!tableName.IsEmpty())
             {
                 query = query.Where(a => a.TableName.Contains(tableName));
@@ -69,7 +70,7 @@ namespace WaterCloud.Service.CommonService
                     LEFT JOIN user_cons_columns c on b.TABLE_NAME=c.TABLE_NAME" + $"WHERE a.table_name = b.table_name and a.Column_name = b.Column_name and a.table_name ={tableName}"
                     + @"and c.constraint_name in (select constraint_name from user_constraints where  constraint_type='P' and a.table_name =:TableName)
                         ORDER BY COLUMN_ID ASC";
-            var list = await GetDbClient().SqlQueryable<TableFieldInfo>(strSql).ToListAsync();
+            var list = await _unitOfWork.GetDbClient().SqlQueryable<TableFieldInfo>(strSql).ToListAsync();
             return list.ToList();
         }
         #endregion
@@ -99,7 +100,7 @@ namespace WaterCloud.Service.CommonService
 　　                                  And a.Owner = b.Owner 　　
 　　                                  And a.table_name = b.table_name AND a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'";
 
-            IEnumerable<TableInfo> list = await GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
+            IEnumerable<TableInfo> list = await _unitOfWork.GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
             return list.ToList();
         }
 

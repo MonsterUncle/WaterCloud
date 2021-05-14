@@ -18,10 +18,10 @@ namespace WaterCloud.Service.SystemOrganize
 {
     public class RoleService : DataFilterService<RoleEntity>, IDenpendency
     {
-        private ModuleService moduleApp;
-        private ModuleButtonService moduleButtonApp;
-        private ModuleFieldsService moduleFieldsApp;
-        private ItemsDataService itemsApp;
+        public ModuleService moduleApp { get; set; }
+        public ModuleButtonService moduleButtonApp { get; set; }
+        public ModuleFieldsService moduleFieldsApp { get; set; }
+        public ItemsDataService itemsApp { get; set; }
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -30,10 +30,6 @@ namespace WaterCloud.Service.SystemOrganize
         
         public RoleService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            moduleApp = new ModuleService(unitOfWork);
-            moduleButtonApp = new ModuleButtonService(unitOfWork);
-            moduleFieldsApp = new ModuleFieldsService(unitOfWork);
-            itemsApp = new ItemsDataService(unitOfWork);
         }
 
         public async Task<List<RoleExtend>> GetList( string keyword = "")

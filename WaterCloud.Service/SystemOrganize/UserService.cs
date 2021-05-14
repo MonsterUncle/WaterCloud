@@ -17,7 +17,7 @@ namespace WaterCloud.Service.SystemOrganize
 {
     public class UserService : DataFilterService<UserEntity>, IDenpendency
     {
-        private SystemSetService syssetApp;
+        public SystemSetService syssetApp { get; set; }
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -26,7 +26,6 @@ namespace WaterCloud.Service.SystemOrganize
         
         public UserService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            syssetApp = new SystemSetService(unitOfWork);
         }
 
         public async Task<List<UserExtend>> GetLookList(SoulPage<UserExtend> pagination, string keyword)

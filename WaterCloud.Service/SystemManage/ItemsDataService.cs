@@ -16,13 +16,12 @@ namespace WaterCloud.Service.SystemManage
 {
     public class ItemsDataService : DataFilterService<ItemsDetailEntity>,IDenpendency
     {
-        private ItemsTypeService itemApp;
+        public ItemsTypeService itemApp { get; set; }
         /// <summary>
         /// 缓存操作类
         /// </summary>
         public ItemsDataService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            itemApp = new ItemsTypeService(unitOfWork);
         }
         //获取类名
         

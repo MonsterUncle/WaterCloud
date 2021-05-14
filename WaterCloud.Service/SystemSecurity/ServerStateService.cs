@@ -17,15 +17,10 @@ using SqlSugar;
 
 namespace WaterCloud.Service.SystemSecurity
 {
-    public class ServerStateService:IDenpendency
+    public class ServerStateService : DataFilterService<ServerStateEntity>, IDenpendency
     {
-        private RepositoryBase<ServerStateEntity> repository;
-        private UnitOfWork uniwork;
-        public ServerStateService(ISqlSugarClient context)
+        public ServerStateService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            uniwork = new UnitOfWork(context);
-            repository = new RepositoryBase<ServerStateEntity>(uniwork);
-
         }
         public async Task<List<ServerStateEntity>> GetList(int timetype)
         {

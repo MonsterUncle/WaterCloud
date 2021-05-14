@@ -13,18 +13,19 @@ using WaterCloud.Domain;
 
 namespace WaterCloud.Service.CommonService
 {
-    public class DatabaseTableSqlServerService : UnitOfWork, IDatabaseTableService
+    public class DatabaseTableSqlServerService: IDatabaseTableService
     {
-        public DatabaseTableSqlServerService(ISqlSugarClient context) : base(context)
+        private IUnitOfWork _unitOfWork;
+        public DatabaseTableSqlServerService(IUnitOfWork unitOfWork)
         {
-
+            _unitOfWork = unitOfWork;
         }
         #region 获取数据
         public async Task<List<TableInfo>> GetTableList(string tableName)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT id Id,name TableName FROM sysobjects WHERE (xtype = 'u' or xtype='V') order by name");
-            IEnumerable<TableInfo> list =await GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
+            IEnumerable<TableInfo> list =await _unitOfWork.GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
             if (!tableName.IsEmpty())
             {
                 list = list.Where(p => p.TableName.Contains(tableName));
@@ -37,7 +38,7 @@ namespace WaterCloud.Service.CommonService
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT id Id,name TableName,crdate CreateTime FROM sysobjects WHERE (xtype = 'u' or xtype='V')");
-            var query = GetDbClient().SqlQueryable<TableInfo>(strSql.ToString());
+            var query = _unitOfWork.GetDbClient().SqlQueryable<TableInfo>(strSql.ToString());
             if (!tableName.IsEmpty())
             {
                 query = query.Where(a => a.TableName.Contains(tableName));
@@ -65,7 +66,7 @@ namespace WaterCloud.Service.CommonService
                             LEFT OUTER JOIN syscomments e ON b.cdefault = e.id  
                             LEFT OUTER JOIN (Select g.id, g.colid FROM sysindexes f, sysindexkeys g Where (f.id=g.id)AND(f.indid=g.indid)AND(f.indid>0)AND(f.indid<255)AND(f.status&2048)<>0) h ON (b.id=h.id)AND(b.colid=h.colid)"  
                             +$"Where (a.id=b.id)AND(a.id=object_id({tableName})) ORDER BY b.colid");
-            var list =await GetDbClient().SqlQueryable<TableFieldInfo>(strSql.ToString()).ToListAsync();
+            var list =await _unitOfWork.GetDbClient().SqlQueryable<TableFieldInfo>(strSql.ToString()).ToListAsync();
             return list.ToList();
         }
         #endregion
@@ -95,7 +96,7 @@ namespace WaterCloud.Service.CommonService
                                            AND sysindexkeys.indid = sysindexes.indid 
                                            AND syscolumns.colid = sysindexkeys.colid";
 
-            IEnumerable<TableInfo> list = await GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
+            IEnumerable<TableInfo> list = await _unitOfWork.GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
             return list.ToList();
         }
 

@@ -10,18 +10,19 @@ using WaterCloud.Domain;
 
 namespace WaterCloud.Service.CommonService
 {
-	public class DatabaseTableMySqlService : UnitOfWork, IDatabaseTableService
+	public class DatabaseTableMySqlService : IDatabaseTableService
     {
-        public DatabaseTableMySqlService(ISqlSugarClient context) : base(context)
+        private IUnitOfWork _unitOfWork;
+        public DatabaseTableMySqlService(IUnitOfWork unitOfWork)
         {
-
+            _unitOfWork = unitOfWork;
         }
         #region 获取数据
         public async Task<List<TableInfo>> GetTableList(string tableName)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT table_name TableName FROM information_schema.tables WHERE table_schema='" + GetDatabase() + "' AND (table_type='base table' or table_type='BASE TABLE' or table_type='view')");
-            IEnumerable<TableInfo> list =await GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
+            IEnumerable<TableInfo> list =await _unitOfWork.GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
             if (!string.IsNullOrEmpty(tableName))
             {
                 list = list.Where(p => p.TableName.Contains(tableName)).ToList();
@@ -34,7 +35,7 @@ namespace WaterCloud.Service.CommonService
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT table_name TableName,CREATE_TIME CreateTime FROM information_schema.tables where table_schema='" + GetDatabase() + "' and (table_type='base table' or table_type='BASE TABLE' or table_type='view')");
-            var query = GetDbClient().SqlQueryable<TableInfo>(strSql.ToString());
+            var query = _unitOfWork.GetDbClient().SqlQueryable<TableInfo>(strSql.ToString());
             if (!tableName.IsEmpty())
             {
                 query = query.Where(a => a.TableName.Contains(tableName));
@@ -57,7 +58,7 @@ namespace WaterCloud.Service.CommonService
                                    IFNULL(COLUMN_DEFAULT,'') FieldDefault,
                                    COLUMN_COMMENT Remark
                              FROM information_schema.columns WHERE table_schema='" + GetDatabase() + $"' AND table_name='{tableName}'");
-            var list = await GetDbClient().SqlQueryable<TableFieldInfo>(strSql.ToString()).ToListAsync();
+            var list = await _unitOfWork.GetDbClient().SqlQueryable<TableFieldInfo>(strSql.ToString()).ToListAsync();
             return list;
         }
         #endregion
@@ -84,7 +85,7 @@ namespace WaterCloud.Service.CommonService
 	                                 LEFT JOIN INFORMATION_SCHEMA.`KEY_COLUMN_USAGE` as t2 on t1.TABLE_NAME = t2.TABLE_NAME
                                      WHERE t1.TABLE_SCHEMA='" + GetDatabase() + "' AND t2.TABLE_SCHEMA='" + GetDatabase() + "'";
 
-            IEnumerable<TableInfo> list = await GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
+            IEnumerable<TableInfo> list = await _unitOfWork.GetDbClient().SqlQueryable<TableInfo>(strSql.ToString()).ToListAsync();
             return list.ToList();
         }
 
