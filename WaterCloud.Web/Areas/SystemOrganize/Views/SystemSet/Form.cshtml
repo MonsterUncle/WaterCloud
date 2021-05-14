@@ -2,19 +2,19 @@
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
+<link href="~/css/stepcss.css" rel="stylesheet" />
 <script>
-    layui.use(['jquery', 'upload', 'form', 'laydate', 'common', 'optimizeSelectOption'], function () {
-        var form = layui.form,
-            $ = layui.$,
+    layui.use(['form', 'step', 'upload', 'laydate', 'common', 'dtree', 'optimizeSelectOption'], function () {
+        var $ = layui.$,
+            form = layui.form,
+            dtree = layui.dtree,
             common = layui.common,
             upload = layui.upload,
-            laydate = layui.laydate;
+            laydate = layui.laydate,
+            step = layui.step;
         var keyValue = $.request("keyValue");
         //权限字段
-        common.authorizeFields('adminform');
-        var isUpload = false;
-        var postData = {};
-        //此处需修改
+        common.authorizeFields('stepForm');
         //类型为时间时
         laydate.render({
             elem: '#F_EndTime'
@@ -69,15 +69,29 @@
                 });
             }
         });
+        step.render({
+            elem: '#stepForm',
+            filter: 'stepForm',
+            width: '90%', //设置容器宽度
+            stepWidth: '300px',
+            height: '500px',
+            stepItems: [{
+                title: '填写租户信息'
+            }, {
+                title: '设置功能权限'
+            }, {
+                title: '设置字段权限'
+            }]
+        });
         $(function () {
             if (!!keyValue) {
                 common.ajax({
-                    url: '/SystemOrganize/SystemSet/GetFormJson',
-                    dataType: 'json',
-                    async: false,
+                    url: "/SystemOrganize/SystemSet/GetFormJson",
+                    dataType: "json",
                     data: { keyValue: keyValue },
+                    async: false,
                     success: function (data) {
-                        common.val('adminform', data);
+                        common.val('stepForm', data);
                         $('#F_EndTime').val(new Date(data.F_EndTime).Format("yyyy-MM-dd"));
                         $('#demo1').attr('src', data.F_Logo); //图片链接
                     }
@@ -86,144 +100,259 @@
             form.render();
         });
         wcLoading.close();
-        //监听提交
-        form.on('submit(saveBtn)', function (data) {
-            postData = data.field;
-            postData.keyValue = keyValue;
-                if (isUpload) {
-                    $("#hideupload1").trigger('click');
+        //select验证
+        form.verify({
+            required: function (value, item) {
+                var msg = "必填项不能为空";
+                value = $.trim(value);
+                var isEmpty = !value || value.length < 1;
+                // 当前验证元素是select且为空时,将页面定位至layui渲染的select处，或自定义想定位的位置
+                if (item.tagName == 'SELECT' && isEmpty) {
+                    $("html").animate({
+                        scrollTop: $(item).siblings(".layui-form-select").offset().top - 74
+                    }, 50);
                 }
-                else {
-                    common.submitForm({
-                        url: '/SystemOrganize/SystemSet/SubmitForm',
-                        param: postData,
-                        success: function () {
-                            common.parentreload('data-search-btn');
-                        }
-                    })
+                if (isEmpty) {
+                    return msg;
                 }
+            }
+        });
+        // 初始化树
+        var DemoTree1 = dtree.render({
+            elem: "#demoTree1",
+            width: '200px',
+            method: "GET",
+            async: false,
+            checkbar: true,
+            line: true,  // 显示树线
+            initLevel: 0,
+            icon: "-1", // 隐藏二级图标
+            checkbarType: "p-casc",
+            scroll: "#toolbarDiv1", // 绑定div元素
+            url: "/SystemOrganize/RoleAuthorize/GetPermissionTree?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"), // 使用url加载（可与data加载同时存在）
+            request: { roleId: keyValue }
+        });
+        var role;
+        form.on('submit(formStep)', function (data) {
+            role = data.field;
+            if (!role["F_EnabledMark"]) role["F_EnabledMark"] = false;
+            step.next('#stepForm');
             return false;
         });
-    });
-</script>
+        var moduleids = [];
+        form.on('submit(formStep2)', function (data) {
+            var params = dtree.getCheckbarNodesParam("demoTree1");
+            for (var i = 0; i < params.length; i++) {
+                moduleids.push(params[i].nodeId);
+            }
+            // 初始化树
+            var DemoTree2 = dtree.render({
+                elem: "#demoTree2",
+                width: '200px',
+                method: "POST",
+                async: false,
+                checkbar: true,
+                line: true,  // 显示树线
+                initLevel: 0,
+                icon: "-1", // 隐藏二级图标
+                checkbarType: "p-casc",
+                scroll: "#toolbarDiv2", // 绑定div元素
+                url: "/SystemOrganize/RoleAuthorize/GetPermissionFieldsTree?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"), // 使用url加载（可与data加载同时存在）
+                request: { roleId: keyValue, moduleids: String(moduleids) }
+            });
+            step.next('#stepForm');
+            return false;
+        });
+        var postData
+        form.on('submit(formStep3)', function (data) {
+            postData = role;
+            var params = dtree.getCheckbarNodesParam("demoTree2");
+            var note = [];
+            for (var i = 0; i < params.length; i++) {
+                note.push(params[i].nodeId);
+            }
+            postData["permissionbuttonIds"] = String(moduleids);
+            postData["permissionfieldsIds"] = String(note);
+            if (isUpload) {
+                $("#hideupload1").trigger('click');
+            }
+            else {
+                common.submitForm({
+                    url: "/SystemOrganize/SystemSet/SubmitForm?keyValue=" + keyValue,
+                    param: postData,
+                    success: function () {
+                        common.parentreload('data-search-btn');
+                    }
+                })
+            }
+            return false;
+        });
 
-<body>
-    <div class="layuimini-container">
-        <div class="layuimini-main">
-            <div class="layui-form layuimini-form" lay-filter="adminform">
-                <div class="layui-form-item">
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">项目名称</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_ProjectName" name="F_ProjectName" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">公司名称</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_CompanyName" name="F_CompanyName" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">联系人</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_PrincipalMan" name="F_PrincipalMan" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">联系方式</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_MobilePhone" name="F_MobilePhone" autocomplete="off" lay-verify="required|phone" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required" style="margin-top: 50px;">Logo图标</label>
-                        <div class="layui-input-block" style="padding-right: 0px;">
-                            <input class="layui-hide" hidden type="text" id="F_Logo" name="F_Logo">
-                            <div class="layui-upload-list">
-                                <img class="layui-upload-img" id="demo1">
-                                <p id="demoText"></p>
+        $('.pre').click(function () {
+            step.pre('#stepForm');
+        });
+    })
+</script>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-carousel" id="stepForm" lay-filter="stepForm">
+            <div carousel-item>
+                <div>
+                    <form class="layui-form layuimini-form">
+                        <div class="layui-form-item">
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">项目名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="F_ProjectName" name="F_ProjectName" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">公司名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="F_CompanyName" name="F_CompanyName" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
+                                </div>
                             </div>
                         </div>
-                        <button type="button" class="layui-btn" id="test1" style="position: absolute;top: 0;right: 6px;cursor: pointer;margin-top: 50px;">选择</button>
-                        <button type="button" class="layui-hide" id="hideupload1">上传</button>
-                    </div>
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">Logo编号</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_LogoCode" name="F_LogoCode" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
+                        <div class="layui-form-item">
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">联系人</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="F_PrincipalMan" name="F_PrincipalMan" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">联系方式</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="F_MobilePhone" name="F_MobilePhone" autocomplete="off" lay-verify="required|phone" class="layui-input">
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="layui-form-item">
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required" style="margin-top: 50px;">Logo图标</label>
+                                <div class="layui-input-block" style="padding-right: 0px;">
+                                    <input class="layui-hide" hidden type="text" id="F_Logo" name="F_Logo">
+                                    <div class="layui-upload-list">
+                                        <img class="layui-upload-img" id="demo1">
+                                        <p id="demoText"></p>
+                                    </div>
+                                </div>
+                                <button type="button" class="layui-btn" id="test1" style="position: absolute;top: 0;right: 6px;cursor: pointer;margin-top: 50px;">选择</button>
+                                <button type="button" class="layui-hide" id="hideupload1">上传</button>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">Logo编号</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="F_LogoCode" name="F_LogoCode" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">系统账户</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="F_AdminAccount" name="F_AdminAccount" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">系统密码</label>
+                                <div class="layui-input-block">
+                                    <input type="password" id="F_AdminPassword" name="F_AdminPassword" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">数据库类型</label>
+                                <div class="layui-input-block">
+                                    <select id="F_DBProvider" name="F_DBProvider" lay-verify="required">
+                                        <option value="MySql">MySql</option>
+                                        <option value="MSSql">MSSql</option>
+                                        <option value="Oracle">Oracle</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">连接字符串</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="F_DbString" name="F_DbString" maxlength="255" autocomplete="off" lay-verify="required" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">域名</label>
+                                <div class="layui-input-block">
+                                    <input id="F_HostUrl" name="F_HostUrl" class="layui-input" autocomplete="off" maxlength="50" lay-verify="required" placeholder="请输入域名">
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">数据库序号</label>
+                                <div class="layui-input-block">
+                                    <input id="F_DbNumber" name="F_DbNumber" class="layui-input" autocomplete="off" maxlength="50" lay-verify="required" placeholder="请输入数据库序号">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">有效</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                                <label class="layui-form-label required">到期时间</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="F_EndTime" name="F_EndTime" autocomplete="off" lay-verify="required" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group-bottom text-right">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="formStep">
+                                    &emsp;下一步&emsp;
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="layui-form-item">
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">系统账户</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_AdminAccount" name="F_AdminAccount" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
+                <div>
+                    <form class="layui-form layuimini-form">
+                        <div class="layui-form-item ">
+                            <div style="height: 350px;overflow: auto;" id="toolbarDiv1">
+                                <ul id="demoTree1" class="dtree" data-id="0"></ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">系统密码</label>
-                        <div class="layui-input-block">
-                            <input type="password" id="F_AdminPassword" name="F_AdminPassword" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
+                        <div class="form-group-bottom text-right">
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                <button class="layui-btn" lay-submit lay-filter="formStep2">
+                                    &emsp;下一步&emsp;
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-                <div class="layui-form-item">
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">数据库类型</label>
-                        <div class="layui-input-block">
-                            <select id="F_DBProvider" name="F_DBProvider" lay-verify="required">
-                                <option value="MySql">MySql</option>
-                                <option value="MSSql">MSSql</option>
-                                <option value="Oracle">Oracle</option>
-                            </select>
+                <div>
+                    <form class="layui-form layuimini-form">
+                        <div class="layui-form-item ">
+                            <div style="height: 350px;overflow: auto;" id="toolbarDiv2">
+                                <ul id="demoTree2" class="dtree" data-id="0"></ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">连接字符串</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_DbString" name="F_DbString" maxlength="255" autocomplete="off" lay-verify="required" class="layui-input">
+                        <div class="form-group-bottom text-right">
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                <button class="layui-btn site-demo-active" lay-submit lay-filter="formStep3">
+                                    确认保存
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">域名</label>
-                        <div class="layui-input-block">
-                            <input id="F_HostUrl" name="F_HostUrl" class="layui-input" autocomplete="off" maxlength="50" lay-verify="required" placeholder="请输入域名">
-                        </div>
-                    </div>
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">数据库序号</label>
-                        <div class="layui-input-block">
-                            <input id="F_DbNumber" name="F_DbNumber" class="layui-input" autocomplete="off" maxlength="50" lay-verify="required" placeholder="请输入数据库序号">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">有效</label>
-                        <div class="layui-input-block">
-                            <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
-                        </div>
-                    </div>
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label required">到期时间</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_EndTime" name="F_EndTime" autocomplete="off" lay-verify="required" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item layui-hide">
-                    <button class="layui-btn site-demo-active" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                    </form>
                 </div>
             </div>
         </div>
+
     </div>
-</body>
+</div>
 

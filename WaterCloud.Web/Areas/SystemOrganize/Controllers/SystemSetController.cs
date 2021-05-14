@@ -94,11 +94,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ServiceFilter(typeof(HandlerAdminAttribute))]
-        public async Task<ActionResult> SubmitForm(SystemSetEntity entity, string keyValue)
+        public async Task<ActionResult> SubmitForm(SystemSetEntity entity, string permissionbuttonIds, string permissionfieldsIds, string keyValue)
         {
             try
             {
-                await _service.SubmitForm(entity, keyValue);
+                await _service.SubmitForm(entity, keyValue, string.IsNullOrEmpty(permissionbuttonIds) ? null : permissionbuttonIds.Split(','), string.IsNullOrEmpty(permissionfieldsIds) ? null : permissionfieldsIds.Split(','));
                 return await Success("操作成功。", "", keyValue);
             }
             catch (Exception ex)

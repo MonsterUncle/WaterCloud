@@ -38,6 +38,11 @@
                             <canvas id="canvas" width="100" height="43"></canvas>
                         </div>
                     </div>
+                    <div class="layui-form-item layui-hide">
+                        <select id="wchost" name="wchost" lay-verify="required">
+                            <option value="localhost">默认租户</option>
+                        </select>
+                    </div>
                     <div class="layui-form-item">
                         <span>
                             <input type="checkbox" name="remember_user" id="remember_user" lay-skin="primary" style="vertical-align:middle;" value="true">
@@ -63,6 +68,7 @@
     <script src="~/js/login.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script src="~/js/framework-ui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script>
+        var SqlMode = '@ViewBag.SqlMode';
         (function ($) {
             var show_num = [];
             $.login = {
@@ -105,8 +111,16 @@
                 }
             };
             $(function () {
+                if (SqlMode ="TenantSql") {
+                    $('wchost').parent().removeClass('layui-hide');
+                }
                 $.login.init();
                 $.login.checkLogin();
+                $("#wchost").bindSelect({
+                    url: "/SystemOrganize/SystemSet/GetListJson",
+                    id: "F_HostUrl",
+                    text: "F_ProjectName"
+                });
                 draw(show_num);
                 if ($.cookie("remember_user")) {
                     $("#remember_user").prop("checked", true);
@@ -171,7 +185,7 @@
                     $("#login_button").attr('disabled', 'disabled').html("loading...");
                     $.ajax({
                         url: "/Login/CheckLogin?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
-                        data: { username: $.trim($('#username').val()), localurl: location.host, password: $.md5($.trim($('#password').val())) },
+                        data: { username: $.trim($('#username').val()), localurl: $('#wchost').val(), password: $.md5($.trim($('#password').val())) },
                         type: "post",
                         dataType: "json",
                         success: function (data) {

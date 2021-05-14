@@ -8,6 +8,8 @@ using SqlSugar;
 using System.IO;
 using System;
 using System.Reflection;
+using WaterCloud.Service.SystemManage;
+using WaterCloud.Domain.SystemManage;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -19,7 +21,10 @@ namespace WaterCloud.Service.SystemOrganize
     public class SystemSetService : DataFilterService<SystemSetEntity>, IDenpendency
     {
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
-        
+        public ModuleService moduleApp { get; set; }
+        public ModuleButtonService moduleButtonApp { get; set; }
+        public ModuleFieldsService moduleFieldsApp { get; set; }
+
         public SystemSetService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
@@ -91,17 +96,70 @@ namespace WaterCloud.Service.SystemOrganize
         }
 
         #region 提交数据
-        public async Task SubmitForm(SystemSetEntity entity, string keyValue)
+        public async Task SubmitForm(SystemSetEntity entity, string keyValue, string[] permissionIds = null, string[] permissionfieldsIds = null)
         {
+            unitofwork.GetDbClient().ChangeDatabase("0");
+            List<RoleAuthorizeEntity> roleAuthorizeEntitys = new List<RoleAuthorizeEntity>();
+            List<ModuleEntity> modules = new List<ModuleEntity>();
+            List<ModuleButtonEntity> modulebtns = new List<ModuleButtonEntity>();
+            List<ModuleFieldsEntity> modulefileds = new List<ModuleFieldsEntity>();
+            if (permissionIds!=null)
+			{
+                var moduledata = await moduleApp.GetList();
+                var buttondata = await moduleButtonApp.GetList();
+                foreach (var itemId in permissionIds)
+                {
+                    RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
+                    roleAuthorizeEntity.F_Id = Utils.GuId();
+                    roleAuthorizeEntity.F_ObjectType = 1;
+                    roleAuthorizeEntity.F_ObjectId = entity.F_Id;
+                    roleAuthorizeEntity.F_ItemId = itemId;
+                    if (moduledata.Find(t => t.F_Id == itemId) != null)
+                    {
+                        roleAuthorizeEntity.F_ItemType = 1;
+                        roleAuthorizeEntitys.Add(roleAuthorizeEntity);
+                        modules.Add(moduledata.Find(t => t.F_Id == itemId));
+                    }
+                    if (buttondata.Find(t => t.F_Id == itemId) != null)
+                    {
+                        roleAuthorizeEntity.F_ItemType = 2;
+                        roleAuthorizeEntitys.Add(roleAuthorizeEntity);
+                        modulebtns.Add(buttondata.Find(t => t.F_Id == itemId));
+                    }
+                }
+            }
+			if (permissionfieldsIds!=null)
+			{
+                var fieldsdata = await moduleFieldsApp.GetList();
+                foreach (var itemId in permissionfieldsIds)
+                {
+                    RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
+                    roleAuthorizeEntity.F_Id = Utils.GuId();
+                    roleAuthorizeEntity.F_ObjectType = 1;
+                    roleAuthorizeEntity.F_ObjectId = entity.F_Id;
+                    roleAuthorizeEntity.F_ItemId = itemId;
+                    if (fieldsdata.Find(t => t.F_Id == itemId) != null)
+                    {
+                        roleAuthorizeEntity.F_ItemType = 3;
+                        roleAuthorizeEntitys.Add(roleAuthorizeEntity);
+                        modulefileds.Add(fieldsdata.Find(t => t.F_Id == itemId));
+                    }
+                }
+            }
             unitofwork.BeginTrans();
             if (string.IsNullOrEmpty(keyValue))
             {
                 entity.F_DeleteMark = false;
                 entity.Create();
-                unitofwork.GetDbClient().ChangeDatabase("0");
                 await repository.Insert(entity);
-				//新建数据库和表
-				using (var db = new SqlSugarClient(DBContexHelper.Contex(entity.F_DbString, entity.F_DBProvider)))
+				//新建租户权限
+				if (roleAuthorizeEntitys.Count>0)
+				{
+                    await repository.Db.Deleteable<RoleAuthorizeEntity>(t => t.F_ObjectId == entity.F_Id).ExecuteCommandAsync();
+                    await repository.Db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
+                }
+                //新建数据库和表
+                using (var db = new SqlSugarClient(DBContexHelper.Contex(entity.F_DbString, entity.F_DBProvider)))
 				{
                     db.DbMaintenance.CreateDatabase();
                     var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
@@ -116,20 +174,37 @@ namespace WaterCloud.Service.SystemOrganize
                             db.CodeFirst.SetStringDefaultLength(50).InitTables(item);
                         } 
                     }
+                    //新建账户,密码
+                    UserEntity user = new UserEntity();
+                    user.Create();
+                    user.F_Account = entity.F_AdminAccount;
+                    user.F_RealName = entity.F_CompanyName;
+                    user.F_Gender = true;
+                    user.F_OrganizeId = entity.F_Id;
+                    UserLogOnEntity logon = new UserLogOnEntity();
+                    logon.F_Id = user.F_Id;
+                    logon.F_UserId = user.F_Id;
+                    logon.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                    logon.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), logon.F_UserSecretkey).ToLower(), 32).ToLower();
+                    db.Insertable(user).ExecuteCommand();
+                    db.Insertable(logon).ExecuteCommand();
+                    //新建菜单
+                    await db.Insertable(modules).ExecuteCommandAsync();
+                    await db.Insertable(modulebtns).ExecuteCommandAsync();
+                    await db.Insertable(modulefileds).ExecuteCommandAsync();
                 }
-                //新建菜单
-                //新建账户,密码
-                //新建租户权限 同时增加定时器 定时同步租户菜单
-                //待设计
             }
             else
             {
                 entity.Modify(keyValue);
+				if (roleAuthorizeEntitys.Count>0)
+				{
+                    await repository.Db.Deleteable<RoleAuthorizeEntity>(t => t.F_ObjectId == entity.F_Id).ExecuteCommandAsync();
+                    await repository.Db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
+                }
                 //更新主库
-                unitofwork.GetDbClient().ChangeDatabase("0");
-                if (currentuser.UserId != GlobalContext.SystemConfig.SysemUserId || currentuser.UserId == null)
+                if (currentuser.UserId == GlobalContext.SystemConfig.SysemUserId || currentuser.UserId == null)
                 {
-                    unitofwork.CurrentBeginTrans();
                     var user = repository.Db.Queryable<UserEntity>().Where(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).First();
                     var userinfo = repository.Db.Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
                     userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
@@ -144,13 +219,12 @@ namespace WaterCloud.Service.SystemOrganize
                         F_UserSecretkey = userinfo.F_UserSecretkey
                     }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
                     await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
-                    unitofwork.CurrentCommit();
                 }
                 else
                 {
                     entity.F_AdminAccount = null;
                     entity.F_AdminPassword = null;
-                    await unitofwork.GetDbClient().Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
+                    await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
                 }
                 //更新租户库
                 if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
@@ -171,12 +245,17 @@ namespace WaterCloud.Service.SystemOrganize
                         F_UserSecretkey = userinfo.F_UserSecretkey
                     }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
                     await unitofwork.GetDbClient().Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
-                    //更新租户权限
                     //更新菜单
-
+                    await unitofwork.GetDbClient().Deleteable<ModuleEntity>().ExecuteCommandAsync();
+                    await unitofwork.GetDbClient().Deleteable<ModuleButtonEntity>().ExecuteCommandAsync();
+                    await unitofwork.GetDbClient().Deleteable<ModuleFieldsEntity>().ExecuteCommandAsync();
+                    await unitofwork.GetDbClient().Insertable(modules).ExecuteCommandAsync();
+                    await unitofwork.GetDbClient().Insertable(modulebtns).ExecuteCommandAsync();
+                    await unitofwork.GetDbClient().Insertable(modulefileds).ExecuteCommandAsync();
                 }
             }
             unitofwork.Commit();
+            unitofwork.GetDbClient().ChangeDatabase("0");
             var set=await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
             unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT?set.F_DbNumber:"0");
             var tempkey= unitofwork.GetDbClient().Queryable<UserEntity>().Where(a => a.F_IsAdmin == true).First().F_Id;

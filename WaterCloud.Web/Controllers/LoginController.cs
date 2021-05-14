@@ -37,6 +37,7 @@ namespace WaterCloud.Web.Controllers
                     ViewBag.UserName = GlobalContext.SystemConfig.SysemUserCode;
                     ViewBag.Password = GlobalContext.SystemConfig.SysemUserPwd;
                 }
+                ViewBag.SqlMode = GlobalContext.SystemConfig.SqlMode;
                 ViewBag.ProjectName = systemset.F_ProjectName;
                 ViewBag.LogoIcon = ".." + systemset.F_Logo;
                 return View();
