@@ -139,7 +139,7 @@ namespace WaterCloud.Service.FlowManage
 
             wfruntime.MakeTagNode(wfruntime.currentNodeId, tag);
             flowInstance.F_IsFinish = 4;//4表示驳回（需要申请者重新提交表单）
-            unitofwork.BeginTrans();
+            unitofwork.CurrentBeginTrans();
             if (resnode != "")
             {
                 wfruntime.RemoveNode(resnode);
@@ -208,7 +208,7 @@ namespace WaterCloud.Service.FlowManage
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
             await messageApp.SubmitForm(msg);
-            unitofwork.Commit();
+            unitofwork.CurrentBeginTrans();
 
             wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
 
@@ -242,7 +242,7 @@ namespace WaterCloud.Service.FlowManage
                 F_CreatorTime = DateTime.Now
             };//操作记录
             FlowRuntime wfruntime = new FlowRuntime(flowInstance);
-            unitofwork.BeginTrans();
+            unitofwork.CurrentBeginTrans();
             #region 会签
             if (flowInstance.F_ActivityType == 0)//当前节点是会签节点
             {
@@ -364,7 +364,7 @@ namespace WaterCloud.Service.FlowManage
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
             await messageApp.SubmitForm(msg);
-            unitofwork.Commit();
+            unitofwork.CurrentCommit();
 
             wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
             return true;
@@ -757,7 +757,7 @@ namespace WaterCloud.Service.FlowManage
             entity.F_CreatorUserName = user.UserName;
             entity.F_MakerList = (wfruntime.GetNextNodeType() != 4 ? GetNextMakers(wfruntime, nodeDesignate) : "");
             entity.F_IsFinish = (wfruntime.GetNextNodeType() == 4 ? 1 : 0);
-            unitofwork.BeginTrans();
+            unitofwork.CurrentBeginTrans();
             await repository.Db.Insertable(entity).ExecuteCommandAsync();
 
             wfruntime.flowInstanceId = entity.F_Id;
@@ -835,7 +835,7 @@ namespace WaterCloud.Service.FlowManage
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
             await messageApp.SubmitForm(msg);
-            unitofwork.Commit();
+            unitofwork.CurrentCommit();
         }
         public async Task UpdateInstance(FlowinstanceEntity entity)
         {
@@ -891,7 +891,7 @@ namespace WaterCloud.Service.FlowManage
             entity.F_CreatorUserName = user.UserName;
             entity.F_MakerList = (wfruntime.GetNextNodeType() != 4 ? GetNextMakers(wfruntime, nodeDesignate) : "");
             entity.F_IsFinish = (wfruntime.GetNextNodeType() == 4 ? 1 : 0);
-            unitofwork.BeginTrans();
+            unitofwork.CurrentBeginTrans();
             await repository.Db.Updateable(entity).ExecuteCommandAsync();
             wfruntime.flowInstanceId = entity.F_Id;
             //复杂表单提交
@@ -965,7 +965,7 @@ namespace WaterCloud.Service.FlowManage
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
             await messageApp.SubmitForm(msg);
-            unitofwork.Commit();
+            unitofwork.CurrentCommit();
             msg.F_ClickRead = false;
             msg.F_KeyValue = entity.F_Id;
         }

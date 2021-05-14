@@ -107,10 +107,10 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 throw new Exception("角色使用中，无法删除");
             }
-            unitofwork.BeginTrans();
+            unitofwork.CurrentBeginTrans();
             await repository.Delete(t => t.F_Id == keyValue);
             await repository.Db.Deleteable<RoleAuthorizeEntity>(t => t.F_ObjectId == keyValue).ExecuteCommandAsync();
-            unitofwork.Commit();
+            unitofwork.CurrentCommit();
             await CacheHelper.Remove(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
         public async Task SubmitForm(RoleEntity roleEntity, string[] permissionIds,string[] permissionfieldsIds, string keyValue)
@@ -163,7 +163,7 @@ namespace WaterCloud.Service.SystemOrganize
                     roleAuthorizeEntitys.Add(roleAuthorizeEntity);
                 }
             }
-            unitofwork.BeginTrans();
+            unitofwork.CurrentBeginTrans();
             if (!string.IsNullOrEmpty(keyValue))
             {
                 await repository.Update(roleEntity);
@@ -175,7 +175,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             await repository.Db.Deleteable<RoleAuthorizeEntity>(t => t.F_ObjectId == roleEntity.F_Id).ExecuteCommandAsync();
             await repository.Db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
-            unitofwork.Commit();
+            unitofwork.CurrentCommit();
             await CacheHelper.Remove(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
     }

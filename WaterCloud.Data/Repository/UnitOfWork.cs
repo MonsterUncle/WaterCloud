@@ -97,5 +97,35 @@ namespace WaterCloud.DataBase
 		{
             GetDbClient().Dispose();
 		}
-	}
+
+		public void CurrentBeginTrans()
+		{
+            GetDbClient().Ado.BeginTran();
+        }
+
+		public void CurrentCommit()
+		{
+            try
+            {
+                GetDbClient().Ado.CommitTran();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex);
+                GetDbClient().Ado.RollbackTran();
+            }
+        }
+
+		public void CurrentRollback()
+		{
+            try
+            {
+                GetDbClient().Ado.RollbackTran();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex);
+            }
+        }
+    }
 }

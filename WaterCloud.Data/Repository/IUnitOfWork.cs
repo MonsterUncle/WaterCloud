@@ -15,5 +15,9 @@ namespace WaterCloud.DataBase
 
 		void Commit();
 		void Rollback();
+		void CurrentBeginTrans();
+
+		void CurrentCommit();
+		void CurrentRollback();
 	}
 }

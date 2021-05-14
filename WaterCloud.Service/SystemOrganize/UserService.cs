@@ -181,10 +181,10 @@ namespace WaterCloud.Service.SystemOrganize
         }
         public async Task DeleteForm(string keyValue)
         {
-            unitofwork.BeginTrans();
+            unitofwork.CurrentBeginTrans();
             await repository.Delete(t => t.F_Id == keyValue);
             await repository.Db.Deleteable<UserLogOnEntity>(t => t.F_UserId == keyValue).ExecuteCommandAsync();
-            unitofwork.Commit();
+            unitofwork.CurrentCommit();
         }
         public async Task SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
@@ -201,7 +201,7 @@ namespace WaterCloud.Service.SystemOrganize
                 userLogOnEntity.F_UserOnLine = false;
                 userLogOnEntity.F_LogOnCount = 0;
             }
-            unitofwork.BeginTrans();
+            unitofwork.CurrentBeginTrans();
             if (!string.IsNullOrEmpty(keyValue))
             {
                 await repository.Update(userEntity);
@@ -215,7 +215,7 @@ namespace WaterCloud.Service.SystemOrganize
                 await repository.Insert(userEntity);
                 await repository.Db.Insertable(userLogOnEntity).ExecuteCommandAsync();
             }
-            unitofwork.Commit();
+            unitofwork.CurrentCommit();
         }
         public async Task UpdateForm(UserEntity userEntity)
         {

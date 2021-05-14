@@ -93,18 +93,22 @@ namespace WaterCloud.Service.SystemOrganize
             if (string.IsNullOrEmpty(keyValue))
             {
                 entity.F_DeleteMark = false;
-                //此处需修改
                 entity.Create();
                 await repository.Insert(entity);
+                //新建数据库类
+                //新建菜单
+                //新建账户,密码
+                //新建租户权限 同时增加定时器 定时同步租户菜单
+                //待设计
             }
             else
             {
-                    //此处需修改
                 entity.Modify(keyValue);
+                //更新主库
+                unitofwork.GetDbClient().ChangeDatabase("0");
                 if (currentuser.UserId != GlobalContext.SystemConfig.SysemUserId || currentuser.UserId == null)
                 {
-                    var setentity = await repository.FindEntity(entity.F_Id);
-                    unitofwork.BeginTrans();
+                    unitofwork.CurrentBeginTrans();
                     var user = repository.Db.Queryable<UserEntity>().Where(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).First();
                     var userinfo = repository.Db.Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
                     userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
@@ -118,25 +122,52 @@ namespace WaterCloud.Service.SystemOrganize
                         F_UserPassword = userinfo.F_UserPassword,
                         F_UserSecretkey = userinfo.F_UserSecretkey
                     }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
-                    await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns:true).ExecuteCommandAsync();
-                    unitofwork.Commit();
+                    await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
+                    unitofwork.CurrentCommit();
                 }
                 else
                 {
                     entity.F_AdminAccount = null;
                     entity.F_AdminPassword = null;
+                    await unitofwork.GetDbClient().Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
                 }
-                await unitofwork.GetDbClient().Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
+                //更新租户库
+                if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
+				{
+                    var tenant = await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
+                    unitofwork.GetDbClient().ChangeDatabase(tenant.F_DBNumber);
+                    unitofwork.CurrentBeginTrans();
+                    var user = unitofwork.GetDbClient().Queryable<UserEntity>().Where(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).First();
+                    var userinfo = unitofwork.GetDbClient().Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
+                    userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                    userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
+                    await unitofwork.GetDbClient().Updateable<UserEntity>(a => new UserEntity
+                    {
+                        F_Account = entity.F_AdminAccount
+                    }).Where(a => a.F_Id == user.F_Id).ExecuteCommandAsync();
+                    await unitofwork.GetDbClient().Updateable<UserLogOnEntity>(a => new UserLogOnEntity
+                    {
+                        F_UserPassword = userinfo.F_UserPassword,
+                        F_UserSecretkey = userinfo.F_UserSecretkey
+                    }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
+                    await unitofwork.GetDbClient().Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
+                    //更新菜单
+                    unitofwork.CurrentCommit();
+                }
             }
             var set=await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
-            unitofwork.GetDbClient().ChangeDatabase(set.F_DBNumber);
-            var tempkey= unitofwork.GetDbClient().Queryable<UserEntity>().Where(a => a.F_IsAdmin == true && a.F_OrganizeId == keyValue).First().F_Id;
+            unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT?set.F_DBNumber:"0");
+            var tempkey= unitofwork.GetDbClient().Queryable<UserEntity>().Where(a => a.F_IsAdmin == true).First().F_Id;
             await CacheHelper.Remove(cacheKeyOperator + "info_" + tempkey);
         }
 
         public async Task DeleteForm(string keyValue)
         {
-            await repository.Delete(t => t.F_Id == keyValue);
+            await repository.Update(t => t.F_Id == keyValue,a=>new SystemSetEntity { 
+                F_DeleteMark=true,
+                F_EnabledMark=false,
+                F_DeleteUserId=currentuser.UserId
+            });
         }
         #endregion
 

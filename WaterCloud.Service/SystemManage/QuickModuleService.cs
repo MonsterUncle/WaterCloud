@@ -66,7 +66,7 @@ namespace WaterCloud.Service.SystemManage
             var quicklist = repository.IQueryable(t => t.F_CreatorUserId == userId && t.F_EnabledMark == true);
             List<QuickModuleExtend> list = new List<QuickModuleExtend>();
             List<QuickModuleEntity> quicks = new List<QuickModuleEntity>();
-            unitofwork.BeginTrans();
+            unitofwork.CurrentBeginTrans();
             if (quicklist.Count() == 0)
             {
                 var user = await repository.Db.Queryable<UserEntity>().InSingleAsync(userId);
@@ -133,7 +133,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 await repository.Db.Insertable(quicks).ExecuteCommandAsync();
             }
-            unitofwork.Commit();
+            unitofwork.CurrentCommit();
             return list;
         }
 
@@ -152,10 +152,10 @@ namespace WaterCloud.Service.SystemManage
                     list.Add(entity);
                 }
             }
-            unitofwork.BeginTrans();
+            unitofwork.CurrentBeginTrans();
             await repository.Delete(t => t.F_CreatorUserId == currentuser.UserId);
             await repository.Insert(list);
-            unitofwork.Commit();
+            unitofwork.CurrentCommit();
         }
 
     }

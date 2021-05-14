@@ -167,6 +167,7 @@ namespace WaterCloud.Service.SystemSecurity
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
                     unitofwork.Rollback();
+                    unitofwork.CurrentRollback();
                     await repository.Insert(logEntity);
                 }
                 else

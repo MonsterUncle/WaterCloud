@@ -1335,14 +1335,14 @@ namespace WaterCloud.CodeGenerator
                     moduleFields.F_DeleteMark = false;
                     moduleFieldsList.Add(moduleFields);
                 }
-                uniwork.BeginTrans();
+                uniwork.CurrentBeginTrans();
                 await uniwork.GetDbClient().Insertable(moduleEntity).ExecuteCommandAsync();
                 await uniwork.GetDbClient().Insertable(moduleButtonList).ExecuteCommandAsync();
                 if (moduleFieldsList.Count > 0)
                 {
                     await uniwork.GetDbClient().Insertable(moduleFieldsList).ExecuteCommandAsync();
                 }
-                uniwork.Commit();
+                uniwork.CurrentCommit();
                 await CacheHelper.Remove(authorizecacheKey+ OperatorProvider.Provider.GetCurrent().DbNumber+ "_list");
                 FileHelper.CreateFile(indexPath, codeIndex);
                 result.Add(new KeyValue { Key = "列表页", Value = indexPath, Description = "生成成功！" });

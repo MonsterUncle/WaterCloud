@@ -63,11 +63,11 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
-                unitofwork.BeginTrans();
+                unitofwork.CurrentBeginTrans();
                 await repository.Delete(a => a.F_Id == keyValue);
                 await repository.Db.Deleteable<ModuleButtonEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
                 await repository.Db.Deleteable<ModuleFieldsEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
-                unitofwork.Commit();
+                unitofwork.CurrentCommit();
                 await CacheHelper.Remove(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
             }
         }

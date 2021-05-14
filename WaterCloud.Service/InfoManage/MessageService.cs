@@ -157,12 +157,12 @@ namespace WaterCloud.Service.InfoManage
         {
             var unList=await GetUnReadListJson();
             var strList = unList.Where(a => a.F_MessageType == type&&a.F_ClickRead==true).Select(a=>a.F_Id).ToList();
-            unitofwork.BeginTrans();
+            unitofwork.CurrentBeginTrans();
             foreach (var item in strList)
             {
                await ReadMsgForm(item);
             }
-            unitofwork.Commit();
+            unitofwork.CurrentCommit();
         }
 
         public async Task ReadMsgForm(string keyValue)
