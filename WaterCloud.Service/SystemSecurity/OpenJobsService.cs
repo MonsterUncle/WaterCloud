@@ -24,7 +24,7 @@ namespace WaterCloud.Service.SystemSecurity
         private IScheduler _scheduler;
         private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
 
-        public OpenJobsService(UnitOfWork unitOfWork, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory)
+        public OpenJobsService(IUnitOfWork unitOfWork, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory)
         {
             var uniwork = unitOfWork;
             repository = new RepositoryBase<OpenJobEntity>(uniwork);
