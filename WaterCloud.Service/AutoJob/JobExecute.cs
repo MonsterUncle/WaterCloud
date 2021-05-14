@@ -42,7 +42,8 @@ namespace WaterCloud.Service.AutoJob
                     jobId = jobData["F_Id"].ToString();
                     using (var _context= new SqlSugarClient(DBContexHelper.Contex()))
                     {
-                        OpenJobsService autoJobService = new OpenJobsService(new UnitOfWork(_context), _schedulerFactory,_iocJobfactory);
+                        var unitwork = new UnitOfWork(_context);
+                        OpenJobsService autoJobService = new OpenJobsService(unitwork, _schedulerFactory,_iocJobfactory);
                         // 获取数据库中的任务
                         dbJobEntity = await autoJobService.GetForm(jobId);
                         if (dbJobEntity != null)
@@ -70,7 +71,7 @@ namespace WaterCloud.Service.AutoJob
                                         .Contains(typeof(IJobTask)))).ToArray();
                                     string filename = dbJobEntity.F_FileName;
                                     var implementType = types.Where(x => x.IsClass && x.FullName == filename).First();
-                                    var obj = System.Activator.CreateInstance(implementType,new UnitOfWork(_context));       // 创建实例(带参数)
+                                    var obj = System.Activator.CreateInstance(implementType, unitwork);       // 创建实例(带参数)
                                     MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
                                     object[] parameters = null;
                                     var temp = (Task<AlwaysResult>)method.Invoke(obj, parameters);     // 调用方法，参数为空
@@ -105,6 +106,7 @@ namespace WaterCloud.Service.AutoJob
                                         await HandleLogHelper.HSetAsync(log.F_JobId, log.F_Id, log);
                                     }
                                     _context.CommitTran();
+                                    unitwork.Dispose();
                                 }
                             }
                         }
