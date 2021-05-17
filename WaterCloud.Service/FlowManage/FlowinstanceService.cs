@@ -27,9 +27,10 @@ namespace WaterCloud.Service.FlowManage
         public IHttpClientFactory _httpClientFactory { get; set; }
         public MessageService messageApp { get; set; }
         private string flowCreator;
-        private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
+        private string className { get; set; }  
         public FlowinstanceService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
+            className= System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3].Substring(0, System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3].Length - 7);
         }
         #region 获取数据
         public async Task<List<FlowinstanceEntity>> GetList(string keyword = "")
@@ -181,7 +182,7 @@ namespace WaterCloud.Service.FlowManage
             if (resnode == wfruntime.startNodeId)
             {
                 msg.F_MessageInfo = flowInstance.F_CustomName + "--流程驳回";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className.Substring(0, className.Length - 7)).First();
+                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ToUserId = flowInstance.F_CreatorUserId;
@@ -192,7 +193,7 @@ namespace WaterCloud.Service.FlowManage
             else
             {
                 msg.F_MessageInfo = flowInstance.F_CustomName + "--流程待处理";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className.Substring(0, className.Length - 7)).First();
+                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
                 msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5) + "ToDoFlow";
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ToUserId = flowInstance.F_MakerList == "1" ? "" : flowInstance.F_MakerList;
@@ -329,7 +330,7 @@ namespace WaterCloud.Service.FlowManage
             if (flowInstance.F_IsFinish == 1)
             {
                 msg.F_MessageInfo = flowInstance.F_CustomName + "--流程已完成";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className.Substring(0, className.Length - 7)).First();
+                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ToUserId = flowInstance.F_CreatorUserId;
@@ -339,7 +340,7 @@ namespace WaterCloud.Service.FlowManage
             else if (flowInstance.F_IsFinish == 3)
             {
                 msg.F_MessageInfo = flowInstance.F_CustomName + "--流程已终止";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className.Substring(0, className.Length - 7)).First();
+                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 var makerList = repository.Db.Queryable<FlowInstanceOperationHistory>().Where(a => a.F_InstanceId == flowInstance.F_Id && a.F_CreatorUserId != currentuser.UserId).Select(a => a.F_CreatorUserId).Distinct().ToList();
@@ -350,7 +351,7 @@ namespace WaterCloud.Service.FlowManage
             else
             {
                 msg.F_MessageInfo = flowInstance.F_CustomName + "--流程待处理";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className.Substring(0, className.Length - 7)).First();
+                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
                 msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5) + "ToDoFlow";
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ToUserId = flowInstance.F_MakerList == "1" ? "" : flowInstance.F_MakerList;
@@ -801,7 +802,7 @@ namespace WaterCloud.Service.FlowManage
             if (entity.F_IsFinish == 1)
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程已完成";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className.Substring(0, className.Length - 7)).First();
+                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ClickRead = true;
@@ -810,7 +811,7 @@ namespace WaterCloud.Service.FlowManage
             else if (entity.F_IsFinish == 3)
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程已终止";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className.Substring(0, className.Length - 7)).First();
+                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 var makerList = repository.Db.Queryable<FlowInstanceOperationHistory>().Where(a => a.F_InstanceId == entity.F_Id && a.F_CreatorUserId != currentuser.UserId).Select(a => a.F_CreatorUserId).Distinct().ToList();
@@ -821,7 +822,7 @@ namespace WaterCloud.Service.FlowManage
             else
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程待处理";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className.Substring(0, className.Length - 7)).First();
+                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
                 msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5) + "ToDoFlow";
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ClickRead = false;
@@ -931,7 +932,7 @@ namespace WaterCloud.Service.FlowManage
             if (entity.F_IsFinish == 1)
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程已完成";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className.Substring(0, className.Length - 7)).First();
+                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ClickRead = true;
@@ -940,7 +941,7 @@ namespace WaterCloud.Service.FlowManage
             else if (entity.F_IsFinish == 3)
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程已终止";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className.Substring(0, className.Length - 7)).First();
+                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 var makerList = repository.Db.Queryable<FlowInstanceOperationHistory>().Where(a => a.F_InstanceId == entity.F_Id && a.F_CreatorUserId != currentuser.UserId).Select(a => a.F_CreatorUserId).Distinct().ToList();
@@ -951,7 +952,7 @@ namespace WaterCloud.Service.FlowManage
             else
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程待处理";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className.Substring(0, className.Length - 7)).First();
+                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
                 msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5) + "ToDoFlow";
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ClickRead = false;
