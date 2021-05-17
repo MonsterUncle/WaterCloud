@@ -120,7 +120,7 @@ namespace WaterCloud.Service.AutoJob
                                     {
                                         var temp = await new HttpWebClient(_httpClient).ExecuteAsync(dbJobEntity.F_RequestUrl, method, dbJobEntity.F_RequestString, dic);
                                         log.F_EnabledMark = true;
-                                        log.F_Description = "执行成功，" + temp.ToString();
+                                        log.F_Description = "执行成功。";
                                     }
                                     catch (Exception ex)
                                     {

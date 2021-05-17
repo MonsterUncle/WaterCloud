@@ -222,10 +222,6 @@
                 });
             }
             else if (obj.event === 'doNow') {
-                if (data.length == 0) {
-                    common.modalMsg("未选中数据", "warning");
-                    return false;
-                }
                 common.submitPost({
                     prompt: "注：您确定要【执行】该项任务吗？",
                     url: "/SystemSecurity/OpenJobs/DoNow",

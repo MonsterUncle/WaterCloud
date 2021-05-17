@@ -217,7 +217,7 @@ namespace WaterCloud.Service.SystemSecurity
 					{
                         var temp = await _httpClient.ExecuteAsync(dbJobEntity.F_RequestUrl, method, dbJobEntity.F_RequestString, dic);
                         log.F_EnabledMark = true;
-                        log.F_Description = "执行成功，" + temp.ToString();
+                        log.F_Description = "执行成功。";
                     }
                     catch (Exception ex)
 					{
