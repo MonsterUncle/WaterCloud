@@ -38,7 +38,6 @@ namespace WaterCloud.Domain.SystemSecurity
         /// 文件名称
         /// </summary>
         [Description("文件名称")]
-        [Required(ErrorMessage = "文件名称不能为空")]
         public string F_FileName { get; set; }
         /// <summary>
         /// 开始时间
