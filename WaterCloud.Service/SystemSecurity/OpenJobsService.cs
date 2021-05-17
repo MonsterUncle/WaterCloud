@@ -90,6 +90,7 @@ namespace WaterCloud.Service.SystemSecurity
             }
 			if (entity.F_DoItNow==true)
 			{
+                await ChangeJobStatus(entity.F_Id,1);
                 await DoNow(entity.F_Id);
             }
             repository.unitOfWork.CurrentCommit();
