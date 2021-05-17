@@ -38,7 +38,10 @@ namespace WaterCloud.DataBase
         {
             get { return _db; }
         }
-
+        public IUnitOfWork unitOfWork
+        {
+            get { return _unitOfWork; }
+        }
         public RepositoryBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -93,7 +96,14 @@ namespace WaterCloud.DataBase
         {
             var tempData = query;
             int totalCount = 0;
-            tempData = tempData.OrderBy(pagination.sort);
+            if (pagination.order == "desc")
+            {
+                tempData = tempData.OrderBy(pagination.sort + " " + pagination.order);
+            }
+            else
+            {
+                tempData = tempData.OrderBy(pagination.sort);
+            }
             var data = tempData.ToPageList(pagination.page, pagination.rows, ref totalCount);
             pagination.records = totalCount;
             return data;

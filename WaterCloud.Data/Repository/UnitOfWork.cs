@@ -37,7 +37,7 @@ namespace WaterCloud.DataBase
             _context.Ado.CommandTimeOut = commandTimeout;
             _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
             {
-                Console.Write("time:" + _context.Ado.SqlExecutionTime.ToString());//输出SQL执行时间
+                Console.WriteLine("time:" + _context.Ado.SqlExecutionTime.ToString());//输出SQL执行时间
                 Console.WriteLine(sql);
                 Console.WriteLine(string.Join(",", pars?.Select(it => it.ParameterName + ":" + it.Value)));
             };
@@ -53,7 +53,7 @@ namespace WaterCloud.DataBase
             _context.Ado.CommandTimeOut = commandTimeout;
             _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
             {
-                Console.Write("time:" + _context.Ado.SqlExecutionTime.ToString());//输出SQL执行时间
+                Console.WriteLine("time:" + _context.Ado.SqlExecutionTime.ToString());//输出SQL执行时间
                 Console.WriteLine(sql);
                 Console.WriteLine(string.Join(",", pars?.Select(it => it.ParameterName + ":" + it.Value)));
             };

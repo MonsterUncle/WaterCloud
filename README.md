@@ -11,11 +11,11 @@
 ![](https://img.shields.io/badge/release-2.9.0-red)
 
 ![](https://img.shields.io/badge/.net-5.0.0-blue)
-![](https://img.shields.io/badge/SqlSugar-5.0.2.9-blue)
+![](https://img.shields.io/badge/SqlSugar-5.0.3.0-blue)
 ![](https://img.shields.io/badge/layui-2.5.7-blue)
 
 ![](https://img.shields.io/badge/Quartz-3.2.4-brightgreen)
-![](https://img.shields.io/badge/Autofac-6.1.0-brightgreen)
+![](https://img.shields.io/badge/Autofac-6.2.0-brightgreen)
 ![](https://img.shields.io/badge/SignalR-4.2.2-brightgreen)
 </div>
 
@@ -39,7 +39,7 @@
 - 提高开发效率及质量。常用类封装，日志、缓存、验证、字典、文件、邮件、Excel。等等。
 - 页面为响应式设计，支持电脑、平板、智能手机等设备，微信浏览器以及各种常见浏览器。
 - 适用范围：可以开发OA、ERP、BPM、CRM、WMS、TMS、MIS、BI、电商平台后台、物流管理系统、快递管理系统、教务管理系统等各类管理软件。
-- 租户管理(未实现，理论阶段)
+- 租户管理(已实现，详细咨询作者)
 
 
 - .net5-Chloe版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net5-Chloe
