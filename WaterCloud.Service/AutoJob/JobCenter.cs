@@ -27,7 +27,7 @@ namespace WaterCloud.Service.AutoJob
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            List<OpenJobEntity> obj = await _service.GetList(null);
+            List<OpenJobEntity> obj = await _service.GetAllList(null);
             obj = obj.Where(a => a.F_EnabledMark == true).ToList();
             if (obj.Count > 0)
             {

@@ -41,7 +41,8 @@ namespace WaterCloud.Service.SystemSecurity
         /// </summary>
         public async Task<List<OpenJobEntity>> GetLookList(Pagination pagination, string keyword = "")
         {
-            var list = repository.IQueryable();
+            var DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
+            var list = repository.IQueryable().Where(u=>u.F_DbNumber == DbNumber);
             if (!string.IsNullOrEmpty(keyword))
             {
                 list = list.Where(u => u.F_JobName.Contains(keyword) || u.F_Description.Contains(keyword));
@@ -63,17 +64,27 @@ namespace WaterCloud.Service.SystemSecurity
         }
         public async Task<List<OpenJobEntity>> GetList(string keyword = "")
         {
-            var cachedata = repository.IQueryable();
+            var DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
+            var query = repository.IQueryable().Where(t => t.F_DbNumber == DbNumber);
             if (!string.IsNullOrEmpty(keyword))
             {
-                cachedata = cachedata.Where(t => t.F_JobName.Contains(keyword));
+                query = query.Where(t => t.F_JobName.Contains(keyword));
             }
-            return cachedata.Where(a => a.F_DeleteMark == false).ToList();
+            return query.Where(a => a.F_DeleteMark == false).ToList();
+        }
+        public async Task<List<OpenJobEntity>> GetAllList(string keyword = "")
+        {
+            var query = repository.IQueryable();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(t => t.F_JobName.Contains(keyword));
+            }
+            return query.Where(a => a.F_DeleteMark == false).ToList();
         }
         public async Task<OpenJobEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.FindEntity(keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         public async Task SubmitForm(OpenJobEntity entity, string keyValue)
         {
@@ -86,6 +97,7 @@ namespace WaterCloud.Service.SystemSecurity
             else
             {
                 entity.Create();
+                entity.F_DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
                 await repository.Insert(entity);
             }
 			if (entity.F_DoItNow==true)

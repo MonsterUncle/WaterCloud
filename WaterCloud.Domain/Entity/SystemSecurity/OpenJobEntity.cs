@@ -18,6 +18,7 @@ namespace WaterCloud.Domain.SystemSecurity
 	/// 定时任务
 	/// </summary>
     [SugarTable("sys_openjob")]
+    [Tenant("0")]
     public partial class OpenJobEntity : IEntity<OpenJobEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
@@ -90,5 +91,6 @@ namespace WaterCloud.Domain.SystemSecurity
         /// </summary>
         [SugarColumn(IsIgnore =true)]
         public bool? F_DoItNow { get; set; }
+        public string F_DbNumber { get; set; }
     }
 }
