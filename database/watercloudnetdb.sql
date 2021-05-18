@@ -1,4 +1,4 @@
-/*
+﻿/*
  Navicat Premium Data Transfer
 
  Source Server         : local
@@ -4354,6 +4354,7 @@ CREATE TABLE `sys_openjob`  (
   `F_RequestHeaders` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求头',
   `F_RequestString` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求内容',
   `F_RequestUrl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求地址',
+  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
  Navicat Premium Data Transfer
 
  Source Server         : 本地mssql
@@ -13238,7 +13238,8 @@ CREATE TABLE [dbo].[sys_openjob] (
   [F_JobType] int  NOT NULL,
   [F_RequestHeaders] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_RequestString] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
-  [F_RequestUrl] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL
+  [F_RequestUrl] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL，
+  [F_DbNumber] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
 )
 GO
 
