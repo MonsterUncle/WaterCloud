@@ -233,7 +233,7 @@ namespace WaterCloud.Service.SystemOrganize
             if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
             {
                 unitofwork.GetDbClient().ChangeDatabase("0");
-                var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).First();
+                var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).FirstOrDefault();
                 if (setTemp!=null)
                 {
                     unitofwork.GetDbClient().ChangeDatabase(setTemp.F_DbNumber);

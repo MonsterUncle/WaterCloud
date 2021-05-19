@@ -49,7 +49,7 @@ namespace WaterCloud.Service.SystemSecurity
 
 		public async Task SubmitForm(ServerStateEntity entity)
         {
-            var old = repository.IQueryable(a => a.F_WebSite == entity.F_WebSite && a.F_Date == DateTime.Now.Date).First();
+            var old = repository.IQueryable().First(a => a.F_WebSite == entity.F_WebSite && a.F_Date == DateTime.Now.Date);
             if (old != null)
             {
                 entity.F_Id = old.F_Id;

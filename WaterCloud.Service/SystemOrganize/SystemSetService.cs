@@ -218,8 +218,8 @@ namespace WaterCloud.Service.SystemOrganize
 				{
                     var tenant = await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
                     unitofwork.GetDbClient().ChangeDatabase(tenant.F_DbNumber);
-                    var user = unitofwork.GetDbClient().Queryable<UserEntity>().Where(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).First();
-                    var userinfo = unitofwork.GetDbClient().Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
+                    var user = unitofwork.GetDbClient().Queryable<UserEntity>().First(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true);
+                    var userinfo = unitofwork.GetDbClient().Queryable<UserLogOnEntity>().First(a => a.F_UserId == user.F_Id);
                     userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                     userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
                     await unitofwork.GetDbClient().Updateable<UserEntity>(a => new UserEntity
@@ -245,8 +245,8 @@ namespace WaterCloud.Service.SystemOrganize
                 }
 				else
 				{
-                    var user = repository.Db.Queryable<UserEntity>().Where(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).First();
-                    var userinfo = repository.Db.Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
+                    var user = repository.Db.Queryable<UserEntity>().First(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true);
+                    var userinfo = repository.Db.Queryable<UserLogOnEntity>().First(a => a.F_UserId == user.F_Id);
                     userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                     userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
                     await repository.Db.Updateable<UserEntity>(a => new UserEntity
@@ -264,7 +264,7 @@ namespace WaterCloud.Service.SystemOrganize
             unitofwork.GetDbClient().ChangeDatabase("0");
             var set=await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
             unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT?set.F_DbNumber:"0");
-            var tempkey= unitofwork.GetDbClient().Queryable<UserEntity>().Where(a => a.F_IsAdmin == true).First().F_Id;
+            var tempkey= unitofwork.GetDbClient().Queryable<UserEntity>().First(a => a.F_IsAdmin == true).F_Id;
             await CacheHelper.Remove(cacheKeyOperator + "info_" + tempkey);
         }
 

@@ -327,7 +327,7 @@ namespace WaterCloud.Code
         private PropertyInfo MapPropertyInfo(string columnName)
         {
             PropertyInfo[] propertyList = ReflectionHelper.GetProperties(typeof(T));
-            PropertyInfo propertyInfo = propertyList.Where(p => p.Name == columnName).First();
+            PropertyInfo propertyInfo = propertyList.Where(p => p.Name == columnName).FirstOrDefault();
             if (propertyInfo != null)
             {
                 return propertyInfo;

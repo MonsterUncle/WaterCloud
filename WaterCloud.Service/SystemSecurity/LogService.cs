@@ -203,7 +203,7 @@ namespace WaterCloud.Service.SystemSecurity
         {
             try
             {
-                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).First();
+                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
                 if (moduleitem==null)
                 {
                     throw new Exception();
@@ -220,7 +220,7 @@ namespace WaterCloud.Service.SystemSecurity
         {
             try
             {
-                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).First();
+                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
                 if (moduleitem == null)
                 {
                     throw new Exception();

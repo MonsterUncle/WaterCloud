@@ -48,7 +48,7 @@ namespace WaterCloud.Service
             {
                 return GetFieldsFilterDataNew(parametername,query, moduleName);
             }
-            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().Where(u => u.F_ModuleCode == moduleName).First();
+            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().First(u => u.F_ModuleCode == moduleName);
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
@@ -85,7 +85,7 @@ namespace WaterCloud.Service
             {
                 return GetFieldsFilterDataNew(parametername,query, moduleName);
             }
-            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().Where(u => u.F_ModuleCode == moduleName).First();
+            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().First(u => u.F_ModuleCode == moduleName);
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
@@ -113,7 +113,7 @@ namespace WaterCloud.Service
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             if (currentuser.UserId == GlobalContext.SystemConfig.SysemUserId) return false;  //超级管理员特权
-            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().Where(u => u.F_ModuleCode == moduleName).First();
+            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().First(u => u.F_ModuleCode == moduleName);
             ////系统菜单也不需要数据权限 跟字段重合取消这样处理
             //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).GetAwaiter().GetResult();
             if (rule == null)
@@ -169,7 +169,7 @@ namespace WaterCloud.Service
                 return list;
             }
             //系统菜单跳过
-            var module = repository.Db.Queryable<ModuleEntity>().Where(u => u.F_EnCode == moduleName).First();
+            var module = repository.Db.Queryable<ModuleEntity>().First(u => u.F_EnCode == moduleName);
             //判断是否需要字段权限
             if (module.F_IsFields == false)
             {
@@ -209,7 +209,7 @@ namespace WaterCloud.Service
                 return entity;
             }
             //系统菜单跳过
-            var module = repository.Db.Queryable<ModuleEntity>().Where(u => u.F_EnCode == moduleName).First();
+            var module = repository.Db.Queryable<ModuleEntity>().First(u => u.F_EnCode == moduleName);
             //判断是否需要字段权限
             if (module.F_IsFields == false)
             {
@@ -251,7 +251,7 @@ namespace WaterCloud.Service
                 return query;
             }
             //系统菜单跳过
-            var module = repository.Db.Queryable<ModuleEntity>().Where(u => u.F_EnCode == moduleName).First();
+            var module = repository.Db.Queryable<ModuleEntity>().First(u => u.F_EnCode == moduleName);
             //判断是否需要字段权限
             if (module.F_IsFields == false)
             {

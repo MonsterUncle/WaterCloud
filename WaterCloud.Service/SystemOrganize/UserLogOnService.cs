@@ -30,7 +30,7 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task RevisePassword(string userPassword,string keyValue)
         {
             UserLogOnEntity entity = new UserLogOnEntity();
-            entity = repository.IQueryable(a => a.F_UserId == keyValue).First() ;
+            entity = repository.IQueryable().InSingle(keyValue) ;
             if (entity == null)
             {
                 entity = new UserLogOnEntity();
@@ -79,7 +79,7 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task ReviseSelfPassword(string userPassword, string keyValue)
         {
             UserLogOnEntity entity = new UserLogOnEntity();
-            entity = repository.IQueryable(a => a.F_UserId == keyValue).First();
+            entity = repository.IQueryable().InSingle(keyValue);
             entity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
             entity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.F_UserSecretkey).ToLower(), 32).ToLower();
             await repository.Update(entity);

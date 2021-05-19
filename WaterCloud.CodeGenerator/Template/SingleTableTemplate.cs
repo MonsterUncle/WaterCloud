@@ -1267,7 +1267,7 @@ namespace WaterCloud.CodeGenerator
                 string menuUrl = "/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + baseConfigModel.FileConfig.PageIndexName;
                 ModuleEntity moduleEntity = new ModuleEntity();
                 moduleEntity.Create();
-                moduleEntity.F_Layers = uniwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).First().F_Layers + 1; ;
+                moduleEntity.F_Layers = uniwork.GetDbClient().Queryable<ModuleEntity>().First(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).F_Layers + 1; ;
                 moduleEntity.F_FullName = baseConfigModel.FileConfig.ClassDescription;
                 moduleEntity.F_UrlAddress = menuUrl;
                 moduleEntity.F_EnCode = baseConfigModel.FileConfig.ClassPrefix;
@@ -1280,8 +1280,8 @@ namespace WaterCloud.CodeGenerator
                 moduleEntity.F_AllowDelete = false;
                 moduleEntity.F_EnabledMark = true;
                 moduleEntity.F_DeleteMark = false;
-                moduleEntity.F_ParentId = uniwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).First().F_Id;
-                var parentModule = await uniwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).FirstAsync();
+                moduleEntity.F_ParentId = uniwork.GetDbClient().Queryable<ModuleEntity>().First(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).F_Id;
+                var parentModule = await uniwork.GetDbClient().Queryable<ModuleEntity>().FirstAsync(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
                 moduleEntity.F_SortCode = (uniwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_ParentId == parentModule.F_Id).Max(a => a.F_SortCode) ?? 0) + 1;
                 List<ModuleButtonEntity> moduleButtonList = new List<ModuleButtonEntity>();
                 int sort = 0;

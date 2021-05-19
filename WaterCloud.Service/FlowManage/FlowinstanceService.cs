@@ -182,7 +182,7 @@ namespace WaterCloud.Service.FlowManage
             if (resnode == wfruntime.startNodeId)
             {
                 msg.F_MessageInfo = flowInstance.F_CustomName + "--流程驳回";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
+                var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == className);
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ToUserId = flowInstance.F_CreatorUserId;
@@ -193,7 +193,7 @@ namespace WaterCloud.Service.FlowManage
             else
             {
                 msg.F_MessageInfo = flowInstance.F_CustomName + "--流程待处理";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
+                var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == className);
                 msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5) + "ToDoFlow";
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ToUserId = flowInstance.F_MakerList == "1" ? "" : flowInstance.F_MakerList;
@@ -203,7 +203,7 @@ namespace WaterCloud.Service.FlowManage
             msg.F_CreatorUserName = currentuser.UserName;
             msg.F_EnabledMark = true;
             msg.F_MessageType = 2;
-            var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == flowInstance.F_Id).OrderBy(t => t.F_CreatorTime,OrderByType.Desc).First();
+            var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == flowInstance.F_Id).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).First();
             if (lastmsg != null && repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
             {
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
@@ -330,7 +330,7 @@ namespace WaterCloud.Service.FlowManage
             if (flowInstance.F_IsFinish == 1)
             {
                 msg.F_MessageInfo = flowInstance.F_CustomName + "--流程已完成";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
+                var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == className);
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ToUserId = flowInstance.F_CreatorUserId;
@@ -340,7 +340,7 @@ namespace WaterCloud.Service.FlowManage
             else if (flowInstance.F_IsFinish == 3)
             {
                 msg.F_MessageInfo = flowInstance.F_CustomName + "--流程已终止";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
+                var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == className);
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 var makerList = repository.Db.Queryable<FlowInstanceOperationHistory>().Where(a => a.F_InstanceId == flowInstance.F_Id && a.F_CreatorUserId != currentuser.UserId).Select(a => a.F_CreatorUserId).Distinct().ToList();
@@ -351,7 +351,7 @@ namespace WaterCloud.Service.FlowManage
             else
             {
                 msg.F_MessageInfo = flowInstance.F_CustomName + "--流程待处理";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
+                var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == className);
                 msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5) + "ToDoFlow";
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ToUserId = flowInstance.F_MakerList == "1" ? "" : flowInstance.F_MakerList;
@@ -359,7 +359,7 @@ namespace WaterCloud.Service.FlowManage
                 msg.F_KeyValue = flowInstance.F_Id;
             }
             msg.F_MessageType = 2;
-            var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == flowInstance.F_Id).OrderBy(t => t.F_CreatorTime,OrderByType.Desc).First();
+            var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == flowInstance.F_Id).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).First();
             if (lastmsg != null && repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
             {
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
@@ -802,7 +802,7 @@ namespace WaterCloud.Service.FlowManage
             if (entity.F_IsFinish == 1)
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程已完成";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
+                var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == className);
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ClickRead = true;
@@ -811,7 +811,7 @@ namespace WaterCloud.Service.FlowManage
             else if (entity.F_IsFinish == 3)
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程已终止";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
+                var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == className);
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 var makerList = repository.Db.Queryable<FlowInstanceOperationHistory>().Where(a => a.F_InstanceId == entity.F_Id && a.F_CreatorUserId != currentuser.UserId).Select(a => a.F_CreatorUserId).Distinct().ToList();
@@ -822,7 +822,7 @@ namespace WaterCloud.Service.FlowManage
             else
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程待处理";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
+                var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == className);
                 msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5) + "ToDoFlow";
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ClickRead = false;
@@ -932,7 +932,7 @@ namespace WaterCloud.Service.FlowManage
             if (entity.F_IsFinish == 1)
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程已完成";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
+                var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == className);
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ClickRead = true;
@@ -941,7 +941,7 @@ namespace WaterCloud.Service.FlowManage
             else if (entity.F_IsFinish == 3)
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程已终止";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
+                var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == className);
                 msg.F_Href = module.F_UrlAddress;
                 msg.F_HrefTarget = module.F_Target;
                 var makerList = repository.Db.Queryable<FlowInstanceOperationHistory>().Where(a => a.F_InstanceId == entity.F_Id && a.F_CreatorUserId != currentuser.UserId).Select(a => a.F_CreatorUserId).Distinct().ToList();
@@ -952,7 +952,7 @@ namespace WaterCloud.Service.FlowManage
             else
             {
                 msg.F_MessageInfo = entity.F_CustomName + "--流程待处理";
-                var module = repository.Db.Queryable<ModuleEntity>().Where(a => a.F_EnCode == className).First();
+                var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == className);
                 msg.F_Href = module.F_UrlAddress.Remove(module.F_UrlAddress.Length - 5, 5) + "ToDoFlow";
                 msg.F_HrefTarget = module.F_Target;
                 msg.F_ClickRead = false;
@@ -960,7 +960,7 @@ namespace WaterCloud.Service.FlowManage
             }
             msg.F_MessageType = 2;
             msg.F_ToUserId = entity.F_MakerList == "1" ? "" : entity.F_MakerList;
-            var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == entity.F_Id).OrderBy(t => t.F_CreatorTime,OrderByType.Desc).First();
+            var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == entity.F_Id).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).First();
             if (lastmsg != null && repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
             {
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
