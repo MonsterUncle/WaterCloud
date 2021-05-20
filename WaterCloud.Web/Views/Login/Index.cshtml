@@ -113,6 +113,10 @@
                 if (SqlMode =='TenantSql') {
                     $('#wchost').parent().removeClass('layui-hide');
                 }
+                else {
+                    $('#wchost').parent().addClass('layui-hide');
+                    $('#wchost').removeAttr('lay-verify');
+                }
                 $.login.init();
                 $.login.checkLogin();
                 $("#wchost").bindSelect({
