@@ -713,7 +713,7 @@ namespace WaterCloud.CodeGenerator
                         sb.AppendLine("                { title: '操作', width: 130, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
                         break;
                     case 3:
-                        sb.AppendLine("                { title: '操作', width: 170, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
+                        sb.AppendLine("                { title: '操作', width: 175, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
                         break;
                     default:
                         break;
@@ -760,7 +760,7 @@ namespace WaterCloud.CodeGenerator
                         sb.AppendLine("                { title: '操作', width: 130, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
                         break;
                     case 3:
-                        sb.AppendLine("                { title: '操作', width: 170, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
+                        sb.AppendLine("                { title: '操作', width: 175, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
                         break;
                     default:
                         break;
