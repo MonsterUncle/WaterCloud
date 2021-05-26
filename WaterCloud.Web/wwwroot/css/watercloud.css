@@ -235,9 +235,3 @@
 ::-webkit-scrollbar-track-piece {
     -webkit-border-radius: 0;
 }
-
-
-/**替换原有样式更新 2.6.7*/ 
-.layui-nav-tree .layui-nav-item > a .layui-nav-more {
-    padding: 0px 0;
-}
