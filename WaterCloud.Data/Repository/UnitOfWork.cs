@@ -37,9 +37,12 @@ namespace WaterCloud.DataBase
             _context.Ado.CommandTimeOut = commandTimeout;
             _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
             {
-                Console.WriteLine("time:" + _context.Ado.SqlExecutionTime.ToString());//输出SQL执行时间
-                Console.WriteLine(sql);
-                Console.WriteLine(string.Join(",", pars?.Select(it => it.ParameterName + ":" + it.Value)));
+                Console.WriteLine("----------Start-----------");
+                Console.WriteLine("StartTime:" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                Console.WriteLine("NeedTime:" + _context.Ado.SqlExecutionTime.ToString());//输出SQL执行时间
+                Console.WriteLine("RunSql:"+sql);
+                Console.WriteLine("Parameters:"+string.Join(",", pars?.Select(it => it.ParameterName + ":" + it.Value)));
+                Console.WriteLine("-----------End------------");
             };
         }
         public UnitOfWork(string ConnectStr, string providerName)
@@ -53,9 +56,12 @@ namespace WaterCloud.DataBase
             _context.Ado.CommandTimeOut = commandTimeout;
             _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
             {
-                Console.WriteLine("time:" + _context.Ado.SqlExecutionTime.ToString());//输出SQL执行时间
-                Console.WriteLine(sql);
-                Console.WriteLine(string.Join(",", pars?.Select(it => it.ParameterName + ":" + it.Value)));
+                Console.WriteLine("----------Start-----------");
+                Console.WriteLine("StartTime:" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                Console.WriteLine("NeedTime:" + _context.Ado.SqlExecutionTime.ToString());//输出SQL执行时间
+                Console.WriteLine("RunSql:" + sql);
+                Console.WriteLine("Parameters:" + string.Join(",", pars?.Select(it => it.ParameterName + ":" + it.Value)));
+                Console.WriteLine("-----------End------------");
             };
         }
         public void BeginTrans()

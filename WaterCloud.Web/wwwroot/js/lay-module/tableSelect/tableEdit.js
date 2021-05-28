@@ -262,7 +262,7 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
         var othis = this;
         var searchFunc = function(val){ //关键字搜索
             $('div.layui-tableEdit-div li').each(function () {
-                othis.isEmpty(val) || $(this).data('value').indexOf(val) > -1 ? $(this).show() : $(this).hide();
+                othis.isEmpty(val) || $(this).data('value').toString().indexOf(val) > -1 ? $(this).show() : $(this).hide();
             });
         },liClickFunc = function(){ //给li元素注册点击事件
             var liArr = $('div.layui-tableEdit-div li');
@@ -378,11 +378,13 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
             layer.tips(verifyMsg, td,{tipsMore:true});
             return false;
         }
-        if(Array.isArray(data) && data.length <= 0){
-            layer.tips(verifyMsg, td,{tipsMore:true});
-            return false;
+        if (Array.isArray(data)) {
+            if (data.length <= 0) {
+                layer.tips(verifyMsg, td, { tipsMore: true });
+                return false;
+            }
         }
-        if((typeof data === 'object' && singleInstance.isEmpty(data.name))
+        else if ((typeof data === 'object' && singleInstance.isEmpty(data.name))
             || data.name === 'undefined'){
             layer.tips(verifyMsg, td,{tipsMore:true});
             return false;

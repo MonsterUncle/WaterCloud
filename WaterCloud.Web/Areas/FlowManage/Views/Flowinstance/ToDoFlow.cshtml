@@ -72,14 +72,7 @@
                 { field: 'F_ActivityName', title: '当前节点名称', width: 140, filter: true },
                 { field: 'F_Description', title: '实例备注', minWidth: 150, filter: true },
                 {
-                    field: 'F_CreatorTime', title: '创建时间', width: 120, filter: { type: 'date[yyyy-MM-dd]' },
-                    templet: function (d) {
-                        if (d.F_CreatorTime) {
-                            var time = new Date(d.F_CreatorTime);
-                            return time.Format("yyyy-MM-dd");
-                        }
-                        return '';
-                    }
+                    field: 'F_CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                 },
                 { field: 'F_CreatorUserName', title: '创建人', width: 120, sort: true, filter: true },
                 { title: '操作', width: 130, toolbar: '#currentTableBar', align: "center", fixed: 'right' }

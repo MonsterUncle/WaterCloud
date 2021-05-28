@@ -763,14 +763,20 @@ namespace WaterCloud.DataBase
                             {
                                 if (temp == "1")
                                 {
-                                    list.Add(true);
+                                    gresult = Expression.Equal(left, Expression.Constant(true));
                                 }
                                 else
                                 {
-                                    list.Add(false);
+                                    if (gresult == null)
+                                    {
+                                        gresult = Expression.Equal(left, Expression.Constant(false));
+                                    }
+                                    else
+                                    {
+                                        gresult.Or(Expression.Equal(left, Expression.Constant(false)));
+                                    }
                                 }
                             }
-                            gresult = Expression.Call(Expression.Constant(list), typeof(List<bool>).GetMethod("Contains", new Type[] { typeof(bool) }), left);
                         }
                         else if (property.PropertyType == typeof(Nullable<bool>))
                         {
@@ -779,14 +785,20 @@ namespace WaterCloud.DataBase
                             {
                                 if (temp == "1")
                                 {
-                                    list.Add(true);
+                                    gresult = Expression.Equal(left, Expression.Constant(true, typeof(bool?)));
                                 }
                                 else
                                 {
-                                    list.Add(false);
+									if (gresult==null)
+									{
+                                        gresult = Expression.Equal(left, Expression.Constant(false, typeof(bool?)));
+                                    }
+									else
+									{
+                                        gresult.Or(Expression.Equal(left, Expression.Constant(false, typeof(bool?))));
+                                    }
                                 }
                             }
-                            gresult = Expression.Call(Expression.Constant(list), typeof(List<bool?>).GetMethod("Contains", new Type[] { typeof(bool?) }), left);
                         }
                         else if (property.PropertyType == typeof(Nullable<float>))
                         {

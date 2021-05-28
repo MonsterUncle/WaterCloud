@@ -63,14 +63,7 @@
                  { field: 'F_ToUserName', title: '收件人', width: 120, sort: true, filter: true },
                  { field: 'F_MessageInfo', title: '内容', minWidth: 150, sort: true, filter: true },
                  {
-                     field: 'F_CreatorTime', title: '创建时间', width: 150, sort: true, filter: { type: 'date[yyyy-MM-dd HH:mm]' },
-                     templet: function (d) {
-                         if (d.F_CreatorTime) {
-                             var time = new Date(d.F_CreatorTime);
-                             return time.Format("yyyy-MM-dd hh:mm");
-                         }
-                         return '';
-                     }
+                     field: 'F_CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                  },
                  { field: 'F_CreatorUserId', title: '创建用户主键', width: 120, sort: true, hide: true, filter: true },
                  { field: 'F_CreatorUserName', title: '创建用户', width: 120, sort: true, filter: true },
