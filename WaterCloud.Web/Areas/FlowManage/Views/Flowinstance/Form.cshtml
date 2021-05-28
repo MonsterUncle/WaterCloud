@@ -322,6 +322,7 @@
         form.on('submit(saveBtn)', function (data) {
             postData.NextNodeDesignateType = NextNodeDesignateType;
             postData.NextNodeDesignates = postData.NextNodeDesignates ? postData.NextNodeDesignates.split(',') : [];
+            postData.F_Code = data.field.F_Code;
             common.submitForm({
                 url: '/FlowManage/Flowinstance/SubmitForm?keyValue=' + keyValue,
                 param: postData,
