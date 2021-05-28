@@ -70,7 +70,7 @@ namespace WaterCloud.DataBase
         }
         public async Task<int> Delete(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _db.Deleteable<TEntity>().Where(predicate).ExecuteCommandAsync();
+            return await _db.Deleteable(predicate).ExecuteCommandAsync();
         }
         public async Task<TEntity> FindEntity(object keyValue)
         {
