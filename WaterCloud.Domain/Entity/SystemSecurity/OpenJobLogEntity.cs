@@ -20,32 +20,37 @@ namespace WaterCloud.Domain.SystemSecurity
     [SugarTable("sys_openjoblog")]
     public partial class OpenJobLogEntity : IEntity<OpenJobEntity>
     {
-        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
+        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]
         public string F_Id { get; set; }
         /// <summary>
         /// 任务名称
         /// </summary>
         [Description("任务名称")]
+        [SugarColumn(IsNullable = false, ColumnName = "F_JobName",ColumnDataType = "nvarchar(50)", ColumnDescription = "任务名称")]
         public string F_JobName { get; set; }
         /// <summary>
-        /// 任务组别
+        /// 任务Id
         /// </summary>
         [Description("任务Id")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_JobId", ColumnDataType = "nvarchar(50)", ColumnDescription = "任务Id")]
         public string F_JobId { get; set; }
         /// <summary>
         /// 文件名称
         /// </summary>
         [Description("任务信息")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "任务信息")]
         public string F_Description { get; set; }
         /// <summary>
         /// 开始时间
         /// </summary>
         [Description("执行时间")]
+        [SugarColumn(IsNullable = true, ColumnDescription = "执行时间")]
         public System.DateTime? F_CreatorTime { get; set; }
         /// <summary>
         /// 结束时间
         /// </summary>
         [Description("执行状态")]
+        [SugarColumn(IsNullable = true, ColumnDescription = "执行状态")]
         public bool? F_EnabledMark { get; set; }
     }
 }

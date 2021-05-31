@@ -142,6 +142,7 @@
         });
         var moduleids = [];
         form.on('submit(formStep2)', function (data) {
+            moduleids = [];
             var params = dtree.getCheckbarNodesParam("demoTree1");
             for (var i = 0; i < params.length; i++) {
                 moduleids.push(params[i].nodeId);

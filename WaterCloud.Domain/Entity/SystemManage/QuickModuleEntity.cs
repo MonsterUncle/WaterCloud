@@ -18,27 +18,60 @@ namespace WaterCloud.Domain.SystemManage
 	[SugarTable("sys_quickmodule")]
     public class QuickModuleEntity : IEntity<QuickModuleEntity>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-						[SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true)]
-			public  String  F_Id { get; set; }
-					
-			public  String  F_ModuleId { get; set; }
-					
-			public  Boolean?  F_DeleteMark { get; set; }
-					
-			public  Boolean?  F_EnabledMark { get; set; }
-					
-			public  String  F_Description { get; set; }
-					
-			public  DateTime?  F_CreatorTime { get; set; }
-					
-			public  String  F_CreatorUserId { get; set; }
-					
-			public  DateTime?  F_LastModifyTime { get; set; }
-					
-			public  String  F_LastModifyUserId { get; set; }
-					
-			public  DateTime?  F_DeleteTime { get; set; }
-					
-			public  String  F_DeleteUserId { get; set; }
-		    }
+		/// <summary>
+		/// 主键Id
+		/// </summary>
+		[SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]
+		public  string  F_Id { get; set; }
+		/// <summary>
+		/// 模块Id
+		/// </summary>					
+		[SugarColumn(IsNullable = true, ColumnName = "F_ModuleId",ColumnDataType = "nvarchar(50)", ColumnDescription = "模块Id")]
+		public  string  F_ModuleId { get; set; }
+		/// <summary>
+		/// 删除标记
+		/// </summary>					
+		[SugarColumn(IsNullable = true, ColumnDescription = "删除标记")]
+		public  Boolean?  F_DeleteMark { get; set; }
+		/// <summary>
+		/// 有效标记
+		/// </summary>
+		[SugarColumn(IsNullable = true, ColumnDescription = "有效标记")]
+		public  Boolean?  F_EnabledMark { get; set; }
+		/// <summary>
+		/// 备注
+		/// </summary>
+		[SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "备注")]
+		public  string  F_Description { get; set; }
+		/// <summary>
+		/// 创建时间
+		/// </summary>
+		[SugarColumn(IsNullable = true, ColumnDescription = "创建时间")]
+		public  DateTime?  F_CreatorTime { get; set; }
+		/// <summary>
+		/// 创建人Id
+		/// </summary>
+		[SugarColumn(IsNullable = true, ColumnName = "F_CreatorUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建人Id")]
+		public  string  F_CreatorUserId { get; set; }
+		/// <summary>
+		/// 修改时间
+		/// </summary>
+		[SugarColumn(IsNullable = true, ColumnDescription = "修改时间")]
+		public  DateTime?  F_LastModifyTime { get; set; }
+		/// <summary>
+		/// 修改人Id
+		/// </summary>
+		[SugarColumn(IsNullable = true, ColumnName = "F_LastModifyUserId",ColumnDataType = "nvarchar(50)", ColumnDescription = "修改人Id")]
+		public  string  F_LastModifyUserId { get; set; }
+		/// <summary>
+		/// 删除时间
+		/// </summary>
+		[SugarColumn(IsNullable = true, ColumnDescription = "删除时间")]
+		public  DateTime?  F_DeleteTime { get; set; }
+		/// <summary>
+		/// 删除人Id
+		/// </summary>
+		[SugarColumn(IsNullable = true, ColumnName = "F_DeleteUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "删除人Id")]
+		public  string  F_DeleteUserId { get; set; }
+	}
 }

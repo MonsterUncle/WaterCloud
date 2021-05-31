@@ -61,9 +61,9 @@ namespace WaterCloud.Service.SystemOrganize
             var query =  GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
             }
-            query = GetDataPrivilege("u", "", query);
+            query = GetDataPrivilege("a", "", query);
             return await repository.OrderList(query, pagination);
         }
         public async Task<RoleEntity> GetForm(string keyValue)
