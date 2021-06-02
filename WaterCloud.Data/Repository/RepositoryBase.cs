@@ -180,7 +180,7 @@ namespace WaterCloud.DataBase
         {
             return _context.Query<TEntity>(locktype);
         }
-        public IQuery<TEntity> IQueryable<TEntity>(Expression<Func<TEntity, bool>> predicate, LockType locktype = LockType.NoLock where TEntity : class
+        public IQuery<TEntity> IQueryable<TEntity>(Expression<Func<TEntity, bool>> predicate, LockType locktype = LockType.NoLock) where TEntity : class
         {
             return _context.Query<TEntity>(locktype).Where(predicate);
         }
