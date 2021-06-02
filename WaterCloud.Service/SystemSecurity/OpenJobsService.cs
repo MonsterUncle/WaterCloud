@@ -103,7 +103,7 @@ namespace WaterCloud.Service.SystemSecurity
 			if (entity.F_DoItNow==true)
 			{
                 await ChangeJobStatus(entity.F_Id,1);
-                await DoNow(entity.F_Id);
+                await DoNow(entity.F_Id,false);
             }
             repository.unitOfWork.CurrentCommit();
         }
@@ -166,7 +166,7 @@ namespace WaterCloud.Service.SystemSecurity
             await repository.Update(job);
         }
 
-        public async Task DoNow(string keyValue)
+        public async Task DoNow(string keyValue,bool commit = true)
         {
             // 获取数据库中的任务
             var dbJobEntity = await GetForm(keyValue);
@@ -252,7 +252,10 @@ namespace WaterCloud.Service.SystemSecurity
                 {
                     await HandleLogHelper.HSetAsync(log.F_JobId, log.F_Id, log);
                 }
-                repository.unitOfWork.CurrentCommit();
+                if (commit)
+                {
+                    repository.unitOfWork.CurrentCommit();
+                }
             }
         }
 
