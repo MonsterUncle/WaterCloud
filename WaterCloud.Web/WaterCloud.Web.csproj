@@ -13,6 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Areas\SystemSecurity\Views\OpenJobs\Details.cshtml" />
+    <None Include="Areas\SystemSecurity\Views\OpenJobs\Form.cshtml" />
+    <None Include="Areas\SystemSecurity\Views\OpenJobs\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="iTextSharp.LGPLv2.Core.Fix" Version="1.4.3" />
