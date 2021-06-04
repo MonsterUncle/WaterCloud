@@ -13,18 +13,19 @@ using WaterCloud.Domain;
 
 namespace WaterCloud.Service.CommonService
 {
-    public class DatabaseTableSqlServerService : RepositoryBase, IDatabaseTableService
+    public class DatabaseTableSqlServerService : IDatabaseTableService
     {
-        public DatabaseTableSqlServerService(IDbContext context) : base(context)
+        private IUnitOfWork _unitOfWork;
+        public DatabaseTableSqlServerService(IUnitOfWork unitOfWork)
         {
-
+            _unitOfWork = unitOfWork;
         }
         #region 获取数据
         public async Task<List<TableInfo>> GetTableList(string tableName)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT id Id,name TableName FROM sysobjects WHERE (xtype = 'u' or xtype='V') order by name");
-            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list =await _unitOfWork.FindList<TableInfo>(strSql.ToString());
             if (!tableName.IsEmpty())
             {
                 list = list.Where(p => p.TableName.Contains(tableName));
@@ -45,7 +46,7 @@ namespace WaterCloud.Service.CommonService
                 parameter.Add(new DbParam("@TableName", '%' + tableName + '%'));
             }
 
-            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
+            IEnumerable<TableInfo> list =await _unitOfWork.FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
             pagination.records = list.Count();
             var tempData = list.OrderByDescending(a=>a.CreateTime).Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows).AsQueryable().ToList();
             await SetTableDetail(tempData);
@@ -71,7 +72,7 @@ namespace WaterCloud.Service.CommonService
                                   ORDER BY b.colid");
             var parameter = new List<DbParam>();
             parameter.Add(new DbParam("@TableName", tableName));
-            var list =await FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
+            var list =await _unitOfWork.FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
             return list.ToList();
         }
         #endregion
@@ -101,7 +102,7 @@ namespace WaterCloud.Service.CommonService
                                            AND sysindexkeys.indid = sysindexes.indid 
                                            AND syscolumns.colid = sysindexkeys.colid";
 
-            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list =await _unitOfWork.FindList<TableInfo>(strSql.ToString());
             return list.ToList();
         }
 

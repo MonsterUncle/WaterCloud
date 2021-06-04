@@ -12,6 +12,8 @@ using System;
 using System.Threading.Tasks;
 using Chloe;
 using System.IO;
+using WaterCloud.DataBase;
+using WaterCloud.DataBase;
 using WaterCloud.Service.SystemManage;
 
 namespace WaterCloud.Service.SystemOrganize
@@ -19,9 +21,9 @@ namespace WaterCloud.Service.SystemOrganize
     public class DutyService : DataFilterService<RoleEntity>, IDenpendency
     {
         private SystemSetService setApp;
-        public DutyService(IDbContext context) :base(context)
+        public DutyService(IUnitOfWork unitOfWork) :base(unitOfWork)
         {
-            setApp = new SystemSetService(context);
+            setApp = new SystemSetService(unitOfWork);
         }
         /// <summary>
         /// 缓存操作类
@@ -98,7 +100,7 @@ namespace WaterCloud.Service.SystemOrganize
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (uniwork.IQueryable<UserEntity>(a => a.F_DutyId == keyValue).Count() > 0)
+            if (unitwork.IQueryable<UserEntity>(a => a.F_DutyId == keyValue).Count() > 0)
             {
                 throw new Exception("岗位使用中，无法删除");
             }
@@ -178,7 +180,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 item.Create();
             }
-            await uniwork.Insert(filterList);
+            await unitwork.Insert(filterList);
         }
     }
 }

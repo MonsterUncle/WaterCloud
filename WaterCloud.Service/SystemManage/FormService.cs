@@ -7,6 +7,7 @@ using Chloe;
 using WaterCloud.Domain.SystemManage;
 using Serenity.Data;
 using WaterCloud.Domain.SystemOrganize;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -19,7 +20,7 @@ namespace WaterCloud.Service.SystemManage
     {
         private string cacheKey = "watercloud_formdata_";
         
-        public FormService(IDbContext context) : base(context)
+        public FormService(DataBase.IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         #region 获取数据

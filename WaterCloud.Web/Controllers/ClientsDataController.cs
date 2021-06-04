@@ -214,7 +214,7 @@ namespace WaterCloud.Web.Controllers
                 var data =await this.GetQuickModuleList();
                 return Content(data.ToJson());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Content("");
             }

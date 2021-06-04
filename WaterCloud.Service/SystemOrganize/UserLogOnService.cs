@@ -8,6 +8,7 @@ using Chloe;
 using System;
 using System.Threading.Tasks;
 using WaterCloud.Code;
+using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service.SystemOrganize
@@ -19,7 +20,7 @@ namespace WaterCloud.Service.SystemOrganize
         /// </summary>
 
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
-        public UserLogOnService(IDbContext context) : base(context)
+        public UserLogOnService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
 

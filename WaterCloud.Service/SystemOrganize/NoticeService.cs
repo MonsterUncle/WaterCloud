@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WaterCloud.Code;
 using System.Threading.Tasks;
+using WaterCloud.DataBase;
 using Chloe;
 
 namespace WaterCloud.Service.SystemOrganize
@@ -25,7 +26,7 @@ namespace WaterCloud.Service.SystemOrganize
         /// </summary>
 
         private string cacheKey = "watercloud_noticedata_";
-        public NoticeService(IDbContext context) : base(context)
+        public NoticeService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public async Task<List<NoticeEntity>> GetList(string keyword)

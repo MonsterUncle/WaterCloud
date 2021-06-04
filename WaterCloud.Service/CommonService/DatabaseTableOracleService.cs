@@ -13,11 +13,12 @@ using WaterCloud.Domain;
 
 namespace WaterCloud.Service.CommonService
 {
-    public class DatabaseTableOracleService : RepositoryBase, IDatabaseTableService
+    public class DatabaseTableOracleService : IDatabaseTableService
     {
-        public DatabaseTableOracleService(IDbContext context) : base(context)
+        private IUnitOfWork _unitOfWork;
+        public DatabaseTableOracleService(IUnitOfWork unitOfWork)
         {
-
+            _unitOfWork = unitOfWork;
         }
         #region 获取数据
         public async Task<List<TableInfo>> GetTableList(string tableName)
@@ -25,7 +26,7 @@ namespace WaterCloud.Service.CommonService
             StringBuilder strSql = new StringBuilder();
             //select TABLE_NAME Id,TABLE_NAME from user_tab_comments utc where utc.table_type='TABLE'
             strSql.Append(@"select a.TABLE_NAME TableName,b.CREATED CreateTime from sys.user_tables a left join user_objects b on b.object_name=upper(a.TABLE_NAME) where a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'");
-            IEnumerable<TableInfo> list = await FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list = await _unitOfWork.FindList<TableInfo>(strSql.ToString());
             if (!tableName.IsEmpty())
             {
                 list = list.Where(p => p.TableName.Contains(tableName));
@@ -46,7 +47,7 @@ namespace WaterCloud.Service.CommonService
                 parameter.Add(new DbParam(":TableName", '%' + tableName + '%'));
             }
 
-            IEnumerable<TableInfo> list = await FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
+            IEnumerable<TableInfo> list = await _unitOfWork.FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
             pagination.records = list.Count();
             var tempData = list.OrderByDescending(a => a.CreateTime).Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows).AsQueryable().ToList();
             await SetTableDetail(tempData);
@@ -77,7 +78,7 @@ namespace WaterCloud.Service.CommonService
 
             var parameter = new List<DbParam>();
             parameter.Add(new DbParam(":TableName", tableName));
-            var list = await FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
+            var list = await _unitOfWork.FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
             return list.ToList();
         }
         #endregion
@@ -107,7 +108,7 @@ namespace WaterCloud.Service.CommonService
 　　                                  And a.Owner = b.Owner 　　
 　　                                  And a.table_name = b.table_name AND a.table_name not like '%$%' and a.table_name not like '%LOGMNR%'";
 
-            IEnumerable<TableInfo> list = await FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list = await _unitOfWork.FindList<TableInfo>(strSql.ToString());
             return list.ToList();
         }
 

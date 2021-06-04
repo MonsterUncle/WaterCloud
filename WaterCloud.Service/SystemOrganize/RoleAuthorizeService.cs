@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Domain.SystemManage;
+using WaterCloud.DataBase;
 using Chloe;
 
 namespace WaterCloud.Service.SystemOrganize
@@ -29,13 +30,13 @@ namespace WaterCloud.Service.SystemOrganize
         /// </summary>
 
         private string cacheKey = "watercloud_authorizeurldata_";// +权限
-        public RoleAuthorizeService(IDbContext context) : base(context)
+        public RoleAuthorizeService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            moduleApp = new ModuleService(context);
-            moduleButtonApp = new ModuleButtonService(context);
-            moduleFieldsApp = new ModuleFieldsService(context);
-            userApp = new UserService(context);
-            roleApp = new RoleService(context);
+            moduleApp = new ModuleService(unitOfWork);
+            moduleButtonApp = new ModuleButtonService(unitOfWork);
+            moduleFieldsApp = new ModuleFieldsService(unitOfWork);
+            userApp = new UserService(unitOfWork);
+            roleApp = new RoleService(unitOfWork);
         }
 
         public async Task<List<RoleAuthorizeEntity>> GetList(string ObjectId)
@@ -57,7 +58,7 @@ namespace WaterCloud.Service.SystemOrganize
                 var rolelist = roleId.Split(',');
                 var moduledata =await moduleApp.GetList();
                 moduledata = moduledata.Where(a => a.F_IsMenu == true && a.F_EnabledMark == true).ToList();
-                var role =uniwork.IQueryable<RoleEntity>(a=>rolelist.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
+                var role =unitwork.IQueryable<RoleEntity>(a=>rolelist.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
                 if (role.Count==0)
                 {
                     return data;

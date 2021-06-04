@@ -26,9 +26,9 @@ namespace WaterCloud.Service.SystemOrganize
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         //获取类名
         
-        public UserService(IDbContext context) : base(context)
+        public UserService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            syssetApp = new SystemSetService(context);
+            syssetApp = new SystemSetService(unitOfWork);
         }
 
         public async Task<List<UserExtend>> GetLookList(SoulPage<UserExtend> pagination, string keyword)
@@ -52,8 +52,8 @@ namespace WaterCloud.Service.SystemOrganize
             }
             query = GetDataPrivilege("u", "", query);
             var data = await repository.OrderList(query, pagination);
-            var roles = uniwork.IQueryable<RoleEntity>().ToList();
-            var orgs = uniwork.IQueryable<OrganizeEntity>().ToList();
+            var roles = unitwork.IQueryable<RoleEntity>().ToList();
+            var orgs = unitwork.IQueryable<OrganizeEntity>().ToList();
             foreach (var item in data)
             {
                 string[] roleIds = item.F_RoleId.Split(',');
@@ -71,8 +71,8 @@ namespace WaterCloud.Service.SystemOrganize
                 cachedata = cachedata.Where(t => t.F_Account.Contains(keyword) || t.F_RealName.Contains(keyword) || t.F_MobilePhone.Contains(keyword));
             }
             var data = cachedata.OrderBy(t => t.F_Account).ToList();
-            var roles = uniwork.IQueryable<RoleEntity>().ToList();
-            var orgs = uniwork.IQueryable<OrganizeEntity>().ToList();
+            var roles = unitwork.IQueryable<RoleEntity>().ToList();
+            var orgs = unitwork.IQueryable<OrganizeEntity>().ToList();
             foreach (var item in data)
             {
                 string[] roleIds = item.F_RoleId.Split(',');
@@ -158,12 +158,12 @@ namespace WaterCloud.Service.SystemOrganize
             if (cachedata.F_RoleId != null)
             {
                 temp = cachedata.F_RoleId.Split(',');
-                cachedata.F_RoleName = string.Join(",", uniwork.IQueryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                cachedata.F_RoleName = string.Join(",", unitwork.IQueryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
             if (cachedata.F_DepartmentId != null)
             {
                 temp = cachedata.F_DepartmentId.Split(',');
-                cachedata.F_DepartmentName = string.Join(",", uniwork.IQueryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                cachedata.F_DepartmentName = string.Join(",", unitwork.IQueryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
 
             return cachedata;
@@ -175,21 +175,21 @@ namespace WaterCloud.Service.SystemOrganize
             if (cachedata.F_RoleId != null)
             {
                 temp = cachedata.F_RoleId.Split(',');
-                cachedata.F_RoleName = string.Join(",", uniwork.IQueryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                cachedata.F_RoleName = string.Join(",", unitwork.IQueryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
             if (cachedata.F_DepartmentId != null)
             {
                 temp = cachedata.F_DepartmentId.Split(',');
-                cachedata.F_DepartmentName = string.Join(",", uniwork.IQueryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                cachedata.F_DepartmentName = string.Join(",", unitwork.IQueryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
             }
             return GetFieldsFilterData(cachedata);
         }
         public async Task DeleteForm(string keyValue)
         {
-            uniwork.BeginTrans();
+            unitwork.BeginTrans();
             await repository.Delete(t => t.F_Id == keyValue);
-            await uniwork.Delete<UserLogOnEntity>(t => t.F_UserId == keyValue);
-            uniwork.Commit();
+            await unitwork.Delete<UserLogOnEntity>(t => t.F_UserId == keyValue);
+            unitwork.Commit();
             await CacheHelper.Remove(cacheKey + keyValue);
             await CacheHelper.Remove(cacheKey + "list");
         }
@@ -211,7 +211,7 @@ namespace WaterCloud.Service.SystemOrganize
                 userLogOnEntity.F_LogOnCount = 0;
                 await CacheHelper.Remove(cacheKey + "list");
             }
-            uniwork.BeginTrans();
+            unitwork.BeginTrans();
             if (!string.IsNullOrEmpty(keyValue))
             {
                 await repository.Update(userEntity);
@@ -223,9 +223,9 @@ namespace WaterCloud.Service.SystemOrganize
                 userLogOnEntity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                 userLogOnEntity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userLogOnEntity.F_UserPassword, 32).ToLower(), userLogOnEntity.F_UserSecretkey).ToLower(), 32).ToLower();
                 await repository.Insert(userEntity);
-                await uniwork.Insert(userLogOnEntity);
+                await unitwork.Insert(userLogOnEntity);
             }
-            uniwork.Commit();
+            unitwork.Commit();
         }
         public async Task UpdateForm(UserEntity userEntity)
         {
@@ -261,7 +261,7 @@ namespace WaterCloud.Service.SystemOrganize
                     if (userLogOnEntity==null)
                     {
                         userLogOnEntity = new OperatorUserInfo();
-                        UserLogOnEntity entity =await uniwork.FindEntity<UserLogOnEntity>(userEntity.F_Id);
+                        UserLogOnEntity entity =await unitwork.FindEntity<UserLogOnEntity>(userEntity.F_Id);
                         userLogOnEntity.F_UserPassword = entity.F_UserPassword;
                         userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
                         userLogOnEntity.F_AllowEndTime = entity.F_AllowEndTime;
@@ -288,7 +288,7 @@ namespace WaterCloud.Service.SystemOrganize
                         if (userEntity.F_Account != GlobalContext.SystemConfig.SysemUserCode)
                         {
                             var list = userEntity.F_RoleId.Split(',');
-                            var rolelist =uniwork.IQueryable<RoleEntity>(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
+                            var rolelist =unitwork.IQueryable<RoleEntity>(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
                             if (rolelist.Count() == 0)
                             {
                                 throw new Exception("账户未设置权限,请联系管理员");

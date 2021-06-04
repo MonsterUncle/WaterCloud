@@ -5,6 +5,7 @@ using WaterCloud.Code;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Domain.SystemManage;
 using Chloe;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -16,7 +17,7 @@ namespace WaterCloud.Service.SystemOrganize
     public class DataPrivilegeRuleService : DataFilterService<DataPrivilegeRuleEntity>,IDenpendency
     {
         private string cacheKey = "watercloud_dataprivilegeruledata_";
-        public DataPrivilegeRuleService(IDbContext context) : base(context)
+        public DataPrivilegeRuleService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         //获取类名
@@ -66,7 +67,7 @@ namespace WaterCloud.Service.SystemOrganize
         #region 提交数据
         public async Task SubmitForm(DataPrivilegeRuleEntity entity, string keyValue)
         {
-            entity.F_ModuleCode = (await uniwork.FindEntity<ModuleEntity>(entity.F_ModuleId)).F_EnCode;
+            entity.F_ModuleCode = (await unitwork.FindEntity<ModuleEntity>(entity.F_ModuleId)).F_EnCode;
             if (string.IsNullOrEmpty(keyValue))
             {
                 entity.F_DeleteMark = false;

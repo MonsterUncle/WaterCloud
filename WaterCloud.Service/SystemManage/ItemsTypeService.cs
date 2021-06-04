@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WaterCloud.Code;
 using Chloe;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -22,7 +23,7 @@ namespace WaterCloud.Service.SystemManage
         private string cacheKey = "watercloud_itemsdata_";// 字典分类
         //获取类名
         
-        public ItemsTypeService(IDbContext context) : base(context)
+        public ItemsTypeService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public async Task<List<ItemsEntity>> GetList()

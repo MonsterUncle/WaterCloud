@@ -11,12 +11,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using WaterCloud.Code;
 using Chloe;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
     public class AreaService : DataFilterService<AreaEntity>, IDenpendency
     {
-        public AreaService(IDbContext context) : base(context)
+        public AreaService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         //获取类名

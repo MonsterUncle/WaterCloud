@@ -22,10 +22,10 @@ namespace WaterCloud.CodeGenerator
         private string quickcacheKey = "watercloud_quickmoduledata_";
         private string initcacheKey = "watercloud_init_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
-        private IRepositoryBase uniwork;
-        public SingleTableTemplate(IDbContext context)
+        private IUnitOfWork unitwork;
+        public SingleTableTemplate(IUnitOfWork unitOfWork)
         {
-            uniwork = new RepositoryBase(context);
+            unitwork = unitOfWork;
         }
         #region GetBaseConfig
         public BaseConfigModel GetBaseConfig(string path, string username, string tableName, string tableDescription, List<ColumnField> tableFieldList)
@@ -194,6 +194,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("using System.Threading.Tasks;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using WaterCloud.Code;");
+            sb.AppendLine("using WaterCloud.DataBase;");
             sb.AppendLine("using Chloe;");
             sb.AppendLine("using WaterCloud.Domain." + baseConfigModel.OutputConfig.OutputModule + ";");
             sb.AppendLine();
@@ -209,7 +210,7 @@ namespace WaterCloud.CodeGenerator
             {
                 sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
             }
-            sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + "(IDbContext context) : base(context)");
+            sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + "(IUnitOfWork unitOfWork) : base(unitOfWork)");
             sb.AppendLine("        {");
             sb.AppendLine("        }");
 
@@ -1272,7 +1273,7 @@ namespace WaterCloud.CodeGenerator
                 string menuUrl = "/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + baseConfigModel.FileConfig.PageIndexName;
                 ModuleEntity moduleEntity = new ModuleEntity();
                 moduleEntity.Create();
-                moduleEntity.F_Layers = (await uniwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Layers + 1; ;
+                moduleEntity.F_Layers = (await unitwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Layers + 1; ;
                 moduleEntity.F_FullName = baseConfigModel.FileConfig.ClassDescription;
                 moduleEntity.F_UrlAddress = menuUrl;
                 moduleEntity.F_EnCode = baseConfigModel.FileConfig.ClassPrefix;
@@ -1285,9 +1286,9 @@ namespace WaterCloud.CodeGenerator
                 moduleEntity.F_AllowDelete = false;
                 moduleEntity.F_EnabledMark = true;
                 moduleEntity.F_DeleteMark = false;
-                moduleEntity.F_ParentId = (await uniwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Id;
-                var parentModule = await uniwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
-                moduleEntity.F_SortCode = (uniwork.IQueryable<ModuleEntity>(a => a.F_ParentId == parentModule.F_Id).Max(a => a.F_SortCode) ?? 0) + 1;
+                moduleEntity.F_ParentId = (await unitwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule)).F_Id;
+                var parentModule = await unitwork.FindEntity<ModuleEntity>(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
+                moduleEntity.F_SortCode = (unitwork.IQueryable<ModuleEntity>(a => a.F_ParentId == parentModule.F_Id).Max(a => a.F_SortCode) ?? 0) + 1;
                 List<ModuleButtonEntity> moduleButtonList = new List<ModuleButtonEntity>();
                 int sort = 0;
                 foreach (var item in baseConfigModel.PageIndex.ButtonList)
@@ -1340,14 +1341,14 @@ namespace WaterCloud.CodeGenerator
                     moduleFields.F_DeleteMark = false;
                     moduleFieldsList.Add(moduleFields);
                 }
-                uniwork.BeginTrans();
-                await uniwork.Insert(moduleEntity);
-                await uniwork.Insert(moduleButtonList);
+                unitwork.BeginTrans();
+                await unitwork.Insert(moduleEntity);
+                await unitwork.Insert(moduleButtonList);
                 if (moduleFieldsList.Count > 0)
                 {
-                    await uniwork.Insert(moduleFieldsList);
+                    await unitwork.Insert(moduleFieldsList);
                 }
-                uniwork.Commit();
+                unitwork.Commit();
                 await CacheHelper.Remove(fieldscacheKey + "list");
                 await CacheHelper.Remove(buttoncacheKey + "list");
                 await CacheHelper.Remove(cacheKey + "list");

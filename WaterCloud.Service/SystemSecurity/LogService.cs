@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using WaterCloud.Service.SystemManage;
 using System.Linq;
 using Chloe;
+using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
 
 namespace WaterCloud.Service.SystemSecurity
@@ -24,9 +25,9 @@ namespace WaterCloud.Service.SystemSecurity
         private ModuleService moduleservice;
         //获取类名
         
-        public LogService(IDbContext context) : base(context)
+        public LogService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            moduleservice = new ModuleService(context);
+            moduleservice = new ModuleService(unitOfWork);
         }
         public async Task<List<LogEntity>> GetList(Pagination pagination, int timetype, string keyword="")
         {
@@ -167,7 +168,7 @@ namespace WaterCloud.Service.SystemSecurity
                 logEntity.Create();
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
-                    uniwork.Rollback();
+                    unitwork.Rollback();
                     await repository.Insert(logEntity);
                 }
                 else

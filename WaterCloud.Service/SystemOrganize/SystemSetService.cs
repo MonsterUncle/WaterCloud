@@ -20,9 +20,9 @@ namespace WaterCloud.Service.SystemOrganize
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
         private string cacheKeyUser = "watercloud_userdata_";
         
-        public SystemSetService(IDbContext context) : base(context)
+        public SystemSetService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _context = context;
+            _context = unitOfWork.GetDbContext();
         }
         #region 获取数据
         public async Task<List<SystemSetEntity>> GetList(string keyword = "")
@@ -96,7 +96,7 @@ namespace WaterCloud.Service.SystemOrganize
         #region 提交数据
         public async Task SubmitForm(SystemSetEntity entity, string keyValue)
         {
-            IRepositoryBase ibs = new RepositoryBase(_context);
+            IUnitOfWork ibs = new UnitOfWork(_context);
             if (string.IsNullOrEmpty(keyValue))
             {
                 entity.F_DeleteMark = false;
@@ -112,23 +112,23 @@ namespace WaterCloud.Service.SystemOrganize
                 if (currentuser.UserId != GlobalContext.SystemConfig.SysemUserId || currentuser.UserId == null)
                 {
                     var setentity = await repository.FindEntity(entity.F_Id);
-                    uniwork.BeginTrans();
-                    var user = uniwork.IQueryable<UserEntity>(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).FirstOrDefault();
-                    var userinfo = uniwork.IQueryable<UserLogOnEntity>(a => a.F_UserId == user.F_Id).FirstOrDefault();
+                    unitwork.BeginTrans();
+                    var user = unitwork.IQueryable<UserEntity>(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true).FirstOrDefault();
+                    var userinfo = unitwork.IQueryable<UserLogOnEntity>(a => a.F_UserId == user.F_Id).FirstOrDefault();
                     userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                     userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
-                    await uniwork.Update<UserEntity>(a => a.F_Id == user.F_Id, a => new UserEntity
+                    await unitwork.Update<UserEntity>(a => a.F_Id == user.F_Id, a => new UserEntity
                     {
                         F_Account = entity.F_AdminAccount
                     });
                     await CacheHelper.Remove(cacheKeyUser + user.F_Id);
-                    await uniwork.Update<UserLogOnEntity>(a => a.F_Id == userinfo.F_Id, a => new UserLogOnEntity
+                    await unitwork.Update<UserLogOnEntity>(a => a.F_Id == userinfo.F_Id, a => new UserLogOnEntity
                     {
                         F_UserPassword = userinfo.F_UserPassword,
                         F_UserSecretkey = userinfo.F_UserSecretkey
                     });
-                    await uniwork.Update(entity);
-                    uniwork.Commit();
+                    await unitwork.Update(entity);
+                    unitwork.Commit();
                 }
                 else
                 {

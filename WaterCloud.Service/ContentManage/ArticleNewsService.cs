@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using WaterCloud.Code;
 using WaterCloud.Domain.ContentManage;
 using Chloe;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.ContentManage
 {
@@ -15,7 +16,7 @@ namespace WaterCloud.Service.ContentManage
     /// </summary>
     public class ArticleNewsService : DataFilterService<ArticleNewsEntity>, IDenpendency
     {
-        public ArticleNewsService(IDbContext context) : base(context)
+        public ArticleNewsService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
 
         }

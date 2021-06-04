@@ -25,15 +25,15 @@ namespace WaterCloud.Service.SystemSecurity
     public class OpenJobsService : IDenpendency
     {
         private IRepositoryBase<OpenJobEntity> repository;
-        private IRepositoryBase uniwork;
+        private IUnitOfWork uniwork;
         private IScheduler _scheduler;
         private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
         private HttpWebClient _httpClient;
 
-        public OpenJobsService(IDbContext context, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory, IHttpClientFactory httpClient)
+        public OpenJobsService(IUnitOfWork unitOfWork, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory, IHttpClientFactory httpClient)
         {
-            repository = new RepositoryBase<OpenJobEntity>(context);
-            uniwork = new RepositoryBase(context);
+            repository = new RepositoryBase<OpenJobEntity>(unitOfWork);
+            uniwork = unitOfWork;
             _scheduler = schedulerFactory.GetScheduler().GetAwaiter().GetResult();
             _scheduler.JobFactory = iocJobfactory;
             _httpClient = new HttpWebClient(httpClient);
@@ -143,7 +143,7 @@ namespace WaterCloud.Service.SystemSecurity
                         .Contains(typeof(IJobTask)))).ToArray();
                     string filename = dbJobEntity.F_FileName;
                     var implementType = types.Where(x => x.IsClass && x.FullName == filename).FirstOrDefault();
-                    var obj = System.Activator.CreateInstance(implementType, repository.GetDbContext());       // 创建实例(带参数)
+                    var obj = System.Activator.CreateInstance(implementType, repository.Db);       // 创建实例(带参数)
                     MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
                     object[] parameters = null;
                     result = ((Task<AlwaysResult>)method.Invoke(obj, parameters)).GetAwaiter().GetResult();     // 调用方法，参数为空

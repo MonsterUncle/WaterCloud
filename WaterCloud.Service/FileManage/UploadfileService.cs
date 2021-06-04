@@ -6,6 +6,7 @@ using WaterCloud.Code;
 using Chloe;
 using WaterCloud.Domain.FileManage;
 using WaterCloud.Domain.SystemOrganize;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.FileManage
 {
@@ -18,7 +19,7 @@ namespace WaterCloud.Service.FileManage
     {
         private string cacheKey = "watercloud_uploadfiledata_";
         
-        public UploadfileService(IDbContext context) : base(context)
+        public UploadfileService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         #region 获取数据
@@ -46,7 +47,7 @@ namespace WaterCloud.Service.FileManage
             foreach (var item in data)
             {
                 string[] departments = item.F_OrganizeId.Split(',');
-                item.F_OrganizeName = string.Join(',', uniwork.IQueryable<OrganizeEntity>(a => departments.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
+                item.F_OrganizeName = string.Join(',', unitwork.IQueryable<OrganizeEntity>(a => departments.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
             }
             return data;
         }
@@ -73,7 +74,7 @@ namespace WaterCloud.Service.FileManage
             //权限过滤
             query = GetDataPrivilege("u", "", query);
             var data = await repository.OrderList(query, pagination);
-            var orgs = uniwork.IQueryable<OrganizeEntity>().ToList();
+            var orgs = unitwork.IQueryable<OrganizeEntity>().ToList();
             foreach (var item in data)
             {
                 string[] departments = item.F_OrganizeId.Split(',');

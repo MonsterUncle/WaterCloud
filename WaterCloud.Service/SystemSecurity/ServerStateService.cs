@@ -20,11 +20,11 @@ namespace WaterCloud.Service.SystemSecurity
     public class ServerStateService:IDenpendency
     {
         private IRepositoryBase<ServerStateEntity> repository;
-        private IRepositoryBase uniwork;
-        public ServerStateService(IDbContext context)
+        private IUnitOfWork uniwork;
+        public ServerStateService(IUnitOfWork unitOfWork)
         {
-            repository = new RepositoryBase<ServerStateEntity>(context);
-            uniwork = new RepositoryBase(context);
+            repository = new RepositoryBase<ServerStateEntity>(unitOfWork);
+            uniwork = unitOfWork;
         }
         public async Task<List<ServerStateEntity>> GetList(int timetype)
         {

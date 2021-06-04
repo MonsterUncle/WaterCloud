@@ -11,6 +11,7 @@ using System;
 using System.Threading.Tasks;
 using WaterCloud.Code;
 using Chloe;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemSecurity
 {
@@ -23,7 +24,7 @@ namespace WaterCloud.Service.SystemSecurity
         private string cacheKey = "watercloud_filterip_";// IP过滤
         //获取类名
         
-        public FilterIPService(IDbContext context) : base(context)
+        public FilterIPService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public async Task<List<FilterIPEntity>> GetList(string keyword)

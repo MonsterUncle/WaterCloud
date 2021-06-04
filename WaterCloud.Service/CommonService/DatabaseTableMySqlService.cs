@@ -15,18 +15,19 @@ using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Service.CommonService
 {
-    public class DatabaseTableMySqlService : RepositoryBase, IDatabaseTableService
+    public class DatabaseTableMySqlService: IDatabaseTableService
     {
-        public DatabaseTableMySqlService(IDbContext context) : base(context)
+        private IUnitOfWork _unitOfWork;
+        public DatabaseTableMySqlService(IUnitOfWork unitOfWork)
         {
-
+            _unitOfWork = unitOfWork;
         }
         #region 获取数据
         public async Task<List<TableInfo>> GetTableList(string tableName)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT table_name TableName FROM information_schema.tables WHERE table_schema='" + GetDatabase() + "' AND (table_type='base table' or table_type='BASE TABLE' or table_type='view')");
-            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list =await _unitOfWork.FindList<TableInfo>(strSql.ToString());
             if (!string.IsNullOrEmpty(tableName))
             {
                 list = list.Where(p => p.TableName.Contains(tableName)).ToList();
@@ -47,7 +48,7 @@ namespace WaterCloud.Service.CommonService
                 parameter.Add(new DbParam("@TableName", '%' + tableName + '%'));
             }
 
-            IEnumerable<TableInfo> list =await FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
+            IEnumerable<TableInfo> list =await _unitOfWork.FindList<TableInfo>(strSql.ToString(), parameter.ToArray());
             pagination.records = list.Count();
             var tempData = list.OrderByDescending(a=>a.CreateTime).Skip(pagination.rows * (pagination.page - 1)).Take(pagination.rows).AsQueryable().ToList();
             await SetTableDetail(tempData);
@@ -67,7 +68,7 @@ namespace WaterCloud.Service.CommonService
                              FROM information_schema.columns WHERE table_schema='" + GetDatabase() + "' AND table_name=@TableName");
             var parameter = new List<DbParam>();
             parameter.Add(new DbParam("@TableName", tableName));
-            var list =await FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
+            var list =await _unitOfWork.FindList<TableFieldInfo>(strSql.ToString(), parameter.ToArray());
             return list;
         }
         #endregion
@@ -109,8 +110,8 @@ namespace WaterCloud.Service.CommonService
         private async Task SyncSqlServerTable<T>() where T : class, new()
         {
             string sqlServerConnectionString = "192.168.1.17;Initial Catalog = WaterCloudNetDb;User ID=sa;Password=admin@12345;MultipleActiveResultSets=true";
-            var list = this.IQueryable<T>().ToList();
-            var context=new RepositoryBase(sqlServerConnectionString, "System.Data.SqlClient");
+            var list = _unitOfWork.IQueryable<T>().ToList();
+            var context=new UnitOfWork(sqlServerConnectionString, "System.Data.SqlClient");
             await context.Delete<T>(p => true);
             foreach (var item in list)
             {
@@ -131,7 +132,7 @@ namespace WaterCloud.Service.CommonService
 	                                 LEFT JOIN INFORMATION_SCHEMA.`KEY_COLUMN_USAGE` as t2 on t1.TABLE_NAME = t2.TABLE_NAME
                                      WHERE t1.TABLE_SCHEMA='" + GetDatabase() + "' AND t2.TABLE_SCHEMA='" + GetDatabase() + "'";
 
-            IEnumerable<TableInfo> list =await  FindList<TableInfo>(strSql.ToString());
+            IEnumerable<TableInfo> list =await _unitOfWork.FindList<TableInfo>(strSql.ToString());
             return list.ToList();
         }
 

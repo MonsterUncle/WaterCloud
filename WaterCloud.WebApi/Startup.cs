@@ -68,6 +68,7 @@ namespace WaterCloud.WebApi
             {
                 return DBContexHelper.Contex();
             });
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             //代替HttpContext.Current
             services.AddHttpContextAccessor();
             services.AddHttpClient();

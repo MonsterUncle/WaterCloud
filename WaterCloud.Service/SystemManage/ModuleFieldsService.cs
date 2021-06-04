@@ -6,6 +6,7 @@ using WaterCloud.Code;
 using WaterCloud.Domain.SystemManage;
 using Chloe;
 using WaterCloud.Domain.SystemOrganize;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -21,7 +22,7 @@ namespace WaterCloud.Service.SystemManage
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
         //获取类名
 
-        public ModuleFieldsService(IDbContext context) : base(context)
+        public ModuleFieldsService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         #region 获取数据
@@ -95,7 +96,7 @@ namespace WaterCloud.Service.SystemManage
             string[] ArrayId = ids.Split(',');
             var data = await this.GetList();
             List<ModuleFieldsEntity> entitys = new List<ModuleFieldsEntity>();
-            var module = await uniwork.FindEntity<ModuleEntity>(a => a.F_Id == moduleId);
+            var module = await unitwork.FindEntity<ModuleEntity>(a => a.F_Id == moduleId);
             if (string.IsNullOrEmpty(module.F_UrlAddress) || module.F_Target != "iframe")
             {
                 throw new Exception("框架页才能创建按钮");
@@ -115,7 +116,7 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<ModuleFieldsEntity>> GetListByRole(string roleid)
         {
-            var moduleList = uniwork.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 3).Select(a => a.F_ItemId).ToList();
+            var moduleList = unitwork.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 3).Select(a => a.F_ItemId).ToList();
             var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
             return query.OrderByDesc(a => a.F_CreatorTime).ToList();
         }

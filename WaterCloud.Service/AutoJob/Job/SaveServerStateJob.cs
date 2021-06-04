@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service.SystemSecurity;
+using WaterCloud.DataBase;
+
 
 namespace WaterCloud.Service.AutoJob
 {
@@ -12,10 +14,10 @@ namespace WaterCloud.Service.AutoJob
     {
         private IWebHostEnvironment _hostingEnvironment;
         private ServerStateService _server;
-        public SaveServerStateJob(IDbContext context)
+        public SaveServerStateJob(IUnitOfWork unitOfWork)
         {
             _hostingEnvironment = GlobalContext.HostingEnvironment;
-            _server = new ServerStateService(context);
+            _server = new ServerStateService(unitOfWork);
          }
         public async Task<AlwaysResult> Start()
         {

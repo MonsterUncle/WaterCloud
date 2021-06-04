@@ -21,34 +21,36 @@ namespace WaterCloud.DataBase
     /// <typeparam name="TEntity"></typeparam>
     public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class, new()
     {
-        private IDbContext _context;
-        public IDbContext GetDbContext()
-        {           
-            return _context;
-        }
-        public RepositoryBase(string ConnectStr, string providerName)
+        private readonly DbContext _dbBase;
+        private readonly IUnitOfWork _unitOfWork;
+        public IDbContext Db
         {
-            _context = DBContexHelper.Contex(ConnectStr, providerName);
+            get { return _dbBase; }
         }
-        public RepositoryBase(IDbContext context)
+        public IUnitOfWork unitOfWork
         {
-            _context = context;
+            get { return _unitOfWork; }
+        }
+        public RepositoryBase(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+            _dbBase = unitOfWork.GetDbContext();
         }
         public async Task<TEntity> Insert(TEntity entity)
         {
-           return await _context.InsertAsync(entity);
+           return await _dbBase.InsertAsync(entity);
         }
         public async Task<int> Insert(List<TEntity> entitys)
         {
             int i = 1;
-            await _context.InsertRangeAsync(entitys);
+            await _dbBase.InsertRangeAsync(entitys);
             return i;
         }
         public async Task<int> Update(TEntity entity)
         {
             //反射对比更新对象变更
-            TEntity newentity = _context.QueryByKey<TEntity>(entity);
-            _context.TrackEntity(newentity);
+            TEntity newentity = _dbBase.QueryByKey<TEntity>(entity);
+            _dbBase.TrackEntity(newentity);
             PropertyInfo[] newprops = newentity.GetType().GetProperties();
             PropertyInfo[] props = entity.GetType().GetProperties();
             foreach (PropertyInfo prop in props)
@@ -64,47 +66,47 @@ namespace WaterCloud.DataBase
                     }
                 }
             }
-            return await _context.UpdateAsync(newentity);
+            return await _dbBase.UpdateAsync(newentity);
         }
         public async Task<int> Update(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> content)
         {
-            return await _context.UpdateAsync(predicate, content);
+            return await _dbBase.UpdateAsync(predicate, content);
         }
         public async Task<int> Delete(TEntity entity)
         {
-            return await _context.DeleteAsync(entity);
+            return await _dbBase.DeleteAsync(entity);
         }
         public async Task<int> Delete(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _context.DeleteAsync(predicate);
+            return await _dbBase.DeleteAsync(predicate);
         }
         public async Task<TEntity> FindEntity(object keyValue)
         {
-            return await _context.QueryByKeyAsync<TEntity>(keyValue);
+            return await _dbBase.QueryByKeyAsync<TEntity>(keyValue);
         }
         public async Task<TEntity> FindEntity(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Query<TEntity>().FirstOrDefault(predicate);
+            return _dbBase.Query<TEntity>().FirstOrDefault(predicate);
         }
         public IQuery<TEntity> IQueryable(LockType locktype = LockType.NoLock)
         {
-            return _context.Query<TEntity>(locktype);
+            return _dbBase.Query<TEntity>(locktype);
         }
         public IQuery<TEntity> IQueryable(Expression<Func<TEntity, bool>> predicate, LockType locktype = LockType.NoLock)
         {
-            return _context.Query<TEntity>(locktype).Where(predicate);
+            return _dbBase.Query<TEntity>(locktype).Where(predicate);
         }
         public async Task<List<TEntity>> FindList(string strSql)
         {
-            return await _context.SqlQueryAsync<TEntity>(strSql);
+            return await _dbBase.SqlQueryAsync<TEntity>(strSql);
         }
         public async Task<List<TEntity>> FindList(string strSql, DbParam[] dbParameter)
         {
-            return await _context.SqlQueryAsync<TEntity>(strSql, dbParameter);
+            return await _dbBase.SqlQueryAsync<TEntity>(strSql, dbParameter);
         }
         public async Task<List<TEntity>> FindList(Pagination pagination)
         {
-            var tempData = _context.Query<TEntity>();
+            var tempData = _dbBase.Query<TEntity>();
             pagination.records = tempData.Count();
             tempData = tempData.OrderBy(pagination.sort);
             tempData = tempData.TakePage(pagination.page, pagination.rows);
@@ -112,7 +114,7 @@ namespace WaterCloud.DataBase
         }
         public async Task<List<TEntity>> FindList(Expression<Func<TEntity, bool>> predicate, Pagination pagination)
         {
-            var tempData = _context.Query<TEntity>().Where(predicate);
+            var tempData = _dbBase.Query<TEntity>().Where(predicate);
             pagination.records = tempData.Count();
             tempData = tempData.OrderBy(pagination.sort);
             tempData = tempData.TakePage(pagination.page, pagination.rows);
@@ -151,7 +153,7 @@ namespace WaterCloud.DataBase
             var cachedata =await CacheHelper.Get<List<TEntity>>(cacheKey);
             if (cachedata == null || cachedata.Count() == 0)
             {
-                cachedata = _context.Query<TEntity>().ToList();
+                cachedata = _dbBase.Query<TEntity>().ToList();
                 await CacheHelper.Set(cacheKey, cachedata);
             }
             return cachedata;
@@ -161,7 +163,7 @@ namespace WaterCloud.DataBase
             var cachedata = await CacheHelper.Get<TEntity>(cacheKey + keyValue);
             if (cachedata == null)
             {
-                cachedata = await _context.QueryByKeyAsync<TEntity>(keyValue);
+                cachedata = await _dbBase.QueryByKeyAsync<TEntity>(keyValue);
                 if (cachedata != null)
                 {
                     await CacheHelper.Set(cacheKey + keyValue, cachedata);

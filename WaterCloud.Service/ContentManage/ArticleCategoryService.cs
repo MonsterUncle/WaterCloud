@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using WaterCloud.Code;
 using WaterCloud.Domain.ContentManage;
 using Chloe;
+using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.ContentManage
 {
@@ -15,7 +16,7 @@ namespace WaterCloud.Service.ContentManage
     /// </summary>
     public class ArticleCategoryService : DataFilterService<ArticleCategoryEntity>, IDenpendency
     {
-        public ArticleCategoryService(IDbContext context) : base(context)
+        public ArticleCategoryService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
 
         }
@@ -94,7 +95,7 @@ namespace WaterCloud.Service.ContentManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            if (uniwork.IQueryable<ArticleNewsEntity>(a=> ids.Contains(a.F_CategoryId)).Count()>0)
+            if (unitwork.IQueryable<ArticleNewsEntity>(a=> ids.Contains(a.F_CategoryId)).Count()>0)
             {
                 throw new Exception("新闻类别使用中，无法删除");
             }

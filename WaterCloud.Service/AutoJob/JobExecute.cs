@@ -44,9 +44,9 @@ namespace WaterCloud.Service.AutoJob
                 {
                     jobData = context.JobDetail.JobDataMap;
                     jobId = jobData["F_Id"].ToString();
-                    using (IDbContext _context= DBContexHelper.Contex())
+                    using (IUnitOfWork unitOfWork = new UnitOfWork(DBContexHelper.Contex()))
                     {
-                        OpenJobsService autoJobService = new OpenJobsService(_context, _schedulerFactory,_iocJobfactory, _httpClient);
+                        OpenJobsService autoJobService = new OpenJobsService(unitOfWork, _schedulerFactory,_iocJobfactory, _httpClient);
                         // 获取数据库中的任务
                         dbJobEntity = await autoJobService.GetForm(jobId);
                         if (dbJobEntity != null)
@@ -69,7 +69,7 @@ namespace WaterCloud.Service.AutoJob
                                     log.F_JobId = jobId;
                                     log.F_JobName = dbJobEntity.F_JobName;
                                     log.F_CreatorTime = now;
-                                    _context.Session.BeginTransaction();
+                                    unitOfWork.BeginTrans();
                                     AlwaysResult result = new AlwaysResult();
                                     if (dbJobEntity.F_JobType == 0)
                                     {
@@ -82,7 +82,7 @@ namespace WaterCloud.Service.AutoJob
                                             .Contains(typeof(IJobTask)))).ToArray();
                                         string filename = dbJobEntity.F_FileName;
                                         var implementType = types.Where(x => x.IsClass && x.FullName == filename).FirstOrDefault();
-                                        var obj = System.Activator.CreateInstance(implementType, _context);       // 创建实例(带参数)
+                                        var obj = System.Activator.CreateInstance(implementType, unitOfWork);       // 创建实例(带参数)
                                         MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
                                         object[] parameters = null;
                                         var temp = (Task<AlwaysResult>)method.Invoke(obj, parameters);     // 调用方法，参数为空
@@ -119,20 +119,20 @@ namespace WaterCloud.Service.AutoJob
                                         }
                                     }
                                     #endregion
-                                    await _context.UpdateAsync<OpenJobEntity>(t => t.F_Id == dbJobEntity.F_Id,t => new OpenJobEntity
+                                    await unitOfWork.Update<OpenJobEntity>(t => t.F_Id == dbJobEntity.F_Id,t => new OpenJobEntity
                                     {
                                         F_LastRunTime = now
                                     });
                                     string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
                                     if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                                     {
-                                        _context.Insert(log);
+                                        await unitOfWork.Insert(log);
                                     }
                                     else
                                     {
                                         await HandleLogHelper.HSetAsync(log.F_JobId, log.F_Id, log);
                                     }
-                                    _context.Session.CommitTransaction();
+                                    unitOfWork.Commit();
                                 }
                             }
                         }
