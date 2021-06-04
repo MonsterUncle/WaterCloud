@@ -61,7 +61,7 @@ namespace WaterCloud.WebApi
                 services.AddSingleton(redisDB1);
                 services.AddSingleton(redisDB2);
             }
-            //连续guid初始化,示例IDGenerator.NextId()
+            //连续guid初始化,示例IDGen.NextId()
             services.AddSingleton<IDistributedIDGenerator, SequentialGuidIDGenerator>();
             //注入数据库连接
             services.AddScoped<Chloe.IDbContext>((serviceProvider) =>
