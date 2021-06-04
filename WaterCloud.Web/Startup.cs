@@ -69,7 +69,7 @@ namespace WaterCloud.Web
                 services.AddSingleton(redisDB1);
                 services.AddSingleton(redisDB2);
             }
-            //连续guid初始化,示例IDGenerator.NextId()
+            //连续guid初始化,示例IDGen.NextId()
             services.AddSingleton<IDistributedIDGenerator, SequentialGuidIDGenerator>();
 			//更新数据库管理员和主系统,获取所有数据库连接
             #region 数据库模式
