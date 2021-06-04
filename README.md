@@ -2,7 +2,7 @@
 <p></p>
 
 <p align="center">
-<img src="http://106.75.169.226:5000/icon/favicon.ico" height="80"/>
+<img src="https://images.gitee.com/uploads/images/2021/0528/215200_accc4311_7353672.jpeg" height="80"/>
 </p>
 <div align="center">
 
@@ -14,7 +14,7 @@
 ![](https://img.shields.io/badge/SqlSugar-5.0.3.0-blue)
 ![](https://img.shields.io/badge/layui-2.6.7-blue)
 
-![](https://img.shields.io/badge/Quartz-3.2.4-brightgreen)
+![](https://img.shields.io/badge/Quartz-3.3.2-brightgreen)
 ![](https://img.shields.io/badge/Autofac-6.2.0-brightgreen)
 ![](https://img.shields.io/badge/SignalR-4.2.2-brightgreen)
 </div>
