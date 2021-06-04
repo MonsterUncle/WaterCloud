@@ -10,18 +10,23 @@
 // 开源协议：Apache-2.0（https://gitee.com/dotnetchina/Furion/blob/master/LICENSE）
 // -----------------------------------------------------------------------------
 
+using System;
+
 namespace WaterCloud.Code
 {
     /// <summary>
-    /// 分布式 ID 生成器
+    /// 连续 GUID 配置
     /// </summary>
-    public interface IDistributedIDGenerator
+    public sealed class SequentialGuidSettings
     {
         /// <summary>
-        /// 生成逻辑
+        /// 当前时间
         /// </summary>
-        /// <param name="idGeneratorOptions"></param>
-        /// <returns></returns>
-        object Create(object idGeneratorOptions = default);
+        public DateTimeOffset TimeNow { get; set; } = DateTimeOffset.UtcNow;
+
+        /// <summary>
+        /// LittleEndianBinary 16 格式化
+        /// </summary>
+        public bool LittleEndianBinary16Format { get; set; } = false;
     }
 }

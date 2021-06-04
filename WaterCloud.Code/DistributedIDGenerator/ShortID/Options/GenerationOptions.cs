@@ -10,18 +10,29 @@
 // 开源协议：Apache-2.0（https://gitee.com/dotnetchina/Furion/blob/master/LICENSE）
 // -----------------------------------------------------------------------------
 
+
 namespace WaterCloud.Code
 {
     /// <summary>
-    /// 分布式 ID 生成器
+    /// 短 ID 生成配置选项
     /// </summary>
-    public interface IDistributedIDGenerator
+    public class GenerationOptions
     {
         /// <summary>
-        /// 生成逻辑
+        /// 是否使用数字
+        /// <para>默认 false</para>
         /// </summary>
-        /// <param name="idGeneratorOptions"></param>
-        /// <returns></returns>
-        object Create(object idGeneratorOptions = default);
+        public bool UseNumbers { get; set; }
+
+        /// <summary>
+        /// 是否使用特殊字符
+        /// <para>默认 true</para>
+        /// </summary>
+        public bool UseSpecialCharacters { get; set; } = true;
+
+        /// <summary>
+        /// 设置短 ID 长度
+        /// </summary>
+        public int Length { get; set; } = RandomHelpers.GenerateNumberInRange(Constants.MinimumAutoLength, Constants.MaximumAutoLength);
     }
 }

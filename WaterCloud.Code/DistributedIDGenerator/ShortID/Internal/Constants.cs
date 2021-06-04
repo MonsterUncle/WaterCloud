@@ -13,15 +13,23 @@
 namespace WaterCloud.Code
 {
     /// <summary>
-    /// 分布式 ID 生成器
+    /// 短 ID 约束
     /// </summary>
-    public interface IDistributedIDGenerator
+    internal static class Constants
     {
         /// <summary>
-        /// 生成逻辑
+        /// 最小长度
         /// </summary>
-        /// <param name="idGeneratorOptions"></param>
-        /// <returns></returns>
-        object Create(object idGeneratorOptions = default);
+        public const int MinimumAutoLength = 8;
+
+        /// <summary>
+        /// 最大长度
+        /// </summary>
+        public const int MaximumAutoLength = 14;
+
+        /// <summary>
+        /// 最小可选字符长度
+        /// </summary>
+        public const int MinimumCharacterSetLength = 50;
     }
 }

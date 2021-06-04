@@ -10,18 +10,37 @@
 // 开源协议：Apache-2.0（https://gitee.com/dotnetchina/Furion/blob/master/LICENSE）
 // -----------------------------------------------------------------------------
 
+using System;
+
 namespace WaterCloud.Code
 {
     /// <summary>
-    /// 分布式 ID 生成器
+    /// 随机数帮助类
     /// </summary>
-    public interface IDistributedIDGenerator
+    internal static class RandomHelpers
     {
         /// <summary>
-        /// 生成逻辑
+        /// 随机数对象
         /// </summary>
-        /// <param name="idGeneratorOptions"></param>
+        private static readonly Random Random = new();
+
+        /// <summary>
+        /// 线程锁
+        /// </summary>
+        private static readonly object ThreadLock = new();
+
+        /// <summary>
+        /// 生成线程安全的范围内随机数
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
         /// <returns></returns>
-        object Create(object idGeneratorOptions = default);
+        public static int GenerateNumberInRange(int min, int max)
+        {
+            lock (ThreadLock)
+            {
+                return Random.Next(min, max);
+            }
+        }
     }
 }
