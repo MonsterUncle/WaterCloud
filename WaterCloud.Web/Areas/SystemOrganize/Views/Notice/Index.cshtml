@@ -38,14 +38,7 @@
                     field: 'F_CreatorUserName', title: '创建人', Width: 100, sort: true, filter: true,
                 },
                 {
-                    field: 'F_CreatorTime', title: '创建时间', minWidth: 120, sort: true, filter: { type: 'date[yyyy-MM-dd]' },
-                    templet: function (d) {
-                        if (d.F_CreatorTime) {
-                            var time = new Date(d.F_CreatorTime);
-                            return time.Format("yyyy-MM-dd");
-                        }
-                        return '';
-                    }
+                    field: 'F_CreatorTime', title: '创建时间', minWidth: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                 },
                 { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right'}
             ]]
