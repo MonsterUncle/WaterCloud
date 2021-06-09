@@ -41,9 +41,9 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<List<RoleAuthorizeEntity>> GetList(string ObjectId)
         {
-            var cachedata =await repository.CheckCacheList(cacheKey + "list");
-            cachedata = cachedata.Where(t => t.F_ObjectId == ObjectId).ToList();
-            return cachedata.ToList();
+            var data = repository.IQueryable();
+            data = data.Where(t => t.F_ObjectId == ObjectId);
+            return data.ToList();
         }
         public async Task<List<ModuleEntity>> GetMenuList(string roleId)
         {
@@ -63,7 +63,7 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     return data;
                 }
-                var authorizedata =(await repository.CheckCacheList(cacheKey + "list")).Where(t => rolelist.Contains(t.F_ObjectId) && t.F_ItemType == 1).GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
+                var authorizedata = repository.IQueryable().Where(t => rolelist.Contains(t.F_ObjectId) && t.F_ItemType == 1).Distinct().ToList();
                 foreach (var item in authorizedata)
                 {
                     ModuleEntity moduleEntity = moduledata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic==false);
@@ -91,7 +91,7 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     return data;
                 }
-                var authorizedata = (await repository.CheckCacheList(cacheKey + "list")).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 2).ToList();
+                var authorizedata = ( repository.IQueryable()).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 2).ToList();
                 foreach (var item in authorizedata)
                 {
                     ModuleButtonEntity moduleButtonEntity = buttondata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false);
@@ -119,7 +119,7 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     return data;
                 }
-                var authorizedata = (await repository.CheckCacheList(cacheKey + "list")).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 3).ToList();
+                var authorizedata = ( repository.IQueryable()).Where(t => t.F_ObjectId == roleId && t.F_ItemType == 3).ToList();
                 foreach (var item in authorizedata)
                 {
                     ModuleFieldsEntity moduleFieldsEntity = fieldsdata.Where(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false).FirstOrDefault();
@@ -141,14 +141,14 @@ namespace WaterCloud.Service.SystemOrganize
             }
             var authorizeurldata = new List<AuthorizeActionModel>();
             var rolelist = user.F_RoleId.Split(',');
-            var cachedata =await CacheHelper.Get<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey + "authorize_list");
-            if (cachedata == null)
+            var data =await CacheHelper.Get<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey + "list");
+            if (data == null)
             {
-                cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
+                data = new Dictionary<string, List<AuthorizeActionModel>>();
             }
             foreach (var roles in rolelist)
             {
-                if (!cachedata.ContainsKey(roles))
+                if (!data.ContainsKey(roles))
                 {
                     var moduledata = await moduleApp.GetList();
                     moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
@@ -188,15 +188,15 @@ namespace WaterCloud.Service.SystemOrganize
                         }
                         authdata.AddRange(moduledata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_Id, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
                         authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
-                        cachedata.Add(roles, authdata);
+                        data.Add(roles, authdata);
                         authorizeurldata.AddRange(authdata);
-                        await CacheHelper.Remove(cacheKey + "authorize_list");
-                        await CacheHelper.Set(cacheKey + "authorize_list", cachedata);
+                        await CacheHelper.Remove(cacheKey + "list");
+                        await CacheHelper.Set(cacheKey + "list", data);
                     }
                 }
                 else
                 {
-                    authorizeurldata.AddRange(cachedata[roles]);
+                    authorizeurldata.AddRange(data[roles]);
                 }
             }
             var module = authorizeurldata.Find(t => t.F_UrlAddress == action);
@@ -225,14 +225,14 @@ namespace WaterCloud.Service.SystemOrganize
             }
             var authorizeurldata = new List<AuthorizeActionModel>();
             var rolelist = user.F_RoleId.Split(',');
-            var cachedata = await CacheHelper.Get<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + "authorize_list");
-            if (cachedata == null)
+            var data = await CacheHelper.Get<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + "list");
+            if (data == null)
             {
-                cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
+                data = new Dictionary<string, List<AuthorizeActionModel>>();
             }
             foreach (var roles in rolelist)
             {
-                if (!cachedata.ContainsKey(roles))
+                if (!data.ContainsKey(roles))
                 {
                     var moduledata = await moduleApp.GetList();
                     moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
@@ -272,15 +272,15 @@ namespace WaterCloud.Service.SystemOrganize
                         }
                         authdata.AddRange(moduledata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_Id, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
                         authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
-                        cachedata.Add(roles, authdata);
+                        data.Add(roles, authdata);
                         authorizeurldata.AddRange(authdata);
-                        await CacheHelper.Remove(cacheKey + "authorize_list");
-                        await CacheHelper.Set(cacheKey + "authorize_list", cachedata);
+                        await CacheHelper.Remove(cacheKey + "list");
+                        await CacheHelper.Set(cacheKey + "list", data);
                     }
                 }
                 else
                 {
-                    authorizeurldata.AddRange(cachedata[roles]);
+                    authorizeurldata.AddRange(data[roles]);
                 }
             }
             if (authorizeurldata.Count>0)

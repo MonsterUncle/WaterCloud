@@ -16,9 +16,7 @@ namespace WaterCloud.Service.SystemOrganize
     public class SystemSetService : DataFilterService<SystemSetEntity>, IDenpendency
     {
         private IDbContext _context;
-        private string cacheKey = "watercloud_systemsetdata_";
         private string cacheKeyOperator = "watercloud_operator_";// +登录者token
-        private string cacheKeyUser = "watercloud_userdata_";
         
         public SystemSetService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -27,13 +25,13 @@ namespace WaterCloud.Service.SystemOrganize
         #region 获取数据
         public async Task<List<SystemSetEntity>> GetList(string keyword = "")
         {
-            var cachedata = await repository.CheckCacheList(cacheKey + "list");
+            var data =  repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                cachedata = cachedata.Where(t => t.F_CompanyName.Contains(keyword) || t.F_ProjectName.Contains(keyword)).ToList();
+                data = data.Where(t => t.F_CompanyName.Contains(keyword) || t.F_ProjectName.Contains(keyword));
             }
-            return cachedata.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
+            return data.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<SystemSetEntity>> GetLookList(string keyword = "")
@@ -50,22 +48,22 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<SystemSetEntity> GetFormByHost(string host)
         {
-            var cachedata = await repository.CheckCacheList(cacheKey + "list");
+            var data =  repository.IQueryable();
             if (!string.IsNullOrEmpty(host))
             {
                 //此处需修改
-                cachedata = cachedata.Where(t => t.F_HostUrl.Contains(host)).ToList();
+                data = data.Where(t => t.F_HostUrl.Contains(host));
             }
             else
             {
-                cachedata = cachedata.Where(t => t.F_Id==GlobalContext.SystemConfig.SysemMasterProject).ToList();
+                data = data.Where(t => t.F_Id==GlobalContext.SystemConfig.SysemMasterProject);
             }
-            if (cachedata.Count==0)
+            if (data.Count()==0)
             {
-                cachedata = await repository.CheckCacheList(cacheKey + "list");
-                cachedata = cachedata.Where(t => t.F_Id == GlobalContext.SystemConfig.SysemMasterProject).ToList();
+                data =  repository.IQueryable();
+                data = data.Where(t => t.F_Id == GlobalContext.SystemConfig.SysemMasterProject);
             }
-            return cachedata.Where(t => t.F_DeleteMark == false).FirstOrDefault();
+            return data.Where(t => t.F_DeleteMark == false).FirstOrDefault();
         }
 
         public async Task<List<SystemSetEntity>> GetLookList(Pagination pagination,string keyword = "")
@@ -82,15 +80,15 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<SystemSetEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         #endregion
 
         public async Task<SystemSetEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data = await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
 
         #region 提交数据
@@ -103,7 +101,6 @@ namespace WaterCloud.Service.SystemOrganize
                 //此处需修改
                 entity.Create();
                 await repository.Insert(entity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
@@ -121,7 +118,6 @@ namespace WaterCloud.Service.SystemOrganize
                     {
                         F_Account = entity.F_AdminAccount
                     });
-                    await CacheHelper.Remove(cacheKeyUser + user.F_Id);
                     await unitwork.Update<UserLogOnEntity>(a => a.F_Id == userinfo.F_Id, a => new UserLogOnEntity
                     {
                         F_UserPassword = userinfo.F_UserPassword,
@@ -136,8 +132,6 @@ namespace WaterCloud.Service.SystemOrganize
                     entity.F_AdminPassword = null;
                 }
                 await ibs.Update(entity);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             var set=await ibs.FindEntity<SystemSetEntity>(entity.F_Id);
             var tempkey= ibs.IQueryable<UserEntity>().Where(a => a.F_IsAdmin == true && a.F_OrganizeId == keyValue).FirstOrDefault().F_Id;
@@ -151,8 +145,6 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task DeleteForm(string keyValue)
         {
             await repository.Delete(t => t.F_Id == keyValue);
-            await CacheHelper.Remove(cacheKey + keyValue);
-            await CacheHelper.Remove(cacheKey + "list");
         }
         #endregion
 

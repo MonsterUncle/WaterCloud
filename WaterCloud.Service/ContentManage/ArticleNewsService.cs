@@ -20,18 +20,17 @@ namespace WaterCloud.Service.ContentManage
         {
 
         }
-        private string cacheKey = "watercloud_cms_articlenewsdata_";
         
         #region 获取数据
         public async Task<List<ArticleNewsEntity>> GetList(string keyword = "")
         {
-            var cachedata = await repository.CheckCacheList(cacheKey + "list");
+            var data = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                cachedata = cachedata.Where(t => t.F_Title.Contains(keyword) || t.F_Tags.Contains(keyword)).ToList();
+                data = data.Where(t => t.F_Title.Contains(keyword) || t.F_Tags.Contains(keyword));
             }
-            return cachedata.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
+            return data.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<ArticleNewsEntity>> GetLookList(SoulPage<ArticleNewsEntity> pagination, string keyword = "", string CategoryId="")
@@ -168,15 +167,12 @@ namespace WaterCloud.Service.ContentManage
                 //此处需修改
                 entity.Create();
                 await repository.Insert(entity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                     //此处需修改
                 entity.Modify(keyValue); 
                 await repository.Update(entity);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
         }
 
@@ -184,11 +180,6 @@ namespace WaterCloud.Service.ContentManage
         {
             var ids = keyValue.Split(',');
             await repository.Delete(t => ids.Contains(t.F_Id));
-            foreach (var item in ids)
-            {
-                await CacheHelper.Remove(cacheKey + item);
-            }
-            await CacheHelper.Remove(cacheKey + "list");
         }
         #endregion
 

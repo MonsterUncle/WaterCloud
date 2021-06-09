@@ -17,23 +17,15 @@ namespace WaterCloud.Service.SystemSecurity
 {
     public class FilterIPService : DataFilterService<FilterIPEntity>, IDenpendency
     {
-        /// <summary>
-        /// 缓存操作类
-        /// </summary>
-
-        private string cacheKey = "watercloud_filterip_";// IP过滤
-        //获取类名
-        
         public FilterIPService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public async Task<List<FilterIPEntity>> GetList(string keyword)
         {
-            var list = new List<FilterIPEntity>();
-            list = await repository.CheckCacheList(cacheKey + "list");
+            var list =  repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(t => t.F_StartIP.Contains(keyword) || t.F_EndIP.Contains(keyword)).ToList();
+                list = list.Where(t => t.F_StartIP.Contains(keyword) || t.F_EndIP.Contains(keyword));
 
             }
             return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList();
@@ -51,23 +43,18 @@ namespace WaterCloud.Service.SystemSecurity
         }
         public async Task<FilterIPEntity> GetLookForm(string keyValue)
         {
-            var cachedata =await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data =await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
         public async Task<FilterIPEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(",");
             await repository.Delete(t => ids.Contains(t.F_Id));
-			foreach (var item in ids)
-			{
-                await CacheHelper.Remove(cacheKey + item);
-            }
-            await CacheHelper.Remove(cacheKey + "list");
         }
         public async Task<bool> CheckIP(string ip)
         {
@@ -109,14 +96,12 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 filterIPEntity.Modify(keyValue);
                 await repository.Update(filterIPEntity);
-                await CacheHelper.Remove(cacheKey + keyValue);
             }
             else
             {
                 filterIPEntity.Create();
                 await repository.Insert(filterIPEntity);
             }
-            await CacheHelper.Remove(cacheKey + "list");
         }
     }
 }

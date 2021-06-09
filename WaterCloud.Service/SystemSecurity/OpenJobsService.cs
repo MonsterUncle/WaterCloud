@@ -65,17 +65,17 @@ namespace WaterCloud.Service.SystemSecurity
         }
         public async Task<List<OpenJobEntity>> GetList(string keyword = "")
         {
-            var cachedata = repository.IQueryable();
+            var data = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                cachedata = cachedata.Where(t => t.F_JobName.Contains(keyword));
+                data = data.Where(t => t.F_JobName.Contains(keyword));
             }
-            return cachedata.Where(a => a.F_DeleteMark == false).ToList();
+            return data.Where(a => a.F_DeleteMark == false).ToList();
         }
         public async Task<OpenJobEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.FindEntity(keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         public async Task SubmitForm(OpenJobEntity entity, string keyValue)
         {

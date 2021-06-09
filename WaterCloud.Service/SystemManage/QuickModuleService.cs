@@ -20,11 +20,6 @@ namespace WaterCloud.Service.SystemManage
 {
     public class QuickModuleService:DataFilterService<QuickModuleEntity> ,IDenpendency
     {
-        /// <summary>
-        /// »º´æ²Ù×÷Àà
-        /// </summary>
-
-        private string cacheKey = "watercloud_quickmoduledata_";
         public QuickModuleService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
@@ -155,13 +150,6 @@ namespace WaterCloud.Service.SystemManage
             await repository.Delete(t => t.F_CreatorUserId == currentuser.UserId);
             await repository.Insert(list);
             unitwork.Commit();
-            var data =await CacheHelper.Get<Dictionary<string, List<QuickModuleExtend>>>(cacheKey + "list");
-            if (data != null&&data.ContainsKey(currentuser.UserId))
-            {
-                data.Remove(currentuser.UserId);
-            }
-            await CacheHelper.Remove(cacheKey + "list");
-            await CacheHelper.Set(cacheKey + "list",data);
         }
 
     }

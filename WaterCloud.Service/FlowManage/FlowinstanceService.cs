@@ -25,7 +25,6 @@ namespace WaterCloud.Service.FlowManage
 	public class FlowinstanceService : DataFilterService<FlowinstanceEntity>, IDenpendency
     {
         private IHttpClientFactory _httpClientFactory;
-        private string cacheKey = "watercloud_flowinstancedata_";
         private MessageService messageApp;
         private string flowCreator;
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
@@ -37,13 +36,13 @@ namespace WaterCloud.Service.FlowManage
         #region 获取数据
         public async Task<List<FlowinstanceEntity>> GetList(string keyword = "")
         {
-            var cachedata = await repository.CheckCacheList(cacheKey + "list");
+            var data = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                cachedata = cachedata.Where(t => t.F_Code.Contains(keyword) || t.F_CustomName.Contains(keyword)).ToList();
+                data = data.Where(t => t.F_Code.Contains(keyword) || t.F_CustomName.Contains(keyword));
             }
-            return cachedata.Where(a => a.F_EnabledMark == true).OrderByDescending(t => t.F_CreatorTime).ToList();
+            return data.Where(a => a.F_EnabledMark == true).OrderByDesc(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<FlowInstanceOperationHistory>> QueryHistories(string keyValue)
@@ -103,15 +102,15 @@ namespace WaterCloud.Service.FlowManage
 
         public async Task<FlowinstanceEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         #endregion
 
         public async Task<FlowinstanceEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data = await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
 
         #region 获取各种节点的流程审核者
@@ -703,8 +702,6 @@ namespace WaterCloud.Service.FlowManage
             {
                 await NodeVerification(entity);
             }
-            await CacheHelper.Remove(cacheKey + entity.F_FlowInstanceId);
-            await CacheHelper.Remove(cacheKey + "list");
         }
         public async Task CreateInstance(FlowinstanceEntity entity)
         {
@@ -841,7 +838,6 @@ namespace WaterCloud.Service.FlowManage
             }
             await messageApp.SubmitForm(msg);
             unitwork.Commit();
-            await CacheHelper.Remove(cacheKey + "list");
         }
         public async Task UpdateInstance(FlowinstanceEntity entity)
         {
@@ -972,10 +968,6 @@ namespace WaterCloud.Service.FlowManage
             }
             await messageApp.SubmitForm(msg);
             unitwork.Commit();
-            await CacheHelper.Remove(cacheKey + entity.F_Id);
-            await CacheHelper.Remove(cacheKey + "list");
-            msg.F_ClickRead = false;
-            msg.F_KeyValue = entity.F_Id;
         }
 
         public async Task DeleteForm(string keyValue)
@@ -985,11 +977,6 @@ namespace WaterCloud.Service.FlowManage
             {
                 F_EnabledMark = false
             });
-            foreach (var item in ids)
-            {
-                await CacheHelper.Remove(cacheKey + item);
-            }
-            await CacheHelper.Remove(cacheKey + "list");
         }
         #endregion
 

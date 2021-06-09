@@ -25,12 +25,7 @@ namespace WaterCloud.Service.SystemOrganize
         /// <summary>
         /// 缓存操作类
         /// </summary>
-
-        private string cacheKey = "watercloud_roledata_";
         private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
-        private string initcacheKey = "watercloud_init_";
-        //获取类名
-        
         public RoleService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             moduleApp = new ModuleService(unitOfWork);
@@ -41,12 +36,12 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<List<RoleExtend>> GetList( string keyword = "")
         {
-            var cachedata = GetQuery();
+            var data = GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
-                cachedata = cachedata.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
+                data = data.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
             }
-            return cachedata.ToList();
+            return data.ToList();
         }
         public async Task<List<RoleExtend>> GetLookList(SoulPage<RoleExtend> pagination, string keyword = "")
         {
@@ -75,13 +70,13 @@ namespace WaterCloud.Service.SystemOrganize
         }
         public async Task<RoleEntity> GetForm(string keyValue)
         {
-            var cachedata =await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data =await repository.FindEntity(keyValue);
+            return data;
         }
         public async Task<RoleEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data = await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
         private IQuery<RoleExtend> GetQuery()
         {
@@ -117,13 +112,7 @@ namespace WaterCloud.Service.SystemOrganize
             await repository.Delete(t => t.F_Id == keyValue);
             await unitwork.Delete<RoleAuthorizeEntity>(t => t.F_ObjectId == keyValue);
             unitwork.Commit();
-            await CacheHelper.Remove(cacheKey + keyValue);
-            await CacheHelper.Remove(cacheKey + "list");
             await CacheHelper.Remove(authorizecacheKey + "list");
-            await CacheHelper.Remove(authorizecacheKey + "authorize_list");
-            await CacheHelper.Remove(initcacheKey + "modulebutton_list");
-            await CacheHelper.Remove(initcacheKey + "modulefields_list");
-            await CacheHelper.Remove(initcacheKey + "list");
         }
         public async Task SubmitForm(RoleEntity roleEntity, string[] permissionIds,string[] permissionfieldsIds, string keyValue)
         {
@@ -188,13 +177,7 @@ namespace WaterCloud.Service.SystemOrganize
             await unitwork.Delete<RoleAuthorizeEntity>(t => t.F_ObjectId == roleEntity.F_Id);
             await unitwork.Insert(roleAuthorizeEntitys);
             unitwork.Commit();
-            await CacheHelper.Remove(cacheKey + keyValue);
-            await CacheHelper.Remove(cacheKey + "list");
             await CacheHelper.Remove(authorizecacheKey + "list");
-            await CacheHelper.Remove(authorizecacheKey + "authorize_list");
-            await CacheHelper.Remove(initcacheKey + "modulebutton_list");
-            await CacheHelper.Remove(initcacheKey + "modulefields_list");
-            await CacheHelper.Remove(initcacheKey + "list");
         }
     }
 }

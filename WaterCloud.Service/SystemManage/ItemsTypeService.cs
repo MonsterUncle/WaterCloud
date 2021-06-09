@@ -16,20 +16,14 @@ using WaterCloud.DataBase;
 namespace WaterCloud.Service.SystemManage
 {
     public class ItemsTypeService : DataFilterService<ItemsEntity>,IDenpendency
-    {
-        /// <summary>
-        /// 缓存操作类
-        /// </summary>
-        private string cacheKey = "watercloud_itemsdata_";// 字典分类
-        //获取类名
-        
+    {  
         public ItemsTypeService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public async Task<List<ItemsEntity>> GetList()
         {
-            var cachedata =await repository.CheckCacheList(cacheKey + "list");
-            return cachedata.Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
+            var data = repository.IQueryable();
+            return data.Where(a=>a.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToList();
         }
         public async Task<List<ItemsEntity>> GetLookList()
         {
@@ -39,14 +33,14 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<ItemsEntity> GetLookForm(string keyValue)
         {
-            var cachedata =await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data =await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
 
         }
         public async Task<ItemsEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
 
         }
         public async Task DeleteForm(string keyValue)
@@ -58,8 +52,6 @@ namespace WaterCloud.Service.SystemManage
             else
             {
                 await repository.Delete(t => t.F_Id == keyValue);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
         }
         public async Task SubmitForm(ItemsEntity itemsEntity, string keyValue)
@@ -68,8 +60,6 @@ namespace WaterCloud.Service.SystemManage
             {
                 itemsEntity.Modify(keyValue);
                 await repository.Update(itemsEntity);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
@@ -77,7 +67,6 @@ namespace WaterCloud.Service.SystemManage
                 itemsEntity.F_IsTree = false;
                 itemsEntity.Create();
                 await repository.Insert(itemsEntity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
         }
     }

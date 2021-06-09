@@ -17,20 +17,13 @@ namespace WaterCloud.Service.SystemOrganize
 {
     public class OrganizeService : DataFilterService<OrganizeEntity>, IDenpendency
     {
-        /// <summary>
-        /// 缓存操作类
-        /// </summary>
-
-        private string cacheKey = "watercloud_organizedata_";
-        //获取类名
-        
         public OrganizeService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public async Task<List<OrganizeEntity>> GetList()
         {
-            var cachedata =await repository.CheckCacheList(cacheKey + "list");
-            return cachedata.Where(a=>a.F_DeleteMark==false).ToList();
+            var data = repository.IQueryable();
+            return data.Where(a=>a.F_DeleteMark==false).ToList();
         }
         public async Task<List<OrganizeEntity>> GetLookList()
         {
@@ -40,13 +33,13 @@ namespace WaterCloud.Service.SystemOrganize
         }
         public async Task<OrganizeEntity> GetLookForm(string keyValue)
         {
-            var cachedata =await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data =await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
         public async Task<OrganizeEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         public async Task DeleteForm(string keyValue)
         {
@@ -61,8 +54,6 @@ namespace WaterCloud.Service.SystemOrganize
                     throw new Exception("组织使用中，无法删除");
                 }
                 await repository.Delete(t => t.F_Id == keyValue);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await  CacheHelper.Remove(cacheKey + "list");
             }
         }
         public async Task SubmitForm(OrganizeEntity organizeEntity, string keyValue)
@@ -71,8 +62,6 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 organizeEntity.Modify(keyValue);
                 await repository.Update(organizeEntity);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
@@ -81,7 +70,6 @@ namespace WaterCloud.Service.SystemOrganize
                 organizeEntity.F_DeleteMark = false;
                 organizeEntity.Create();
                 await repository.Insert(organizeEntity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
         }
     }

@@ -20,18 +20,16 @@ namespace WaterCloud.Service.ContentManage
         {
 
         }
-        private string cacheKey = "watercloud_cms_articlecategorydata_";
-        
         #region 获取数据
         public async Task<List<ArticleCategoryEntity>> GetList(string keyword = "")
         {
-            var cachedata = await repository.CheckCacheList(cacheKey + "list");
+            var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                cachedata = cachedata.Where(t => t.F_FullName.Contains(keyword) || t.F_Description.Contains(keyword)).ToList();
+                query = query.Where(t => t.F_FullName.Contains(keyword) || t.F_Description.Contains(keyword));
             }
-            return cachedata.Where(t => t.F_DeleteMark == false).OrderByDescending(t => t.F_CreatorTime).ToList();
+            return query.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
         }
 
         public async Task<List<ArticleCategoryEntity>> GetLookList(string keyword = "")
@@ -61,13 +59,13 @@ namespace WaterCloud.Service.ContentManage
 
         public async Task<ArticleCategoryEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var  data= await repository.FindEntity(keyValue);
+            return data;
         }
         public async Task<ArticleCategoryEntity> GetLookForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data = await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
         #endregion
 
@@ -80,15 +78,12 @@ namespace WaterCloud.Service.ContentManage
                 //此处需修改
                 entity.Create();
                 await repository.Insert(entity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                     //此处需修改
                 entity.Modify(keyValue); 
                 await repository.Update(entity);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
         }
 
@@ -100,11 +95,6 @@ namespace WaterCloud.Service.ContentManage
                 throw new Exception("新闻类别使用中，无法删除");
             }
             await repository.Delete(t => ids.Contains(t.F_Id));
-            foreach (var item in ids)
-            {
-                await CacheHelper.Remove(cacheKey + item);
-            }
-            await CacheHelper.Remove(cacheKey + "list");
         }
         #endregion
 

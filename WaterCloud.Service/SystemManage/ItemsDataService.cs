@@ -22,21 +22,18 @@ namespace WaterCloud.Service.SystemManage
         public ItemsDataService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
-        private string cacheKey = "watercloud_itemdetaildata_";
-        private string itemcacheKey = "watercloud_itemsdata_";
         //获取类名
         
         public async Task<List<ItemsDetailEntity>> GetList(string itemId = "", string keyword = "")
         {
-            var list = new List<ItemsDetailEntity>();
-            list = await repository.CheckCacheList(cacheKey + "list");
+            var list = repository.IQueryable();
             if (!string.IsNullOrEmpty(itemId))
             {
-                list = list.Where(t => t.F_ItemId == itemId).ToList();
+                list = list.Where(t => t.F_ItemId == itemId);
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword)).ToList();
+                list = list.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword));
             }
             return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
         }
@@ -56,27 +53,24 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {
-            var itemcachedata =await unitwork.CheckCacheList<ItemsEntity>(itemcacheKey + "list");
-            var item = itemcachedata.Find(a => a.F_EnCode == enCode);
-            var cachedata =await repository.CheckCacheList(cacheKey + "list");
-            cachedata = cachedata.Where(a => a.F_DeleteMark == false && a.F_EnabledMark == true && a.F_ItemId == item.F_Id).OrderBy(a => a.F_SortCode).ToList();
-            return cachedata;
+            var itemdata = unitwork.IQueryable<ItemsEntity>().ToList();
+            var item = itemdata.Find(a => a.F_EnCode == enCode);
+            var data = repository.IQueryable();
+            return data.Where(a => a.F_DeleteMark == false && a.F_EnabledMark == true && a.F_ItemId == item.F_Id).OrderBy(a => a.F_SortCode).ToList();
         }
         public async Task<ItemsDetailEntity> GetLookForm(string keyValue)
         {
-            var cachedata =await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data =await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
         public async Task<ItemsDetailEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         public async Task DeleteForm(string keyValue)
         {
             await repository.Delete(t => t.F_Id == keyValue);
-            await CacheHelper.Remove(cacheKey + keyValue);
-            await CacheHelper.Remove(cacheKey + "list");
         }
         public async Task SubmitForm(ItemsDetailEntity itemsDetailEntity, string keyValue)
         {
@@ -84,15 +78,12 @@ namespace WaterCloud.Service.SystemManage
             {
                 itemsDetailEntity.Modify(keyValue);
                 await repository.Update(itemsDetailEntity);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
                 itemsDetailEntity.F_DeleteMark = false;
                 itemsDetailEntity.Create();
                 await repository.Insert(itemsDetailEntity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
         }
     }

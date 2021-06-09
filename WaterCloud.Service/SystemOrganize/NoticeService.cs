@@ -19,23 +19,15 @@ namespace WaterCloud.Service.SystemOrganize
 {
     public class NoticeService: DataFilterService<NoticeEntity>,IDenpendency
     {
-        //获取类名
-        
-        /// <summary>
-        /// 缓存操作类
-        /// </summary>
-
-        private string cacheKey = "watercloud_noticedata_";
         public NoticeService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
         public async Task<List<NoticeEntity>> GetList(string keyword)
         {
-            List<NoticeEntity> list = new List<NoticeEntity>();
-            list = await repository.CheckCacheList(cacheKey + "list");
+            var list =  repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(t => t.F_Title.Contains(keyword) || t.F_Content.Contains(keyword)).ToList();
+                list = list.Where(t => t.F_Title.Contains(keyword) || t.F_Content.Contains(keyword));
             }
             //公告这里不控制
             //数据权限和缓存获取冲突
@@ -74,13 +66,13 @@ namespace WaterCloud.Service.SystemOrganize
         }
         public async Task<NoticeEntity> GetLookForm(string keyValue)
         {
-            var cachedata =await repository.CheckCache(cacheKey, keyValue);
-            return GetFieldsFilterData(cachedata);
+            var data =await repository.FindEntity(keyValue);
+            return GetFieldsFilterData(data);
         }
         public async Task<NoticeEntity> GetForm(string keyValue)
         {
-            var cachedata = await repository.CheckCache(cacheKey, keyValue);
-            return cachedata;
+            var data = await repository.FindEntity(keyValue);
+            return data;
         }
         public async Task SubmitForm(NoticeEntity entity, string keyValue)
         {
@@ -88,8 +80,6 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 entity.Modify(keyValue);
                 await repository.Update(entity);
-                await CacheHelper.Remove(cacheKey + keyValue);
-                await CacheHelper.Remove(cacheKey + "list");
             }
             else
             {
@@ -97,7 +87,6 @@ namespace WaterCloud.Service.SystemOrganize
                 entity.F_DeleteMark = false;
                 entity.Create();
                 await repository.Insert(entity);
-                await CacheHelper.Remove(cacheKey + "list");
             }
         }
 
@@ -105,11 +94,6 @@ namespace WaterCloud.Service.SystemOrganize
         {
             var ids = keyValue.Split(',');
             await repository.Delete(t => ids.Contains(t.F_Id));
-            foreach (var item in ids)
-            {
-                await CacheHelper.Remove(cacheKey + item);
-            }
-            await CacheHelper.Remove(cacheKey + "list");
         }
 
     }
