@@ -33,14 +33,10 @@
                 { field: 'F_StartIP', title: '起始IP', width: 150, sort: true},
                 { field: 'F_EndIP', title: '结束IP', width: 150, sort: true },
                 {
-                    field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true,
-                    templet: function (d) {
-                        if (d.F_CreatorTime) {
-                            var time = new Date(d.F_CreatorTime);
-                            return time.Format("yyyy-MM-dd");
-                        }
-                        return '';
-                    }
+                    field: 'F_EndTime', title: '到期时间', width: 160, sort: true
+                },
+                {
+                    field: 'F_CreatorTime', title: '创建时间', width: 160, sort: true
                 },
                 {
                     field: 'F_EnabledMark', title: '状态', width: 80, sort: true,

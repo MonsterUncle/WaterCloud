@@ -31,5 +31,6 @@ namespace WaterCloud.Domain.SystemSecurity
         public string F_LastModifyUserId { get; set; }
         public DateTime? F_DeleteTime { get; set; }
         public string F_DeleteUserId { get; set; }
+        public DateTime? F_EndTime { get; set; }
     }
 }

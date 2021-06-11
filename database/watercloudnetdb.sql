@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 17/05/2021 11:00:57
+ Date: 11/06/2021 15:43:31
 */
 
 SET NAMES utf8mb4;
@@ -22,266 +22,319 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `cms_articlecategory`;
 CREATE TABLE `cms_articlecategory`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键Id',
-  `F_FullName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类别名称',
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父级Id',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `F_FullName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '类别名称',
+  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '父级Id',
   `F_SortCode` int NOT NULL COMMENT '排序',
-  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '描述',
-  `F_LinkUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '链接地址',
-  `F_ImgUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片地址',
-  `F_SeoTitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'SEO标题',
-  `F_SeoKeywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'SEO关键字',
-  `F_SeoDescription` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'SEO描述',
+  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '描述',
+  `F_LinkUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '链接地址',
+  `F_ImgUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '图片地址',
+  `F_SeoTitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'SEO标题',
+  `F_SeoKeywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'SEO关键字',
+  `F_SeoDescription` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'SEO描述',
   `F_IsHot` tinyint NULL DEFAULT NULL COMMENT '是否热门',
   `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
   `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '删除标志',
   `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`F_Id`) USING BTREE,
+  UNIQUE INDEX `cms_articlecategory_key1`(`F_FullName`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cms_articlecategory
 -- ----------------------------
+INSERT INTO `cms_articlecategory` VALUES ('b2be2ea5-819e-485b-a277-26be5396db65', '222', '0', 9933, '222', '222', '22', '222', '22', '22', 0, 1, 0, '2020-06-23 16:29:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-29 17:25:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `cms_articlecategory` VALUES ('c71f577a-8c9b-409b-b21c-bb7081060338', '啊倒萨大大苏打大苏打撒大苏打啊实打实的阿德飒飒啊是', '0', 22222222, '222', 'http://www.baidu.com', 'http://www.baidu.com', '', '', '', 0, 1, 0, '2020-06-30 11:56:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-08-11 13:22:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for cms_articlenews
 -- ----------------------------
 DROP TABLE IF EXISTS `cms_articlenews`;
 CREATE TABLE `cms_articlenews`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章主键Id',
-  `F_CategoryId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别Id',
-  `F_Title` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
-  `F_LinkUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '链接地址',
-  `F_ImgUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片地址',
-  `F_SeoTitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'SEO标题',
-  `F_SeoKeywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'SEO关键字',
-  `F_SeoDescription` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'SEO描述',
-  `F_Tags` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '标签',
-  `F_Zhaiyao` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '摘要',
-  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
+  `F_Id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文章主键Id',
+  `F_CategoryId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '类别Id',
+  `F_Title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '标题',
+  `F_LinkUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '链接地址',
+  `F_ImgUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '图片地址',
+  `F_SeoTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'SEO标题',
+  `F_SeoKeywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'SEO关键字',
+  `F_SeoDescription` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'SEO描述',
+  `F_Tags` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '标签',
+  `F_Zhaiyao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '摘要',
+  `F_Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '内容',
   `F_SortCode` int NULL DEFAULT NULL COMMENT '排序',
   `F_IsTop` tinyint NULL DEFAULT NULL COMMENT '是否置顶',
   `F_IsHot` tinyint NULL DEFAULT NULL COMMENT '是否热门',
   `F_IsRed` tinyint NULL DEFAULT NULL,
   `F_Click` int NULL DEFAULT NULL COMMENT '点击次数',
-  `F_Source` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源',
-  `F_Author` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '作者',
+  `F_Source` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '来源',
+  `F_Author` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '作者',
   `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
   `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '逻辑删除标志',
   `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建人',
   `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最后修改人',
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '最后修改人',
   `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除人',
-  PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '删除人',
+  PRIMARY KEY (`F_Id`) USING BTREE,
+  UNIQUE INDEX `cms_articlenews_key1`(`F_CategoryId`, `F_Title`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cms_articlenews
 -- ----------------------------
+INSERT INTO `cms_articlenews` VALUES ('59966d73-fb8d-448e-9576-12e6a2efd7ed', 'c71f577a-8c9b-409b-b21c-bb7081060338', '44444', '', '', '44444', '', '', '', '', '', 2, 0, 0, 0, 0, '本站', '超级管理员', 1, 0, '2020-07-07 14:00:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-23 10:39:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `cms_articlenews` VALUES ('7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', 'c71f577a-8c9b-409b-b21c-bb7081060338', '3333', '', '/file/local/20210606/202106062145091936.jpg', '3333', 'xxx', 'xxx', '', 'xxx', 'xxx', 1, 0, 0, 0, 0, '本站', '超级管理员', 1, 0, '2020-07-23 10:24:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-06-06 21:45:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for oms_flowinstance
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_flowinstance`;
 CREATE TABLE `oms_flowinstance`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键Id',
-  `F_InstanceSchemeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程实例模板Id',
-  `F_Code` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '实例编号',
-  `F_CustomName` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '自定义名称',
-  `F_ActivityId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当前节点ID',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `F_InstanceSchemeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '流程实例模板Id',
+  `F_Code` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '实例编号',
+  `F_CustomName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '自定义名称',
+  `F_ActivityId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '当前节点ID',
   `F_ActivityType` int NULL DEFAULT NULL COMMENT '当前节点类型（0会签节点）',
-  `F_ActivityName` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当前节点名称',
-  `F_PreviousId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '前一个ID',
-  `F_SchemeContent` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '流程模板内容',
-  `F_SchemeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程模板ID',
-  `F_DbName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据库名称',
-  `F_FrmData` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '表单数据',
+  `F_ActivityName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '当前节点名称',
+  `F_PreviousId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '前一个ID',
+  `F_SchemeContent` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '流程模板内容',
+  `F_SchemeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程模板ID',
+  `F_DbName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '数据库名称',
+  `F_FrmData` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单数据',
   `F_FrmType` int NOT NULL COMMENT '表单类型',
-  `F_FrmContentData` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '表单字段',
-  `F_FrmContentParse` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '表单参数（冗余）',
-  `F_FrmId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '表单ID',
-  `F_SchemeType` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程类型',
+  `F_FrmContentData` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单字段',
+  `F_FrmContentParse` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单参数（冗余）',
+  `F_FrmId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '表单ID',
+  `F_SchemeType` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程类型',
   `F_FlowLevel` int NOT NULL DEFAULT 0 COMMENT '等级',
-  `F_Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '实例备注',
+  `F_Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '实例备注',
   `F_IsFinish` int NOT NULL DEFAULT 0 COMMENT '是否完成',
-  `F_MakerList` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '执行人',
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门',
+  `F_MakerList` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '执行人',
+  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属部门',
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
   `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
-  `F_FrmContent` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '表单元素json',
-  PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工作流流程实例表' ROW_FORMAT = COMPACT;
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
+  `F_FrmContent` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单元素json',
+  PRIMARY KEY (`F_Id`) USING BTREE,
+  UNIQUE INDEX `oms_flowinstance_key1`(`F_Code`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '工作流流程实例表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of oms_flowinstance
 -- ----------------------------
+INSERT INTO `oms_flowinstance` VALUES ('08d92a8d-5355-4f4a-8290-0878fe4a2ab5', '', '1623163860504', '444 2021-06-08 22:51:02', '1623161368159', 2, '结点_3', '1623161365419', '{\"title\":\"newFlow_1\",\"nodes\":[{\"name\":\"开始_1\",\"left\":216,\"top\":55,\"type\":\"start round mix\",\"id\":\"1623161365419\",\"width\":120,\"height\":30,\"alt\":true},{\"name\":\"结束_2\",\"left\":260,\"top\":228,\"type\":\"end round\",\"id\":\"1623161366761\",\"width\":120,\"height\":30,\"alt\":true},{\"name\":\"结点_3\",\"left\":266,\"top\":142,\"type\":\"node\",\"id\":\"1623161368159\",\"width\":120,\"height\":40,\"alt\":true,\"setInfo\":{\"NodeName\":\"结点_3\",\"NodeCode\":\"1623161368159\",\"NodeRejectType\":\"1\",\"NodeDesignate\":\"ALL_USER\",\"NodeConfluenceType\":\"all\",\"ThirdPartyUrl\":\"\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[],\"currentDepart\":false}}}],\"lines\":[{\"type\":\"sl\",\"from\":\"1623161365419\",\"to\":\"1623161368159\",\"id\":\"1623161371322\",\"name\":\"\",\"dash\":false},{\"type\":\"sl\",\"from\":\"1623161368159\",\"to\":\"1623161366761\",\"id\":\"1623161372230\",\"name\":\"\",\"dash\":false}],\"areas\":[],\"initNum\":6}', '08d92a87-0ce5-4cab-8359-8536c3763dcc', '', '{\"input_4\":\"aaaa\",\"password_5\":\"3333\",\"NextMakerName\":\"所有人\",\"NextNodeDesignates\":\"\",\"editor_1\":\"\",\"申请人\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"所属部门\":\"5AB270C0-5D33-4203-A54F-4552699FDA3C\"}', 0, 'input_4,password_5,date_9,date_10,image_7,editor_1', NULL, '08d92a58-531c-43ec-8546-d359e0f81347', NULL, 0, NULL, 0, '1', NULL, 1, '2021-06-08 22:54:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '[\n    {\n        \"id\": \"grid_3\",\n        \"index\": 0,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"input_4\",\n                        \"index\": 0,\n                        \"label\": \"用户名\",\n                        \"tag\": \"input\",\n                        \"tagIcon\": \"input\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"expression\": \"\",\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"password_5\",\n                        \"index\": 0,\n                        \"label\": \"密码\",\n                        \"tag\": \"password\",\n                        \"tagIcon\": \"password\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"grid_6\",\n        \"index\": 1,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"date_9\",\n                        \"index\": 0,\n                        \"label\": \"起始\",\n                        \"tag\": \"date\",\n                        \"tagIcon\": \"date\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"dateDefaultValue\": \"2021-05-25\",\n                        \"datetype\": \"date\",\n                        \"range\": false,\n                        \"dateformat\": \"yyyy-MM-dd\",\n                        \"isInitValue\": false,\n                        \"dataMaxValue\": \"2088-12-31\",\n                        \"dataMinValue\": \"1900-01-01\",\n                        \"trigger\": null,\n                        \"position\": \"absolute\",\n                        \"theme\": \"default\",\n                        \"mark\": null,\n                        \"showBottom\": true,\n                        \"zindex\": 66666666,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"date_10\",\n                        \"index\": 0,\n                        \"label\": \"目标\",\n                        \"tag\": \"date\",\n                        \"tagIcon\": \"date\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"dateDefaultValue\": \"2021-05-25\",\n                        \"datetype\": \"date\",\n                        \"range\": false,\n                        \"dateformat\": \"yyyy-MM-dd\",\n                        \"isInitValue\": false,\n                        \"dataMaxValue\": \"2088-12-31\",\n                        \"dataMinValue\": \"1900-01-01\",\n                        \"trigger\": null,\n                        \"position\": \"absolute\",\n                        \"theme\": \"default\",\n                        \"mark\": null,\n                        \"showBottom\": true,\n                        \"zindex\": 66666666,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"image_7\",\n        \"index\": 2,\n        \"label\": \"凭据\",\n        \"tag\": \"image\",\n        \"tagIcon\": \"image\",\n        \"placeholder\": \"请输入\",\n        \"defaultValue\": null,\n        \"labelWidth\": null,\n        \"disabled\": false,\n        \"required\": true,\n        \"document\": \"\",\n        \"uploadUrl\": \"/FileManage/Uploadfile/Upload?filetype=1&fileby=\'流程表单\'&isLayui=true\"\n    },\n    {\n        \"id\": \"editor_1\",\n        \"index\": 3,\n        \"label\": \"编辑器\",\n        \"tag\": \"editor\",\n        \"tagIcon\": \"editor\",\n        \"labelWidth\": null,\n        \"clearable\": true,\n        \"maxlength\": null,\n        \"showWordLimit\": false,\n        \"tool\": [],\n        \"hideTool\": [],\n        \"height\": \"120px\",\n        \"document\": \"\",\n        \"uploadUrl\": \"/FileManage/Uploadfile/Upload?filetype=1&fileby=\'流程表单\'&isLayui=true\"\n    }\n]');
+INSERT INTO `oms_flowinstance` VALUES ('39fcc2eb-9367-b566-9078-9f411bc4f050', '', '1622167949311', '复杂表单流程 2021-05-28 10:12:32', '1595465821942', 2, '第二级', '1595465820221', '{\"title\":\"newFlow_1\",\"initNum\":9,\"lines\":[{\"id\":\"1595465828057\",\"label\":null,\"type\":\"sl\",\"from\":\"1595465816935\",\"to\":\"1595465820221\",\"name\":\"\",\"dash\":false,\"M\":0.0,\"alt\":false,\"Compares\":[]},{\"id\":\"1595465829568\",\"label\":null,\"type\":\"sl\",\"from\":\"1595465820221\",\"to\":\"1595465821942\",\"name\":\"\",\"dash\":false,\"M\":0.0,\"alt\":false,\"Compares\":[]},{\"id\":\"1595465830589\",\"label\":null,\"type\":\"sl\",\"from\":\"1595465821942\",\"to\":\"1595465823573\",\"name\":\"\",\"dash\":false,\"M\":0.0,\"alt\":false,\"Compares\":[]}],\"nodes\":[{\"id\":\"1595465816935\",\"name\":\"node_1\",\"type\":\"start round mix\",\"left\":358,\"top\":22,\"width\":26,\"height\":26,\"alt\":true,\"setInfo\":null},{\"id\":\"1595465820221\",\"name\":\"第一级\",\"type\":\"node\",\"left\":360,\"top\":94,\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeDesignate\":\"ALL_USER\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[],\"currentDepart\":false},\"NodeCode\":\"1595465820221\",\"NodeName\":\"第一级\",\"ThirdPartyUrl\":\"\",\"NodeRejectType\":\"0\",\"Taged\":1,\"UserName\":\"超级管理员\",\"UserId\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"Description\":\"\",\"TagedTime\":\"2021-05-28 10:15\",\"NodeConfluenceType\":\"all\",\"ConfluenceOk\":null,\"ConfluenceNo\":null}},{\"id\":\"1595465821942\",\"name\":\"第二级\",\"type\":\"node\",\"left\":383,\"top\":170,\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeDesignate\":\"ALL_USER\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[],\"currentDepart\":false},\"NodeCode\":\"1595465821942\",\"NodeName\":\"第二级\",\"ThirdPartyUrl\":\"\",\"NodeRejectType\":\"0\",\"Taged\":2,\"UserName\":\"超级管理员\",\"UserId\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"Description\":\"\",\"TagedTime\":\"2021-05-28 10:16\",\"NodeConfluenceType\":\"all\",\"ConfluenceOk\":null,\"ConfluenceNo\":null}},{\"id\":\"1595465823573\",\"name\":\"node_4\",\"type\":\"end round\",\"left\":420,\"top\":254,\"width\":26,\"height\":26,\"alt\":true,\"setInfo\":null}],\"areas\":[]}', '0f4924b8-22a6-4f28-958c-488265d0bcc1', 'FormTest', '{\"F_RequestType\":\"事假\",\"F_UserName\":\"222233\",\"F_StartTime\":\"2021-05-28 00:00\",\"F_EndTime\":\"2021-05-28 00:00\",\"F_RequestComment\":\"3333\",\"F_Attachment\":\"\",\"NextMakerName\":\"所有人\",\"NextNodeDesignates\":\"\",\"申请人\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"所属部门\":\"5AB270C0-5D33-4203-A54F-4552699FDA3C\"}', 1, 'F_Id,F_UserName,F_RequestType,F_StartTime,F_EndTime,F_RequestComment,F_Attachment,F_FlowInstanceId,F_CreatorTime,F_CreatorUserId,F_CreatorUserName', '', '8faff4e5-b729-44d2-ac26-e899a228f63d', NULL, 0, NULL, 3, '1', NULL, 1, '2021-05-28 10:12:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '');
+INSERT INTO `oms_flowinstance` VALUES ('39fcc2ee-4d76-d970-35de-99271eada270', '', '1622168125187', '正常动态表单流程 2021-05-28 10:15:27', '1595465950174', 2, '002角色审核', '1595465947319', '{\"title\":\"newFlow_1\",\"nodes\":[{\"name\":\"node_1\",\"left\":225,\"top\":32,\"type\":\"start round mix\",\"id\":\"1595465947319\",\"width\":26,\"height\":26,\"alt\":true},{\"name\":\"002角色审核\",\"left\":232,\"top\":100,\"type\":\"node\",\"id\":\"1595465950174\",\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeName\":\"002角色审核\",\"NodeCode\":\"1595465950174\",\"NodeRejectType\":\"0\",\"NodeDesignate\":\"SPECIAL_ROLE\",\"NodeConfluenceType\":\"all\",\"ThirdPartyUrl\":\"\",\"NodeDesignateData\":{\"users\":[],\"roles\":[\"8c119bce-0d70-4a56-8389-214d8e14e107\"],\"orgs\":[]}}},{\"name\":\"node_3\",\"left\":282,\"top\":214,\"type\":\"end round\",\"id\":\"1595465952758\",\"width\":26,\"height\":26,\"alt\":true}],\"lines\":[{\"type\":\"sl\",\"from\":\"1595465947319\",\"to\":\"1595465950174\",\"id\":\"1595465955629\",\"name\":\"\",\"dash\":false,\"alt\":true},{\"type\":\"sl\",\"from\":\"1595465950174\",\"to\":\"1595465952758\",\"id\":\"1595465956878\",\"name\":\"\",\"dash\":false,\"alt\":true}],\"areas\":[],\"initNum\":7}', '49c506c3-ee0b-43eb-ac64-b1c31fd5eb57', '', '{\"input_2\":\"3333\",\"password_3\":\"333333\",\"radio_6\":\"value2\",\"select_7\":\"value1\",\"date_14\":\"2021-05-28\",\"input_15\":\"3333\",\"rate_11\":\"4\",\"editor_16\":\"333\",\"NextMakerName\":\"xxxx\",\"NextNodeDesignates\":\"\",\"申请人\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"所属部门\":\"5AB270C0-5D33-4203-A54F-4552699FDA3C\"}', 0, 'input_2,password_3,radio_6,select_7,date_14,input_15,rate_11,editor_16', NULL, '3b6922f9-b4ba-4615-aa3f-b00110da54c6', NULL, 0, NULL, 0, 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 1, '2021-05-28 10:15:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '[\n    {\n        \"id\": \"grid_1\",\n        \"index\": 0,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"input_2\",\n                        \"index\": 0,\n                        \"label\": \"用户名\",\n                        \"tag\": \"input\",\n                        \"tagIcon\": \"input\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"expression\": \"string\",\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"password_3\",\n                        \"index\": 0,\n                        \"label\": \"密码\",\n                        \"tag\": \"password\",\n                        \"tagIcon\": \"password\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"grid_4\",\n        \"index\": 1,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"radio_6\",\n                        \"index\": 0,\n                        \"label\": \"性别\",\n                        \"tag\": \"radio\",\n                        \"tagIcon\": \"radio\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\",\n                        \"options\": [\n                            {\n                                \"text\": \"男\",\n                                \"value\": \"value1\"\n                            },\n                            {\n                                \"text\": \"女\",\n                                \"value\": \"value2\"\n                            }\n                        ]\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"select_7\",\n                        \"index\": 0,\n                        \"label\": \"类型\",\n                        \"tag\": \"select\",\n                        \"tagIcon\": \"select\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\",\n                        \"optionType\": \"local\",\n                        \"remoteUrl\": \"http://www.fishpro.com.cn/demo1/\",\n                        \"remoteMethod\": \"post\",\n                        \"remoteOptionText\": \"options.data.dictName\",\n                        \"remoteOptionValue\": \"options.data.dictId\",\n                        \"remoteDefaultValue\": \"12\",\n                        \"options\": [\n                            {\n                                \"text\": \"管理员\",\n                                \"value\": \"value1\"\n                            },\n                            {\n                                \"text\": \"供应商\",\n                                \"value\": \"value2\"\n                            },\n                            {\n                                \"text\": \"经销商\",\n                                \"value\": \"value3\"\n                            }\n                        ]\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"grid_12\",\n        \"index\": 2,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"date_14\",\n                        \"index\": 0,\n                        \"label\": \"出生日期\",\n                        \"tag\": \"date\",\n                        \"tagIcon\": \"date\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"defaultValue\": null,\n                        \"datetype\": \"date\",\n                        \"range\": false,\n                        \"dateformat\": \"yyyy-MM-dd\",\n                        \"isInitValue\": false,\n                        \"maxValue\": \"9999-12-31\",\n                        \"minValue\": \"1900-1-1\",\n                        \"trigger\": null,\n                        \"position\": \"absolute\",\n                        \"theme\": \"default\",\n                        \"mark\": null,\n                        \"showBottom\": true,\n                        \"zindex\": 66666666,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"input_15\",\n                        \"index\": 0,\n                        \"label\": \"身份证号\",\n                        \"tag\": \"input\",\n                        \"tagIcon\": \"input\",\n                        \"placeholder\": \"输入身份证号\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"expression\": \"string\",\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"rate_11\",\n        \"index\": 3,\n        \"label\": \"用户评价\",\n        \"tag\": \"rate\",\n        \"tagIcon\": \"rate\",\n        \"labelWidth\": null,\n        \"defaultValue\": 0,\n        \"rateLength\": 5,\n        \"half\": false,\n        \"text\": false,\n        \"theme\": \"default\",\n        \"showBottom\": true,\n        \"readonly\": false,\n        \"required\": true,\n        \"document\": \"\"\n    },\n    {\n        \"id\": \"editor_16\",\n        \"index\": 4,\n        \"label\": \"备注\",\n        \"tag\": \"editor\",\n        \"tagIcon\": \"editor\",\n        \"placeholder\": \"请输入\",\n        \"defaultValue\": null,\n        \"labelWidth\": null,\n        \"width\": \"100%\",\n        \"clearable\": true,\n        \"maxlength\": null,\n        \"showWordLimit\": false,\n        \"tool\": [],\n        \"hideTool\": [],\n        \"height\": \"120px\",\n        \"uploadImage\": {},\n        \"readonly\": false,\n        \"disabled\": false,\n        \"required\": true,\n        \"document\": \"\"\n    }\n]');
 
 -- ----------------------------
 -- Table structure for oms_flowinstancehis
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_flowinstancehis`;
 CREATE TABLE `oms_flowinstancehis`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键Id',
-  `F_InstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '实例Id',
-  `F_FromNodeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '开始节点Id',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `F_InstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '实例Id',
+  `F_FromNodeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '开始节点Id',
   `F_FromNodeType` int NULL DEFAULT NULL COMMENT '开始节点类型',
-  `F_FromNodeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '开始节点名称',
-  `F_ToNodeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '结束节点Id',
+  `F_FromNodeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '开始节点名称',
+  `F_ToNodeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '结束节点Id',
   `F_ToNodeType` int NULL DEFAULT NULL COMMENT '结束节点类型',
-  `F_ToNodeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '结束节点名称',
+  `F_ToNodeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '结束节点名称',
   `F_TransitionSate` tinyint(1) NOT NULL COMMENT '转化状态',
   `F_IsFinish` tinyint(1) NOT NULL COMMENT '是否结束',
   `F_CreatorTime` datetime NOT NULL COMMENT '转化时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人Id',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作人名称',
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '操作人Id',
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '操作人名称',
   PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工作流实例流转历史记录' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '工作流实例流转历史记录' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of oms_flowinstancehis
 -- ----------------------------
+INSERT INTO `oms_flowinstancehis` VALUES ('08d92a8d-535f-4c6e-8960-220c89c01a13', '08d92a8d-5355-4f4a-8290-0878fe4a2ab5', '1623161365419', 3, '开始_1', '1623161368159', 2, '结点_3', 0, 0, '2021-06-08 22:54:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_flowinstancehis` VALUES ('39fcc2eb-95da-f0c4-59ea-029ea6aa33cc', '39fcc2eb-9367-b566-9078-9f411bc4f050', '1595465816935', 3, 'node_1', '1595465820221', 2, '第一级', 0, 0, '2021-05-28 10:12:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_flowinstancehis` VALUES ('39fcc2ee-4dd6-6899-fe02-8f4563fc0ccb', '39fcc2ee-4d76-d970-35de-99271eada270', '1595465947319', 3, 'node_1', '1595465950174', 2, '002角色审核', 0, 0, '2021-05-28 10:15:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_flowinstancehis` VALUES ('39fcc2ee-6de9-98e4-ac77-31cf2f20d65b', '39fcc2eb-9367-b566-9078-9f411bc4f050', '1595465820221', 2, '第一级', '1595465821942', 2, '第二级', 0, 0, '2021-05-28 10:15:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
 
 -- ----------------------------
 -- Table structure for oms_flowinstanceinfo
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_flowinstanceinfo`;
 CREATE TABLE `oms_flowinstanceinfo`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键Id',
-  `F_InstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '实例进程Id',
-  `F_Content` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作内容',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `F_InstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '实例进程Id',
+  `F_Content` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '操作内容',
   `F_CreatorTime` datetime NOT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
   PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工作流实例操作记录' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '工作流实例操作记录' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of oms_flowinstanceinfo
 -- ----------------------------
+INSERT INTO `oms_flowinstanceinfo` VALUES ('08d92a8d-535f-4283-85f0-68c37f5d5d2e', '08d92a8d-5355-4f4a-8290-0878fe4a2ab5', '【创建】超级管理员创建了一个流程【1623163860504/444 2021-06-08 22:51:02】', '2021-06-08 22:54:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_flowinstanceinfo` VALUES ('39fcc2eb-95d1-74c2-4c3f-dfe34649e1a4', '39fcc2eb-9367-b566-9078-9f411bc4f050', '【创建】超级管理员创建了一个流程【1622167949311/复杂表单流程 2021-05-28 10:12:32】', '2021-05-28 10:12:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_flowinstanceinfo` VALUES ('39fcc2ee-4dd0-dd09-f3fa-94fd9402dfa1', '39fcc2ee-4d76-d970-35de-99271eada270', '【创建】超级管理员创建了一个流程【1622168125187/正常动态表单流程 2021-05-28 10:15:27】', '2021-05-28 10:15:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_flowinstanceinfo` VALUES ('39fcc2ee-6de6-e364-7398-75b1f1da9d5c', '39fcc2eb-9367-b566-9078-9f411bc4f050', '【第一级】【2021-05-28 10:15】同意,备注：', '2021-05-28 10:15:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_flowinstanceinfo` VALUES ('39fcc2ee-adc8-16fb-6be5-d62abe26a19f', '39fcc2eb-9367-b566-9078-9f411bc4f050', '【第二级】【2021-05-28 10:16】不同意,备注：', '2021-05-28 10:16:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
 
 -- ----------------------------
 -- Table structure for oms_formtest
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_formtest`;
 CREATE TABLE `oms_formtest`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ID',
-  `F_UserName` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '请假人姓名',
-  `F_RequestType` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '请假分类，病假，事假，公休等',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'ID',
+  `F_UserName` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '请假人姓名',
+  `F_RequestType` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '请假分类，病假，事假，公休等',
   `F_StartTime` datetime NULL DEFAULT NULL COMMENT '开始时间',
   `F_EndTime` datetime NULL DEFAULT NULL COMMENT '结束时间',
-  `F_RequestComment` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请假说明',
-  `F_Attachment` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '附件，用于提交病假证据等',
+  `F_RequestComment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '请假说明',
+  `F_Attachment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '附件，用于提交病假证据等',
   `F_CreatorTime` datetime NOT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
-  `F_FlowInstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属流程ID',
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
+  `F_FlowInstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属流程ID',
   PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '模拟一个自定页面的表单，该数据会关联到流程实例FrmData，可用于复杂页面的设计及后期的数据分析' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '模拟一个自定页面的表单，该数据会关联到流程实例FrmData，可用于复杂页面的设计及后期的数据分析' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of oms_formtest
 -- ----------------------------
+INSERT INTO `oms_formtest` VALUES ('39fcc2eb-95c4-ce62-2429-46be05704627', '222233', '事假', '2021-05-28 00:00:00', '2021-05-28 00:00:00', '3333', '', '2021-05-28 10:12:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '39fcc2eb-9367-b566-9078-9f411bc4f050');
 
 -- ----------------------------
 -- Table structure for oms_message
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_message`;
 CREATE TABLE `oms_message`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键Id',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
   `F_MessageType` int NULL DEFAULT NULL COMMENT '信息类型（通知、私信、处理）',
-  `F_ToUserId` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收件人主键',
-  `F_ToUserName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收件人',
-  `F_MessageInfo` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
+  `F_ToUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '收件人主键',
+  `F_ToUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '收件人',
+  `F_MessageInfo` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '内容',
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
   `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
-  `F_HrefTarget` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '跳转类型',
-  `F_Href` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '跳转地址',
-  `F_KeyValue` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '待办关联键',
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
+  `F_HrefTarget` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '跳转类型',
+  `F_Href` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '跳转地址',
+  `F_KeyValue` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '待办关联键',
   `F_ClickRead` tinyint(1) NULL DEFAULT NULL COMMENT '点击已读',
   PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of oms_message
 -- ----------------------------
+INSERT INTO `oms_message` VALUES ('08d92a8d-5361-4d84-88ef-0781bc1e99a7', 2, '', '所有人', '444 2021-06-08 22:51:02--流程待处理', 1, '2021-06-08 22:54:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', 'iframe', '/FlowManage/Flowinstance/ToDoFlow', '08d92a8d-5355-4f4a-8290-0878fe4a2ab5', 0);
+INSERT INTO `oms_message` VALUES ('08d92c86-34e1-4eab-8ef6-465f99cb5733', 0, '', '所有人', '222', 1, '2021-06-11 11:08:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, 1);
+INSERT INTO `oms_message` VALUES ('1e4776e9-85ad-45a3-ba04-0d02d3cc670e', 0, '', '所有人', '测测', 0, '2020-08-04 11:24:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, 1);
+INSERT INTO `oms_message` VALUES ('39fcc2eb-95ef-148f-150f-22b3446e8b9a', 2, '', '所有人', '复杂表单流程 2021-05-28 10:12:32--流程待处理', 1, '2021-05-28 10:12:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', 'iframe', '/FlowManage/Flowinstance/ToDoFlow', '39fcc2eb-9367-b566-9078-9f411bc4f050', 0);
+INSERT INTO `oms_message` VALUES ('39fcc2ee-4de7-d0cd-b480-1f34ed11678b', 2, 'df821722-2fae-4023-ae57-23bebfccad85', 'xxxx', '正常动态表单流程 2021-05-28 10:15:27--流程待处理', 1, '2021-05-28 10:15:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', 'iframe', '/FlowManage/Flowinstance/ToDoFlow', '39fcc2ee-4d76-d970-35de-99271eada270', 0);
+INSERT INTO `oms_message` VALUES ('39fcc2ee-6e35-f96f-b68a-8e3998bc2240', 2, '', '所有人', '复杂表单流程 2021-05-28 10:12:32--流程待处理', 1, '2021-05-28 10:15:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', 'iframe', '/FlowManage/Flowinstance/ToDoFlow', '39fcc2eb-9367-b566-9078-9f411bc4f050', 0);
+INSERT INTO `oms_message` VALUES ('39fcc2ee-ade2-52de-f1b2-61070045ac9f', 2, '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '复杂表单流程 2021-05-28 10:12:32--流程已终止', 1, '2021-05-28 10:16:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', 'iframe', '/FlowManage/Flowinstance/Index', '39fcc2eb-9367-b566-9078-9f411bc4f050', 1);
+INSERT INTO `oms_message` VALUES ('4bc9ed34-6cf0-4005-ba61-ea8e2953ebdd', 0, '', '所有人', '22222', 1, '2020-09-04 14:33:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, 1);
+INSERT INTO `oms_message` VALUES ('5840d25f-9231-4c92-af68-e5766f4aff95', 2, '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '正常动态表单流程 2020-07-31 15:23:29--流程已完成', 1, '2020-07-31 17:30:30', 'df821722-2fae-4023-ae57-23bebfccad85', 'xxxx', 'iframe', '/FlowManage/Flowinstance/Index', '34601f70-2a2b-4eee-a7d9-d2f79749aa24', 1);
+INSERT INTO `oms_message` VALUES ('9a06d498-3990-490b-9940-6ec37f12cc53', 0, '', '所有人', '测试', 0, '2020-08-04 10:34:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, 1);
+INSERT INTO `oms_message` VALUES ('c865b4b5-c056-4493-9900-69c5569d58d7', 2, 'df821722-2fae-4023-ae57-23bebfccad85', 'xxxx', '正常动态表单流程 2020-07-31 15:23:29--流程待处理', 1, '2020-07-31 15:23:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', 'iframe', '/FlowManage/Flowinstance/ToDoFlow', '34601f70-2a2b-4eee-a7d9-d2f79749aa24', 0);
+INSERT INTO `oms_message` VALUES ('ce826d95-a7c8-4752-81c7-cad7ab011f1d', 0, '', '所有人', '22222', 0, '2020-08-04 10:33:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, 1);
+INSERT INTO `oms_message` VALUES ('f11c8555-4f89-4d87-a605-9794a4d64cee', 0, '', '所有人', '测测', 1, '2020-08-04 11:35:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, 1);
+INSERT INTO `oms_message` VALUES ('f30d9720-ee87-42a6-967e-dffcd8bdab8f', 0, '', '所有人', '测试测试', 0, '2020-08-03 17:04:10', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, 1);
+INSERT INTO `oms_message` VALUES ('ff60d258-409c-4770-97d0-3f9eddbef6a5', 2, '', '所有人', '复杂表单流程 2020-08-04 10:34:35--流程待处理', 1, '2020-08-04 10:34:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', 'iframe', '/FlowManage/Flowinstance/ToDoFlow', 'a08a48db-1569-44a5-a271-6631c1e32f57', 0);
 
 -- ----------------------------
 -- Table structure for oms_messagehis
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_messagehis`;
 CREATE TABLE `oms_messagehis`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键Id',
-  `F_MessageId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '信息Id',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `F_MessageId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '信息Id',
   `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
   PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of oms_messagehis
 -- ----------------------------
+INSERT INTO `oms_messagehis` VALUES ('08d92c86-3822-47aa-85d8-d186a900ce62', '08d92c86-34e1-4eab-8ef6-465f99cb5733', '2021-06-11 11:08:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('12fd3f0b-a8bf-466f-9f9b-629c4989f433', 'ad9be7a7-ae65-4066-bd73-f41e646a25cc', '2020-08-03 16:44:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('136bd38c-c199-4ee9-9605-ff6f44bb4ef3', 'ce826d95-a7c8-4752-81c7-cad7ab011f1d', '2020-08-04 10:33:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('1befce60-9ed4-4e3f-b55c-9221a0ec5432', 'f30d9720-ee87-42a6-967e-dffcd8bdab8f', '2020-08-03 17:04:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('2fe07363-8a29-4c62-bc07-1fef1974125d', '1e4776e9-85ad-45a3-ba04-0d02d3cc670e', '2020-08-04 11:24:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('32190cd8-ad1d-4c73-87a8-8cde9c4a9389', 'afeaa41a-1f45-4b16-8655-0d8cfe6e16ec', '2020-08-03 17:03:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('39fcc2ee-6e32-e3ad-e564-d3fb72bc575f', '39fcc2eb-95ef-148f-150f-22b3446e8b9a', '2021-05-28 10:15:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('39fcc2ee-ade1-449d-6927-2c190e1d6e2b', '39fcc2ee-6e35-f96f-b68a-8e3998bc2240', '2021-05-28 10:16:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('545f360b-ef41-4ca0-b397-081287fd832f', 'c865b4b5-c056-4493-9900-69c5569d58d7', '2020-07-31 17:30:30', 'df821722-2fae-4023-ae57-23bebfccad85', 'xxxx');
+INSERT INTO `oms_messagehis` VALUES ('6b69053c-29d1-47a6-adb8-149a0aae3be0', '9a06d498-3990-490b-9940-6ec37f12cc53', '2020-08-04 10:34:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('8ab2c37b-9b37-44f5-b085-c820ef0ed8da', '3f6ca90c-be1c-4cb0-a6e6-2cd832dca66a', '2020-07-31 17:54:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('8c0dc658-62d1-46f0-8e61-5bd9f3f11948', '6d713aa9-7e1f-4f5f-be08-97005defb9b9', '2020-08-03 17:02:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('b69fc895-5abc-4426-98ec-65adcff482cd', '5840d25f-9231-4c92-af68-e5766f4aff95', '2020-07-31 17:31:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('cb3c713a-0056-4cc5-b2dd-2b9a711552fd', 'e5113d01-5772-41a4-bf7d-3fcdd9261e87', '2020-08-03 17:04:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_messagehis` VALUES ('ed831440-0710-4158-9d13-0e69e44b4026', 'f11c8555-4f89-4d87-a605-9794a4d64cee', '2020-08-04 11:35:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
 
 -- ----------------------------
 -- Table structure for oms_uploadfile
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_uploadfile`;
 CREATE TABLE `oms_uploadfile`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键Id',
-  `F_FilePath` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件路径',
-  `F_FileName` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文件名称',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `F_FilePath` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件路径',
+  `F_FileName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '文件名称',
   `F_FileType` int NULL DEFAULT NULL COMMENT '文件类型（0 文件，1 图片）',
   `F_FileSize` int NULL DEFAULT NULL COMMENT '文件大小',
-  `F_FileExtension` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件扩展名',
-  `F_FileBy` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件所属',
-  `F_Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门',
+  `F_FileExtension` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件扩展名',
+  `F_FileBy` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件所属',
+  `F_Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '备注',
+  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属部门',
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
   `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_OMS_UPLOADFile`(`F_FileName`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `oms_uploadfile_key1`(`F_FileName`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of oms_uploadfile
 -- ----------------------------
+INSERT INTO `oms_uploadfile` VALUES ('08d92c82-be01-41ae-8ad9-2040e49be5dd', '/icon/local/20210611/202106111043498898.jpg', '202106111043498898.jpg', 1, 34093, '.jpg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2021-06-11 10:43:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_uploadfile` VALUES ('08d92c85-3e43-4b93-80d5-526b5525ee95', '/icon/local/20210611/202106111101432772.jpg', '202106111101432772.jpg', 1, 34093, '.jpg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2021-06-11 11:01:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
 
 -- ----------------------------
 -- Table structure for sys_area
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_area`;
 CREATE TABLE `sys_area`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父级',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键',
+  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '父级',
   `F_Layers` int NULL DEFAULT NULL COMMENT '层次',
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编码',
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `F_SimpleSpelling` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '简拼',
+  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '编码',
+  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '名称',
+  `F_SimpleSpelling` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '简拼',
   `F_SortCode` bigint NULL DEFAULT NULL COMMENT '排序码',
   `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '删除标志',
   `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '有效标志',
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '描述',
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '描述',
   `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建日期',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
   `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最后修改用户',
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '最后修改用户',
   `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除用户',
-  PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '行政区域表' ROW_FORMAT = DYNAMIC;
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '删除用户',
+  PRIMARY KEY (`F_Id`) USING BTREE,
+  UNIQUE INDEX `sys_area_key1`(`F_EnCode`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '行政区域表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_area
@@ -3655,49 +3708,51 @@ INSERT INTO `sys_area` VALUES ('659006000000', '659000000000', 3, '659006000000'
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dataprivilegerule`;
 CREATE TABLE `sys_dataprivilegerule`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_ModuleCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_PrivilegeRules` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ModuleCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_PrivilegeRules` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   `F_SortCode` int NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `XK_DataPrivilegeRule_1`(`F_ModuleId`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_dataprivilegerule_key1`(`F_ModuleId`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dataprivilegerule
 -- ----------------------------
+INSERT INTO `sys_dataprivilegerule` VALUES ('07999ec1-9fbb-46b5-bcea-d343bf49e6d8', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'Notice', '[{\"Operation\":\"and\",\"Filters\":\"[{\\\"Key\\\":\\\"{loginRole}\\\",\\\"Contrast\\\":\\\"contains\\\",\\\"Text\\\":\\\"0003\\\",\\\"Value\\\":\\\"d71324b7-e7eb-47b2-bdea-f0293d36bb7f\\\"},{\\\"Key\\\":\\\"F_CreatorUserId\\\",\\\"Contrast\\\":\\\"==\\\",\\\"Text\\\":\\\"{loginUser}\\\",\\\"Value\\\":\\\"{loginUser}\\\"}]\",\"Description\":\"0003角色只能查看自己的\"},{\"Operation\":\"and\",\"Filters\":\"[{\\\"Key\\\":\\\"{loginRole}\\\",\\\"Contrast\\\":\\\"contains\\\",\\\"Text\\\":\\\"0002\\\",\\\"Value\\\":\\\"8c119bce-0d70-4a56-8389-214d8e14e107\\\"},{\\\"Key\\\":\\\"F_EnabledMark\\\",\\\"Contrast\\\":\\\"==\\\",\\\"Text\\\":\\\"0\\\",\\\"Value\\\":\\\"0\\\"}]\",\"Description\":\"0002查看全部的\"}]', 0, 0, 1, '0003角色只能查看自己的,0002查看全部的', '2020-06-03 11:21:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-08-31 10:40:11', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_filterip
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_filterip`;
 CREATE TABLE `sys_filterip`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_Type` bit(1) NOT NULL,
-  `F_StartIP` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_EndIP` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_SortCode` int NOT NULL,
-  `F_DeleteMark` bit(1) NOT NULL,
-  `F_EnabledMark` bit(1) NOT NULL,
-  `F_Description` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_CreatorTime` datetime NOT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_LastModifyTime` datetime NOT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_DeleteTime` datetime NOT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_Type` tinyint NULL DEFAULT NULL,
+  `F_StartIP` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_EndIP` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_SortCode` int NULL DEFAULT NULL,
+  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_EndTime` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_filterip
@@ -3708,93 +3763,98 @@ CREATE TABLE `sys_filterip`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_flowscheme`;
 CREATE TABLE `sys_flowscheme`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键Id',
-  `F_SchemeCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程编号',
-  `F_SchemeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程名称',
-  `F_SchemeType` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程分类',
-  `F_SchemeVersion` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程内容版本',
-  `F_SchemeCanUser` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '流程模板使用者',
-  `F_SchemeContent` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '流程内容',
-  `F_FrmId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '表单ID',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `F_SchemeCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程编号',
+  `F_SchemeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程名称',
+  `F_SchemeType` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程分类',
+  `F_SchemeVersion` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程内容版本',
+  `F_SchemeCanUser` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '流程模板使用者',
+  `F_SchemeContent` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '流程内容',
+  `F_FrmId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '表单ID',
   `F_FrmType` int NOT NULL DEFAULT 0 COMMENT '表单类型',
   `F_AuthorizeType` int NOT NULL DEFAULT 0 COMMENT '模板权限类型：0完全公开,1指定部门/人员',
   `F_SortCode` int NULL DEFAULT NULL COMMENT '排序码',
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL COMMENT '删除标记',
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
-  `F_Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `F_Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '备注',
   `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建用户',
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
   `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '修改时间',
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改用户主键',
-  `F_LastModifyUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改用户',
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门',
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '修改用户主键',
+  `F_LastModifyUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '修改用户',
+  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属部门',
   `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除人',
-  PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工作流模板信息表' ROW_FORMAT = COMPACT;
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '删除人',
+  PRIMARY KEY (`F_Id`) USING BTREE,
+  UNIQUE INDEX `sys_flowscheme_key1`(`F_SchemeCode`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '工作流模板信息表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of sys_flowscheme
 -- ----------------------------
+INSERT INTO `sys_flowscheme` VALUES ('08d92a87-0ce5-4cab-8359-8536c3763dcc', '1623161355556', '444', NULL, NULL, NULL, '{\"title\":\"newFlow_1\",\"nodes\":[{\"name\":\"开始_1\",\"left\":216,\"top\":55,\"type\":\"start round mix\",\"id\":\"1623161365419\",\"width\":120,\"height\":30,\"alt\":true},{\"name\":\"结束_2\",\"left\":260,\"top\":228,\"type\":\"end round\",\"id\":\"1623161366761\",\"width\":120,\"height\":30,\"alt\":true},{\"name\":\"结点_3\",\"left\":266,\"top\":142,\"type\":\"node\",\"id\":\"1623161368159\",\"width\":120,\"height\":40,\"alt\":true,\"setInfo\":{\"NodeName\":\"结点_3\",\"NodeCode\":\"1623161368159\",\"NodeRejectType\":\"1\",\"NodeDesignate\":\"ALL_USER\",\"NodeConfluenceType\":\"all\",\"ThirdPartyUrl\":\"\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[],\"currentDepart\":false}}}],\"lines\":[{\"type\":\"sl\",\"from\":\"1623161365419\",\"to\":\"1623161368159\",\"id\":\"1623161371322\",\"name\":\"\",\"dash\":false},{\"type\":\"sl\",\"from\":\"1623161368159\",\"to\":\"1623161366761\",\"id\":\"1623161372230\",\"name\":\"\",\"dash\":false}],\"areas\":[],\"initNum\":6}', '08d92a58-531c-43ec-8546-d359e0f81347', 0, 0, 3, 0, 1, '', '2021-06-08 22:09:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-06-08 22:49:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, '', NULL, NULL);
+INSERT INTO `sys_flowscheme` VALUES ('0f4924b8-22a6-4f28-958c-488265d0bcc1', '1595465800213', '复杂表单流程', NULL, NULL, NULL, '{\"title\":\"newFlow_1\",\"nodes\":[{\"name\":\"node_1\",\"left\":358,\"top\":22,\"type\":\"start round mix\",\"id\":\"1595465816935\",\"width\":26,\"height\":26,\"alt\":true},{\"name\":\"第一级\",\"left\":360,\"top\":94,\"type\":\"node\",\"id\":\"1595465820221\",\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeName\":\"第一级\",\"NodeCode\":\"1595465820221\",\"NodeRejectType\":\"0\",\"NodeDesignate\":\"ALL_USER\",\"NodeConfluenceType\":\"all\",\"ThirdPartyUrl\":\"\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[]}}},{\"name\":\"第二级\",\"left\":383,\"top\":170,\"type\":\"node\",\"id\":\"1595465821942\",\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeName\":\"第二级\",\"NodeCode\":\"1595465821942\",\"NodeRejectType\":\"0\",\"NodeDesignate\":\"ALL_USER\",\"NodeConfluenceType\":\"all\",\"ThirdPartyUrl\":\"\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[]}}},{\"name\":\"node_4\",\"left\":420,\"top\":254,\"type\":\"end round\",\"id\":\"1595465823573\",\"width\":26,\"height\":26,\"alt\":true}],\"lines\":[{\"type\":\"sl\",\"from\":\"1595465816935\",\"to\":\"1595465820221\",\"id\":\"1595465828057\",\"name\":\"\",\"dash\":false},{\"type\":\"sl\",\"from\":\"1595465820221\",\"to\":\"1595465821942\",\"id\":\"1595465829568\",\"name\":\"\",\"dash\":false},{\"type\":\"sl\",\"from\":\"1595465821942\",\"to\":\"1595465823573\",\"id\":\"1595465830589\",\"name\":\"\",\"dash\":false}],\"areas\":[],\"initNum\":9}', '8faff4e5-b729-44d2-ac26-e899a228f63d', 1, 0, 1, 0, 1, '复杂表单流程', '2020-07-23 08:58:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-07-23 08:58:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_form
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_form`;
 CREATE TABLE `sys_form`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '表单模板Id',
-  `F_Name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '表单名称',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '表单模板Id',
+  `F_Name` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '表单名称',
   `F_FrmType` int NULL DEFAULT 0 COMMENT '表单类型，0：默认动态表单；1：Web自定义表单',
-  `F_WebId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '系统页面标识，当表单类型为用Web自定义的表单时，需要标识加载哪个页面',
+  `F_WebId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '系统页面标识，当表单类型为用Web自定义的表单时，需要标识加载哪个页面',
   `F_Fields` int NULL DEFAULT NULL COMMENT '字段个数',
-  `F_ContentData` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '表单中的控件属性描述',
-  `F_ContentParse` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '表单控件位置模板',
-  `F_Content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '表单原html模板未经处理的',
+  `F_ContentData` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单中的控件属性描述',
+  `F_ContentParse` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单控件位置模板',
+  `F_Content` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单原html模板未经处理的',
   `F_SortCode` int NULL DEFAULT NULL COMMENT '排序码',
   `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
   `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '逻辑删除标志',
   `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建人',
   `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最后修改人',
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '最后修改人',
   `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除人',
-  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属组织',
-  `F_DbName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据库名称',
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '删除人',
+  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '内容',
+  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属组织',
+  `F_DbName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '数据库名称',
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_SYS_FORM`(`F_Name`) USING BTREE COMMENT '唯一'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '表单模板表' ROW_FORMAT = COMPACT;
+  UNIQUE INDEX `sys_form_key1`(`F_Name`) USING BTREE COMMENT '唯一'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '表单模板表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of sys_form
 -- ----------------------------
+INSERT INTO `sys_form` VALUES ('08d92a58-531c-43ec-8546-d359e0f81347', '333', 0, '', 6, 'input_4,password_5,date_9,date_10,image_7,editor_1', NULL, '[\n    {\n        \"id\": \"grid_3\",\n        \"index\": 0,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"input_4\",\n                        \"index\": 0,\n                        \"label\": \"用户名\",\n                        \"tag\": \"input\",\n                        \"tagIcon\": \"input\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"expression\": \"\",\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"password_5\",\n                        \"index\": 0,\n                        \"label\": \"密码\",\n                        \"tag\": \"password\",\n                        \"tagIcon\": \"password\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"grid_6\",\n        \"index\": 1,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"date_9\",\n                        \"index\": 0,\n                        \"label\": \"起始\",\n                        \"tag\": \"date\",\n                        \"tagIcon\": \"date\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"dateDefaultValue\": \"2021-05-25\",\n                        \"datetype\": \"date\",\n                        \"range\": false,\n                        \"dateformat\": \"yyyy-MM-dd\",\n                        \"isInitValue\": false,\n                        \"dataMaxValue\": \"2088-12-31\",\n                        \"dataMinValue\": \"1900-01-01\",\n                        \"trigger\": null,\n                        \"position\": \"absolute\",\n                        \"theme\": \"default\",\n                        \"mark\": null,\n                        \"showBottom\": true,\n                        \"zindex\": 66666666,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"date_10\",\n                        \"index\": 0,\n                        \"label\": \"目标\",\n                        \"tag\": \"date\",\n                        \"tagIcon\": \"date\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"dateDefaultValue\": \"2021-05-25\",\n                        \"datetype\": \"date\",\n                        \"range\": false,\n                        \"dateformat\": \"yyyy-MM-dd\",\n                        \"isInitValue\": false,\n                        \"dataMaxValue\": \"2088-12-31\",\n                        \"dataMinValue\": \"1900-01-01\",\n                        \"trigger\": null,\n                        \"position\": \"absolute\",\n                        \"theme\": \"default\",\n                        \"mark\": null,\n                        \"showBottom\": true,\n                        \"zindex\": 66666666,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"image_7\",\n        \"index\": 2,\n        \"label\": \"凭据\",\n        \"tag\": \"image\",\n        \"tagIcon\": \"image\",\n        \"placeholder\": \"请输入\",\n        \"defaultValue\": null,\n        \"labelWidth\": null,\n        \"disabled\": false,\n        \"required\": true,\n        \"document\": \"\",\n        \"uploadUrl\": \"/FileManage/Uploadfile/Upload?filetype=1&fileby=\'流程表单\'&isLayui=true\"\n    },\n    {\n        \"id\": \"editor_1\",\n        \"index\": 3,\n        \"label\": \"编辑器\",\n        \"tag\": \"editor\",\n        \"tagIcon\": \"editor\",\n        \"labelWidth\": null,\n        \"clearable\": true,\n        \"maxlength\": null,\n        \"showWordLimit\": false,\n        \"tool\": [],\n        \"hideTool\": [],\n        \"height\": \"120px\",\n        \"document\": \"\",\n        \"uploadUrl\": \"/FileManage/Uploadfile/Upload?filetype=1&fileby=\'流程表单\'&isLayui=true\"\n    }\n]', 33, 1, 0, '2021-06-08 16:35:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-06-08 22:49:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '', '', NULL);
+INSERT INTO `sys_form` VALUES ('8faff4e5-b729-44d2-ac26-e899a228f63d', '系统内置的复杂请假条表单', 1, 'FormTest', 11, 'F_Id,F_UserName,F_RequestType,F_StartTime,F_EndTime,F_RequestComment,F_Attachment,F_FlowInstanceId,F_CreatorTime,F_CreatorUserId,F_CreatorUserName', '', '', 0, 1, 0, '2019-07-29 01:03:36', '6ba79766-faa0-4259-8139-a4a6d35784e0', '2020-07-23 08:49:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2019-07-29 01:03:36', '6ba79766-faa0-4259-8139-a4a6d35784e0', '企业版内置的复杂请假条表单', '', NULL);
 
 -- ----------------------------
 -- Table structure for sys_items
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_items`;
 CREATE TABLE `sys_items`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_IsTree` tinyint(1) NULL DEFAULT NULL,
   `F_Layers` int NULL DEFAULT NULL,
   `F_SortCode` int NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_Sys_Items`(`F_EnCode`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_items_key1`(`F_EnCode`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_items
@@ -3808,7 +3868,7 @@ INSERT INTO `sys_items` VALUES ('64c10822-0c85-4516-9b59-879b818547ae', '7707011
 INSERT INTO `sys_items` VALUES ('77070117-3F1A-41BA-BF81-B8B85BF10D5E', '0', 'Sys_Items', '通用字典', 1, 1, 1, 0, 1, NULL, NULL, NULL, '2020-04-20 17:17:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_items` VALUES ('8CEB2F71-026C-4FA6-9A61-378127AE7320', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', '102', '生育', 0, 2, 13, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('954AB9A1-9928-4C6D-820A-FC1CDC85CDE0', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'AuditState', '审核状态', 0, 2, 6, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_items` VALUES ('9a7079bd-0660-4549-9c2d-db5e8616619f', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'DbLogType', '系统日志', 0, 2, 17, 0, 1, '', '2016-07-19 17:09:45', NULL, '2021-05-16 22:28:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_items` VALUES ('9a7079bd-0660-4549-9c2d-db5e8616619f', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'DbLogType', '系统日志', 0, 2, 16, 0, 1, NULL, '2016-07-19 17:09:45', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('9EB4602B-BF9A-4710-9D80-C73CE89BEC5D', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'OrganizeCategory', '机构分类', 0, 2, 2, 0, 1, NULL, NULL, NULL, '2020-04-28 09:07:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_items` VALUES ('BDD797C3-2323-4868-9A63-C8CC3437AEAA', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', '104', '性别', 0, 2, 15, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('D94E4DC1-C2FD-4D19-9D5D-3886D39900CE', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'RoleType', '角色类型', 0, 2, 3, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3819,27 +3879,27 @@ INSERT INTO `sys_items` VALUES ('FA7537E2-1C64-4431-84BF-66158DD63269', '7707011
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_itemsdetail`;
 CREATE TABLE `sys_itemsdetail`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_ItemId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_ItemCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_ItemName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_SimpleSpelling` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_ItemId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ItemCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ItemName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_SimpleSpelling` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   `F_IsDefault` tinyint(1) NULL DEFAULT NULL,
   `F_Layers` int NULL DEFAULT NULL,
   `F_SortCode` int NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_Sys_ItemsDetail`(`F_ItemId`, `F_ItemCode`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_itemsdetail_key1`(`F_ItemId`, `F_ItemCode`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_itemsdetail
@@ -3862,6 +3922,11 @@ INSERT INTO `sys_itemsdetail` VALUES ('39fc87c1-15a9-292d-a4ad-27b3bdc43c99', '3
 INSERT INTO `sys_itemsdetail` VALUES ('39fc87c1-2fe4-c8ac-324f-9b9546888a47', '39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, '2', 'Post', NULL, 0, NULL, 2, 0, 1, '', '2021-05-16 22:28:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('39fc87c1-4dda-99fc-b451-2fe5a9d5214c', '39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, '3', 'Put', NULL, 0, NULL, 3, 0, 1, '', '2021-05-16 22:28:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('39fc87c1-679d-0818-ab56-79c34e727672', '39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, '4', 'Delete', NULL, 0, NULL, 4, 0, 1, '', '2021-05-16 22:29:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('39fcc061-aaf8-2e3a-dfa3-138de46b189e', '39fcc059-5908-10be-14d9-a6bc5e7e9cfd', NULL, '0', '原料', NULL, 0, NULL, 0, 0, 1, '', '2021-05-27 22:22:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('39fcc061-c67e-7581-6a38-2d294231a9aa', '39fcc059-5908-10be-14d9-a6bc5e7e9cfd', NULL, '1', '半成品', NULL, 0, NULL, 1, 0, 1, '', '2021-05-27 22:22:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('39fcc061-e55e-4899-68f5-668e335fa285', '39fcc059-5908-10be-14d9-a6bc5e7e9cfd', NULL, '2', '成品', NULL, 0, NULL, 2, 0, 1, '', '2021-05-27 22:23:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-05-27 22:23:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('39fcc062-0c61-f8ec-51ec-bb313fd5a423', '39fcc05b-4d9a-ea9d-c621-49c4295ece65', NULL, '0', '正常收货', NULL, 0, NULL, 0, 0, 1, '', '2021-05-27 22:23:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('39fcc062-2e81-0762-1d29-e8bbdc62cbf8', '39fcc05b-4d9a-ea9d-c621-49c4295ece65', NULL, '1', '退货收货', NULL, 0, NULL, 1, 0, 1, '', '2021-05-27 22:23:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('3c884a03-4f34-4150-b134-966387f1de2a', '9a7079bd-0660-4549-9c2d-db5e8616619f', NULL, 'Exit', '退出', NULL, 0, NULL, 2, 0, 1, NULL, '2016-07-19 17:10:49', NULL, '2016-07-19 18:20:23', NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('3f280e2b-92f6-466c-8cc3-d7c8ff48cc8d', '00F76465-DBBA-484A-B75C-E81DEE9313E6', NULL, '7', '硕士', NULL, 0, NULL, 7, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('41053517-215d-4e11-81cd-367c0e9578d7', '954AB9A1-9928-4C6D-820A-FC1CDC85CDE0', NULL, '3', '通过', NULL, 0, NULL, 3, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3912,42 +3977,1105 @@ INSERT INTO `sys_itemsdetail` VALUES ('fa6c1873-888c-4b70-a2cc-59fccbb22078', '0
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log`;
 CREATE TABLE `sys_log`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_Date` datetime NOT NULL,
-  `F_Account` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_NickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_Type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_IPAddress` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_IPAddressName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_ModuleName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_Date` datetime NULL DEFAULT NULL,
+  `F_Account` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_NickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Type` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_IPAddress` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_IPAddressName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ModuleName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_Result` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_KeyValue` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_CompanyId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_KeyValue` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CompanyId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO `sys_log` VALUES ('39fc8a6b-74b4-8a8d-d69b-bb918c783eeb', '2021-05-17 10:54:00', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-17 10:54:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0021446f-3d41-4298-b4b3-e8b0d79a5955', '2020-10-14 10:26:04', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-14 10:26:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0080d0d7-5d76-4873-a37d-1710867ce0bd', '2021-02-10 12:30:37', '20000', 'xxxx', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 12:30:38', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('00ae8d92-506f-422a-abf1-3e8e23f341a6', '2021-02-10 12:32:28', '20000', 'xxxx', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 12:32:29', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('01263523-1c1c-4839-a509-f600016a9fca', '2020-09-07 10:44:04', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-09-07 10:44:04', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('01c17d91-64b9-4103-b6da-da2a2a3ca869', '2020-07-02 14:02:57', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry \'xxxxx\' for key \'IX_Sys_Notice\'', '2020-07-02 14:02:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('01c570ae-e8b2-4588-924d-c4213a2398ff', '2020-10-12 15:14:07', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 15:14:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('0200dd69-378a-4719-bcc1-d41bdebf6296', '2020-07-22 16:10:32', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 16:10:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('023fc161-1ec2-41c9-80a5-ce98969842a8', '2020-07-23 08:48:48', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-23 08:48:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('02924efd-1fcb-4801-bb3d-bf27a3c7ecbb', '2020-07-22 16:10:18', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 16:10:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('02c44948-0d0f-4c63-aa72-69d63af6cf66', '2020-07-08 10:10:35', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-08 10:10:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('02dd78e4-504c-4e9f-bb7e-df553bd72bd4', '2020-06-28 15:02:43', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 15:02:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('02e38376-7212-46e5-8dc3-8d4addf9c9c7', '2020-06-28 12:41:58', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功', '2020-06-28 12:41:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0336e7a1-3cfa-4a23-8104-5540ea0b10dd', '2021-02-10 11:15:58', '20000', 'xxxx', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 11:15:59', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('035a572b-7e8b-451d-bd56-ab9b01f883af', '2020-07-31 17:31:21', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-07-31 17:31:21', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('04b9d1e4-4da9-44d2-9991-1e03dccceb2b', '2020-07-23 08:59:52', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,新增操作成功', '2020-07-23 08:59:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0504a623-ccd8-4650-9958-093d0e21a59c', '2020-07-13 16:06:58', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_AuthorizeType\' cannot be null', '2020-07-13 16:06:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('05919823-d70a-4465-b2de-e96deb1d3c66', '2020-07-13 16:43:16', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_SchemeType\' cannot be null', '2020-07-13 16:43:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0623896b-3b04-417b-a9ac-c60ef430441b', '2020-06-28 14:18:07', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 14:18:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('06325602-a8bd-461e-a3f6-75aa975b9c4c', '2020-08-03 16:35:20', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功', '2020-08-03 16:35:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0679eb47-1f45-48f3-9837-88196efe2fdb', '2020-07-31 17:50:03', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:50:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('069a9221-40db-4b52-9002-888e77219ad9', '2020-09-29 14:39:27', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功。', '2020-09-29 14:39:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b2ac5f2c-a2b7-4ca9-86d8-6439bf8186a4', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('07614de9-cff6-4afe-8ba4-3650735c6f98', '2020-09-01 16:37:31', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-09-01 16:37:31', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('079e054c-9d26-4120-b7ae-56767e8c0c8c', '2020-09-09 11:50:59', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功。', '2020-09-09 11:50:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '9165dd75-8902-4a63-aad1-2a5286be5169', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('07a00af6-b824-4c0a-a6e3-1d5a2fb2c19b', '2020-10-13 16:13:09', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-13 16:13:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('07ba8628-05cb-41f1-b768-9d85d4307034', '2020-08-04 08:32:20', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:32:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('07ee2e53-e245-4f5a-b2b0-322ae1059bdd', '2020-07-21 17:52:13', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,新增操作成功', '2020-07-21 17:52:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d9270c-c0db-4ae8-8409-0316ac74a2f5', '2021-06-04 11:56:38', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-06-04 11:56:38', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d9270c-c505-4897-861d-a8ccb9c0406b', '2021-06-04 11:56:45', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-04 11:56:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d9270c-c7ef-4879-87a8-7d94623b707e', '2021-06-04 11:56:50', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,修改操作失败，Object reference not set to an instance of an object.', '2021-06-04 11:56:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d9270c-ca28-4e7b-8bbf-a38f8aedba98', '2021-06-04 11:56:53', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,修改操作失败，Object reference not set to an instance of an object.', '2021-06-04 11:56:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d9270c-f789-477d-8018-19fea3b9696a', '2021-06-04 11:58:10', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,修改操作失败，Object reference not set to an instance of an object.', '2021-06-04 11:58:10', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d9270d-21e4-47f4-8837-24ac676c2ecf', '2021-06-04 11:59:21', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,修改操作失败，Object reference not set to an instance of an object.', '2021-06-04 11:59:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d9270d-248e-49b7-8318-9e0e9f4ccb80', '2021-06-04 11:59:25', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功。', '2021-06-04 11:59:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92714-1c71-41bf-8099-0af7c95a1033', '2021-06-04 12:49:18', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-04 12:49:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92714-5667-4efc-8806-8441c639abdf', '2021-06-04 12:50:55', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-06-04 12:50:55', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92714-5a27-4092-87aa-3629e74b412b', '2021-06-04 12:51:01', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-04 12:51:01', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92714-80f8-43c4-8dfb-3e181b74211c', '2021-06-04 12:52:06', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-04 12:52:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92714-ad6d-46f6-8a96-ac747c53efa4', '2021-06-04 12:53:21', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-04 12:53:21', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92716-3ffa-4d78-80d4-9c3b1b9b2681', '2021-06-04 13:04:36', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-04 13:04:37', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92716-e2ed-4fa6-846c-17e2f633b4ec', '2021-06-04 13:09:10', 'admin', '超级管理员', 'Login', '127.0.0.1', '本地局域网', NULL, '系统登录', 1, '登录成功', '2021-06-04 13:09:10', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d9275e-5a52-4276-88cb-010368d54496', '2021-06-04 21:40:44', 'coreShop', 'coreShop', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2021-06-04 21:40:45', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d9275e-61ab-4aa2-8541-694f7d1f9567', '2021-06-04 21:40:57', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-04 21:40:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d9275f-0407-4e59-8790-0f3bfa6def6c', '2021-06-04 21:45:29', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-04 21:45:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d928f0-d77c-4ac8-8461-8df7841a5109', '2021-06-06 21:41:52', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-06 21:41:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d928f0-e111-4126-83a5-f779d6d5ecad', '2021-06-06 21:42:08', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-06 21:42:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d928f0-e120-41dc-816b-d1edefe0675e', '2021-06-06 21:42:08', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-06 21:42:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d928f0-e17a-4b13-873a-9c67131435cd', '2021-06-06 21:42:09', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功。', '2021-06-06 21:42:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d928f1-08df-4659-8ecf-3118c03890d2', '2021-06-06 21:43:15', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-06 21:43:15', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d928f1-4656-450f-8caa-4f1b8a23fdec', '2021-06-06 21:44:58', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-06 21:44:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d928f1-4cd4-4647-8f49-8bae14d9601f', '2021-06-06 21:45:09', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-06 21:45:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d928f1-4cdf-4bea-8cbf-3f3e11a06035', '2021-06-06 21:45:09', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-06 21:45:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d928f1-500d-465e-8dde-01c8118ae649', '2021-06-06 21:45:14', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-内容管理-新闻管理', 1, '新闻管理操作,修改操作成功。', '2021-06-06 21:45:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92966-3624-4b83-81a1-ba75661bdb26', '2021-06-07 11:42:02', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-07 11:42:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92966-aa45-47ad-8bda-fa65fccca941', '2021-06-07 11:45:17', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-07 11:45:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92978-765f-4a4b-802e-e2f82e4d15ba', '2021-06-07 13:52:41', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-06-07 13:52:41', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92978-79ac-4852-8c5f-c5cf9fb3f591', '2021-06-07 13:52:46', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-07 13:52:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92978-a7eb-45c1-8f1f-eda73e3ed7e7', '2021-06-07 13:54:04', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功。', '2021-06-07 13:54:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92978-cef0-4192-810f-03ae26c1e830', '2021-06-07 13:55:09', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功。', '2021-06-07 13:55:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92978-f1ad-4052-876e-abdd507a420b', '2021-06-07 13:56:08', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-07 13:56:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-0be0-4447-8158-1b3ded9948f6', '2021-06-07 13:56:52', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,新增操作成功。', '2021-06-07 13:56:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-1f02-4901-8aa6-6356c55e4870', '2021-06-07 13:57:24', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-岗位管理', 1, '岗位管理操作,新增操作成功。', '2021-06-07 13:57:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-2bac-4665-807b-5ed06ca959dc', '2021-06-07 13:57:45', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-用户管理', 1, '用户管理操作,新增操作成功。', '2021-06-07 13:57:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-2ec9-4911-8cd5-2cf87d783be5', '2021-06-07 13:57:50', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '安全退出系统', '2021-06-07 13:57:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-34d3-4604-81a2-edfc7356b183', '2021-06-07 13:58:00', '10000', '11111', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-07 13:58:00', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-4ea2-437b-83ba-b4693d5c0fd3', '2021-06-07 13:58:44', '10000', '11111', 'Exit', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '安全退出系统', '2021-06-07 13:58:44', '08d92979-2ba7-43b2-85c0-ef44f060604e', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-523d-4bbe-817e-02f20325c8d4', '2021-06-07 13:58:50', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-07 13:58:50', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-57f3-492b-8ce5-34019483fdff', '2021-06-07 13:58:59', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功。', '2021-06-07 13:58:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '08d92978-ceda-45c4-8a98-e94a332ac4b6', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-5a90-4e5b-8ab5-53fba58937b3', '2021-06-07 13:59:04', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功。', '2021-06-07 13:59:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '08d92978-a7e4-4a72-8eff-f387d37391c2', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-5d6a-4fee-80da-e6a5a09d03e9', '2021-06-07 13:59:08', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-用户管理', 1, '用户管理操作,删除操作成功。', '2021-06-07 13:59:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '08d92979-2ba7-43b2-85c0-ef44f060604e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-607c-4afc-8a5c-fd5555a7a494', '2021-06-07 13:59:14', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,删除操作成功。', '2021-06-07 13:59:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '08d92979-0bd7-41d4-80b4-43a29a550dc3', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92979-62ae-4292-8c7c-06cb1fe04fde', '2021-06-07 13:59:17', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-岗位管理', 1, '岗位管理操作,删除操作成功。', '2021-06-07 13:59:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '08d92979-1eff-4c27-8aca-625b3a4c2604', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a49-52c0-40ed-8b3c-0110cefe2094', '2021-06-08 14:47:46', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-06-08 14:47:46', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a49-591d-4534-822e-89bbd7601759', '2021-06-08 14:47:56', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-08 14:47:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a4e-77d0-440f-8305-34daa7a18dc9', '2021-06-08 15:24:35', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-08 15:24:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a51-c05c-47c0-89ba-eb311ab3966c', '2021-06-08 15:48:06', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-08 15:48:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a58-5322-4490-82d6-4efa472df444', '2021-06-08 16:35:09', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,新增操作成功。', '2021-06-08 16:35:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a58-6175-47ac-8462-ec7971ab4ef0', '2021-06-08 16:35:33', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,删除操作成功。', '2021-06-08 16:35:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '3b6922f9-b4ba-4615-aa3f-b00110da54c6', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a58-6cde-4c70-89ff-ce6bf30bcd79', '2021-06-08 16:35:52', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,删除操作成功。', '2021-06-08 16:35:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '49c506c3-ee0b-43eb-ac64-b1c31fd5eb57', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a86-e53e-41cc-895f-41bf6e8f95fc', '2021-06-08 22:08:31', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-08 22:08:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a87-0ce9-4958-8c2b-57082369b5c3', '2021-06-08 22:09:38', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,新增操作成功。', '2021-06-08 22:09:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8b-462e-4c65-8c6e-e644e8923437', '2021-06-08 22:39:52', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功。', '2021-06-08 22:39:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '08d92a58-531c-43ec-8546-d359e0f81347', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8b-aac8-4926-8431-12b49909e655', '2021-06-08 22:42:40', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,修改操作成功。', '2021-06-08 22:42:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '08d92a87-0ce5-4cab-8359-8536c3763dcc', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8b-bc2b-46ca-846e-d8924457d18d', '2021-06-08 22:43:10', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-08 22:43:10', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8b-bc35-45c7-87f7-3952e45da45c', '2021-06-08 22:43:10', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-08 22:43:10', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8b-cf87-46c0-8e1b-1ff7e3be408c', '2021-06-08 22:43:42', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-08 22:43:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8b-cf90-4e78-8f0b-963cf09db98e', '2021-06-08 22:43:42', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-08 22:43:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8b-e381-4de5-8e94-b125d30a1b2a', '2021-06-08 22:44:16', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-08 22:44:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8b-e38a-4d62-8eab-5e58f01ad254', '2021-06-08 22:44:16', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-08 22:44:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8b-e38a-4f61-85db-8819a3a8a0b7', '2021-06-08 22:44:16', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-08 22:44:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8b-e393-4b11-8e67-5358d6cba6ae', '2021-06-08 22:44:16', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-08 22:44:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8c-9efe-4d9c-81cd-b65bd678d049', '2021-06-08 22:49:30', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功。', '2021-06-08 22:49:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '08d92a58-531c-43ec-8546-d359e0f81347', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8c-b028-49c4-8e78-44ec2a5a729a', '2021-06-08 22:49:59', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,修改操作成功。', '2021-06-08 22:49:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '08d92a87-0ce5-4cab-8359-8536c3763dcc', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8c-b54f-4c3f-8d5c-5183a7676770', '2021-06-08 22:50:08', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-08 22:50:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8c-b557-42ce-8cf2-0583a449a791', '2021-06-08 22:50:08', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-08 22:50:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8c-d278-4f79-84ca-458f25c71a30', '2021-06-08 22:50:56', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-08 22:50:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8c-e21a-4c43-8f58-66d2b7fd5260', '2021-06-08 22:51:23', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-08 22:51:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8c-e700-4494-82a0-0fcc86cd06c9', '2021-06-08 22:51:31', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-08 22:51:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8c-f517-4f47-8176-b983157ee16b', '2021-06-08 22:51:55', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-08 22:51:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8c-f523-4b5f-804e-0319fafbab6e', '2021-06-08 22:51:55', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-08 22:51:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8c-f876-4825-8893-eb904eba7ede', '2021-06-08 22:52:00', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-08 22:52:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8c-f87d-4cec-819c-753fe532c238', '2021-06-08 22:52:00', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-08 22:52:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8d-537e-4396-8961-48063c80b1c9', '2021-06-08 22:54:33', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功。', '2021-06-08 22:54:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8e-927e-4e34-8006-2de285538073', '2021-06-08 23:03:28', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-08 23:03:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8e-9287-4266-8ca3-1b9ae8375b75', '2021-06-08 23:03:28', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-08 23:03:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8f-1fe9-4ef4-8fc2-d69ce542b799', '2021-06-08 23:07:25', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-08 23:07:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92a8f-1ff1-4ee3-8914-9d3c8c16749a', '2021-06-08 23:07:25', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-08 23:07:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92af9-b9cc-45d7-8f3a-7c881c8d2025', '2021-06-09 11:50:30', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-09 11:50:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afc-f83e-46ba-8240-c24d88de00c0', '2021-06-09 12:13:43', 'admin', 'admin', 'Login', '127.0.0.1', '本地局域网', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-06-09 12:13:43', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afd-6e63-4592-82b1-937477e4acb8', '2021-06-09 12:17:02', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-09 12:17:02', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afd-a268-4d5c-84f0-5fd9a35f6f91', '2021-06-09 12:18:29', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2021-06-09 12:18:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afd-a615-43b0-8777-25530ec94ccc', '2021-06-09 12:18:35', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统安全-定时任务', 0, '定时任务操作,新增操作失败，Constructor on type \'WaterCloud.Service.AutoJob.SaveServerStateJob\' not found.', '2021-06-09 12:18:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afd-adc7-4a06-8078-86993b1290f3', '2021-06-09 12:18:48', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2021-06-09 12:18:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afd-b20a-40df-87bd-4675ff96bbb4', '2021-06-09 12:18:55', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统安全-定时任务', 0, '定时任务操作,新增操作失败，Constructor on type \'WaterCloud.Service.AutoJob.SaveServerStateJob\' not found.', '2021-06-09 12:18:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afd-b57e-4d52-8c42-fb1a4536126b', '2021-06-09 12:19:01', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2021-06-09 12:19:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afd-b6a9-40ea-846c-b422587fd3a8', '2021-06-09 12:19:03', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2021-06-09 12:19:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afe-1943-4e08-8f06-94ce1bcd6e11', '2021-06-09 12:21:48', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2021-06-09 12:21:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afe-1e76-4550-80d3-4dd3e1555012', '2021-06-09 12:21:57', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统安全-定时任务', 0, '定时任务操作,新增操作失败，Constructor on type \'WaterCloud.Service.AutoJob.SaveServerStateJob\' not found.', '2021-06-09 12:21:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afe-41da-4cef-8771-daebed4fb6c7', '2021-06-09 12:22:56', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统安全-定时任务', 0, '定时任务操作,新增操作失败，There is an object reference not set to an instance in expression tree. The type of null object is \'WaterCloud.Service.SystemSecurity.OpenJobsService+<>c__DisplayClass13_0\'.', '2021-06-09 12:22:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92afe-454c-4143-8054-8bbf024bbd12', '2021-06-09 12:23:02', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,新增操作成功。', '2021-06-09 12:23:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92b06-1b3f-4f06-807c-4a3d9c6a9708', '2021-06-09 13:19:08', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-09 13:19:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92b06-8d70-480b-8d7a-277cce92d7a6', '2021-06-09 13:22:19', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-09 13:22:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92b1b-e394-4486-84df-bd4d867b3594', '2021-06-09 15:55:03', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-06-09 15:55:03', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92b1c-2046-446b-8162-5544fd6c5224', '2021-06-09 15:56:45', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，Unable to cast object of type \'System.String\' to type \'System.Collections.Generic.List`1[WaterCloud.Domain.SystemSecurity.FilterIPEntity]\'.', '2021-06-09 15:56:45', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92b1c-f0cf-44a6-85c4-7399d6766b57', '2021-06-09 16:02:35', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，Unable to cast object of type \'System.String\' to type \'System.Collections.Generic.List`1[WaterCloud.Domain.SystemSecurity.FilterIPEntity]\'.', '2021-06-09 16:02:37', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c82-6c65-4f12-8465-aa5225db86df', '2021-06-11 10:41:32', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-06-11 10:41:33', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c82-7058-4a01-87c8-49f3c46496f2', '2021-06-11 10:41:39', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 10:41:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c82-be07-4139-8da1-54097d4ce06e', '2021-06-11 10:43:50', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-11 10:43:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c82-be16-484d-80a6-8a6290e7f13f', '2021-06-11 10:43:50', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-11 10:43:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c82-c527-4967-8b08-1748c26b5e97', '2021-06-11 10:44:01', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功。', '2021-06-11 10:44:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c83-8835-49a8-8c0e-7205c25416e8', '2021-06-11 10:49:29', 'ceshi', 'ceshi', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,新增操作成功。', '2021-06-11 10:49:29', '08d92c82-c515-4fcd-8963-ec5a8ad36b5b', '', '08d92c82-be71-4969-8b78-43299a9a5bda');
+INSERT INTO `sys_log` VALUES ('08d92c83-cca6-4b0b-8b70-273cef57d327', '2021-06-11 10:51:23', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-06-11 10:51:24', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c83-d185-4ab7-8260-db13d670219c', '2021-06-11 10:51:32', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 10:51:32', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c84-ec4e-400f-8a84-e86207e3a7e8', '2021-06-11 10:59:26', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 10:59:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c85-3e49-4555-8ea4-ffa0172448a7', '2021-06-11 11:01:44', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-06-11 11:01:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c85-3e55-4ca4-8681-d2ae9fa5d8df', '2021-06-11 11:01:44', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-06-11 11:01:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c85-45c2-4faa-86f3-132fdf039c43', '2021-06-11 11:01:56', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功。', '2021-06-11 11:01:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c85-5266-4256-8ace-69524f5104ed', '2021-06-11 11:02:17', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 11:02:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c85-5e09-44c4-8312-9f93e2437207', '2021-06-11 11:02:37', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '安全退出系统', '2021-06-11 11:02:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c86-2f19-4574-8a15-d9f79034d484', '2021-06-11 11:08:28', 'admin', '超级管理员', 'Login', '127.0.0.1', '本地局域网', NULL, '系统登录', 1, '登录成功', '2021-06-11 11:08:28', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c86-34ff-4be1-89c3-4982e8e84825', '2021-06-11 11:08:38', 'admin', '超级管理员', 'Create', '127.0.0.1', '本地局域网', NULL, '常规管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功。', '2021-06-11 11:08:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c86-3825-4177-8723-e8b9dfdf44f8', '2021-06-11 11:08:43', 'admin', '超级管理员', 'Update', '127.0.0.1', '本地局域网', NULL, '常规管理-信息中心-通知管理', 1, '通知管理操作,修改操作成功。', '2021-06-11 11:08:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '08d92c86-34e1-4eab-8ef6-465f99cb5733', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c87-90eb-4ef8-87df-4f81d1fc51c2', '2021-06-11 11:18:21', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 11:18:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c87-bafb-4ebe-8de0-22a4a8102ae0', '2021-06-11 11:19:32', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 11:19:32', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c88-0b8f-4706-8380-d45b61d6a76b', '2021-06-11 11:21:47', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '安全退出系统', '2021-06-11 11:21:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c88-2ba8-45a8-897f-fbeeb6a6dbef', '2021-06-11 11:22:41', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 11:22:41', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c88-3ecc-4dc8-87d0-52ef87eb688d', '2021-06-11 11:23:13', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '安全退出系统', '2021-06-11 11:23:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c88-deec-4e4f-80c1-740c4eeb4840', '2021-06-11 11:27:42', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 11:27:42', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c88-e2fd-4088-8e61-29a040f89831', '2021-06-11 11:27:49', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '安全退出系统', '2021-06-11 11:27:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c8d-39bc-4820-8b9f-af0af4f65b2e', '2021-06-11 11:58:52', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 11:58:52', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c8d-4970-4417-8f8c-aa0df2a83c25', '2021-06-11 11:59:18', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '安全退出系统', '2021-06-11 11:59:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c8d-78ad-47a1-8b8d-42b4410dfb4b', '2021-06-11 12:00:38', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 12:00:38', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92c8d-7c7e-42ac-82d8-c0ef3d292848', '2021-06-11 12:00:44', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '安全退出系统', '2021-06-11 12:00:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92cab-f8bf-4984-8f9a-48e99e445aa3', '2021-06-11 15:38:57', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 15:38:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08d92cac-3dde-45e6-8462-e71d78caa8b9', '2021-06-11 15:40:53', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 15:40:53', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('095f9844-3ecf-4075-b5d1-5e8a41776742', '2020-10-28 13:01:37', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 13:01:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('09714166-6ffd-4cea-a8ec-15caf7acffc2', '2020-07-10 08:50:52', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('09a9f4ff-4c91-4d66-889c-1c5ed8b19e08', '2020-06-28 16:44:56', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,新增操作成功', '2020-06-28 16:44:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0ac9e521-621a-43ad-962b-d7e698468b45', '2020-07-31 17:48:58', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:48:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0b143b43-421d-4a9c-a96f-cef8102fbcc2', '2020-07-29 16:51:50', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功', '2020-07-29 16:51:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0be12d1f-7ed1-499c-b70a-5c3af63be349', '2020-08-11 13:20:57', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,修改操作成功', '2020-08-11 13:20:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0becb4ce-fdba-4e88-80e9-9134916fa4fe', '2020-07-21 07:58:05', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-21 07:58:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0c0cbaae-f29c-4154-be6c-b74b037223ec', '2020-08-03 16:15:04', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-08-03 16:15:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0c28a004-f73c-4b9f-af11-dba4d52694f2', '2020-08-03 17:03:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 17:03:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0c5c2dff-5c77-4211-886a-cf13e542e1c6', '2020-07-23 15:44:22', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-07-23 15:44:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '873db213-2d22-4c00-af03-2d1898f13481', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0d40cabf-ba34-434d-8c84-b59bc139129b', '2021-02-10 12:27:01', '20000', 'xxxx', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 12:27:01', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0d4981eb-1b99-44f4-a30a-191de865bf4e', '2020-07-02 14:01:38', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-07-02 14:01:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0d9ec810-c382-4248-9a61-827c2ae036e6', '2020-06-29 17:36:05', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,新增操作成功', '2020-06-29 17:36:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0df1fb6a-f8d7-4567-8ca7-03daaf273360', '2020-07-13 13:59:26', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-13 13:59:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '318bb233-c9df-4374-9937-e55b71fbcf99', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0e52e7e6-8179-4a30-89b9-8363b791c362', '2020-06-30 12:00:53', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:00:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0edc2f74-d838-4ce3-8073-17ba3e62ff6c', '2020-06-30 10:02:37', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统公告', 1, '系统公告操作,修改操作成功', '2020-06-30 10:02:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c2c5efce-96a2-4793-bbee-89a989f4eaf5', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0f1f5bd1-beb2-466b-8fd5-f92aa5ec2089', '2020-10-12 09:38:11', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 09:38:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0fc4ad23-fdf3-4985-96b0-610533d29076', '2020-08-03 16:56:21', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-03 16:56:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0fc90da8-62e5-4908-88f4-e4393fffc2c4', '2020-07-31 17:25:35', '20000', 'xxxx', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:25:35', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0ffb3e58-6dd6-430b-881b-221f76d753c3', '2020-10-15 09:00:10', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 09:00:10', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('10484357-1f43-4640-9159-235e7c5697f6', '2020-06-24 15:03:36', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-24 15:03:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1127654a-6239-426b-9ca6-3e2a293b7fb3', '2020-08-12 10:56:47', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-12 10:56:47', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('116038a1-8f4e-4088-9617-b44a10022950', '2020-07-03 10:52:47', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-03 10:52:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('12383c78-3b6a-4d97-b57c-5e4a58064712', '2020-07-23 11:35:18', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,删除操作成功', '2020-07-23 11:35:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('123e91fa-cff0-4fcd-a90b-4cb399ce8205', '2020-08-03 11:24:38', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-03 11:24:38', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1253244d-0854-4ff2-b59d-71841404f346', '2020-09-04 13:23:04', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-09-04 13:23:04', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('12bb2c61-61d5-44b6-9fcd-8e3302c94295', '2020-07-08 15:26:44', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-08 15:26:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('12ed0f18-1b2b-421c-8db9-bc6ea47ad87d', '2020-07-02 13:53:49', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry \'xxxxx\' for key \'IX_Sys_Notice\'', '2020-07-02 13:53:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('132e7361-51f1-4a8b-9b1e-784372c6bfa7', '2020-07-02 14:46:15', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry \'xxxxx\' for key \'IX_Sys_Notice\'', '2020-07-02 14:46:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('142d7864-dd73-42e4-9842-25d8a1cfd757', '2020-07-29 16:50:54', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功', '2020-07-29 16:50:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('14377694-7edc-4000-9510-4bee5a03c802', '2020-07-03 15:26:17', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-03 15:26:17', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1485216a-efba-4909-aadd-c0a407d07ad6', '2020-10-19 12:44:42', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:44:42', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('152eadcb-0d54-41b0-8ad1-3cf24643615f', '2020-07-14 08:57:20', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-14 08:57:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b4fc0b00-6101-4166-8396-520735f0cdec', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('15b4a971-329c-45e6-9083-37e95efe0eb2', '2020-07-22 14:47:05', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,删除操作成功', '2020-07-22 14:47:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('15f9d0b1-f49e-42ed-925a-e5a5017196fd', '2020-08-04 08:38:50', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:38:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('1607d204-7531-445a-8c8b-1056a2304bff', '2020-06-28 14:21:08', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 14:21:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('165c62c7-48b4-4f99-b251-002f0f32fabe', '2020-07-02 13:54:00', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry \'xxxxx\' for key \'IX_Sys_Notice\'', '2020-07-02 13:54:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1678855c-a82d-4d09-9d80-6640df6beb5b', '2020-08-04 08:52:45', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:52:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('167c0288-9a5a-422b-8cd4-65a6fa6c5c2b', '2020-07-31 17:52:29', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:52:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('16bd3a2b-6063-4364-b1a5-345683e3117e', '2020-07-08 14:34:38', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('173ad1c4-c4a0-4e32-aa3e-a0de8c2fb307', '2020-10-15 09:00:16', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 09:00:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('177466c6-0793-4aeb-bbf1-fa6d08ae59eb', '2020-07-24 14:02:39', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,新增操作成功', '2020-07-24 14:02:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('17ce796c-d3d0-486d-8059-b99e4e1519d8', '2020-10-19 13:10:50', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 13:10:50', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('17d9a2b3-09ac-4163-85ca-9e43ce7f8620', '2020-10-28 11:22:51', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 11:22:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('17f0531e-b8ed-4a0f-8800-693132833adb', '2020-08-11 14:52:18', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-08-11 14:52:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '3b6922f9-b4ba-4615-aa3f-b00110da54c6', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('18040b37-ab14-46ce-af45-e2265d3efed8', '2020-08-04 09:51:11', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功', '2020-08-04 09:51:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1882c7b7-ef7d-4439-bedb-22bb4cec9e95', '2020-08-03 16:54:23', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 16:54:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('18c14b7f-f3ce-4842-838f-d75792653305', '2020-07-22 16:07:54', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 16:07:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1a2d980b-48e4-459e-b94d-895f43ccde48', '2020-07-24 14:08:20', '10000', 'hhh', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-24 14:08:20', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', '7e8a523a-3183-43b8-a83c-830fde0aa13b', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1a5ed086-a799-4bf6-8120-98ae3f1ceb9c', '2020-09-01 08:29:31', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-09-01 08:29:31', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1a94c4d2-cb60-42d0-b640-aedbe669bc1e', '2020-07-30 10:19:38', '10000', 'hhh', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-30 10:19:38', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1ac41139-55c6-476a-83c1-2e38678e38e5', '2020-07-31 17:59:07', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-31 17:59:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1b7ff20f-555d-4fee-b543-4df54eca2770', '2020-10-19 11:05:45', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 11:05:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1c476c28-ae5b-491f-9d39-8f328a4d2f0e', '2020-07-23 15:40:48', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-23 15:40:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1c5aa95e-604e-451d-92e6-5da707a8d009', '2020-07-23 09:00:59', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-23 09:00:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1ca7cdc1-5293-4c16-a60e-56b161bdd86d', '2020-07-21 17:51:08', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,新增操作成功', '2020-07-21 17:51:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1cff725e-de47-4547-b453-7ffe59ba8756', '2020-08-03 17:02:04', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 17:02:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1d7a2b8c-969c-4765-aa19-06bbe44fe5dd', '2020-10-15 10:05:58', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:05:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1dade866-37e0-4a6f-9b4d-66bc54205acd', '2020-07-23 15:41:58', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-23 15:41:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '5f9873e9-0308-4a8e-84b7-1c4c61f37654', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1ded98bf-c771-4f4e-a1e2-defe5f654b82', '2020-08-27 14:49:00', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-08-27 14:49:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '4767b688-83aa-4fd8-b3f6-85175185ec85', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1e10a4fb-5069-41cd-8cbf-233663e44e68', '2020-07-22 14:17:45', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 14:17:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1e349006-26a2-4100-9adf-d752b6497d15', '2020-07-30 15:41:30', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-30 15:41:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1e695269-cdd1-46ab-b28a-6efeb584ae35', '2020-10-15 10:22:47', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:22:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1fa11095-99aa-4091-9a20-96803cff09d1', '2020-10-09 15:24:20', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-09 15:24:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('1fb71c78-1df5-4290-a69f-e1a8c4e0edd5', '2020-07-09 12:06:05', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,新增操作成功', '2020-07-09 12:06:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('203fc40e-600d-4f56-a6be-cb67e262cd05', '2020-10-12 15:46:54', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 15:46:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('218c51d3-536b-4da7-bbc1-be869f5bf806', '2020-07-14 15:39:44', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功', '2020-07-14 15:39:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('21d268f7-3847-4bb8-8527-c0a2811e3c32', '2020-07-22 14:47:46', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-22 14:47:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1a588a3b-95d7-4b3a-b50a-d3bc40de9fe3', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('21fcb2cd-6922-4678-b81d-74fbbc77b625', '2020-08-12 11:17:52', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-12 11:17:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'a5b323e7-db24-468f-97d7-a17bf5396742', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('226b8ed7-c00f-48a9-909b-54bac2cf2ff7', '2020-07-15 15:04:15', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-15 15:04:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'e376d482-023e-4715-a9c8-2a393c24426e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('228bab42-7b6e-4667-b3ba-a99418b4f209', '2020-07-23 15:45:17', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-23 15:45:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('230abd79-eaf7-4cf7-b181-f22bc2ff7def', '2020-08-03 17:04:30', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 17:04:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2319c9da-073c-4f63-8cd7-b0f2d34ad143', '2020-07-07 13:32:42', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-07 13:32:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2353d67a-593c-4b75-8e74-81a3e3786211', '2020-06-28 14:20:46', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 14:20:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('235699b4-da93-446a-90e3-3999688b41b5', '2020-06-28 14:15:46', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 14:15:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('23de76d5-6159-479e-bab0-2ab34eb05c9c', '2020-07-31 15:23:53', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-31 15:23:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('248e6731-25fc-4202-a37c-d0e99bf59c8d', '2020-07-22 17:12:18', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 17:12:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('24a3aa54-23fa-406e-88bc-705315e4548f', '2020-07-14 09:21:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2575bbe1-a07d-4520-b7f8-e85296824ee5', '2020-08-04 08:52:20', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:52:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('26545095-9b21-463f-9641-1cc0c632f1ee', '2020-10-15 09:20:25', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 09:20:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('26b0fec0-49d0-4443-827e-6a90e9c65baf', '2020-07-22 17:35:29', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,修改操作成功', '2020-07-22 17:35:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'edbbf77a-6321-4be5-a000-8fc70c9cf895', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('26bd4fdb-c8a9-48ea-b6ad-676709463303', '2020-07-22 17:08:57', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-22 17:08:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8ea9a328-4b20-4af4-ae99-e3be5b520317', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('26d4ba49-820e-4b98-858e-1dc4307cad23', '2020-10-14 10:35:07', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-14 10:35:07', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('26e5e101-9f23-4c7b-b2e6-a469300ebe26', '2020-07-02 08:38:57', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-02 08:38:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('27098bfa-b1f9-4daa-b265-1c09796aaed1', '2020-07-30 16:45:19', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-30 16:45:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '924456df-e40f-426f-b086-245ced28325e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('27345574-22d9-4855-ae8a-0e81bb6bbb6f', '2020-07-21 14:12:11', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-21 14:12:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8faff4e5-b729-44d2-ac26-e899a228f63d', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('278f4e5f-0105-4577-a093-a43a99b6540e', '2020-08-12 11:17:09', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-12 11:17:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '5f9873e9-0308-4a8e-84b7-1c4c61f37654', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2795001e-71ba-4f2a-b284-f2cce6ba4535', '2020-07-21 13:39:05', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,新增操作成功', '2020-07-21 13:39:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('27e38d57-915e-4079-9a57-b5f4dc7dd0c7', '2020-08-20 16:49:11', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-08-20 16:49:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'eaa34917-4924-4661-bd17-28d2be9a855a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('27fcdf20-2205-4a7f-af59-93b13b8f7460', '2020-07-13 09:22:02', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-13 09:22:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('281513c3-67d2-439e-ae28-bb25e427be7f', '2020-10-19 12:55:04', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:55:04', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('28249534-84b6-4273-849b-0738124debd3', '2020-08-04 11:24:08', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-04 11:24:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2839d991-4c0d-4e2d-92ea-6382e11f79a1', '2020-09-04 14:33:00', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-09-04 14:33:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2869931e-0e1c-4d79-8685-c50c4f7d0515', '2020-07-30 15:51:17', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-30 15:51:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8a381383-5db2-4700-b26e-0f5aed3fb3a2', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('287313c8-005b-433a-8130-f64a88cdbb4c', '2020-07-22 14:18:12', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 14:18:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('287bd5b8-c3cc-492a-bd3c-4a63e8732253', '2020-07-22 14:18:15', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功', '2020-07-22 14:18:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('28e38c07-2faf-4a3c-81ce-95ae3cf201ff', '2020-07-24 14:07:26', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,修改操作成功', '2020-07-24 14:07:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd71324b7-e7eb-47b2-bdea-f0293d36bb7f', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('29431cd0-66a1-4348-8844-a3272e16bfb8', '2020-06-30 17:39:56', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-30 17:39:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2a237fe6-3bbf-42c4-b4aa-a8d907d7e746', '2020-10-15 10:13:17', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:13:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2a279585-325b-4960-abd0-364973d626e0', '2020-10-14 10:35:17', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:35:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2a4b7db6-385a-465d-af3c-0f49390114a2', '2020-07-21 17:51:24', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,删除操作成功', '2020-07-21 17:51:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2a86fc34-aebe-40b1-ad55-1d0d22e29c5a', '2020-07-22 09:49:18', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-22 09:49:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2a9c38b8-e0f9-4282-9d5b-c4ca194683fc', '2020-10-19 10:12:17', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 10:12:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2b5e9633-3c61-4dcb-8b66-ad8d28f29350', '2020-08-03 11:24:57', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-03 11:24:57', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('2c189382-23fa-4695-9399-f82200af254b', '2020-08-03 16:52:18', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 16:52:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2c3a7cd8-3d01-4021-b9d9-c4ab2d678dad', '2020-09-02 09:04:44', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-09-02 09:04:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2c69424d-3404-44d0-8cab-d991d19a91fe', '2020-07-24 14:13:05', '10000', 'hhh', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-24 14:13:05', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2cd9e25e-171c-404f-a7fa-b52403147eaa', '2020-06-29 17:24:42', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-29 17:24:42', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2d2a42be-8263-42d1-86a9-5dd9ba873195', '2020-07-30 16:46:35', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-30 16:46:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '924456df-e40f-426f-b086-245ced28325e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2dce4127-b124-42c9-aed1-918c59ab2a91', '2020-10-28 11:23:00', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 11:23:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2e82e8d2-8f34-460c-9766-b940167ece25', '2020-06-30 11:58:44', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 11:58:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2e873f5f-488f-4e1f-a615-1f1eb06ab3ac', '2020-10-20 09:02:01', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-20 09:02:01', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2efe72ba-282d-4e23-a27d-d7aad851ac9c', '2020-06-24 08:30:42', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-24 08:30:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2f2766f8-5ec0-428a-b91e-62e45771a540', '2020-08-31 10:50:59', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-用户管理', 1, '用户管理操作,修改操作成功', '2020-08-31 10:50:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'df821722-2fae-4023-ae57-23bebfccad85', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('2f46a6a4-c343-4b7d-912b-f681cee183dc', '2021-05-28 21:41:23', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-05-28 21:41:23', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('306380a7-3717-4242-b89c-a4363fbec59c', '2020-07-24 14:29:45', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-用户管理', 1, '用户管理操作,修改操作成功', '2020-07-24 14:29:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('30cb9a42-5b53-4466-a3ca-95e9e94ff55a', '2020-07-24 15:36:51', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,修改操作成功', '2020-07-24 15:36:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '599669e9-2b1b-4c51-a842-ed0165075432', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('31a823ea-1539-4430-818f-46c3ce14eba7', '2020-07-31 16:23:32', '20000', 'xxxx', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 16:23:32', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('31b9cb98-452b-4125-aaea-db2137b0d27d', '2020-07-23 11:50:09', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-07-23 11:50:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '873db213-2d22-4c00-af03-2d1898f13481', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('31c52261-6aaf-4b6e-9091-118d909dcf1e', '2020-07-31 17:50:35', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:50:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3207046e-5887-43b4-ad53-7a9fd1177807', '2020-06-28 12:27:57', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_Title\' at row 1', '2020-06-28 12:28:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c2c5efce-96a2-4793-bbee-89a989f4eaf5', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('332ad5ef-71d2-4d07-b4e2-fc14e9702351', '2020-10-19 12:38:11', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:38:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('33722239-549a-48ea-b5fb-2e8d4e1ac7e6', '2020-06-30 10:45:51', '20000', 'xxxx', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-30 10:45:51', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('338ebe3b-ae99-45f3-90da-7ffefe2b6c33', '2020-07-07 13:50:02', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,删除操作成功', '2020-07-07 13:50:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('33ab9399-ccc9-4695-b505-cff3957f9a71', '2020-07-08 10:41:26', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,新增克隆成功', '2020-07-08 10:41:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('33d32ed4-69cc-43bc-8a4a-d9405ff5884e', '2020-06-28 16:37:33', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,新增操作成功', '2020-06-28 16:37:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('33d5ca19-dbd0-42c2-a13a-0ecdb821d59c', '2020-06-28 14:17:37', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 14:17:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3413f529-6954-4a3f-8586-5394ef31a12c', '2020-06-28 14:15:49', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 14:15:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('343e18c0-debd-448c-b1b1-92b59093c3fc', '2020-08-04 08:50:12', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:50:12', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('3456acad-2b52-40c5-8105-a3041c1119b8', '2020-07-08 10:12:57', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-08 10:12:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '96EE855E-8CD2-47FC-A51D-127C131C9FB9', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3595c3f3-a727-4e8c-b5eb-63c58bf0b493', '2020-07-06 10:15:12', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-07-06 10:15:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('35ada9db-c28d-47a1-9bbb-3a8a6ac1cf66', '2020-07-31 16:08:57', '20000', 'xxxx', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 16:08:57', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('35e129d7-dcde-4191-8f88-08ef89e99de1', '2020-06-30 12:03:22', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:03:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('365d0486-fd4e-4611-8011-a05e8fcd1623', '2020-06-28 14:05:52', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_MobilePhone\' at row 1', '2020-06-28 14:05:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('366db9df-03d6-4aa7-ab5a-7d47b870242e', '2021-06-02 22:26:06', 'admin', '超级管理员', 'Login', '127.0.0.1', '本地局域网', NULL, '系统登录', 1, '登录成功', '2021-06-02 22:26:06', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('36e6f632-e72f-4430-a874-adc25ce9c6eb', '2020-07-02 08:42:17', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-02 08:42:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1dff096a-db2f-410c-af2f-12294bdbeccd', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3712a3c9-4c13-454c-a828-a696dfaa5a4d', '2020-10-19 09:23:32', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 09:23:32', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3728bb4f-95e9-494b-9bfa-42d594d73164', '2020-07-22 17:12:22', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-22 17:12:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3733917b-81ce-4122-a84a-74a876bdb5de', '2020-07-08 12:44:51', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-08 12:44:51', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('37cf477d-9ae0-48b7-9b62-d721080e7e83', '2020-07-14 17:05:47', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，\'string\' does not contain a definition for \'lines\'', '2020-07-14 17:05:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('37d1f60c-1a02-411c-a676-04a2de0f80ff', '2020-07-07 08:15:02', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-07 08:15:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('38366eed-7be1-44e1-954a-98778bdf7b1e', '2020-07-09 10:21:30', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,新增操作成功', '2020-07-09 10:21:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('383b075e-de1c-482c-83e8-01a4e3e9a98a', '2020-07-14 08:53:52', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-14 08:53:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('387797dd-2c04-4d6b-92dd-311412a1bb53', '2020-06-30 10:45:38', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,修改操作成功', '2020-06-30 10:45:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '74a7c517-dbc4-4c7d-b9ba-9795a3dc008c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('38ec47d0-adf6-40b2-865d-4696a5d8ac0d', '2020-08-03 16:56:23', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-03 16:56:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('38efbbf3-9d8a-450f-b2b6-24e542cfea72', '2020-07-07 14:23:17', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-07 14:23:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('396ac648-6f1d-4a0c-ae5f-d8ce942b0484', '2020-10-19 12:40:29', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:40:29', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39c67bfc-6e7a-4eab-8944-c93f27a8ce22', '2020-08-04 08:46:13', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:46:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('39d5a99f-56de-482b-9851-cfee2b54c73e', '2020-10-14 10:35:20', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:35:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fc76f9-c4a9-77f0-7897-f7ed73a2201d', '2021-05-13 16:17:02', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-13 16:17:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fc76fe-f7ca-06c6-5f94-50e0037f92fd', '2021-05-13 16:22:43', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2021-05-13 16:22:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fc9a60-5d77-07bb-5082-c98afef72bfd', '2021-05-20 13:15:48', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-20 13:15:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fc9a62-18be-97be-c71e-45c6fbd0edb0', '2021-05-20 13:17:42', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-20 13:17:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fc9e86-8801-c971-fb2b-55223c8d7f90', '2021-05-21 08:35:58', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-21 08:35:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcb89e-e9b8-4928-64ab-98f1837bb82f', '2021-05-26 10:12:44', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-26 10:12:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcb8a5-696c-9bdb-0cd4-81108387aba9', '2021-05-26 10:19:50', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-26 10:19:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcb8a6-7aa2-d0c2-989f-d5659d948d53', '2021-05-26 10:21:00', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-26 10:21:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcb952-d9b4-5795-1c1b-02cf40c09240', '2021-05-26 13:29:16', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-26 13:29:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc057-5f26-6030-c1fd-933857c9f5e9', '2021-05-27 22:11:33', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-05-27 22:11:33', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc057-7b48-f803-f016-69fa7992533f', '2021-05-27 22:11:40', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-27 22:11:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc058-b4e5-4e26-ed76-1ad304e875c7', '2021-05-27 22:13:01', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,新增操作成功。', '2021-05-27 22:13:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc059-592c-c8fb-f235-636881c8c370', '2021-05-27 22:13:43', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,新增操作成功。', '2021-05-27 22:13:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc05b-4dc7-5883-e2d0-208959e30ebe', '2021-05-27 22:15:51', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,新增操作成功。', '2021-05-27 22:15:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc05d-eab4-502d-b545-b19306f0e263', '2021-05-27 22:18:42', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功。', '2021-05-27 22:18:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc05e-f85d-929e-7f8b-9cfb054cb3b8', '2021-05-27 22:19:51', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功。', '2021-05-27 22:19:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc060-0285-d7e0-a94e-aa120e44b779', '2021-05-27 22:20:59', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功。', '2021-05-27 22:20:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc060-ef84-3706-cc1f-5f702606fb3f', '2021-05-27 22:22:00', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功。', '2021-05-27 22:22:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc061-6329-db19-775f-10898f05d19f', '2021-05-27 22:22:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功。', '2021-05-27 22:22:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc061-ab2b-c8aa-77e9-967cf20c46bb', '2021-05-27 22:22:48', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2021-05-27 22:22:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc061-c69f-06b8-b05d-e79c2c31ceed', '2021-05-27 22:22:55', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2021-05-27 22:22:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc061-e582-c9d0-e99a-54576b2eb527', '2021-05-27 22:23:03', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2021-05-27 22:23:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc062-0c8e-7239-3733-ffb4eb0d10cb', '2021-05-27 22:23:13', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2021-05-27 22:23:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc062-2ea7-1fdb-f0d7-8c38f629b8ee', '2021-05-27 22:23:22', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2021-05-27 22:23:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc062-5889-40c3-9a65-cc7a02eae4a1', '2021-05-27 22:23:32', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,修改操作成功。', '2021-05-27 22:23:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc061-e55e-4899-68f5-668e335fa285', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc066-f66e-7226-0691-71718f86542f', '2021-05-27 22:28:35', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-27 22:28:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc069-9315-3436-1a33-febc0078af1f', '2021-05-27 22:31:26', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-27 22:31:26', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc27a-d65e-8976-b3e6-13999002513f', '2021-05-28 08:09:32', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 08:09:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc27b-bba8-10e2-920e-55c06df58377', '2021-05-28 08:10:31', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 08:10:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc27d-437f-bd9e-4292-07c7d5db2969', '2021-05-28 08:12:11', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 08:12:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc27f-0495-55da-1ba6-f313a56943bc', '2021-05-28 08:14:06', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 08:14:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc27f-7df4-bfb9-6cbc-74e6cffa264c', '2021-05-28 08:14:37', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功。', '2021-05-28 08:14:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'eaa34917-4924-4661-bd17-28d2be9a855a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc281-7560-7f29-b221-733b5de9fb32', '2021-05-28 08:16:46', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 08:16:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc287-4e99-7163-0e43-9b3d58e37434', '2021-05-28 08:23:09', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 08:23:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc290-177a-bb5b-0872-9ffe1ce1b3e7', '2021-05-28 08:32:45', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功。', '2021-05-28 08:32:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'eaa34917-4924-4661-bd17-28d2be9a855a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2a3-da43-1068-e617-bd14c9f652ae', '2021-05-28 08:54:20', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 08:54:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2a4-3aaa-2f97-f15f-963ab06329bc', '2021-05-28 08:54:45', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, 'Mes系统-基础信息-工序管理', 1, '工序管理操作,新增操作成功。', '2021-05-28 08:54:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2a4-6732-e3fc-0d68-4c766a2fd457', '2021-05-28 08:54:56', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, 'Mes系统-基础信息-工序管理', 1, '工序管理操作,删除操作成功。', '2021-05-28 08:54:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc2a4-3a81-a95f-5e4a-ad9276052081', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2a9-500a-2425-bf00-9c27cb840805', '2021-05-28 09:00:18', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 09:00:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2a9-7749-4835-d2e3-19ae0d9afda2', '2021-05-28 09:00:28', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, 'Mes系统-基础信息-工序管理', 1, '工序管理操作,新增操作成功。', '2021-05-28 09:00:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2ab-da75-ac2a-a230-c52c1152aaff', '2021-05-28 09:03:04', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 09:03:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2ae-3f01-dcc5-e3d3-292fd235c7e8', '2021-05-28 09:05:41', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 09:05:41', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2ae-ec7a-2091-2c20-d546cf461cdc', '2021-05-28 09:06:26', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2021-05-28 09:06:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc05e-f839-7aa2-8cda-a9a92b03be33', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2af-04e0-5bf7-9113-d19a37d78839', '2021-05-28 09:06:32', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功。', '2021-05-28 09:06:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc05d-ea81-b53f-6425-364473a7588c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2b0-4bd3-30cc-51d5-9e67eb3d22f0', '2021-05-28 09:07:55', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2021-05-28 09:07:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc05e-f839-7aa2-8cda-a9a92b03be33', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2b1-68eb-bb9e-968d-3a9ce900a301', '2021-05-28 09:09:08', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2021-05-28 09:09:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc05e-f839-7aa2-8cda-a9a92b03be33', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2b2-50cb-2ddc-6555-e84507cc4940', '2021-05-28 09:10:08', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,删除操作成功。', '2021-05-28 09:10:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc059-5908-10be-14d9-a6bc5e7e9cfd', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2b2-5f31-d5a4-de0d-936608d15d50', '2021-05-28 09:10:12', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,删除操作成功。', '2021-05-28 09:10:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc05b-4d9a-ea9d-c621-49c4295ece65', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2b2-6d14-f095-ec94-94474b929cfe', '2021-05-28 09:10:15', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,删除操作成功。', '2021-05-28 09:10:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc058-b4bc-14d8-ca7d-e08bc10c170a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2b4-6cd1-62d0-a82d-ae646cd67cf4', '2021-05-28 09:12:26', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功。', '2021-05-28 09:12:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc060-0213-361c-472b-660a790aeafa', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2b4-9e6d-79b3-587e-af0b0ef8d7d4', '2021-05-28 09:12:39', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功。', '2021-05-28 09:12:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc060-ef0e-434d-a8b7-ff8f611f1899', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2b4-b99f-86bc-23cc-eb9e99568241', '2021-05-28 09:12:46', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功。', '2021-05-28 09:12:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc061-62ce-3904-6e0a-7b0cd5e6bb2a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2b4-e2e3-a24c-8173-e9d6f42b2e9e', '2021-05-28 09:12:56', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功。', '2021-05-28 09:12:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc05e-f839-7aa2-8cda-a9a92b03be33', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2ba-96c9-7ab9-5ffd-1fa475054412', '2021-05-28 09:19:10', 'admin', '超级管理员', 'Login', '127.0.0.1', '本地局域网', NULL, '系统登录', 1, '登录成功', '2021-05-28 09:19:10', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2ba-b6be-2061-aeca-489e4a0a6907', '2021-05-28 09:19:18', 'admin', '超级管理员', 'Create', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2021-05-28 09:19:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2ba-c92b-d4f9-fd59-2a569d124bbe', '2021-05-28 09:19:23', 'admin', '超级管理员', 'Create', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2021-05-28 09:19:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2bb-a16b-2b74-d931-4428a9466bc7', '2021-05-28 09:20:18', 'admin', '超级管理员', 'Create', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2021-05-28 09:20:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2bc-41a2-a564-5e84-f49ed7e21bb1', '2021-05-28 09:20:59', 'admin', '超级管理员', 'Delete', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,删除操作成功。', '2021-05-28 09:20:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc2bb-a151-ff0a-4cc2-4055454da90c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2bc-6048-0e0e-4f83-a776a978585d', '2021-05-28 09:21:07', 'admin', '超级管理员', 'Create', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2021-05-28 09:21:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2bc-6e07-cb31-acc4-9f3967530e3c', '2021-05-28 09:21:11', 'admin', '超级管理员', 'Create', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2021-05-28 09:21:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2bd-d034-68a4-aaa2-72de0a1468d8', '2021-05-28 09:22:41', 'admin', '超级管理员', 'Delete', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,删除操作失败，Data too long for column \'F_KeyValue\' at row 1', '2021-05-28 09:22:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc2bc-6de1-239f-27cd-f2449059daa7,39fcc2bc-6022-5d40-c23d-c966a302ca59', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2c1-a490-d724-9451-13379df668e5', '2021-05-28 09:26:52', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 09:26:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2c9-899a-953e-8841-011dafa3c471', '2021-05-28 09:35:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2021-05-28 09:35:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2cc-4e58-eba1-2f57-875363c22964', '2021-05-28 09:38:31', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 09:38:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2eb-96bb-dd64-c74e-aace338b9dc8', '2021-05-28 10:12:41', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功。', '2021-05-28 10:12:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2ed-ea79-2fce-8ff8-72b8035b45fc', '2021-05-28 10:15:14', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 10:15:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2ee-4ea1-9c4e-2a5a-d8a66cba9d98', '2021-05-28 10:15:39', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功。', '2021-05-28 10:15:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2ee-6ea0-907c-a555-565345115f45', '2021-05-28 10:15:48', 'admin', '超级管理员', 'Submit', '0.0.0.1', 'iana保留地址', NULL, '常规管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功。', '2021-05-28 10:15:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc2eb-9367-b566-9078-9f411bc4f050', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2ee-ae3d-073f-802b-50f26be0e950', '2021-05-28 10:16:04', 'admin', '超级管理员', 'Submit', '0.0.0.1', 'iana保留地址', NULL, '常规管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功。', '2021-05-28 10:16:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc2eb-9367-b566-9078-9f411bc4f050', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc5ab-3d30-7bd6-86fd-ad3b99e6efb7', '2021-05-28 23:01:16', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 23:01:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc5ad-48de-7cdc-a767-f630d2d05c3b', '2021-05-28 23:03:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功。', '2021-05-28 23:03:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc5ad-ec1b-8f16-7fc5-c72c81e7e7a8', '2021-05-28 23:04:12', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2021-05-28 23:04:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc5ad-48af-7778-53a5-4c3c9d18cbd3', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccf9b-d6d9-e61d-ed10-fe8965766ac1', '2021-05-30 21:20:38', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 21:20:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccf9e-48d0-f5ea-f3ca-15e6aae793a2', '2021-05-30 21:23:19', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 21:23:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfaa-dc37-480e-b8ba-8d1a212259d4', '2021-05-30 21:37:03', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 21:37:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfab-4d70-51d8-14a7-b87bf8e3571f', '2021-05-30 21:37:32', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2021-05-30 21:37:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfae-91b4-e049-c663-9bd48a03e626', '2021-05-30 21:41:06', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:41:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfae-9278-1b06-c9d9-ab8154ef3e3f', '2021-05-30 21:41:06', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:41:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfae-98fd-f9c4-d2e5-16aa921a13b0', '2021-05-30 21:41:08', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 21:41:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfae-d55c-8c8b-6e23-d5d030c123b3', '2021-05-30 21:41:23', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:41:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfae-d5f6-a0b7-cc73-1e0ceb0b2048', '2021-05-30 21:41:24', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:41:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfaf-b295-5609-2da0-a27112f66df5', '2021-05-30 21:42:20', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 21:42:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb1-6992-4d40-4c61-6175aa0f3d6d', '2021-05-30 21:44:12', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:44:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb1-6a2a-7f47-6926-cfb0ecc82c1c', '2021-05-30 21:44:13', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:44:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb1-7cd3-87d8-0df2-f4fc980db59d', '2021-05-30 21:44:17', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 21:44:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb1-e437-1299-ce35-d8ca1d94e633', '2021-05-30 21:44:44', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:44:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb1-e4cc-c9cf-1919-3aba8c6c26b2', '2021-05-30 21:44:44', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:44:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb1-e9f0-d540-379d-85812097ad14', '2021-05-30 21:44:45', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 21:44:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb2-2d36-b883-2342-4a46e265ee75', '2021-05-30 21:45:03', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:45:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb2-2dda-748d-e80d-01f09f7a0f5d', '2021-05-30 21:45:03', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:45:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb3-72a8-864b-89e5-762fa9a23520', '2021-05-30 21:46:26', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 21:46:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb5-510c-427d-ecde-2e5cd1b30756', '2021-05-30 21:48:28', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 21:48:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb6-9dff-ef7e-ddd2-aaedc44348ae', '2021-05-30 21:49:54', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:49:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb6-9eb3-1387-2f6b-c32d6bbc55d6', '2021-05-30 21:49:54', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:49:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfbb-bc59-028c-0a07-261491c763b4', '2021-05-30 21:55:29', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'(50) DEFAULT NULL   , Primary key(`F_Id`))\' at line 14', '2021-05-30 21:55:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfbb-ca4c-5315-65fe-5e5558e2038c', '2021-05-30 21:55:33', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:55:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfbb-cade-7088-c688-f28dd98a520d', '2021-05-30 21:55:33', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:55:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfbc-cd60-5339-9554-43867483bb8b', '2021-05-30 21:56:39', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'(50) DEFAULT NULL   , Primary key(`F_Id`))\' at line 14', '2021-05-30 21:56:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfc3-fc56-37fa-5011-44ec4f8165ff', '2021-05-30 22:04:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:04:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfc3-fcdb-c19f-3d10-cf1af2a60a53', '2021-05-30 22:04:30', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:04:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfc4-d554-c8ab-84dc-6bb82fb0f814', '2021-05-30 22:05:25', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:05:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfc6-1cf0-7f0e-08be-1e3af708e0c4', '2021-05-30 22:06:49', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:06:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfc6-1e45-bd6b-91c5-c6c30b67a191', '2021-05-30 22:06:49', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:06:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfca-1acd-7ce2-d256-2191df227dc3', '2021-05-30 22:11:11', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:11:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfcb-4095-28bf-7dc8-814c65f292ad', '2021-05-30 22:12:26', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:12:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfcb-41ac-43ec-e7e8-3337cd262b16', '2021-05-30 22:12:26', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:12:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfce-03d5-6eac-645d-9b8b1f2a488f', '2021-05-30 22:15:27', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:15:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfce-0e81-e644-dd84-ceae9ade914d', '2021-05-30 22:15:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:15:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfce-0ef9-7941-9023-880372b3c86a', '2021-05-30 22:15:30', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:15:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd2-5ba6-2d58-6124-7de985b5a8a4', '2021-05-30 22:20:11', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:20:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd2-65d0-ed99-c230-32aa6844eed3', '2021-05-30 22:20:14', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:20:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd2-6677-9c2e-5faf-a861fae04fe3', '2021-05-30 22:20:14', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:20:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd3-1129-a513-f0d3-99a28676d532', '2021-05-30 22:20:58', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:20:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd3-1cdb-9da0-5b58-d2841b41b811', '2021-05-30 22:21:01', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:21:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd3-1d6c-6c35-44a4-adbebf8930c8', '2021-05-30 22:21:01', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:21:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd3-b361-bcae-b8b9-c724723bf4a1', '2021-05-30 22:21:40', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:21:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd3-be87-420d-6c77-b8442b485763', '2021-05-30 22:21:42', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:21:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd3-bf61-59e9-cac7-00b4c89dcc07', '2021-05-30 22:21:43', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:21:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd3-ecc5-c047-9da3-85c7a7dddf6b', '2021-05-30 22:21:54', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:21:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd5-19c6-c06a-83fa-be78832d5d26', '2021-05-30 22:23:11', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:23:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd5-1aa9-caa5-4eb3-3e75c88a3f1d', '2021-05-30 22:23:12', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:23:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd8-4ae2-e1cd-abc9-3bf2ffd19295', '2021-05-30 22:26:40', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:26:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd8-5387-40e3-78cb-14d18ec8eafb', '2021-05-30 22:26:43', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:26:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd8-5437-7d95-61a8-eb5b5cf80bcc', '2021-05-30 22:26:43', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:26:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfdb-cb22-d081-1e3b-9efe86f3da7c', '2021-05-30 22:30:30', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:30:30', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfdb-e972-2e23-f476-23cba51c2273', '2021-05-30 22:30:38', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:30:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfdb-e9fe-e0fc-9a57-c9a4f1c70896', '2021-05-30 22:30:38', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:30:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfdc-b44c-e1f4-37ca-50ad65d19ac4', '2021-05-30 22:31:29', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:31:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfdc-be9a-1958-ff1b-5ae0d0525fd6', '2021-05-30 22:31:32', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:31:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfdc-bf3b-9cb0-8af0-f9250db7cdb4', '2021-05-30 22:31:32', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:31:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfe4-8832-843a-e4a3-cee6a3c95c17', '2021-05-30 22:40:02', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:40:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfe4-b4af-2f67-77ec-8f988a908081', '2021-05-30 22:40:14', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:40:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfe4-b562-8fc4-9ce2-35782f2448f8', '2021-05-30 22:40:14', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:40:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfe5-a40a-8761-6767-fde61153529d', '2021-05-30 22:41:15', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:41:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfec-32d3-b966-92a4-631334140bd3', '2021-05-30 22:48:25', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:48:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfec-70e2-8cc9-13d8-1296b952977f', '2021-05-30 22:48:41', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:48:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfec-7189-a532-1118-7170bf6083ba', '2021-05-30 22:48:41', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:48:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfec-79a5-2594-032a-23236967939e', '2021-05-30 22:48:43', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:48:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfed-2d4c-ce31-f322-b64eff2de5c4', '2021-05-30 22:49:29', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:49:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfed-2de9-2e5a-bbad-80cb3db9890b', '2021-05-30 22:49:29', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:49:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfed-972d-eb42-3ea7-fa9e732cc792', '2021-05-30 22:49:56', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:49:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccff2-94e1-674f-5aa0-f95c11da18a4', '2021-05-30 22:55:23', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:55:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccff2-ad4f-eead-f0c9-54acac73dac3', '2021-05-30 22:55:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:55:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccff2-ae2a-763b-434f-8d3dea597e66', '2021-05-30 22:55:30', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:55:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccff2-b5d8-bccd-be73-abe73cefee87', '2021-05-30 22:55:32', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，Table \'watercloudnettest.sys_user\' doesn\'t exist', '2021-05-30 22:55:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccff4-e08a-accc-f3c8-93a62f6bac94', '2021-05-30 22:57:54', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:57:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccff4-e826-3242-7fd2-9296ed61274a', '2021-05-30 22:57:56', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:57:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccff4-e8be-66c8-cd07-90fd17d6c608', '2021-05-30 22:57:56', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:57:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccff5-2c87-3056-572a-c8c032ff6953', '2021-05-30 22:58:13', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功。', '2021-05-30 22:58:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1ee-08af-cad9-7091-b85d22af8576', '2021-05-31 08:09:40', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-31 08:09:40', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1f1-6da9-2555-22b1-afd3558b5dfe', '2021-05-31 08:13:22', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-31 08:13:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1f1-6e0a-ba45-fc32-55b50600a23a', '2021-05-31 08:13:22', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-31 08:13:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1f1-9676-813f-d9af-8c8e5fa5d235', '2021-05-31 08:13:33', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，ConfigId was not found 1', '2021-05-31 08:13:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1f8-d593-2786-cd19-f5428f877ccc', '2021-05-31 08:21:27', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-31 08:21:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1f9-f2f8-2d5b-065e-4935cbc69e4a', '2021-05-31 08:22:41', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-31 08:22:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1f9-f353-ad5b-af49-1292fc97e273', '2021-05-31 08:22:41', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-31 08:22:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1fb-27c2-7b66-f1dd-c33cd8c4851b', '2021-05-31 08:24:00', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，ConfigId was not found 1', '2021-05-31 08:24:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1fe-86d4-edb8-9ea8-da9ff824d3b8', '2021-05-31 08:27:40', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-05-31 08:27:41', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1fe-a7c2-0177-f5fe-fe832a1a0d29', '2021-05-31 08:27:49', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-31 08:27:49', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1ff-c785-9d82-22e9-43b0b7203550', '2021-05-31 08:29:03', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-31 08:29:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1ff-c7d0-d6f3-749d-901e6c78e204', '2021-05-31 08:29:03', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-31 08:29:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd1ff-eee4-a883-fb82-e7eca77f99fe', '2021-05-31 08:29:13', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功。', '2021-05-31 08:29:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd202-5f68-b21f-a7ea-6f6a2e53b187', '2021-05-31 08:31:53', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-31 08:31:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd202-5fa5-5dfb-4e54-f3a7debad10a', '2021-05-31 08:31:53', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-31 08:31:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd202-8748-9c4f-73fd-206cb866a91f', '2021-05-31 08:32:03', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功。', '2021-05-31 08:32:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd203-7833-fc37-6b6f-15e0f4681847', '2021-05-31 08:33:04', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-31 08:33:05', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd204-de66-9dbe-3842-1ee8eaca31b7', '2021-05-31 08:34:36', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-31 08:34:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd204-dec1-03ea-84dd-33844d2d8552', '2021-05-31 08:34:36', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-31 08:34:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd205-0a2f-2e50-b698-7e714ffec362', '2021-05-31 08:34:47', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功。', '2021-05-31 08:34:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd207-c419-9254-1bda-3e680a9918a5', '2021-05-31 08:37:46', 'test', 'test', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2021-05-31 08:37:46', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd20e-89e7-faef-6b87-ea17c5f85090', '2021-05-31 08:45:10', 'test', 'test', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2021-05-31 08:45:10', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd210-8738-cd95-5c51-d325a0f85f71', '2021-05-31 08:47:20', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-31 08:47:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd21d-50a3-bcfd-dfc6-f0508d90f582', '2021-05-31 09:01:18', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-31 09:01:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd21e-44ce-9bc1-a554-04beb1a01848', '2021-05-31 09:02:21', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-31 09:02:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd21e-4549-030c-2ba9-23b4fc80bc04', '2021-05-31 09:02:21', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-31 09:02:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd21e-6fae-d784-6f52-d98ac292e2aa', '2021-05-31 09:02:32', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功。', '2021-05-31 09:02:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd22b-7e33-f569-b6c9-8119dfb1a7d7', '2021-05-31 09:16:47', 'test', 'test', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2021-05-31 09:16:48', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd22f-0ad8-077b-eeee-08546ee499c1', '2021-05-31 09:20:40', 'test', 'test', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2021-05-31 09:20:40', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd23b-fbee-3e91-d764-6be95f5aeb50', '2021-05-31 09:34:48', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-31 09:34:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd23d-8b17-6cf1-c7a1-5ccd677ca149', '2021-05-31 09:36:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-31 09:36:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd23d-8b77-1b68-d6ef-040cc83714fe', '2021-05-31 09:36:31', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-31 09:36:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd23d-b681-4752-e816-7686b30a5f76', '2021-05-31 09:36:42', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，Duplicate entry \'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f\' for key \'sys_module.PRIMARY\'', '2021-05-31 09:36:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd23f-5e44-ef4f-a3b8-6ebf466d9577', '2021-05-31 09:38:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-31 09:38:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd23f-5e8d-b5ce-31cc-44988b288e6f', '2021-05-31 09:38:30', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-31 09:38:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd242-45fd-9a2e-d86e-0a9823cd4228', '2021-05-31 09:41:40', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，Duplicate entry \'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f\' for key \'sys_module.PRIMARY\'', '2021-05-31 09:41:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd242-de74-0bfc-eaf3-bbe8abdcf9b4', '2021-05-31 09:42:20', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-31 09:42:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd242-deb0-78d9-fe27-340495a7c961', '2021-05-31 09:42:20', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-31 09:42:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd243-4cea-ef90-4bf3-fe85a97c34a4', '2021-05-31 09:42:48', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，Duplicate entry \'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f\' for key \'sys_module.PRIMARY\'', '2021-05-31 09:42:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd243-ede9-f662-999a-c19cab255685', '2021-05-31 09:43:29', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-31 09:43:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd243-ee22-36ee-c473-46dfa8c2020e', '2021-05-31 09:43:29', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-31 09:43:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd244-3673-7769-3651-d74bbb257889', '2021-05-31 09:43:48', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，Duplicate entry \'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f\' for key \'sys_module.PRIMARY\'', '2021-05-31 09:43:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd247-027c-c73e-f7e1-5495b5ddef8a', '2021-05-31 09:46:51', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-31 09:46:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd247-02b8-3f69-f479-ee426c5f4217', '2021-05-31 09:46:51', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-31 09:46:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd247-2e45-d2b0-646b-580aefa1f50a', '2021-05-31 09:47:02', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功。', '2021-05-31 09:47:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcd24b-966b-db91-0dc2-d94ae56e0ec0', '2021-05-31 09:51:51', 'test', 'test', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2021-05-31 09:51:51', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3adb9d5f-5a12-4532-a344-8c539e3162ec', '2020-08-03 16:56:27', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 16:56:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3b28a449-de94-4d04-b366-608157001b65', '2020-08-04 10:33:57', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-04 10:33:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3b693727-47a0-43e6-9582-32db997aced2', '2020-07-02 11:13:53', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-02 11:13:53', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3b9af832-8c80-41ad-b5f5-baedc59ca6ca', '2020-07-23 09:02:08', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-23 09:02:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3bbe6fb8-91c7-4f0f-9323-3abf9636186f', '2020-06-28 14:20:01', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 14:20:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3bbff95d-f624-4bcb-b1b7-dd01b2f75d2e', '2020-08-03 11:24:44', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-08-03 11:24:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3c4fc9bd-0466-4517-bd53-e2701e2c97b5', '2020-07-03 10:42:04', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-03 10:42:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3d1f0207-04fd-456d-83d0-d8eeab8ca4af', '2020-07-07 08:14:41', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-07 08:14:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3d2a2572-53a3-455b-aed5-2e756d447c0e', '2020-07-30 10:18:19', '10000', 'hhh', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-30 10:18:19', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', '2b1a2313-6b79-4e07-9866-fb0aa93805f7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3d5bec94-43cd-475d-bbd7-026ea7d0fcdf', '2020-07-29 16:52:21', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功', '2020-07-29 16:52:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3d7f30fe-2870-4359-b909-9b18094d50ba', '2020-10-12 10:02:57', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 10:02:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3df592e2-ab9e-4a60-b284-ebb33fa75423', '2020-07-22 17:30:39', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 0, '我的流程操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_CreatorTime\' cannot be null', '2020-07-22 17:30:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'edbbf77a-6321-4be5-a000-8fc70c9cf895', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3e59fa1d-22a2-4dd3-b905-50defb3278eb', '2020-10-19 12:57:36', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:57:36', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3f13dfbf-6f8b-4ce6-9818-30c773ee5dec', '2020-08-04 10:33:38', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-04 10:33:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3f9a4a6c-1718-45fa-95b7-3b0c58cadcd4', '2020-07-03 10:54:38', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-03 10:54:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3fbc7def-3620-4f8b-a400-4ef86d28354c', '2020-07-13 13:58:11', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-13 13:58:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '318bb233-c9df-4374-9937-e55b71fbcf99', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('402b72e2-fde9-4282-86e0-95ca2c4fcb35', '2020-07-22 17:12:18', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 17:12:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4059f6f1-fb54-4c83-83ee-a8defab8619d', '2020-08-04 09:50:12', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功', '2020-08-04 09:50:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('409b2158-f77d-471b-8b6b-800476468233', '2020-08-11 14:26:17', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-08-11 14:26:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '3b6922f9-b4ba-4615-aa3f-b00110da54c6', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('409f4427-0989-436d-b706-ce05c926a238', '2020-06-24 09:02:54', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-区域管理', 1, '区域管理操作,修改操作成功', '2020-06-24 09:02:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '130000000000', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('40ee4e3f-e1d9-4c8b-9a28-38bdc7a99f6d', '2020-07-22 14:40:24', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-22 14:40:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('40fbf041-b66a-4fc6-a5f3-b8b11d96b276', '2020-07-10 09:16:53', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-10 09:16:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '318bb233-c9df-4374-9937-e55b71fbcf99', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('421f3eb1-f629-4cd3-898a-f4c01a11a2fd', '2020-10-12 10:09:23', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 10:09:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('43516abe-f181-45b6-966c-1c7a045a8129', '2020-10-09 15:59:52', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-09 15:59:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('43fcfa46-9d70-478e-b06a-e55c114113d2', '2020-07-14 17:10:51', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，Value cannot be null. (Parameter \'key\')', '2020-07-14 17:10:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('448df0c2-ed3e-4f32-b983-b25e07a3c2c3', '2020-08-31 10:40:11', '10000', 'hhh', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-数据权限', 1, '数据权限操作,修改操作成功', '2020-08-31 10:40:11', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', '07999ec1-9fbb-46b5-bcea-d343bf49e6d8', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('44a6a264-ad38-419b-8faf-1c0e8e224e56', '2020-07-24 14:07:40', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-用户管理', 1, '用户管理操作,修改操作成功', '2020-07-24 14:07:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('456befa6-b559-4058-9768-aa894fb9a562', '2020-08-03 17:03:50', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 17:03:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('46006baa-bb35-48b9-aa13-75f630c95094', '2020-06-30 12:02:22', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:02:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('460e00ac-dfc3-4961-bae5-780751d37fe9', '2020-07-09 17:05:44', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-09 17:05:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '0411376a-18fd-4f52-bffb-22ae0d3fa21d', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('46f92b12-6d8a-43e3-905d-50d4b84e87b2', '2020-07-07 14:00:09', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,新增操作成功', '2020-07-07 14:00:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('474587db-36c0-4e8f-992e-30d0ad9d33c0', '2020-07-09 15:49:16', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-09 15:49:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('47bd78af-c553-4fe2-b471-48c0b82b3b21', '2020-07-22 16:07:55', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 16:07:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('47ec85a5-a1e1-4813-bccb-009ae99ef266', '2020-10-12 10:14:32', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 10:14:32', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('47f62c0a-ef1c-4595-871e-40ad40842865', '2020-07-23 10:24:21', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,新增操作成功', '2020-07-23 10:24:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('47fb8aad-bb69-496c-91f5-19698dfa5cfb', '2020-07-01 13:38:53', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,删除操作成功', '2020-07-01 13:38:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('484933f8-f39b-48dc-8607-a08eb474aa7e', '2020-07-23 15:36:42', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-23 15:36:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'e6514544-1436-431d-acbc-c44802831ea8', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('485852a7-f03c-4f4b-8886-62a2b2647c89', '2020-07-07 08:15:21', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功', '2020-07-07 08:15:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('488aa59e-25b3-4b42-aef8-1b47f5d087ac', '2020-07-01 16:26:53', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-01 16:26:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('48e6046e-f5de-40b3-a958-d61bd9806ac0', '2020-07-14 17:06:39', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，\'string\' does not contain a definition for \'lines\'', '2020-07-14 17:06:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4987a67d-8d91-4845-b4bc-639e3f4c2ede', '2020-07-24 14:05:30', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,修改操作成功', '2020-07-24 14:05:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '599669e9-2b1b-4c51-a842-ed0165075432', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('499b95ca-89a2-4266-ba6c-89bfa08737a8', '2020-10-15 10:10:52', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:10:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('49d6a56f-e0f4-4a65-b066-7900e2329153', '2020-10-12 10:00:49', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 10:00:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4a0b2f68-1039-4ff2-9cb7-2adbb0184d98', '2020-07-13 15:38:33', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,新增操作成功', '2020-07-13 15:38:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4a6d54cc-df4b-4cb0-b35e-e7955a6dc1e3', '2021-02-10 11:13:53', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,修改操作成功。', '2021-02-10 11:13:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8c119bce-0d70-4a56-8389-214d8e14e107', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4ac49c8b-48d1-4bcc-a00e-33130633ad81', '2020-08-03 16:13:56', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-03 16:13:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4b6ff4d8-b9d2-4409-bba3-33461734de3c', '2020-06-30 17:39:30', '20000', 'xxxx', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-30 17:39:30', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4b8b68f6-152a-4ef1-87a6-0b1cdd91169d', '2020-08-11 14:52:30', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-08-11 14:52:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '3b6922f9-b4ba-4615-aa3f-b00110da54c6', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4bbe3383-fc00-4ec4-82f5-cda9b5a215e6', '2020-07-14 17:07:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，\'string\' does not contain a definition for \'lines\'', '2020-07-14 17:07:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4bd64165-f328-4886-8ccb-45fa69c47fb9', '2021-02-10 11:14:15', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '安全退出系统', '2021-02-10 11:14:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4c1b859e-087b-4f29-8d61-f34b2a3bbff0', '2020-07-23 08:58:31', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,新增操作成功', '2020-07-23 08:58:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4c6bf073-c0e0-478d-8dd0-819a23548279', '2020-07-24 14:03:21', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，节点node_4是会签节点，不能用所有人,请检查!', '2020-07-24 14:03:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4c7bb9ac-7b43-4e3c-99c7-01149e39ef60', '2020-06-30 12:09:53', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:09:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4caa5dc8-8c50-4366-af6f-ccbed81c17ba', '2021-02-10 12:28:07', '20000', 'xxxx', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 12:28:07', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4ce4a544-e97b-45c6-9fc4-c596b8fc40e1', '2020-10-28 11:24:11', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 11:24:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4d410009-0ce5-4359-81fc-eeef00a74130', '2020-10-28 13:01:59', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 13:01:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4e27cb6f-9145-46f3-9615-45459a21bc1e', '2020-10-09 16:00:02', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-09 16:00:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4ee41510-ede5-4676-a559-7073a4b805e1', '2020-08-04 11:35:44', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-04 11:35:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4f7d332d-f0a3-43c0-b89d-83cc345da6b5', '2020-07-22 15:23:22', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 15:23:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4f98b790-fd2b-424a-9821-61e78f745b4a', '2020-07-13 16:02:09', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_FrmType\' cannot be null', '2020-07-13 16:02:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4f9e05f8-73b8-43f1-98f6-b342fd6cba9d', '2020-10-15 10:39:16', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:39:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4fc7cb85-af23-4f28-ac3e-6c59fa51e128', '2020-06-24 08:31:03', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,删除操作成功', '2020-06-24 08:31:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4ff78831-1c06-4278-bea2-fc6c65681e09', '2020-07-13 16:44:24', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_SchemeType\' cannot be null', '2020-07-13 16:44:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5145fe05-9a1c-4dc4-801b-9418daf9ee27', '2020-07-02 14:02:12', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_Title\' at row 1', '2020-07-02 14:02:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5164dd51-7592-4e6e-b88b-618fcbcf4fc3', '2020-07-21 16:31:21', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,新增操作成功', '2020-07-21 16:31:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('525f1e4c-1651-41cf-b8d9-181b1daa9637', '2020-07-30 10:15:26', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-30 10:15:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5307c499-d737-49fe-b496-475e097b5eaa', '2020-07-23 09:02:08', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-23 09:02:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5460b10e-eb84-42cb-892e-1df89863f248', '2020-08-20 16:37:41', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-08-20 16:37:41', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('54f8e371-f5ce-4790-9d7b-0be0c50e8112', '2020-07-20 09:07:39', 'admin', '超级管理员', 'Login', '172.17.180.1', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-20 09:07:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5564d483-7d1a-4e05-8305-37e29caf9ec7', '2020-07-24 14:07:15', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,修改操作成功', '2020-07-24 14:07:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8c119bce-0d70-4a56-8389-214d8e14e107', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('556d4d7a-ffb3-45b1-a2bd-2a0a5d838b26', '2020-07-03 10:53:07', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-03 10:53:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('55f095aa-b298-4374-b395-e9d63ba5fda7', '2021-02-10 12:36:02', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 12:36:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('560051a4-b1fb-44f0-8c98-933228fa72fa', '2020-07-08 10:12:24', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 0, '系统菜单操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry \'系统日志\' for key \'IX_Sys_Module\'', '2020-07-08 10:12:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5733007f-6edf-4bd0-8adb-e295a06fb87d', '2020-06-30 12:03:58', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:03:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('573efddf-a4ec-4f74-91e1-f8ac3ded57e8', '2020-07-15 15:04:24', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-15 15:04:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd42aaaae-4973-427c-ad86-7a6b20b09325', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('574b2a48-1b1a-43f9-a6fc-b0813db291d9', '2020-07-24 16:21:37', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，Input string was not in a correct format.', '2020-07-24 16:21:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5756e105-3c2d-4585-a37b-66267ebd73bb', '2020-07-13 16:07:25', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,新增操作成功', '2020-07-13 16:07:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('57d0f1ad-ef92-41fc-8e6c-20356454632c', '2020-08-03 16:13:24', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功', '2020-08-03 16:13:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('580ed846-9cd3-40b5-aeb7-baacb8298562', '2020-07-01 13:53:38', '222', '222', 'Login', '未连接未知', '本地局域网', NULL, '用户Api', 0, '登录失败，账户不存在，请重新输入', '2020-07-01 13:53:38', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('582a31c4-71b0-48da-af55-4fbdde6b17d5', '2020-07-24 15:55:15', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-24 15:55:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('58756e94-c310-4ac4-a19d-378207649249', '2020-07-15 11:51:13', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-15 11:51:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('588cf9ff-6f3a-4c09-aa0f-b9ccebda99c6', '2021-06-02 23:11:50', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-02 23:11:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('58ba375b-3e5e-4af9-875e-ff899090c7fd', '2020-07-07 15:59:10', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 0, '代码生成操作,新增操作失败，列表页已存在，列表页生成失败！', '2020-07-07 15:59:10', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('58bd8652-8987-4432-ad69-d1bc9b7ce6d4', '2020-08-31 10:39:13', '10000', 'hhh', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-08-31 10:39:13', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5914e2ba-cb58-4ca2-aa62-b3550c7405ca', '2020-08-04 08:35:49', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:35:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('59942a41-91b0-427e-b0d2-4b0602cca135', '2020-06-28 13:55:23', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-28 13:55:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5acb06ad-7f57-411a-b0a7-afd4799f2a3c', '2020-06-23 16:59:19', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功', '2020-06-23 16:59:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5aef9372-251b-4fb4-8fc4-3b4cf6553f61', '2020-07-22 17:10:24', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 17:10:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5b907a00-f514-4c91-994b-55ec45cece5a', '2020-09-02 09:02:16', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-09-02 09:02:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'dbc4780d-b56d-4e57-ad46-8ddc218983f6', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5bb693c8-c72d-413e-972f-bb74d94ff670', '2020-10-12 11:02:24', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 11:02:24', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5c027cca-b8a0-411d-8a62-bdc0453d9ee4', '2020-09-02 09:02:40', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-09-02 09:02:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'dbc4780d-b56d-4e57-ad46-8ddc218983f6', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5cf20d7c-d16c-4a66-930e-b9ffd662545d', '2020-07-15 15:03:33', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,新增克隆成功', '2020-07-15 15:03:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5d02086b-251d-4baf-928f-531f741e94e5', '2020-06-29 15:05:13', 'admin', 'admin', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 0, '登录失败，使用前请初始化 RedisHelper.Initialization(new CSRedis.CSRedisClient(\"127.0.0.1:6379,pass=123,defaultDatabase=13,poolsize=50,ssl=false,writeBuffer=10240,prefix=key前辍\"));', '2020-06-29 15:05:14', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5e580f5e-acaa-4448-8a04-56b3a1b2e670', '2020-08-04 09:48:47', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功', '2020-08-04 09:48:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5ecc0d87-6efb-4039-9f17-1c8285eb4286', '2020-07-22 11:41:20', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-22 11:41:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b4fc0b00-6101-4166-8396-520735f0cdec', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5fb542d4-e1aa-4f25-873d-9cfb87b04a53', '2020-09-02 09:11:47', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-09-02 09:11:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'dbc4780d-b56d-4e57-ad46-8ddc218983f6', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5ff540a1-6458-441e-91c4-1ce4c93b773c', '2020-09-01 08:29:23', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-09-01 08:29:23', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6089dc12-c83c-4f01-a5e6-28c4eb402147', '2020-10-15 10:15:29', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:15:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('60adb533-0f91-4217-bf99-3c08c9ba485d', '2020-08-12 11:18:13', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-12 11:18:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '873e2274-6884-4849-b636-7f04cca8242c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('60bf09e4-51ac-4609-8bf1-b0fced21192b', '2020-07-30 16:16:40', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-30 16:16:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'f2a2a708-3b9e-4e0f-91eb-029594464a55', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('611dd0ff-54dc-4648-90dd-84f3c74986b0', '2020-10-28 11:23:14', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 11:23:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6122f143-c49e-4642-9f3d-c4651b1b52a2', '2020-06-28 15:02:39', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 15:02:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('616ddd4e-83c8-44f8-b963-328f69b15f23', '2020-07-23 08:58:47', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,修改操作成功', '2020-07-23 08:58:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '0f4924b8-22a6-4f28-958c-488265d0bcc1', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('621c57c5-f33e-48d0-afcf-4c9b040f303f', '2020-10-15 09:12:36', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 09:12:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6243519c-de9b-4f8c-a026-41d3ee976adf', '2021-02-10 11:23:13', '20000', '20000', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入，还有4次机会', '2021-02-10 11:23:13', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('62dd20ff-b013-46c3-a293-090d0d116836', '2020-10-27 15:04:08', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-27 15:04:08', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6392f56a-2d1f-4a01-a81a-f62daff057ec', '2020-08-04 11:35:35', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-04 11:35:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6487e20e-d798-427f-adc7-8b7748a90f27', '2020-08-03 17:04:15', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 17:04:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('64fe451c-0c1e-48c5-b81a-75b712aaf8dd', '2020-08-12 11:18:47', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功', '2020-08-12 11:18:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('65307c82-66dc-4b97-ae1b-75be03da2bfa', '2020-10-15 10:27:58', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:27:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('66964dbd-6004-4e15-a177-a53ed9700c0b', '2020-07-30 10:14:47', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-07-30 10:14:47', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('66e41781-854f-46a7-ba3c-ffc86329b176', '2020-07-02 14:01:41', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,删除操作成功', '2020-07-02 14:01:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('67b3edec-f0d4-4cfc-9307-4f5f8c39da0f', '2020-07-10 09:26:37', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-10 09:26:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '318bb233-c9df-4374-9937-e55b71fbcf99', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('67b6cdf5-cc16-400e-bfb9-ad32a8c0a000', '2020-10-15 10:39:06', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:39:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('681a5249-6018-4db3-9291-db8b0cc27b86', '2020-07-02 10:55:01', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功', '2020-07-02 10:55:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6916df05-89db-46a9-9097-ae57796438ee', '2020-08-03 17:02:26', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 17:02:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('69a7c27e-1057-4781-adf7-4a9c932a4fb7', '2020-09-04 13:22:56', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-09-04 13:22:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6aecb515-0ac2-4b9e-b6bc-6ba68df88063', '2020-07-10 17:08:46', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-10 17:08:46', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6b52bc63-a658-4103-939c-10c59625f97b', '2020-10-14 10:35:23', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:35:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6bc73396-1fdd-484d-86b9-a5b1d8bc3506', '2020-10-15 10:27:48', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:27:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6dc3a7f6-a7c2-4039-9628-676b70f83dc4', '2020-07-23 10:47:10', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-23 10:47:10', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'f51da6f6-8511-49f3-982b-a30ed0946706', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6dcde5c0-edd9-488e-be95-454415240798', '2020-07-23 09:02:19', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-23 09:02:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6de538c2-7c97-4199-9874-65bdb61b6103', '2020-07-09 14:12:21', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-09 14:12:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '0411376a-18fd-4f52-bffb-22ae0d3fa21d', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6dec64d7-63dc-40d8-8ec2-5631fb5dd193', '2020-06-28 14:17:42', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 0, '定时任务操作,修改操作失败，Unable to store Job: \'WaterCloud.服务器状态\', because one already exists with this identification.', '2020-06-28 14:17:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6e81d1cf-e1b6-48c1-b798-b666f2516cce', '2020-10-14 10:26:42', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:26:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6ee3986a-11f7-4f20-a952-7b5e23249c4a', '2020-07-07 13:59:39', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,删除操作成功', '2020-07-07 13:59:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6f53074f-6766-47e0-aba1-c7b87e9b7973', '2020-07-22 16:02:32', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 16:02:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('6fb52b1d-0385-4406-bdb2-4b7f2ef0b98b', '2020-08-31 10:12:00', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-08-31 10:12:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7094022b-6104-4950-9e7e-5e2e60222918', '2020-06-30 12:01:58', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:01:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('711225cb-73e9-4a8e-85d6-be38d05acf43', '2020-07-24 14:19:55', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-24 14:19:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('717303f5-a747-4312-95e1-f2618ce0f396', '2020-07-23 11:42:37', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-07-23 11:42:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '719decb4-fd6d-40bb-b56c-d5228332cd8c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('71b5a663-e6cf-4c87-a453-6f7ae82b7c85', '2020-07-02 11:11:00', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功', '2020-07-02 11:11:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('723af10f-1185-47ff-84eb-6e2d5e704748', '2020-06-28 12:18:18', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-28 12:18:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('74447dd5-1b56-4542-9981-f90ee9a10b93', '2020-10-19 12:52:58', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:52:58', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('74694f63-90dd-48ff-aaec-7676c078c1b1', '2020-07-23 09:07:47', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-23 09:07:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('747fae5f-7829-46f9-ad33-4f1826ae7161', '2020-10-14 10:28:36', '20000', 'xxxx', 'Exit', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-10-14 10:28:36', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7506fd3d-e8bb-464a-8cb2-0c81ce63ef3d', '2020-10-27 14:12:20', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-27 14:12:20', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('751c49b4-1a05-475c-ad09-b03fe5cd45be', '2020-07-31 17:46:30', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:46:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('754bac05-f313-463e-af61-cfddc2a5ddec', '2020-08-31 10:50:17', '20000', 'xxxx', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-08-31 10:50:17', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('76070e4d-70f7-482c-ad60-59767b14f364', '2020-07-31 17:41:55', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:41:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('765d2325-b4d8-4610-aa85-aec273f0c54a', '2020-10-14 10:27:55', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:27:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7744b823-c7ac-43bc-a6db-c82c2934ed55', '2020-10-14 10:28:22', '20000', 'xxxx', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-14 10:28:22', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('77bf6f4b-becf-4ff7-a347-71fdf2fbbbc2', '2020-08-12 11:11:15', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-08-12 11:11:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7809aae2-0945-4366-9712-0bc618fc7b96', '2020-06-30 11:34:14', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 0, '新闻类别操作,删除操作失败，新闻类别使用中，无法删除', '2020-06-30 11:34:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7815c85b-4813-4434-add1-27d80bf37191', '2020-06-30 10:02:24', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-06-30 10:02:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('78335eae-2772-4f49-8334-48e68856f2bb', '2020-07-13 15:57:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_FrmType\' cannot be null', '2020-07-13 15:57:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('78969a7a-ac7a-4d13-9127-a470579ef78a', '2020-07-21 11:00:58', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-21 11:00:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '11847a81-b6fe-4de9-864d-9b1f5dd89d0e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('78ed971a-9f9d-41b6-9a94-727da3bec2f8', '2020-07-14 17:23:46', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-14 17:23:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7919e50f-a3ab-4e96-ab10-3967983a0303', '2020-07-23 11:44:46', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,删除操作成功', '2020-07-23 11:44:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('79424de2-80e4-49a2-a2d3-3dc5ba7f4ec7', '2020-10-12 09:58:52', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 09:58:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('794cc647-afee-4abc-a4ce-0055751e3028', '2020-06-30 17:39:00', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-30 17:39:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('798b362b-69cf-4253-8eb8-da68d9c2805e', '2020-07-07 13:45:16', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-用户管理', 1, '用户管理操作,修改操作成功', '2020-07-07 13:45:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'df821722-2fae-4023-ae57-23bebfccad85', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('79929902-588e-4164-a829-00a4dd7ed14e', '2020-07-01 17:23:56', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-01 17:23:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('79cf66ae-6121-45b7-ba56-4d883266ee5f', '2020-10-14 10:27:28', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:27:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7a957e41-b2a2-4f72-a60d-2ab193373aaf', '2020-07-13 16:03:18', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_AuthorizeType\' cannot be null', '2020-07-13 16:03:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7a9807ab-25e7-4833-b56c-f71f49480397', '2020-06-28 13:55:34', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-28 13:55:34', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7aaa13b5-bbab-4446-84ca-a77d904e19f4', '2020-09-09 11:52:27', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2020-09-09 11:52:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7b382d9f-c58c-40b3-81b0-c863494adeb8', '2020-07-02 14:46:56', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_Title\' at row 1', '2020-07-02 14:46:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7b425510-f963-401a-b0e0-e9bd62093880', '2020-10-14 10:27:25', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:27:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7bdc566b-ad81-4a73-927f-1e86c4f88fe9', '2020-07-02 12:13:21', '20000', 'xxxx', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-02 12:13:21', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7bf9b6d5-669a-46ac-adcf-cf3c60f43a2c', '2020-07-22 12:05:35', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7c7d5f94-8e14-4ae7-a1eb-ef21397a819f', '2020-07-24 15:58:58', '20000', 'xxxx', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-24 15:58:58', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7c891b45-8872-4095-8a60-8d4b19170593', '2020-07-30 16:43:54', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-30 16:43:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7c9e02b8-1835-471a-a727-94f3415de576', '2020-07-09 15:37:00', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-09 15:37:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7cec0a6d-b358-41ea-95f2-7d20a76f7889', '2020-09-02 09:08:08', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-09-02 09:08:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7cf18a26-3e7b-4161-b612-9756cb8eefe7', '2020-10-15 09:09:29', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 09:09:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7cf83261-fa41-47e7-b732-31fbe784a6d8', '2020-07-14 17:11:42', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，Value cannot be null. (Parameter \'key\')', '2020-07-14 17:11:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7d0f9c7c-ba82-497a-b9fb-a56223c7440a', '2020-08-12 11:24:24', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-08-12 11:24:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7dca8cad-d5ea-4b5a-850f-5475c54d0627', '2020-09-09 11:35:44', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功。', '2020-09-09 11:35:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'cde8cdbb-86df-419e-9074-a38911936df7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7e0a085d-b4b8-4332-b52f-1190257737c6', '2020-06-28 13:04:23', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_MobilePhone\' at row 1', '2020-06-28 13:04:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7e3cde3a-84d4-4c4d-9393-c7d7c8862bfa', '2020-08-03 17:03:46', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-03 17:03:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7e4f5713-6943-4c81-a1d6-f6b2d7ae2b2d', '2020-08-04 08:36:46', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:36:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('7ed44a0c-3a7f-40dc-a484-fc07464ef32f', '2020-10-28 13:01:24', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 13:01:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7ef0f0be-d881-49d8-854a-23bda481c444', '2020-06-28 14:09:55', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-28 14:09:55', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7f12c880-126e-492c-9d18-83ffebfd040e', '2020-07-31 17:31:14', '20000', 'xxxx', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-31 17:31:14', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7f5ec92a-ce6e-450d-9da0-75d209497320', '2020-10-19 09:23:20', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 09:23:20', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7f61d267-db59-443f-9105-9b3547e278aa', '2020-10-14 10:26:27', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:26:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7f98dd32-e509-4c40-826e-9048269f9f97', '2020-06-29 17:25:28', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-29 17:25:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b2be2ea5-819e-485b-a277-26be5396db65', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7fa9faa2-4407-44ed-8746-7f00054351d6', '2020-07-07 13:49:48', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-用户管理', 1, '用户管理操作,修改操作成功', '2020-07-07 13:49:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'df821722-2fae-4023-ae57-23bebfccad85', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7fb71f57-8241-4d04-a2f7-5400bca3635f', '2021-02-10 11:17:49', '20000', 'xxxx', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 11:17:49', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7fba68c5-feb2-4e30-bd41-6c3b67513094', '2020-07-30 16:12:29', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-30 16:12:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'f2a2a708-3b9e-4e0f-91eb-029594464a55', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('80655c79-5932-41d6-bf1b-b49cd3efcb73', '2020-10-14 10:27:31', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:27:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('808f72a9-ea13-4fa8-b84e-4234f2a99feb', '2020-06-29 17:36:09', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,删除操作成功', '2020-06-29 17:36:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('80a2f968-e427-40a7-9ca2-dd3f1c0bdeb4', '2020-07-24 14:07:47', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-24 14:07:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('811d0eb9-b719-4e97-a050-edc72a6a7119', '2020-07-13 16:43:57', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_SchemeType\' cannot be null', '2020-07-13 16:43:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('811d5a80-d22a-4144-903f-670a3725d79c', '2021-02-10 11:18:58', '20000', 'xxxx', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 11:18:58', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('81235a5e-09ec-48ab-915b-384fc9d07485', '2020-10-12 10:06:58', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 10:06:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8236abe8-05c2-4b91-bf77-a8b5193b239d', '2020-10-19 12:52:04', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:52:04', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('824261f9-273a-478f-9c20-8bfc264f69a8', '2020-08-11 13:20:02', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-11 13:20:02', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('828b252f-9da2-46e5-97fd-b447722bd1d0', '2020-07-15 08:39:20', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-15 08:39:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('82ac3b90-7fa4-46dd-b768-d2455440382a', '2020-09-01 11:36:34', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-09-01 11:36:34', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('82ff2bcc-e1a7-45fc-a366-12433d04cbbb', '2020-07-22 17:10:24', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 17:10:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('83568341-4b8f-40c6-b8a6-ba5afed957d0', '2020-10-19 10:14:28', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 10:14:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('843d5d23-51bb-451f-b0dc-584811e224c0', '2020-07-24 15:44:26', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,修改操作成功', '2020-07-24 15:44:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '599669e9-2b1b-4c51-a842-ed0165075432', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('844cff0b-261e-4ad5-997b-3a777f4b3d85', '2020-07-02 14:10:51', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，Object reference not set to an instance of an object.', '2020-07-02 14:10:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('84bff078-0ef6-443c-a1b0-d18bc6a3605d', '2020-07-24 14:05:58', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-24 14:05:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('84ca40d3-d147-43a0-a23c-cacfddb4f286', '2020-08-20 16:48:40', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-08-20 16:48:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('84fac8bd-d0ec-470f-834d-d42d1c785dd6', '2020-08-20 16:50:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-08-20 16:50:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('853ddc07-364d-4b57-bc98-e282cde45cf5', '2020-07-14 08:52:44', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功', '2020-07-14 08:52:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('854c602e-a217-4b68-89e2-bf004c66bdfd', '2020-08-03 16:44:40', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 16:44:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8551ed87-dc7b-47a2-9b6f-6386b1b5250f', '2020-07-13 15:40:39', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_FrmType\' cannot be null', '2020-07-13 15:40:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('860e1a98-5c1d-4359-bb41-e9ea6f3799fd', '2020-07-21 11:05:51', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-21 11:05:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '11847a81-b6fe-4de9-864d-9b1f5dd89d0e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8706cb52-6724-4258-933f-625b68516fd3', '2020-07-13 13:59:37', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-13 13:59:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b08bb00f-e1df-44f8-904f-58ee5b1f4eb4', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('871dc075-9e32-46d4-b505-f8d08c6a36ab', '2020-08-03 16:15:09', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-03 16:15:09', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('878955bc-1591-4684-8f2d-de094ea0fa65', '2020-07-31 17:33:40', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,修改操作成功', '2020-07-31 17:33:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8892186f-22ff-40c4-9907-e80721f9c5fe', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('87af1763-05c7-4b1e-9d9b-7e9df1707742', '2020-08-03 16:56:16', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-03 16:56:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('88bc6562-9782-4983-ab18-53587b5a95c2', '2020-07-30 16:18:22', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-30 16:18:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8924c6db-38e2-4399-9a9c-319339951fec', '2020-07-14 15:37:48', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-14 15:37:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b4fc0b00-6101-4166-8396-520735f0cdec', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('895131f9-fa7d-4a94-b0e9-330993f2325d', '2020-08-04 08:33:33', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:33:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('8960a635-95b5-4fea-9bb8-72b87d5c462c', '2020-07-22 15:48:07', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功', '2020-07-22 15:48:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8970007d-c9d2-48a6-afd7-5a6502ef14fb', '2020-08-12 11:11:22', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-08-12 11:11:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'db12ad90-1c30-41ae-89c2-8b835ecacbd9', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('89c080ae-6539-4475-b9c1-807745001c61', '2020-06-30 08:31:42', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-30 08:31:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8a7d9c27-3f77-4e02-b53d-d6ff0eab14f3', '2020-07-02 11:14:46', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功', '2020-07-02 11:14:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8a873f2a-32f2-4b66-855b-be23f5d03147', '2020-07-23 11:41:49', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-07-23 11:41:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '719decb4-fd6d-40bb-b56c-d5228332cd8c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8b65d6c8-3235-458f-828f-d84199d10550', '2021-02-10 11:23:20', '20000', 'xxxx', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 11:23:20', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8bc3fc2e-2488-4e4b-8d3d-444e7d9ceece', '2020-07-30 16:18:47', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-30 16:18:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8b059c40-d1bf-4a8c-94ea-850ade3d0745', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8c4d4bdf-36d3-4823-b077-1817e4c12d4b', '2020-07-02 08:42:23', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-02 08:42:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '06bb3ea8-ec7f-4556-a427-8ff0ce62e873', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8cbcacbc-53ae-4bd3-8245-68b4835d9f02', '2020-07-28 10:12:52', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-28 10:12:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8cbdb322-5f9a-4c0d-9d31-435f4edbb464', '2020-07-10 08:47:06', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-10 08:47:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8ced495f-8b8a-4ec3-84ea-70e5823181f8', '2020-06-29 17:35:53', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,删除操作成功', '2020-06-29 17:35:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8dc7b19b-3afd-43f6-aadc-5a8ca7d2f364', '2020-06-29 17:36:46', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功', '2020-06-29 17:36:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8defb737-bc97-4362-a410-166613a7394a', '2020-10-15 09:04:28', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 09:04:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8ed603aa-c50f-4f99-9a2e-e966a1ce287e', '2020-09-09 11:35:24', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-09-09 11:35:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8f63d149-858a-4ecb-a083-aef5b2b71ae2', '2020-07-14 15:40:20', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-14 15:40:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8fcec9d7-366b-4763-bb96-baa5a75a8557', '2021-05-28 21:41:36', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 21:41:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8fd54e67-50c6-4acf-a8f0-6395887b25f3', '2020-07-22 16:14:50', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-22 16:14:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('90d19572-360a-45d4-850c-1260d79e5439', '2020-10-13 16:13:19', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-13 16:13:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('912318ca-d22f-429f-9fef-f32febd7855e', '2020-06-30 12:02:31', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:02:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9164b46a-112f-40ff-84c8-d30db97c7a54', '2020-07-06 15:04:14', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,修改操作成功', '2020-07-06 15:04:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8c119bce-0d70-4a56-8389-214d8e14e107', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('91f25667-f03e-45a6-b1dd-c123adc552fb', '2020-09-29 14:42:59', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功。', '2020-09-29 14:42:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b2ac5f2c-a2b7-4ca9-86d8-6439bf8186a4', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9295e050-9308-46a5-9bb9-cf61c0e84231', '2020-07-22 17:10:29', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-22 17:10:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('92c1d908-82b6-4c54-9ebe-8a21506f7e3a', '2020-10-12 09:36:06', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 09:36:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('92d5d337-41d9-419a-a604-f69b8eee2e42', '2020-07-29 16:44:29', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-29 16:44:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('92fcd038-f324-4001-bf50-64efc781844b', '2020-08-27 14:51:55', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-08-27 14:51:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9313297c-529b-4876-9b2b-77f04e5a89d9', '2021-02-10 11:13:23', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 11:13:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('931637b2-6057-4975-b9f0-c2a1ff381385', '2020-07-24 14:13:16', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-24 14:13:16', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('931f24e4-ad42-48c0-89a0-24495760c31d', '2020-07-29 16:51:19', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,新增操作成功', '2020-07-29 16:51:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('955c0a26-c0c4-428a-952c-90e8f6f1c091', '2020-06-28 14:16:50', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 14:16:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('95c81cf3-f29f-420c-833c-d0b38b19ee86', '2020-07-31 17:54:08', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:54:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('966c9ba6-5db0-43a2-8bc3-552085560754', '2020-08-04 10:34:05', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-04 10:34:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9679c919-81da-4539-ab4b-35574f076d1b', '2020-07-21 11:43:02', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-21 11:43:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '11847a81-b6fe-4de9-864d-9b1f5dd89d0e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9686e8c5-7568-4a54-aea8-cdb9dc9f8b7d', '2020-07-22 17:28:27', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-22 17:28:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('971158e8-ac45-4f02-8510-d33b243d05d3', '2020-07-02 14:20:25', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry \'xxxxx\' for key \'IX_Sys_Notice\'', '2020-07-02 14:20:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('97a3c837-bb0c-4c10-ad0f-6ff070a2b945', '2020-07-08 12:50:33', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,新增操作成功', '2020-07-08 12:50:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('97e480eb-37f4-4a20-bc42-e06802c9b217', '2020-06-30 11:56:38', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 11:56:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('982b1f39-1c64-4ad0-aa65-cdd42000d875', '2020-07-22 16:02:32', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 16:02:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9868035b-e3a8-4dfc-a327-621fd3003d11', '2020-07-21 16:30:20', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,新增操作成功', '2020-07-21 16:30:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9928659b-0048-478c-a376-9571bc20db5a', '2020-07-14 13:58:30', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-14 13:58:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '772eb88a-5f67-4bb1-a122-0c83a2bdb5ef', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9985eed5-3234-4d2e-819e-21d79bd4ee25', '2020-08-12 10:54:57', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-12 10:54:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('99c4d099-29e6-413c-94a4-72292e313365', '2020-07-02 08:41:12', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-02 08:41:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2536fbf0-53ff-40a6-a093-73aa0a8fc035', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('99fb6293-e59f-4e7e-b1fd-4da2e95fd262', '2020-07-14 17:06:12', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，\'string\' does not contain a definition for \'lines\'', '2020-07-14 17:06:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9a71c8b3-3e58-4c3e-a2f9-447419bca58b', '2020-07-02 11:05:45', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-02 11:05:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9a8a4d0a-29aa-4fa9-a57d-54f61d52069a', '2020-08-03 11:18:59', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-03 11:18:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('9afad845-5e75-4b11-b18c-8cf245d5e5b8', '2020-07-01 16:27:08', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-01 16:27:08', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9b4d5c10-4cdc-4cb4-ac21-a5da20e8c1d5', '2020-07-24 14:03:05', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，节点node_4是会签节点，不能用所有人,请检查!', '2020-07-24 14:03:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9bb8c42e-b8d0-4f40-981e-155fed6e7a60', '2020-07-02 08:41:52', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-02 08:41:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1e60fce5-3164-439d-8d29-4950b33011e2', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9bbbd7bb-fc8e-490b-afce-171b764fdbad', '2020-07-23 09:19:37', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-23 09:19:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9be88c0b-cbc7-41b0-a5dc-f6f620f7ebc4', '2020-08-03 11:23:51', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-03 11:23:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('9c131e67-0e97-47c5-9eef-e8a38821796b', '2020-07-31 16:24:42', '20000', 'xxxx', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 16:24:42', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9c21ffd2-e5b8-490d-864a-51a2a97856dc', '2020-07-22 17:20:34', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-22 17:20:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9cbfcdac-c36e-45fd-9d72-0badb718b35e', '2020-06-30 17:39:36', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-30 17:39:36', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9d1664e6-3827-4ef6-b67a-5d3fb6326203', '2020-07-02 13:53:34', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-02 13:53:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9d5106eb-c3ed-4dbf-b72a-a751ec836ab6', '2020-07-23 11:48:53', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-07-23 11:48:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '873db213-2d22-4c00-af03-2d1898f13481', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9d5fef45-e749-4344-8f6c-71e034d2c386', '2020-07-06 09:15:53', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-06 09:15:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9d6efc0b-cbb9-47cf-808f-6c19de1482b5', '2020-06-28 14:13:11', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-28 14:13:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9ed3f76a-b920-4440-af80-26920c4df439', '2020-06-28 14:16:47', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 14:16:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9f927624-c858-4189-9d26-961c60079e50', '2020-08-12 10:59:03', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-岗位管理', 1, '岗位管理操作,新增操作成功', '2020-08-12 10:59:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9fa12470-19f7-4446-9dd5-bb8a5608ac62', '2020-08-03 11:25:21', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-08-03 11:25:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('9fe4aa1c-636e-43dc-acde-fc2a07e14d2e', '2020-10-14 10:33:49', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-14 10:33:49', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a0239505-0207-4bd7-9f25-06c722d9ea1a', '2020-07-02 12:13:14', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-02 12:13:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a06aa08f-94e2-4174-a0e5-1647e1da920a', '2020-07-08 11:10:19', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-07-08 11:10:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a0a0deee-395e-494a-a71e-abc3ceaac48c', '2020-07-31 10:37:38', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-07-31 10:37:38', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('a0ac723a-883b-4d1f-9cb2-a7acacca9b7d', '2020-07-14 08:29:27', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-14 08:29:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a0adb01f-5770-4059-935d-06c7e0872cb2', '2020-10-19 10:54:04', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 10:54:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a0bcb1c9-acdf-4bc0-a261-f3642cbe2c3f', '2020-08-04 11:35:32', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-04 11:35:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a0de3a21-00f4-4e19-863b-b07ca34b68c9', '2020-07-24 16:18:43', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,修改操作成功', '2020-07-24 16:18:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '599669e9-2b1b-4c51-a842-ed0165075432', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a0f05146-b05d-4cae-8348-4ac2f9ab5ae8', '2020-07-15 16:49:23', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-15 16:49:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '642c0210-162c-4ded-b8e7-e2ea51158a0c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a13195d2-e3d2-4c7b-8462-44746503d510', '2020-08-04 10:34:56', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-08-04 10:34:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a19cbffd-c453-4ee5-a409-9ae81015208e', '2020-07-22 15:23:23', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功', '2020-07-22 15:23:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a20de7eb-312e-4714-a2f2-669d6178a320', '2020-06-30 12:01:06', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:01:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a2c98050-1495-4272-9f53-5acb9bac60a9', '2020-07-23 08:56:20', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,新增操作成功', '2020-07-23 08:56:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a3a9eb94-b57d-423f-8004-db682c179a4b', '2020-07-24 15:59:04', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-24 15:59:04', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a3b1ee11-d8c9-4d3f-b065-510bec56dd17', '2020-08-03 16:57:45', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-03 16:57:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a3b481a1-ced1-4bb3-86ce-5470caf136ea', '2020-07-23 09:20:21', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-23 09:20:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '6b196514-0df1-41aa-ae64-9bb598960709', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a3ba7cf2-2d6f-42be-81fe-76a947c7d7b8', '2020-06-29 17:24:33', 'admin', 'admin', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2020-06-29 17:24:33', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a49dd0da-e8f2-4a86-a1f7-a87893f3c218', '2020-09-29 14:23:08', 'admin', '?????', 'Create', '192.168.3.41', '?????', NULL, '????-????-????', 1, '??????,???????', '2020-09-29 14:23:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a54fc972-5a82-4226-a022-d1882218e29a', '2020-10-14 10:32:32', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:32:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '26452c9a-243d-4c81-97b9-a3ad581c3bf4', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a5c64b81-c4cc-49c8-898c-b5279b2ec0e7', '2020-08-11 13:20:37', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,修改操作成功', '2020-08-11 13:20:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a6c90098-8487-482c-9adf-5144d4b31f7f', '2020-07-21 14:01:42', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 0, '表单设计操作,修改操作失败，Object reference not set to an instance of an object.', '2020-07-21 14:01:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8faff4e5-b729-44d2-ac26-e899a228f63d', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a773ba61-ea4b-42d6-a036-7dfc982ba8f7', '2020-06-28 16:38:13', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,删除操作成功', '2020-06-28 16:38:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a7bf1ea1-dbb7-423b-ab7e-c73d4c22aaf2', '2020-07-29 16:44:08', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a7dde9e4-7d15-445d-8db9-d32e96d83036', '2020-06-29 17:35:07', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,修改操作成功', '2020-06-29 17:35:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'B97BD7F5-B212-40C1-A1F7-DD9A2E63EEF2', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a813fdfc-964e-4761-a5d3-a0d65d66d934', '2020-07-23 08:49:20', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-23 08:49:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8faff4e5-b729-44d2-ac26-e899a228f63d', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a823217f-80d2-4c62-9c75-85b4872103c7', '2020-10-28 13:01:33', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 13:01:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a8475e1f-0715-40cd-b60b-0dd1086f6d2f', '2020-07-08 10:13:54', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-08 10:13:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a8be3009-c170-4038-9955-22b52d57ec4d', '2020-07-31 17:31:30', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:31:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a93f8b47-d4af-4132-b9a4-732c5f1e7b6d', '2020-07-29 16:40:58', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功', '2020-07-29 16:40:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('a9828db1-f425-4516-8893-409215b747d2', '2020-08-04 08:37:46', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:37:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('aa38441a-e980-47e1-ac41-dcd4962e978a', '2020-08-04 11:35:47', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-04 11:35:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('aa98fc8a-c232-46c0-a4f5-e95e549efca8', '2020-10-15 08:59:39', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-15 08:59:39', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ab559e65-f01e-45c6-8b6c-297daa84b4a6', '2020-07-23 15:36:31', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-23 15:36:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f32069f-20f3-48c9-8e35-cd245fffcf64', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ab7cdc27-1284-4bb9-8c09-c0f3ca39abe3', '2020-07-23 14:52:15', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-23 14:52:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ab845c40-e11a-4c9a-a195-f7e953970c21', '2020-08-04 10:34:18', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-04 10:34:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ab8f7cd5-8419-481c-a4c7-dbb94ce0dc64', '2020-07-14 13:58:40', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-14 13:58:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '153e4773-7425-403f-abf7-42db13f84c8d', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('acbc9484-dcf2-43f6-88b5-153a80a0069a', '2020-07-22 14:32:58', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-22 14:32:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ad44686c-bda2-417f-bfb2-ddd85910150f', '2020-10-15 10:06:31', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:06:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ad8db02e-a3bb-4a9b-b589-a7dafc9c340f', '2020-07-14 11:33:37', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-我的流程', 0, '我的流程操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_InstanceSchemeId\' cannot be null', '2020-07-14 11:33:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('addc9339-97d0-4c90-9fdd-daf50cd3b166', '2020-07-24 09:50:25', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-24 09:50:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ae239b1e-8e85-4eb9-8b20-2dc9d7df0a17', '2020-06-29 17:24:23', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-29 17:24:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ae565ca4-dc6a-4d5a-a2cc-9430f3d85d06', '2021-02-10 11:14:09', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-用户管理', 1, '用户管理操作,修改重置密码成功。', '2021-02-10 11:14:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'df821722-2fae-4023-ae57-23bebfccad85', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('af224b1a-b4c7-42bd-929e-07c50934a135', '2020-07-31 17:44:02', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:44:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('af318fb8-e3f2-4bbe-ad22-26fed896e9f5', '2020-09-09 11:50:46', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2020-09-09 11:50:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('af63e132-d610-4e98-9f8a-7609161915e0', '2020-07-30 16:41:25', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-30 16:41:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8b059c40-d1bf-4a8c-94ea-850ade3d0745', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('afb88abb-617c-454c-b81c-d832e08376f8', '2020-07-15 15:05:48', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,新增克隆成功', '2020-07-15 15:05:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b0169231-dd09-4fd7-8cab-d2cc2a4e132a', '2020-10-14 10:27:40', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,修改操作成功。', '2020-10-14 10:27:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8c119bce-0d70-4a56-8389-214d8e14e107', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b02dbd41-09ff-48c2-9e28-d9c322811e49', '2020-07-23 10:46:58', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-23 10:46:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e10a7ac-8b65-4c7c-8eee-92d69d7dcbd9', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b0411762-f182-404c-8924-ad8345dc1f8d', '2020-10-15 09:04:33', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 09:04:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b09a0747-7ec3-41c7-973f-ce5c4d363896', '2020-07-31 17:30:30', '20000', 'xxxx', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-31 17:30:30', 'df821722-2fae-4023-ae57-23bebfccad85', '34601f70-2a2b-4eee-a7d9-d2f79749aa24', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b0a5e980-2b7c-4520-9f4e-9dfb835cda28', '2020-08-03 17:02:22', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-03 17:02:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b20877d9-6feb-4c96-a565-5deb27e6dd22', '2020-07-22 16:14:40', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 16:14:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b2b06c53-65f9-4c65-8cfc-3d661f6392fd', '2020-06-29 09:52:02', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-29 09:52:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b33a50d2-5779-4a5f-b462-6c1bd62ee976', '2020-07-02 12:12:25', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-02 12:12:25', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b36653a2-921e-4d7b-80da-7de488655c22', '2020-10-27 14:11:57', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-27 14:11:57', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b37c1b22-7ae3-468e-af0b-7921485141e6', '2020-09-07 10:43:54', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-09-07 10:43:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b3ad4660-f22a-4d4a-9a8d-46cf88d46d99', '2020-07-09 08:13:00', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-09 08:13:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b3b2c499-ffc9-4452-b7d5-ddbe9c953948', '2020-06-30 12:08:44', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:08:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b3e06fa0-ebfe-4c14-b048-db46e60f8ce1', '2020-07-24 15:58:49', '20000', 'xxxx', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-24 15:58:49', 'df821722-2fae-4023-ae57-23bebfccad85', '03a0545e-76b7-47e8-9d30-efd7320b6e8a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b44d6f20-d1c2-4ae4-8b75-bb7eafc4df6f', '2020-07-03 15:17:33', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-07-03 15:17:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd036623f-bac8-443b-8d0b-663965aef337', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b4ac55e7-8ed3-4964-99a5-9e6b499a0ecb', '2020-10-27 14:09:18', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-27 14:09:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b52b53bd-5f27-454f-9143-51500971898c', '2020-08-04 09:49:13', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-04 09:49:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7eed7439-bf24-425c-a1f9-8786a221ee89', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b558dc15-2667-4b55-91a1-e11dca120160', '2020-10-13 16:14:28', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-13 16:14:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b5dfc767-c7bd-4327-8b85-237d3bbdc0a9', '2020-10-14 10:26:35', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:26:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b675b4aa-f024-4d69-af47-15d1cf926adc', '2020-07-02 08:45:07', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-02 08:45:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '49F61713-C1E4-420E-BEEC-0B4DBC2D7DE8', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b6791c89-2eed-4d07-b076-67de627b99db', '2020-08-11 13:22:20', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-08-11 13:22:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b6909a4d-4190-46d5-9097-b53aba08e1cd', '2020-07-23 11:35:13', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,删除操作成功', '2020-07-23 11:35:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b6d35765-2d24-44e4-beef-68c31865b766', '2020-08-04 08:46:53', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:46:53', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('b70a9aa3-f624-48a1-a8fd-2395b90d6c9a', '2020-10-13 16:14:40', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-13 16:14:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b72efa56-37da-43f0-9fda-b054222e834c', '2020-06-30 17:40:02', '20000', 'xxxx', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-30 17:40:02', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b777d667-70aa-42a1-a6e2-a43265ea2fdd', '2020-08-12 11:17:33', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-12 11:17:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '5f9873e9-0308-4a8e-84b7-1c4c61f37654', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b78b3ed5-f4eb-4791-aa6b-f48556a97eef', '2020-07-21 14:49:44', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-21 14:49:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b79a5d76-877d-44b2-8089-c460cb177136', '2020-07-02 08:42:05', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-02 08:42:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8e52143d-2f97-49e5-89a4-13469f66fc77', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b7d79e4c-67e2-448a-bc89-481792dc48e5', '2020-10-13 16:10:41', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-13 16:10:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b802b50f-94d2-4b48-af8b-84e01fdcb5e0', '2020-07-20 16:42:31', 'admin', '超级管理员', 'Create', '172.17.180.1', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,新增操作成功', '2020-07-20 16:42:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b83dc0f4-436e-4964-babb-cd87a64d0a24', '2020-07-22 11:41:03', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-22 11:41:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b4fc0b00-6101-4166-8396-520735f0cdec', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b88174c8-6218-4f10-9446-4a1ccf23e1fe', '2020-08-04 11:24:11', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-04 11:24:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b889693e-b2a6-43c8-b048-a8843c0d961c', '2020-06-23 17:34:05', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-23 17:34:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b90310ae-8d33-4cc7-81e4-58bad6ab3831', '2021-06-02 22:09:13', 'admin', 'admin', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 0, '登录失败，密码不正确，请重新输入', '2021-06-02 22:09:13', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b952ed06-ec19-477b-9cf2-a53e07af13f7', '2020-07-14 08:57:09', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-14 08:57:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'e283c8a6-5d21-4256-97cf-d08268d88c1b', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b998885b-dd15-4004-b6f5-68b891882621', '2020-07-22 15:52:32', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-22 15:52:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b999c00c-e254-4187-bb11-efcaee60c638', '2020-07-15 15:05:33', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功', '2020-07-15 15:05:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('b9b12553-a008-4e7c-bcdc-c109525df76d', '2020-08-03 11:02:17', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-03 11:02:17', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('ba487f2d-8b1f-493d-91eb-84feeaaa309d', '2020-07-23 14:56:09', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-07-23 14:56:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '873db213-2d22-4c00-af03-2d1898f13481', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('baeb1ef9-ffba-4016-acd7-274cd29038c4', '2020-07-31 17:36:33', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:36:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bb11bb19-f389-4129-81c8-f1ef4c076617', '2020-10-28 11:35:25', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 11:35:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bb29bd72-5979-418c-921f-43dfda640fe8', '2020-10-13 16:13:34', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-13 16:13:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bbacbd94-4bd7-4060-90a4-df24a2d260e9', '2020-07-15 15:04:10', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-15 15:04:10', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd42aaaae-4973-427c-ad86-7a6b20b09325', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bbc20c36-4953-4d9a-9aa1-d9bfe198f356', '2020-07-13 14:00:26', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-13 14:00:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b08bb00f-e1df-44f8-904f-58ee5b1f4eb4', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bbc24bbb-e987-471a-a708-8aee279c857e', '2020-07-24 14:19:32', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,修改操作成功', '2020-07-24 14:19:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '599669e9-2b1b-4c51-a842-ed0165075432', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bc128af6-de35-4e6f-842f-c34ca9a6f0f3', '2020-08-03 11:28:14', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-03 11:28:14', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('bc6a92cd-2970-4479-8c5f-0e40c8a1c9f6', '2020-07-09 17:00:18', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功', '2020-07-09 17:00:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bc8f04ac-0a89-4213-a059-000071b7d76e', '2020-07-15 13:28:40', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-15 13:28:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bcc21186-acfd-4097-9e10-812752ad1898', '2020-07-15 16:33:42', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-15 16:33:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bd0ea87b-7756-4296-9d3c-ef7bd5433fa3', '2020-07-08 12:50:52', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,删除操作成功', '2020-07-08 12:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bd3f93e0-6923-43ec-ac85-c2c74bda6ada', '2020-10-13 16:11:08', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-13 16:11:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bda7067d-d0fe-4572-977b-cd778383e1f9', '2020-07-24 15:57:47', '10000', 'hhh', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-24 15:57:47', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('be674239-a654-4524-ac9f-6c1b4741c34d', '2020-07-02 10:55:01', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功', '2020-07-02 10:55:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('beb64490-f21d-48de-94bf-201c3715ce3e', '2020-10-13 16:11:18', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-13 16:11:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('beda3d6d-3b59-429e-87b5-9a5bd52b955d', '2020-07-13 16:06:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_AuthorizeType\' cannot be null', '2020-07-13 16:06:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('befdeea1-f7f8-422c-b282-3f93498d734d', '2020-07-23 10:47:04', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-23 10:47:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '0b1b307b-2aac-456b-acfb-484a05c71bd7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bf675bfa-9547-4ec2-9e8f-6b9c47fcc61c', '2020-07-22 15:23:22', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 15:23:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bfbc149a-f07f-47db-9e3d-74af45952399', '2020-08-03 17:14:25', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-03 17:14:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bfc99a5e-69c2-480a-b117-96f944e130f3', '2020-10-14 10:32:51', '20000', 'xxxx', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-14 10:32:51', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('bfdbeb21-b3a6-41eb-b418-eddb8f1f8ba7', '2020-07-08 10:13:23', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-08 10:13:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '96EE855E-8CD2-47FC-A51D-127C131C9FB9', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c03d5cad-6dd9-4c87-81af-d474b9066893', '2020-10-28 11:23:04', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 11:23:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c03f816c-3b09-41ba-b47e-4eb112635eb3', '2020-10-19 12:53:20', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:53:20', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c08c9123-198f-4b44-b1c7-5f5305292824', '2020-07-22 14:47:39', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-22 14:47:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '17a0e46f-28f9-4787-832c-0da25c321ce4', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c093a28d-0f1b-4f13-bf2d-fdb341737787', '2020-07-23 10:38:46', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,修改操作成功', '2020-07-23 10:38:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '59966d73-fb8d-448e-9576-12e6a2efd7ed', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c095800a-6bc1-4235-8413-69e5b61b9957', '2020-07-22 16:10:18', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 16:10:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c0d6082e-5bc0-46a4-8e3a-0bd88b60034a', '2020-10-19 09:44:53', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 09:44:53', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c1698b46-d5fe-42a4-816f-904260d6e319', '2020-08-04 08:32:44', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:32:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('c1e23f02-b300-44b3-88a6-8b2f5ae355f6', '2020-07-23 10:33:24', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,修改操作成功', '2020-07-23 10:33:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '59966d73-fb8d-448e-9576-12e6a2efd7ed', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c1e636d8-3c90-4a39-824a-32ccb85fa10a', '2020-06-28 14:07:18', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-28 14:07:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c1e82643-4eac-41e5-8977-ff1b1ba3381a', '2020-07-23 10:47:15', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-23 10:47:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1b72be70-e44d-43d6-91d0-dc3ad628d22e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c1fdf2ae-a101-4321-91c1-4d5195123d9e', '2020-07-01 09:03:26', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-01 09:03:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c24548bf-c287-4df5-a86b-dc94e98150d8', '2020-07-21 11:07:04', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-21 11:07:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '11847a81-b6fe-4de9-864d-9b1f5dd89d0e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c280cb7a-1ba5-4ba7-8a60-d14080d6f729', '2020-07-14 17:05:21', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，\'string\' does not contain a definition for \'lines\'', '2020-07-14 17:05:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c37bbeba-b2d5-47e7-be75-1f052066c538', '2020-08-31 10:50:23', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-08-31 10:50:23', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c3b63631-388f-45dc-b2e8-b49448425a5a', '2020-10-14 10:33:58', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:33:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '26452c9a-243d-4c81-97b9-a3ad581c3bf4', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c3b91e9a-6ef3-407a-bdf2-3f9ff1bbf084', '2020-07-10 10:35:42', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-10 10:35:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c3bcaaf3-6fb1-41b7-9870-d1f4a31bc971', '2020-07-22 14:47:03', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,删除操作成功', '2020-07-22 14:47:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c43cdf9e-50fe-4b5f-a0d1-acdfdcb50f3e', '2020-07-07 15:54:51', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 0, '代码生成操作,新增操作失败，Object reference not set to an instance of an object.', '2020-07-07 15:54:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c5c59f72-5336-4fed-82d1-81afda0ef803', '2020-06-30 11:57:34', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 11:57:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c5d394b1-9278-44ef-b30a-05b7b42a3fc8', '2020-07-24 16:16:02', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,修改操作成功', '2020-07-24 16:16:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '599669e9-2b1b-4c51-a842-ed0165075432', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c737b163-866b-44f7-9b1c-52cbf17869af', '2020-10-28 11:23:19', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 11:23:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c75fd5af-ae34-4d0c-9f1a-7ceb65596a91', '2020-08-29 10:36:09', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-08-29 10:36:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c7d946aa-ef32-4f35-8218-6ade2a597e4e', '2020-10-15 09:01:17', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 09:01:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c8023da4-3674-4fb6-a338-c38a9b58d315', '2020-08-11 14:51:59', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-08-11 14:51:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '3b6922f9-b4ba-4615-aa3f-b00110da54c6', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c80a7fd9-a93b-4bc0-ba44-9a470921d399', '2020-07-07 14:02:57', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-07 14:02:57', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c81ba20e-33eb-4b9b-8688-6c1d6dc2895b', '2020-08-12 11:19:29', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-12 11:19:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '873e2274-6884-4849-b636-7f04cca8242c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c86d8500-55aa-4417-8203-58ce03391adc', '2020-07-03 10:54:24', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-03 10:54:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('c8fd05b5-f3d8-41cb-8b1a-202bd0e2c6b8', '2020-10-19 13:11:12', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 13:11:12', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ca02af45-06fa-4322-b982-88a2bb009e47', '2020-07-08 10:41:43', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-08 10:41:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '3c8bc8ed-4cc4-43bc-accd-d4acb2a0358d', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ca5dbc78-c01d-46c5-b866-3056c013239b', '2020-07-24 15:59:25', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-24 15:59:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ca689563-3153-40a7-93b7-3dfb7c4e1c68', '2020-07-29 13:20:52', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-07-29 13:20:52', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('ca8a3689-a24c-4b90-ae5e-425deab40701', '2020-06-30 17:39:07', '20000', 'xxxx', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-30 17:39:07', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cb3c39dc-e54f-4b1b-b6f8-0379edff58fd', '2020-11-02 16:42:51', 'admin', '超级管理员', 'Login', '192.168.3.50', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-11-02 16:42:51', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cb463af3-ae05-470f-9efd-d3d09b2c99b8', '2020-06-30 11:56:16', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,新增操作成功', '2020-06-30 11:56:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cb69f1de-d51d-4855-9ea8-b48033a8bd77', '2020-06-30 10:03:08', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-06-30 10:03:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cb788148-e2d2-4a2b-b860-a0518d8a6c4e', '2020-07-30 16:07:22', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-30 16:07:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cba7a037-39e9-44db-adfe-2bc0969ddb61', '2020-07-30 10:19:46', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-07-30 10:19:46', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('cc100350-b90b-411d-83c8-9888a19982c1', '2020-07-06 10:14:44', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-07-06 10:14:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cc5b902b-64d9-4131-a5fe-d7f19586a08b', '2020-10-12 10:05:26', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 10:05:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ccde214e-c732-459e-9922-5ce20d924a6e', '2020-08-12 11:18:40', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功', '2020-08-12 11:18:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ccf5543d-bc08-4eac-bfab-4c61f3ee4bca', '2020-07-02 08:40:56', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-02 08:40:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd419160a-0a54-4da2-98fe-fc57f2461a2d', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cd22153a-b6ab-4ea0-a0f9-84a945cd02fe', '2020-07-31 15:24:13', '20000', 'xxxx', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-07-31 15:24:13', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('cdd9db27-7c26-4234-87db-47c504355a1b', '2020-08-12 11:17:44', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-12 11:17:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '6b196514-0df1-41aa-ae64-9bb598960709', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ce581465-f409-42ca-aaf2-499929067a74', '2020-07-15 16:37:20', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-15 16:37:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cea8d73e-63d9-4588-b1ff-14786a381b1f', '2020-11-02 16:49:17', 'admin', '超级管理员', 'Create', '192.168.3.50', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2020-11-02 16:49:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ceaf1f2f-6ddc-4946-9314-53106f2083c1', '2020-08-12 11:11:28', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-08-12 11:11:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '873db213-2d22-4c00-af03-2d1898f13481', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ceb24ff4-7d97-4b50-9079-e3f58be7572a', '2020-10-19 09:34:38', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 09:34:38', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ced762da-c138-4072-8116-564725f649ea', '2020-06-28 12:44:40', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功', '2020-06-28 12:44:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cedbfd1e-f162-44c1-ab5f-1727f78c33ab', '2020-10-15 09:18:58', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 09:18:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cf5491f5-7f21-4368-a117-264088c207c4', '2020-08-31 10:40:23', '20000', 'xxxx', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-08-31 10:40:23', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cf625dfb-57c5-45d6-987b-9fceac0de351', '2020-07-24 16:30:51', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-24 16:30:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cf6bc4e1-a819-4a99-90e2-db48325cd40b', '2020-10-27 14:09:41', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-27 14:09:41', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('cfab2adb-1c97-4fdf-9001-fa0157246c30', '2020-08-03 16:15:24', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-03 16:15:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'babca5e0-7c69-4200-b445-9a65b92aaa01', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d07ca215-a9cc-4768-97c3-b8fcc4ae0277', '2020-06-29 17:35:48', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功', '2020-06-29 17:35:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d1664e8c-6df8-42fc-a29d-60069a637738', '2020-10-15 10:26:29', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:26:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d1b20723-3129-4d55-a51f-25728bad35e4', '2020-08-11 14:27:55', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功', '2020-08-11 14:27:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d1c0d6f5-6dbd-402d-bc87-9319572e0493', '2020-07-09 15:40:03', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功', '2020-07-09 15:40:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d1c892fc-62ce-4f7f-9839-b26e581d6587', '2020-07-31 17:59:56', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-31 17:59:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d1ed8c80-0af2-4419-b069-38f9bde55965', '2020-06-28 12:41:38', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功', '2020-06-28 12:41:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d31fa33b-f7b1-4d58-a8f4-bff99b8f3fad', '2020-07-15 15:03:12', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功', '2020-07-15 15:03:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d333f5f8-ccc7-45ac-8297-ccf46c53d0f8', '2020-07-31 15:24:09', '10000', 'hhh', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-31 15:24:09', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d366507a-a343-4933-b80a-98c06a90e00b', '2020-07-22 16:02:05', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-22 16:02:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d45ebb7b-4002-4170-879f-0c332fc4c17d', '2020-07-02 14:00:50', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry \'xxxxx\' for key \'IX_Sys_Notice\'', '2020-07-02 14:00:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d46312d7-fe8d-4282-96d4-362f36e91bbe', '2020-08-12 10:59:17', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-岗位管理', 1, '岗位管理操作,删除操作成功', '2020-08-12 10:59:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d4744a44-a2b4-4a3a-a89b-b35ec502774b', '2020-07-31 15:24:00', '10000', 'hhh', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-07-31 15:24:00', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('d4a2698b-4540-4765-a0e4-f094a0df6abb', '2020-07-21 16:30:41', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-21 16:30:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'eb4bbf40-2f55-4b79-86ec-82f0555427fa', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d5784b04-bf71-4eaf-b0ed-524e63425410', '2020-08-03 16:44:26', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 16:44:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d5be52c0-ea70-4c31-8d53-1bcf63afcbd3', '2020-07-15 14:26:52', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-15 14:26:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d67fa3e5-f565-4d41-aeb3-fd57a22da082', '2020-07-08 11:04:45', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-08 11:04:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '3c8bc8ed-4cc4-43bc-accd-d4acb2a0358d', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d685fd43-622b-4c31-96b2-91feec2c21a1', '2020-07-10 09:32:20', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-10 09:32:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '318bb233-c9df-4374-9937-e55b71fbcf99', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d6974ce2-e80c-4e2f-9232-32daed650411', '2020-07-23 11:48:38', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-07-23 11:48:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '873db213-2d22-4c00-af03-2d1898f13481', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d73ef7b8-263e-46cd-a413-8a6f441257bd', '2020-07-22 17:30:22', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-22 17:30:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'edbbf77a-6321-4be5-a000-8fc70c9cf895', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d75bdc55-22f4-420d-b86b-a7fe32fe5f02', '2020-10-14 10:27:52', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:27:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d76916ef-fef9-4d56-9a85-ac028f65bf32', '2020-06-24 09:08:22', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,修改操作成功', '2020-06-24 09:08:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'e5079bae-a8c0-4209-9019-6a2b4a3a7dac', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d79e5e14-9e35-4872-8c55-a5baea41033c', '2020-10-19 12:59:10', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:59:10', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d7cc7c54-9a64-4974-8ba5-ac26accb3848', '2020-08-03 16:56:19', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-03 16:56:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d7e2acc2-195e-4aec-82e5-6719bf407fd7', '2020-07-03 10:45:36', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-03 10:45:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d86944cf-9497-492e-bf5d-74839d1ef57d', '2020-08-31 10:39:07', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-08-31 10:39:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d944fcff-e167-4b73-aa39-5270e6645270', '2020-07-22 15:48:07', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 15:48:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('d9ae72c8-a0cc-4487-8bc2-2a004633acd4', '2020-07-30 15:49:07', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-30 15:49:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8a381383-5db2-4700-b26e-0f5aed3fb3a2', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('da6795ae-25be-40bc-a896-312792b7fcec', '2020-07-03 13:53:53', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-03 13:53:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('da8a7745-fdc0-4e6c-b584-eab0d33c0e3b', '2020-07-23 15:36:23', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,新增操作成功', '2020-07-23 15:36:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('db33eef1-45ed-4f38-b7ea-4092ab86923a', '2020-07-07 17:13:57', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-07 17:13:57', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('db40daa9-7ee1-4d6c-91c6-352074fa7e03', '2020-07-09 17:07:00', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,删除操作成功', '2020-07-09 17:07:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('db919a56-292a-425e-8a18-7aa786b74fe6', '2020-08-04 10:33:43', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-04 10:33:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('db965db1-42ca-45ee-bb85-0c25481cfb02', '2020-09-29 14:22:58', 'admin', '?????', 'Login', '192.168.3.41', '?????', NULL, '????', 1, '????', '2020-09-29 14:22:58', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dba85c5e-b364-42fa-9e29-f0a716dd5a5a', '2020-07-31 15:23:45', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-31 15:23:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dbb3a55a-1630-4a31-bbd9-804bd4fc23e2', '2020-06-28 14:07:24', '10000', 'hhh', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-28 14:07:24', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dbc3fae6-09be-4097-bf52-81116c7de50b', '2020-07-13 16:06:32', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_AuthorizeType\' cannot be null', '2020-07-13 16:06:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dbcef240-8cd4-4f51-a1ca-38ef55196c9b', '2020-07-14 17:03:43', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，\'string\' does not contain a definition for \'lines\'', '2020-07-14 17:03:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dbd22967-b8b1-433a-aeaf-3760a54fb112', '2020-10-19 14:59:03', 'admin', '超级管理员', 'Create', '192.168.3.42', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2020-10-19 14:59:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dc1ae85e-660b-4726-ab7d-89f1c55c60ff', '2020-06-30 17:43:42', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-30 17:43:42', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dc4dc05f-ea95-442b-9520-154b3d76d9e1', '2020-07-03 10:51:50', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-03 10:51:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dc592ab8-38e2-47b5-8294-50aaf3543b16', '2020-07-02 08:44:44', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-02 08:44:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '06bb3ea8-ec7f-4556-a427-8ff0ce62e873', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dcce46ba-82d5-420a-8ba5-9b28e891acf3', '2020-08-03 11:24:28', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-08-03 11:24:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dced4b56-5f33-46ca-bf25-3663434bb410', '2020-06-29 17:36:50', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,删除操作成功', '2020-06-29 17:36:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dd162a70-ed5d-46c1-b3dc-a9840206df7a', '2020-08-04 08:40:58', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:40:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_log` VALUES ('dd64f21c-1b20-4fee-9c69-af0b71dd4d99', '2020-06-30 10:47:57', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-30 10:47:57', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dd76e18d-9471-4472-bf78-4abaacac45b8', '2020-08-03 17:04:10', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 17:04:10', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('df841ada-fdea-4cab-ab6a-c73a103da7e7', '2020-07-07 14:21:59', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-07 14:21:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e01982af-77cb-483a-b5ef-49f47216f25e', '2020-07-09 13:57:11', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-09 13:57:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '0411376a-18fd-4f52-bffb-22ae0d3fa21d', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e019aea8-0f92-4f6e-99d7-6319e78ce2a5', '2020-07-29 16:50:59', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,删除操作成功', '2020-07-29 16:50:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e07a8a8b-73a0-4231-bd1d-84dc4a85f89e', '2020-10-19 10:04:56', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 10:04:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e1c64da4-6287-4d47-88ee-1b38dc566f84', '2020-06-30 17:43:37', '20000', 'xxxx', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-30 17:43:37', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e1d3f705-4b30-4f5d-bc3f-a9d3d9d1a4c3', '2020-06-30 12:04:08', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:04:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e24bca97-ba78-42c7-b3d2-eea9a3e026a1', '2021-06-02 22:15:47', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-02 22:15:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e38d8769-1f42-4e99-acc3-9ad26a939db0', '2020-08-04 09:52:33', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功', '2020-08-04 09:52:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e41d2741-b6ef-4b56-b32c-0e20ee1ef606', '2020-07-29 16:51:59', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功', '2020-07-29 16:51:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e47c123f-c81d-4673-b256-98c21c63bfca', '2020-07-22 16:10:32', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 16:10:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e55817f7-a008-447f-b961-a398652b06f1', '2020-09-09 11:47:49', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2020-09-09 11:47:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e5b9439b-c04c-40b9-be26-5d57c76a2cd2', '2020-07-24 15:57:20', '10000', 'hhh', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-24 15:57:20', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e5c39c46-d2aa-4617-a865-0b30bbe90b37', '2020-07-22 15:47:52', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-22 15:47:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e5f08d48-0e44-4215-8f2d-ae14b811886b', '2020-07-22 15:48:07', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 15:48:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e65cd5c4-1d90-4259-8ae6-d8e046dce879', '2020-09-02 08:37:51', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-09-02 08:37:51', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e68a3f94-34ee-4ef0-b692-855477bc82be', '2020-07-24 16:14:49', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,修改操作成功', '2020-07-24 16:14:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '03a0545e-76b7-47e8-9d30-efd7320b6e8a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e6973d34-bdf2-4d90-9e35-0844e846cf7d', '2020-07-23 10:39:03', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,修改操作成功', '2020-07-23 10:39:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '59966d73-fb8d-448e-9576-12e6a2efd7ed', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e6ffe35a-72a2-435f-bcac-723950501b11', '2020-10-19 09:21:31', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 09:21:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e700a3da-cc6b-449e-9a27-d49f3a434696', '2020-10-19 10:03:25', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 10:03:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e743c018-d500-4e2b-a5ac-beedcd6eddc0', '2020-08-31 10:40:17', '10000', 'hhh', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-08-31 10:40:17', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e7bdc154-caf0-4d13-802e-a9450dddf31a', '2020-07-02 08:42:30', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-02 08:42:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c14ab4f2-a1cf-4abd-953b-bacd70e78e8c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e91ef139-6ce2-4b09-a911-496ef17d236a', '2020-07-23 11:35:15', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,删除操作成功', '2020-07-23 11:35:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e962c159-e348-485c-9e72-d6a9dd5d8161', '2020-08-03 17:02:15', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 17:02:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('e999d32e-740e-4fab-9b2f-23d549891e8c', '2020-07-06 09:16:09', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-07-06 09:16:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ea8d5b20-715a-4b04-85e4-f2b539002546', '2020-07-15 13:51:26', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-15 13:51:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('eb2eefe2-3508-4080-b1db-e627b2f5eb6b', '2020-10-19 11:00:43', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 11:00:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('eb4b0bb4-82c1-4ad0-823b-f4ff7dff792f', '2020-09-02 09:01:35', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-09-02 09:01:35', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ebcf676f-2502-45de-aa7a-92542303587b', '2020-10-28 09:59:50', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-28 09:59:50', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ec1b7135-e832-4cca-b1cc-8e3956413837', '2020-10-15 10:40:53', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:40:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ec1bcb2c-461a-4d8e-be7a-282527f037bc', '2020-10-15 09:40:28', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 09:40:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ec4ab95c-b8cb-43f0-af7e-f22e4658b59d', '2020-08-12 11:26:41', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-12 11:26:41', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('ec9b477b-21ac-4025-b955-518de22ec963', '2020-07-08 10:12:42', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功', '2020-07-08 10:12:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('eca31bc1-3eef-4338-84f7-53c6a3c57fbe', '2020-07-14 15:45:36', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-14 15:45:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '64A1C550-2C61-4A8C-833D-ACD0C012260F', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('edd99e72-b6fa-419a-a3c7-0c1f5b43327d', '2020-07-21 17:51:48', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,新增操作成功', '2020-07-21 17:51:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('edf49eb9-2877-4b85-b9ed-a2850724f0f4', '2020-07-10 09:31:17', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-10 09:31:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '318bb233-c9df-4374-9937-e55b71fbcf99', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('eed0d204-fd8a-455b-8dbe-4c03755d00c6', '2020-07-08 10:13:41', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-08 10:13:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('eed79e86-f89b-457b-8dbc-bd6f69b423d1', '2020-10-27 14:11:39', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-27 14:11:39', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ef2a761c-42fe-4466-8575-1f45f5fd2b2d', '2020-10-28 11:35:47', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 11:35:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ef4d41a3-6cef-45af-964c-2478e8689751', '2020-07-23 15:35:01', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-23 15:35:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f32069f-20f3-48c9-8e35-cd245fffcf64', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ef5db5d3-0c4d-44a8-a7ea-bbafb66db8af', '2021-02-10 11:24:17', '20000', 'xxxx', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 11:24:17', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('efeb7d06-9836-4f59-a6da-899e5fd4de2a', '2020-10-15 10:27:26', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:27:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('eff9dd15-8b1a-415f-b592-88bfe60c8257', '2020-10-14 10:28:09', 'admin', '超级管理员', 'Exit', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-10-14 10:28:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f07d8cbe-fbe4-4147-8663-fd332b7884c1', '2020-11-02 11:18:24', 'admin', '超级管理员', 'Login', '192.168.3.50', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-11-02 11:18:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f11f277a-eda5-4247-8da9-f5f43e1b5c2b', '2020-08-28 10:44:28', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-08-28 10:44:28', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f13b5641-5f5c-4c38-9968-7eaf16575afc', '2020-07-22 17:11:25', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-22 17:11:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '29c5321d-9625-4f97-a750-f49761082d6e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f18373cc-5c93-4bd6-958b-c2ab1534fd3f', '2020-07-13 15:42:47', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_FrmType\' cannot be null', '2020-07-13 15:42:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f1aa3465-0173-4044-8d65-b11050eeac00', '2020-06-30 12:06:26', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:06:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f1b058c8-2a99-4633-9a83-9e0010367069', '2020-06-30 10:47:49', '20000', 'xxxx', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-30 10:47:49', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f1c5f093-fc28-42a3-b3ab-6a74b58b2bb7', '2020-10-13 11:13:32', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-13 11:13:32', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f25920e5-5049-44cf-92bc-98dc683a1c7e', '2020-10-12 10:04:14', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 10:04:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f27ccdf8-87ae-4e6c-8904-3b416b8d0cd2', '2020-06-28 12:42:40', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,修改操作成功', '2020-06-28 12:42:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f2a1f86b-c596-41e9-a230-ca4133b359bb', '2020-06-30 17:39:51', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,修改操作成功', '2020-06-30 17:39:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '74a7c517-dbc4-4c7d-b9ba-9795a3dc008c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f2ee85da-1ea3-422c-aa81-d5647d2f7538', '2020-08-04 10:33:39', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-04 10:33:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f30a2409-cdfd-4f1c-8939-1fd0fd723be6', '2020-08-12 11:15:16', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-08-12 11:15:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f3571817-1112-42bd-8917-57d4e10b9f04', '2020-06-28 14:07:57', '10000', 'hhh', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-28 14:07:57', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f3811f8d-f793-468b-8416-91ca81767f00', '2020-06-30 11:37:30', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,删除操作成功', '2020-06-30 11:37:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f3960291-a3e4-45a6-9aa8-77647c20c894', '2020-07-22 16:14:40', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 16:14:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f41dc977-d3e2-4a43-9bed-27574ae751a0', '2020-10-14 10:27:59', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:27:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f4372dce-67e8-43f6-ad88-92f9da96d7ce', '2020-07-24 15:57:54', '20000', 'xxxx', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-24 15:57:54', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f445157d-705c-44f5-82fa-ffe4868572aa', '2020-07-24 15:57:11', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-24 15:57:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f446a6fd-de02-47d4-ae75-b2ef1002f0de', '2020-07-23 08:56:28', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-23 08:56:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '3b6922f9-b4ba-4615-aa3f-b00110da54c6', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f44d7c7d-edcb-486f-bcea-e9407e10ff07', '2020-07-02 12:12:47', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-02 12:12:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f4a1fe2c-4b5f-492c-a27a-4247a14c8f3e', '2020-10-14 10:32:42', 'admin', '超级管理员', 'Exit', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-10-14 10:32:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f4a30a78-8deb-43ea-8dc7-f7cd240b163a', '2020-07-08 10:14:06', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-08 10:14:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '30c629a0-910e-404b-8c29-a73a6291fd95', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f4d53c3d-0efc-499a-984b-da44161a6f50', '2020-08-11 13:21:33', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,修改操作成功', '2020-08-11 13:21:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f4e70de5-e713-4d46-8f54-4aacc7f1be69', '2020-08-12 11:18:03', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-12 11:18:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'bcd52760-009f-4673-80e5-ff166aa07687', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f4f46cdd-2624-4313-a2d2-332f09a372bf', '2020-06-30 11:56:49', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 11:56:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f5061b15-e214-445f-8385-02964b41a50c', '2020-06-28 12:24:57', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 0, '系统菜单操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_EnCode\' at row 1', '2020-06-28 12:24:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f547c971-0c61-4173-bf1f-ed881eef1ab3', '2021-06-02 22:09:19', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-02 22:09:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f6b3f275-35cf-4358-9121-d89ccef2ac2d', '2020-07-24 14:07:56', '10000', 'hhh', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-24 14:07:56', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f6c61edd-a80b-471f-86a8-3c8ba8d3c84a', '2020-10-19 11:01:46', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 11:01:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f84c0d46-1299-425d-a04b-188bbaa299ab', '2020-06-30 11:58:16', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 11:58:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f8585bc8-1ffb-4454-8272-80b30ece1b17', '2020-07-07 13:44:43', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-角色管理', 0, '角色管理操作,删除操作失败，角色使用中，无法删除', '2020-07-07 13:44:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f8865b04-dff5-4eef-a6b8-3e8e25f6c4ae', '2020-08-27 13:25:44', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-08-27 13:25:44', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f8888be9-98e2-44be-8f82-2c9920b1a8b2', '2020-07-02 11:14:40', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功', '2020-07-02 11:14:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f8c1a31a-d44f-47e0-9871-4087f70b64ed', '2020-07-02 14:00:02', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry \'xxxxx\' for key \'IX_Sys_Notice\'', '2020-07-02 14:00:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f8e0b462-a379-4e42-94a0-7b1ed6284e2c', '2020-10-15 09:14:32', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 09:14:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f8e5672d-8a72-4fbe-b09b-3fb208b9640c', '2020-07-23 11:44:43', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-07-23 11:44:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f914b5c6-04ef-4be3-9020-8a42531f5d7d', '2020-10-14 10:31:58', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-14 10:31:58', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f95c0967-e24b-41e8-848f-e656244d5736', '2020-07-01 13:38:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,新增操作成功', '2020-07-01 13:38:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f9c558f3-8c52-4bb9-b2ab-17ceeab1749c', '2020-07-22 11:43:27', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功', '2020-07-22 11:43:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('fa3bcb50-ca00-40be-ae28-bc1d2522ea24', '2020-07-31 16:16:41', '20000', 'xxxx', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 16:16:41', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('fa56a6a6-a9c4-44af-af74-f2975c20dfd5', '2020-10-14 10:27:46', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,修改操作成功。', '2020-10-14 10:27:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd71324b7-e7eb-47b2-bdea-f0293d36bb7f', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('fa7d511b-11cd-4cc1-b10b-05f1365e4b05', '2020-07-30 10:15:34', '10000', 'hhh', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-07-30 10:15:34', NULL, NULL, NULL);
+INSERT INTO `sys_log` VALUES ('fb7f9eaa-b448-4222-b730-7435aec07a38', '2020-07-06 09:16:14', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-07-06 09:16:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('fca466de-3469-4093-a053-d9a5fd892943', '2020-06-29 17:25:10', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-06-29 17:25:10', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c2c5efce-96a2-4793-bbee-89a989f4eaf5', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('fd8cc91f-2e4b-4466-8064-88f4c0d2537f', '2020-10-28 10:00:20', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 10:00:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('fe5c3eb1-98f9-4193-9430-49fb6addb49c', '2020-06-30 10:45:44', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-30 10:45:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('fe7258d9-a415-4c9b-bec5-a0b67b9e42d5', '2020-07-15 16:24:39', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-15 16:24:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '642c0210-162c-4ded-b8e7-e2ea51158a0c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('fe81a2f4-de5c-48f6-84af-acc295142619', '2020-10-19 12:53:41', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:53:41', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('fec62b77-6727-4c1c-b7d2-36589429e938', '2020-08-29 10:36:18', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-08-29 10:36:18', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ff0189d4-d500-4bf1-ae47-18944c21cfc2', '2020-08-03 17:22:25', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-08-03 17:22:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ff9355a5-4197-49c7-a5cd-289cc82093bc', '2020-07-13 16:05:20', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_AuthorizeType\' cannot be null', '2020-07-13 16:05:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ffecd92d-ba79-463c-9695-4f065f3684b4', '2020-08-12 11:18:28', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-12 11:18:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b4fc0b00-6101-4166-8396-520735f0cdec', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 
 -- ----------------------------
 -- Table structure for sys_module
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_module`;
 CREATE TABLE `sys_module`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_Layers` int NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_UrlAddress` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Target` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_UrlAddress` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_Target` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_IsMenu` tinyint(1) NULL DEFAULT NULL,
   `F_IsExpand` tinyint(1) NULL DEFAULT NULL,
   `F_IsFields` tinyint(1) NULL DEFAULT NULL,
@@ -3957,17 +5085,17 @@ CREATE TABLE `sys_module`  (
   `F_SortCode` int NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Authorize` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Authorize` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_Sys_Module`(`F_FullName`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_module_key1`(`F_EnCode`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_module
@@ -3985,6 +5113,7 @@ INSERT INTO `sys_module` VALUES ('2c2ddbce-ee87-4134-9b32-54d0bd572910', '462027
 INSERT INTO `sys_module` VALUES ('30c629a0-910e-404b-8c29-a73a6291fd95', '73FD1267-79BA-4E23-A152-744AF73117E9', 3, 'AppLog', '系统日志', 'fa fa-file', '/SystemSecurity/AppLog/Index', 'iframe', 1, 0, 0, 0, 0, 0, 0, 0, 1, '', '2020-07-08 10:12:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-08 10:14:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('337A4661-99A5-4E5E-B028-861CACAF9917', '462027E0-0848-41DD-BCC3-025DCAE65555', 2, 'Area', '区域管理', 'fa fa-area-chart', '/SystemManage/Area/Index', 'iframe', 1, 0, 0, 0, 0, 0, 7, 0, 1, '', NULL, NULL, '2020-06-15 14:57:10', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('38CA5A66-C993-4410-AF95-50489B22939C', '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 2, 'User', '用户管理', 'fa fa-address-card-o', '/SystemOrganize/User/Index', 'iframe', 1, 0, 0, 0, 0, 0, 6, 0, 1, '', NULL, NULL, '2020-06-16 08:11:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
+INSERT INTO `sys_module` VALUES ('39fcc5ad-48af-7778-53a5-4c3c9d18cbd3', '873e2274-6884-4849-b636-7f04cca8242c', 3, 'MoreTools', '更多组件', 'fa fa-paper-plane-o', 'https://fly.layui.com/extend/', 'blank', 1, 0, 0, 0, 0, 0, 9, 0, 1, '', '2021-05-28 23:03:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-05-28 23:04:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
 INSERT INTO `sys_module` VALUES ('423A200B-FA5F-4B29-B7B7-A3F5474B725F', '462027E0-0848-41DD-BCC3-025DCAE65555', 2, 'ItemsData', '数据字典', 'fa fa-align-justify', '/SystemManage/ItemsData/Index', 'iframe', 1, 0, 0, 0, 0, 0, 5, 0, 1, '', NULL, NULL, '2020-06-15 14:57:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('462027E0-0848-41DD-BCC3-025DCAE65555', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, 'SystemManage', '系统管理', 'fa fa-gears', NULL, 'expand', 1, 1, 0, 0, 0, 0, 1, 0, 1, '', NULL, NULL, '2020-06-23 10:38:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('484269cb-9aea-4af1-b7f6-f99e7e396ad1', '462027E0-0848-41DD-BCC3-025DCAE65555', 2, 'SystemOptions', '系统配置', 'fa fa-gears', '/SystemOrganize/SystemSet/SetForm', 'iframe', 1, 0, 1, 0, 0, 0, 0, 0, 1, '', '2020-06-12 14:32:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-16 09:27:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
@@ -4002,7 +5131,7 @@ INSERT INTO `sys_module` VALUES ('87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', '0', 1,
 INSERT INTO `sys_module` VALUES ('8e52143d-2f97-49e5-89a4-13469f66fc77', '873e2274-6884-4849-b636-7f04cca8242c', 2, 'SelectTool', '下拉选择', 'fa fa-angle-double-down', '../page/table-select.html', 'expand', 1, 0, 0, 0, 0, 0, 3, 0, 1, '', '2020-06-23 11:06:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-02 08:42:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 2, 'Role', '角色管理', 'fa fa-user-circle', '/SystemOrganize/Role/Index', 'iframe', 1, 0, 0, 0, 0, 0, 4, 0, 1, '', NULL, NULL, '2020-06-16 08:11:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('96EE855E-8CD2-47FC-A51D-127C131C9FB9', '73FD1267-79BA-4E23-A152-744AF73117E9', 3, 'Log', '操作日志', 'fa fa-clock-o', '/SystemSecurity/Log/Index', 'iframe', 1, 0, 0, 0, 0, 0, 1, 0, 1, '', NULL, NULL, '2020-07-08 10:13:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
-INSERT INTO `sys_module` VALUES ('a303cbe1-60eb-437b-9a69-77ff8b48f173', '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 3, 'SystemSet', '租户设置', 'fa fa-connectdevelop', '/SystemOrganize/SystemSet/Index', 'iframe', 1, 0, 0, 0, 0, 0, 1, 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-05-14 14:44:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
+INSERT INTO `sys_module` VALUES ('a303cbe1-60eb-437b-9a69-77ff8b48f173', '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 3, 'SystemSet', '租户设置', 'fa fa-connectdevelop', '/SystemOrganize/SystemSet/Index', 'iframe', 1, 0, 0, 0, 0, 0, 1, 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-05-30 21:37:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
 INSERT INTO `sys_module` VALUES ('a3a4742d-ca39-42ec-b95a-8552a6fae579', '73FD1267-79BA-4E23-A152-744AF73117E9', 2, 'FilterIP', '访问控制', 'fa fa-filter', '/SystemSecurity/FilterIP/Index', 'iframe', 1, 0, 0, 0, 0, 0, 2, 0, 1, NULL, '2016-07-17 22:06:10', NULL, '2020-04-16 14:10:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('a5b323e7-db24-468f-97d7-a17bf5396742', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, 'InfoManage', '信息中心', 'fa fa-info', NULL, 'expand', 1, 1, 0, 0, 0, 0, 5, 0, 1, '', '2020-07-29 16:40:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-08-12 11:17:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('bcd52760-009f-4673-80e5-ff166aa07687', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, 'ContentManage', '内容管理', 'fa fa-building-o', NULL, 'expand', 1, 1, 0, 0, 0, 0, 6, 0, 1, '', '2020-06-08 20:07:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-08-12 11:18:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
@@ -4025,16 +5154,16 @@ INSERT INTO `sys_module` VALUES ('f82fd629-5f3a-45d6-8681-5ec47e66a807', '462027
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_modulebutton`;
 CREATE TABLE `sys_modulebutton`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_Layers` int NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_Location` int NULL DEFAULT NULL,
-  `F_JsEvent` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_UrlAddress` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_JsEvent` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_UrlAddress` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   `F_Split` tinyint(1) NULL DEFAULT NULL,
   `F_IsPublic` tinyint(1) UNSIGNED ZEROFILL NULL DEFAULT 0,
   `F_AllowEdit` tinyint(1) NULL DEFAULT NULL,
@@ -4042,17 +5171,17 @@ CREATE TABLE `sys_modulebutton`  (
   `F_SortCode` int NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Authorize` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Authorize` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_Sys_ModuleButton`(`F_ModuleId`, `F_Layers`, `F_EnCode`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_modulebutton_key1`(`F_ModuleId`, `F_ParentId`, `F_EnCode`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_modulebutton
@@ -4074,7 +5203,7 @@ INSERT INTO `sys_modulebutton` VALUES ('1a588a3b-95d7-4b3a-b50a-d3bc40de9fe3', '
 INSERT INTO `sys_modulebutton` VALUES ('1b72be70-e44d-43d6-91d0-dc3ad628d22e', '26452c9a-243d-4c81-97b9-a3ad581c3bf4', '0', 1, 'NF-details', '查看机构', NULL, 2, 'details', '/SystemOrganize/Organize/Details', 0, 0, 0, 0, 4, 0, 1, '', NULL, NULL, '2020-07-23 10:47:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('1d1e71a6-dd8b-4052-8093-f1d7d347b9bc', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', '0', 1, 'NF-details', '查看', NULL, 2, 'details', '/SystemOrganize/SystemSet/Details', 0, 0, 0, 0, 2, 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-16 08:12:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('1ee1c46b-e767-4532-8636-936ea4c12003', '423A200B-FA5F-4B29-B7B7-A3F5474B725F', '0', 1, 'NF-delete', '删除字典', NULL, 2, 'delete', '/SystemManage/ItemsData/DeleteForm', 0, 0, 0, 0, 4, 0, 1, NULL, NULL, NULL, '2016-07-25 15:37:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
-INSERT INTO `sys_modulebutton` VALUES ('208c2915-d6d0-4bb0-8ec4-154f86561f5a', 'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', '0', 1, 'NF-enabled', '启用', NULL, 2, 'enabled', '/SystemSecurity/OpenJobs/ChangeStatus', 0, 0, 0, 0, 6, 0, 1, '', '2020-05-26 13:55:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-05-17 10:09:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
+INSERT INTO `sys_modulebutton` VALUES ('208c2915-d6d0-4bb0-8ec4-154f86561f5a', 'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', '0', 1, 'NF-enabled', '启用', NULL, 2, 'enabled', '/SystemSecurity/OpenJobs/ChangeStatus', 0, 0, 0, 0, 4, 0, 1, '', '2020-05-26 13:55:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-27 08:42:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('23780fa8-b92c-4c0e-830e-ddcbe6cf4463', '64A1C550-2C61-4A8C-833D-ACD0C012260F', '0', 1, 'NF-modulefields', '字段管理', NULL, 2, 'modulefields', '/SystemManage/ModuleFields/Index', 0, 0, 0, 0, 6, 0, 1, '', '2020-05-21 14:28:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('239077ff-13e1-4720-84e1-67b6f0276979', '91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', '0', 1, 'NF-delete', '删除角色', NULL, 2, 'delete', '/SystemOrganize/Role/DeleteForm', 0, 0, 0, 0, 3, 0, 1, '', NULL, NULL, '2020-06-16 08:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('29306956-f9b2-4e76-bc23-4b8f02d21be3', 'F298F868-B689-4982-8C8B-9268CBF0308D', '0', 1, 'NF-import', '导入', NULL, 1, 'import', '/SystemOrganize/Duty/Import', NULL, 0, 0, 0, 5, 0, 1, '', '2020-08-12 10:17:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-08-12 10:17:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
@@ -4142,7 +5271,7 @@ INSERT INTO `sys_modulebutton` VALUES ('b83c84e4-6264-4b8e-b319-a49fbf34860d', '
 INSERT INTO `sys_modulebutton` VALUES ('ba72435b-1185-4108-8020-7310c5a70233', '01849cc9-c6da-4184-92f8-34875dac1d42', '0', 1, 'NF-details', '查看数据表', NULL, 2, 'details', '/SystemManage/CodeGenerator/Details', 0, 0, 0, 0, 2, 0, 1, NULL, NULL, NULL, '2020-05-06 13:12:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('c8eed325-56ad-4210-b610-3e3bb68eb0be', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, 'NF-edit', '修改', NULL, 2, 'edit', '/FlowManage/Flowinstance/Form', 0, 0, 0, 0, 1, 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('cba403cb-6418-44b7-868d-19e04af673ce', 'd742c96e-b61c-4cea-afeb-81805789687b', '0', 1, 'NF-delete', '删除分类', NULL, 2, 'delete', '/SystemManage/ItemsType/DeleteForm', 0, 0, 0, 0, 4, 0, 1, NULL, NULL, NULL, '2020-04-27 16:52:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
-INSERT INTO `sys_modulebutton` VALUES ('cc115cef-c2d1-4b97-adbc-ea885aea6190', 'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', '0', 1, 'NF-log', '日志', NULL, 1, 'log', '/SystemSecurity/OpenJobs/Details', NULL, 0, 0, 0, 7, 0, 1, '', '2020-12-02 13:14:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-05-17 10:09:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
+INSERT INTO `sys_modulebutton` VALUES ('cc115cef-c2d1-4b97-adbc-ea885aea6190', 'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', '0', 1, 'NF-log', '日志', NULL, 1, 'log', '/SystemSecurity/OpenJobs/Details', NULL, 0, 0, 0, 6, 0, 1, '', '2020-12-02 13:14:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('cd65e50a-0bea-45a9-b82e-f2eacdbd209e', '252229DB-35CA-47AE-BDAE-C9903ED5BA7B', '0', 1, 'NF-add', '新建机构', NULL, 1, 'add', '/SystemManage/Organize/Form', 0, 0, 0, 0, 1, 0, 1, NULL, NULL, NULL, '2020-04-07 14:22:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('d1086ccf-e605-44a4-9777-629810cec02d', '152a8e93-cebb-4574-ae74-2a86595ff986', '0', 1, 'NF-edit', '修改字段', NULL, 2, 'edit', '/SystemManage/ModuleFields/Form', 0, 0, 0, 0, 1, 0, 1, '', '2020-05-21 14:39:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-21 15:15:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('d26da420-7e73-41ef-8361-86551b8dd1bb', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', '0', 1, 'NF-add', '新增', NULL, 1, 'add', '/SystemOrganize/SystemSet/Form', 0, 0, 0, 0, 0, 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-16 08:12:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
@@ -4173,23 +5302,23 @@ INSERT INTO `sys_modulebutton` VALUES ('ffffe7f8-900c-413a-9970-bee7d6599cce', '
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_modulefields`;
 CREATE TABLE `sys_modulefields`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_IsPublic` tinyint(1) NULL DEFAULT 0,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_Sys_ModuleFields`(`F_ModuleId`, `F_EnCode`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_modulefields_key1`(`F_ModuleId`, `F_EnCode`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_modulefields
@@ -4307,26 +5436,62 @@ INSERT INTO `sys_modulefields` VALUES ('ff60fd1e-d0df-4847-bc5a-1bf4c3310c9c', '
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_notice`;
 CREATE TABLE `sys_notice`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_Title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_Title` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Content` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_Sys_Notice`(`F_Title`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_notice_key1`(`F_Title`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_notice
 -- ----------------------------
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa1', '1.0.0版本说明', '2020/7/23 \n功能变更：\n1、增加表单设计；\n2、增加流程设计；\n3、增加流程中心；\n4、增加文件管理。\n4、去除Respository实现类和接口\n5、代码生成增加实体生成功能\nbug修复：\n1、tab iframe刷新tab iframe问题；\n2、流程中心处理界面显示问题。\n3、修复公告换行问题', 0, 1, NULL, '2020-07-23 11:44:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-08-12 11:11:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa2', '1.0.1版本更新', '2020/8/3\n功能变更：\n1、增加信息中心；\n2、完善通知功能（除私信）；\nbug修复：\n1、当前用户信息对象为空问题；\n2、流程中心部分问题；\n3、代码生成实体生成显示问题；', 0, 1, NULL, '2020-08-03 17:22:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-08-12 11:11:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa3', '1.0.2版本更新', '2020/8/10\n功能变更：\n1、更新流程2张表和信息历史表名称长度\n2、修改清空缓存功能，只对管理员开放，成功跳转登录页\n3、增加oracle数据库脚本\n4、信息和流程删除设置为假删\n5、更新tableselect插件\n6、修改系统设置提交关闭问题\n7、选择弹框增加清除方法\n8、选择弹框增加双击事件\n9、区域查询把下级数据也加进去\nbug修复：\n1、通知中心加载问题修复；\n2、修复oracle数据库查询服务bug\n3、修复流程新增缺少F_EnabledMark字段问题\n4、修复用户查看明细显示问题\n5、模板修复树生成问题\n6、修复选择组织、角色、用户弹窗 鉴权异常\n7、修复用户中角色和部门显示问题\n8、二次确认框解决确认没有关闭的问题\n9、修复检测图片 gif异常问题\n', 0, 1, NULL, '2020-08-12 11:11:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa4', '1.0.3版本更新', '2020/8/12\n功能变更：\n1、upload报错信息改为动态信息；\n2、upload上传地址修改；\n3、导入文件路径修改，增加日期\n4、修改弹窗，改为top.layer.open，修改相应界面\n6、去掉界面中的isMax参数\n7、弹窗大小取消判断\nbug修复：\n1、修复多列模板样式问题；', 0, 1, NULL, '2020-08-12 11:15:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa5', '1.0.4版本更新', '2020/8/12\n功能变更：\n1、upload增加excel类别；\n2、岗位管理增加导入导出功能；\n3、菜单全移入常规管理以便二次开发使用新模块\n4、数据库更新、增加导入导出按钮，菜单更新', 0, 1, NULL, '2020-08-12 11:24:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa6', '1.0.5版本更新', '2020/8/17\n功能变更：\n1、增加字典管理分类查询功能\n2、增加字段管理分类的滚动条\n3、模板生成表单，input增加默认显示\n4、自定义测试表单，添加创建人名称\nBUG修复：\n1、修复首次启动更新信息的问题\n2、修复表单设计中date 点击不出现的bug\n3、权限bug修复\n4、修复弹窗超出界面bug\n5、修改addform返回有效的数据\n6、submitPost方法取消关闭loading修复\n7、模板修复是否树的引用\n8、修改modalOpen方法 增加返回值index\n9、修改modalOpen方法 高度宽度不对问题\n10、修复获取用户信息bug', 0, 1, NULL, '2020-08-20 16:48:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-05-28 08:32:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bab0', '1.0.6版本更新', '2020/8/27\n功能变更：\n1、删除多余字体文件\n2、修复选择弹窗机构显示异常问题，\n3、增加pdf导出示例，在岗位管理里\n4、验证码颜色背景改成白色\n5、表格权限字段，不存在就跳过\n6、common中table和treetable增加字段权限开关，默认开启\nBUG修复：\n1、修改modalOpen方法 高度宽度不对问题\n2、修复登录日志异常问题，\n3、pdf导出样式修改', 0, 1, NULL, '2020-08-20 16:50:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-08-27 14:48:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bab1', '1.1.0版本更新', '2020/8/27\n功能变更：\n1、去除引用tablePlug插件\n2、下拉框遮挡引用改为optimizeSelectOption\n3、删除多余sqlkey、删除Id列\n4、修改tree折叠列\n5、引入soul-table插件，table增加自动列宽、右键菜单、拖动列、tips显示、导出数据功能\n6、新增formatDate方法\n7、table和treetable去掉hideAlways参数', 0, 1, NULL, '2020-08-27 14:51:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-09-02 09:11:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bab2', '1.1.1版本更新', '2020/8/31\n功能变更：\n1、新增soul-table后台筛选，岗位管理实现\n2、搜索框样式调整 删除margin\nBUG修复：\n1、修复ClientsData null异常问题\n2、数据权限显示问题修复\n3、数据权限null判断修复', 0, 1, NULL, '2020-09-02 09:04:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bab3', '1.1.2版本更新', '2020/9/1\n功能变更：\n1、loading优化\n2、去除内容管理 url验证\n3、模板调整，分页参数使用soul的\n4、筛选的实现\n5、有效标识改成文字显示', 0, 1, NULL, '2020-09-02 09:08:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-09-09 11:35:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bab4', '1.1.3版本更新', '2020/9/2\nBUG修复：\n1、访问控制显示问题修复', 0, 1, NULL, '2020-09-09 11:47:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-09-09 11:50:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bab5', '1.1.4版本更新', '2020/9/4\n功能变更：\n1、下拉选择样式调整，打开窗体大小调整\n2、首页用户增加下拉箭头\n3、过滤插件微调，防止静态数据去请求后端\n4、前端格式化显示的数据筛选功能调整，后端反格式化数据，只支持\"等于\"\nBug修复：\n1、layui table合计行小数问题修复', 0, 1, NULL, '2020-09-09 11:50:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bab6', '1.1.5版本更新', '2020/9/9\n功能变更：\n1、日志方法独立出来，简化控制层代码，保留原日志方法，相应模板修改\nBug修复：\n1、修复代码生成新增字段bug', 0, 1, NULL, '2020-09-09 11:52:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bab7', '1.1.6版本更新', '2020/9/29\n功能变更：\n1、chat.js增加重连log提示\n2、soultable和table从common中独立出来\n3、控制器删除多余引用\n4、前端删除多余模块\n\nBug修复：\n1、修复缓存浅copy问题\n2、修复日志，没有模块异常问题（方式className直接传文字即可）\n3、修改JsonHelper中的方法，去掉Serenity引用\n4、修复ToJson时间问题', 0, 1, NULL, '2020-09-29 14:23:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-09-29 14:42:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bab8', '1.1.7版本更新', '2020/10/19\n功能变更：\n1、错误页关闭直接返回登录页\n2、quarz优化\n3、ajax请求修改默认为异步\n\nBug修复：\n1、修复系统日志没有自适应问题\n2、前端修复时间null 问题\n3、修复拦截器未拦截的问题\n4、修复多线程中IDbContext复用问题\n', 0, 1, NULL, '2020-10-19 14:59:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bab9', '1.1.8版本更新', '2020/11/02\n功能变更：\n1、增加数据库超时\n2、操作日志增加配置（redis/sql）\n3、操作日志移除数据权限\n4、默认配置设置为不用redis\n\nBug修复：\n1、修复前端浏览器时间解析异常问题，时间格式统一为“yyyy/MM/dd HH:mm:ss”\n2、 修复定时任务反射异常问题，反射取指定前后缀的dll', 0, 1, NULL, '2020-11-02 16:49:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac0', '1.1.9版本更新', '2020/11/10\n功能变更：\n1、流程中角色增加当前部门选项\n2、优化流程和信息提醒', 0, 1, NULL, '2020-11-10 12:34:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-11-12 12:36:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac1', '1.2.0版本更新', '2020/11/12\nBUG修复：\n1、流程驳回bug修复\n2、流程驳回信息提示修复\n3、流程连线条件bug修复\n4、流程修改前端增加限制条件\n5、待处理流程列表显示BUG修复\n6、修复IE连接signalr异常问题', 0, 1, NULL, '2020-11-12 12:36:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-11-12 12:36:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac2', '1.3.0版本更新', '2020/11/23\n功能变更：\n1、插件更新\n2、流程中compare全转小写\n3、layui-form-label手机端样式修改\n4、代码生成主页显示调整\n5、增加搜索工具按钮\n6、优化按钮显示，宽度小于500隐藏打印按钮\n7、常用参数修改，配置文件增加管理员账号信息等参数\n8、程序启动修改管理员账户\n9、框架新增调用chloe的rollback方法\n10、首页改动\n\nBUG修复：\n1、修复流程发起人无法修改的bug\n2、修复流程处理的IE异常\n3、修复流程中的图片显示异常问题\n4、修复流程执行过程中，线条丢失参数M的问题\n5、修复流程图第一次打开自适应问题\n6、修复异常日志添加问题，事务没有回滚，无法添加的问题\n7、修复直接访问首页websocket异常的问题\n8、修复用户资料，没有更新的问题', 0, 1, NULL, '2020-11-23 10:09:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-11-23 10:10:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac3', '1.4.0版本更新', '2020/11/25\n功能变更：\n1、增加全局模型认证\n2、信息界面显示微调\n3、Domain增加模型验证、模板调整\n4、更新数据库记录的数据连接\n5、主题保存到localstorage中\n6、设置全局ValidateAntiForgeryToken\n7、js修改参数提交方式，删除原特性\n8、导入实例去掉搜索图标\n9、代码优化\n\nBUG修复：\n1、修复导入案例中删除异常问题\n2、修复上传文件没有保存问题\n3、修复获取session异常问题', 0, 1, NULL, '2020-11-25 09:20:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac4', '1.5.0版本更新', '2020/11/25\n功能变更：\n框架升级从.netcore3.1升级到.net5', 0, 1, NULL, '2020-11-25 10:21:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-11-25 10:21:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac5', '1.6.0版本更新', '2020/12/03\n功能变更：\n1、新增定时器日志\n\nBUG修复：\n1、修复流程回调第三方失效的BUG\n2、修复代码生成自增Id的异常\n3、修复缓存查询int问题\n4、修复字典缓存异常问题\n5、修复定时器数据连接关闭异常\n6、修复用户管理修改密码缓存异常', 0, 1, NULL, '2020-12-03 21:00:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac6', '1.7.0版本更新', '2020/12/15\n功能变更：\n1、webapi允许body重用\n2、增加sql打印功能，开发模式开启\n3、类名获取，修改方式，代码生成修改\n4、全局去掉className\n5、优化查询 count问题，在order之前处理count\n6、优化前端加载初始化信息，不再使用top.clients存放基础信息\n7、去除UE编辑器，使用wang编辑器\n8、内容管理多选启用人性化设置，修改代码生成器\n9、为了多选人性化，全局Index按钮去除layui-hide样式，\n10、上传接口改成多文件，接口文件地址修改\n11、数据库文件地址修改，logo统一加前缀/icon/,其他统一加前缀/file/\n12、内容管理图片点击预览修改\n13、优化代码生成界面的排序，增加创建时间\n14、更新流程插件，增加右键打开方法，修改默认名称中文\n15、增加流程插件区域修改方法\n\nBUG修复：\n1、修复岗位soultable演示异常\n2、修复岗位导入excel异常\n3、修复快捷入口 清空时对象为空异常', 0, 1, NULL, '2020-12-15 11:14:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-12-15 11:14:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac7', '1.8.0版本更新', '2020/12/15\n功能变更：\n1、审核流程样式优化\n2、流程、表单改成左右表结构，左边部门，右边流程、表单\n3、字典管理增加条数显示\n4、流程修改，只能获取当前部门的可用流程\n5、代码生成增加可选缓存，默认不带缓存\n6、规范返回结果，AjaxResult修改为AlwaysResult，AjaxResultDTree修改为DTreeResult，AjaxResult文件修改重命名全局即可\n7、更新oracle查询数据库表\n8、更新登录缓存滑动过期，默认1小时\n9、更新全局多选单选界面以及soultable，common和commonTable新增行选中按钮控制方法\n10、修复按钮显示隐藏自适应问题\n11、更新api启动，网站启动，优化api\n12、增加卡片表格示例\n\nBUG修复：\n1、修复下载文件异常\n2、修复表单设计器属性没有更新的问题\n3、修复流程寻找下一节点 当前部门不是申请人的bug', 0, 1, NULL, '2020-12-21 12:14:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac8', '1.9.0版本更新', '2020/12/30\n功能变更：\n1、api更新模型验证和打印sql\n2、微调卡片表格插件\n3、界面主页地址存放到appsetting中\n4、修改项目中的admin，使用配置文件中的账号\n5、主页布局修改，增加按钮tohome\n6、字段权限方法修复，集成到数据权限中，使用select lambda方式\n7、查询条件全放到数据权限之前，模板修改\n8、登录对cookie密码加密\n9、优化数据权限界面显示\n10、流程设计线条增加条件，增加in not in\n\nBUG修复：\n1、修复批量上传过快，文件名称重复的bug\n2、修复公共属性没有显示的bug', 0, 1, NULL, '2020-12-30 16:32:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-12-30 16:33:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac9', '2.0.0版本更新', '2020/01/05\n功能变更：\n1、增加防重复锁特性，用户本身默认5秒\n2、优化.Result改成同步方式执行\n3、api增加防重复验证，用户本身默认5秒\n4、优化soultable过滤\n\nBUG修复：\n1、修复用户管理按钮bug\n2、修复上传安全问题，指定文件格式\n3、权限问题修复\n4、api修复刷新token问题\n5、datetime2生成问题修复\n6、修复oracle number参数生成问题\n7、修复快捷菜单显示非菜单模块的Bug', 0, 1, NULL, '2021-01-05 22:10:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad0', '2.1.0版本更新', '2020/01/10\n功能变更：\n1、前端新增单个按钮权限控制方法\n2、按钮界面增加编号显示\n3、修复token文字\n4、修改流程图配置，增加自定义显示功能\n5、替换前端流程样式', 0, 1, NULL, '2021-01-10 12:43:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-01-10 12:44:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad1', '2.2.0版本更新', '2020/01/29\n功能变更：\n1、更新日志传入key 类型\n2、岗位导入前端显示增加soultable\n3、更新信息服务 hub默认不传\n4、给系统设置加上管理员验证\n5、前端增加参数null删除表单元素的方法\n6、消息未读查询优化\n7、增加自适应大屏\nBUG修复：\n1、岗位导入修复文件名重复异常\n2、修复定时任务没有后台启动的BUG\n3、修复ip控制多选bug\n4、修复数据库连接保留问题\n5、修复字段权限对象为空的bug', 0, 1, NULL, '2021-01-29 10:24:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-01-29 10:24:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad2', '2.3.0版本更新', '2020/02/10\n功能变更：\n1、更新信息即时通知，改成http调用，方便api调用，需要修改配置文件配合\n2、更新ip获取地址方法，增加配置是否本地局域网\n3、删除多余前端文件\n4、更新echarts文件，删除主题\n5、增加权限验证方法，可根据参数进行验证，菜单和按钮增加字段F_Authorize\n6、新增api权限验证\n\nBUG修复：\n1、table修复点击按钮触发行点击事件的bug\n2、修复获取ip的bug', 0, 1, NULL, '2021-02-10 13:50:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad3', '2.4.0版本更新', '2020/02/26\n功能变更：\n1、更新树形表格插件，增加复选框联动设置\n2、重构代码生成\n3、表单设计器优化，表单设计增加表头和上传url设置\n4、优化实时通讯，支持其他客户端登录者连接\n5、表单设计增加表头和上传url设置\n6、前端优化重复提交方式，统一放到submitForm中\n\nBUG修复：\n1、修复api 登录参数异常', 0, 1, NULL, '2021-02-26 10:02:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-02-26 10:17:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad4', '2.5.0版本更新', '2020/03/10\n功能变更：\n1、启动增加清理缓存，快捷菜单优化\n2、表单设计器赋值优化，实体模板删除多余\n3、定时任务增加cron表达式\n\nBUG修复：\n1、修复树形单选不触发行点击事件bug', 0, 1, NULL, '2021-03-10 16:01:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-03-10 16:01:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad5', '2.6.0版本更新', '2020/03/23\n功能变更：\n1、更新前端插件，如layui、soultable\n2、增加雪花id方法\n3、更新layui库，改成layui，方便以后升级\n4、配置增加后台定时任务开关\n5、优化权限判断，优先使用缓存数据\n6、更正配置跨域参数名称\n7、代码生成新增删除字段和创建字段，优化代码生成\n8、代码生成列表增加上下移动\n9、删除cardtable中的 缓存验证\n10、新增树形表格插件，增加soultable支持，更新代码生成\n\nBUG修复：\n1、修复菜单按钮 关键字查询无效BUG\n2、修复表单number验证问题\n3、修复省市区联动初始化赋值示例\n4、修复消息提示全部清空无效的BUG\n5、修复权限验证登录验证 读取缓存的BUG\n6、修复ie11访问异常问题\n7、修复用户查询报错问题，暂时去掉岗位部门的过滤\n8、修复获取lanip方法iv6异常的BUG\n9、修复代码生成添加字段失败的BUG\n10、解决表单设计器日期的BUG\n11、修复一些界面操作列还存在按钮的BUG', 0, 1, NULL, '2021-03-23 16:26:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-03-23 16:26:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad6', '2.7.0版本更新', '2021/4/15\n功能变更：\n1、更新表格树形；\n2、更新卡片表格组件;\n3、更新上传示例，增加loading；\n4、前端新增单选绑定；\n5、优化前端多选绑定；\n\nbug修复：\n1、修复卡片表格bug；\n2、修复上传后在筛选状态删除数据的bug；\n3、修复缓存延时bug问题；\n4、修复日志菜单的异常；\n5、修复树形表格刷新点击事件重复的问题；\n6、修复过滤 float等类型异常；\n7、修复代码生成异常；', 0, 1, NULL, '2021-04-15 21:59:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad7', '2.8.0版本更新', '2021/4/30\n功能变更：\n1、更新卡片组件；\n2、代码生成 mssql增加视图；\n3、更新select 默认值问题；\n4、修改菜单，允许无路由菜单添加按钮；\n5、流程申请增加指定角色或者指定用户；\n6、流程申请界面优化\n7、流程增加显示当前审批人；\n\nbug修复：\n1、修复定时任务不显示删除按钮的bug；\n2、修复代码生成模板bug；\n3、修复流程修改后没有申请人和所属部门bug；\n4、修复soultable 排序引起的分页插件配置异常；\n5、修复微端 表单显示问题；\n6、修复sql 传输级错误问题；\n7、修复startup使用数据库连接，没有包using问题；\n8、解决resize()，表格最底行点击异常问题；\n9、修复用户组织异常', 0, 1, NULL, '2021-04-30 14:08:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad8', '2.9.0版本更新', '2021/5/13\n功能变更：\n1、表单设计器样式调整；\n2、修改dbhelper文件；\n3、配置数据库类型简化；\n4、ORM改成SqlSugar;\n5、去除所有service缓存；\n6、id默认使用连续集合id；\n7、修改部分文件名；\n\nbug修复：\n1、修复soultable类型bug;\n2、修复ChloeIQuery类型bug；\n3、修复流程设计自适应问题；', 0, 1, NULL, '2021-05-13 16:22:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fcc2c9-894f-48c7-5e87-bb2f4505cbe1', '2.10.0版本更新', '2021/5/28\n功能变更：\n1、增加单库事务和多库事务区分；\n2、增加多库及多租户实现；(多租户只缺少实体CodeFirst)\n3、定时任务增加远程调用功能；\n4、定时任务增加执行功能；\n5、定时任务增加租户号；\n6、更新layui2.6.7；\n7、去除前端格式化时间；\n\nbug修复：\n1、修复切换orm的各种问题；\n2、修复webapi 唯一登录问题；\n3、修复筛选bool类型和时间类型问题；', 0, 1, NULL, '2021-05-28 09:35:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_openjob
@@ -4337,147 +5502,164 @@ CREATE TABLE `sys_openjob`  (
   `F_FileName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_JobGroup` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_StarRunTime` timestamp NULL DEFAULT NULL,
-  `F_EndRunTime` timestamp NULL DEFAULT NULL,
+  `F_StarRunTime` datetime NULL DEFAULT NULL,
+  `F_EndRunTime` datetime NULL DEFAULT NULL,
   `F_CronExpress` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastRunTime` timestamp NULL DEFAULT NULL COMMENT '最后一次执行时间',
+  `F_LastRunTime` datetime NULL DEFAULT NULL COMMENT '最后一次执行时间',
   `F_JobType` int NOT NULL DEFAULT 0 COMMENT '任务类型0Run,1Get,2Post,3Put,4Delete',
   `F_RequestHeaders` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求头',
   `F_RequestString` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求内容',
   `F_RequestUrl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求地址',
-  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据库数字',
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_openjob
 -- ----------------------------
+INSERT INTO `sys_openjob` VALUES ('08d92c83-8743-41a6-878e-930d5c34fec1', 'WaterCloud.Service.AutoJob.SaveServerStateJob', '服务器状态', 'WaterCloud', '2021-06-11 10:49:27', NULL, '0 0/10 * * * ?', 0, 1, '', '2021-06-11 10:49:27', '08d92c82-c515-4fcd-8963-ec5a8ad36b5b', '2021-06-11 10:49:27', '08d92c82-c515-4fcd-8963-ec5a8ad36b5b', NULL, NULL, '2021-06-11 10:49:27', 0, '', '', '', '1');
+INSERT INTO `sys_openjob` VALUES ('1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'WaterCloud.Service.AutoJob.SaveServerStateJob', '服务器状态', 'WaterCloud', '2021-06-09 12:19:03', '2021-06-09 12:19:01', '0 0/10 * * * ?', 0, 1, '每10分钟更新一次服务器状态', '2020-05-26 14:50:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-06-09 12:21:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '2021-06-09 12:23:01', 0, '', '', '', '0');
 
 -- ----------------------------
 -- Table structure for sys_openjoblog
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_openjoblog`;
 CREATE TABLE `sys_openjoblog`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_JobId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务Id',
-  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '任务信息',
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_JobId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '任务Id',
+  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '任务信息',
   `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '执行时间',
   `F_EnabledMark` tinyint NOT NULL COMMENT '执行状态',
-  `F_JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务名称',
+  `F_JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '任务名称',
   PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_openjoblog
 -- ----------------------------
+INSERT INTO `sys_openjoblog` VALUES ('08d92af9-a7d1-49f7-8ccb-bbe786f238c1', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', '执行成功，服务器状态更新成功！', '2021-06-09 11:50:00', 1, '服务器状态');
+INSERT INTO `sys_openjoblog` VALUES ('08d92afb-0d6e-4b97-851d-60e6c845d476', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', '执行成功，服务器状态更新成功！', '2021-06-09 12:00:00', 1, '服务器状态');
+INSERT INTO `sys_openjoblog` VALUES ('08d92afd-fe19-42df-8047-34c6d1d29cec', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', '执行成功，服务器状态更新成功！', '2021-06-09 12:21:03', 1, '服务器状态');
+INSERT INTO `sys_openjoblog` VALUES ('08d92afe-448d-4ec5-827b-a53588afa4de', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', '执行成功，服务器状态更新成功！', '2021-06-09 12:23:01', 1, '服务器状态');
+INSERT INTO `sys_openjoblog` VALUES ('08d92afe-448d-4f68-895a-75c12cdba499', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', '执行成功，服务器状态更新成功！', '2021-06-09 12:23:01', 1, '服务器状态');
+INSERT INTO `sys_openjoblog` VALUES ('08d92c83-874f-4a00-800f-19e729e4b4a1', '08d92c83-8743-41a6-878e-930d5c34fec1', '执行成功，服务器状态更新成功！', '2021-06-11 10:49:27', 1, '服务器状态');
 
 -- ----------------------------
 -- Table structure for sys_organize
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_organize`;
 CREATE TABLE `sys_organize`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_Layers` int NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_ShortName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CategoryId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_ManagerId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_TelePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_WeChat` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Fax` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_AreaId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Address` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ShortName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_CategoryId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ManagerId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_TelePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_WeChat` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Fax` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_AreaId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Address` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   `F_AllowEdit` tinyint(1) NULL DEFAULT NULL,
   `F_AllowDelete` tinyint(1) NULL DEFAULT NULL,
   `F_SortCode` int NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_Sys_Organize`(`F_EnCode`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_organize_key1`(`F_EnCode`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_organize
 -- ----------------------------
+INSERT INTO `sys_organize` VALUES ('253EDA1F-F158-4F3F-A778-B7E538E052A2', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Manufacturing', '生产部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 7, 0, 1, '', '2016-06-10 00:00:00', NULL, '2020-05-28 10:54:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_organize` VALUES ('554C61CE-6AE0-44EB-B33D-A462BE7EB3E1', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Ministry', '技术部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 5, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_organize` VALUES ('5AB270C0-5D33-4203-A54F-4552699FDA3C', '0', 1, 'Company', '上海东鞋贸易有限公司', NULL, 'Company', '郭总', NULL, NULL, NULL, NULL, NULL, NULL, '上海市松江区', 0, 0, 1, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_organize` VALUES ('5B417E2B-4B96-4F37-8BAA-10E5A812D05E', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Market', '市场部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 3, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_organize` VALUES ('80E10CD5-7591-40B8-A005-BCDE1B961E76', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Administration', '行政部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 2, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_organize` VALUES ('BD830AEF-0A2E-4228-ACF8-8843C39D41D8', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Purchase', '采购部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 6, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_organize` VALUES ('DFA2FB91-C909-44A3-9282-BF946102E1C9', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'HumanResourse', '人事部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 8, 0, 1, NULL, '2016-06-10 00:00:00', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_organize` VALUES ('F02A66CA-3D8B-491B-8A17-C9ACA3E3B5DD', '5AB270C0-5D33-4203-A54F-4552699FDA3C', 2, 'Financials', '财务部', NULL, 'Department', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 4, 0, 1, NULL, '2016-06-10 00:00:00', NULL, '2020-05-12 12:29:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_quickmodule
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_quickmodule`;
 CREATE TABLE `sys_quickmodule`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_Sys_QuickModule`(`F_ModuleId`, `F_CreatorUserId`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_quickmodule_key1`(`F_ModuleId`, `F_CreatorUserId`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_quickmodule
 -- ----------------------------
-INSERT INTO `sys_quickmodule` VALUES ('39fc8a6b-7777-4b44-b153-e37844c2deea', '01849cc9-c6da-4184-92f8-34875dac1d42', 0, 1, NULL, '2021-05-17 10:54:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_quickmodule` VALUES ('39fc8a6b-777a-69e7-e293-64cbee85113d', '06bb3ea8-ec7f-4556-a427-8ff0ce62e873', 0, 1, NULL, '2021-05-17 10:54:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_quickmodule` VALUES ('39fc8a6b-7780-d306-9a64-7f55a1d13244', '1dff096a-db2f-410c-af2f-12294bdbeccd', 0, 1, NULL, '2021-05-17 10:54:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_quickmodule` VALUES ('39fc8a6b-7784-64e1-a5de-4fe5989ad6b0', '1e60fce5-3164-439d-8d29-4950b33011e2', 0, 1, NULL, '2021-05-17 10:54:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_quickmodule` VALUES ('39fc8a6b-778a-3ae3-c9f2-d2aac8bb49c7', '2536fbf0-53ff-40a6-a093-73aa0a8fc035', 0, 1, NULL, '2021-05-17 10:54:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_quickmodule` VALUES ('39fc8a6b-778e-4e08-666a-8ec5e765d0ef', '262ca754-1c73-436c-a9a2-b6374451a845', 0, 1, NULL, '2021-05-17 10:54:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_quickmodule` VALUES ('39fc8a6b-7790-8344-74ee-79b04339d500', '26452c9a-243d-4c81-97b9-a3ad581c3bf4', 0, 1, NULL, '2021-05-17 10:54:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
-INSERT INTO `sys_quickmodule` VALUES ('39fc8a6b-7792-2b81-4f3b-71dec5e764e1', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 0, 1, NULL, '2021-05-17 10:54:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_quickmodule` VALUES ('08d92979-3529-4de5-865e-4d121dc62cc3', '08d92978-ceda-45c4-8a98-e94a332ac4b6', 0, 1, NULL, '2021-06-07 13:58:01', '08d92979-2ba7-43b2-85c0-ef44f060604e', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_quickmodule` VALUES ('39fcd21d-5555-d9c3-a28e-906c9543b417', '01849cc9-c6da-4184-92f8-34875dac1d42', 0, 1, NULL, '2021-05-31 09:01:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_quickmodule` VALUES ('39fcd21d-555c-db3f-15fe-b9ca2f611861', '06bb3ea8-ec7f-4556-a427-8ff0ce62e873', 0, 1, NULL, '2021-05-31 09:01:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_quickmodule` VALUES ('39fcd21d-555f-e717-da82-19de53378531', '1dff096a-db2f-410c-af2f-12294bdbeccd', 0, 1, NULL, '2021-05-31 09:01:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_quickmodule` VALUES ('39fcd21d-5562-6d3b-7a0a-b380c41610af', '1e60fce5-3164-439d-8d29-4950b33011e2', 0, 1, NULL, '2021-05-31 09:01:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_quickmodule` VALUES ('39fcd21d-556e-5089-cfb5-6e091af5899d', '2536fbf0-53ff-40a6-a093-73aa0a8fc035', 0, 1, NULL, '2021-05-31 09:01:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_quickmodule` VALUES ('39fcd21d-5572-7272-aec0-11288334cd24', '262ca754-1c73-436c-a9a2-b6374451a845', 0, 1, NULL, '2021-05-31 09:01:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_quickmodule` VALUES ('39fcd21d-5574-2f40-de73-075be1c5d040', '26452c9a-243d-4c81-97b9-a3ad581c3bf4', 0, 1, NULL, '2021-05-31 09:01:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_quickmodule` VALUES ('39fcd21d-5575-f2b5-227f-b92f88bb8817', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 0, 1, NULL, '2021-05-31 09:01:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_Category` int NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Type` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_AllowEdit` tinyint(1) NULL DEFAULT NULL,
   `F_AllowDelete` tinyint(1) NULL DEFAULT NULL,
   `F_SortCode` int NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_Sys_Role`(`F_EnCode`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_role_key1`(`F_EnCode`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
@@ -4488,16 +5670,16 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_roleauthorize`;
 CREATE TABLE `sys_roleauthorize`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `F_ItemType` int NULL DEFAULT NULL,
-  `F_ItemId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_ItemId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_ObjectType` int NULL DEFAULT NULL,
-  `F_ObjectId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_ObjectId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_SortCode` int NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_roleauthorize
@@ -4508,81 +5690,184 @@ CREATE TABLE `sys_roleauthorize`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_serverstate`;
 CREATE TABLE `sys_serverstate`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_WebSite` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_ARM` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CPU` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_IIS` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_WebSite` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ARM` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_CPU` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_IIS` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_Date` date NULL DEFAULT NULL,
   `F_Cout` int NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
   UNIQUE INDEX `IX_Sys_ServerState`(`F_WebSite`, `F_Date`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_serverstate
 -- ----------------------------
+INSERT INTO `sys_serverstate` VALUES ('069aa689-a8c1-4248-828b-1a1129b0edc8', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '77.86', '18.97', '0', '2020-05-25', 118);
+INSERT INTO `sys_serverstate` VALUES ('07c7d9de-d1a3-434a-86a6-f3fe4d0d28f6', 'WaterCloud.Web', '77.45', '11.66', '0', '2020-04-14', 87);
+INSERT INTO `sys_serverstate` VALUES ('08d92af9-a8c5-457f-8eca-f7de808c857e', 'C:\\Users\\Administrator\\source\\repos\\WaterCloud\\WaterCloud.Web', '64.5', '11.25', '0', '2021-06-09', 4);
+INSERT INTO `sys_serverstate` VALUES ('08d92c83-882c-48a4-88c9-968b69c676c8', 'C:\\Users\\Administrator\\source\\repos\\WaterCloud\\WaterCloud.Web', '58', '11', '0', '2021-06-11', 1);
+INSERT INTO `sys_serverstate` VALUES ('0bf3a314-5de8-43fd-bea4-24da53570544', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '81.21', '16.52', '0', '2020-07-23', 23);
+INSERT INTO `sys_serverstate` VALUES ('0ca4ddd0-9882-4b0a-afd9-da40b3202dc8', '/app', '0', '0', '0', '2020-05-20', 371);
+INSERT INTO `sys_serverstate` VALUES ('0caa82b2-4b0f-47dd-9c7a-f772ee71488d', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '81.26', '19.5', '0', '2020-06-09', 16);
+INSERT INTO `sys_serverstate` VALUES ('0dfb24dc-029d-4d2a-bc91-ad9bc28103be', 'E:\\.net Core\\WaterCloud_Core\\WaterCloud.Web', '49', '8.2', '0', '2020-11-02', 5);
+INSERT INTO `sys_serverstate` VALUES ('10044d9d-7a07-4304-805e-1d6ff4776b09', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '89.5', '23.01', '0', '2020-08-27', 8);
+INSERT INTO `sys_serverstate` VALUES ('154388d4-10ac-4e9b-a3b1-11266fd10d2e', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '90.06', '23.36', '0', '2020-07-24', 14);
+INSERT INTO `sys_serverstate` VALUES ('159a9a04-2898-4ab4-93be-d879f2e50702', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85.65', '42.47', '0', '2020-05-19', 31);
+INSERT INTO `sys_serverstate` VALUES ('1bf388c5-ae73-4f47-9b1a-fddab05c460d', 'E:\\.net Core\\WaterCloud_Core\\WaterCloud.Web', '49.2', '7.4', '0', '2020-10-27', 5);
+INSERT INTO `sys_serverstate` VALUES ('1c2b44b3-489a-4981-a782-a36b146e4d39', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '88.9', '31.59', '0', '2020-08-11', 10);
+INSERT INTO `sys_serverstate` VALUES ('1cf71c87-46dd-4df4-b4be-32f5f09ac417', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '81.63', '14.75', '0', '2020-09-07', 8);
+INSERT INTO `sys_serverstate` VALUES ('1dfa946e-f474-45d8-97de-383328be403a', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '80.07', '19', '0', '2020-06-16', 14);
+INSERT INTO `sys_serverstate` VALUES ('25c38938-e24b-403d-b0b4-6b3360ffdae7', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '82.5', '25.5', '0', '2020-08-12', 2);
+INSERT INTO `sys_serverstate` VALUES ('27ac3c2b-3a5d-4507-9c0d-38a12315df82', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '83.16', '26.63', '0', '2020-06-29', 143);
+INSERT INTO `sys_serverstate` VALUES ('2a5d2242-a642-4ed3-bc4f-1040913788cf', 'D:\\C#\\WaterCloud_Core\\WaterCloud.Web', '44.07', '3.57', '0', '2020-10-19', 14);
+INSERT INTO `sys_serverstate` VALUES ('2d2d0f27-dce4-4500-8d2a-05f45546a136', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '87.16', '8.91', '0', '2020-07-21', 93);
+INSERT INTO `sys_serverstate` VALUES ('2f9e2832-79ed-4ba7-b4f9-eae06b78794a', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '83.45', '18.58', '0', '2020-05-22', 370);
+INSERT INTO `sys_serverstate` VALUES ('305a1efc-c1f9-4289-954c-ca6587ef7c45', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85.57', '22.74', '0', '2020-07-07', 169);
+INSERT INTO `sys_serverstate` VALUES ('307cc033-97dd-4f2e-915f-e1fa6c58cd35', 'C:\\Users\\29522\\Desktop\\WebSite', '81.2', '23.2', '0', '2020-04-29', 5);
+INSERT INTO `sys_serverstate` VALUES ('32ced166-3b0a-44fd-8017-077b54bf4412', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '81.62', '26.17', '0', '2020-05-07', 967);
+INSERT INTO `sys_serverstate` VALUES ('336e1a17-8c35-4511-b573-7f302a3d4551', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '93.15', '53.84', '0', '2020-04-29', 13);
+INSERT INTO `sys_serverstate` VALUES ('369e96af-1edd-4688-802d-14ba62de2cdd', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '84.65', '28.74', '0', '2020-04-27', 174);
+INSERT INTO `sys_serverstate` VALUES ('36c48d94-a53c-477c-980f-831b6c52553c', 'D:\\C#\\WaterCloud_Core\\WaterCloud.Web', '44', '7', '0', '2020-10-14', 2);
+INSERT INTO `sys_serverstate` VALUES ('3a823abe-dc4e-4899-a157-c434e2120953', 'WaterCloud.Web', '93.49', '16.25', '7', '2020-04-10', 1);
+INSERT INTO `sys_serverstate` VALUES ('3a823abe-dc4e-4899-a157-c434e2120954', 'WaterCloud.Web', '93.49', '16.25', '4', '2020-04-11', 1);
+INSERT INTO `sys_serverstate` VALUES ('3a823abe-dc4e-4899-a157-c434e2120955', 'WaterCloud.Web', '93.49', '16.25', '5', '2020-04-12', 1);
+INSERT INTO `sys_serverstate` VALUES ('3a823abe-dc4e-4899-a157-c434e2120956', 'WaterCloud.Web', '88.88', '17.28', '0', '2020-04-13', 41);
+INSERT INTO `sys_serverstate` VALUES ('3b7ae179-e731-4ef9-b57d-57b419152bb0', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85.4', '27.83', '0', '2020-06-11', 18);
+INSERT INTO `sys_serverstate` VALUES ('3c83bd8e-c508-408a-b03f-2eb3146284d9', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '83.27', '19.65', '0', '2020-08-04', 11);
+INSERT INTO `sys_serverstate` VALUES ('3e46b3d6-e1e1-4554-9ad8-ab723f9f7a88', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '77.57', '15.14', '0', '2020-07-28', 7);
+INSERT INTO `sys_serverstate` VALUES ('3f4436ac-80b1-41f7-980c-cc29fdec1d30', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '83.95', '27.14', '0', '2020-06-30', 476);
+INSERT INTO `sys_serverstate` VALUES ('3fba8419-a7d7-48a0-858c-9d47cb6d9b8c', 'D:\\C#\\WaterCloud_Core\\WaterCloud.Web', '51', '9', '0', '2020-09-29', 1);
+INSERT INTO `sys_serverstate` VALUES ('42560a65-9696-4266-a383-29b3af4e2edf', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '89.02', '23.4', '0', '2020-05-26', 237);
+INSERT INTO `sys_serverstate` VALUES ('481b5865-2080-4205-a5ff-36454193f2b2', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '82.77', '21.19', '0', '2020-05-08', 636);
+INSERT INTO `sys_serverstate` VALUES ('4b241c4a-7e20-4362-bf28-c232b169e688', 'E:\\WaterCloud_Core\\WaterCloud.Web', '59', '8', '0', '2020-11-02', 1);
+INSERT INTO `sys_serverstate` VALUES ('4eb23d37-7e58-4497-81b0-a0765770385f', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '90.33', '26.33', '0', '2020-05-29', 3);
+INSERT INTO `sys_serverstate` VALUES ('4eeb12e3-afdd-4757-925a-7db121c26f05', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '87.32', '24.5', '0', '2020-05-13', 218);
+INSERT INTO `sys_serverstate` VALUES ('53386811-6c32-42a0-a451-475091a776db', 'WaterCloud.Web', '82.93', '29.88', '0', '2020-04-20', 33);
+INSERT INTO `sys_serverstate` VALUES ('566a2a8d-85c5-47ae-8354-033079202eaa', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85.4', '10.8', '0', '2020-07-29', 5);
+INSERT INTO `sys_serverstate` VALUES ('577c5946-f34f-4a9d-b975-79458a7e50f3', 'D:\\C#\\WaterCloud_Core\\WaterCloud.Web', '48', '9', '0', '2020-10-12', 1);
+INSERT INTO `sys_serverstate` VALUES ('5b4dcc07-dce6-481b-9669-6bfa9b6349c7', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '86', '18', '0', '2020-09-09', 1);
+INSERT INTO `sys_serverstate` VALUES ('5e6b4d9b-78d9-4cfa-bf65-d3734701c30c', 'WaterCloud.Web', '92.99', '47', '0', '2020-04-30', 2);
+INSERT INTO `sys_serverstate` VALUES ('639fb18d-152a-4407-a0b4-e3f3add80001', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85.85', '18.14', '0', '2020-06-19', 7);
+INSERT INTO `sys_serverstate` VALUES ('67e24c0e-7267-4809-a673-3cac3e6c8042', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '86.62', '20.11', '0', '2020-06-02', 29);
+INSERT INTO `sys_serverstate` VALUES ('680a3cc6-d446-4108-849c-58b130a2443d', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85', '40', '0', '2020-05-18', 2);
+INSERT INTO `sys_serverstate` VALUES ('69846d43-d0cd-4979-a2d1-948e29ee9156', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '73.46', '20.67', '0', '2020-05-04', 312);
+INSERT INTO `sys_serverstate` VALUES ('73b29630-8fd8-49ad-8aaf-f6e87f99cb78', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '87.24', '17.77', '0', '2020-06-18', 17);
+INSERT INTO `sys_serverstate` VALUES ('7784d64f-863f-43c2-b0b4-8a5d968e3e65', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '87.26', '23.64', '0', '2020-07-08', 53);
+INSERT INTO `sys_serverstate` VALUES ('7a64c031-1511-4ccf-931f-84b93301bad5', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '86', '18.27', '0', '2020-06-15', 18);
+INSERT INTO `sys_serverstate` VALUES ('7e564f0c-7969-436c-9c25-54cb488954e1', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85.4', '19.75', '0', '2020-06-28', 91);
+INSERT INTO `sys_serverstate` VALUES ('845dd7ae-79ff-42ca-85e8-1a21f89ff35d', 'E:\\WebSite', '36', '14', '0', '2020-10-28', 1);
+INSERT INTO `sys_serverstate` VALUES ('855165ff-b6bf-4917-8a16-ec63e7fc99a9', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '82.5', '18', '0', '2020-09-04', 2);
+INSERT INTO `sys_serverstate` VALUES ('895aae2b-ac64-44c2-91f3-1cc81288b1af', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '86.42', '27.36', '0', '2020-05-06', 262);
+INSERT INTO `sys_serverstate` VALUES ('91ba06c3-c7b1-472a-a05f-73670533c474', 'WaterCloud.Web', '88.19', '24.63', '0', '2020-04-22', 8);
+INSERT INTO `sys_serverstate` VALUES ('9233bfb4-e1c1-4a7c-9f1d-498d24b9d515', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '80.67', '17.83', '0', '2020-06-05', 6);
+INSERT INTO `sys_serverstate` VALUES ('99802427-d402-41a6-8ba3-3ca3aa26f8f9', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85.3', '19.3', '0', '2020-07-09', 30);
+INSERT INTO `sys_serverstate` VALUES ('9b277cfc-35da-4ac1-b275-80b27bfdc326', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '87', '20.65', '0', '2020-06-01', 14);
+INSERT INTO `sys_serverstate` VALUES ('9b4aaf8b-5abf-4caf-a9bf-bc8c183be4c8', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '82.84', '21.5', '0', '2020-07-06', 116);
+INSERT INTO `sys_serverstate` VALUES ('9b651977-59ae-497b-b373-216f102d0a66', 'WaterCloud.Web', '50.54', '2', '0', '2020-10-12', 1);
+INSERT INTO `sys_serverstate` VALUES ('9b662de7-3714-41d3-a15d-f63d67732290', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '82.56', '26.29', '0', '2020-05-11', 213);
+INSERT INTO `sys_serverstate` VALUES ('9e5e3969-c67a-4d1d-87f2-e553ff46386e', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '83.07', '15.71', '0', '2020-06-17', 32);
+INSERT INTO `sys_serverstate` VALUES ('a6cd0949-e779-44e5-aa9d-4ac1f26081f2', 'WaterCloud.Web', '83.28', '20.04', '0', '2020-04-23', 78);
+INSERT INTO `sys_serverstate` VALUES ('aabf99ed-62d7-47c9-9850-990412ce8483', 'D:\\C#\\WaterCloud_Core\\WaterCloud.Web', '47.67', '4.33', '0', '2020-10-13', 3);
+INSERT INTO `sys_serverstate` VALUES ('aea1609d-eaf9-4275-aa05-0287a8ac3e22', 'D:\\C#\\WaterCloud_Core\\WaterCloud.Web', '58.33', '3.67', '0', '2020-10-09', 3);
+INSERT INTO `sys_serverstate` VALUES ('b0b5c4ae-6d91-4eee-b1f8-a92a3534d2f0', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85.1', '22.31', '0', '2020-06-10', 19);
+INSERT INTO `sys_serverstate` VALUES ('b0d021db-efc9-47ae-ac49-5ea3d69faf53', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '87.8', '18.4', '0', '2020-08-29', 5);
+INSERT INTO `sys_serverstate` VALUES ('b0da052a-7ac6-4a18-8182-5871030b603f', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '79.46', '27.71', '0', '2020-05-21', 183);
+INSERT INTO `sys_serverstate` VALUES ('b28d0191-6faa-461c-8d6e-c81a19018ad0', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85.07', '23.21', '0', '2020-08-03', 15);
+INSERT INTO `sys_serverstate` VALUES ('b2e41be9-5e9d-4fdd-8cef-a85ea97dd83b', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '86', '33.37', '0', '2020-05-27', 66);
+INSERT INTO `sys_serverstate` VALUES ('b4786bea-d82e-48c3-8d44-0818f631676f', 'D:\\C#\\WaterCloud_Core\\WaterCloud.Web', '45.28', '17.35', '0', '2020-10-15', 6472);
+INSERT INTO `sys_serverstate` VALUES ('b740b6bd-de82-4474-bc4b-44d1973c22cd', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '82.94', '22.69', '0', '2020-08-31', 22);
+INSERT INTO `sys_serverstate` VALUES ('bc1e329a-506e-4055-94fa-956e61256322', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '82.86', '14.14', '0', '2020-07-30', 7);
+INSERT INTO `sys_serverstate` VALUES ('bd1cbb72-941e-4d21-9338-813db7497bce', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '90.11', '17.46', '0', '2020-07-10', 39);
+INSERT INTO `sys_serverstate` VALUES ('c14b1fab-cd81-420e-82d9-c7c979e15e22', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '84.12', '20.87', '0', '2020-04-28', 340);
+INSERT INTO `sys_serverstate` VALUES ('c358930a-89ab-4a01-8160-d4aae7375b2e', 'E:\\.net Core\\WaterCloud_Core\\WaterCloud.Web', '48.33', '10.33', '0', '2020-10-28', 3);
+INSERT INTO `sys_serverstate` VALUES ('c3e05de7-6feb-44ae-832c-eb84ea782879', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '82.75', '24.25', '0', '2020-09-01', 8);
+INSERT INTO `sys_serverstate` VALUES ('c83e8ed4-1968-460a-a072-7ff26a19a701', 'WaterCloud.Web', '82.57', '55.75', '0', '2020-05-04', 4);
+INSERT INTO `sys_serverstate` VALUES ('ca08a0e1-9bfa-4571-b2a2-ab8c080c415a', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '83.78', '16.86', '0', '2020-06-12', 14);
+INSERT INTO `sys_serverstate` VALUES ('cc241b89-afcd-4bca-8a67-09d834988276', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '86.17', '16.87', '0', '2020-07-02', 48);
+INSERT INTO `sys_serverstate` VALUES ('cdea416f-27d3-49d8-a8ca-2589ee31ca92', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '86', '14', '0', '2020-09-02', 1);
+INSERT INTO `sys_serverstate` VALUES ('ce3224a6-a90a-4808-aba7-4a2b988cc189', 'WaterCloud.Web', '83.45', '23.45', '0', '2020-04-21', 33);
+INSERT INTO `sys_serverstate` VALUES ('d2345438-8529-47a8-be63-e8630302f9b7', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '83.54', '22.02', '0', '2020-06-03', 32);
+INSERT INTO `sys_serverstate` VALUES ('d3ef0660-a39d-4fde-8bdc-14626a6ccd0d', 'WaterCloud.Web', '83.09', '36.42', '0', '2020-05-28', 14);
+INSERT INTO `sys_serverstate` VALUES ('dc7af239-f4ca-4a07-9dd2-1f84630555e8', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '84.83', '13.47', '0', '2020-07-31', 17);
+INSERT INTO `sys_serverstate` VALUES ('e01106d2-a2da-43e5-aed7-6b16849836d3', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85.24', '14.85', '0', '2020-07-22', 28);
+INSERT INTO `sys_serverstate` VALUES ('e0e50853-577f-4526-a3b8-b350c73e9ca7', 'WaterCloud.Web', '78.69', '23', '0', '2020-06-03', 1);
+INSERT INTO `sys_serverstate` VALUES ('e34da9a7-4ed0-45d0-9c79-3e852472eed5', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '79.17', '19.74', '0', '2020-05-28', 23);
+INSERT INTO `sys_serverstate` VALUES ('e39f072d-498f-45a5-af20-39f788110708', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '82.57', '20.9', '0', '2020-05-15', 123);
+INSERT INTO `sys_serverstate` VALUES ('e5b00fa6-d6a3-44d2-bb95-929060041b72', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '81.56', '10.77', '0', '2020-07-20', 82);
+INSERT INTO `sys_serverstate` VALUES ('e640e998-d9a3-4281-b997-2a8f7882acd3', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '88.5', '30', '0', '2020-08-20', 2);
+INSERT INTO `sys_serverstate` VALUES ('e6eba4c1-0221-4e97-8cc5-81d000dd5819', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '81.48', '16', '0', '2020-07-03', 107);
+INSERT INTO `sys_serverstate` VALUES ('e6ec84de-7a61-43d5-aadd-91617a3ea651', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85', '25', '0', '2020-04-30', 9);
+INSERT INTO `sys_serverstate` VALUES ('e7182526-1d56-4508-a8d9-c108454cbea2', 'WaterCloud.Web', '78.03', '16.18', '0', '2020-04-15', 59);
+INSERT INTO `sys_serverstate` VALUES ('e7348d5d-77e2-4653-a6d7-6024c6f85164', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '83.44', '9.16', '0', '2020-07-14', 73);
+INSERT INTO `sys_serverstate` VALUES ('ecdaef0e-efd2-4d37-9c3d-39cb6f393824', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '86.5', '26.67', '0', '2020-05-12', 188);
+INSERT INTO `sys_serverstate` VALUES ('f425de56-1e5d-4d8c-8c8b-a32b98271d0b', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '85.13', '18.6', '0', '2020-07-01', 231);
+INSERT INTO `sys_serverstate` VALUES ('f432d730-5c1a-4dd3-8c9b-ac2cf1ef7bd7', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '84.11', '18.47', '0', '2020-06-08', 34);
+INSERT INTO `sys_serverstate` VALUES ('f70ecd3a-914c-4fdb-9b59-165b36765d37', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '89.45', '12.17', '0', '2020-07-15', 90);
+INSERT INTO `sys_serverstate` VALUES ('f78b4872-75c4-4dfb-a45e-44151b7dd16f', 'WaterCloud.Web', '85.33', '38.63', '0', '2020-05-29', 27);
+INSERT INTO `sys_serverstate` VALUES ('fadf0e26-371d-4eaa-b863-72472ccd100d', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '82.77', '12.76', '0', '2020-07-13', 39);
+INSERT INTO `sys_serverstate` VALUES ('fb323d9c-abb1-41fb-810d-615ce8f79d7f', 'C:\\资料\\WaterCloud_Core\\WaterCloud.Web', '90.84', '23.34', '0', '2020-05-20', 135);
 
 -- ----------------------------
 -- Table structure for sys_systemset
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_systemset`;
 CREATE TABLE `sys_systemset`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_Logo` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_LogoCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_ProjectName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CompanyName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_AdminAccount` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_AdminPassword` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_Logo` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_LogoCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ProjectName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_CompanyName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_AdminAccount` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_AdminPassword` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_PrincipalMan` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_EndTime` timestamp NULL DEFAULT NULL,
-  `F_DbString` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_DBProvider` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_HostUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_PrincipalMan` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_EndTime` datetime NULL DEFAULT NULL,
+  `F_DbString` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_DBProvider` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_HostUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_SYSTEMSET`(`F_DbNumber`) USING BTREE,
-  UNIQUE INDEX `IX_SYSTEMSET2`(`F_HostUrl`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_systemset_key1`(`F_DbNumber`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_systemset
 -- ----------------------------
-INSERT INTO `sys_systemset` VALUES ('d69fd66a-6a77-4011-8a25-53a79bdf5001', '/icon/favicon.ico', 'WaterCloud', '水之云信息系统', '水之云', 'admin', '0000', 0, 1, '', '2020-06-12 16:30:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-05-14 21:53:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '13600000000', 'xxxxx', '2032-06-26 00:00:00', 'data source=localhost;database=watercloudnetdb;uid=root;pwd=root;', 'MySql', 'localhost', '0');
+INSERT INTO `sys_systemset` VALUES ('d69fd66a-6a77-4011-8a25-53a79bdf5001', '/icon/favicon.ico', 'WaterCloud', '水之云信息系统', '水之云', 'admin', '0000', 0, 1, '', '2020-06-12 16:30:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-06-09 13:22:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '13621551864', 'MonsterUncle', '2032-06-26 00:00:00', 'data source=localhost;database=watercloudnetdb;uid=root;pwd=root;', 'MySql.Data.MySqlClient', 'localhost', '0');
 
 -- ----------------------------
 -- Table structure for sys_user
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_Account` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_RealName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_NickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_HeadIcon` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_Account` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_RealName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_NickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_HeadIcon` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_Gender` tinyint(1) NULL DEFAULT NULL,
-  `F_Birthday` timestamp NULL DEFAULT NULL,
-  `F_MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_WeChat` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_ManagerId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Birthday` datetime NULL DEFAULT NULL,
+  `F_MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_WeChat` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_ManagerId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_SecurityLevel` int NULL DEFAULT NULL,
-  `F_Signature` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DepartmentId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_RoleId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DutyId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Signature` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DepartmentId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_RoleId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_DutyId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   `F_IsAdmin` tinyint(1) NULL DEFAULT NULL,
   `F_IsBoss` tinyint(1) NULL DEFAULT NULL,
   `F_IsLeaderInDepts` tinyint(1) NULL DEFAULT NULL,
@@ -4590,61 +5875,62 @@ CREATE TABLE `sys_user`  (
   `F_SortCode` int NULL DEFAULT NULL,
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` timestamp NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` timestamp NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DingTalkUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DingTalkUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DingTalkAvatar` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_WxOpenId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_WxNickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_HeadImgUrl` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DingTalkUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DingTalkUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DingTalkAvatar` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_WxOpenId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_WxNickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_HeadImgUrl` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_Sys_User`(`F_Account`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `sys_user_key1`(`F_Account`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'admin', '超级管理员', '超级管理员', NULL, 1, '2020-03-27 00:00:00', '13600000000', '3333', NULL, NULL, NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001', '554C61CE-6AE0-44EB-B33D-A462BE7EB3E1', NULL, NULL, 1, 0, 0, 0, NULL, 0, 1, '系统内置账户', '2016-07-20 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, '闫志辉', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES ('9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'admin', '超级管理员', '超级管理员', NULL, 1, '2020-03-27 00:00:00', '13600000000', '3333', NULL, NULL, NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001', '5AB270C0-5D33-4203-A54F-4552699FDA3C', NULL, NULL, 1, 0, 0, 0, NULL, 0, 1, '系统内置账户', '2016-07-20 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, '闫志辉', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_userlogon
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_userlogon`;
 CREATE TABLE `sys_userlogon`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_UserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_UserPassword` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_UserSecretkey` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_AllowStartTime` timestamp NULL DEFAULT NULL,
-  `F_AllowEndTime` timestamp NULL DEFAULT NULL,
-  `F_LockStartDate` timestamp NULL DEFAULT NULL,
-  `F_LockEndDate` timestamp NULL DEFAULT NULL,
-  `F_FirstVisitTime` timestamp NULL DEFAULT NULL,
-  `F_PreviousVisitTime` timestamp NULL DEFAULT NULL,
-  `F_LastVisitTime` timestamp NULL DEFAULT NULL,
-  `F_ChangePasswordDate` timestamp NULL DEFAULT NULL,
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `F_UserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_UserPassword` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_UserSecretkey` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_AllowStartTime` datetime NULL DEFAULT NULL,
+  `F_AllowEndTime` datetime NULL DEFAULT NULL,
+  `F_LockStartDate` datetime NULL DEFAULT NULL,
+  `F_LockEndDate` datetime NULL DEFAULT NULL,
+  `F_FirstVisitTime` datetime NULL DEFAULT NULL,
+  `F_PreviousVisitTime` datetime NULL DEFAULT NULL,
+  `F_LastVisitTime` datetime NULL DEFAULT NULL,
+  `F_ChangePasswordDate` datetime NULL DEFAULT NULL,
   `F_MultiUserLogin` tinyint(1) NULL DEFAULT NULL,
   `F_LogOnCount` int NULL DEFAULT NULL,
   `F_UserOnLine` tinyint(1) NULL DEFAULT NULL,
-  `F_Question` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_AnswerQuestion` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Question` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_AnswerQuestion` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
   `F_CheckIPAddress` tinyint(1) NULL DEFAULT NULL,
-  `F_Language` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_Theme` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LoginSession` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_Language` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_Theme` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LoginSession` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_ErrorNum` int NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`F_Id`) USING BTREE,
+  UNIQUE INDEX `sys_userlogon_key1`(`F_UserId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_userlogon
 -- ----------------------------
-INSERT INTO `sys_userlogon` VALUES ('9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd47247b35e447d4818719a164f17d697', '80dd8a2de94161b0', NULL, NULL, NULL, NULL, NULL, '2020-04-17 14:47:44', '2020-04-17 14:59:58', NULL, 0, 360, 0, NULL, NULL, 0, NULL, NULL, 'evrcyibdv42f3ykhfy1yz3ur', 0);
+INSERT INTO `sys_userlogon` VALUES ('9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '99e5c8431f64527c0acd80b34a3dce3c', '74aeb85d04e4b485', NULL, NULL, NULL, NULL, NULL, '2020-04-17 14:47:44', '2020-04-17 14:59:58', NULL, 0, 360, 0, NULL, NULL, 0, NULL, NULL, 'evrcyibdv42f3ykhfy1yz3ur', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
