@@ -37,13 +37,21 @@ namespace WaterCloud.Service
                 await Groups.AddToGroupAsync(Context.ConnectionId, user.CompanyId);
                 //将用户信息存进缓存
                 var list = await CacheHelper.Get<List<string>>(cacheKey + user.UserId);
+                //登录计数
+                var onlinelist = await CacheHelper.Get<List<string>>(cacheKey+"list_" + user.CompanyId);
+				if (onlinelist==null||onlinelist.Count==0)
+				{
+                    onlinelist = new List<string>();
+                }
                 if (list == null)
                 {
                     list = new List<string>();
                 }
                 list.Add(Context.ConnectionId);
+                onlinelist.Add(Context.ConnectionId);
                 await CacheHelper.Set(cacheKey + Context.ConnectionId, user.UserId);
                 await CacheHelper.Set(cacheKey + user.UserId, list);
+                await CacheHelper.Set(cacheKey + "list_" + user.CompanyId, onlinelist);
             }
         }
         /// <summary>
@@ -72,12 +80,15 @@ namespace WaterCloud.Service
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
+            var user = _service.currentuser;
             //删除缓存连接
             var userId = await CacheHelper.Get<string>(cacheKey + Context.ConnectionId);
             if (!string.IsNullOrEmpty(userId))
             {
                 //将用户信息存进缓存
                 var list = await CacheHelper.Get<List<string>>(cacheKey + userId);
+                //登录计数
+                var onlinelist = await CacheHelper.Get<List<string>>(cacheKey + "list_" + user.CompanyId);
                 if (list != null)
                 {
                     list.Remove(Context.ConnectionId);
@@ -88,6 +99,18 @@ namespace WaterCloud.Service
                     else
                     {
                         await CacheHelper.Set(cacheKey + userId, list);
+                    }
+                }
+                if (onlinelist != null)
+                {
+                    onlinelist.Remove(Context.ConnectionId);
+                    if (list.Count == 0)
+                    {
+                        await CacheHelper.Remove(cacheKey + "list_" + user.CompanyId);
+                    }
+                    else
+                    {
+                        await CacheHelper.Set(cacheKey + "list_" + user.CompanyId, onlinelist);
                     }
                 }
                 await CacheHelper.Remove(cacheKey + Context.ConnectionId);

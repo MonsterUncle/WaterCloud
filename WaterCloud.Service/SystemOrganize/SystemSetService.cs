@@ -136,6 +136,8 @@ namespace WaterCloud.Service.SystemOrganize
                             modulebtns.Add(buttondata.Find(t => t.F_Id == itemId));
                         }
                     }
+                    modules.AddRange(moduledata.Where(a => a.F_IsPublic == true && a.F_EnabledMark == true && a.F_DeleteMark == false));
+                    modulebtns.AddRange(buttondata.Where(a => a.F_IsPublic == true && a.F_EnabledMark == true && a.F_DeleteMark == false));
                 }
                 if (permissionfieldsIds != null)
                 {
@@ -154,6 +156,7 @@ namespace WaterCloud.Service.SystemOrganize
                             modulefileds.Add(fieldsdata.Find(t => t.F_Id == itemId));
                         }
                     }
+                    modulefileds.AddRange(fieldsdata.Where(a => a.F_IsPublic == true && a.F_EnabledMark == true && a.F_DeleteMark == false));
                 }
                 //新建租户权限
                 if (roleAuthorizeEntitys.Count>0)

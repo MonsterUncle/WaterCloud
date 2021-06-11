@@ -17,7 +17,7 @@ namespace WaterCloud.Domain.SystemSecurity
     /// <summary>
 	/// 定时任务
 	/// </summary>
-    [SugarTable("sys_openjoblog")]
+    [SugarTable("sys_openjoblog", TableDescription = "0")]
     public partial class OpenJobLogEntity : IEntity<OpenJobEntity>
     {
         [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]

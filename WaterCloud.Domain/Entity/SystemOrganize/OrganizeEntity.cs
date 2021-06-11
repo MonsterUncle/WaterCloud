@@ -37,7 +37,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 编号
         /// </summary>
         [Required(ErrorMessage = "编号不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_EnCode",ColumnDataType = "nvarchar(50)", ColumnDescription = "编号")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_EnCode",ColumnDataType = "nvarchar(50)", ColumnDescription = "编号", UniqueGroupNameList = new string[] { "sys_organize" })]
         public string F_EnCode { get; set; }
         /// <summary>
         /// 全名称

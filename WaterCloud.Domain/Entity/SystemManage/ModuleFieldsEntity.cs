@@ -23,14 +23,14 @@ namespace WaterCloud.Domain.SystemManage
         /// </summary>
         /// <returns></returns>
         [Required(ErrorMessage = "模块不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_ModuleId",ColumnDataType = "nvarchar(50)", ColumnDescription = "模块Id")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ModuleId",ColumnDataType = "nvarchar(50)", ColumnDescription = "模块Id", UniqueGroupNameList = new string[] { "sys_modulefields" })]
         public string F_ModuleId { get; set; }
         /// <summary>
         /// 编号
         /// </summary>
         /// <returns></returns>
         [Required(ErrorMessage = "编号不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_EnCode",ColumnDataType = "nvarchar(50)", ColumnDescription = "编号")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_EnCode",ColumnDataType = "nvarchar(50)", ColumnDescription = "编号", UniqueGroupNameList = new string[] { "sys_modulefields" })]
         public string F_EnCode { get; set; }
         /// <summary>
         /// 名称

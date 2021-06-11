@@ -22,23 +22,23 @@ namespace WaterCloud.Domain.SystemManage
         /// 模块Id
         /// </summary>
         [Required(ErrorMessage = "模块不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_ModuleId", ColumnDataType = "nvarchar(50)", ColumnDescription = "模块Id")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ModuleId", ColumnDataType = "nvarchar(50)", ColumnDescription = "模块Id", UniqueGroupNameList = new string[] { "sys_modulebutton" })]
         public string F_ModuleId { get; set; }
         /// <summary>
         /// 父级Id
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ParentId",ColumnDataType = "nvarchar(50)", ColumnDescription = "标题")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ParentId",ColumnDataType = "nvarchar(50)", ColumnDescription = "父级", UniqueGroupNameList = new string[] { "sys_modulebutton" })]
         public string F_ParentId { get; set; }
         /// <summary>
         /// 层级
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnDescription = "标题")]
+        [SugarColumn(IsNullable = true, ColumnDescription = "层级")]
         public int? F_Layers { get; set; }
         /// <summary>
         /// 编号
         /// </summary>
         [Required(ErrorMessage = "编号不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_EnCode",ColumnDataType = "nvarchar(50)", ColumnDescription = "编号")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_EnCode",ColumnDataType = "nvarchar(50)", ColumnDescription = "编号", UniqueGroupNameList = new string[] { "sys_modulebutton" })]
         public string F_EnCode { get; set; }
         /// <summary>
         /// 名称
@@ -143,7 +143,7 @@ namespace WaterCloud.Domain.SystemManage
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Authorize",ColumnDataType = "nvarchar(100)")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Authorize",ColumnDataType = "nvarchar(200)", ColumnDescription = "权限标识")]
         public string F_Authorize { get; set; }
     }
 }

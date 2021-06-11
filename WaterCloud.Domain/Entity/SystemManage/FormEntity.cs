@@ -24,7 +24,7 @@ namespace WaterCloud.Domain.SystemManage
         /// </summary>
         /// <returns></returns>
         [Required(ErrorMessage = "表单名称不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_Name",ColumnDataType = "nvarchar(200)", ColumnDescription = "表单名称")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Name",ColumnDataType = "nvarchar(200)", ColumnDescription = "表单名称", UniqueGroupNameList = new string[] { "sys_form" })]
         public string F_Name { get; set; }
         /// <summary>
         /// 表单类型，0：默认动态表单；1：Web自定义表单

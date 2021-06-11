@@ -33,12 +33,12 @@ namespace WaterCloud.Domain.SystemOrganize
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(IsNullable = true, ColumnDescription = "目标类型")]
         public int? F_ObjectType { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ObjectId",ColumnDataType = "nvarchar(50)")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ObjectId",ColumnDataType = "nvarchar(50)", ColumnDescription = "目标Id")]
         public string F_ObjectId { get; set; }
         /// <summary>
         /// 排序码

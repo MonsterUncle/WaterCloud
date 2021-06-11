@@ -156,7 +156,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// <summary>
         /// 数据库序号
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_DbNumber",ColumnDataType = "nvarchar(50)", ColumnDescription = "数据库序号")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_DbNumber",ColumnDataType = "nvarchar(50)", ColumnDescription = "数据库序号", UniqueGroupNameList = new string[] { "sys_systemset" })]
         public string F_DbNumber { get; set; }
     }
 }

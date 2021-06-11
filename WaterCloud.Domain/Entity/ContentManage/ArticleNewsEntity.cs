@@ -23,7 +23,7 @@ namespace WaterCloud.Domain.ContentManage
         /// </summary>
         /// <returns></returns>
         [Required(ErrorMessage = "新闻类别不能为空")]
-        [SugarColumn(IsNullable = false, ColumnName = "F_CategoryId", ColumnDataType = "nvarchar(50)", ColumnDescription = "类别Id")]
+        [SugarColumn(IsNullable = false, ColumnName = "F_CategoryId", ColumnDataType = "nvarchar(50)", ColumnDescription = "类别Id", UniqueGroupNameList = new string[] { "cms_articlenews" })]
         public string F_CategoryId { get; set; }
         /// <summary>
         /// 类别名称（不映射任何列）
@@ -36,7 +36,7 @@ namespace WaterCloud.Domain.ContentManage
         /// </summary>
         /// <returns></returns>
         [Required(ErrorMessage = "新闻标题不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_Title", ColumnDataType = "nvarchar(200)", ColumnDescription = "标题")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Title", ColumnDataType = "nvarchar(200)", ColumnDescription = "标题", UniqueGroupNameList = new string[] { "cms_articlenews" })]
         public string F_Title { get; set; }
         /// <summary>
         /// 链接地址

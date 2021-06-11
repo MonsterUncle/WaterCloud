@@ -28,7 +28,7 @@ namespace WaterCloud.Domain.FileManage
         /// 文件名称
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = false, ColumnName = "F_FileName",ColumnDataType = "nvarchar(200)", ColumnDescription = "文件名称")]
+        [SugarColumn(IsNullable = false, ColumnName = "F_FileName",ColumnDataType = "nvarchar(200)", ColumnDescription = "文件名称", UniqueGroupNameList = new string[] { "oms_uploadfile" })]
         public string F_FileName { get; set; }
         /// <summary>
         /// 文件类型(0文件、1图片)

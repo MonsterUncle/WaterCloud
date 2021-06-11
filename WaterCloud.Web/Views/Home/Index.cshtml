@@ -216,6 +216,7 @@
             });
             $('.login-out').on("click", function () {
                 layer.msg('退出登录成功', function () {
+                    window.onbeforeunload();
                     window.location.href = '../Login/OutLogin';
                 });
             });

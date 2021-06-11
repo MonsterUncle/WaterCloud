@@ -23,7 +23,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// </summary>
         /// <returns></returns>
         [Required(ErrorMessage = "模块不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_ModuleId",ColumnDataType = "nvarchar(50)", ColumnDescription = "模块Id")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ModuleId",ColumnDataType = "nvarchar(50)", ColumnDescription = "模块Id", UniqueGroupNameList = new string[] { "sys_dataprivilegerule" })]
         public string F_ModuleId { get; set; }
         /// <summary>
         /// 模块编号

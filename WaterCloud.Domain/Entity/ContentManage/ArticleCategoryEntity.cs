@@ -23,7 +23,7 @@ namespace WaterCloud.Domain.ContentManage
         /// </summary>
         /// <returns></returns>
         [Required(ErrorMessage="新闻类别名称不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_FullName",ColumnDataType = "nvarchar(100)", ColumnDescription = "类别名称")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_FullName",ColumnDataType = "nvarchar(100)", ColumnDescription = "类别名称", UniqueGroupNameList = new string[] { "cms_articlecategory" })]
         public string F_FullName { get; set; }
         /// <summary>
         /// 父级Id

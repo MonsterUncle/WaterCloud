@@ -236,6 +236,10 @@ namespace WaterCloud.Service.SystemOrganize
                 var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).FirstOrDefault();
                 if (setTemp!=null)
                 {
+					if (setTemp.F_EndTime>DateTime.Now.Date)
+					{
+                        throw new Exception("租户已到期，请联系供应商");
+                    }
                     unitofwork.GetDbClient().ChangeDatabase(setTemp.F_DbNumber);
                     repository = new RepositoryBase<UserEntity>(unitofwork);
                 }

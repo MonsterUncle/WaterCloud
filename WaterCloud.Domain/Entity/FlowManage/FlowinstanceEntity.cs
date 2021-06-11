@@ -30,7 +30,7 @@ namespace WaterCloud.Domain.FlowManage
         /// </summary>
         /// <returns></returns>
         [Required(ErrorMessage = "编号不能为空")]
-        [SugarColumn(IsNullable = false, ColumnName = "F_Code", ColumnDataType = "nvarchar(200)", ColumnDescription = "实例编号")]
+        [SugarColumn(IsNullable = false, ColumnName = "F_Code", ColumnDataType = "nvarchar(200)", ColumnDescription = "实例编号", UniqueGroupNameList = new string[] { "oms_flowinstance" })]
         public string F_Code { get; set; }
         /// <summary>
         /// 自定义名称

@@ -28,7 +28,7 @@ namespace WaterCloud.Domain.SystemOrganize
 		/// 标题
 		/// </summary>
 		[Required(ErrorMessage = "标题不能为空")]
-		[SugarColumn(IsNullable = true, ColumnName = "F_Title",ColumnDataType = "nvarchar(50)", ColumnDescription = "标题")]
+		[SugarColumn(IsNullable = true, ColumnName = "F_Title",ColumnDataType = "nvarchar(50)", ColumnDescription = "标题", UniqueGroupNameList = new string[] { "sys_notice" })]
 		public string F_Title { get; set; }
 		/// <summary>
 		/// 内容

@@ -26,7 +26,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 账户
         /// </summary>
         [Required(ErrorMessage = "账户不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_Account",ColumnDataType = "nvarchar(50)", ColumnDescription = "账户")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Account",ColumnDataType = "nvarchar(50)", ColumnDescription = "账户", UniqueGroupNameList = new string[] { "sys_user" })]
         public string F_Account { get; set; }
         /// <summary>
         /// 姓名

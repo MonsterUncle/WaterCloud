@@ -26,7 +26,7 @@ namespace WaterCloud.Domain.SystemManage
 		/// <summary>
 		/// 模块Id
 		/// </summary>					
-		[SugarColumn(IsNullable = true, ColumnName = "F_ModuleId",ColumnDataType = "nvarchar(50)", ColumnDescription = "模块Id")]
+		[SugarColumn(IsNullable = true, ColumnName = "F_ModuleId",ColumnDataType = "nvarchar(50)", ColumnDescription = "模块Id", UniqueGroupNameList = new string[] { "sys_quickmodule" })]
 		public  string  F_ModuleId { get; set; }
 		/// <summary>
 		/// 删除标记
@@ -51,7 +51,7 @@ namespace WaterCloud.Domain.SystemManage
 		/// <summary>
 		/// 创建人Id
 		/// </summary>
-		[SugarColumn(IsNullable = true, ColumnName = "F_CreatorUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建人Id")]
+		[SugarColumn(IsNullable = true, ColumnName = "F_CreatorUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建人Id", UniqueGroupNameList = new string[] { "sys_quickmodule" })]
 		public  string  F_CreatorUserId { get; set; }
 		/// <summary>
 		/// 修改时间

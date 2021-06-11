@@ -27,13 +27,13 @@ namespace WaterCloud.Domain.SystemManage
         /// <summary>
         /// 父级Id
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ParentId", ColumnDataType = "nvarchar(50)", ColumnDescription = "父级Id")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ParentId", ColumnDataType = "nvarchar(50)", ColumnDescription = "父级Id", UniqueGroupNameList = new string[] { "sys_itemsdetail" })]
         public string F_ParentId { get; set; }
         /// <summary>
         /// 编号
         /// </summary>
         [Required(ErrorMessage = "编号不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_ItemCode",ColumnDataType = "nvarchar(50)", ColumnDescription = "编号")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ItemCode",ColumnDataType = "nvarchar(50)", ColumnDescription = "编号", UniqueGroupNameList = new string[] { "sys_itemsdetail" })]
         public string F_ItemCode { get; set; }
         /// <summary>
         /// 名称

@@ -24,7 +24,7 @@ namespace WaterCloud.Domain.SystemManage
         /// </summary>
         /// <returns></returns>
         [Required(ErrorMessage = "流程编号不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_SchemeCode",ColumnDataType = "nvarchar(50)", ColumnDescription = "流程编号")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_SchemeCode",ColumnDataType = "nvarchar(50)", ColumnDescription = "流程编号", UniqueGroupNameList = new string[] { "sys_flowscheme" })]
         public string F_SchemeCode { get; set; }
         /// <summary>
         /// 流程名称

@@ -21,7 +21,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// <summary>
         /// 用户Id
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_UserId",ColumnDataType = "nvarchar(50)", ColumnDescription = "用户Id")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_UserId",ColumnDataType = "nvarchar(50)", ColumnDescription = "用户Id", UniqueGroupNameList = new string[] { "sys_userlogon" })]
         public string F_UserId { get; set; }
         /// <summary>
         /// 用户密码
