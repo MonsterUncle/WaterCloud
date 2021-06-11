@@ -129,3 +129,7 @@ connection.onreconnected(function(connectionId){
 connection.onclose(function(error){
     console.log('重连失败');
 });
+//关闭连接方法
+window.onbeforeunload = function (e) {
+    connection.stop();
+};
