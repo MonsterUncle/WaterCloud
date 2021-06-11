@@ -87,6 +87,11 @@ namespace WaterCloud.Domain.SystemSecurity
         /// 删除人Id
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnName = "F_DeleteUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "删除人Id")]
-        public string F_DeleteUserId { get; set; }       
+        public string F_DeleteUserId { get; set; }
+        /// <summary>
+        /// 删除时间
+        /// </summary>
+        [SugarColumn(IsNullable = true, ColumnDescription = "到期时间")]
+        public DateTime? F_EndTime { get; set; }
     }
 }

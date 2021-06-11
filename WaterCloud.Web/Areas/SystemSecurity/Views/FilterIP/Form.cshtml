@@ -13,9 +13,7 @@
                         <label class="layui-form-label required">策略类型</label>
                         <div class="layui-input-block">
                             <select id="F_Type" name="F_Type" lay-verify="required">
-                                <option value="">==请选择==</option>
-                                <option value="true">允许访问</option>
-                                <option value="false">拒绝访问</option>
+                                <option value="false" selected>拒绝访问</option>
                             </select>
                         </div>
                     </div>
@@ -29,6 +27,12 @@
                         <label class="layui-form-label">结束IP</label>
                         <div class="layui-input-block">
                             <input type="text" id="F_EndIP" name="F_EndIP" maxlength="50" value="" class="layui-input ">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">到期时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="F_EndTime" name="F_EndTime" lay-verify="required" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item layui-hide">
@@ -57,6 +61,13 @@
             common = layui.common,
             laydate = layui.laydate;
         var keyValue = $.request("keyValue");
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#F_EndTime'
+            , trigger: 'click'
+            , type: 'datetime'
+            , format: 'yyyy/MM/dd HH:mm:ss',
+        });
         //权限字段
         common.authorizeFields('adminform');
         $(function () {

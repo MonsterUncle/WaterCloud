@@ -13,8 +13,6 @@
                     <label class="layui-form-label">策略类型</label>
                     <div class="layui-input-block">
                         <select id="F_Type" name="F_Type">
-                            <option value="">==请选择==</option>
-                            <option value="true">允许访问</option>
                             <option value="false">拒绝访问</option>
                         </select>
                     </div>
@@ -29,6 +27,12 @@
                     <label class="layui-form-label">结束IP</label>
                     <div class="layui-input-block">
                         <input type="text" id="F_EndIP" name="F_EndIP" value="" class="layui-input ">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">到期时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_EndTime" name="F_EndTime" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">

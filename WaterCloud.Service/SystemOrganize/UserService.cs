@@ -12,12 +12,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using SqlSugar;
 using WaterCloud.DataBase;
+using WaterCloud.Service.SystemSecurity;
+using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Service.SystemOrganize
 {
     public class UserService : DataFilterService<UserEntity>, IDenpendency
     {
         public SystemSetService syssetApp { get; set; }
+        public FilterIPService ipApp { get; set; }
         /// <summary>
         /// 缓存操作类
         /// </summary>
@@ -303,25 +306,27 @@ namespace WaterCloud.Service.SystemOrganize
                     }
                     else
                     {
-                        if (userEntity.F_Account != GlobalContext.SystemConfig.SysemUserCode)
+                        //登录错误不超过3次
+                        int num = await OperatorProvider.Provider.AddCurrentErrorNum();
+                        string erornum = (4 - num).ToString();
+                        if (num == 4)
                         {
-                            int num =await OperatorProvider.Provider.AddCurrentErrorNum();
-                            string erornum = (5 - num).ToString();
-                            if (num == 5)
-                            {
-                                userEntity.F_EnabledMark = false;
-                                await repository.Update(userEntity);
-                                await OperatorProvider.Provider.ClearCurrentErrorNum();
-                                throw new Exception("密码不正确，账户被系统锁定");
-                            }
-                            else
-                            {
-                                throw new Exception("密码不正确，请重新输入，还有" + erornum + "次机会");
-                            }
+                            FilterIPEntity ipentity = new FilterIPEntity();
+                            ipentity.F_Id = Utils.GuId();
+                            ipentity.F_StartIP = WebHelper.Ip;
+                            ipentity.F_CreatorTime = DateTime.Now;
+                            ipentity.F_DeleteMark = false;
+                            ipentity.F_EnabledMark = true;
+                            ipentity.F_Type = false;
+                            //封禁12小时
+                            ipentity.F_EndTime = DateTime.Now.AddHours(12);
+                            await ipApp.SubmitForm(ipentity,null);
+                            await OperatorProvider.Provider.ClearCurrentErrorNum();
+                            throw new Exception("密码不正确，IP被锁定");
                         }
                         else
                         {
-                            throw new Exception("密码不正确，请重新输入");
+                            throw new Exception("密码不正确，请重新输入，还有" + erornum + "次机会");
                         }
                     }
                 }
