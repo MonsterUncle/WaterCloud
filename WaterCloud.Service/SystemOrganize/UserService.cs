@@ -247,6 +247,10 @@ namespace WaterCloud.Service.SystemOrganize
                     repository = new RepositoryBase<UserEntity>(unitofwork);
                 }
             }
+			if (!(await CheckIP()))
+			{
+                throw new Exception("IP受限");
+			}
             UserEntity userEntity =await repository.FindEntity(t => t.F_Account == username);
             if (userEntity != null)
             {
@@ -339,6 +343,12 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 throw new Exception("账户不存在，请重新输入");
             }
+        }
+
+        private async Task<bool> CheckIP()
+        {
+            string ip = WebHelper.Ip;
+            return await ipApp.CheckIP(ip);
         }
     }
 }

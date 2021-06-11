@@ -21,7 +21,6 @@ namespace WaterCloud.Web.Controllers
 {
 	public class LoginController : Controller
     {
-        public FilterIPService _filterIPService { get; set; }
         public UserService _userService { get; set; }
         public LogService _logService { get; set; }
         public SystemSetService _setService { get; set; }
@@ -148,10 +147,6 @@ namespace WaterCloud.Web.Controllers
             }
             try
             {
-                if (!await CheckIP())
-                {
-                    throw new Exception("IP受限");
-                }
                 UserEntity userEntity =await _userService.CheckLogin(username, password, localurl);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
@@ -210,11 +205,6 @@ namespace WaterCloud.Web.Controllers
                 await _logService.WriteDbLog(logEntity);
                 return Content(new AlwaysResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
             }
-        }
-        private async Task<bool> CheckIP()
-        {
-            string ip = WebHelper.Ip;
-            return await _filterIPService.CheckIP(ip);
         }
     }
 }

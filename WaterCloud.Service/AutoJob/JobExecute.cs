@@ -82,6 +82,7 @@ namespace WaterCloud.Service.AutoJob
                                             .Contains(typeof(IJobTask)))).ToArray();
                                         string filename = dbJobEntity.F_FileName;
                                         var implementType = types.Where(x => x.IsClass && x.FullName == filename).FirstOrDefault();
+                                        unitwork.GetDbClient().ChangeDatabase(dbJobEntity.F_DbNumber);
                                         var obj = System.Activator.CreateInstance(implementType, unitwork);       // 创建实例(带参数)
                                         MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
                                         object[] parameters = null;
@@ -116,6 +117,8 @@ namespace WaterCloud.Service.AutoJob
                                                 break;
                                         }
                                         var dic = dbJobEntity.F_RequestHeaders.ToObject<Dictionary<string, string>>();
+                                        //请求头添加租户号
+                                        dic.Add("dbNumber",dbJobEntity.F_DbNumber);
                                         try
                                         {
                                             var temp = await new HttpWebClient(_httpClient).ExecuteAsync(dbJobEntity.F_RequestUrl, method, dbJobEntity.F_RequestString, dic);
@@ -128,6 +131,7 @@ namespace WaterCloud.Service.AutoJob
                                             log.F_Description = "执行失败，" + ex.Message.ToString();
                                         }
                                     }
+                                    unitwork.GetDbClient().ChangeDatabase("0");
                                     #endregion
                                     await unitwork.GetDbClient().Updateable<OpenJobEntity>(t => new OpenJobEntity
                                     {
