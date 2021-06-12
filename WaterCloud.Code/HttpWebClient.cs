@@ -203,7 +203,14 @@ namespace WaterCloud.Code
         public async Task<string> ExecuteAsync(string url, HttpMethod method, string requestString, Dictionary<string, string> dicHeaders, int timeoutSecond = 120)
         {
             var client = _httpClientFactory.CreateClient();
-            url += "?v=" + DateTime.Now.ToString("yyyyMMddhhmmss");
+			if (url.IndexOf('?')>-1)
+			{
+                url += "&v=" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            }
+			else
+			{
+                url += "?v=" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            }
             var request = new HttpRequestMessage(method, url)
             {
                 Content = new StringContent(requestString),
