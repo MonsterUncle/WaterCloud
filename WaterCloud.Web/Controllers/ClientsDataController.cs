@@ -27,7 +27,7 @@ namespace WaterCloud.Web.Controllers
         /// <summary>
         /// 缓存操作类
         /// </summary>
-        private string cacheKeyOperator = "watercloud_operator_";// +登录者token
+        private string cacheKeyOperator = GlobalContext.SystemConfig.ProjectPrefix + "_operator_";// +登录者token
         public QuickModuleService _quickModuleService { get; set; }
         public NoticeService _noticeService { get; set; }
         public UserService _userService { get; set; }

@@ -24,7 +24,7 @@ namespace WaterCloud.Service.SystemOrganize
         /// <summary>
         /// 缓存操作类
         /// </summary>
-        private string cacheKeyOperator = "watercloud_operator_";// +登录者token
+        private string cacheKeyOperator = GlobalContext.SystemConfig.ProjectPrefix + "_operator_";// +登录者token
         //获取类名
         
         public UserService(IUnitOfWork unitOfWork) : base(unitOfWork)

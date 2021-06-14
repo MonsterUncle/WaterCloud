@@ -16,12 +16,7 @@ namespace WaterCloud.CodeGenerator
 {
     public class SingleTableTemplate
     {
-        private string buttoncacheKey = "watercloud_modulebuttondata_";
-        private string fieldscacheKey = "watercloud_modulefieldsdata_";
-        private string cacheKey = "watercloud_moduleldata_";
-        private string quickcacheKey = "watercloud_quickmoduledata_";
-        private string initcacheKey = "watercloud_init_";
-        private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
+        private string authorizecacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_authorizeurldata_";// +权限
         private IUnitOfWork unitwork;
         public SingleTableTemplate(IUnitOfWork unitOfWork)
         {
@@ -208,7 +203,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("    {");
             if (baseConfigModel.PageIndex.IsCache == true)
             {
-                sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
+                sb.AppendLine("        private string cacheKey = GlobalContext.SystemConfig.ProjectPrefix + \"_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
             }
             sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + "(IUnitOfWork unitOfWork) : base(unitOfWork)");
             sb.AppendLine("        {");
@@ -1349,13 +1344,6 @@ namespace WaterCloud.CodeGenerator
                     await unitwork.Insert(moduleFieldsList);
                 }
                 unitwork.Commit();
-                await CacheHelper.Remove(fieldscacheKey + "list");
-                await CacheHelper.Remove(buttoncacheKey + "list");
-                await CacheHelper.Remove(cacheKey + "list");
-                await CacheHelper.Remove(quickcacheKey + "list");
-                await CacheHelper.Remove(initcacheKey + "list");
-                await CacheHelper.Remove(initcacheKey + "modulebutton_list");
-                await CacheHelper.Remove(initcacheKey + "modulefields_list");
                 await CacheHelper.Remove(authorizecacheKey + "list");
                 FileHelper.CreateFile(indexPath, codeIndex);
                 result.Add(new KeyValue { Key = "列表页", Value = indexPath, Description = "生成成功！" });
