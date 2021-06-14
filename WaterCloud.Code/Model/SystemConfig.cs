@@ -65,5 +65,9 @@ namespace WaterCloud.Code.Model
         /// 数据库模式
         /// </summary>
         public string SqlMode { get; set; }
+        /// <summary>
+        /// 项目前缀
+        /// </summary>
+        public string ProjectPrefix { get; set; }
     }
 }

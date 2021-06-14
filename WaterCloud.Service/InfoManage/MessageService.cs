@@ -22,7 +22,7 @@ namespace WaterCloud.Service.InfoManage
     /// </summary>
     public class MessageService : DataFilterService<MessageEntity>, IDenpendency
     {
-        private string cacheHubKey = "watercloud_hubuserinfo_";
+        private string cacheHubKey = GlobalContext.SystemConfig.ProjectPrefix + "_hubuserinfo_";
 
         public IHubContext<MessageHub> _messageHub { get; set; }
         public ItemsDataService itemsApp { get; set; }

@@ -15,11 +15,12 @@ namespace WaterCloud.Code
     public class OperatorProvider
     {
         //登录信息保存方式
-        private string LoginProvider = GlobalContext.SystemConfig.LoginProvider;
+        private static string LoginProvider = GlobalContext.SystemConfig.LoginProvider;
         //是否允许一个账户在多处登录
-        private bool LoginMultiple = GlobalContext.SystemConfig.LoginMultiple;
+        private static bool LoginMultiple = GlobalContext.SystemConfig.LoginMultiple;
         //缓存过期时间
-        private int LoginExpire = GlobalContext.SystemConfig.LoginExpire;
+        private static int LoginExpire = GlobalContext.SystemConfig.LoginExpire;
+        private static string projectPrefix = GlobalContext.SystemConfig.ProjectPrefix;
         public static OperatorProvider Provider
         {
             get { return new OperatorProvider(); }
@@ -30,17 +31,17 @@ namespace WaterCloud.Code
         /// <summary>
         /// 缓存操作类
         /// </summary>
-        private string cacheKeyOperator = "watercloud_operator_";// +登录者token
-        private string cacheKeyToken = "watercloud_token_";// +登录者token
-        private string cacheKeyError = "watercloud_error_";// + Mark
+        private string cacheKeyOperator = projectPrefix+"_operator_";// +登录者token
+        private string cacheKeyToken = projectPrefix+"_token_";// +登录者token
+        private string cacheKeyError = projectPrefix+"_error_";// + Mark
         /// <summary>
         /// 秘钥
         /// </summary>
-        private string LoginUserToken = "watercloud_Token";
+        private string LoginUserToken = projectPrefix+"_Token";
         /// <summary>
         /// 标记登录的浏览器
         /// </summary>
-        private string LoginUserMarkKey = "watercloud_Mark";
+        private string LoginUserMarkKey = projectPrefix+"_Mark";
         public string GetProvider(string key)
         {
             switch (LoginProvider)

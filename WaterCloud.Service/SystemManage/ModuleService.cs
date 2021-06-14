@@ -21,7 +21,7 @@ namespace WaterCloud.Service.SystemManage
         /// <summary>
         /// 缓存操作类
         /// </summary>
-        private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
+        private string authorizecacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_authorizeurldata_";// +权限
         //获取类名
 
         public ModuleService(IUnitOfWork unitOfWork) : base(unitOfWork)

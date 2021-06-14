@@ -16,7 +16,7 @@ namespace WaterCloud.CodeGenerator
 {
     public class SingleTableTemplate
     {
-        private string authorizecacheKey = "watercloud_authorizeurldata_";// +权限
+        private string authorizecacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_authorizeurldata_";// +权限
         private UnitOfWork uniwork;
         public SingleTableTemplate(ISqlSugarClient context)
         {
@@ -202,7 +202,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("    {");
             if (baseConfigModel.PageIndex.IsCache == true)
             {
-                sb.AppendLine("        private string cacheKey = \"watercloud_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
+                sb.AppendLine("        private string cacheKey = GlobalContext.SystemConfig.ProjectPrefix + \"_" + baseConfigModel.FileConfig.ClassPrefix.ToLower() + "data_\";");
             }
             sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + "(IUnitOfWork unitOfWork) : base(unitOfWork)");
             sb.AppendLine("        {");

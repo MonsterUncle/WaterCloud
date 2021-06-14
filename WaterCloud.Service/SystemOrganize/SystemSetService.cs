@@ -20,7 +20,7 @@ namespace WaterCloud.Service.SystemOrganize
     /// </summary>
     public class SystemSetService : DataFilterService<SystemSetEntity>, IDenpendency
     {
-        private string cacheKeyOperator = "watercloud_operator_";// +登录者token
+        private string cacheKeyOperator = GlobalContext.SystemConfig.ProjectPrefix + "_operator_";// +登录者token
         public ModuleService moduleApp { get; set; }
         public ModuleButtonService moduleButtonApp { get; set; }
         public ModuleFieldsService moduleFieldsApp { get; set; }

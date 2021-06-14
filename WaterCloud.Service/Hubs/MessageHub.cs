@@ -11,10 +11,10 @@ namespace WaterCloud.Service
 {
     public class MessageHub : Hub
     {
-        private string cacheKey = "watercloud_hubuserinfo_";
+        private string cacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_hubuserinfo_";
         private readonly UserService _service;
         private readonly MessageService _msgService;
-        private string cacheKeyOperator = "watercloud_operator_";// +登录者tokens
+        private string cacheKeyOperator = GlobalContext.SystemConfig.ProjectPrefix + "_operator_";// +登录者tokens
         public MessageHub(UserService service, MessageService msgService)
         {
             _service = service;
