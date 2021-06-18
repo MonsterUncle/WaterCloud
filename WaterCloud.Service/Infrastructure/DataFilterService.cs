@@ -171,7 +171,7 @@ namespace WaterCloud.Service
             //系统菜单跳过
             var module = repository.Db.Queryable<ModuleEntity>().First(u => u.F_EnCode == moduleName);
             //判断是否需要字段权限
-            if (module.F_IsFields == false)
+            if (module == null || module.F_IsFields == false)
             {
                 return list;
             }
@@ -211,7 +211,7 @@ namespace WaterCloud.Service
             //系统菜单跳过
             var module = repository.Db.Queryable<ModuleEntity>().First(u => u.F_EnCode == moduleName);
             //判断是否需要字段权限
-            if (module.F_IsFields == false)
+            if (module == null || module.F_IsFields == false)
             {
                 return entity;
             }
@@ -253,7 +253,7 @@ namespace WaterCloud.Service
             //系统菜单跳过
             var module = repository.Db.Queryable<ModuleEntity>().First(u => u.F_EnCode == moduleName);
             //判断是否需要字段权限
-            if (module.F_IsFields == false)
+            if (module == null || module.F_IsFields == false)
             {
                 return query;
             }
