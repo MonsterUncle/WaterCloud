@@ -69,5 +69,9 @@ namespace WaterCloud.Code.Model
         /// 项目前缀
         /// </summary>
         public string ProjectPrefix { get; set; }
-    }
+        /// <summary>
+        /// 是否重置密码
+        /// </summary>
+		public bool? ReviseSysem { get; set; }
+	}
 }

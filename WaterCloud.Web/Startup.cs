@@ -186,6 +186,44 @@ namespace WaterCloud.Web
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
+            try
+            {
+                if (GlobalContext.SystemConfig.ReviseSysem == true)
+                {
+                    using (var context =new UnitOfWork(new SqlSugarClient(DBContexHelper.Contex())))
+                    {
+                        context.CurrentBeginTrans();
+                        context.GetDbClient().Updateable<SystemSetEntity>(a => new SystemSetEntity
+                        {
+                            F_AdminAccount= GlobalContext.SystemConfig.SysemUserCode,
+                            F_AdminPassword = GlobalContext.SystemConfig.SysemUserPwd
+                        }).Where(a => a.F_Id == GlobalContext.SystemConfig.SysemMasterProject).ExecuteCommand();
+                        context.GetDbClient().Updateable<SystemSetEntity>(a => new SystemSetEntity
+                        {
+                            F_AdminAccount = GlobalContext.SystemConfig.SysemUserCode,
+                            F_AdminPassword = GlobalContext.SystemConfig.SysemUserPwd
+                        }).Where(a => a.F_Id == GlobalContext.SystemConfig.SysemMasterProject).ExecuteCommand();
+                        var user = context.GetDbClient().Queryable<UserEntity>().Where(a => a.F_OrganizeId == GlobalContext.SystemConfig.SysemMasterProject && a.F_IsAdmin == true).First();
+                        var userinfo = context.GetDbClient().Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
+                        userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                        userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(GlobalContext.SystemConfig.SysemUserPwd, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
+                        context.GetDbClient().Updateable<UserEntity>(a => new UserEntity
+                        {
+                            F_Account = GlobalContext.SystemConfig.SysemUserCode
+                        }).Where(a => a.F_Id == user.F_Id).ExecuteCommand();
+                        context.GetDbClient().Updateable<UserLogOnEntity>(a => new UserLogOnEntity
+                        {
+                            F_UserPassword = userinfo.F_UserPassword,
+                            F_UserSecretkey = userinfo.F_UserSecretkey
+                        }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommand();
+                        context.Commit();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex);
+            }
             //清理缓存
             //CacheHelper.FlushAll().GetAwaiter().GetResult();
         }
