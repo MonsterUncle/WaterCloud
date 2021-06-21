@@ -39,8 +39,7 @@
 - 提高开发效率及质量。常用类封装，日志、缓存、验证、字典、文件、邮件、Excel。等等。
 - 页面为响应式设计，支持电脑、平板、智能手机等设备，微信浏览器以及各种常见浏览器。
 - 适用范围：可以开发OA、ERP、BPM、CRM、WMS、TMS、MIS、BI、电商平台后台、物流管理系统、快递管理系统、教务管理系统等各类管理软件。
-- 租户管理(已实现，详细咨询作者)
-
+- 租户管理,基于Database的多租户功能。
 
 - .net5-Chloe版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net5-Chloe
 - .net4.5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net4.5-Chloe
