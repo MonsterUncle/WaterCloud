@@ -390,6 +390,11 @@ layui.define(["element", "layer", "jquery"], function (exports) {
                 if (options.urlHashLocation) {
                     location.hash = '/' + tabId;
                 }
+                if (tabId != options.homeInfo.href) {
+                    $.cookie("wc_returnurl", tabId, {
+                        expires: 1,path: '/'
+                    });
+                }
                 if (typeof options.listenSwichCallback === 'function') {
                     options.listenSwichCallback();
                 }

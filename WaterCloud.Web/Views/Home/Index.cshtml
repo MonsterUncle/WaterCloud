@@ -12,12 +12,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
     <link rel="icon" href="@ViewBag.LogoIcon">
-    <link rel="stylesheet" href="~/lib/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="~/css/layuimini.css" media="all">
-    <link rel="stylesheet" href="~/css/themes/default.css" media="all">
-    <link rel="stylesheet" href="~/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="~/lib/layui/css/layui.css?v=@WaterCloud.Code.GlobalContext.GetVersion()" media="all">
+    <link rel="stylesheet" href="~/css/layuimini.css?v=@WaterCloud.Code.GlobalContext.GetVersion()" media="all">
+    <link rel="stylesheet" href="~/css/themes/default.css?v=@WaterCloud.Code.GlobalContext.GetVersion()" media="all">
+    <link rel="stylesheet" href="~/lib/font-awesome-4.7.0/css/font-awesome.min.css?v=@WaterCloud.Code.GlobalContext.GetVersion()" media="all">
     <style id="layuimini-bg-color">
     </style>
 </head>
@@ -131,12 +131,13 @@
         </div>
 
     </div>
-    <script src="~/lib/layui/layui.js" charset="utf-8"></script>
+    <script src="~/lib/layui/layui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
     <script src="~/js/lay-config.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
+    <script src="~/js/cookie/jquery.cookie.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script src="~/js/framework-clientdata.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script src="~/js/framework-ui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
-    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script src="~/js/chat.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script>
         function btn_revisepassword() {
             layui.use(['common'], function () {
@@ -217,6 +218,9 @@
             $('.login-out').on("click", function () {
                 layer.msg('退出登录成功', function () {
                     window.onbeforeunload();
+                    $.cookie("wc_returnurl", '', {
+                        expires: -1, path: '/'
+                    });
                     window.location.href = '../Login/OutLogin';
                 });
             });
