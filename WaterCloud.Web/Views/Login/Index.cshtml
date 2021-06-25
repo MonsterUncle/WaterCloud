@@ -10,8 +10,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     <link rel="icon" href="@ViewBag.LogoIcon">
-    <link rel="stylesheet" href="~/lib/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="~/css/login.css" media="all">
+    <link rel="stylesheet" href="~/lib/layui/css/layui.css?v=@WaterCloud.Code.GlobalContext.GetVersion()" media="all">
+    <link rel="stylesheet" href="~/css/login.css?v=@WaterCloud.Code.GlobalContext.GetVersion()" media="all">
 </head>
 <body>
     @*动画特效*@
@@ -55,11 +55,11 @@
             </div>
         </div>
     </div>
-    <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
-    <script src="~/js/cookie/jquery.cookie.js"></script>
-    <script src="~/js/md5/base64.js"></script>
-    <script src="~/js/md5/jquery.md5.js"></script>
-    <script src="~/lib/layui/layui.js" charset="utf-8"></script>
+    <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
+    <script src="~/js/cookie/jquery.cookie.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script src="~/js/md5/base64.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script src="~/js/md5/jquery.md5.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script src="~/lib/layui/layui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
     <script src="~/js/login.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script src="~/js/framework-ui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script>
@@ -98,7 +98,13 @@
                         dataType: "json",
                         success: function (data) {
                             if (data.state == "success") {
-                                 window.location.href = '@Url.Content("~/Home/Index")';
+                                var url = top.$.cookie('wc_returnurl');
+                                if (url != null) {
+                                    window.location.href = '@Url.Content("~/Home/Index")'+"#/"+url;
+                                }
+                                else {
+                                    window.location.href = '@Url.Content("~/Home/Index")';
+                                }
                             }
                         }
                     });
@@ -178,7 +184,13 @@
                             if (data.state == "success") {
                                 $("#login_button").empty();
                                 $("#login_button").html("登录成功，正在跳转...");
-                                window.location.href = '@Url.Content("~/Home/Index")';
+                                var url = top.$.cookie('wc_returnurl');
+                                if (url != null) {
+                                    window.location.href = '@Url.Content("~/Home/Index")'+"#/"+url;
+                                }
+                                else {
+                                    window.location.href = '@Url.Content("~/Home/Index")';
+                                }
                             } else {
                                 $("#login_button").empty();
                                 $("#login_button").removeAttr('disabled').html("登 入");
