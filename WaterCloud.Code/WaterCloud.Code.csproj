@@ -34,7 +34,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="Chloe" Version="4.14.0" />
+    <PackageReference Include="Chloe" Version="4.16.0" />
     <PackageReference Include="CSRedisCore" Version="3.6.6" />
     <PackageReference Include="iTextSharp.LGPLv2.Core.Fix" Version="1.4.3" />
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
