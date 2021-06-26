@@ -630,7 +630,6 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
   //重置表格尺寸/结构
   Class.prototype.resize = function(){
     var that = this;
-    sessionStorage.removeItem("wc_table_scolltop");
     var scrollTop = 0;
     if (!!that.config.id) {
         scrollTop = that.layMain[0].scrollTop;
