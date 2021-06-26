@@ -24,6 +24,7 @@ namespace WaterCloud.Web.Controllers
         public UserService _userService { get; set; }
         public LogService _logService { get; set; }
         public SystemSetService _setService { get; set; }
+        public RoleAuthorizeService _roleAuthServuce { get; set; }
         public IDbContext _context { get; set; }
         [HttpGet]
         public virtual async Task<ActionResult> Index()
@@ -96,6 +97,8 @@ namespace WaterCloud.Web.Controllers
                 }
                 else
                 {
+                    //验证回退路由是否有权限，没有就删除
+                    await CheckReturnUrl(_setService.currentuser.UserId);
                     return Content(new AlwaysResult { state = ResultType.success.ToString() }.ToJson());
                 }
             }
@@ -179,6 +182,8 @@ namespace WaterCloud.Web.Controllers
                 logEntity.F_Result = true;
                 logEntity.F_Description = "登录成功";
                 await _logService.WriteDbLog(logEntity);
+                //验证回退路由是否有权限，没有就删除
+                await CheckReturnUrl(operatorModel.UserId);
                 return Content(new AlwaysResult { state = ResultType.success.ToString(), message = "登录成功。"}.ToJson());
             }
             catch (Exception ex)
@@ -195,6 +200,15 @@ namespace WaterCloud.Web.Controllers
         {
             string ip = WebHelper.Ip;
             return await _filterIPService.CheckIP(ip);
+        }
+
+        private async Task CheckReturnUrl(string userId)
+        {
+            var url = WebHelper.GetCookie("wc_returnurl");
+            if (!string.IsNullOrEmpty(url) && !await _roleAuthServuce.CheckReturnUrl(userId, url))
+            {
+                WebHelper.RemoveCookie("wc_returnurl");
+            }
         }
     }
 }
