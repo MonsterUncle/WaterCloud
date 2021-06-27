@@ -48,7 +48,7 @@ namespace WaterCloud.WebApi.Controllers
                 {
                     throw new Exception("IP受限");
                 }
-                UserEntity userEntity = await _userService.CheckLogin(request.userName, Md5.md5(request.password, 32).ToLower(), request.localurl);
+                UserEntity userEntity = await _userService.CheckLogin(request.userName, Md5.md5(request.password, 32), request.localurl);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
                 operatorModel.UserCode = userEntity.F_Account;

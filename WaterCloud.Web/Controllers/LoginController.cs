@@ -150,7 +150,7 @@ namespace WaterCloud.Web.Controllers
             }
             try
             {
-                UserEntity userEntity =await _userService.CheckLogin(username, password, localurl);
+                UserEntity userEntity =await _userService.CheckLogin(username, Md5.md5(password, 32), localurl);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
                 operatorModel.UserCode = userEntity.F_Account;
