@@ -228,7 +228,7 @@ namespace WaterCloud.DataBase
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
-        public async Task<List<TEntity>> CheckCacheList<TEntity>(string cacheKey, long old = 0) where TEntity : class
+        public async Task<List<TEntity>> CheckCacheList<TEntity>(string cacheKey) where TEntity : class
         {
             var cachedata = await CacheHelper.Get<List<TEntity>>(cacheKey);
             if (cachedata == null || cachedata.Count() == 0)
@@ -239,7 +239,7 @@ namespace WaterCloud.DataBase
             return cachedata;
         }
 
-        public async Task<TEntity> CheckCache<TEntity>(string cacheKey, object keyValue, long old = 0) where TEntity : class
+        public async Task<TEntity> CheckCache<TEntity>(string cacheKey, object keyValue) where TEntity : class
         {
             var cachedata = await CacheHelper.Get<TEntity>(cacheKey + keyValue);
             if (cachedata == null)

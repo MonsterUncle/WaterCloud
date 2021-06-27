@@ -141,7 +141,7 @@ namespace WaterCloud.DataBase
         /// <param name="keyValue"></param>
         /// <param name="old"></param>
         /// <returns></returns>
-        Task<TEntity> CheckCache<TEntity>(string cacheKey, object keyValue, long old = 0) where TEntity : class;
+        Task<TEntity> CheckCache<TEntity>(string cacheKey, object keyValue) where TEntity : class;
         /// <summary>
         /// 缓存查询列表(大数据表谨慎使用)
         /// </summary>
@@ -149,7 +149,7 @@ namespace WaterCloud.DataBase
         /// <param name="cacheKey"></param>
         /// <param name="old"></param>
         /// <returns></returns>
-        Task<List<TEntity>> CheckCacheList<TEntity>(string cacheKey, long old = 0) where TEntity : class;
+        Task<List<TEntity>> CheckCacheList<TEntity>(string cacheKey) where TEntity : class;
 
     }
 }
