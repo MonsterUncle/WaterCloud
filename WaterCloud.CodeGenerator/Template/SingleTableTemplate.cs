@@ -88,7 +88,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildEntity
-        public string BuildEntity(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id")
+        public string BuildEntity(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id", bool keyIsNull = false)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
@@ -104,7 +104,7 @@ namespace WaterCloud.CodeGenerator
             SetClassDescription("实体类", baseConfigModel, sb);
             baseConfigModel.TableNameUpper = TableMappingHelper.ConvertTo_Uppercase(baseConfigModel.TableName);
             sb.AppendLine("    [TableAttribute(\"" + baseConfigModel.TableName + "\")]");
-            var baseEntity = GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn);
+            var baseEntity = GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn, keyIsNull);
             if (string.IsNullOrEmpty(baseEntity))
             {
                 sb.AppendLine("    public class " + baseConfigModel.FileConfig.EntityName);
@@ -1452,7 +1452,7 @@ namespace WaterCloud.CodeGenerator
         }
         #endregion 
 
-        private string GetBaseEntity(string EntityName, DataTable dt, string idColumn = "F_Id")
+        private string GetBaseEntity(string EntityName, DataTable dt, string idColumn = "F_Id", bool keyIsNull = false)
         {
             string entity = string.Empty;
             var columnList = dt.AsEnumerable().Select(p => p["TableColumn"].ParseToString()).ToList();
@@ -1461,7 +1461,7 @@ namespace WaterCloud.CodeGenerator
             bool baseIsDelete = columnList.Where(p => p == "F_DeleteUserId").Any() && columnList.Where(p => p == "F_DeleteTime").Any() && columnList.Where(p => p == "F_DeleteMark").Any();
             bool baseIsCreate = columnList.Where(p => p == "F_Id").Any() && columnList.Where(p => p == "F_CreatorUserId").Any() && columnList.Where(p => p == "F_CreatorTime").Any();
             bool baseIsModifie = columnList.Where(p => p == "F_Id").Any() && columnList.Where(p => p == "F_LastModifyUserId").Any() && columnList.Where(p => p == "F_LastModifyTime").Any();
-            if (!id)
+            if (!id && !keyIsNull)
             {
                 throw new Exception("数据库表必须有主键id字段");
             }

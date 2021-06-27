@@ -257,7 +257,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                             idcolumn = dr["TableColumn"].ToString();
                         }
                     }
-                    string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
+                    string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn,true);
                     await template.EntityCreateCode(baseConfig, codeEntity);
                 }
                 return await Success("操作成功。", "", "");
