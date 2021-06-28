@@ -10,6 +10,8 @@ using Chloe;
 using WaterCloud.DataBase;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using System;
 /// <summary>
 /// 登录验证
 /// </summary>
@@ -18,9 +20,11 @@ namespace WaterCloud.Web
     public class HandlerLoginAttribute : ActionFilterAttribute
     {
         private readonly RoleAuthorizeService _service;
-        public HandlerLoginAttribute(RoleAuthorizeService service)
+        private readonly ICompositeViewEngine _compositeViewEngine;
+        public HandlerLoginAttribute(RoleAuthorizeService service, ICompositeViewEngine compositeViewEngine)
         {
             _service = service;
+            _compositeViewEngine = compositeViewEngine;
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -40,6 +44,19 @@ namespace WaterCloud.Web
                 WebHelper.WriteCookie("WaterCloud_login_error", "overdue");
                 //filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408" + "';if(document.all) window.event.returnValue = false;</script>");
                 OperatorProvider.Provider.EmptyCurrent("pc_").GetAwaiter().GetResult();
+                if (filterContext.HttpContext.Request.Path != "/Home/Index")
+                {
+                    var url = filterContext.HttpContext.Request.Path.Value.Substring(filterContext.HttpContext.Request.Path.Value.LastIndexOf('/') + 1, filterContext.HttpContext.Request.Path.Value.Length - 1 - filterContext.HttpContext.Request.Path.Value.LastIndexOf('/'));
+                    var view = _compositeViewEngine.FindView(filterContext, url, false)?.View;
+                    if (view != null)
+                    {
+                        OperatorProvider.Provider.EmptyCurrent("pc_").GetAwaiter().GetResult();
+                        CookieOptions options = new CookieOptions();
+                        options.Expires = DateTime.Now.AddDays(1);
+                        options.Path = "/";
+                        WebHelper.WriteCookie("wc_realreturnurl", filterContext.HttpContext.Request.PathBase + filterContext.HttpContext.Request.Path, options);
+                    }
+                }
                 filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408");
                 return;
             }

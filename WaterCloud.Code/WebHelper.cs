@@ -179,11 +179,14 @@ namespace WaterCloud.Code
         /// </summary>
         /// <param name="strName">名称</param>
         /// <param name="strValue">值</param>
-        public static void WriteCookie(string strName, string strValue)
+        public static void WriteCookie(string strName, string strValue, CookieOptions option = null)
         {
             IHttpContextAccessor hca = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>();
-            CookieOptions option = new CookieOptions();
-            option.Expires = DateTime.Now.AddDays(30);
+            if (option == null)
+            {
+                option = new CookieOptions();
+                option.Expires = DateTime.Now.AddDays(30);
+            }
             hca?.HttpContext?.Response.Cookies.Append(strName, strValue, option);
         }
         /// <summary>
