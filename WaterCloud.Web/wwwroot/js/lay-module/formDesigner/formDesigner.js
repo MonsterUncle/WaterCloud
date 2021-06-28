@@ -317,7 +317,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
 
             , MOD_NAME = 'formDesigner'
             , TP_MAIN = ['<div class="layui-layout layui-layout-admin">'
-                , '<div class="layui-header" style="height:25px">'
+                , '<div class="layui-header" style="height:25px;position:unset;">'
                 , '<div class="layui-logo" style="line-height:25px">Layui 表单设计器</div>'
                 , '<!-- 头部区域（可配合layui已有的水平导航） -->'
                 , '<ul class="layui-nav layui-layout-right">'
@@ -339,7 +339,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 , '<!-- 左侧导航区域（可配合layui已有的垂直导航） -->'
                 , '<h3 class="coltitle">组件</h3>'
                 , '<div id="generateSetValue" class="layui-hide"></div>'
-                , '<div class="components-list" style="position:absolute; height:440px; overflow:auto;border:1px dotted #999" id="components-form-list">'
+                , '<div class="components-list" style="position:absolute; height:440px; overflow:auto;border:1px dotted #999;background: #fff;" id="components-form-list">'
                 , '</div>'
                 , '</div>'
                 , '<div class="layui-col-md6 layui-col-sm6">'
