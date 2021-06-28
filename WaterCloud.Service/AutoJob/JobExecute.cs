@@ -39,9 +39,8 @@ namespace WaterCloud.Service.AutoJob
                 JobDataMap jobData = null;
                 OpenJobEntity dbJobEntity = null;
                 DateTime now = DateTime.Now;
-                using (ISqlSugarClient client = new SqlSugarClient(DBContexHelper.Contex()))
+                using (UnitOfWork unitwork = GlobalContext.ServiceProvider.GetService(typeof(IUnitOfWork)) as UnitOfWork)
                 {
-                    IUnitOfWork unitwork = new UnitOfWork(client);
                     try
                     {
                         jobData = context.JobDetail.JobDataMap;
