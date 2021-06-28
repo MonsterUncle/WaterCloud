@@ -57,9 +57,10 @@ layui.define(["element", "layer", "jquery"], function (exports) {
                 , id: options.tabId
             });
             $('.layuimini-menu-left').attr('layuimini-tab-tag', 'add');
-            $.cookie('layuiminimenu_' + options.tabId, options.title, {
-                expires: 1, path: '/'
-            });
+            var d = new Date();
+            d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = 'layuiminimenu_' + options.tabId + "=" + options.title + ";" + "path=/;" + expires;
         },
 
 
@@ -393,9 +394,10 @@ layui.define(["element", "layer", "jquery"], function (exports) {
                     location.hash = '/' + tabId;
                 }
                 if (tabId != options.homeInfo.href) {
-                    $.cookie("wc_returnurl", tabId, {
-                        expires: 1, path: '/'
-                    });
+                    var d = new Date();
+                    d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000));
+                    var expires = "expires=" + d.toGMTString();
+                    document.cookie = 'wc_returnurl' + "=" + tabId + ";" + "path=/;" + expires;
                 }
                 if (typeof options.listenSwichCallback === 'function') {
                     options.listenSwichCallback();
@@ -468,7 +470,13 @@ layui.define(["element", "layer", "jquery"], function (exports) {
             if (isSearchMenu) return false;
 
             // 既不是右侧菜单、快捷菜单,就直接打开
-            var title = $.cookie('layuiminimenu_' + tabId) === null ? tabId : $.cookie('layuiminimenu_' + tabId);
+            var name = 'layuiminimenu_' + tabId + "=";
+            var title = tabId;
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(name) == 0) title = c.substring(name.length, c.length);
+            }
             miniTab.create({
                 tabId: tabId,
                 href: tabId,
