@@ -16,6 +16,7 @@ using WaterCloud.Service.SystemOrganize;
 using WaterCloud.Domain.SystemOrganize;
 using SqlSugar;
 using System.Linq;
+using System.Text;
 
 namespace WaterCloud.Web.Controllers
 {
@@ -150,7 +151,7 @@ namespace WaterCloud.Web.Controllers
             }
             try
             {
-                UserEntity userEntity =await _userService.CheckLogin(username, Md5.md5(password, 32), localurl);
+                UserEntity userEntity =await _userService.CheckLogin(username, password, localurl);
                 OperatorModel operatorModel = new OperatorModel();
                 operatorModel.UserId = userEntity.F_Id;
                 operatorModel.UserCode = userEntity.F_Account;

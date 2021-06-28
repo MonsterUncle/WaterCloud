@@ -194,7 +194,7 @@
                     $("#login_button").attr('disabled', 'disabled').html("loading...");
                     $.ajax({
                         url: "/Login/CheckLogin?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
-                        data: { username: $.trim($('#username').val()), localurl: $('#wchost').val(), password: $('#password').val() },
+                        data: { username: $.trim($('#username').val()), localurl: $('#wchost').val(), password: $.md5($.trim($('#password').val())) },
                         type: "post",
                         dataType: "json",
                         success: function (data) {
