@@ -50,7 +50,6 @@ namespace WaterCloud.Web
                     var view = _compositeViewEngine.FindView(filterContext, url, false)?.View;
                     if (view != null)
                     {
-                        OperatorProvider.Provider.EmptyCurrent("pc_").GetAwaiter().GetResult();
                         CookieOptions options = new CookieOptions();
                         options.Expires = DateTime.Now.AddDays(1);
                         options.Path = "/";
