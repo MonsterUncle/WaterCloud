@@ -215,7 +215,12 @@ namespace WaterCloud.Web.Controllers
 
         private async Task CheckReturnUrl(string userId)
         {
+            var realurl = WebHelper.GetCookie("wc_realreturnurl");
             var url = WebHelper.GetCookie("wc_returnurl");
+            if (!string.IsNullOrEmpty(realurl) && await _roleAuthServuce.CheckReturnUrl(userId, realurl))
+            {
+                WebHelper.RemoveCookie("wc_realreturnurl");
+            }
             if (!string.IsNullOrEmpty(url)&& !await _roleAuthServuce.CheckReturnUrl(userId,url))
             {
                 WebHelper.RemoveCookie("wc_returnurl");
