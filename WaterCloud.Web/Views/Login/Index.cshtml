@@ -201,12 +201,19 @@
                             if (data.state == "success") {
                                 $("#login_button").empty();
                                 $("#login_button").html("登录成功，正在跳转...");
-                                var url = $.cookie('wc_returnurl');
-                                if (url != null) {
-                                    window.location.href = '@Url.Content("~/Home/Index")'+"#/"+url;
+                                var realurl = $.cookie('wc_realreturnurl');
+                                if (realurl != null) {
+                                    window.location.href = realurl;
+                                    $.cookie('wc_realreturnurl', '', {path:"/",expires:-1});
                                 }
                                 else {
-                                    window.location.href = '@Url.Content("~/Home/Index")';
+                                    var url = $.cookie('wc_returnurl');
+                                    if (url != null) {
+                                        window.location.href = '@Url.Content("~/Home/Index")'+"#/"+url;
+                                    }
+                                    else {
+                                        window.location.href = '@Url.Content("~/Home/Index")';
+                                    }
                                 }
                             } else {
                                 $("#login_button").empty();

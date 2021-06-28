@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Service.SystemOrganize;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System;
 /// <summary>
 /// 登录验证
 /// </summary>
@@ -34,6 +36,13 @@ namespace WaterCloud.Web
                 WebHelper.WriteCookie("WaterCloud_login_error", "overdue");
                 //filterContext.HttpContext.Response.WriteAsync("<script>top.location.href ='" + filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408" + "';if(document.all) window.event.returnValue = false;</script>");
                 OperatorProvider.Provider.EmptyCurrent("pc_").GetAwaiter().GetResult();
+                CookieOptions options = new CookieOptions();
+                options.Expires = DateTime.Now.AddDays(1);
+                options.Path = "/";
+                if (filterContext.HttpContext.Request.Path != "/Home/Index")
+                {
+                    WebHelper.WriteCookie("wc_realreturnurl", filterContext.HttpContext.Request.PathBase + filterContext.HttpContext.Request.Path, options);
+                }
                 filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408");
                 return;
             }
