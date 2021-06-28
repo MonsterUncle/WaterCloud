@@ -117,10 +117,9 @@
     background-color:#fff;
     color:#fff;
 }
-
-.layui-body .active {
-    outline       : 2px solid #409EFF;
-    border        : 1px solid #409EFF;
+ .active {
+    outline: 2px solid #409EFF;
+    border: 1px solid #409EFF;
     outline-offset: 0;
 }
 
