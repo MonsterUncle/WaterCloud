@@ -105,7 +105,8 @@
                             if (data.state == "success") {
                                 var url = $.cookie('wc_returnurl');
                                 if (url != null) {
-                                    window.location.href = '@Url.Content("~/Home/Index")'+"#/"+url;
+                                    window.location.href = '@Url.Content("~/Home/Index")' + "#/" + url;
+                                    $.cookie('wc_returnurl', '', { path: "/", expires: -1 });
                                 }
                                 else {
                                     window.location.href = '@Url.Content("~/Home/Index")';
@@ -204,12 +205,14 @@
                                 var realurl = $.cookie('wc_realreturnurl');
                                 if (realurl != null) {
                                     window.location.href = realurl;
-                                    $.cookie('wc_realreturnurl', '', {path:"/",expires:-1});
+                                    $.cookie('wc_realreturnurl', '', { path: "/", expires: -1 });
+                                    $.cookie('wc_returnurl', '', { path: "/", expires: -1 });
                                 }
                                 else {
                                     var url = $.cookie('wc_returnurl');
                                     if (url != null) {
-                                        window.location.href = '@Url.Content("~/Home/Index")'+"#/"+url;
+                                        window.location.href = '@Url.Content("~/Home/Index")' + "#/" + url;
+                                        $.cookie('wc_returnurl', '', { path: "/", expires: -1 });
                                     }
                                     else {
                                         window.location.href = '@Url.Content("~/Home/Index")';

@@ -6,6 +6,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 /// <summary>
 /// 登录验证
 /// </summary>
@@ -14,9 +15,11 @@ namespace WaterCloud.Web
 	public class HandlerLoginAttribute : ActionFilterAttribute
     {
         private readonly RoleAuthorizeService _service;
-        public HandlerLoginAttribute(RoleAuthorizeService service)
+        private readonly ICompositeViewEngine _compositeViewEngine;
+        public HandlerLoginAttribute(RoleAuthorizeService service, ICompositeViewEngine compositeViewEngine)
         {
             _service = service;
+            _compositeViewEngine = compositeViewEngine;
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -41,7 +44,12 @@ namespace WaterCloud.Web
                 options.Path = "/";
                 if (filterContext.HttpContext.Request.Path != "/Home/Index")
                 {
-                    WebHelper.WriteCookie("wc_realreturnurl", filterContext.HttpContext.Request.PathBase + filterContext.HttpContext.Request.Path, options);
+                    var url = filterContext.HttpContext.Request.Path.Value.Substring(filterContext.HttpContext.Request.Path.Value.LastIndexOf('/') + 1, filterContext.HttpContext.Request.Path.Value.Length - 1 - filterContext.HttpContext.Request.Path.Value.LastIndexOf('/'));
+                    var view = _compositeViewEngine.FindView(filterContext, url, false)?.View;
+                    if (view != null)
+                    {
+                        WebHelper.WriteCookie("wc_realreturnurl", filterContext.HttpContext.Request.PathBase + filterContext.HttpContext.Request.Path, options);
+                    }
                 }
                 filterContext.Result = new RedirectResult(filterContext.HttpContext.Request.PathBase + "/Home/Error?msg=408");
                 return;
