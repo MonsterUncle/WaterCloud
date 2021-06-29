@@ -25,7 +25,7 @@
 #### 介绍
 
 - 请勿用于违反我国法律的项目上。
-- WaterCloud是一套基于ASP.NET 5.0  MVC+SqlSugar+LayUI的框架，源代码完全开源，可以帮助你解决C#.NET项目的重复工作！
+- WaterCloud是一套基于ASP.NET 5.0  MVC+SqlSugar/Chloe+LayUI的框架，源代码完全开源，可以帮助你解决C#.NET项目的重复工作！
 - 采用主流架构思想，容易上手，简单易学，学习成本低。
 - 可完全实现二次开发让开发更多关注业务逻辑。既能快速提高开发效率，帮助公司节省人力成本，同时又不失灵活性。
 - 支持SQLServer、MySQL 等多数据库类型。模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。
@@ -39,11 +39,8 @@
 - 提高开发效率及质量。常用类封装，日志、缓存、验证、字典、文件、邮件、Excel。等等。
 - 页面为响应式设计，支持电脑、平板、智能手机等设备，微信浏览器以及各种常见浏览器。
 - 适用范围：可以开发OA、ERP、BPM、CRM、WMS、TMS、MIS、BI、电商平台后台、物流管理系统、快递管理系统、教务管理系统等各类管理软件。
-- 租户管理，基于Database的多租户功能。
+- 租户管理，基于Database的多租户功能(SqlSugar支持)。
 
-- .net5-Chloe版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net5-Chloe
-- .net4.5版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/net4.5-Chloe
-- .netcore3.1版地址：https://gitee.com/qian_wei_hong/WaterCloud/tree/core3.1-Chloe
 - 项目演示地址：http://106.75.169.226:5000/  （账号：admin 密码：0000，数据库2个小时还原一次）
 - 文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
 
@@ -66,14 +63,13 @@
 - 图表插件：echarts
 - 日期控件：LayUI laydate
 - 图标选择：LayUI 开源 IconPicker
-- 颜色选择：paigusu
 - 省市区选择：LayUI 开源 layarea
 
 2、后端技术
 
 - 核心框架：ASP.NET 5.0、WEB API
 - 定时任务：QuartZ，实现web控制
-- 持久层框架：SqlSugar（支持多种数据库，复杂查询操作、多租户等）
+- 持久层框架：SqlSugar（支持多种数据库，复杂查询操作、多租户等）、Chloe(支持多种数据库，复杂查询操作，比较稳定)
 - 安全支持：过滤器、Sql注入、请求伪造
 - 服务端验证：实体模型验证
 - 缓存框架：Redis/Memory（单点登录控制）
@@ -89,13 +85,14 @@
 3. Mysql或者SQLSERVER2005及以上版本，database文件夹下有sql文件可执行；
 4. 请使用VS2019及以上版本打开解决方案。
 
-#### 使用说明
+#### 友情链接
 
 1. 前端框架Layui 官方文档：https://www.layui.com/doc/
 2. Layui前端框架Layuimini 码云地址：https://gitee.com/zhongshaofa/layuimini
 3. SqlSugar.ORM 文档地址：https://www.donet5.com/home/doc
-4. WaterCloud讨论交流QQ群（1065447456）[![](https://pub.idqqimg.com/wpa/images/group.png)](https://jq.qq.com/?_wv=1027&k=51RHQVG)
-5. 友情链接.NET易用底层框架 Furion框架，码云地址：https://gitee.com/monksoul/Furion
+4. Chloe.ORM 文档地址：https://github.com/shuxinqin/Chloe/wiki
+5. WaterCloud讨论交流QQ群（1065447456）[![](https://pub.idqqimg.com/wpa/images/group.png)](https://jq.qq.com/?_wv=1027&k=51RHQVG)
+6. .NET易用底层框架 Furion，码云地址：https://gitee.com/monksoul/Furion
 
 #### 捐赠支持
 
