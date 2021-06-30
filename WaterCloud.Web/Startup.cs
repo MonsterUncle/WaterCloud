@@ -26,6 +26,8 @@ using System;
 using SqlSugar;
 using System.Collections.Generic;
 using WaterCloud.Domain.SystemOrganize;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.IO.Compression;
 
 namespace WaterCloud.Web
 {
@@ -181,6 +183,20 @@ namespace WaterCloud.Web
             services.AddControllersWithViews().AddControllersAsServices();
             //调试前端可更新
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            //启用 Gzip 和 Brotil 压缩功能
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<BrotliCompressionProvider>();
+                options.Providers.Add<GzipCompressionProvider>();
+                options.MimeTypes =
+                    ResponseCompressionDefaults.MimeTypes.Concat(
+                        new[] { "image/svg+xml" });
+            });
+
+            services.Configure<BrotliCompressionProviderOptions>(options =>
+            {
+                options.Level = (CompressionLevel)4; // 4 or 5 is OK
+            });
             services.AddOptions();
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(GlobalContext.HostingEnvironment.ContentRootPath + Path.DirectorySeparatorChar + "DataProtection"));
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
@@ -308,6 +324,8 @@ namespace WaterCloud.Web
                 ContentTypeProvider = new CustomerFileExtensionContentTypeProvider(),
                 OnPrepareResponse = GlobalContext.SetCacheControl
             });
+            //启用 Gzip 和 Brotil 压缩功能
+            app.UseResponseCompression();
             //session
             app.UseSession();
             //路径
