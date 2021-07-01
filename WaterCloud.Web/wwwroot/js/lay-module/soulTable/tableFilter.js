@@ -4,7 +4,7 @@
  * @author: yelog
  * @link: https://github.com/yelog/layui-soul-table
  * @license: MIT
- * @version: v1.5.21
+ * @version: v1.6.1
  */
 layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (exports) {
 
@@ -237,7 +237,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                     } else {
                         where_cache[myTable.id] = myTable.where || {}
                     }
-                } else if ((typeof myTable.url !== 'undefined' && !!myTable.url &&  myTable.page ? typeof myTable.where.filterSos === 'undefined' : true) && where_cache[myTable.id] && JSON.parse(where_cache[myTable.id].filterSos || '[]').length > 0) {
+                } else if ((typeof myTable.url !== 'undefined' && !!myTable.url && myTable.page ? typeof myTable.where.filterSos === 'undefined' : true) && where_cache[myTable.id] && JSON.parse(where_cache[myTable.id].filterSos || '[]').length > 0) {
                     myTable.where['filterSos'] = where_cache[myTable.id].filterSos
                     where_cache[myTable.id] = myTable.where;
                     _this.soulReload(myTable, false);
@@ -866,7 +866,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                     }
                 });
                 if (columnField.length > 0) {
-                    if (typeof myTable.url !== 'undefined' && !!myTable.url &&  myTable.page) {
+                    if (typeof myTable.url !== 'undefined' && !!myTable.url && myTable.page) {
                         var datas = JSON.parse(JSON.stringify(myTable.where)), url = myTable.url;
                         datas['columns'] = JSON.stringify(columnField);
                         $.ajax({
@@ -1645,7 +1645,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                 bodyHeight = bodyHeight - $table.next().children('.layui-table-box').children('.layui-table-header').outerHeight();
 
                 $table.next().children('.layui-table-box').children('.layui-table-body').height(bodyHeight)
-                var fixHeight = bodyHeight - _this.getScrollWidth($tableMain[0])-1,
+                var fixHeight = bodyHeight - _this.getScrollWidth($tableMain[0]) - 1,
                     layMainTableHeight = $tableMain.children('table').height()
                 $table.next().children('.layui-table-box').children('.layui-table-fixed').children('.layui-table-body').height(layMainTableHeight >= fixHeight ? fixHeight : 'auto')
 
@@ -1778,7 +1778,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                 scrollLeft = $table.next().children('.layui-table-box').children('.layui-table-main').scrollLeft();
 
             isFilterReload[myTable.id] = typeof isr === 'undefined' ? true : isr;
-            if (typeof myTable.url !== 'undefined' && !!myTable.url &&  myTable.page) {
+            if (typeof myTable.url !== 'undefined' && !!myTable.url && myTable.page) {
                 $table.data('scrollLeft', scrollLeft);
                 /**
                  * 后台筛选
@@ -1788,7 +1788,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
-                })
+                }, true)
             } else {
                 /**
                  * 前端筛选
@@ -1822,7 +1822,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                             , page: {
                                 curr: 1 //重新从第 1 页开始
                             }
-                        })
+                        }, true)
                     } else {
                         var url = myTable.url;
                         $table.next().off('click')
@@ -1831,7 +1831,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                             , initSort: myTable.initSort
                             , isSoulFrontFilter: true
                             , data: newData
-                        })
+                        }, true)
                         inst.config.url = url;
                     }
                     myTable.data = newData
@@ -1845,13 +1845,13 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                             , page: {
                                 curr: 1 //重新从第 1 页开始
                             }
-                        })
+                        }, true)
                     } else {
                         table.reload(myTable.id, {
                             data: cache[myTable.id]
                             , initSort: myTable.initSort
                             , isSoulFrontFilter: true
-                        })
+                        }, true)
                     }
                     myTable.data = cache[myTable.id]
                 }
