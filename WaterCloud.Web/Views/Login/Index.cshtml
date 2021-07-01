@@ -13,7 +13,20 @@
     <link rel="stylesheet" href="~/lib/layui/css/layui.css?v=@WaterCloud.Code.GlobalContext.GetVersion()" media="all">
     <link rel="stylesheet" href="~/css/login.css?v=@WaterCloud.Code.GlobalContext.GetVersion()" media="all">
 </head>
+
 <body>
+    <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
+    <script src="~/js/cookie/jquery.cookie.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script src="~/js/md5/base64.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script src="~/js/md5/jquery.md5.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script src="~/lib/layui/layui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
+    <script src="~/js/lay-config.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
+    <script src="~/js/login.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script src="~/js/framework-ui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script>
+        layui.use(['jquery', 'form', 'table', 'common', 'commonTable', 'echarts'], function () {
+        });
+    </script>
     @*动画特效*@
     <div id="starsBox"></div>
     <div class="layui-container">
@@ -59,17 +72,7 @@
             </div>
         </div>
     </div>
-    <script src="~/lib/jquery-3.4.1/jquery-3.4.1.min.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
-    <script src="~/js/cookie/jquery.cookie.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
-    <script src="~/js/md5/base64.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
-    <script src="~/js/md5/jquery.md5.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
-    <script src="~/lib/layui/layui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
-    <script src="~/js/lay-config.js?v=@WaterCloud.Code.GlobalContext.GetVersion()" charset="utf-8"></script>
-    <script src="~/js/login.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
-    <script src="~/js/framework-ui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script>
-        layui.use(['jquery', 'form', 'table', 'common', 'commonTable', 'echarts'], function () {
-        });
         var SqlMode = '@ViewBag.SqlMode';
         (function ($) {
             var show_num = [];

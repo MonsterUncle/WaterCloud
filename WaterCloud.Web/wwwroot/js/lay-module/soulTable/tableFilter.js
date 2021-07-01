@@ -1788,7 +1788,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
-                })
+                },true)
             } else {
                 /**
                  * 前端筛选
@@ -1822,7 +1822,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                             , page: {
                                 curr: 1 //重新从第 1 页开始
                             }
-                        })
+                        }, true)
                     } else {
                         var url = myTable.url;
                         $table.next().off('click')
@@ -1831,7 +1831,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                             , initSort: myTable.initSort
                             , isSoulFrontFilter: true
                             , data: newData
-                        })
+                        }, true)
                         inst.config.url = url;
                     }
                     myTable.data = newData
@@ -1845,13 +1845,13 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                             , page: {
                                 curr: 1 //重新从第 1 页开始
                             }
-                        })
+                        }, true)
                     } else {
                         table.reload(myTable.id, {
                             data: cache[myTable.id]
                             , initSort: myTable.initSort
                             , isSoulFrontFilter: true
-                        })
+                        }, true)
                     }
                     myTable.data = cache[myTable.id]
                 }
