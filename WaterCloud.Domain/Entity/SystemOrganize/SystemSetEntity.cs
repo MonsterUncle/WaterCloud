@@ -139,13 +139,13 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 数据库连接串
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnName = "F_DbString", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "数据库连接串")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_DbString", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "数据库连接串")]
         public string F_DbString { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnName = "F_DBProvider",ColumnDataType = "nvarchar(50)")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_DBProvider",ColumnDataType = "nvarchar(50)")]
         public string F_DBProvider { get; set; }
         /// <summary>
         /// 域名
@@ -156,7 +156,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// <summary>
         /// 数据库序号
         /// </summary>
-        [SugarColumn(IsNullable = true, IsOnlyIgnoreUpdate = true, ColumnName = "F_DbNumber",ColumnDataType = "nvarchar(50)", ColumnDescription = "数据库序号", UniqueGroupNameList = new string[] { "sys_systemset" })]
+        [SugarColumn(IsNullable = true, ColumnName = "F_DbNumber",ColumnDataType = "nvarchar(50)", ColumnDescription = "数据库序号", UniqueGroupNameList = new string[] { "sys_systemset" })]
         public string F_DbNumber { get; set; }
     }
 }

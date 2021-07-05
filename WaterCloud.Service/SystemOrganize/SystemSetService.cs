@@ -220,9 +220,6 @@ namespace WaterCloud.Service.SystemOrganize
                     await db.Deleteable<ItemsDetailEntity>().ExecuteCommandAsync();
                     await db.Insertable(itemsTypes).ExecuteCommandAsync();
                     await db.Insertable(itemsDetails).ExecuteCommandAsync();
-                    var config = DBContexHelper.Contex(entity.F_DbString, entity.F_DBProvider);
-                    config.ConfigId = entity.F_DbNumber;
-                    unitOfWork.GetDbClient().AddConnection(config);
                 }
 
             }
