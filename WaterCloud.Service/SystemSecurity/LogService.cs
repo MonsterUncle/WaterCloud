@@ -169,7 +169,27 @@ namespace WaterCloud.Service.SystemSecurity
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
                     unitwork.Rollback();
-                    await repository.Insert(logEntity);
+                    if (!string.IsNullOrEmpty(logEntity.F_KeyValue))
+                    {
+                        //批量删除时，循环拆分F_KeyValue，以免截断二进制错误
+                        //方便以后根据F_KeyValue查询；
+                        var keylist = logEntity.F_KeyValue.Split(",").ToList();
+                        var loglist = new List<LogEntity>();
+                        foreach (var key in keylist)
+                        {
+                            var log = new LogEntity();
+                            log = logEntity.ToJson().ToObject<LogEntity>();
+                            log.F_KeyValue = key;
+                            log.F_Id = Utils.GuId();
+                            loglist.Add(log);
+                        }
+                        await repository.Insert(loglist);
+                    }
+                    else
+                    {
+                        await repository.Insert(logEntity);
+                    }
+
                 }
                 else
                 {
