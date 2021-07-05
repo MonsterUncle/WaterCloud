@@ -93,6 +93,8 @@
                     success: function (data) {
                         common.val('stepForm', data);
                         $('#F_EndTime').val(new Date(data.F_EndTime).Format("yyyy-MM-dd"));
+                        $('#F_DBProvider').attr('disabled', 'disabled');
+                        $('#F_DbString').attr('disabled', 'disabled');
                         $('#F_DbNumber').attr('disabled','disabled');
                         $('#demo1').attr('src', data.F_Logo); //图片链接
                     }

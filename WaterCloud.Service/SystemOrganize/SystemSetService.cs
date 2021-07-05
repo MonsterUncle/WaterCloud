@@ -229,7 +229,6 @@ namespace WaterCloud.Service.SystemOrganize
             else
             {
                 entity.Modify(keyValue);
-                entity.F_DbNumber = null;
                 if (permissionIds != null)
                 {
                     var moduledata = await moduleApp.GetList();
@@ -323,10 +322,6 @@ namespace WaterCloud.Service.SystemOrganize
                     await unitofwork.GetDbClient().Deleteable<ItemsDetailEntity>().ExecuteCommandAsync();
                     await unitofwork.GetDbClient().Insertable(itemsTypes).ExecuteCommandAsync();
                     await unitofwork.GetDbClient().Insertable(itemsDetails).ExecuteCommandAsync();
-                    var config = DBContexHelper.Contex(entity.F_DbString, entity.F_DBProvider);
-                    config.ConfigId = tenant.F_DbNumber;
-                    unitOfWork.GetDbClient().GetConnection(tenant.F_DbNumber).CurrentConnectionConfig = config;
-
                 }
 				else
 				{
