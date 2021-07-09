@@ -25,19 +25,19 @@ namespace WaterCloud.Service.SystemManage
             var query = repository.IQueryable();
             if (layers != 0)
             {
-                query = query.Where(t => t.F_Layers == layers);
+                query = query.Where(a => a.F_Layers == layers);
             }
-            return await query.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true).OrderBy(t => t.F_SortCode).ToListAsync();
+            return await query.Where(a => a.F_DeleteMark == false && a.F_EnabledMark == true).OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<List<AreaEntity>> GetLookList(int layers=0)
         {
-            var query =repository .IQueryable ().Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true);
+            var query =repository .IQueryable ().Where(a => a.F_DeleteMark == false && a.F_EnabledMark == true);
             if (layers!=0)
             { 
-                query = query.Where(t => t.F_Layers == layers);
+                query = query.Where(a => a.F_Layers == layers);
             }
-            query = GetDataPrivilege("t","", query);
-            return await query.OrderBy(t => t.F_SortCode).ToListAsync();
+            query = GetDataPrivilege("a","", query);
+            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<AreaEntity> GetLookForm(string keyValue)
         {
@@ -51,13 +51,13 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (repository.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
+            if (repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).Count() > 0)
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }
             else
             {
-               await repository.Delete(t => t.F_Id == keyValue);
+               await repository.Delete(a => a.F_Id == keyValue);
             }
         }
         public async Task SubmitForm(AreaEntity mEntity, string keyValue)

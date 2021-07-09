@@ -36,9 +36,9 @@ namespace WaterCloud.Service.InfoManage
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
+                query = query.Where(a => a.F_MessageInfo.Contains(keyword) || a.F_CreatorUserName.Contains(keyword));
             }
-            return await query.Where(a => a.F_EnabledMark == true).OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.F_EnabledMark == true).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetLookList(string keyword = "")
@@ -46,10 +46,10 @@ namespace WaterCloud.Service.InfoManage
             var query = repository.IQueryable().Where(a => a.F_EnabledMark == true);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
+                query = query.Where(a => a.F_MessageInfo.Contains(keyword) || a.F_CreatorUserName.Contains(keyword));
             }
-            query = GetDataPrivilege("u","", query);
-            return await query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToListAsync();
+            query = GetDataPrivilege("a","", query);
+            return await query.OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetUnReadListJson()
@@ -60,7 +60,7 @@ namespace WaterCloud.Service.InfoManage
                 )).Select(a => a.F_Id).ToList();
             hisquery.AddRange(tempList);
             var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId) || a.F_ToUserId == "") && a.F_EnabledMark == true).Where(a => !hisquery.Contains(a.F_Id));
-            return await GetFieldsFilterDataNew("a", query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc)).ToListAsync();
+            return await GetFieldsFilterDataNew("a", query.OrderBy(a => a.F_CreatorTime,OrderByType.Desc)).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetLookList(SoulPage<MessageEntity> pagination, string keyword = "")
@@ -80,9 +80,9 @@ namespace WaterCloud.Service.InfoManage
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
+                query = query.Where(a => a.F_MessageInfo.Contains(keyword) || a.F_CreatorUserName.Contains(keyword));
             }
-            query = GetDataPrivilege("u","",query);
+            query = GetDataPrivilege("a","",query);
             return await repository.OrderList(query, pagination);
         }
 
@@ -198,7 +198,7 @@ namespace WaterCloud.Service.InfoManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Update(t => ids.Contains(t.F_Id), t=>new MessageEntity { 
+            await repository.Update(a => ids.Contains(a.F_Id), a=>new MessageEntity { 
                 F_EnabledMark=false         
             });
         }

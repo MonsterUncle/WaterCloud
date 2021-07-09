@@ -26,9 +26,9 @@ namespace WaterCloud.Service.FileManage
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_FileName.Contains(keyword) || t.F_Description.Contains(keyword));
+                query = query.Where(a => a.F_FileName.Contains(keyword) || a.F_Description.Contains(keyword));
             }
-            return await query.OrderBy(t => t.F_Id,OrderByType.Desc).ToListAsync();
+            return await query.OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<UploadfileEntity>> GetLookList(string keyword = "")
@@ -36,10 +36,10 @@ namespace WaterCloud.Service.FileManage
             var query = GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
+                query = query.Where(a => a.F_FileName.Contains(keyword) || a.F_Description.Contains(keyword));
             }
-            query = GetDataPrivilege("u", "", query);
-            var data = await query.OrderBy(t => t.F_Id,OrderByType.Desc).ToListAsync();
+            query = GetDataPrivilege("a", "", query);
+            var data = await query.OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
             foreach (var item in data)
             {
                 string[] departments = item.F_OrganizeId.Split(',');
@@ -132,7 +132,7 @@ namespace WaterCloud.Service.FileManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Delete(t => ids.Contains(t.F_Id));
+            await repository.Delete(a => ids.Contains(a.F_Id));
         }
         #endregion
 

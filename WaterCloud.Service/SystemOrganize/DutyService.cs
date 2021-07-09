@@ -27,12 +27,12 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<RoleEntity>> GetList(string keyword = "")
         {
             var query = repository.IQueryable();
-            query = query.Where(t => t.F_Category == 2&&t.F_DeleteMark==false);
+            query = query.Where(a => a.F_Category == 2 && a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
             }
-            return await query.OrderBy(t => t.F_SortCode).ToListAsync();
+            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<List<RoleExtend>> GetLookList(SoulPage<RoleExtend> pagination, string keyword = "")
         {
@@ -88,7 +88,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 throw new Exception("岗位使用中，无法删除");
             }
-            await repository.Delete(t => t.F_Id == keyValue);
+            await repository.Delete(a => a.F_Id == keyValue);
         }
         public async Task SubmitForm(RoleEntity roleEntity, string keyValue)
         {

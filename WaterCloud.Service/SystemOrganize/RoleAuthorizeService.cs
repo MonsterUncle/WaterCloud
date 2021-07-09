@@ -36,7 +36,7 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<RoleAuthorizeEntity>> GetList(string ObjectId)
         {
             var query = repository.IQueryable();
-            query = query.Where(t => t.F_ObjectId == ObjectId);
+            query = query.Where(a => a.F_ObjectId == ObjectId);
             return await query.ToListAsync();
         }
         public async Task<List<ModuleEntity>> GetMenuList(string roleId)
@@ -57,10 +57,10 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     return data;
                 }
-                var authorizedata = repository.IQueryable().Where(t => rolelist.Contains(t.F_ObjectId) && t.F_ItemType == 1).Distinct().ToList();
+                var authorizedata = repository.IQueryable().Where(a => rolelist.Contains(a.F_ObjectId) && a.F_ItemType == 1).Distinct().ToList();
                 foreach (var item in authorizedata)
                 {
-                    ModuleEntity moduleEntity = moduledata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic==false);
+                    ModuleEntity moduleEntity = moduledata.Find(a => a.F_Id == item.F_ItemId && a.F_IsPublic==false);
                     if (moduleEntity != null && data.Find(a=>a.F_Id==moduleEntity.F_Id)==null)
                     {
                         data.Add(moduleEntity);
@@ -68,7 +68,7 @@ namespace WaterCloud.Service.SystemOrganize
                 }
                 data.AddRange(moduledata.Where(a => a.F_IsPublic == true));
             }
-            return data.OrderBy(t => t.F_SortCode).ToList();
+            return data.OrderBy(a => a.F_SortCode).ToList();
         }
         public async Task<List<ModuleButtonEntity>> GetButtonList(string roleId)
         {
@@ -85,10 +85,10 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     return data;
                 }
-                var authorizedata = repository.IQueryable().Where(t => t.F_ObjectId == roleId && t.F_ItemType == 2).ToList();
+                var authorizedata = repository.IQueryable().Where(a => a.F_ObjectId == roleId && a.F_ItemType == 2).ToList();
                 foreach (var item in authorizedata)
                 {
-                    ModuleButtonEntity moduleButtonEntity = buttondata.Find(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false);
+                    ModuleButtonEntity moduleButtonEntity = buttondata.Find(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false);
                     if (moduleButtonEntity != null)
                     {
                         data.Add(moduleButtonEntity);
@@ -96,7 +96,7 @@ namespace WaterCloud.Service.SystemOrganize
                 }
                 data.AddRange(buttondata.Where(a => a.F_IsPublic == true));
             }
-            return data.OrderBy(t => t.F_SortCode).ToList();
+            return data.OrderBy(a => a.F_SortCode).ToList();
         }
         public async Task<List<ModuleFieldsEntity>> GetFieldsList(string roleId)
         {
@@ -113,10 +113,10 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     return data;
                 }
-                var authorizedata = repository.IQueryable().Where(t => t.F_ObjectId == roleId && t.F_ItemType == 3).ToList();
+                var authorizedata = repository.IQueryable().Where(a => a.F_ObjectId == roleId && a.F_ItemType == 3).ToList();
                 foreach (var item in authorizedata)
                 {
-                    ModuleFieldsEntity moduleFieldsEntity = fieldsdata.Where(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false).FirstOrDefault();
+                    ModuleFieldsEntity moduleFieldsEntity = fieldsdata.Where(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false).FirstOrDefault();
                     if (moduleFieldsEntity != null)
                     {
                         data.Add(moduleFieldsEntity);
@@ -124,7 +124,7 @@ namespace WaterCloud.Service.SystemOrganize
                 }
                 data.AddRange(fieldsdata.Where(a => a.F_IsPublic == true));
             }
-            return data.OrderByDescending(t => t.F_CreatorTime).ToList();
+            return data.OrderByDescending(a => a.F_CreatorTime).ToList();
         }
         public async Task<bool> ActionValidate(string action,bool isAuthorize=false)
         {
@@ -159,7 +159,7 @@ namespace WaterCloud.Service.SystemOrganize
                             {
                                 if (item.F_ItemType == 1)
                                 {
-                                    ModuleEntity moduleEntity = moduledata.Where(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false).FirstOrDefault();
+                                    ModuleEntity moduleEntity = moduledata.Where(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false).FirstOrDefault();
                                     if (moduleEntity != null)
                                     {
                                         authdata.Add(new AuthorizeActionModel { F_Id = moduleEntity.F_Id, F_UrlAddress = moduleEntity.F_UrlAddress, F_Authorize = moduleEntity.F_Authorize });
@@ -167,7 +167,7 @@ namespace WaterCloud.Service.SystemOrganize
                                 }
                                 else if (item.F_ItemType == 2)
                                 {
-                                    ModuleButtonEntity moduleButtonEntity = buttondata.Where(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false).FirstOrDefault();
+                                    ModuleButtonEntity moduleButtonEntity = buttondata.Where(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false).FirstOrDefault();
                                     if (moduleButtonEntity != null)
                                     {
                                         authdata.Add(new AuthorizeActionModel { F_Id = moduleButtonEntity.F_ModuleId, F_UrlAddress = moduleButtonEntity.F_UrlAddress, F_Authorize = moduleButtonEntity.F_Authorize });
@@ -193,11 +193,11 @@ namespace WaterCloud.Service.SystemOrganize
                     authorizeurldata.AddRange(cachedata[roles]);
                 }
             }
-            var module = authorizeurldata.Find(t => t.F_UrlAddress == action);
+            var module = authorizeurldata.Find(a => a.F_UrlAddress == action);
             if (isAuthorize)
 			{
                 var temps = action.Split(',');
-                module = authorizeurldata.Where(t => temps.Contains(t.F_Authorize)).FirstOrDefault();
+                module = authorizeurldata.Where(a => temps.Contains(a.F_Authorize)).FirstOrDefault();
             }
             if (module!=null)
             {
@@ -249,7 +249,7 @@ namespace WaterCloud.Service.SystemOrganize
                                 {
                                     if (item.F_ItemType == 1)
                                     {
-                                        ModuleEntity moduleEntity = moduledata.Where(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false).FirstOrDefault();
+                                        ModuleEntity moduleEntity = moduledata.Where(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false).FirstOrDefault();
                                         if (moduleEntity != null)
                                         {
                                             authdata.Add(new AuthorizeActionModel { F_Id = moduleEntity.F_Id, F_UrlAddress = moduleEntity.F_UrlAddress, F_Authorize = moduleEntity.F_Authorize });
@@ -257,7 +257,7 @@ namespace WaterCloud.Service.SystemOrganize
                                     }
                                     else if (item.F_ItemType == 2)
                                     {
-                                        ModuleButtonEntity moduleButtonEntity = buttondata.Where(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false).FirstOrDefault();
+                                        ModuleButtonEntity moduleButtonEntity = buttondata.Where(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false).FirstOrDefault();
                                         if (moduleButtonEntity != null)
                                         {
                                             authdata.Add(new AuthorizeActionModel { F_Id = moduleButtonEntity.F_ModuleId, F_UrlAddress = moduleButtonEntity.F_UrlAddress, F_Authorize = moduleButtonEntity.F_Authorize });
@@ -283,7 +283,7 @@ namespace WaterCloud.Service.SystemOrganize
                         authorizeurldata.AddRange(cachedata[roles]);
                     }
                 }
-                var module = authorizeurldata.Find(t => t.F_UrlAddress == url);
+                var module = authorizeurldata.Find(a => a.F_UrlAddress == url);
                 if (module != null)
                 {
                     return true;
@@ -330,7 +330,7 @@ namespace WaterCloud.Service.SystemOrganize
                             {
                                 if (item.F_ItemType == 1)
                                 {
-                                    ModuleEntity moduleEntity = moduledata.Where(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false).FirstOrDefault();
+                                    ModuleEntity moduleEntity = moduledata.Where(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false).FirstOrDefault();
                                     if (moduleEntity != null)
                                     {
                                         authdata.Add(new AuthorizeActionModel { F_Id = moduleEntity.F_Id, F_UrlAddress = moduleEntity.F_UrlAddress, F_Authorize = moduleEntity.F_Authorize });
@@ -338,7 +338,7 @@ namespace WaterCloud.Service.SystemOrganize
                                 }
                                 else if (item.F_ItemType == 2)
                                 {
-                                    ModuleButtonEntity moduleButtonEntity = buttondata.Where(t => t.F_Id == item.F_ItemId && t.F_IsPublic == false).FirstOrDefault();
+                                    ModuleButtonEntity moduleButtonEntity = buttondata.Where(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false).FirstOrDefault();
                                     if (moduleButtonEntity != null)
                                     {
                                         authdata.Add(new AuthorizeActionModel { F_Id = moduleButtonEntity.F_ModuleId, F_UrlAddress = moduleButtonEntity.F_UrlAddress, F_Authorize = moduleButtonEntity.F_Authorize });

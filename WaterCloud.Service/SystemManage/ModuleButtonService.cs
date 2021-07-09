@@ -27,24 +27,24 @@ namespace WaterCloud.Service.SystemManage
             var list = repository.IQueryable();
             if (!string.IsNullOrEmpty(moduleId))
             {
-                list = list.Where(t => t.F_ModuleId == moduleId);
+                list = list.Where(a => a.F_ModuleId == moduleId);
             }
-            return await list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToListAsync();
+            return await list.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<List<ModuleButtonEntity>> GetLookList(string moduleId = "", string keyword = "")
         {
-            var query = repository.IQueryable().Where(t => t.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(moduleId))
             {
-                query = query.Where(t => t.F_ModuleId == moduleId);
+                query = query.Where(a => a.F_ModuleId == moduleId);
             }
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
             }
-            query = GetDataPrivilege("t", "", query);
-            return await query.OrderBy(t => t.F_SortCode).ToListAsync();
+            query = GetDataPrivilege("a", "", query);
+            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<ModuleButtonEntity> GetLookForm(string keyValue)
         {
@@ -58,13 +58,13 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (repository.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
+            if (repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).Count() > 0)
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }
             else
             {
-                await repository.Delete(t => t.F_Id == keyValue);
+                await repository.Delete(a => a.F_Id == keyValue);
             }
             await CacheHelper.Remove(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
@@ -114,7 +114,7 @@ namespace WaterCloud.Service.SystemManage
             }
             foreach (string item in ArrayId)
             {
-                ModuleButtonEntity moduleButtonEntity = data.Find(t => t.F_Id == item);
+                ModuleButtonEntity moduleButtonEntity = data.Find(a => a.F_Id == item);
                 moduleButtonEntity.Create();
                 moduleButtonEntity.F_ModuleId = moduleId;
                 entitys.Add(moduleButtonEntity);

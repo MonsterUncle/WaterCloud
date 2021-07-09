@@ -26,20 +26,20 @@ namespace WaterCloud.Service.ContentManage
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(t => t.F_FullName.Contains(keyword) || t.F_Description.Contains(keyword));
+                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_Description.Contains(keyword));
             }
-            return await query.Where(t => t.F_DeleteMark == false).OrderBy(t => t.F_Id,OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<ArticleCategoryEntity>> GetLookList(string keyword = "")
         {
-            var query = repository.IQueryable().Where(t => t.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t =>t.F_FullName.Contains(keyword) || t.F_Description.Contains(keyword));
+                query = query.Where(a =>a.F_FullName.Contains(keyword) || a.F_Description.Contains(keyword));
             }
-            query = GetDataPrivilege("t","", query);
-            return await query.OrderBy(t => t.F_Id, OrderByType.Desc).ToListAsync();
+            query = GetDataPrivilege("a","", query);
+            return await query.OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<ArticleCategoryEntity>> GetLookList(Pagination pagination,string keyword = "")

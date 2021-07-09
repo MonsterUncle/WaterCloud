@@ -27,20 +27,20 @@ namespace WaterCloud.Service.SystemManage
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
             }
-            return await query.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_Id,OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<ModuleFieldsEntity>> GetLookList(Pagination pagination, string moduleId, string keyword = "")
         {
             //获取数据权限
-            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false && u.F_ModuleId == moduleId);
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false && a.F_ModuleId == moduleId);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(u => u.F_FullName.Contains(keyword) || u.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
             }
-            query = GetDataPrivilege("u","", query);
+            query = GetDataPrivilege("a","", query);
             return await repository.OrderList(query, pagination);
 
         }
@@ -75,7 +75,7 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task DeleteForm(string keyValue)
         {
-            await repository.Delete(t => t.F_Id == keyValue);
+            await repository.Delete(a => a.F_Id == keyValue);
         }
 
         public async Task SubmitCloneFields(string moduleId, string ids)
@@ -90,7 +90,7 @@ namespace WaterCloud.Service.SystemManage
             }
             foreach (string item in ArrayId)
             {
-                ModuleFieldsEntity moduleFieldsEntity = data.Find(t => t.F_Id == item);
+                ModuleFieldsEntity moduleFieldsEntity = data.Find(a => a.F_Id == item);
                 moduleFieldsEntity.Create();
                 moduleFieldsEntity.F_ModuleId = moduleId;
                 entitys.Add(moduleFieldsEntity);
@@ -102,7 +102,7 @@ namespace WaterCloud.Service.SystemManage
         {
             var moduleList = repository.Db.Queryable<RoleAuthorizeEntity>().Where(a => a.F_ObjectId == roleid && a.F_ItemType == 3).Select(a => a.F_ItemId).ToList();
             var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
-            return await query.OrderBy(t => t.F_CreatorTime,OrderByType.Desc).ToListAsync();
+            return await query.OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToListAsync();
         }
 
         internal async Task<List<ModuleFieldsEntity>> GetListNew(string moduleId = "")

@@ -140,9 +140,9 @@ namespace WaterCloud.Service.SystemOrganize
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_Account.Contains(keyword) || t.F_RealName.Contains(keyword) || t.F_MobilePhone.Contains(keyword));
+                query = query.Where(a => a.F_Account.Contains(keyword) || a.F_RealName.Contains(keyword) || a.F_MobilePhone.Contains(keyword));
             }
-            return await query.Where(t => t.F_EnabledMark ==true && t.F_DeleteMark == false).OrderBy(t => t.F_Account).ToListAsync();
+            return await query.Where(a => a.F_EnabledMark ==true && a.F_DeleteMark == false).OrderBy(a => a.F_Account).ToListAsync();
         }
 
         public async Task<UserEntity> GetForm(string keyValue)
@@ -185,8 +185,8 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task DeleteForm(string keyValue)
         {
             unitofwork.CurrentBeginTrans();
-            await repository.Delete(t => t.F_Id == keyValue);
-            await repository.Db.Deleteable<UserLogOnEntity>(t => t.F_UserId == keyValue).ExecuteCommandAsync();
+            await repository.Delete(a => a.F_Id == keyValue);
+            await repository.Db.Deleteable<UserLogOnEntity>(a => a.F_UserId == keyValue).ExecuteCommandAsync();
             unitofwork.CurrentCommit();
         }
         public async Task SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
@@ -251,7 +251,7 @@ namespace WaterCloud.Service.SystemOrganize
 			{
                 throw new Exception("IP受限");
 			}
-            UserEntity userEntity =await repository.FindEntity(t => t.F_Account == username);
+            UserEntity userEntity =await repository.FindEntity(a => a.F_Account == username);
             if (userEntity != null)
             {
                 if (userEntity.F_EnabledMark == true)

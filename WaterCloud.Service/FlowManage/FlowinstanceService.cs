@@ -39,9 +39,9 @@ namespace WaterCloud.Service.FlowManage
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(t => t.F_Code.Contains(keyword) || t.F_CustomName.Contains(keyword));
+                query = query.Where(a => a.F_Code.Contains(keyword) || a.F_CustomName.Contains(keyword));
             }
-            return await query.Where(a => a.F_EnabledMark == true).OrderBy(t => t.F_Id,OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.F_EnabledMark == true).OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<FlowInstanceOperationHistory>> QueryHistories(string keyValue)
@@ -55,10 +55,10 @@ namespace WaterCloud.Service.FlowManage
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(u => u.F_Code.Contains(keyword) || u.F_CustomName.Contains(keyword));
+                query = query.Where(a => a.F_Code.Contains(keyword) || a.F_CustomName.Contains(keyword));
             }
-            query = GetDataPrivilege("u", "", query);
-            return await query.Where(a => a.F_EnabledMark == true).OrderBy(t => t.F_Id, OrderByType.Desc).ToListAsync();
+            query = GetDataPrivilege("a", "", query);
+            return await query.Where(a => a.F_EnabledMark == true).OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<FlowinstanceEntity>> GetLookList(SoulPage<FlowinstanceEntity> pagination, string type = "", string keyword = "")
@@ -77,25 +77,25 @@ namespace WaterCloud.Service.FlowManage
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(u => u.F_Code.Contains(keyword) || u.F_CustomName.Contains(keyword));
+                query = query.Where(a => a.F_Code.Contains(keyword) || a.F_CustomName.Contains(keyword));
             }
             var user = currentuser;
             if (type == "todo")   //待办事项
             {
-                query = query.Where(u => ((u.F_MakerList == "1" || u.F_MakerList.Contains(user.UserId))) && (u.F_IsFinish == 0 || u.F_IsFinish == 4) && u.F_ActivityType < 3);
+                query = query.Where(a => ((a.F_MakerList == "1" || a.F_MakerList.Contains(user.UserId))) && (a.F_IsFinish == 0 || a.F_IsFinish == 4) && a.F_ActivityType < 3);
             }
             else if (type == "done")  //已办事项（即我参与过的流程）
             {
-                var instances = repository.Db.Queryable<FlowInstanceOperationHistory>().Where(u => u.F_CreatorUserId == user.UserId)
-                    .Select(u => u.F_InstanceId).Distinct().ToList();
-                query = query.Where(u => instances.Contains(u.F_Id));
+                var instances = repository.Db.Queryable<FlowInstanceOperationHistory>().Where(a => a.F_CreatorUserId == user.UserId)
+                    .Select(a => a.F_InstanceId).Distinct().ToList();
+                query = query.Where(a => instances.Contains(a.F_Id));
             }
             else  //我的流程
             {
-                query = query.Where(u => u.F_CreatorUserId == user.UserId);
+                query = query.Where(a => a.F_CreatorUserId == user.UserId);
             }
             //权限过滤
-            query = GetDataPrivilege("u","",query);
+            query = GetDataPrivilege("a","",query);
             return await repository.OrderList(query.Where(a => a.F_EnabledMark == true), pagination);
         }
 
@@ -157,7 +157,7 @@ namespace WaterCloud.Service.FlowManage
                 }
                 else
                 {
-                    flowInstance.F_MakerList = await repository.Db.Queryable<FlowInstanceTransitionHistory>().Where(a => a.F_FromNodeId == resnode && a.F_ToNodeId == prruntime.nextNodeId).OrderBy(t => t.F_CreatorTime,OrderByType.Desc).Select(a => a.F_CreatorUserId).FirstAsync();//当前节点可执行的人信息
+                    flowInstance.F_MakerList = await repository.Db.Queryable<FlowInstanceTransitionHistory>().Where(a => a.F_FromNodeId == resnode && a.F_ToNodeId == prruntime.nextNodeId).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).Select(a => a.F_CreatorUserId).FirstAsync();//当前节点可执行的人信息
                 }
                 await AddRejectTransHistory(wfruntime, prruntime);
                 await repository.Update(flowInstance);
@@ -830,7 +830,7 @@ namespace WaterCloud.Service.FlowManage
             }
             msg.F_MessageType = 2;
             msg.F_ToUserId = entity.F_MakerList == "1" ? "" : entity.F_MakerList;
-            var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == entity.F_Id).OrderBy(t => t.F_CreatorTime,OrderByType.Desc).First();
+            var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == entity.F_Id).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).First();
             if (lastmsg != null && repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
             {
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
@@ -974,7 +974,7 @@ namespace WaterCloud.Service.FlowManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Update(t => ids.Contains(t.F_Id), t => new FlowinstanceEntity
+            await repository.Update(a => ids.Contains(a.F_Id), a => new FlowinstanceEntity
             {
                 F_EnabledMark = false
             });

@@ -42,12 +42,12 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task<List<OpenJobEntity>> GetLookList(Pagination pagination, string keyword = "")
         {
             var DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
-            var list = repository.IQueryable().Where(u=>u.F_DbNumber == DbNumber);
+            var list = repository.IQueryable().Where(a=>a.F_DbNumber == DbNumber);
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(u => u.F_JobName.Contains(keyword) || u.F_Description.Contains(keyword));
+                list = list.Where(a => a.F_JobName.Contains(keyword) || a.F_Description.Contains(keyword));
             }
-            list = list.Where(u => u.F_DeleteMark == false);
+            list = list.Where(a => a.F_DeleteMark == false);
             return await repository.OrderList(list, pagination);
         }
 
@@ -65,10 +65,10 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task<List<OpenJobEntity>> GetList(string keyword = "")
         {
             var DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
-            var query = repository.IQueryable().Where(t => t.F_DbNumber == DbNumber);
+            var query = repository.IQueryable().Where(a => a.F_DbNumber == DbNumber);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_JobName.Contains(keyword));
+                query = query.Where(a => a.F_JobName.Contains(keyword));
             }
             return query.Where(a => a.F_DeleteMark == false).ToList();
         }
@@ -77,7 +77,7 @@ namespace WaterCloud.Service.SystemSecurity
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_JobName.Contains(keyword));
+                query = query.Where(a => a.F_JobName.Contains(keyword));
             }
             return query.Where(a => a.F_DeleteMark == false).ToList();
         }
@@ -110,7 +110,7 @@ namespace WaterCloud.Service.SystemSecurity
 
         public async Task DeleteForm(string keyValue)
         {
-            await repository.Delete(t => t.F_Id == keyValue);
+            await repository.Delete(a => a.F_Id == keyValue);
         }
         #region 定时任务运行相关操作
 
@@ -121,15 +121,15 @@ namespace WaterCloud.Service.SystemSecurity
         public List<string> QueryLocalHandlers()
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypes().Where(t => t.GetInterfaces()
+                .SelectMany(a => a.GetTypes().Where(a => a.GetInterfaces()
                     .Contains(typeof(IJobTask))))
                 .ToArray();
-            return types.Select(u => u.FullName).ToList();
+            return types.Select(a => a.FullName).ToList();
         }
 
         public async Task ChangeJobStatus(string keyValue, int status)
         {
-            var job = await repository.FindEntity(u => u.F_Id == keyValue);
+            var job = await repository.FindEntity(a => a.F_Id == keyValue);
             if (job == null)
             {
                 throw new Exception("任务不存在");
@@ -239,7 +239,7 @@ namespace WaterCloud.Service.SystemSecurity
                     }
                 }
                 #endregion
-                await repository.Update(t => t.F_Id == keyValue, t => new OpenJobEntity
+                await repository.Update(a => a.F_Id == keyValue, a => new OpenJobEntity
                 {
                     F_LastRunTime = now
                 });

@@ -31,7 +31,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ModuleEntity>> GetList()
         {
             var query = repository.IQueryable();
-            return await query.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToListAsync();
+            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<List<ModuleEntity>> GetBesidesList()
         {
@@ -41,9 +41,9 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<List<ModuleEntity>> GetLookList()
         {
-            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
-            query = GetDataPrivilege("u", "", query);
-            return await query.OrderBy(u => u.F_SortCode).ToListAsync();
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            query = GetDataPrivilege("a", "", query);
+            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<ModuleEntity> GetLookForm(string keyValue)
         {
@@ -57,7 +57,7 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (repository.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
+            if (repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).Count() > 0)
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }

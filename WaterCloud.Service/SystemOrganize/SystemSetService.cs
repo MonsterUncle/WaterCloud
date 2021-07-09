@@ -34,19 +34,19 @@ namespace WaterCloud.Service.SystemOrganize
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_CompanyName.Contains(keyword) || t.F_ProjectName.Contains(keyword));
+                query = query.Where(a => a.F_CompanyName.Contains(keyword) || a.F_ProjectName.Contains(keyword));
             }
-            return await query.Where(t => t.F_DeleteMark == false).OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<SystemSetEntity>> GetLookList(string keyword = "")
         {
-            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(u => u.F_CompanyName.Contains(keyword) || u.F_ProjectName.Contains(keyword));
+                query = query.Where(a => a.F_CompanyName.Contains(keyword) || a.F_ProjectName.Contains(keyword));
             }
-            query = GetDataPrivilege("u", "", query);
+            query = GetDataPrivilege("a", "", query);
             return await query.OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
         }
 
@@ -56,29 +56,29 @@ namespace WaterCloud.Service.SystemOrganize
             if (!string.IsNullOrEmpty(host))
             {
                 //此处需修改
-                query = query.Where(t => t.F_HostUrl.Contains(host));
+                query = query.Where(a => a.F_HostUrl.Contains(host));
             }
             else
             {
-                query = query.Where(t => t.F_Id==GlobalContext.SystemConfig.SysemMasterProject);
+                query = query.Where(a => a.F_Id==GlobalContext.SystemConfig.SysemMasterProject);
             }
             if (query.Clone().Count()==0)
             {
                 query = repository.IQueryable();
-                query = query.Where(t => t.F_Id == GlobalContext.SystemConfig.SysemMasterProject);
+                query = query.Where(a => a.F_Id == GlobalContext.SystemConfig.SysemMasterProject);
             }
-            return await query.Where(t => t.F_DeleteMark == false).FirstAsync();
+            return await query.Where(a => a.F_DeleteMark == false).FirstAsync();
         }
 
         public async Task<List<SystemSetEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
-            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false&&u.F_DbNumber!="0");
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false && a.F_DbNumber != "0");
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(u => u.F_CompanyName.Contains(keyword) || u.F_ProjectName.Contains(keyword));
+                query = query.Where(a => a.F_CompanyName.Contains(keyword) || a.F_ProjectName.Contains(keyword));
             }
-            query = GetDataPrivilege("u", "", query);
+            query = GetDataPrivilege("a", "", query);
             return await repository.OrderList(query, pagination);
         }
 
@@ -123,17 +123,17 @@ namespace WaterCloud.Service.SystemOrganize
                         roleAuthorizeEntity.F_ObjectType = 1;
                         roleAuthorizeEntity.F_ObjectId = entity.F_Id;
                         roleAuthorizeEntity.F_ItemId = itemId;
-                        if (moduledata.Find(t => t.F_Id == itemId) != null)
+                        if (moduledata.Find(a => a.F_Id == itemId) != null)
                         {
                             roleAuthorizeEntity.F_ItemType = 1;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modules.Add(moduledata.Find(t => t.F_Id == itemId));
+                            modules.Add(moduledata.Find(a => a.F_Id == itemId));
                         }
-                        if (buttondata.Find(t => t.F_Id == itemId) != null)
+                        if (buttondata.Find(a => a.F_Id == itemId) != null)
                         {
                             roleAuthorizeEntity.F_ItemType = 2;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modulebtns.Add(buttondata.Find(t => t.F_Id == itemId));
+                            modulebtns.Add(buttondata.Find(a => a.F_Id == itemId));
                         }
                     }
                     modules.AddRange(moduledata.Where(a => a.F_IsPublic == true && a.F_EnabledMark == true && a.F_DeleteMark == false));
@@ -149,11 +149,11 @@ namespace WaterCloud.Service.SystemOrganize
                         roleAuthorizeEntity.F_ObjectType = 1;
                         roleAuthorizeEntity.F_ObjectId = entity.F_Id;
                         roleAuthorizeEntity.F_ItemId = itemId;
-                        if (fieldsdata.Find(t => t.F_Id == itemId) != null)
+                        if (fieldsdata.Find(a => a.F_Id == itemId) != null)
                         {
                             roleAuthorizeEntity.F_ItemType = 3;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modulefileds.Add(fieldsdata.Find(t => t.F_Id == itemId));
+                            modulefileds.Add(fieldsdata.Find(a => a.F_Id == itemId));
                         }
                     }
                     modulefileds.AddRange(fieldsdata.Where(a => a.F_IsPublic == true && a.F_EnabledMark == true && a.F_DeleteMark == false));
@@ -237,17 +237,17 @@ namespace WaterCloud.Service.SystemOrganize
                         roleAuthorizeEntity.F_ObjectType = 1;
                         roleAuthorizeEntity.F_ObjectId = entity.F_Id;
                         roleAuthorizeEntity.F_ItemId = itemId;
-                        if (moduledata.Find(t => t.F_Id == itemId) != null)
+                        if (moduledata.Find(a => a.F_Id == itemId) != null)
                         {
                             roleAuthorizeEntity.F_ItemType = 1;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modules.Add(moduledata.Find(t => t.F_Id == itemId));
+                            modules.Add(moduledata.Find(a => a.F_Id == itemId));
                         }
-                        if (buttondata.Find(t => t.F_Id == itemId) != null)
+                        if (buttondata.Find(a => a.F_Id == itemId) != null)
                         {
                             roleAuthorizeEntity.F_ItemType = 2;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modulebtns.Add(buttondata.Find(t => t.F_Id == itemId));
+                            modulebtns.Add(buttondata.Find(a => a.F_Id == itemId));
                         }
                     }
                 }
@@ -261,17 +261,17 @@ namespace WaterCloud.Service.SystemOrganize
                         roleAuthorizeEntity.F_ObjectType = 1;
                         roleAuthorizeEntity.F_ObjectId = entity.F_Id;
                         roleAuthorizeEntity.F_ItemId = itemId;
-                        if (fieldsdata.Find(t => t.F_Id == itemId) != null)
+                        if (fieldsdata.Find(a => a.F_Id == itemId) != null)
                         {
                             roleAuthorizeEntity.F_ItemType = 3;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modulefileds.Add(fieldsdata.Find(t => t.F_Id == itemId));
+                            modulefileds.Add(fieldsdata.Find(a => a.F_Id == itemId));
                         }
                     }
                 }
                 if (roleAuthorizeEntitys.Count>0)
 				{
-                    await repository.Db.Deleteable<RoleAuthorizeEntity>(t => t.F_ObjectId == entity.F_Id).ExecuteCommandAsync();
+                    await repository.Db.Deleteable<RoleAuthorizeEntity>(a => a.F_ObjectId == entity.F_Id).ExecuteCommandAsync();
                     await repository.Db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
                 }
                 //更新主库
@@ -347,7 +347,7 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task DeleteForm(string keyValue)
         {
-            await repository.Update(t => t.F_Id == keyValue,a=>new SystemSetEntity { 
+            await repository.Update(a => a.F_Id == keyValue,a=>new SystemSetEntity { 
                 F_DeleteMark=true,
                 F_EnabledMark=false,
                 F_DeleteUserId=currentuser.UserId

@@ -29,39 +29,39 @@ namespace WaterCloud.Service.SystemManage
 
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_SchemeCode.Contains(keyword) || t.F_SchemeName.Contains(keyword));
+                query = query.Where(a => a.F_SchemeCode.Contains(keyword) || a.F_SchemeName.Contains(keyword));
             }
             var list = currentuser.DepartmentId.Split(',');
             if (list.Count() > 0)
             {
-                return await query.Where(t => t.F_DeleteMark == false && (t.F_OrganizeId == "" || t.F_OrganizeId == null || list.Contains(t.F_OrganizeId))).OrderBy(t => t.F_Id,OrderByType.Desc).ToListAsync();
+                return await query.Where(a => a.F_DeleteMark == false && (a.F_OrganizeId == "" || a.F_OrganizeId == null || list.Contains(a.F_OrganizeId))).OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
             }
-            return await query.Where(t => t.F_DeleteMark == false && t.F_OrganizeId == "" || t.F_OrganizeId == null).OrderBy(t => t.F_Id, OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.F_DeleteMark == false && a.F_OrganizeId == "" || a.F_OrganizeId == null).OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<FlowschemeEntity>> GetLookList(string ItemId = "", string keyword = "")
         {
-            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(ItemId))
             {
-                query = query.Where(u => u.F_OrganizeId == ItemId || u.F_OrganizeId == null || u.F_OrganizeId == "");
+                query = query.Where(a => a.F_OrganizeId == ItemId || a.F_OrganizeId == null || a.F_OrganizeId == "");
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword));
+                query = query.Where(a => a.F_SchemeCode.Contains(keyword) || a.F_SchemeName.Contains(keyword));
             }
-            query = GetDataPrivilege("u","", query);
-            return await query.OrderBy(u => u.F_CreatorTime,OrderByType.Desc).ToListAsync();
+            query = GetDataPrivilege("a","", query);
+            return await query.OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<FlowschemeEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
-            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword));
+                query = query.Where(a => a.F_SchemeCode.Contains(keyword) || a.F_SchemeName.Contains(keyword));
             }
-            query = GetDataPrivilege("u","", query);
+            query = GetDataPrivilege("a","", query);
             return await repository.OrderList(query, pagination);
         }
 
@@ -151,7 +151,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Delete(t => ids.Contains(t.F_Id));
+            await repository.Delete(a => ids.Contains(a.F_Id));
         }
         #endregion
 

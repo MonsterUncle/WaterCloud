@@ -25,7 +25,7 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<object> GetTransferList(string userId)
         {
-            var quicklist = repository.IQueryable(t => t.F_CreatorUserId == userId && t.F_EnabledMark == true).ToList();
+            var quicklist = repository.IQueryable(a => a.F_CreatorUserId == userId && a.F_EnabledMark == true).ToList();
             List<ModuleEntity> quicks = new List<ModuleEntity>();
             var user = await repository.Db.Queryable<UserEntity>().InSingleAsync(userId);
             var roleId = user.F_RoleId;
@@ -63,7 +63,7 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<QuickModuleExtend>> GetQuickModuleList(string userId)
         {
-            var quicklist = repository.IQueryable(t => t.F_CreatorUserId == userId && t.F_EnabledMark == true);
+            var quicklist = repository.IQueryable(a => a.F_CreatorUserId == userId && a.F_EnabledMark == true);
             List<QuickModuleExtend> list = new List<QuickModuleExtend>();
             List<QuickModuleEntity> quicks = new List<QuickModuleEntity>();
             unitofwork.CurrentBeginTrans();
@@ -153,7 +153,7 @@ namespace WaterCloud.Service.SystemManage
                 }
             }
             unitofwork.CurrentBeginTrans();
-            await repository.Delete(t => t.F_CreatorUserId == currentuser.UserId);
+            await repository.Delete(a => a.F_CreatorUserId == currentuser.UserId);
             await repository.Insert(list);
             unitofwork.CurrentCommit();
         }

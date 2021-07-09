@@ -27,9 +27,9 @@ namespace WaterCloud.Service.ContentManage
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_Title.Contains(keyword) || t.F_Tags.Contains(keyword));
+                query = query.Where(a => a.F_Title.Contains(keyword) || a.F_Tags.Contains(keyword));
             }
-            return await query.Where(t => t.F_DeleteMark == false).OrderBy(t => t.F_Id,OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<ArticleNewsEntity>> GetLookList(SoulPage<ArticleNewsEntity> pagination, string keyword = "", string CategoryId="")
@@ -130,7 +130,7 @@ namespace WaterCloud.Service.ContentManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Delete(t => ids.Contains(t.F_Id));
+            await repository.Delete(a => ids.Contains(a.F_Id));
         }
         #endregion
 

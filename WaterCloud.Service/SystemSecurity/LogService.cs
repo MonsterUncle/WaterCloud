@@ -54,10 +54,10 @@ namespace WaterCloud.Service.SystemSecurity
                 var list = repository.IQueryable();
                 if (!string.IsNullOrEmpty(keyword))
                 {
-                    list = list.Where(u => u.F_Account.Contains(keyword) || u.F_Description.Contains(keyword) || u.F_ModuleName.Contains(keyword));
+                    list = list.Where(a => a.F_Account.Contains(keyword) || a.F_Description.Contains(keyword) || a.F_ModuleName.Contains(keyword));
                 }
 
-                list = list.Where(t => t.F_Date >= startTime && t.F_Date <= endTime);
+                list = list.Where(a => a.F_Date >= startTime && a.F_Date <= endTime);
                 result = await repository.OrderList(list, pagination);
             }
             else
@@ -65,11 +65,11 @@ namespace WaterCloud.Service.SystemSecurity
                 result = HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList();
                 if (!string.IsNullOrEmpty(keyword))
                 {
-                    result = result.Where(u => u.F_Account.Contains(keyword) || u.F_Description.Contains(keyword) || u.F_ModuleName.Contains(keyword)).Where(t => t.F_Date >= startTime && t.F_Date <= endTime).ToList();
+                    result = result.Where(a => a.F_Account.Contains(keyword) || a.F_Description.Contains(keyword) || a.F_ModuleName.Contains(keyword)).Where(a => a.F_Date >= startTime && a.F_Date <= endTime).ToList();
                 }
                 else
                 {
-                    result = result.Where(t => t.F_Date >= startTime && t.F_Date <= endTime).ToList();
+                    result = result.Where(a => a.F_Date >= startTime && a.F_Date <= endTime).ToList();
                 }
                 pagination.records = result.Count();
                 result = result.OrderByDescending(a => a.F_CreatorTime).Skip((pagination.page - 1) * pagination.rows).Take(pagination.rows).ToList();
@@ -106,13 +106,13 @@ namespace WaterCloud.Service.SystemSecurity
             if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
                 var expression = ExtLinq.True<LogEntity>();
-                expression = expression.And(t => t.F_Date <= operateTime);
+                expression = expression.And(a => a.F_Date <= operateTime);
                 await repository.Delete(expression);
             }
             else
             {
                 var list = HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList();
-                var strList = list.Where(t => t.F_Date <= operateTime).Select(a=>a.F_Id).ToList();
+                var strList = list.Where(a => a.F_Date <= operateTime).Select(a => a.F_Id).ToList();
                 await HandleLogHelper.HDelAsync(currentuser.CompanyId, strList.ToArray());
             }
         }

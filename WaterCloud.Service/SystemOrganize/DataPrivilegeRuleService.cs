@@ -27,9 +27,9 @@ namespace WaterCloud.Service.SystemOrganize
             var list =  repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(t => t.F_ModuleCode.Contains(keyword) || t.F_Description.Contains(keyword));
+                list = list.Where(a => a.F_ModuleCode.Contains(keyword) || a.F_Description.Contains(keyword));
             }
-            return await list.Where(t => t.F_DeleteMark == false).OrderBy(t => t.F_Id,OrderByType.Desc).ToListAsync();
+            return await list.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<DataPrivilegeRuleEntity>> GetLookList(SoulPage<DataPrivilegeRuleEntity> pagination, string keyword = "")
@@ -41,12 +41,12 @@ namespace WaterCloud.Service.SystemOrganize
             enabledTemp.Add("无效", "0");
             dic.Add("F_EnabledMark", enabledTemp);
             pagination = ChangeSoulData(dic, pagination);
-            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(u => u.F_ModuleCode.Contains(keyword) || u.F_Description.Contains(keyword));
+                query = query.Where(a => a.F_ModuleCode.Contains(keyword) || a.F_Description.Contains(keyword));
             }
-            query = GetDataPrivilege("u", "", query);
+            query = GetDataPrivilege("a", "", query);
             return await repository.OrderList(query, pagination);
         }
 
@@ -81,7 +81,7 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task DeleteForm(string keyValue)
         {
-            await repository.Delete(t => t.F_Id == keyValue);
+            await repository.Delete(a => a.F_Id == keyValue);
         }
         #endregion
 

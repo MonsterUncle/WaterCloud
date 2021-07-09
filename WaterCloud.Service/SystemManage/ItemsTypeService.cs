@@ -23,7 +23,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ItemsEntity>> GetList()
         {
             var query = repository.IQueryable();
-            return await query.Where(t=>t.F_DeleteMark==false).OrderBy(t => t.F_SortCode).ToListAsync();
+            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<List<ItemsEntity>> GetLookList()
         {
@@ -45,13 +45,13 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (repository.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
+            if (repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).Count() > 0)
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }
             else
             {
-                await repository.Delete(t => t.F_Id == keyValue);
+                await repository.Delete(a => a.F_Id == keyValue);
             }
         }
         public async Task SubmitForm(ItemsEntity itemsEntity, string keyValue)

@@ -30,27 +30,27 @@ namespace WaterCloud.Service.SystemManage
             var list = repository.IQueryable();
             if (!string.IsNullOrEmpty(itemId))
             {
-                list = list.Where(t => t.F_ItemId == itemId);
+                list = list.Where(a => a.F_ItemId == itemId);
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword));
+                list = list.Where(a => a.F_ItemName.Contains(keyword) || a.F_ItemCode.Contains(keyword));
             }
-            return await list.Where(t => t.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToListAsync();
+            return await list.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<List<ItemsDetailEntity>> GetLookList(string itemId = "", string keyword = "")
         {
-            var query = repository.IQueryable().Where(t => t.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(itemId))
             {
-                query = query.Where(t => t.F_ItemId == itemId);
+                query = query.Where(a => a.F_ItemId == itemId);
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword));
+                query = query.Where(a => a.F_ItemName.Contains(keyword) || a.F_ItemCode.Contains(keyword));
             }
-            query = GetDataPrivilege("t","", query);
-            return await query.OrderBy(t => t.F_SortCode).ToListAsync();
+            query = GetDataPrivilege("a","", query);
+            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {
@@ -71,7 +71,7 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task DeleteForm(string keyValue)
         {
-            await repository.Delete(t => t.F_Id == keyValue);
+            await repository.Delete(a => a.F_Id == keyValue);
         }
         public async Task SubmitForm(ItemsDetailEntity itemsDetailEntity, string keyValue)
         {

@@ -479,7 +479,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("            if (!string.IsNullOrEmpty(keyword))");
                 sb.AppendLine("            {");
                 sb.AppendLine("                 //此处需修改");
-                sb.AppendLine("                 data = data.TreeWhere(t => t." + baseConfigModel.PageIndex.TreeColum + ".Contains(keyword));");
+                sb.AppendLine("                 data = data.TreeWhere(a => a." + baseConfigModel.PageIndex.TreeColum + ".Contains(keyword));");
                 sb.AppendLine("            }");
                 sb.AppendLine("            return Success(data.Count, data);");
                 sb.AppendLine("        }");

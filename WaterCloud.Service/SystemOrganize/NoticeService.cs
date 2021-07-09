@@ -27,7 +27,7 @@ namespace WaterCloud.Service.SystemOrganize
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(t => t.F_Title.Contains(keyword) || t.F_Content.Contains(keyword));
+                query = query.Where(a => a.F_Title.Contains(keyword) || a.F_Content.Contains(keyword));
             }
             return await query.Where(a => a.F_DeleteMark == false).ToListAsync();
         }
@@ -40,13 +40,13 @@ namespace WaterCloud.Service.SystemOrganize
             enabledTemp.Add("无效", "0");
             dic.Add("F_EnabledMark", enabledTemp);
             pagination = ChangeSoulData(dic, pagination);
-            var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(u => u.F_Title.Contains(keyword) || u.F_Content.Contains(keyword));
+                query = query.Where(a => a.F_Title.Contains(keyword) || a.F_Content.Contains(keyword));
             }
             //权限过滤（保证分页参数存在）
-            query = GetDataPrivilege("u", "", query);
+            query = GetDataPrivilege("a", "", query);
             return await repository.OrderList(query, pagination);
         }
         public async Task<NoticeEntity> GetLookForm(string keyValue)
@@ -78,7 +78,7 @@ namespace WaterCloud.Service.SystemOrganize
 		public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Delete(t => ids.Contains(t.F_Id));
+            await repository.Delete(a => ids.Contains(a.F_Id));
         }
 
     }

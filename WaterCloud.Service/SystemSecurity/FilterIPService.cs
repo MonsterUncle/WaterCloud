@@ -25,21 +25,21 @@ namespace WaterCloud.Service.SystemSecurity
             var list = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(t => t.F_StartIP.Contains(keyword) || t.F_EndIP.Contains(keyword));
+                list = list.Where(a => a.F_StartIP.Contains(keyword) || a.F_EndIP.Contains(keyword));
 
             }
-            return await list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_Id).ToListAsync();
+            return await list.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id).ToListAsync();
         }
         public async Task<List<FilterIPEntity>> GetLookList(string keyword)
         {
-            var query = repository.IQueryable().Where(t => t.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(t => t.F_StartIP.Contains(keyword) || t.F_EndIP.Contains(keyword));
+                query = query.Where(a => a.F_StartIP.Contains(keyword) || a.F_EndIP.Contains(keyword));
             }
-            query = GetDataPrivilege("t", "", query);
-            return await query.OrderBy(t => t.F_Id).ToListAsync();
+            query = GetDataPrivilege("a", "", query);
+            return await query.OrderBy(a => a.F_Id).ToListAsync();
         }
         public async Task<FilterIPEntity> GetLookForm(string keyValue)
         {
@@ -54,7 +54,7 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(",");
-            await repository.Delete(t => ids.Contains(t.F_Id));
+            await repository.Delete(a => ids.Contains(a.F_Id));
         }
         public async Task<bool> CheckIP(string ip)
         {
