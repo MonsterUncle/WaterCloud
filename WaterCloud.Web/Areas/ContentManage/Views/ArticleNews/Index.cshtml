@@ -235,8 +235,8 @@
     function previewImg(obj) {
         var img = new Image();
         img.src = obj.src;
-        var height = img.height + 50; //获取图片高度
-        var width = img.width; //获取图片宽度
+        var height = (!!img.height ? img.height : 100) + 50; //获取图片高度
+        var width = (!!img.width ? img.height : 100); //获取图片宽度
         if (height > 500) { height = 500; };
         if (width > 500) { width = 500; };
         var imgHtml = "<img src='" + obj.src + "' style=\"height: " + (height - 43) + "px; width: " + width + "px; line-height: 25px!important;\"/>";
