@@ -51,7 +51,7 @@ namespace WaterCloud.Domain.SystemManage
         /// 排序
         /// </summary>
         [Required(ErrorMessage = "排序不能为空")]
-        [Range(0, 99999999, ErrorMessage = "排序大小必须介于1~99999999之间")]
+        [Range(0, 999999999999, ErrorMessage = "排序大小必须介于1~999999999999之间")]
         [SugarColumn(IsNullable = true, ColumnDescription = "排序")]
         public long? F_SortCode { get; set; }
         /// <summary>
