@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+
+    layui.use(['jquery', 'form', 'laydate', 'tableEdit', 'commonTable', 'table', 'common', 'optimizeSelectOption'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            laydate = layui.laydate,
+            tableEdit = layui.tableEdit,
+            table = layui.table,
+            commonTable = layui.commonTable,
+            common = layui.common;
+        var keyValue = $.request("keyValue");
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#F_NeedTime'
+            , trigger: 'click',
+            format: 'yyyy/MM/dd',
+        });
+        //权限字段
+        common.authorizeFields('adminform');
+        var listData = [];
+        $(function () {
+            initControl();
+            if (!!keyValue) {
+                common.ajax({
+                    url: '/OrderManagement/Order/GetFormJson',
+                    dataType: 'json',
+                    data: { keyValue: keyValue },
+                    async: false,
+                    success: function (data) {
+                        common.val('adminform', data);
+                        if (!!data.list && data.list.length > 0) {
+                            listData = data.list;
+                        }
+                        common.setReadOnly('adminform');
+                    }
+                });
+            }
+            else {
+                var code = new Date().formatDate('yyyyMMddhhmmss');
+                $('#F_OrderCode').val("OR-" + code);
+            }
+            form.render();
+            var params = [{ name: '未完成', value: 0 }, { name: '已完成', value: 1 }];
+            var cols = [[
+                { type: "checkbox", width: 50 },
+                {
+                    field: 'F_OrderState', title: '订单状态', width: 120, sort: true, filter: true
+                    , templet: function (d) {
+                        if (d.F_OrderState || d.F_OrderState == 0) {
+                            if (d.F_OrderState.value || d.F_OrderState.value == 0) {
+                                return d.F_OrderState.name;
+                            }
+                            for (var i = 0; i < params.length; i++) {
+                                if (params[i].value == d.F_OrderState) {
+                                    return params[i].name;
+                                }
+                            }
+                        }
+                        return ''
+                    }
+                },
+                {
+                    field: 'F_ActualTime', title: '实际时间', minWidth: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
+                },
+                { field: 'F_ProductName', title: '产品名称', minWidth: 145, sort: true, filter: true },
+                { field: 'F_ProductDescription', title: '产品规格', minWidth: 145, filter: true },
+                { field: 'F_ProductUnit', title: '产品单位', width: 120, filter: true },
+                { field: 'F_NeedNum', title: '需求数量', width: 140, filter: true},
+                { field: 'F_ActualNum', title: '实际数量', width: 140, filter: true},
+                { field: 'F_Description', title: '备注', minWidth: 145, filter: true},
+            ]];
+            commonTable.rendertable({
+                elem: '#currentTableId',
+                data: listData,
+                defaultToolbar: [],
+                search: false,
+                limit: 9999,//每页数据 默认
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['count'] //自定义分页布局
+                    , first: false //不显示首页
+                    , last: false //不显示尾页
+                },
+                height: 'full-185',
+                filter: {
+                    clearFilter: false,
+                },
+                cols: cols
+            });
+        });
+        wcLoading.close();
+        function initControl() {
+            //此处需修改
+            //绑定数据源
+            //类型为下拉框时
+        }
+    });
+</script>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form" lay-filter="adminform">
+                <div class="layui-form-item">
+                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                        <label class="layui-form-label">订单编号</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="F_OrderCode" name="F_OrderCode" autocomplete="off" maxlength="50" lay-verify="required" placeholder="请输入订单编号" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                        <label class="layui-form-label">订单状态</label>
+                        <div class="layui-input-block">
+                            <select id="F_OrderState" name="F_OrderState" disabled>
+                                <option value="0">未完成</option>
+                                <option value="1">已完成</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                        <label class="layui-form-label">需求时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="F_NeedTime" name="F_NeedTime" autocomplete="off" lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                        <label class="layui-form-label">选项</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-col-md12 layui-col-xs12 layui-hide">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <input id="F_Description" name="F_Description" class="layui-input" placeholder="请输入备注">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-col-md12 layui-col-sm12">
+                        <label class="layui-form-label">明细列表</label>
+                        <div class="layui-input-block">
+                            <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container" id="toolbar">
+                </div>
+            </script>
+        </div>
+    </div>
+</body>
+
