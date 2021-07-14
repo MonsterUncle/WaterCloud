@@ -57,10 +57,20 @@ layui.define(["element", "layer", "jquery"], function (exports) {
                 , id: options.tabId
             });
             $('.layuimini-menu-left').attr('layuimini-tab-tag', 'add');
-            var d = new Date();
-            d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toGMTString();
-            document.cookie = 'layuiminimenu_' + options.tabId + "=" + escape(options.title) + ";" + "path=/;" + expires;
+            var name = 'layuiminimenu_list' + "=";
+            var datajson = {};
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(name) == 0) datajson = JSON.parse(unescape(c.substring(name.length, c.length)));
+            }
+            if (!datajson[options.tabId]) {
+                datajson[options.tabId] = options.title.trim();
+                var d = new Date();
+                d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toGMTString();
+                document.cookie = 'layuiminimenu_list' + "=" + escape(JSON.stringify(datajson)) + ";" + "path=/;" + expires;
+            }
         },
 
 
@@ -470,12 +480,16 @@ layui.define(["element", "layer", "jquery"], function (exports) {
             if (isSearchMenu) return false;
 
             // 既不是右侧菜单、快捷菜单,就直接打开
-            var name = 'layuiminimenu_' + tabId + "=";
+            var name = 'layuiminimenu_list' + "=";
             var title = tabId;
+            var datajson = {};
             var ca = document.cookie.split(';');
             for (var i = 0; i < ca.length; i++) {
                 var c = ca[i].trim();
-                if (c.indexOf(name) == 0) title = unescape(c.substring(name.length, c.length));
+                if (c.indexOf(name) == 0) datajson = JSON.parse(unescape(c.substring(name.length, c.length)));
+            }
+            if (!!datajson[tabId]) {
+                var title = datajson[tabId];
             }
             miniTab.create({
                 tabId: tabId,
@@ -608,6 +622,5 @@ layui.define(["element", "layer", "jquery"], function (exports) {
         }
 
     };
-
     exports("miniTab", miniTab);
 });
