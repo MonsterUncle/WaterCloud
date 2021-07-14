@@ -60,7 +60,7 @@ layui.define(["element", "layer", "jquery"], function (exports) {
             var d = new Date();
             d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000));
             var expires = "expires=" + d.toGMTString();
-            document.cookie = 'layuiminimenu_' + options.tabId + "=" + options.title + ";" + "path=/;" + expires;
+            document.cookie = 'layuiminimenu_' + options.tabId + "=" + escape(options.title) + ";" + "path=/;" + expires;
         },
 
 
@@ -475,7 +475,7 @@ layui.define(["element", "layer", "jquery"], function (exports) {
             var ca = document.cookie.split(';');
             for (var i = 0; i < ca.length; i++) {
                 var c = ca[i].trim();
-                if (c.indexOf(name) == 0) title = c.substring(name.length, c.length);
+                if (c.indexOf(name) == 0) title = unescape(c.substring(name.length, c.length));
             }
             miniTab.create({
                 tabId: tabId,
