@@ -122,10 +122,12 @@
                 common.modalConfirm("注：您确定要删除选择的数据吗？", function (r) {
                     if (r) {
                         var alldata = table.cache.currentTableId;
-                        for (var i = 0; i < alldata.length; i++) {
-                            if (alldata[i].F_Id == data[0].F_Id) {
-                                alldata.splice(i, 1);
-                                break;
+                        for (var j = 0; j < data.length; j++) {
+                            for (var i = alldata.length - 1; i >= 0; i--) {
+                                if (alldata[i].F_Id == data[j].F_Id) {
+                                    alldata.splice(i, 1);
+                                    break;
+                                }
                             }
                         }
                         table.reload('currentTableId', { data: alldata })
