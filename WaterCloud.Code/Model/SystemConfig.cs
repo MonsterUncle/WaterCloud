@@ -69,5 +69,6 @@ namespace WaterCloud.Code.Model
         /// 重置密码
         /// </summary>
 		public bool? ReviseSysem { get; set; }
-	}
+        public int? LoginErrorCount { get; set; }
+    }
 }
