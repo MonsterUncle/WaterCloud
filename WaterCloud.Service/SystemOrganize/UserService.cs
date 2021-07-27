@@ -310,10 +310,11 @@ namespace WaterCloud.Service.SystemOrganize
                     }
                     else
                     {
-                        //登录错误不超过3次
+                        //登录错误不超过指定次数
                         int num = await OperatorProvider.Provider.AddCurrentErrorNum();
-                        string erornum = (4 - num).ToString();
-                        if (num == 4)
+                        int errorcount = GlobalContext.SystemConfig.LoginErrorCount ?? 4;
+                        string erornum = (errorcount - num).ToString();
+                        if (num == errorcount)
                         {
                             FilterIPEntity ipentity = new FilterIPEntity();
                             ipentity.F_Id = Utils.GuId();
@@ -322,7 +323,7 @@ namespace WaterCloud.Service.SystemOrganize
                             ipentity.F_DeleteMark = false;
                             ipentity.F_EnabledMark = true;
                             ipentity.F_Type = false;
-                            //封禁12小时
+                            //默认封禁12小时
                             ipentity.F_EndTime = DateTime.Now.AddHours(12);
                             await ipApp.SubmitForm(ipentity,null);
                             await OperatorProvider.Provider.ClearCurrentErrorNum();
