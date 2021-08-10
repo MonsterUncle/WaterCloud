@@ -1,4 +1,4 @@
-﻿using SqlSugar;
+using SqlSugar;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -67,7 +67,7 @@ namespace WaterCloud.Service.CommonService
                                    '' FieldDefault,
                                    a.comments Remark
                     FROM all_col_comments a, user_tab_columns b  
-                    LEFT JOIN user_cons_columns c on b.TABLE_NAME=c.TABLE_NAME" + $"WHERE a.table_name = b.table_name and a.Column_name = b.Column_name and a.table_name ='{tableName}'"
+                    LEFT JOIN user_cons_columns c on b.TABLE_NAME=c.TABLE_NAME" + $" WHERE a.table_name = b.table_name and a.Column_name = b.Column_name and a.table_name ='{tableName}'"
                     + $"and c.constraint_name in (select constraint_name from user_constraints where  constraint_type='P' and a.table_name = '{tableName}')";
             var list = await _unitOfWork.GetDbClient().SqlQueryable<TableFieldInfo>(strSql).ToListAsync();
             return list.ToList();
