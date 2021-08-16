@@ -72,7 +72,7 @@ namespace WaterCloud.Web.Controllers
                 F_Description = "安全退出系统",
             });
             await OperatorProvider.Provider.EmptyCurrent("pc_");
-            return Redirect("/Login/Index");
+            return Content(new AlwaysResult { state = ResultType.success.ToString() }.ToJson());
         }
         /// <summary>
         /// 验证登录状态请求接口
