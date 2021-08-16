@@ -216,12 +216,22 @@
                 ],
             });
             $('.login-out').on("click", function () {
-                layer.msg('退出登录成功', function () {
-                    window.onbeforeunload();
-                    $.cookie("wc_returnurl", '', {
-                        expires: -1, path: '/'
-                    });
-                    window.location.href = '../Login/OutLogin';
+                common.modalConfirm("是否要退出账号登录", function (r) {
+                    if (r) {
+                        common.ajax({
+                            url: "../Login/OutLogin",
+                            dataType: "json",
+                            async: true,
+                            success: function (data) {
+                                layer.msg('退出成功');
+                                window.onbeforeunload();
+                                $.cookie("wc_returnurl", '', {
+                                    expires: -1, path: '/'
+                                });
+                                window.location.href = '../Login/Index';
+                            }
+                        });
+                    }
                 });
             });
         });
