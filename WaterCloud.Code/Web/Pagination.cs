@@ -23,7 +23,7 @@ namespace WaterCloud.Code
         /// <summary>
         /// 排序列
         /// </summary>
-        public string sort { get; set; }
+        public string field { get; set; }
         /// <summary>
         /// 排序类型
         /// </summary>

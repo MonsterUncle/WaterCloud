@@ -78,7 +78,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)
         {
             pagination.order = "desc";
-            pagination.sort = "F_EnabledMark";
+            pagination.field = "F_EnabledMark";
             //导出全部页使用
             if (pagination.rows == 0 && pagination.page == 0)
             {

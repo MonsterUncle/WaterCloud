@@ -188,7 +188,7 @@ namespace WaterCloud.DataBase
         {
             var tempData = _context.Query<TEntity>();
             pagination.records = tempData.Count();
-            tempData = tempData.OrderBy(pagination.sort);
+            tempData = tempData.OrderBy(pagination.field);
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
@@ -196,7 +196,7 @@ namespace WaterCloud.DataBase
         {
             var tempData = _context.Query<TEntity>().Where(predicate);
             pagination.records = tempData.Count();
-            tempData = tempData.OrderBy(pagination.sort);
+            tempData = tempData.OrderBy(pagination.field);
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }
@@ -204,7 +204,7 @@ namespace WaterCloud.DataBase
         {
             var tempData = query;
             pagination.records = tempData.Count();
-            tempData = tempData.OrderBy(pagination.sort);
+            tempData = tempData.OrderBy(pagination.field);
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }

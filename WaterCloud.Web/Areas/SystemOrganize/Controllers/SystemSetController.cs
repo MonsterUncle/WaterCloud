@@ -35,7 +35,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             //此处需修改
             pagination.order = "desc";
-            pagination.sort = "F_CreatorTime desc";
+            pagination.field = "F_CreatorTime desc";
             //导出全部页使用
             if (pagination.rows == 0 && pagination.page == 0)
             {
