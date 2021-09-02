@@ -98,11 +98,11 @@ namespace WaterCloud.DataBase
             int totalCount = 0;
             if (pagination.order == "desc")
             {
-                tempData = tempData.OrderBy(pagination.sort + " " + pagination.order);
+                tempData = tempData.OrderBy(pagination.field + " " + pagination.order);
             }
             else
             {
-                tempData = tempData.OrderBy(pagination.sort);
+                tempData = tempData.OrderBy(pagination.field);
             }
             var data = tempData.ToPageList(pagination.page, pagination.rows, ref totalCount);
             pagination.records = totalCount;
