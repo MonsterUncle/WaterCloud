@@ -177,11 +177,11 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                     // 同步分页信息
                     myTable.limit = cache[myTable.id].limit
 
-                    if (myTable.url && myTable.page) {
+                    if (myTable.url && myTable.page && !myTable.autoSort) {
                         // 后台分页
                         cache[myTable.id].field = obj.field;
                         cache[myTable.id].order = obj.type;
-                        isFilterReload[myTable.id] = true;
+                        isFilterReload[myTable.id] = false;
                         myTable.page = $.extend(myTable.page, {
                             curr: 1 //重新从第 1 页开始
                         });
