@@ -189,7 +189,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                             initSort: obj
                             , where: cache[myTable.id]
                         }));
-                    } else if (!myTable.url && myTable.page) {
+                    } else if ((!myTable.url && myTable.page) || myTable.autoSort) {
                         // 前台分页
                         if (obj.type === 'asc') { //升序
                             cache[myTable.id] = layui.sort(cache[myTable.id], obj.field)
