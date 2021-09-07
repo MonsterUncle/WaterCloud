@@ -179,15 +179,16 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
 
                     if (myTable.url && myTable.page && !myTable.autoSort) {
                         // 后台分页
-                        cache[myTable.id].field = obj.field;
-                        cache[myTable.id].order = obj.type;
+                        where_cache[myTable.id] = myTable.where || {}
+                        where_cache[myTable.id].field = obj.field;
+                        where_cache[myTable.id].order = obj.type;
                         isFilterReload[myTable.id] = false;
-                        myTable.page = $.extend(myTable.page, {
+                        myTable.page = $extend(myTable.page, {
                             curr: 1 //重新从第 1 页开始
                         });
                         table.render($.extend(myTable, {
                             initSort: obj
-                            , where: cache[myTable.id]
+                            , where: where_cache[myTable.id]
                         }));
                     } else if ((!myTable.url && myTable.page) || myTable.autoSort) {
                         // 前台分页
