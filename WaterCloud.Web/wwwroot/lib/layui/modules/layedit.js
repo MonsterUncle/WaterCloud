@@ -120,7 +120,7 @@ layui.define(['layer', 'form'], function(exports){
     }else{
       $(iframeWin[0].document.body).html(content)
     };
-    layedit.sync(index)
+    this.sync(index)
   };
   //将编辑器内容同步到textarea（一般用于异步提交时）
   Edit.prototype.sync = function(index){

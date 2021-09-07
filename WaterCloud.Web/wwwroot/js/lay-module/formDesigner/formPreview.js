@@ -804,7 +804,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                                     '<div class="file-iteme">' +
                                     //'<div class="handle"><i class="layui-icon layui-icon-delete"></i></div>' +
                                     '<img class="layui-upload-img" src=' + result + '>' +
-                                    '<div class="info">' + file + '</div>' +
+                                    '<div class="info">' + file + '</div>' + file +
                                     '<p id="' + item.id + "_text" + '"></p>' +
                                     '</div>'
                                 );
@@ -828,8 +828,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                             $('#uploader-list-' + item.id).html(
                                 '<div class="file-iteme">' +
                                 //'<div class="handle"><i class="layui-icon layui-icon-delete"></i></div>' +
-                                '<img class="layui-upload-img" src=' + document.location.origin + "/file/" + res.data.src + '>' +
-                                '<div class="info">' + res.data.title + '</div>' +
+                                '<img class="layui-upload-img" src=' + document.location.origin + res.data[0].src + '>' +
+                                '<div class="info">' + res.data[0].title + '</div>' + res.data[0].src +
                                 '</div>' +
                                 '<p id="' + item.id + "_text" + '"></p>'
                             );
