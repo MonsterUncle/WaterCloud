@@ -86,7 +86,7 @@
                     },
                     { field: 'F_KeyValue', title: '操作对象', width: 300, hide: true },
                     {
-                        field: 'F_CreatorTime', title: '创建时间', width: 180,
+                        field: 'F_CreatorTime', title: '创建时间', width: 180, sort: true,
                         templet: function (d) {
                             if (d.F_CreatorTime) {
                                 return new Date(d.F_CreatorTime).Format("yyyy-MM-dd hh:mm:ss");

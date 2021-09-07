@@ -124,7 +124,14 @@ namespace WaterCloud.DataBase
         {
             var tempData = query;
             pagination.records = tempData.Count();
-            tempData = tempData.OrderBy(pagination.field);
+            if (pagination.order == "desc")
+            {
+                tempData = tempData.OrderBy(pagination.field + " " + pagination.order);
+            }
+            else
+            {
+                tempData = tempData.OrderBy(pagination.field);
+            }
             tempData = tempData.TakePage(pagination.page, pagination.rows);
             return tempData.ToList();
         }

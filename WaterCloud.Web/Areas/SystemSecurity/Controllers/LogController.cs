@@ -24,8 +24,11 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword,int timetype=2)
         {
-            pagination.order = "desc";
-            pagination.field = "F_CreatorTime desc";
+            if (string.IsNullOrEmpty(pagination.field))
+            {
+                pagination.order = "desc";
+                pagination.field = "F_CreatorTime";
+            }
             //导出全部页使用
             if (pagination.rows == 0 && pagination.page == 0)
             {
