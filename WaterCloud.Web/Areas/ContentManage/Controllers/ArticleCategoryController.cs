@@ -26,9 +26,11 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)
         {
-            //此处需修改
-            pagination.order = "desc";
-            pagination.field = "F_Id";
+            if (string.IsNullOrEmpty(pagination.field))
+            {
+                pagination.order = "desc";
+                pagination.field = "F_Id";
+            }
             var data = await _service.GetLookList(pagination,keyword);
             return Success(pagination.records, data);
         }
