@@ -183,7 +183,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                         where_cache[myTable.id].field = obj.field;
                         where_cache[myTable.id].order = obj.type;
                         isFilterReload[myTable.id] = false;
-                        myTable.page = $extend(myTable.page, {
+                        myTable.page = $.extend(myTable.page, {
                             curr: 1 //重新从第 1 页开始
                         });
                         table.render($.extend(myTable, {
