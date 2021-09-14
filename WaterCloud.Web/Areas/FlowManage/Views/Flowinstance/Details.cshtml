@@ -152,6 +152,11 @@
                         arr[i].columns[j].list = setFormValue(arr[i].columns[j].list, temp);
                     }
                 }
+                else if (arr[i].tag == "checkbox") {
+                    for (var j = 0; j < arr[i].options.length; j++) {
+                        arr[i].options[j].checked = temp[arr[i].options[j].value]=="on";
+                    }
+                }
                 else {
                     if (!!temp[arr[i].id]) {
                         arr[i].defaultValue = temp[arr[i].id];

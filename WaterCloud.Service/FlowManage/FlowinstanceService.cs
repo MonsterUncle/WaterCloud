@@ -322,7 +322,7 @@ namespace WaterCloud.Service.FlowManage
 
             wfruntime.RemoveNode(wfruntime.nextNodeId);
             flowInstance.F_SchemeContent = wfruntime.ToSchemeObj().ToJson();
-            await repository.Db.Updateable(flowInstance).ExecuteCommandAsync();
+            await repository.Db.Updateable(flowInstance).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
             await repository.Db.Insertable(flowInstanceOperationHistory).ExecuteCommandAsync();
             MessageEntity msg = new MessageEntity();
             msg.F_CreatorUserName = currentuser.UserName;
@@ -893,7 +893,7 @@ namespace WaterCloud.Service.FlowManage
             entity.F_MakerList = (wfruntime.GetNextNodeType() != 4 ? GetNextMakers(wfruntime, nodeDesignate) : "");
             entity.F_IsFinish = (wfruntime.GetNextNodeType() == 4 ? 1 : 0);
             unitofwork.CurrentBeginTrans();
-            await repository.Db.Updateable(entity).ExecuteCommandAsync();
+            await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
             wfruntime.flowInstanceId = entity.F_Id;
             //复杂表单提交
             if (entity.F_FrmType == 1)

@@ -279,11 +279,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     _html += '<div class="layui-input-block">';
                     _html += '<select name="{0}" id="{0}" lay-verify="required" style="width:{1}">'.format(json.id, json.width);
                     if (json.defaultValue === undefined) {
-                        _html += '<option value="{0}" checked>{1}</option>'.format('', '请选择');
+                        _html += '<option value="{0}" selected="">{1}</option>'.format('', '请选择');
                     }
                     for (var i = 0; i < json.options.length; i++) {
                         if (json.options[i].checked || (!!json.defaultValue && json.defaultValue == json.options[i].value)) {
-                            _html += '<option value="{0}" checked>{1}</option>'.format(json.options[i].value, json.options[i].text);
+                            _html += '<option value="{0}" selected="">{1}</option>'.format(json.options[i].value, json.options[i].text);
                         } else {
                             _html += '<option value="{0}">{1}</option>'.format(json.options[i].value, json.options[i].text);
                         }
@@ -349,9 +349,9 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
 
                     for (var i = 0; i < json.options.length; i++) {
                         if (json.options[i].checked) {
-                            _html += '<input type="checkbox" name="{0}" title="{1}" checked="">'.format(json.id, json.options[i].value, json.options[i].text);
+                            _html += '<input type="checkbox" name="{0}" title="{1}" checked="">'.format(json.options[i].value, json.options[i].text);
                         } else {
-                            _html += '<input type="checkbox" name="{0}" title="{1}" >'.format(json.id, json.options[i].value, json.options[i].text);
+                            _html += '<input type="checkbox" name="{0}" title="{1}" >'.format(json.options[i].value, json.options[i].text);
                         }
                     }
                     _html += '</div>';
@@ -379,8 +379,12 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _html = '<div class="layui-form-item"  data-id="{0}" data-tag="{1}" data-index="{2}">'.format(json.id, json.tag, json.index);
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'required' : '', json.label);
                     _html += '<div class="layui-input-block">';
+                    if (json.defaultValue) {
+                        _html += '<input type="checkbox" name="{0}" id="{0}" lay-skin="switch" checked="" lay-text="ON|OFF">'.format(json.id);
+                    } else {
+                        _html += '<input type="checkbox" name="{0}" id="{0}" lay-skin="switch" lay-text="ON|OFF">'.format(json.id);
+                    }
 
-                    _html += '<input type="checkbox" name="{0}" id="{0}" lay-skin="switch" lay-text="ON|OFF">'.format(json.id);
                     _html += '</div>';
                     _html += '</div>';
                     return _html;
