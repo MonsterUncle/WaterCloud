@@ -262,19 +262,24 @@
                         arr[i].columns[j].list = setFormValue(arr[i].columns[j].list, temp);
                     }
                 }
+                else if (arr[i].tag == "checkbox") {
+                    if (!!temp) {
+                        for (var j = 0; j < arr[i].options.length; j++) {
+                            arr[i].options[j].checked = temp[arr[i].options[j].value] == "on";
+                        }
+                    }
+                }
                 else if (!!temp) {
                     if (!!temp[arr[i].id]) {
                         arr[i].defaultValue = temp[arr[i].id];
                     }
-                }
-                if (arr[i].tag == "image") {
-                    editor = arr[i];
                 }
                 if (arr[i].tag == "editor") {
                     editor = arr[i];
                 }
             }
             return arr;
+
         };
         function initControl() {
             $("#F_SchemeId").bindSelect({
@@ -322,6 +327,7 @@
         form.on('submit(saveBtn)', function (data) {
             postData.NextNodeDesignateType = NextNodeDesignateType;
             postData.NextNodeDesignates = postData.NextNodeDesignates ? postData.NextNodeDesignates.split(',') : [];
+            postData.F_Code = data.field.F_Code;
             common.submitForm({
                 url: '/FlowManage/Flowinstance/SubmitForm?keyValue=' + keyValue,
                 param: postData,
