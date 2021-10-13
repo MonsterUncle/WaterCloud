@@ -52,6 +52,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
+        public async Task<ActionResult> GetMaxSortCodeText(string F_ParentId)
+        {
+            var data = await _service.GetMaxSortCode(F_ParentId);
+
+            return Content(data);
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
         public async Task<ActionResult> GetSelectJson()
         {
             var data = await _service.GetList();
@@ -160,6 +168,20 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             catch (Exception ex)
             {
                 return await Error(ex.Message, "", keyValue);
+            }
+        }
+        [HttpPost]
+        [HandlerAjaxOnly]
+        public async Task<ActionResult> SubmitUpdateForm(string F_Id, int SortCode)
+        {
+            try
+            {
+                await _service.SubmitUpdateForm(F_Id, SortCode);
+                return await Success("操作成功。", "", F_Id);
+            }
+            catch (Exception ex)
+            {
+                return await Error(ex.Message, "", F_Id);
             }
         }
         [HttpPost]
