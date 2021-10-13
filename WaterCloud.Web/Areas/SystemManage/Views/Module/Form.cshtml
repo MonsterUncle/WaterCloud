@@ -35,17 +35,48 @@
                     }
                 });
             }
+            else if (event == "clone")
+            {
+                common.ajax({
+                    url: "/SystemManage/Module/GetFormJson",
+                    dataType: "json",
+                    data: { keyValue: keyValue },
+                    async: false,
+                    success: function (data) {
+                        common.val('adminform', data);
+                        if (!!data.F_Icon) {
+                            iconPickerFa.checkIcon('iconPicker', data.F_Icon);
+                        }
+                    }
+                });
+            }
             else {
                 if (!!keyValue) {
                     $('#F_ParentId').val(keyValue);
+                    ParentIdChange(keyValue);
                 }
                 else {
-                    $('#F_ParentId').val("0");
+                    ParentIdChange(0);
                 }
             }
             form.render();
         });
         wcLoading.close();
+        form.on('select(F_ParentId)', function (data) {
+            ParentIdChange(data.value);
+        });
+        function ParentIdChange(value) {
+            common.ajax({
+                url: '/SystemManage/Module/GetMaxSortCodeText',
+                dataType: 'text',
+                data: { F_ParentId: value },
+                async: false,
+                success: function (data) {
+                    $('#F_SortCode').val(data);
+                }
+            });
+            return false;
+        }
         function initControl() {
             $("#F_ParentId").bindSelect({
                 url: "/SystemManage/Module/GetTreeSelectJson",
@@ -121,7 +152,7 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">上级</label>
                     <div class="layui-input-block">
-                        <select id="F_ParentId" name="F_ParentId" lay-verify="required" lay-search>
+                        <select id="F_ParentId" name="F_ParentId" lay-verify="required" lay-filter="F_ParentId" lay-search>
                             <option value="0" selected>父节点</option>
                         </select>
                     </div>

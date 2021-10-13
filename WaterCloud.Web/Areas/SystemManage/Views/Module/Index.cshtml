@@ -21,18 +21,18 @@
             treeIdName: 'F_Id',  // id字段名称
             treePidName: 'F_ParentId',     // pid字段名称
             cols: [[
-                { type: "radio", width: 50,fixed:'left' },
-                { field: 'F_FullName', title: '名称', width: 200, filter: true },
+                { type: "radio", minWidth: 50, fixed: 'left' },
+                { field: 'F_FullName', title: '名称', minWidth: 200, filter: true },
                 {
-                    field: 'F_Icon', title: '图标', width: 60,
+                    field: 'F_Icon', title: '图标', minWidth: 60,
                     templet: function (d) {
                         return d.F_Icon == "" ? "<i class=\"fa \"></i>" : "<i class=\"fa " + d.F_Icon + "\"></i>";
                     }
                 },
-                { field: 'F_UrlAddress', title: '连接', width: 220, filter: true },
-                { field: 'F_Authorize', title: '权限', width: 150, filter: true },
+                { field: 'F_UrlAddress', title: '连接', minWidth: 220, filter: true },
+                { field: 'F_SortCode', title: '排序', minWidth: 80, filter: true, edit: 'number' },
                 {
-                    field: 'F_Target', title: '目标', width: 80, filter: true,
+                    field: 'F_Target', title: '目标', minWidth: 80, filter: true,
                     templet: function (d) {
                         if (d.F_Target == "expand") {
                             return "无页面";
@@ -46,7 +46,7 @@
                     }
                 },
                 {
-                    field: 'F_IsMenu', title: '菜单', width: 80, filter: true,
+                    field: 'F_IsMenu', title: '菜单', minWidth: 80, filter: true,
                     templet: function (d) {
                         if (d.F_IsMenu == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
@@ -56,7 +56,7 @@
                     }
                 },
                 {
-                    field: 'F_IsExpand', title: '展开', width: 80, filter: true,
+                    field: 'F_IsExpand', title: '展开', minWidth: 80, filter: true,
                     templet: function (d) {
                         if (d.F_IsExpand == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
@@ -66,7 +66,7 @@
                     }
                 },
                 {
-                    field: 'F_IsPublic', title: '公共', width: 80, filter: true,
+                    field: 'F_IsPublic', title: '公共', minWidth: 80, filter: true,
                     templet: function (d) {
                         if (d.F_IsPublic == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
@@ -76,7 +76,7 @@
                     }
                 },
                 {
-                    field: 'F_IsFields', title: '字段', width: 80, filter: true,
+                    field: 'F_IsFields', title: '字段', minWidth: 80, filter: true,
                     templet: function (d) {
                         if (d.F_IsFields == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
@@ -86,7 +86,7 @@
                     }
                 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80, filter: true,
+                    field: 'F_EnabledMark', title: '状态', minWidth: 80, filter: true,
                     templet: function (d) {
                         if (d.F_EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
@@ -95,15 +95,41 @@
                         }
                     }
                 },
-                { field: 'F_SortCode', title: '排序', width: 80, filter: true },
+                { field: 'F_Authorize', title: '权限', minWidth: 150, filter: true },
                 {
-                    field: 'F_CreatorTime', title: '创建时间', width: 160, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
+                    field: 'F_CreatorTime', title: '创建时间', minWidth: 120, filter: { type: 'date[yyyy-MM-dd]' },
+                    templet: function (d) {
+                        if (d.F_CreatorTime) {
+                            var time = new Date(d.F_CreatorTime);
+                            return time.Format("yyyy-MM-dd");
+                        }
+                        return '';
+                    }
                 },
                 { field: 'F_Description', title: '备注', minWidth: 100, filter: true },
-                { title: '操作', width: 210, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
+                { title: '操作', width: 260, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]]
         };
         commonTable.rendertreetable(options);
+        //监听单元格编辑
+        table.on('edit(currentTableFilter)', function (obj) {
+            var value = obj.value //得到修改后的值
+                , data = obj.data //得到所在行所有键值
+                , field = obj.field; //得到字段
+            //layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改值为：' + value);
+            if (field == "F_SortCode") {
+                common.submitForm({
+                    url: '/SystemManage/Module/SubmitUpdateForm',
+                    dataType: 'json',
+                    param: { F_Id: data.id, SortCode: value },
+                    async: false,
+                    close: false,
+                    success: function (data) {
+                        common.modalMsg("修改成功", "success");
+                    }
+                });
+            }
+        });
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
             queryJson = data.field.txt_keyword;
@@ -123,7 +149,7 @@
             var keyValue = data.length > 0 ? data[0].F_Id : null;
             var module = data.length > 0 ? data[0] : null;
             if (obj.event === 'add') {  // 监听操作
-                if (!keyValue || data[0].F_IsExpand == false || data[0].F_Target !="expand") {
+                if (!keyValue || data[0].F_IsExpand == false || data[0].F_Target != "expand") {
                     keyValue = "";
                 }
                 common.modalOpen({
@@ -144,6 +170,18 @@
                     success: function () {
                         common.reload('data-search-btn');
                     }
+                });
+            }
+            else if (obj.event === 'clone') {
+                if (keyValue == null) {
+                    common.modalMsg("未选中数据", "warning");
+                    return false;
+                }
+                common.modalOpen({
+                    title: "添加菜单",
+                    url: "/SystemManage/Module/Form?event=add&keyValue=" + keyValue,
+                    width: "500px",
+                    height: "500px"
                 });
             }
             else if (obj.event === 'edit') {
@@ -228,6 +266,14 @@
                     height: "500px"
                 });
             }
+            else if (obj.event === 'clone') {
+                common.modalOpen({
+                    title: "添加菜单",
+                    url: "/SystemManage/Module/Form?event=clone&keyValue=" + obj.data.F_Id,
+                    width: "500px",
+                    height: "500px"
+                });
+            }
             else if (obj.event === 'modulebutton') {
                 if (obj.data.F_Target != "iframe" && obj.data.F_Target != "expand") {
                     common.modalAlert("菜单不能创建按钮,请修改后重试", "warning");
@@ -275,6 +321,7 @@
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
                 <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
+                <button id="NF-edit"name="NF-edit" authorize="yes" class="layui-btn layui-btn-sm  layui-btn-normal layui-hide" lay-event="clone"><i class="fa fa-paste"></i>复制</button>
                 <button id="NF-edit" name="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
                 <button id="NF-delete" name="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
                 <button id="NF-details" name="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
@@ -283,6 +330,7 @@
             </div>
         </script>
         <script type="text/html" id="currentTableBar">
+            <a id="NF-edit" authorize class="layui-btn layui-btn-sm layui-btn-normal" lay-event="clone"><i class="fa fa-paste"></i></a>
             <a id="NF-edit" authorize class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
             <a id="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"><i class="layui-icon">&#xe640;</i></a>
             <a id="NF-modulebutton" authorize class="layui-btn layui-btn-sm data-info-btn" lay-event="modulebutton"> <i class="fa fa-gavel"></i></a>

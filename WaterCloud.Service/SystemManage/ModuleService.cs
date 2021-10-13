@@ -55,6 +55,12 @@ namespace WaterCloud.Service.SystemManage
             var data = await repository.FindEntity(keyValue);
             return data;
         }
+        public async Task<string> GetMaxSortCode(string F_ParentId)
+        {
+            int F_SortCode = (int)repository.IQueryable().Where(t => t.F_ParentId == F_ParentId).Max(a => a.F_SortCode);
+
+            return (F_SortCode + 1).ToString();
+        }
         public async Task DeleteForm(string keyValue)
         {
             if (repository.IQueryable(t => t.F_ParentId.Equals(keyValue)).Count() > 0)
@@ -96,6 +102,20 @@ namespace WaterCloud.Service.SystemManage
                 await repository.Insert(moduleEntity);
             }
             await CacheHelper.Remove(authorizecacheKey + "list");
+        }
+        /// <summary>
+        /// 更新菜单排序
+        /// </summary>
+        /// <param name="F_Id">内码</param>
+        /// <param name="SortCode">排序数字</param>
+        /// <returns></returns>
+        public async Task SubmitUpdateForm(string F_Id, int SortCode)
+        {
+            //更新
+            await repository.Update(a => a.F_Id == F_Id, a => new ModuleEntity()
+            {
+                F_SortCode = SortCode
+            });
         }
     }
 }
