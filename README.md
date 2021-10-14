@@ -87,7 +87,7 @@
 
 #### 友情链接
 
-1. 前端框架Layui 官方文档：https://www.layui.com/doc/
+1. 前端框架Layui 文档地址：https://layui.itze.cn/
 2. Layui前端框架Layuimini 码云地址：https://gitee.com/zhongshaofa/layuimini
 3. SqlSugar.ORM 文档地址：https://www.donet5.com/home/doc
 4. Chloe.ORM 文档地址：https://github.com/shuxinqin/Chloe/wiki
