@@ -103,15 +103,11 @@ namespace WaterCloud.Web
 			{
                 try
                 {
-                    var configs= Configuration.GetSection("SystemConfig:SqlConfig");
-					for (int i = 1; i < 9999; i++)
-					{
-						if (!configs.GetSection(i.ToString()).Exists())
-						{
-                            break;
-						}
-                        var config = DBContexHelper.Contex(configs.GetSection(i.ToString()).GetSection("DBConnectionString").Value, configs.GetSection(i.ToString()).GetSection("DBProvider").Value);
-                        config.ConfigId = i.ToString();
+                    var configs=(DBConfig[]) Configuration.GetSection("SystemConfig:SqlConfig").Get(typeof(DBConfig[]));
+                    foreach (var item in configs)
+                    {
+                        var config = DBContexHelper.Contex(item.DBConnectionString, item.DBProvider);
+                        config.ConfigId = item.DBNumber;
                         list.Add(config);
                     }
                 }

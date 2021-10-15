@@ -74,5 +74,24 @@ namespace WaterCloud.Code.Model
         /// </summary>
 		public bool? ReviseSysem { get; set; }
 		public int? LoginErrorCount { get; set; }
+        /// <summary>
+        /// 多数据库组
+        /// </summary>
+		public DBConfig[] SqlConfig { get; set; }
+    }
+    public class DBConfig
+    {
+        /// <summary>
+        /// 数据库序号
+        /// </summary>
+		public string DBNumber { get; set; }
+        /// <summary>
+        /// 数据库类型
+        /// </summary>
+        public string DBProvider { get; set; }
+        /// <summary>
+        /// 数据库连接
+        /// </summary>
+        public string DBConnectionString { get; set; }
     }
 }
