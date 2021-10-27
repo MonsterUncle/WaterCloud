@@ -129,6 +129,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             top.layer.alert(content, {
                 icon: icon,
                 title: "系统提示",
+                id: "系统提示",
                 btn: ['确认'],
                 btnclass: ['btn btn-primary'],
                 yes: function (index) {
@@ -205,6 +206,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 fix: false,
                 area: [_width, _height],
                 content: options.url,
+                id: !!options.id ? options.id : options.title,
                 btn: options.btn,
                 success: function (layero, index) {
                     if (!!options.success) {
@@ -324,6 +326,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 formType: type,
                 value: '',
                 title: title,
+                id:title,
                 btn: ['确认', '取消'],
                 btnclass: ['btn btn-primary', 'btn btn-danger'],
             }, function (value, index, elem) {
