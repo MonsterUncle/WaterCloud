@@ -504,6 +504,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             if (iframes.length > 0) {
                 iframes[0].contentWindow.$('button[lay-filter="' + filter + '"]').click();
             }
+            else {
+                window.parent.$('button[lay-filter="' + filter + '"]').click();
+            }
         },
         currentWindow: function () {
             var iframes = top.$(".layui-show>iframe");
@@ -538,6 +541,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         authorizeButtonNew: function (innerHTML) {
             //行操作权限控制
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            if (!moduleId) {
+                moduleId = location.pathname;
+            }
             var returnhtml = '';
             //没有就全清
             if (!top.clients || !top.clients.authorizeButton) {
@@ -603,6 +609,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         //权限按钮(控制dom,只控制button,旧)
         authorizeButton: function (id) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            if (!moduleId) {
+                moduleId = location.pathname;
+            }
             //没有就全清
             if (!top.clients || !top.clients.authorizeButton) {
                 $element.find('button[authorize=yes]').attr('authorize', 'no');
@@ -628,6 +637,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         //权限控制单个按钮，返回是否
         authorizeButtonOne: function (id) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            if (!moduleId) {
+                moduleId = location.pathname;
+            }
             var isOk = false;
             if (!top.clients || !top.clients.authorizeButton || !top.clients.authorizeButton[moduleId.split("?")[0]]) {
                 isOk = false;
@@ -653,6 +665,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         //表单权限字段
         authorizeFields: function (filter) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            if (!moduleId) {
+                moduleId = location.pathname;
+            }
             var element = $('div[lay-filter=' + filter + ']');
             //没有就全清
             if (!top.clients || !top.clients.moduleFields) {
@@ -824,6 +839,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         //表格权限字段(过滤cols)
         tableAuthorizeFields: function (cols) {
             var moduleId = top.$(".layui-tab-title>.layui-this").attr("lay-id");
+            if (!moduleId) {
+                moduleId = location.pathname;
+            }
             //没有权限就返回无
             if (!top.clients||!top.clients.moduleFields) {
                 return [];
