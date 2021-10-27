@@ -28,7 +28,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetGridJson(Pagination pagination, string moduleId, string keyword)
         {
             pagination.order = "desc";
-            pagination.field = "F_CreatorTime desc";
+            pagination.field = "F_Id";
             var data = await _service.GetLookList(pagination, moduleId, keyword);
             return Success(pagination.records, data);
         }

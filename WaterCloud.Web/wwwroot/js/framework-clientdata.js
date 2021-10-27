@@ -1,6 +1,11 @@
-﻿var clients = [];
+﻿var clients = {};
 $(function () {
-    clients = $.clientsInit();
+    if (!!top.clients && top.clients.hasOwnProperty("dataItems")) {
+        clients = top.clients;
+    }
+    else {
+        clients = $.clientsInit();
+    }
 })
 $.clientsInit = function () {
     var dataJson = {
