@@ -308,6 +308,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
            var index= top.layer.confirm(content, {
                 icon: "fa-exclamation-circle",
                 title: "系统提示",
+                id: "系统提示",
                 btn: ['确认', '取消'],
                 btnclass: ['btn btn-primary', 'btn btn-danger'],
             }, function () {
