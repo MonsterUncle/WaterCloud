@@ -92,7 +92,7 @@
 3. SqlSugar.ORM 文档地址：https://www.donet5.com/home/doc
 4. Chloe.ORM 文档地址：https://github.com/shuxinqin/Chloe/wiki
 5. WaterCloud讨论交流QQ群（1065447456）[![](https://pub.idqqimg.com/wpa/images/group.png)](https://jq.qq.com/?_wv=1027&k=51RHQVG)
-6. .NET易用底层框架 Furion，码云地址：https://gitee.com/monksoul/Furion
+6. .NET易用底层框架 Furion，码云地址：https://gitee.com/dotnetchina/Furion
 
 #### 捐赠支持
 
