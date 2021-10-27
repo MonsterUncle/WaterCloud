@@ -513,6 +513,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             if (iframes.length > 0) {
                 return iframes[0].contentWindow;
             }
+            else {
+                return window.parent;
+            }
         },
         //当前页刷新（按钮刷新）
         reload: function (filter) {

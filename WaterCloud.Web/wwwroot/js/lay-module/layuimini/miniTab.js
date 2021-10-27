@@ -45,18 +45,23 @@ layui.define(["element", "layer", "jquery"], function (exports) {
             options.title = options.title || null;
             options.isIframe = options.isIframe || false;
             options.maxTabNum = options.maxTabNum || 20;
-            if ($(".layuimini-tab .layui-tab-title li").length >= options.maxTabNum) {
+            if (top.$(".layuimini-tab .layui-tab-title li").length >= options.maxTabNum) {
                 layer.msg('Tab窗口已达到限定数量，请先关闭部分Tab');
                 return false;
             }
-            var ele = element;
-            if (options.isIframe) ele = parent.layui.element;
-            ele.tabAdd('layuiminiTab', {
-                title: '<span class="layuimini-tab-active"></span><span>' + options.title + '</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>' //用于演示
-                , content: '<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0"   src="' + options.href + '"></iframe>'
-                , id: options.tabId
-            });
-            $('.layuimini-menu-left').attr('layuimini-tab-tag', 'add');
+            if (top.$(".layuimini-tab").length == 0) {
+                window.open(options.href, "_blank");
+            }
+            else {
+                var ele = element;
+                if (options.isIframe) ele = parent.layui.element;
+                ele.tabAdd('layuiminiTab', {
+                    title: '<span class="layuimini-tab-active"></span><span>' + options.title + '</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>' //用于演示
+                    , content: '<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0"   src="' + options.href + '"></iframe>'
+                    , id: options.tabId
+                });
+                $('.layuimini-menu-left').attr('layuimini-tab-tag', 'add');
+            }
             var name = 'layuiminimenu_list'+"=";
             var datajson = {};
             var ca = document.cookie.split(';');
@@ -315,7 +320,7 @@ layui.define(["element", "layer", "jquery"], function (exports) {
             $('body').on('click', '[layuimini-tab-close]', function () {
                 var loading = layer.load(0, { shade: false, time: 2 * 1000 });
                 var closeType = $(this).attr('layuimini-tab-close');
-                $(".layuimini-tab .layui-tab-title li").each(function () {
+                top.$(".layuimini-tab .layui-tab-title li").each(function () {
                     var tabId = $(this).attr('lay-id');
                     var id = $(this).attr('id');
                     var isCurrent = $(this).hasClass('layui-this');
