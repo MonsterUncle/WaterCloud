@@ -696,7 +696,7 @@ namespace WaterCloud.CodeGenerator
                     sb.AppendLine("             search:false,");
                 }
                 sb.AppendLine("             treeColIndex: 1,           // 折叠图标显示在第几列");
-                sb.AppendLine("             url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson'+(!queryJson ? '' : '?keyword=' + queryJson),"); sb.AppendLine("             sqlkey: '" + idColumn + "',//数据库主键");
+                sb.AppendLine("             url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/GetTreeGridJson'+(!queryJson ? '' : '?keyword=' + queryJson),"); 
                 sb.AppendLine("             cols: [[");
                 sb.AppendLine("                 //此处需修改");
                 sb.AppendLine("                 { type: \"radio\", width: 50, fixed: 'left' },");
