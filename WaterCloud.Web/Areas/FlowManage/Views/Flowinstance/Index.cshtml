@@ -127,8 +127,7 @@
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
-                 var userJsonStr = sessionStorage.getItem('currentUser');
-                 var userId = JSON.parse(userJsonStr).F_Id;
+                 var userId = top.currentUser.F_Id;
                  if (data[0].F_IsFinish != 4 || data[0].F_MakerList.indexOf(userId)<0 ) {
                      common.modalMsg("申请已处理，无法修改", "warning");
                      return false;
@@ -178,8 +177,7 @@
                  });
              }
              else if (obj.event === 'edit') {
-                 var userJsonStr = sessionStorage.getItem('currentUser');
-                 var userId = JSON.parse(userJsonStr).F_Id;
+                 var userId = top.currentUser.F_Id;
                  if (obj.data.F_IsFinish != 4 || obj.data.F_MakerList.indexOf(userId) < 0) {
                      common.modalMsg("申请已处理，无法修改", "warning");
                      return false;

@@ -1,10 +1,17 @@
 ﻿var clients = {};
+var currentUser = {};
 $(function () {
     if (!!top.clients && top.clients.hasOwnProperty("dataItems")) {
         clients = top.clients;
     }
     else {
         clients = $.clientsInit();
+    }
+    if (!!top.currentUser) {
+        currentUser = top.currentUser;
+    }
+    else {
+        currentUser = $.userInit();
     }
 })
 $.clientsInit = function () {
@@ -13,10 +20,11 @@ $.clientsInit = function () {
         authorizeButton: [],
         authorizeFields: [],
         moduleFields: [],
+        printTemplates: [],
     };
     var init = function () {
         $.ajax({
-            url: "/ClientsData/GetClientsDataJson?v="+new Date().Format("yyyy-MM-dd hh:mm:ss"),
+            url: "/ClientsData/GetClientsDataJson?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
             type: "get",
             dataType: "json",
             async: false,
@@ -25,6 +33,23 @@ $.clientsInit = function () {
                 dataJson.authorizeButton = data.authorizeButton;
                 dataJson.authorizeFields = data.authorizeFields;
                 dataJson.moduleFields = data.moduleFields;
+                dataJson.printTemplates = data.printTemplates;
+            }
+        });
+    }
+    init();
+    return dataJson;
+}
+$.userInit = function () {
+    var dataJson = {};
+    var init = function () {
+        $.ajax({
+            url: "/ClientsData/GetUserCode?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
+            type: "get",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                dataJson = data;
             }
         });
     }

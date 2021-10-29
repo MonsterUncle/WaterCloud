@@ -162,35 +162,27 @@
                 notice = layui.notice,
                 miniTongji = layui.miniTongji;
             function loadUser() {
-                common.ajax({
-                    url: "/ClientsData/GetUserCode?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),
-                    dataType: "json",
-                    async: true,
-                    success: function (data) {
-                        var code = document.getElementById("usercode");
-                        if (data.F_IsAdmin) {
-                            $('[data-clear]').removeClass('layui-hide');
-                        }
-                        else {
-                            $('[data-clear]').parent().remove();
-                        }
-                        code.innerHTML = data.F_Account + '<i class="layui-icon layui-icon-down layui-nav-more"></i>';
-                        sessionStorage.setItem('currentUser', JSON.stringify(data));
-                        if (data.MsgCout > 0) {
-                            $('#noticeMarker').html('<span class="layui-badge-dot"></span>');
-                            notice.options = {
-                                positionClass: "toast-bottom-right",//弹出的位置,
-                                onclick: function () {
-                                    $('#noticeMarker').click();
-                                },
-                            };
-                            notice.info('您有' + data.MsgCout + '条信息未读');
-                        }
-                        else {
-                            $('#noticeMarker').html('');
-                        }
-                    }
-                });
+                var code = document.getElementById("usercode");
+                if (top.currentUser.F_IsAdmin) {
+                    $('[data-clear]').removeClass('layui-hide');
+                }
+                else {
+                    $('[data-clear]').parent().remove();
+                }
+                code.innerHTML = top.currentUser.F_Account + '<i class="layui-icon layui-icon-down layui-nav-more"></i>';                
+                if (top.currentUser.MsgCout > 0) {
+                    $('#noticeMarker').html('<span class="layui-badge-dot"></span>');
+                    notice.options = {
+                        positionClass: "toast-bottom-right",//弹出的位置,
+                        onclick: function () {
+                            $('#noticeMarker').click();
+                        },
+                    };
+                    notice.info('您有' + data.MsgCout + '条信息未读');
+                }
+                else {
+                    $('#noticeMarker').html('');
+                }
             };
             var bgcolor = localStorage.getItem('watercloudBgcolorId');
             var options = {
