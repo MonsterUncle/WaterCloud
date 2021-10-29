@@ -7,7 +7,7 @@ $(function () {
     else {
         clients = $.clientsInit();
     }
-    if (!!top.currentUser) {
+    if (!!top.currentUser && top.clients.hasOwnProperty("F_Id")) {
         currentUser = top.currentUser;
     }
     else {
