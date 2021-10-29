@@ -92,7 +92,7 @@ namespace WaterCloud.Web.Controllers
             }
             else if (roleId == null && !_userService.currentuser.IsSystem)
             {
-                return null;
+                roleId = "visitor";
             }
             Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
             var list= await _roleAuthorizeService.GetMenuList(roleId);
@@ -312,7 +312,7 @@ namespace WaterCloud.Web.Controllers
             }
             else if (roleId == null && !currentuser.IsSystem)
             {
-                return null;
+                roleId = "visitor";
             }
             var rolelist = roleId.Split(',');
             var dictionarylist = new Dictionary<string, List<ModuleButtonEntity>>();
@@ -356,7 +356,7 @@ namespace WaterCloud.Web.Controllers
             }
             else if (roleId == null && !currentuser.IsSystem)
             {
-                return null;
+                roleId = "visitor";
             }
             var rolelist = roleId.Split(',');
             var dictionarylist = new Dictionary<string, List<ModuleFieldsEntity>>();
