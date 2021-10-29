@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using WaterCloud.Service.SystemOrganize;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Service.InfoManage;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WaterCloud.Web.Controllers
 {
@@ -44,6 +45,7 @@ namespace WaterCloud.Web.Controllers
         /// <returns></returns>
         [HttpGet]
         [HandlerAjaxOnly]
+        [AllowAnonymous]
         public async Task<ActionResult> GetClientsDataJson()
         {
             var data = new
@@ -155,6 +157,7 @@ namespace WaterCloud.Web.Controllers
         /// <returns></returns>
         [HttpGet]
         [HandlerAjaxOnly]
+        [AllowAnonymous]
         public async Task<ActionResult> GetUserCode()
         {
             var currentuser = _userService.currentuser;
