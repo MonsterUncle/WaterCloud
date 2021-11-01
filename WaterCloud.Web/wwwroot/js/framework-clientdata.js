@@ -20,7 +20,6 @@ $.clientsInit = function () {
         authorizeButton: [],
         authorizeFields: [],
         moduleFields: [],
-        printTemplates: [],
     };
     var init = function () {
         $.ajax({
@@ -33,7 +32,6 @@ $.clientsInit = function () {
                 dataJson.authorizeButton = data.authorizeButton;
                 dataJson.authorizeFields = data.authorizeFields;
                 dataJson.moduleFields = data.moduleFields;
-                dataJson.printTemplates = data.printTemplates;
             }
         });
     }
