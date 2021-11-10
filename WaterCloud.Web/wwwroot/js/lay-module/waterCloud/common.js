@@ -873,7 +873,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             return cols;
         },
         //treetable行点击事件及按钮显示控制
-        treeTableRowClick: function (type, rendertree ,tableId, oneList, moreList) {
+        treeTableRowClick: function (type, rendertree, tableId, oneList, moreList, clickfunction) {
             var oneList = !!oneList ? oneList : [];
             var moreList = !!moreList ? moreList : [];
             treeTable.on('row(' + tableId + ')', function (obj) {
@@ -886,6 +886,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     for (var i = 0; i < moreList.length; i++) {
                         $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
                     }
+                }
+                if (clickfunction) {
+                    clickfunction(obj);
                 }
             })
             //多选框监听
