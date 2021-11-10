@@ -150,15 +150,23 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(job.F_StarRunTime, 1);
                 DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(DateTime.MaxValue.AddDays(-1), 1);
-                IJobDetail jobdetail = JobBuilder.Create<JobExecute>().WithIdentity(job.F_JobName, job.F_JobGroup).Build();
-                jobdetail.JobDataMap.Add("F_Id", job.F_Id);
+                
                 ITrigger trigger = TriggerBuilder.Create()
                                                  .StartAt(starRunTime)
                                                  .EndAt(endRunTime)
                                                  .WithIdentity(job.F_JobName, job.F_JobGroup)
                                                  .WithCronSchedule(job.F_CronExpress)
                                                  .Build();
-                await _scheduler.ScheduleJob(jobdetail, trigger);
+
+                // 判断数据库中有没有记录过，有的话，quartz会自动从数据库中提取信息创建 schedule
+                if (!await _scheduler.CheckExists(new JobKey(job.F_JobName, job.F_JobGroup)))
+                {
+                    IJobDetail jobdetail = JobBuilder.Create<JobExecute>().WithIdentity(job.F_JobName, job.F_JobGroup).Build();
+                    jobdetail.JobDataMap.Add("F_Id", job.F_Id);
+
+                    await _scheduler.ScheduleJob(jobdetail, trigger);
+                }
+
                 job.F_EnabledMark = true;
                 job.F_StarRunTime = DateTime.Now;
             }

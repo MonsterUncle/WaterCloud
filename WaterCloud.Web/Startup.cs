@@ -28,6 +28,9 @@ using System.Collections.Generic;
 using WaterCloud.Domain.SystemOrganize;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
+using Quartz.Impl.AdoJobStore.Common;
+using System.Collections.Specialized;
+using MySql.Data.MySqlClient;
 
 namespace WaterCloud.Web
 {
@@ -128,8 +131,38 @@ namespace WaterCloud.Web
             #region 注入 Quartz调度类
             services.AddSingleton<JobExecute>();
             //注册ISchedulerFactory的实例。
-            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             services.AddSingleton<IJobFactory, IOCJobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            //开启集群模式,具体数据库从官方github下载
+            //services.AddSingleton<ISchedulerFactory>(u => {
+            //    DbProvider.RegisterDbMetadata("mysql-custom", new DbMetadata()
+            //    {
+            //        AssemblyName = typeof(MySqlConnection).Assembly.GetName().Name,
+            //        ConnectionType = typeof(MySqlConnection),
+            //        CommandType = typeof(MySqlCommand),
+            //        ParameterType = typeof(MySqlParameter),
+            //        ParameterDbType = typeof(DbType),
+            //        ParameterDbTypePropertyName = "DbType",
+            //        ParameterNamePrefix = "@",
+            //        ExceptionType = typeof(MySqlException),
+            //        BindByName = true
+            //    });
+            //    var properties = new NameValueCollection
+            //    {
+            //        ["quartz.jobStore.type"] = "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz", // 配置Quartz以使用JobStoreTx
+            //        //["quartz.jobStore.useProperties"] = "true", // 配置AdoJobStore以将字符串用作JobDataMap值
+            //        ["quartz.jobStore.dataSource"] = "myDS", // 配置数据源名称
+            //        ["quartz.jobStore.tablePrefix"] = "QRTZ_", // quartz所使用的表，在当前数据库中的表前缀
+            //        ["quartz.jobStore.driverDelegateType"] = "Quartz.Impl.AdoJobStore.MySQLDelegate, Quartz",  // 配置AdoJobStore使用的DriverDelegate
+            //        ["quartz.dataSource.myDS.connectionString"] = Configuration.GetSection("SystemConfig:DBConnectionString").Value, // 配置数据库连接字符串，自己处理好连接字符串，我这里就直接这么写了
+            //        ["quartz.dataSource.myDS.provider"] = "mysql-custom", // 配置数据库提供程序（这里是自定义的，定义的代码在上面）
+            //        ["quartz.jobStore.lockHandler.type"] = "Quartz.Impl.AdoJobStore.UpdateLockRowSemaphore, Quartz",
+            //        ["quartz.serializer.type"] = "binary",
+            //        ["quartz.jobStore.clustered"] = "true",    //  指示Quartz.net的JobStore是应对 集群模式
+            //        ["quartz.scheduler.instanceId"] = "AUTO"
+            //    };
+            //    return new StdSchedulerFactory(properties);
+            //});
             //是否开启后台任务
             if (Configuration.GetSection("SystemConfig:OpenQuarz").Value == "True")
             {
