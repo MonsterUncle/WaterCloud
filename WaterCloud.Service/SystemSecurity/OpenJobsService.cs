@@ -110,6 +110,11 @@ namespace WaterCloud.Service.SystemSecurity
 
         public async Task DeleteForm(string keyValue)
         {
+            var job = await repository.FindEntity(keyValue);
+            TriggerKey triggerKey = new TriggerKey(job.F_JobName, job.F_JobGroup);
+            await _scheduler.PauseTrigger(triggerKey);
+            await _scheduler.UnscheduleJob(triggerKey);
+            await _scheduler.DeleteJob(new JobKey(job.F_JobName, job.F_JobGroup));
             await repository.Delete(a => a.F_Id == keyValue);
         }
         #region 定时任务运行相关操作
