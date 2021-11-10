@@ -310,7 +310,7 @@ layui.define(["jquery", "layer", 'table', 'soulTable', 'common', 'tabletree'], f
             return options;
         },
         //table行点击事件及按钮显示控制
-        tableRowClick: function (type, tableFilter, tableId, oneList, moreList) {
+        tableRowClick: function (type, tableFilter, tableId, oneList, moreList, clickfunction) {
             var oneList = !!oneList ? oneList : [];
             var moreList = !!moreList ? moreList : [];
             //type是checkbox或者radio
@@ -340,6 +340,9 @@ layui.define(["jquery", "layer", 'table', 'soulTable', 'common', 'tabletree'], f
             });
             table.on('row(' + tableFilter+')', function (obj) {
                 obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+                if (clickfunction) {
+                    clickfunction(obj);
+                }
             })
             //多选框监听
             table.on(type+'(' + tableFilter + ')', function (obj) {
