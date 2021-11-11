@@ -134,6 +134,7 @@ namespace WaterCloud.Web
             services.AddSingleton<IJobFactory, IOCJobFactory>();
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             //开启集群模式,具体数据库从官方github下载
+            //https://github.com/quartznet/quartznet/blob/main/database/tables/
             //services.AddSingleton<ISchedulerFactory>(u => {
             //    DbProvider.RegisterDbMetadata("mysql-custom", new DbMetadata()
             //    {
