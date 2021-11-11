@@ -112,7 +112,7 @@ namespace WaterCloud.Web
             //        ["quartz.dataSource.myDS.connectionString"] = Configuration.GetSection("SystemConfig:DBConnectionString").Value, // 配置数据库连接字符串，自己处理好连接字符串，我这里就直接这么写了
             //        ["quartz.dataSource.myDS.provider"] = "mysql-custom", // 配置数据库提供程序（这里是自定义的，定义的代码在上面）
             //        ["quartz.jobStore.lockHandler.type"] = "Quartz.Impl.AdoJobStore.UpdateLockRowSemaphore, Quartz",
-            //        ["quartz.serializer.type"] = "binary",
+            //        ["quartz.serializer.type"] = "json",
             //        ["quartz.jobStore.clustered"] = "true",    //  指示Quartz.net的JobStore是应对 集群模式
             //        ["quartz.scheduler.instanceId"] = "AUTO"
             //    };
