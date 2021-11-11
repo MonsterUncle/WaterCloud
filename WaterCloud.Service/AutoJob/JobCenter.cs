@@ -10,6 +10,8 @@ using Quartz.Spi;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service.SystemSecurity;
+using Quartz.Impl.Triggers;
+using System.Collections.ObjectModel;
 
 namespace WaterCloud.Service.AutoJob
 {
@@ -94,14 +96,16 @@ namespace WaterCloud.Service.AutoJob
                                                  .WithIdentity(entity.F_JobName, entity.F_JobGroup)
                                                  .WithCronSchedule(entity.F_CronExpress)
                                                  .Build();
-
+                    ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
                     // 判断数据库中有没有记录过，有的话，quartz会自动从数据库中提取信息创建 schedule
                     if (!await _scheduler.CheckExists(new JobKey(entity.F_JobName,entity.F_JobGroup)))
                     {
                         IJobDetail job = JobBuilder.Create<JobExecute>().WithIdentity(entity.F_JobName, entity.F_JobGroup).Build();
                         job.JobDataMap.Add("F_Id", entity.F_Id);
-
                         await _scheduler.ScheduleJob(job, trigger, cancellationToken);
+                        //存在相同名字的Job或Trigger,更新调度任务
+                        //IList<ICronTrigger> triggers = new List<ICronTrigger> { trigger };
+                        //await _scheduler.ScheduleJob(job, new ReadOnlyCollection<ICronTrigger>(triggers), true);
                     }
                 }
             }
