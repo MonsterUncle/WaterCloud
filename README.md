@@ -40,7 +40,7 @@
 - 页面为响应式设计，支持电脑、平板、智能手机等设备，微信浏览器以及各种常见浏览器。
 - 适用范围：可以开发OA、ERP、BPM、CRM、WMS、TMS、MIS、BI、电商平台后台、物流管理系统、快递管理系统、教务管理系统等各类管理软件。
 - 租户管理，基于Database的多租户功能(SqlSugar支持)。
-
+- 定时任务，基于quartz的定时任务功能(可以集群)。
 - 项目演示地址：http://106.75.169.226:5000/  （账号：admin 密码：0000，数据库2个小时还原一次）
 - 文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
 
