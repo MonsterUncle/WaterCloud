@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>c1fb91bb-fd9e-4a3a-8c93-b84e89a0941a</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <Version>2.15.0.0</Version>
+    <Version>2.16.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -22,7 +22,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
     <PackageReference Include="Quartz" Version="3.3.3" />
     <PackageReference Include="Quartz.Serialization.Json" Version="3.3.3" />
-    <PackageReference Include="System.DirectoryServices.Protocols" Version="5.0.0" />
+    <PackageReference Include="System.DirectoryServices.Protocols" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
