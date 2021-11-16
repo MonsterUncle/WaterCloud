@@ -48,8 +48,7 @@ namespace WaterCloud.Service.AutoJob
         {
             _scheduler = await _schedulerFactory.GetScheduler(cancellationToken);
             _scheduler.JobFactory = _jobFactory;
-
-            List<OpenJobEntity> obj = await _service.GetList();
+            List<OpenJobEntity> obj = await _service.GetList("",false);
             obj = obj.Where(a => a.F_EnabledMark == true).ToList();
             if (obj.Count > 0)
             {

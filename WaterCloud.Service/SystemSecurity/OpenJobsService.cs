@@ -64,15 +64,27 @@ namespace WaterCloud.Service.SystemSecurity
                 return HandleLogHelper.HGetAll<OpenJobLogEntity>(keyValue).Values.OrderByDescending(a => a.F_CreatorTime).ToList(); ;
             }
         }
-        public async Task<List<OpenJobEntity>> GetList(string keyword = "")
+        public async Task<List<OpenJobEntity>> GetList(string keyword = "",bool needDb=true)
         {
-            var DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
-            var query = repository.IQueryable().Where(a => a.F_DbNumber == DbNumber);
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                query = query.Where(a => a.F_JobName.Contains(keyword));
+			if (needDb)
+			{
+                var DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
+                var query = repository.IQueryable().Where(a => a.F_DbNumber == DbNumber);
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    query = query.Where(a => a.F_JobName.Contains(keyword));
+                }
+                return query.Where(a => a.F_DeleteMark == false).ToList();
             }
-            return query.Where(a => a.F_DeleteMark == false).ToList();
+			else
+			{
+                var query = repository.IQueryable();
+                if (!string.IsNullOrEmpty(keyword))
+                {
+                    query = query.Where(a => a.F_JobName.Contains(keyword));
+                }
+                return query.Where(a => a.F_DeleteMark == false).ToList();
+            }
         }
         public async Task<List<OpenJobEntity>> GetAllList(string keyword = "")
         {
