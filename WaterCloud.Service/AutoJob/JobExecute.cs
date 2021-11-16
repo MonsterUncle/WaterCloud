@@ -68,7 +68,7 @@ namespace WaterCloud.Service.AutoJob
                                     log.F_JobId = jobId;
                                     log.F_JobName = dbJobEntity.F_JobName;
                                     log.F_CreatorTime = now;
-                                    unitwork.CurrentBeginTrans();
+                                    unitwork.BeginTrans();
                                     AlwaysResult result = new AlwaysResult();
                                     if (dbJobEntity.F_JobType == 0)
                                     {
@@ -95,7 +95,7 @@ namespace WaterCloud.Service.AutoJob
                                             {
                                                 F_LastRunMark = true,
                                                 F_LastRunTime = now,
-                                            }).IgnoreColumns(ignoreAllNullColumns: true).Where(a => a.F_Id == jobId).ExecuteCommandAsync();
+                                            }).Where(a => a.F_Id == jobId).ExecuteCommandAsync();
                                         }
                                         else
                                         {
@@ -170,7 +170,7 @@ namespace WaterCloud.Service.AutoJob
                                             await HandleLogHelper.HSetAsync(log.F_JobId, log.F_Id, log);
                                         }
                                     }
-                                    unitwork.CurrentCommit();
+                                    unitwork.Commit();
                                 }
                             }
                         }
