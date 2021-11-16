@@ -1,4 +1,4 @@
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
@@ -58,7 +58,9 @@
                 { field: 'F_RequestUrl', title: '请求地址', minWidth: 180, sort: true },
                 { field: 'F_RequestString', title: '请求参数', minWidth: 180, sort: true },
                 { field: 'F_CronExpress', title: 'CRON', minWidth: 150 },
-                { field: 'F_Description', title: '备注', minWidth: 200, sort: true }
+                { field: 'F_Description', title: '备注', minWidth: 200, sort: true },
+                { title: '操作', width: 310, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
+
             ]]
         });
         // 监听搜索操作
@@ -84,7 +86,8 @@
                 common.modalOpen({
                     title: "添加任务",
                     url: "/SystemSecurity/OpenJobs/Form",
-                    isMax: true,
+                    width: "750px",
+                    height: "650px",
                 });
             }
             else if (obj.event === 'delete') {
@@ -108,7 +111,8 @@
                 common.modalOpen({
                     title: "修改任务",
                     url: "/SystemSecurity/OpenJobs/Form?keyValue=" + data[0].F_Id,
-                    isMax: true,
+                    width: "750px",
+                    height: "650px",
                 });
             }
             else if (obj.event === 'clear') {
@@ -208,7 +212,8 @@
                 common.modalOpen({
                     title: "修改任务",
                     url: "/SystemSecurity/OpenJobs/Form?keyValue=" + obj.data.F_Id,
-                    isMax: true,
+                    width: "750px",
+                    height: "650px",
                 });
             }
             else if (obj.event === 'doNow') {

@@ -1,4 +1,4 @@
-@{
+﻿@{
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
@@ -101,25 +101,25 @@
                     success: function (data) {
                         common.val('adminform', data);
                         changeJobType(data.F_JobType);
-                        //cron.render({
-                        //    elem: "#F_CronExpress",           // 绑定元素
-                        //    value: data.F_CronExpress, // 默认值
-                        //    done: function (cronStr) {  // 点击确定，或运行时，触发，参数为 cron 表达式字符串
-                        //        $("#F_CronExpress").val(cronStr);
-                        //    },
-                        //});
+                        cron.render({
+                            elem: "#F_CronExpress",           // 绑定元素
+                            value: data.F_CronExpress, // 默认值
+                            done: function (cronStr) {  // 点击确定，或运行时，触发，参数为 cron 表达式字符串
+                                $("#F_CronExpress").val(cronStr);
+                            },
+                        });
                     }
                 });
             }
             else {
                 changeJobType(0);
-                //cron.render({
-                //    elem: "#F_CronExpress",           // 绑定元素
-                //    value: "0/20 * * * * ?", // 默认值
-                //    done: function (cronStr) {  // 点击确定，或运行时，触发，参数为 cron 表达式字符串
-                //        $("#F_CronExpress").val(cronStr);
-                //    },
-                //});
+                cron.render({
+                    elem: "#F_CronExpress",           // 绑定元素
+                    value: "0/20 * * * * ?", // 默认值
+                    done: function (cronStr) {  // 点击确定，或运行时，触发，参数为 cron 表达式字符串
+                        $("#F_CronExpress").val(cronStr);
+                    },
+                });
             }
             form.render();
         });
