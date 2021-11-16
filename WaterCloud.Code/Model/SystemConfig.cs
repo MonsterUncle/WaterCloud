@@ -78,6 +78,10 @@ namespace WaterCloud.Code.Model
         /// 多数据库组
         /// </summary>
 		public DBConfig[] SqlConfig { get; set; }
+        /// <summary>
+        /// 是否集群
+        /// </summary>
+        public bool? IsCluster { get; set; }
     }
     public class DBConfig
     {
