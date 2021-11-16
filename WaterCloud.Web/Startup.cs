@@ -86,7 +86,7 @@ namespace WaterCloud.Web
             #region 注入 Quartz调度类
             services.AddSingleton<JobExecute>();
             //注册ISchedulerFactory的实例。
-            if (Configuration.GetSection("SystemConfig:IsCluster").Value == "True")
+            if (Configuration.GetSection("SystemConfig:IsCluster").Value != "True")
             {
                 services.AddSingleton<IJobFactory, IOCJobFactory>();
             }
