@@ -57,9 +57,16 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<string> GetMaxSortCode(string F_ParentId)
         {
-            int F_SortCode = (int)repository.Db.Queryable<ModuleEntity>().Where(t => t.F_ParentId == F_ParentId).Max(a => a.F_SortCode);
+			try
+			{
+                int F_SortCode = (int)repository.Db.Queryable<ModuleEntity>().Where(t => t.F_ParentId == F_ParentId).Max(a => a.F_SortCode);
 
-            return (F_SortCode + 1).ToString();
+                return (F_SortCode + 1).ToString();
+            }
+			catch (Exception)
+			{
+                return "0";
+			}
         }
         public async Task DeleteForm(string keyValue)
         {
