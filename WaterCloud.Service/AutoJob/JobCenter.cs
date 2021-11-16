@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -33,14 +33,11 @@ namespace WaterCloud.Service.AutoJob
         private OpenJobsService _service;
         private IScheduler _scheduler;
 
-        /// <summary>
-        /// 构造注入
-        /// </summary>
         public JobCenter(OpenJobsService service, ISchedulerFactory schedulerFactory, IJobFactory jobFactory)
         {
             _service = service;
-            _jobFactory = jobFactory;
             _schedulerFactory = schedulerFactory;
+            _jobFactory = jobFactory;
         }
         /// <summary>
         /// 批量启动定时任务
@@ -52,69 +49,35 @@ namespace WaterCloud.Service.AutoJob
             _scheduler = await _schedulerFactory.GetScheduler(cancellationToken);
             _scheduler.JobFactory = _jobFactory;
 
-            List<OpenJobEntity> obj = await _service.GetAllList(null);
+            List<OpenJobEntity> obj = await _service.GetList();
             obj = obj.Where(a => a.F_EnabledMark == true).ToList();
             if (obj.Count > 0)
             {
-                await AddScheduleJob(obj, cancellationToken);
-            }
-            await _scheduler.Start();
-            //if (!GlobalContext.SystemConfig.Debug)
-            //{
-            //    List<OpenJobEntity> obj = await new OpenJobService().GetList(null);
-            //    if (obj.Count>0)
-            //    {
-            //        AddScheduleJob(obj);
-            //    }
-            //}
-        }
-
-        public async Task StopAsync(CancellationToken cancellationToken)
-        {
-            await ClearScheduleJob();
-        }
-        #region 添加任务计划
-        /// <summary>
-        /// 添加任务计划
-        /// </summary>
-        /// <returns></returns>
-        private async Task AddScheduleJob(List<OpenJobEntity> entityList, CancellationToken cancellationToken)
-        {
-            try
-            {
-                foreach (OpenJobEntity entity in entityList)
+                foreach (OpenJobEntity entity in obj)
                 {
                     entity.F_StarRunTime = DateTime.Now;
                     entity.F_EndRunTime = DateTime.Now.AddSeconds(-1);
                     DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(entity.F_StarRunTime, 1);
                     DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(DateTime.MaxValue.AddDays(-1), 1);
+                    //更新数据库
                     await _service.SubmitForm(entity, entity.F_Id);
-                    
-                    ICronTrigger trigger = (ICronTrigger)TriggerBuilder.Create()
-                                                 .StartAt(starRunTime)
-                                                 .EndAt(endRunTime)
-                                                 .WithIdentity(entity.F_JobName, entity.F_JobGroup)
-                                                 .WithCronSchedule(entity.F_CronExpress)
-                                                 .Build();
-                    ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
-                    // 判断数据库中有没有记录过，有的话，quartz会自动从数据库中提取信息创建 schedule
-                    if (!await _scheduler.CheckExists(new JobKey(entity.F_JobName,entity.F_JobGroup)))
-                    {
-                        IJobDetail job = JobBuilder.Create<JobExecute>().WithIdentity(entity.F_JobName, entity.F_JobGroup).Build();
-                        job.JobDataMap.Add("F_Id", entity.F_Id);
-                        await _scheduler.ScheduleJob(job, trigger, cancellationToken);
-                        //存在相同名字的Job或Trigger,更新调度任务
-                        //IList<ICronTrigger> triggers = new List<ICronTrigger> { trigger };
-                        //await _scheduler.ScheduleJob(job, new ReadOnlyCollection<ICronTrigger>(triggers), true);
-                    }
+                    //注册并启动作业
+                    await _service.AddJob(entity);
+                }
+                if (!_scheduler.IsStarted)
+                {
+                    await _scheduler.Start();
                 }
             }
-            catch (Exception ex)
-            {
-                LogHelper.WriteWithTime(ex);
-            }
         }
-        #endregion
+        /// <summary>
+        /// 停止
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task StopAsync(CancellationToken cancellationToken)
+            => await _scheduler?.Shutdown(cancellationToken);
+
 
         #region 清除任务计划
         /// <summary>
