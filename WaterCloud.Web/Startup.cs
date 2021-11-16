@@ -142,6 +142,7 @@ namespace WaterCloud.Web
 				//https://github.com/quartznet/quartznet/blob/main/database/tables/
 				services.AddSingleton<ISchedulerFactory>(u =>
 				{
+                    //当前是mysql的例子，其他数据库做相应更改
 					DbProvider.RegisterDbMetadata("mysql-custom", new DbMetadata()
 					{
 						AssemblyName = typeof(MySqlConnection).Assembly.GetName().Name,
