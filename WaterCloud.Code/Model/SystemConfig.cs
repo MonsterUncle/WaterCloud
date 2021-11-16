@@ -82,6 +82,10 @@ namespace WaterCloud.Code.Model
         /// 是否集群
         /// </summary>
         public bool? IsCluster { get; set; }
+        /// <summary>
+        /// 是否删除定时调度任务
+        /// </summary>
+        public bool? NeedClear { get; set; }
     }
     public class DBConfig
     {
