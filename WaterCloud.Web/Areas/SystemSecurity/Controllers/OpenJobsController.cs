@@ -1,4 +1,4 @@
-﻿using WaterCloud.Service.SystemSecurity;
+using WaterCloud.Service.SystemSecurity;
 using WaterCloud.Code;
 using System;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service;
 using System.Linq;
+using Quartz;
 
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
 {
@@ -15,7 +16,6 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     [Area("SystemSecurity")]
     public class OpenJobsController : ControllerBase
     {
-
         public OpenJobsService _service { get; set; }
 
         //获取详情
@@ -77,11 +77,8 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)
         {
-            if (string.IsNullOrEmpty(pagination.field))
-            {
-                pagination.order = "desc";
-                pagination.field = "F_EnabledMark";
-            }
+            pagination.order = "desc";
+            pagination.field = "F_EnabledMark";
             //导出全部页使用
             if (pagination.rows == 0 && pagination.page == 0)
             {
@@ -89,6 +86,18 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
                 pagination.page = 1;
             }
             var data = await _service.GetLookList(pagination, keyword);
+            foreach (var item in data)
+            {
+                if (item.F_EnabledMark == true)
+                {
+                    CronExpression cronExpression = new CronExpression(item.F_CronExpress);
+                    item.NextValidTimeAfter = cronExpression.GetNextValidTimeAfter(DateTime.Now).Value.ToLocalTime().DateTime;
+                }
+                else
+                {
+                    item.NextValidTimeAfter = null;
+                }
+            }
             return Success(pagination.records, data);
         }
         [HttpGet]
@@ -119,7 +128,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             }
         }
         /// <summary>
-        /// 执行任务
+        /// 立即执行任务
         /// </summary>
         [HttpPost]
         public async Task<ActionResult> DoNow(string keyValue)
@@ -127,11 +136,28 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             try
             {
                 await _service.DoNow(keyValue);
-                return await Success("操作成功。", "", null, null);
+                var data = await _service.GetForm(keyValue);
+                return await Success("操作成功。", "", keyValue);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, "", null);
+                return await Error(ex.Message, "", keyValue);
+            }
+        }
+        /// <summary>
+        /// 清除任务计划
+        /// </summary>
+        [HttpPost]
+        public async Task<ActionResult> ClearScheduleJob()
+        {
+            try
+            {
+                await _service.ClearScheduleJob();
+                return await Success("操作成功。", "", "");
+            }
+            catch (Exception ex)
+            {
+                return await Error(ex.Message, "", "");
             }
         }
         [HttpPost]
