@@ -70,5 +70,9 @@ namespace WaterCloud.Code.Model
         /// </summary>
 		public bool? ReviseSysem { get; set; }
         public int? LoginErrorCount { get; set; }
+        /// <summary>
+        /// 是否集群
+        /// </summary>
+        public bool? IsCluster { get; set; }
     }
 }

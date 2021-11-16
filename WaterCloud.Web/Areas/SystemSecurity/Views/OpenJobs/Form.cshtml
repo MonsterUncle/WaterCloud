@@ -100,6 +100,10 @@
                     async: false,
                     success: function (data) {
                         common.val('adminform', data);
+                        if(data.F_IsLog=='是')
+                        {
+                            $('#F_IsLog').attr("checked", 'checked');
+                        }
                         changeJobType(data.F_JobType);
                         cron.render({
                             elem: "#F_CronExpress",           // 绑定元素
