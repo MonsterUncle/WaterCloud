@@ -18,6 +18,7 @@ using SqlSugar;
 using System.IO;
 using System.Reflection;
 using System.Net.Http;
+using Quartz.Impl.Triggers;
 
 namespace WaterCloud.Service.SystemSecurity
 {
@@ -176,7 +177,7 @@ namespace WaterCloud.Service.SystemSecurity
                                                  .WithIdentity(job.F_JobName, job.F_JobGroup)
                                                  .WithCronSchedule(job.F_CronExpress)
                                                  .Build();
-
+                ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
                 // 判断数据库中有没有记录过，有的话，quartz会自动从数据库中提取信息创建 schedule
                 if (!await _scheduler.CheckExists(new JobKey(job.F_JobName, job.F_JobGroup)))
                 {
