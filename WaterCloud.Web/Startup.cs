@@ -29,6 +29,7 @@ using System.IO.Compression;
 using Quartz.Impl.AdoJobStore.Common;
 using System.Collections.Specialized;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace WaterCloud.Web
 {
@@ -85,7 +86,7 @@ namespace WaterCloud.Web
             #region 注入 Quartz调度类
             services.AddSingleton<JobExecute>();
             //注册ISchedulerFactory的实例。
-            if (Configuration.GetSection("SystemConfig:IsCluster").Value == "true")
+            if (Configuration.GetSection("SystemConfig:IsCluster").Value == "True")
             {
                 services.AddSingleton<IJobFactory, IOCJobFactory>();
             }
@@ -126,7 +127,7 @@ namespace WaterCloud.Web
 			}
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();           
             //是否开启后台任务
-            if (Configuration.GetSection("SystemConfig:OpenQuarz").Value == "true")
+            if (Configuration.GetSection("SystemConfig:OpenQuarz").Value == "True")
             {
                 services.AddHostedService<JobCenter>();
             }
