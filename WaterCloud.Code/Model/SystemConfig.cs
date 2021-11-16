@@ -74,5 +74,6 @@ namespace WaterCloud.Code.Model
         /// 是否集群
         /// </summary>
         public bool? IsCluster { get; set; }
+        public bool? NeedClear { get; set; }
     }
 }
