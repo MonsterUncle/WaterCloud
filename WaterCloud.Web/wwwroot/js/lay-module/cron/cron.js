@@ -222,7 +222,7 @@ layui.define(['form', 'element'], function (exports) {
     });
     elemMain.push(
       "</ul>",
-      '<div class="layui-tab-content" style="width:651px;min-height:300px;">',
+        '<div class="layui-tab-content" style="width:651px;min-height:260px;padding:0;">',
       elemSeconds,
       elemMinutes,
       elemHours,
@@ -520,8 +520,8 @@ layui.define(['form', 'element'], function (exports) {
     elem.push(
       '<div><input type="radio" name="type[3]" value="all" title="每天" ',
       radio[0],
-      "></div>",
-      '<div><input type="radio" name="type[3]" value="none" title="不指定" ',
+    "></div>",
+    '<div><input type="radio" name="type[6]" value="none" title="不指定" ',
       radio[1],
       "></div>",
       '<div><input type="radio" name="type[3]" value="range" title="周期" ',
@@ -610,8 +610,8 @@ layui.define(['form', 'element'], function (exports) {
     elem.push(
       '<div><input type="radio" name="type[4]" value="all" title="每个月" ',
       radio[0],
-      "></div>",
-      '<div><input type="radio" name="type[4]" value="none" title="不指定" ',
+    "></div>",
+    '<div><input type="radio" name="type[6]" value="none" title="不指定" ',
       radio[1],
       "></div>",
       '<div><input type="radio" name="type[4]" value="range" title="周期" ',
@@ -639,7 +639,7 @@ layui.define(['form', 'element'], function (exports) {
       "></div>"
     );
     elem.push("<div>");
-    for (var i = 0; i < 24; i++) {
+    for (var i = 1; i <= 12; i++) {
       elem.push(
         '<input type="checkbox" lay-skin="primary" name="months[',
         i,
@@ -693,8 +693,8 @@ layui.define(['form', 'element'], function (exports) {
     elem.push(
       '<div><input type="radio" name="type[5]" value="all" title="每个周" ',
       radio[0],
-      "></div>",
-      '<div><input type="radio" name="type[5]" value="none" title="不指定" ',
+    "></div>",
+    '<div><input type="radio" name="type[6]" value="none" title="不指定" ',
       radio[1],
       "></div>",
       '<div><input type="radio" name="type[5]" value="range" title="周期" ',

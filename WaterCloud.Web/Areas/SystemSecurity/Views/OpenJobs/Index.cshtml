@@ -8,7 +8,6 @@
             form = layui.form,
             table = layui.table,
             common = layui.common;
-        //加载数据
         wcLoading.close();
         //权限控制(js是值传递)
         currentTableBar.innerHTML = common.authorizeButtonNew(currentTableBar.innerHTML);
@@ -20,20 +19,17 @@
             page: false,
             cols: [[
                 { type: "radio", width: 50, fixed: 'left' },
-                { field: 'F_JobName', title: '名称', width: 120, sort: true },
-                { field: 'F_JobGroup', title: '组名', width: 120, sort: true },
+                { field: 'F_JobName', title: '名称', minWidth: 230, sort: true },
+                { field: 'F_JobGroup', title: '组名', minWidth: 180, sort: true },
+                { field: 'F_IsLog', title: '是否记录日志', minWidth: 130, sort: true },
                 {
-                    field: 'F_JobType', title: '类型', width: 120, sort: true,
+                    field: 'F_JobType', title: '类型', minWidth: 100, sort: true,
                     templet: function (d) {
                         return top.clients.dataItems["JobType"][d.F_JobType] == undefined ? "" : top.clients.dataItems["JobType"][d.F_JobType];
                     }
                 },
-                { field: 'F_FileName', title: '文件名', width: 180, sort: true },
-                { field: 'F_RequestUrl', title: '请求地址', width: 180, sort: true },
-                { field: 'F_RequestString', title: '请求参数', width: 180, sort: true },
-                { field: 'F_CronExpress', title: 'CRON', width: 150 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
+                    field: 'F_EnabledMark', title: '任务状态', minWidth: 110, sort: true,
                     templet: function (d) {
                         if (d.F_EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
@@ -42,39 +38,29 @@
                         }
                     }
                 },
+                { field: 'F_LastRunTime', title: '最近执行时间', minWidth: 160, sort: true },
+                { field: 'NextValidTimeAfter', title: '下次执行时间', minWidth: 160, sort: true },
                 {
-                    field: 'F_LastRunTime', title: '最近执行时间', width: 180, sort: true,
+                    field: 'F_LastRunMark', title: '最近执行状态', minWidth: 130, sort: true,
                     templet: function (d) {
-                        if (d.F_LastRunTime) {
-                            var time = new Date(d.F_LastRunTime);
-                            return time.Format("yyyy-MM-dd hh:mm:ss");
+                        if (d.F_LastRunMark == true) {
+                            return "<span class='layui-btn layui-btn-normal layui-btn-xs'>成功</span>";
+                        } else {
+                            return "<span class='layui-btn layui-btn-warm layui-btn-xs'>失败</span>";
                         }
-                        return '';
                     }
                 },
-                {
-                    field: 'F_StarRunTime', title: '最近启动时间', width: 170, sort: true,
-                    templet: function (d) {
-                        if (d.F_StarRunTime) {
-                            var time = new Date(d.F_StarRunTime);
-                            return time.Format("yyyy-MM-dd hh:mm:ss");
-                        }
-                        return '';
-                    }
-                },
-                {
-                    field: 'F_EndRunTime', title: '最近关闭时间', width: 170, sort: true,
-                    templet: function (d) {
-                        if (d.F_EndRunTime) {
-                            var time = new Date(d.F_EndRunTime);
-                            return time.Format("yyyy-MM-dd hh:mm:ss");
-                        }
-                        return '';
-                    }
-                },
-
+                { field: 'F_LastRunErrTime', title: '上次发生错误时间', minWidth: 160, sort: true },
+                { field: 'F_LastRunErrMsg', title: '上次发生错误信息', minWidth: 180, sort: true },
+                { field: 'F_StarRunTime', title: '最近启动时间', minWidth: 170, sort: true },
+                { field: 'F_EndRunTime', title: '最近关闭时间', minWidth: 170, sort: true },
+                { field: 'F_FileName', title: '文件名', minWidth: 180, sort: true },
+                { field: 'F_RequestUrl', title: '请求地址', minWidth: 180, sort: true },
+                { field: 'F_RequestString', title: '请求参数', minWidth: 180, sort: true },
+                { field: 'F_CronExpress', title: 'CRON', minWidth: 150 },
                 { field: 'F_Description', title: '备注', minWidth: 200, sort: true },
                 { title: '操作', width: 310, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
+
             ]]
         });
         // 监听搜索操作
@@ -89,7 +75,7 @@
             return false;
         });
         //行点击事件监听，控制按钮显示
-        var oneList = ["NF-edit", "NF-delete", "NF-disabled", "NF-enabled", "NF-edit", "NF-log","NF-doNow"];//选择1条显示
+        var oneList = ["NF-edit", "NF-delete", "NF-disabled", "NF-enabled", "NF-edit", "NF-log", "NF-doNow"];//选择1条显示
         commonTable.tableRowClick("radio", "currentTableFilter", "currentTableId", oneList);
         /**
          * toolbar监听事件
@@ -127,6 +113,15 @@
                     url: "/SystemSecurity/OpenJobs/Form?keyValue=" + data[0].F_Id,
                     width: "750px",
                     height: "650px",
+                });
+            }
+            else if (obj.event === 'clear') {
+                common.submitPost({
+                    prompt: "注：您确定要【清除所有任务计划】吗？",
+                    url: "/SystemSecurity/OpenJobs/ClearScheduleJob",
+                    success: function () {
+                        common.reload('data-search-btn');
+                    }
                 });
             }
             else if (obj.event === 'doNow') {
@@ -296,6 +291,7 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
+                <button id="NF-clear" name="NF-clear" authorize class="layui-btn layui-btn-sm data-add-btn" lay-event="clear"><i class="layui-icon">&#xe665;</i>清除任务计划</button>
                 <button id="NF-add" name="NF-add" authorize class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
                 <button id="NF-edit" name="NF-edit" authorize class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
                 <button id="NF-delete" name="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>

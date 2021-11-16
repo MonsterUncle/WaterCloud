@@ -74,6 +74,10 @@ namespace WaterCloud.Domain.SystemSecurity
         /// 任务类型
         /// </summary>
         public int? F_JobType { get; set; }
+        public string F_IsLog { get; set; }
+        public bool? F_LastRunMark { get; set; }
+        public DateTime? F_LastRunErrTime { get; set; }
+        public string F_LastRunErrMsg { get; set; }
         /// <summary>
         /// 请求头
         /// </summary>
