@@ -39,8 +39,9 @@
                     }
                 },
                 { field: 'F_LastRunTime', title: '最近执行时间', width: 160, sort: true },
+                { field: 'NextValidTimeAfter', title: '最近执行时间', width: 160 },
                 {
-                    field: 'F_LastRunMark', title: '最近执行状态', width: 130, sort: true,
+                    field: 'F_LastRunMark', title: '下次执行状态', width: 130, sort: true,
                     templet: function (d) {
                         if (d.F_LastRunMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>成功</span>";

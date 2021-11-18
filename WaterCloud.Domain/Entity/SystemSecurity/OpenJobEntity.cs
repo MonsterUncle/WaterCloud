@@ -95,5 +95,7 @@ namespace WaterCloud.Domain.SystemSecurity
         /// </summary>
         [NotMapped]
         public bool? F_DoItNow { get; set; }
-    }
+        [NotMapped]
+        public DateTime? NextValidTimeAfter { get; set; }
+	}
 }

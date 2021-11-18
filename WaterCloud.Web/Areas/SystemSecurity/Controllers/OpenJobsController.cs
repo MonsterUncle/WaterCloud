@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WaterCloud.Domain.SystemSecurity;
 using WaterCloud.Service;
 using System.Linq;
+using Quartz;
 
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
 {
@@ -89,6 +90,18 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
                 pagination.page = 1;
             }
             var data = await _service.GetLookList(pagination, keyword);
+            foreach (var item in data)
+            {
+                if (item.F_EnabledMark == true)
+                {
+                    CronExpression cronExpression = new CronExpression(item.F_CronExpress);
+                    item.NextValidTimeAfter = cronExpression.GetNextValidTimeAfter(DateTime.Now).Value.ToLocalTime().DateTime;
+                }
+                else
+                {
+                    item.NextValidTimeAfter = null;
+                }
+            }
             return Success(pagination.records, data);
         }
         [HttpGet]
