@@ -19386,6 +19386,13 @@ CREATE TABLE [dbo].[sys_openjob] (
 )
 GO
 
+EXEC sp_addextendedproperty
+'MS_Description', N'主键Id',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_openjob',
+'COLUMN', N'F_Id'
+GO
+
 ALTER TABLE [dbo].[sys_openjob] SET (LOCK_ESCALATION = TABLE)
 GO
 
