@@ -6015,7 +6015,8 @@ CREATE TABLE `sys_openjob`  (
   `F_RequestHeaders` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `F_RequestString` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `F_RequestUrl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL
+  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
