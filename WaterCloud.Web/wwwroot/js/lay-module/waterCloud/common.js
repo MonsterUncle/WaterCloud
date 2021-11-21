@@ -146,6 +146,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 IsClose = true;
             }
             if (IsClose) {
+                delete top.iframesList[index];
                 parent.layer.close(index);
             } else {
                 location.reload();
@@ -221,7 +222,16 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     if (!!options.yes) {
                         options.yes(index, layero);
                     }
-                }, cancel: function () {
+                }, btn2: function (index, layero) {
+                    if (!!options.btn2) {
+                        options.btn2(index, layero);
+                    }
+                    else {
+                        delete top.iframesList[index];
+                        return true;
+                    }
+                }, cancel: function (index, layero) {
+                    delete top.iframesList[index];
                     return true;
                 },
                 end: function () {
