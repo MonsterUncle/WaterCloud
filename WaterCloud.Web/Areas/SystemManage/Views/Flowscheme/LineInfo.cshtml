@@ -221,12 +221,11 @@
             var form = layui.form,
                 $ = layui.$,
                 common = layui.common;
-            var parentform = window.name;
             //不同弹窗
             if (fields == '申请人') {
                 common.modalOpen({
                     title: "选择用户",
-                    url: "/SystemOrganize/User/AddForm?parentform=" + parentform + "&name=" + "ComparesName" + data + "&value=" + "ComparesValue" + data,
+                    url: "/SystemOrganize/User/AddForm?name=" + "ComparesName" + data + "&value=" + "ComparesValue" + data,
                     width: "650px",
                     height: "600px",
                 });
@@ -234,7 +233,7 @@
             else if (fields == '所属部门') {
                 common.modalOpen({
                     title: "选择组织",
-                    url: "/SystemOrganize/Organize/AddForm?parentform=" + parentform + "&name=" + "ComparesName" + data + "&value=" + "ComparesValue" + data,
+                    url: "/SystemOrganize/Organize/AddForm?name=" + "ComparesName" + data + "&value=" + "ComparesValue" + data,
                     width: "650px",
                     height: "600px",
                 });

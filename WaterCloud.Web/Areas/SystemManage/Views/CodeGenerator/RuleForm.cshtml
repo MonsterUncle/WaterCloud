@@ -3,11 +3,11 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
-    var entity = {};
     layui.use(['jquery', 'form', 'laydate', 'common', 'optimizeSelectOption'], function () {
         var form = layui.form,
             $ = layui.$,
             common = layui.common;
+        var entity = common.parentWindow().dataJson;
         //权限字段
         common.authorizeFields('adminform');
         common.val('adminform', entity);
@@ -84,7 +84,7 @@
                 else {
                     postData.F_Id = uuid();
                 }
-                var tempdata = common.currentWindow().layui.table.cache.currentTableId;
+                var tempdata = common.parentWindow().layui.table.cache.currentTableId;
                 if (!!entity && !!entity.F_Id) {
                     for (var i = 0; i < tempdata.length; i++) {
                         if (entity.F_Id == tempdata[i].F_Id) {
@@ -113,7 +113,7 @@
                     tempdata.push(postData);
                 }
                 common.modalMsg("操作成功", "success");
-                common.currentWindow().layui.table.reload('currentTableId', {
+                common.parentWindow().layui.table.reload('currentTableId', {
                     data: tempdata
                 });
                 parent.layer.close(index);
@@ -122,9 +122,6 @@
             return false;
         });
     });
-    function initForm(data) {
-        entity = data;
-    }
 </script>
 <body>
     <div class="layuimini-container">

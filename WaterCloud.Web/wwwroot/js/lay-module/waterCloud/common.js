@@ -162,7 +162,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 maxmin: true, //开启最大化最小化按钮
                 url: '',
                 shade: 0.3,
-                data: null,
+                dataJson: null,//传参
                 btn: ['确认', '关闭'],
                 btnclass: ['layui-btn', 'layui-btn-primary'],
                 isMax: false,//最大化属性 默认不是
@@ -175,18 +175,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     submit.trigger('click');
                 }
             };
-            var doneCallback = options.success;
             var options = $.extend(defaults, options);
-            options.success = function (layero, index) {
-                //子界面定义一个窗口方法initForm，里面调用common.val给参数赋值
-                if (!!options.data && layero.find('iframe')[0].contentWindow.initForm) {
-                    layero.find('iframe')[0].contentWindow.initForm(options.data);
-                }
-                $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
-                if (doneCallback) {
-                    doneCallback(layero, index);
-                }
-            };
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
             //options.url = obj.urlAddTime(options.url);
@@ -209,6 +198,20 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 id: !!options.id ? options.id : options.title,
                 btn: options.btn,
                 success: function (layero, index) {
+                    $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
+                    //建立父子关系
+                    if (!top.iframesList) {
+                        top.iframesList = {};
+                    }
+                    var iframes = top.$(".layui-show>iframe");
+                    if (iframes.length > 0 && !window.name) {
+                        top.iframesList[index] = iframes[0].contentWindow;
+                    }
+                    else {
+                        top.iframesList[index] = parent[window.name];
+                    }
+                    //新增传值方式
+                    top.iframesList[index].dataJson = options.dataJson;
                     if (!!options.success) {
                         options.success(layero, index);
                     }
@@ -500,14 +503,14 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         },
         //父窗体刷新（按钮刷新）
         parentreload: function (filter) {
-            var iframes = top.$(".layui-show>iframe");
-            if (iframes.length > 0) {
-                iframes[0].contentWindow.$('button[lay-filter="' + filter + '"]').click();
-            }
-            else {
-                window.parent.$('button[lay-filter="' + filter + '"]').click();
-            }
+            obj.parentWindow().$('button[lay-filter="' + filter + '"]').click();
         },
+        //父窗体
+        parentWindow: function () {
+            var index = parent.layer.getFrameIndex(window.name);
+            return top.iframesList[index];
+        },
+        //当前tab窗体
         currentWindow: function () {
             var iframes = top.$(".layui-show>iframe");
             if (iframes.length > 0) {
