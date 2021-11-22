@@ -270,3 +270,8 @@ function uuid() {
     var uuid = s.join("");
     return uuid;
 }
+//父窗体方法
+Window.prototype.parentWindow = function () { //author: meizz
+    var index = parent.layer.getFrameIndex(this.name);
+    return top.iframesList[index];
+};

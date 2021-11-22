@@ -204,13 +204,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     if (!top.iframesList) {
                         top.iframesList = {};
                     }
-                    var iframes = top.$(".layui-show>iframe");
-                    if (iframes.length > 0 && !window.name) {
-                        top.iframesList[index] = iframes[0].contentWindow;
-                    }
-                    else {
-                        top.iframesList[index] = parent[window.name];
-                    }
+                    top.iframesList[index] = window;
                     //新增传值方式
                     top.iframesList[index].dataJson = options.dataJson;
                     if (!!options.success) {
