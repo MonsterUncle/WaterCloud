@@ -24,7 +24,7 @@
                 if (!lock) {
                     lock = true;
                     var valuedata = data.field.F_NewName;
-                    common.currentWindow().$('#' + event).html(valuedata);
+                    common.parentWindow().$('#' + event).html(valuedata);
                     common.modalMsg("修改成功!", "success");
                     common.modalClose();
                     lock = false;

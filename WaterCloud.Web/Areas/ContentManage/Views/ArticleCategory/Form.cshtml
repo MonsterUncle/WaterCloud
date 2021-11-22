@@ -3,13 +3,6 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
-    //父传子示例
-    function initForm(data) {
-        layui.use(['common'], function () {
-            var common = layui.common;
-            common.val('adminform',data);
-        });
-    }
     layui.use(['jquery', 'form', 'laydate', 'optimizeSelectOption', 'common'], function () {
         var form = layui.form,
             $ = layui.$,
@@ -30,6 +23,7 @@
         $(function () {
             initControl();
             $('#F_ParentId').val("0");
+            common.val('adminform',common.parentWindow().dataJson);
             form.render();
        });
         wcLoading.close();

@@ -12,8 +12,7 @@
         //加载数据
         wcLoading.close();
         var value = $.request("value");
-        var parentform = $.request("parentform");
-        var currentWindow = !parent[parentform] ? common.currentWindow() : parent[parentform];
+        var currentWindow = common.parentWindow();
         var name = $.request("name");
         var ids = $.request("ids");
         commonTable.rendertable({
