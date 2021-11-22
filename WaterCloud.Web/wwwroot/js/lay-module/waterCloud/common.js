@@ -226,7 +226,12 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     }
                 }, cancel: function (index, layero) {
                     delete top.iframesList[index];
-                    return true;
+                    if (!!options.cancel) {
+                        options.cancel(index, layero);
+                    }
+                    else {
+                        return true;
+                    }
                 },
                 end: function () {
                     if (!!options.end) {
