@@ -80,6 +80,11 @@ namespace WaterCloud.Service.SystemSecurity
         }
         public async Task SubmitForm(OpenJobEntity entity, string keyValue)
         {
+            bool IsTrue = CronExpression.IsValidExpression(entity.F_CronExpress);
+            if (IsTrue == false)
+            {
+                throw new Exception("定时任务的Cron表达式不正确！");
+            }
             if (!string.IsNullOrEmpty(keyValue))
             {
                 entity.Modify(keyValue);
