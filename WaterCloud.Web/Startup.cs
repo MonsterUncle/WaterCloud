@@ -76,56 +76,12 @@ namespace WaterCloud.Web
             }
             //连续guid初始化,示例IDGen.NextId()
             services.AddSingleton<IDistributedIDGenerator, SequentialGuidIDGenerator>();
-			//更新数据库管理员和主系统,获取所有数据库连接
-            #region 数据库模式
-			List<ConnectionConfig> list = new List<ConnectionConfig>();
-            var defaultConfig = DBContexHelper.Contex(Configuration.GetSection("SystemConfig:DBConnectionString").Value, Configuration.GetSection("SystemConfig:DBProvider").Value);
-            defaultConfig.ConfigId = "0";
-            list.Add(defaultConfig);
-			if (Configuration.GetSection("SystemConfig:SqlMode").Value== "TenantSql")
-			{
-                try
-                {
-                    using (var context = new UnitOfWork(new SqlSugarClient(defaultConfig)))
-                    {
-                        var sqls = context.GetDbClient().Queryable<SystemSetEntity>().ToList();
-                        foreach (var item in sqls.Where(a => a.F_EnabledMark == true && a.F_EndTime > DateTime.Now.Date && a.F_DbNumber != "0"))
-                        {
-                            var config = DBContexHelper.Contex(item.F_DbString, item.F_DBProvider);
-                            config.ConfigId = item.F_DbNumber;
-                            list.Add(config);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Write(ex);
-                }
-            }
-			else
-			{
-                try
-                {
-                    var configs=(DBConfig[]) Configuration.GetSection("SystemConfig:SqlConfig").Get(typeof(DBConfig[]));
-                    foreach (var item in configs)
-                    {
-                        var config = DBContexHelper.Contex(item.DBConnectionString, item.DBProvider);
-                        config.ConfigId = item.DBNumber;
-                        list.Add(config);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Write(ex);
-                }
-            }
-			#endregion
 			#region 依赖注入
 			//注入数据库连接
 			// 注册 SqlSugar 客户端 多租户模式
 			services.AddScoped<ISqlSugarClient>(u =>
             {
-                return new SqlSugarClient(list);
+                return new SqlSugarClient(DBInitialize.GetConnectionConfigs());
             });
             services.AddScoped<IUnitOfWork,UnitOfWork>();
             #region 注入 Quartz调度类
@@ -240,39 +196,9 @@ namespace WaterCloud.Web
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
-            try
-            {
-                if (GlobalContext.SystemConfig.ReviseSysem == true)
-                {
-                    using (var context =new UnitOfWork(new SqlSugarClient(DBContexHelper.Contex())))
-                    {
-                        context.CurrentBeginTrans();
-                        var systemSet = context.GetDbClient().Queryable<SystemSetEntity>().Where(a => a.F_DbNumber == "0").First();
-                        context.GetDbClient().Updateable<SystemSetEntity>(a => new SystemSetEntity
-                        {
-                            F_AdminAccount = systemSet.F_AdminAccount,
-                            F_AdminPassword = systemSet.F_AdminAccount
-                        }).Where(a => a.F_Id == systemSet.F_Id).ExecuteCommand();
-                        var user = context.GetDbClient().Queryable<UserEntity>().Where(a => a.F_OrganizeId == systemSet.F_Id && a.F_IsAdmin == true).First();
-                        var userinfo = context.GetDbClient().Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
-                        userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                        userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(systemSet.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
-                        context.GetDbClient().Updateable<UserEntity>(a => new UserEntity
-                        {
-                            F_Account = systemSet.F_AdminAccount
-                        }).Where(a => a.F_Id == user.F_Id).ExecuteCommand();
-                        context.GetDbClient().Updateable<UserLogOnEntity>(a => new UserLogOnEntity
-                        {
-                            F_UserPassword = userinfo.F_UserPassword,
-                            F_UserSecretkey = userinfo.F_UserSecretkey
-                        }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommand();
-                        context.Commit();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex);
+			if (GlobalContext.SystemConfig.ReviseSysem == true)
+			{
+                DBInitialize.ReviseSuperSysem();
             }
             //清理缓存
             //CacheHelper.FlushAll().GetAwaiter().GetResult();

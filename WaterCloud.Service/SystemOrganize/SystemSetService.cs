@@ -21,6 +21,7 @@ namespace WaterCloud.Service.SystemOrganize
     public class SystemSetService : DataFilterService<SystemSetEntity>, IDenpendency
     {
         private string cacheKeyOperator = GlobalContext.SystemConfig.ProjectPrefix + "_operator_";// +登录者token
+        private static string cacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_dblist";// 数据库键
         public ModuleService moduleApp { get; set; }
         public ModuleButtonService moduleButtonApp { get; set; }
         public ModuleFieldsService moduleFieldsApp { get; set; }
@@ -221,7 +222,7 @@ namespace WaterCloud.Service.SystemOrganize
                     await db.Insertable(itemsTypes).ExecuteCommandAsync();
                     await db.Insertable(itemsDetails).ExecuteCommandAsync();
                 }
-
+                await CacheHelper.Remove(cacheKey);
             }
             else
             {
