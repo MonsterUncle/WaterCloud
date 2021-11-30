@@ -113,7 +113,7 @@ namespace WaterCloud.Service
         protected bool CheckDataPrivilege(string moduleName = "")
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
-            if (currentuser.UserId == GlobalContext.SystemConfig.SysemUserId) return false;  //超级管理员特权
+            if (currentuser.IsSuperAdmin) return false;  //管理员特权
             var rule = unitwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
             ////系统菜单也不需要数据权限 跟字段重合取消这样处理
             //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).GetAwaiter().GetResult();
@@ -165,7 +165,7 @@ namespace WaterCloud.Service
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             //管理员跳过
-            if (currentuser.RoleId == "admin" || currentuser.IsSystem)
+            if (currentuser.IsSuperAdmin)
             {
                 return list;
             }
@@ -205,7 +205,7 @@ namespace WaterCloud.Service
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             //管理员跳过
-            if (currentuser.RoleId == "admin" || currentuser.IsSystem)
+            if (currentuser.RoleId == "admin" || currentuser.IsSuperAdmin)
             {
                 return entity;
             }
@@ -247,7 +247,7 @@ namespace WaterCloud.Service
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             //管理员跳过
-            if (currentuser.RoleId == "admin" || currentuser.IsSystem)
+            if (currentuser.RoleId == "admin" || currentuser.IsSuperAdmin)
             {
                 return query;
             }

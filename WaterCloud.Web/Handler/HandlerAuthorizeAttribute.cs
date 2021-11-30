@@ -28,7 +28,7 @@ namespace WaterCloud.Web
 			{
                 _authorize = methodanonymous._authorize;
             }
-            if (OperatorProvider.Provider.GetCurrent() != null&& OperatorProvider.Provider.GetCurrent().IsSystem)
+            if (OperatorProvider.Provider.GetCurrent() != null&& OperatorProvider.Provider.GetCurrent().IsSuperAdmin)
             {
                 return;
             }

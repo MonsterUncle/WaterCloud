@@ -65,7 +65,7 @@ namespace WaterCloud.Web
                 return;
             }
             //管理员跳过检测(管理员授权或者关闭需要清理缓存保证安全)
-            if (OperatorProvider.Provider.GetCurrent().IsSystem)
+            if (OperatorProvider.Provider.GetCurrent().IsSuperAdmin)
             {
                 return;
             }

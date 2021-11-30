@@ -33,7 +33,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             var buttondata = new List<ModuleButtonEntity>();
             var authorizedata = new List<RoleAuthorizeEntity>();
             //隐藏系统菜单及字典管理
-            if (roleid == null&& current.IsAdmin)
+            if (roleid == null&& current.IsSuperAdmin)
             {
                 moduledata = await _moduleService.GetList();
                 buttondata = await _moduleButtonService.GetList();
@@ -102,7 +102,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             var fieldsdata = new List<ModuleFieldsEntity>();
             var authorizedata = new List<RoleAuthorizeEntity>();
             //隐藏系统菜单及字典管理
-            if (roleid == null && current.IsAdmin)
+            if (roleid == null && current.IsSuperAdmin)
             {
                 moduledata = await _moduleService.GetList();
                 fieldsdata = await _moduleFieldsService.GetList();

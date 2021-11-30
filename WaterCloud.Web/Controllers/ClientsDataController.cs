@@ -66,7 +66,7 @@ namespace WaterCloud.Web.Controllers
         {
             try
             {
-                if (_setService.currentuser.UserId != GlobalContext.SystemConfig.SysemUserId)
+                if (!_setService.currentuser.IsSuperAdmin)
                 {
                     return Content(new { code = 0, msg = "此功能需要管理员权限" }.ToJson());
                 }
@@ -86,11 +86,11 @@ namespace WaterCloud.Web.Controllers
         private async Task<object> GetMenuFields()
         {
             var roleId = _userService.currentuser.RoleId;
-            if (roleId == null && _userService.currentuser.IsSystem)
+            if (roleId == null && _userService.currentuser.IsSuperAdmin)
             {
                 roleId = "admin";
             }
-            else if (roleId == null && !_userService.currentuser.IsSystem)
+            else if (roleId == null && !_userService.currentuser.IsSuperAdmin)
             {
                 roleId = "visitor";
             }
@@ -306,11 +306,11 @@ namespace WaterCloud.Web.Controllers
         {
             var currentuser = _userService.currentuser;
             var roleId = currentuser.RoleId;
-            if (roleId == null && currentuser.IsSystem)
+            if (roleId == null && currentuser.IsSuperAdmin)
             {
                 roleId = "admin";
             }
-            else if (roleId == null && !currentuser.IsSystem)
+            else if (roleId == null && !currentuser.IsSuperAdmin)
             {
                 roleId = "visitor";
             }
@@ -350,11 +350,11 @@ namespace WaterCloud.Web.Controllers
         {
             var currentuser = _userService.currentuser;
             var roleId = currentuser.RoleId;
-            if (roleId == null && currentuser.IsSystem)
+            if (roleId == null && currentuser.IsSuperAdmin)
             {
                 roleId = "admin";
             }
-            else if (roleId == null && !currentuser.IsSystem)
+            else if (roleId == null && !currentuser.IsSuperAdmin)
             {
                 roleId = "visitor";
             }

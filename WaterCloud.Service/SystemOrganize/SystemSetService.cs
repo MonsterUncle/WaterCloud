@@ -54,14 +54,9 @@ namespace WaterCloud.Service.SystemOrganize
                 //此处需修改
                 data = data.Where(t => t.F_HostUrl.Contains(host));
             }
-            else
-            {
-                data = data.Where(t => t.F_Id==GlobalContext.SystemConfig.SysemMasterProject);
-            }
             if (data.Count()==0)
             {
                 data =  repository.IQueryable();
-                data = data.Where(t => t.F_Id == GlobalContext.SystemConfig.SysemMasterProject);
             }
             return data.Where(t => t.F_DeleteMark == false).FirstOrDefault();
         }
@@ -106,7 +101,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                     //此处需修改
                 entity.Modify(keyValue);
-                if (currentuser.UserId != GlobalContext.SystemConfig.SysemUserId || currentuser.UserId == null)
+                if (currentuser.IsSuperAdmin == true || currentuser.UserId == null)
                 {
                     var setentity = await repository.FindEntity(entity.F_Id);
                     unitwork.BeginTrans();

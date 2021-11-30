@@ -278,7 +278,7 @@ namespace WaterCloud.Service.SystemOrganize
                     string dbPassword = Md5.md5(DESEncrypt.Encrypt(password.ToLower(), userLogOnEntity.F_UserSecretkey).ToLower(), 32).ToLower();
                     if (dbPassword == userLogOnEntity.F_UserPassword)
                     {
-                        if (userEntity.F_Account != GlobalContext.SystemConfig.SysemUserCode)
+                        if (userEntity.F_IsAdmin!=true)
                         {
                             var list = userEntity.F_RoleId.Split(',');
                             var rolelist =unitwork.IQueryable<RoleEntity>(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();

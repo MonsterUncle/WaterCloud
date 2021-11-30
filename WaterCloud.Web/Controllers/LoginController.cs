@@ -35,8 +35,8 @@ namespace WaterCloud.Web.Controllers
                 var systemset = await _setService.GetFormByHost("");
                 if (GlobalContext.SystemConfig.Demo)
                 {
-                    ViewBag.UserName = GlobalContext.SystemConfig.SysemUserCode;
-                    ViewBag.Password = GlobalContext.SystemConfig.SysemUserPwd;
+                    ViewBag.UserName = systemset.F_AdminAccount;
+                    ViewBag.Password = systemset.F_AdminPassword;
                 }
                 ViewBag.ProjectName = systemset.F_ProjectName;
                 ViewBag.LogoIcon = ".." + systemset.F_Logo;
@@ -155,21 +155,20 @@ namespace WaterCloud.Web.Controllers
                 operatorModel.DdUserId = userEntity.F_DingTalkUserId;
                 operatorModel.WxOpenId = userEntity.F_WxOpenId;
                 //各租户的管理员也是当前数据库的全部权限
-                operatorModel.IsSystem = userEntity.F_IsAdmin.Value;
-                operatorModel.IsAdmin = userEntity.F_IsAdmin.Value;
                 operatorModel.IsBoss = userEntity.F_IsBoss.Value;
                 operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
                 SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
                 operatorModel.DbString = setEntity.F_DbString;
                 operatorModel.DBProvider = setEntity.F_DBProvider;
-                if (userEntity.F_Account == GlobalContext.SystemConfig.SysemUserCode)
+
+                if (userEntity.F_IsAdmin == true)
                 {
-                    operatorModel.IsSystem = true;
+                    operatorModel.IsSuperAdmin = true;
                 }
                 else
                 {
-                    operatorModel.IsSystem = false;
+                    operatorModel.IsSuperAdmin = false;
                 }
                 //缓存保存用户信息
                 await OperatorProvider.Provider.AddLoginUser(operatorModel, "","pc_");

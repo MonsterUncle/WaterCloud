@@ -14,6 +14,7 @@ using System.Linq;
 using Chloe;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
+using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service.SystemSecurity
 {
@@ -144,6 +145,7 @@ namespace WaterCloud.Service.SystemSecurity
         {
             logEntity.F_Id = Utils.GuId();
             logEntity.F_Date = DateTime.Now;
+            var systemSet = await unitOfWork.IQueryable<SystemSetEntity>().FirstAsync();
             try
             {
                 if (currentuser == null || string.IsNullOrEmpty(currentuser.UserId))
@@ -157,7 +159,7 @@ namespace WaterCloud.Service.SystemSecurity
 					{
                         logEntity.F_IPAddressName = WebHelper.GetIpLocation(logEntity.F_IPAddress);
                     }
-                    logEntity.F_CompanyId = GlobalContext.SystemConfig.SysemMasterProject;
+                    logEntity.F_CompanyId = systemSet.F_Id;
                 }
                 else
                 {
@@ -207,7 +209,7 @@ namespace WaterCloud.Service.SystemSecurity
                 {
                     logEntity.F_IPAddressName = WebHelper.GetIpLocation(logEntity.F_IPAddress);
                 }
-                logEntity.F_CompanyId = GlobalContext.SystemConfig.SysemMasterProject;
+                logEntity.F_CompanyId = systemSet.F_Id;
                 logEntity.Create();
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {

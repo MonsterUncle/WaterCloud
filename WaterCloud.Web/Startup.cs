@@ -201,10 +201,8 @@ namespace WaterCloud.Web
                     using (IUnitOfWork unitOfWork = new UnitOfWork(DBContexHelper.Contex()))
                     {
                         var _setService = new Service.SystemOrganize.SystemSetService(unitOfWork);
-                        Domain.SystemOrganize.SystemSetEntity temp = new Domain.SystemOrganize.SystemSetEntity();
-                        temp.F_AdminAccount = GlobalContext.SystemConfig.SysemUserCode;
-                        temp.F_AdminPassword = GlobalContext.SystemConfig.SysemUserPwd;
-                        _setService.SubmitForm(temp, GlobalContext.SystemConfig.SysemMasterProject).GetAwaiter().GetResult();
+                        Domain.SystemOrganize.SystemSetEntity temp = _setService.GetFormByHost("").Result;
+                        _setService.SubmitForm(temp, temp.F_Id).GetAwaiter().GetResult();
                     }
                 }
             }

@@ -300,7 +300,7 @@ namespace WaterCloud.Code
                     if ((token == operatorInfo.LoginToken || LoginProvider == Define.PROVIDER_WEBAPI) && tokenMarkList.ContainsKey(operatorInfo.loginMark) && tokenMarkList[operatorInfo.loginMark] == operatorInfo.LoginToken)
                     {
                         ////账号被顶(排除admin)
-                        if (!LoginMultiple && !operatorInfo.IsSystem && operatorInfo.LoginToken != await CacheHelper.Get<string>(cacheKeyOperator + facilityMark + operatorInfo.UserId))
+                        if (!LoginMultiple && !operatorInfo.IsSuperAdmin && operatorInfo.LoginToken != await CacheHelper.Get<string>(cacheKeyOperator + facilityMark + operatorInfo.UserId))
                         {
                             operatorResult.stateCode = -2;
                             tokenMarkList = await CacheHelper.Get<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);

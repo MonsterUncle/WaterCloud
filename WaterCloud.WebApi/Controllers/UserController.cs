@@ -68,20 +68,19 @@ namespace WaterCloud.WebApi.Controllers
                 operatorModel.LoginTime = DateTime.Now;
                 operatorModel.DdUserId = userEntity.F_DingTalkUserId;
                 operatorModel.WxOpenId = userEntity.F_WxOpenId;
-                operatorModel.IsAdmin = userEntity.F_IsAdmin.Value;
                 operatorModel.IsBoss = userEntity.F_IsBoss.Value;
                 operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
                 SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
                 operatorModel.DbString = setEntity.F_DbString;
                 operatorModel.DBProvider = setEntity.F_DBProvider;
-                if (userEntity.F_Account == GlobalContext.SystemConfig.SysemUserCode)
+                if (userEntity.F_IsAdmin == true)
                 {
-                    operatorModel.IsSystem = true;
+                    operatorModel.IsSuperAdmin = true;
                 }
                 else
                 {
-                    operatorModel.IsSystem = false;
+                    operatorModel.IsSuperAdmin = false;
                 }
                 await OperatorProvider.Provider.AddLoginUser(operatorModel, apitoken, "api_",false);
                 logEntity.F_Account = userEntity.F_Account;

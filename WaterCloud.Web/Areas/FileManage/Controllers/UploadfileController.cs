@@ -71,18 +71,6 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
                     throw new Exception("请指定文件格式");
                 }
                 string stemp = "local";
-                if (_service.currentuser.CompanyId != GlobalContext.SystemConfig.SysemMasterProject)
-                {
-                    var temp = await _setService.GetForm(_service.currentuser.CompanyId);
-                    if (temp != null)
-                    {
-                        stemp = temp.F_CompanyName;
-                    }
-                    else
-                    {
-                        throw new Exception("租户不存在");
-                    }
-                }
                 var files = HttpContext.Request.Form.Files;
                 long size = files.Sum(f => f.Length);
                 if (size > 104857600)
