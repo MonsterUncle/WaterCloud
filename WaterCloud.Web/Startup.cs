@@ -196,10 +196,7 @@ namespace WaterCloud.Web
             GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
-			if (GlobalContext.SystemConfig.ReviseSysem == true)
-			{
-                DBInitialize.ReviseSuperSysem();
-            }
+            DBInitialize.ReviseSuperSysem();
             //清理缓存
             //CacheHelper.FlushAll().GetAwaiter().GetResult();
         }
