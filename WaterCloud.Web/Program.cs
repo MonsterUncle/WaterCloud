@@ -23,7 +23,7 @@ namespace WaterCloud.Web
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseUrls("http://*:5000").UseStartup<Startup>();
+                webBuilder.UseStartup<Startup>();
             });
     }
 }

@@ -20,7 +20,8 @@ namespace WaterCloud.Code
         public string LoginIPAddressName { get; set; }
         public string LoginToken { get; set; }
         public DateTime LoginTime { get; set; }
-        public bool IsSystem { get; set; }
+        //超管
+        public bool IsSuperAdmin { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsBoss { get; set; }
         public bool IsSenior { get; set; }

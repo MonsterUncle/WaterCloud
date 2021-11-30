@@ -29,7 +29,7 @@ namespace WaterCloud.Service.SystemManage
             List<ModuleEntity> quicks = new List<ModuleEntity>();
             var user = await repository.Db.Queryable<UserEntity>().InSingleAsync(userId);
             var roleId = user.F_RoleId;
-            if (user.F_Account == GlobalContext.SystemConfig.SysemUserCode || user.F_IsAdmin == true)
+            if (user.F_IsAdmin == true)
             {
                 roleId = "admin";
             }
@@ -71,7 +71,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 var user = await repository.Db.Queryable<UserEntity>().InSingleAsync(userId);
                 var roleId = user.F_RoleId;
-                if (user.F_Account == GlobalContext.SystemConfig.SysemUserCode || user.F_IsAdmin == true)
+                if (user.F_IsAdmin == true)
                 {
                     roleId = "admin";
                 }

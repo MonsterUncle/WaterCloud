@@ -247,23 +247,19 @@ namespace WaterCloud.Web
                     using (var context =new UnitOfWork(new SqlSugarClient(DBContexHelper.Contex())))
                     {
                         context.CurrentBeginTrans();
+                        var systemSet = context.GetDbClient().Queryable<SystemSetEntity>().Where(a => a.F_DbNumber == "0").First();
                         context.GetDbClient().Updateable<SystemSetEntity>(a => new SystemSetEntity
                         {
-                            F_AdminAccount= GlobalContext.SystemConfig.SysemUserCode,
-                            F_AdminPassword = GlobalContext.SystemConfig.SysemUserPwd
-                        }).Where(a => a.F_Id == GlobalContext.SystemConfig.SysemMasterProject).ExecuteCommand();
-                        context.GetDbClient().Updateable<SystemSetEntity>(a => new SystemSetEntity
-                        {
-                            F_AdminAccount = GlobalContext.SystemConfig.SysemUserCode,
-                            F_AdminPassword = GlobalContext.SystemConfig.SysemUserPwd
-                        }).Where(a => a.F_Id == GlobalContext.SystemConfig.SysemMasterProject).ExecuteCommand();
-                        var user = context.GetDbClient().Queryable<UserEntity>().Where(a => a.F_OrganizeId == GlobalContext.SystemConfig.SysemMasterProject && a.F_IsAdmin == true).First();
+                            F_AdminAccount = systemSet.F_AdminAccount,
+                            F_AdminPassword = systemSet.F_AdminAccount
+                        }).Where(a => a.F_Id == systemSet.F_Id).ExecuteCommand();
+                        var user = context.GetDbClient().Queryable<UserEntity>().Where(a => a.F_OrganizeId == systemSet.F_Id && a.F_IsAdmin == true).First();
                         var userinfo = context.GetDbClient().Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
                         userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                        userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(GlobalContext.SystemConfig.SysemUserPwd, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
+                        userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(systemSet.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
                         context.GetDbClient().Updateable<UserEntity>(a => new UserEntity
                         {
-                            F_Account = GlobalContext.SystemConfig.SysemUserCode
+                            F_Account = systemSet.F_AdminAccount
                         }).Where(a => a.F_Id == user.F_Id).ExecuteCommand();
                         context.GetDbClient().Updateable<UserLogOnEntity>(a => new UserLogOnEntity
                         {

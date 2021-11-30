@@ -51,10 +51,6 @@ namespace WaterCloud.Code.Model
         public string CacheProvider { get; set; }
         public string HandleLogProvider { get; set; }
         public string RedisConnectionString { get; set; }
-        public string SysemUserId { get; set; }
-        public string SysemUserCode { get; set; }
-        public string SysemUserPwd { get; set; }
-        public string SysemMasterProject { get; set; }
         public string TokenName { get; set; }
         //缓存过期时间
         public int LoginExpire { get; set; }
@@ -86,6 +82,10 @@ namespace WaterCloud.Code.Model
         /// 是否删除定时调度任务
         /// </summary>
         public bool? NeedClear { get; set; }
+        /// <summary>
+        /// 主程序数据库编号
+        /// </summary>
+        public string MainDbNumber { get; set; }
     }
     public class DBConfig
     {

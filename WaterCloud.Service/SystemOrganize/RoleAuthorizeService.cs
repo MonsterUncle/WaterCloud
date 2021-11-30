@@ -42,7 +42,7 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<ModuleEntity>> GetMenuList(string roleId)
         {
             var data = new List<ModuleEntity>();
-            if (currentuser.IsSystem)
+            if (currentuser.IsAdmin)
             {
                 data =await moduleApp.GetList();
                 data = data.Where(a => a.F_IsMenu == true&&a.F_EnabledMark==true).ToList();
@@ -73,7 +73,7 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<ModuleButtonEntity>> GetButtonList(string roleId)
         {
             var data = new List<ModuleButtonEntity>();
-            if (currentuser.IsSystem)
+            if (currentuser.IsAdmin)
             {
                 data = await moduleButtonApp.GetListNew();
             }
@@ -101,7 +101,7 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<ModuleFieldsEntity>> GetFieldsList(string roleId)
         {
             var data = new List<ModuleFieldsEntity>();
-            if (currentuser.IsSystem)
+            if (currentuser.IsAdmin)
             {
                 data = await moduleFieldsApp.GetListNew();
             }

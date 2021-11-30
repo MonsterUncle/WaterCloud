@@ -74,13 +74,13 @@ namespace WaterCloud.WebApi.Controllers
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
                 SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
                 operatorModel.DbNumber = setEntity.F_DbNumber;
-                if (userEntity.F_Account == GlobalContext.SystemConfig.SysemUserCode)
+                if (operatorModel.IsAdmin && operatorModel.DbNumber == GlobalContext.SystemConfig.MainDbNumber)
                 {
-                    operatorModel.IsSystem = true;
+                    operatorModel.IsSuperAdmin = true;
                 }
                 else
                 {
-                    operatorModel.IsSystem = false;
+                    operatorModel.IsSuperAdmin = false;
                 }
                 await OperatorProvider.Provider.AddLoginUser(operatorModel, apitoken, "api_",false);
                 logEntity.F_Account = userEntity.F_Account;

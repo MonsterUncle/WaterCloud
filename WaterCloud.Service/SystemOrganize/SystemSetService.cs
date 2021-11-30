@@ -60,12 +60,12 @@ namespace WaterCloud.Service.SystemOrganize
             }
             else
             {
-                query = query.Where(a => a.F_Id==GlobalContext.SystemConfig.SysemMasterProject);
+                query = query.Where(a => a.F_DbNumber == "0");
             }
             if (query.Clone().Count()==0)
             {
                 query = repository.IQueryable();
-                query = query.Where(a => a.F_Id == GlobalContext.SystemConfig.SysemMasterProject);
+                query = query.Where(a => a.F_DbNumber == "0");
             }
             return await query.Where(a => a.F_DeleteMark == false).FirstAsync();
         }
@@ -275,7 +275,7 @@ namespace WaterCloud.Service.SystemOrganize
                     await repository.Db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
                 }
                 //更新主库
-                if (currentuser.IsAdmin == true)
+                if (currentuser.IsSuperAdmin == true)
                 {
                     await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
                 }

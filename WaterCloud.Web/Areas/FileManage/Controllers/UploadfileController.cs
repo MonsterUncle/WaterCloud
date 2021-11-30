@@ -71,7 +71,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
                     throw new Exception("请指定文件格式");
                 }
                 string stemp = "local";
-                if (_service.currentuser.CompanyId != GlobalContext.SystemConfig.SysemMasterProject)
+                if (_service.currentuser.DbNumber != GlobalContext.SystemConfig.MainDbNumber)
                 {
                     var temp = await _setService.GetForm(_service.currentuser.CompanyId);
                     if (temp != null)
