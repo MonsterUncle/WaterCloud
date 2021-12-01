@@ -882,9 +882,19 @@ namespace WaterCloud.DataBase
                                 endTime = new DateTime(DateTime.Now.Date.AddYears(1).Year, 1, 1); //本年年初
                                 break;
                             case "specific":
-                                var tempTime = DateTime.Parse(item.value);
-                                startTime = tempTime.Date;
-                                endTime = tempTime.Date.AddDays(+1);
+                                var tempTime = item.value.Split('~');
+                                if (tempTime.Length == 0 || tempTime.Length == 1)
+                                {
+                                    var A = DateTime.Parse(tempTime[0]);
+                                    startTime = A.Date;
+                                    endTime = A.Date.AddDays(+1);
+                                }
+                                else
+                                {
+                                    startTime = DateTime.Parse(tempTime[0]);
+                                    endTime = DateTime.Parse(tempTime[1]);
+                                }
+
                                 break;
                             default: break;
                         }
