@@ -183,7 +183,7 @@
 [id^=soul-condition] {
     overflow-y: visible;
     max-height: initial;
-    min-width: 285px;
+    min-width: 555px;
     padding: 5px;
 }
 [id^=soul-condition] .layui-laydate-header {
@@ -250,7 +250,7 @@
 }
 /*表格筛选*/
 [id^=soul-condition]>div{
-    width: 270px;
+    width: 550px;
 }
 
 .soul-condition-title {
