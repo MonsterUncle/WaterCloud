@@ -58,7 +58,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 data =  repository.IQueryable();
             }
-            return data.Where(t => t.F_DeleteMark == false).FirstOrDefault();
+            return data.Where(t => t.F_DeleteMark == false).OrderBy(a=>a.F_CreatorTime).FirstOrDefault();
         }
 
         public async Task<List<SystemSetEntity>> GetLookList(Pagination pagination,string keyword = "")
