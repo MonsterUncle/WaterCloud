@@ -172,6 +172,44 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                 } else {
                     cache[myTable.id] = myTable.data || layui.table.cache[myTable.id]
                 }
+                table.on('sort(' + $table.attr('lay-filter') + ')', function (obj) {
+
+                    // 同步分页信息
+                    myTable.limit = cache[myTable.id].limit
+
+                    if (myTable.url && myTable.page && !myTable.autoSort) {
+                        // 后台分页
+                        where_cache[myTable.id] = myTable.where || {}
+                        where_cache[myTable.id].field = obj.field;
+                        where_cache[myTable.id].order = obj.type;
+                        isFilterReload[myTable.id] = false;
+                        myTable.page = $.extend(myTable.page, {
+                            curr: 1 //重新从第 1 页开始
+                        });
+                        table.render($.extend(myTable, {
+                            initSort: obj
+                            , where: where_cache[myTable.id]
+                        }));
+                    } else if ((!myTable.url && myTable.page) || myTable.autoSort) {
+                        // 前台分页
+                        if (obj.type === 'asc') { //升序
+                            cache[myTable.id] = layui.sort(cache[myTable.id], obj.field)
+                        } else if (obj.type === 'desc') { //降序
+                            cache[myTable.id] = layui.sort(cache[myTable.id], obj.field, true)
+                        } else { //清除排序
+                            cache[myTable.id] = layui.sort(cache[myTable.id], myTable.indexName)
+                        }
+                        //排序后及时更新row[SOUL_ROW_INDEX]
+                        cache[myTable.id].forEach(function (item, index) {
+                            item[SOUL_ROW_INDEX] = index
+                        })
+                        myTable.initSort = obj;
+                        myTable.page = $.extend(myTable.page, {
+                            curr: 1 //重新从第 1 页开始
+                        });
+                        _this.soulReload(myTable, false)
+                    }
+                });
                 return;
             } //如果没筛选列，直接退出
 
