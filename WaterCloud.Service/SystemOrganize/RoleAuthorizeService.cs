@@ -304,6 +304,10 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 return false;
             }
+			if (user.F_IsAdmin == true)
+			{
+                return true;
+			}
             var authorizeurldata = new List<AuthorizeActionModel>();
             var rolelist = user.F_RoleId.Split(',');
             var cachedata = await CacheHelper.Get<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
