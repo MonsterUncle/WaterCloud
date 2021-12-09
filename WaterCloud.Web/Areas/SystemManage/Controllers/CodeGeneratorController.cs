@@ -141,28 +141,41 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             {
                 List<TableFieldInfo> list = await _service.GetTableFieldList(baseConfig.TableName);
                 SingleTableTemplate template = new SingleTableTemplate(_unitOfWork.GetDbClient());
-                DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
                 string idcolumn = string.Empty;
                 Dictionary<string, string> dic = new Dictionary<string, string>();
                 baseConfig.PageIndex.ButtonList = ExtList.removeNull(baseConfig.PageIndex.ButtonList);
                 baseConfig.PageIndex.ColumnList = baseConfig.PageIndex.ColumnList.Where(a => a.field != "").ToList();
                 baseConfig.PageForm.FieldList.Remove("");
                 string idType = "string";
+                //构造虚拟参数
+				foreach (var item in baseConfig.PageIndex.ColumnList)
+				{
+					if (list.Where(a=>a.TableColumn == item.field).Count() == 0)
+					{
+                        TableFieldInfo temp=new TableFieldInfo();
+                        temp.TableIdentity = "";
+                        temp.TableColumn = item.field;
+                        temp.Remark = item.title;
+                        temp.IsIgnore = "Y";
+                        temp.Key = "";
+                        temp.IsNullable = "";
+                        temp.FieldDefault = "";
+                        temp.Datatype = "";
+                        temp.FieldLength = "";
+                        list.Add(temp);
+                    }
+				}
+                DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
                 foreach (DataRow dr in dt.Rows)
                 {
-
                     if (dr["TableIdentity"].ToString() == "Y")
                     {
                         idcolumn = dr["TableColumn"].ToString();
                         string datatype = dr["Datatype"].ToString();
                         datatype = TableMappingHelper.GetPropertyDatatype(datatype);
-                        if (datatype == "int?")
+                        if (datatype == "int"|| datatype == "long")
                         {
                             idType = "int";
-                        }
-                        else if (datatype == "long?")
-                        {
-                            idType = "long";
                         }
                         else
                         {

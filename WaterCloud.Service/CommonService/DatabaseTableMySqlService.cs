@@ -7,6 +7,7 @@ using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.DataBase.Extensions;
 using WaterCloud.Domain;
+using WaterCloud.CodeGenerator;
 
 namespace WaterCloud.Service.CommonService
 {

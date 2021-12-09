@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WaterCloud.Code;
+using WaterCloud.CodeGenerator;
 using WaterCloud.Domain;
 
 namespace WaterCloud.Service

@@ -75,58 +75,46 @@ namespace WaterCloud.CodeGenerator
         {
             string sTempDatatype = string.Empty;
             sDatatype = sDatatype.ToLower();
-            if (sDatatype.Contains("numer("))
-            {
-                sDatatype = "numer(8,2)";
-            }
+            sDatatype = System.Text.RegularExpressions.Regex.Replace(sDatatype, @"\d", "");
+            sDatatype = sDatatype.Replace(",", "");
+            sDatatype = sDatatype.Replace("(", "");
+            sDatatype = sDatatype.Replace(")", "");
             switch (sDatatype)
             {
                 case "int":
-                case "number":
                 case "integer":
                 case "smallint":
-                    sTempDatatype = "int?";
+                    sTempDatatype = "int";
                     break;
-
                 case "bigint":
-                    sTempDatatype = "long?";
+                    sTempDatatype = "long";
                     break;
-
-                case "tinyint":
-                    sTempDatatype = "bool?";
-                    break;
-
                 case "numeric":
                 case "real":
-                    sTempDatatype = "Single?";
+                    sTempDatatype = "Single";
                     break;
-
                 case "float":
-                    sTempDatatype = "float?";
+                case "number":
+                    sTempDatatype = "float";
                     break;
-
                 case "decimal":
-                case "numer(8,2)":
-                    sTempDatatype = "decimal?";
+                    sTempDatatype = "decimal";
                     break;
-
+                case "tinyint":
                 case "bit":
-                    sTempDatatype = "bool?";
+                    sTempDatatype = "bool";
                     break;
-
                 case "datetime":
                 case "datetime2":
                 case "date":
                 case "smalldatetime":
                 case "timestamp":
-                    sTempDatatype = "DateTime?";
+                    sTempDatatype = "DateTime";
                     break;
-
                 case "money":
                 case "smallmoney":
-                    sTempDatatype = "double?";
+                    sTempDatatype = "double";
                     break;
-
                 case "char":
                 case "varchar":
                 case "nvarchar2":

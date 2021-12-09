@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WaterCloud.CodeGenerator\WaterCloud.CodeGenerator.csproj" />
     <ProjectReference Include="..\WaterCloud.Code\WaterCloud.Code.csproj" />
     <ProjectReference Include="..\WaterCloud.Data\WaterCloud.DataBase.csproj" />
     <ProjectReference Include="..\WaterCloud.Domain\WaterCloud.Domain.csproj" />

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WaterCloud.Domain
+﻿namespace WaterCloud.CodeGenerator
 {
-    public class TableFieldInfo
+	public class TableFieldInfo
     {
         public string TableColumn { get; set; }
 
@@ -15,6 +9,7 @@ namespace WaterCloud.Domain
         public string FieldLength { get; set; }
 
         public string IsNullable { get; set; }
+        public string IsIgnore { get; set; }
         public string TableIdentity { get; set; }
         public string Key { get; set; }
         public string FieldDefault { get; set; }

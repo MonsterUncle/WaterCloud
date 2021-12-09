@@ -114,50 +114,34 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("    public class " + baseConfigModel.FileConfig.EntityName + " : " + baseEntity);
             }
             sb.AppendLine("    {");
-
-            string column = string.Empty;
-            string remark = string.Empty;
-            string datatype = string.Empty;
-            foreach (DataRow dr in dt.Rows)
+            var list = dt.ToDataList<TableFieldInfo>();
+            foreach (var item in list)
             {
-                column = dr["TableColumn"].ToString();
-                //基础字段一样生成
-                //if (BaseField.BaseFieldList.Where(p => p == column.ToLower()).Any())
-                //{
-                //    // 基础字段不需要生成，继承合适的BaseEntity即可。
-                //    continue;
-                //}
-                remark = dr["Remark"].ToString();
-                datatype = dr["Datatype"].ToString();
-                //column = TableMappingHelper.ConvertToUppercase(column);
-                datatype = TableMappingHelper.GetPropertyDatatype(datatype);
-
+                var datatype = TableMappingHelper.GetPropertyDatatype(item.Datatype);
+                var isPrimaryKey = idColumn == item.TableColumn ? ",IsPrimaryKey = true" : "";
+                var isIdentity = item.TableIdentity=="Y" ? ",IsIdentity = true" : "";
+                var isNull = (item.IsNullable == "Y" && item.Datatype != "string" && item.Datatype != "byte[]") ? "?" : "";
+                var isIgnore = item.IsIgnore == "Y" ? ",IsIgnore = true" : "";
+                var isJson = item.Datatype.StartsWith("json") ? ",IsJson= true" : "";
+                var columntype = item.Datatype;
+                if (item.FieldLength != null && !string.IsNullOrEmpty(item.FieldLength))
+                {
+                    columntype = columntype + "(" + item.FieldLength + ")";
+                }
+                var IsNullable = "";
+                if (item.IsNullable == "Y")
+                {
+                    IsNullable = ", IsNullable = true";
+                }
+                if (isIgnore != "")
+                {
+                    isPrimaryKey = isIdentity = isNull = "";
+                }
                 sb.AppendLine("        /// <summary>");
-                sb.AppendLine("        /// " + remark);
+                sb.AppendLine("        /// " + item.Remark);
                 sb.AppendLine("        /// </summary>");
-                if (idColumn == column)
-                {
-
-                    if (datatype == "int?")
-                    {
-                        sb.AppendLine("        [SugarColumn(ColumnName=\"" + column + "\", IsPrimaryKey = true , IsIdentity = true)]");
-                        sb.AppendLine("        public int " + column + " { get; set; }");
-                    }
-                    else if (datatype == "long?")
-                    {
-                        sb.AppendLine("        [SugarColumn(ColumnName=\"" + column + "\", IsPrimaryKey = true)]");
-                        sb.AppendLine("        public long " + column + " { get; set; }");
-                    }
-                    else
-                    {
-                        sb.AppendLine("        [SugarColumn(ColumnName=\"" + column + "\", IsPrimaryKey = true)]");
-                        sb.AppendLine("        public " + datatype + " " + column + " { get; set; }");
-                    }
-                }
-                else
-                {
-                    sb.AppendLine("        public " + datatype + " " + column + " { get; set; }");
-                }
+                sb.AppendLine("        [SugarColumn(ColumnName=\"" + item.TableColumn + "\", ColumnDescription = \""+item.Remark+ "\",ColumnDataType = \""+ columntype + "\""+ IsNullable + isIgnore+isJson+isIdentity+isPrimaryKey+")]");
+                sb.AppendLine("        public " + datatype + isNull + " " + item.TableColumn + " { get; set; }");
                 //switch (datatype)
                 //{
                 //    case "long?":
