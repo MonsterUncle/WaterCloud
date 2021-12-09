@@ -37,18 +37,22 @@ namespace WaterCloud.DataBase
                     || pars[i].DbType == System.Data.DbType.AnsiString
                     || pars[i].DbType == System.Data.DbType.StringFixedLength)
                 {
-					if (sql.IndexOf(pars[i].ParameterName)>-1)
                         sql = sql.Replace(pars[i].ParameterName, "'" + pars[i].Value?.ToString() + "'");
 
                 }
                 else if (pars[i].DbType == System.Data.DbType.Boolean)
                 {
-                    if (sql.IndexOf(pars[i].ParameterName) > -1)
+					try
+					{
                         sql = sql.Replace(pars[i].ParameterName, Convert.ToBoolean(pars[i].Value) ? "1" : "0");
+                    }
+					catch (Exception)
+					{
+                        sql = sql.Replace(pars[i].ParameterName, "0");
+                    }
                 }
                 else
                 {
-                    if (sql.IndexOf(pars[i].ParameterName) > -1)
                         sql = sql.Replace(pars[i].ParameterName, pars[i].Value?.ToString());
                 }
             }
