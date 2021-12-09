@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using WaterCloud.Code.Extend;
 using WaterCloud.DataBase;
 using SqlSugar;
+using System;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -23,17 +24,17 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         private readonly IUnitOfWork _unitOfWork;
         public CodeGeneratorController(IUnitOfWork unitOfWork)
         {
-            string dbType = GlobalContext.SystemConfig.DBProvider;
+            var dbType = Convert.ToInt32(Enum.Parse(typeof(SqlSugar.DbType), GlobalContext.SystemConfig.DBProvider));
             _unitOfWork = unitOfWork;
             switch (dbType)
             {
-                case Define.DBTYPE_SQLSERVER:
+                case (int)SqlSugar.DbType.SqlServer:
                     _service = new DatabaseTableSqlServerService(unitOfWork);
                     break;
-                case Define.DBTYPE_MYSQL:
+                case (int)SqlSugar.DbType.MySql:
                     _service = new DatabaseTableMySqlService(unitOfWork);
                     break;
-                case Define.DBTYPE_ORACLE:
+                case (int)SqlSugar.DbType.Oracle:
                     _service = new DatabaseTableOracleService(unitOfWork);
                     break;
                 default:

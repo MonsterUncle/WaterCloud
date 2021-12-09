@@ -7,18 +7,19 @@ namespace WaterCloud.DataBase
 {
 	public class DBContexHelper
     {
-        private static string dbType = GlobalContext.SystemConfig.DBProvider;
-        private static string dbConnectionString = GlobalContext.SystemConfig.DBConnectionString;
+        private static string defaultDbType = GlobalContext.SystemConfig.DBProvider;
+        private static string defaultDbConnectionString = GlobalContext.SystemConfig.DBConnectionString;
 
         public static ConnectionConfig Contex(string ConnectStr = "", string providerName = "")
         {
-            ConnectStr = string.IsNullOrEmpty(ConnectStr) ? dbConnectionString : ConnectStr;
-            providerName = string.IsNullOrEmpty(providerName) ? dbType : providerName;
-            if (providerName == Define.DBTYPE_SQLSERVER)
+            ConnectStr = string.IsNullOrEmpty(ConnectStr) ? defaultDbConnectionString : ConnectStr;
+            providerName = string.IsNullOrEmpty(providerName) ? defaultDbType : providerName;
+            var dbType = Convert.ToInt32(Enum.Parse(typeof(DbType), providerName));
+            if (dbType == Convert.ToInt32(DbType.SqlServer))
             {
                 return new ConnectionConfig()
                 {
-                    DbType = DbType.SqlServer,
+                    DbType = (DbType)dbType,
                     InitKeyType = InitKeyType.Attribute,
                     IsAutoCloseConnection = true,
                     ConnectionString = ConnectStr,
@@ -28,29 +29,15 @@ namespace WaterCloud.DataBase
                     }
                 };
             }
-            else if (providerName == Define.DBTYPE_MYSQL)
-            {
-                return new ConnectionConfig()
-                {
-                    DbType = DbType.MySql,
-                    InitKeyType = InitKeyType.Attribute,
-                    IsAutoCloseConnection = true,
-                    ConnectionString = ConnectStr
-                };
-            }
-            else if (providerName == Define.DBTYPE_ORACLE)
-            {
-                return new ConnectionConfig()
-                {
-                    DbType = DbType.Oracle,
-                    InitKeyType = InitKeyType.Attribute,
-                    IsAutoCloseConnection = true,
-                    ConnectionString = ConnectStr
-                };
-            }
             else
             {
-                return null;
+                return new ConnectionConfig()
+                {
+                    DbType = (DbType)dbType,
+                    InitKeyType = InitKeyType.Attribute,
+                    IsAutoCloseConnection = true,
+                    ConnectionString = ConnectStr
+                };
             }
         }
     }

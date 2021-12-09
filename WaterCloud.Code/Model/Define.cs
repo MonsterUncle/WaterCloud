@@ -6,9 +6,6 @@ namespace WaterCloud.Code
 {
     public static class Define
     {
-        public const string DBTYPE_SQLSERVER = "MSSql";    //sql server
-        public const string DBTYPE_MYSQL = "MySql";    //sql server
-        public const string DBTYPE_ORACLE = "Oracle";    //oracle
 
         public const string PROVIDER_COOKIE = "Cookie";
         public const string PROVIDER_SESSION = "Session";

@@ -6,19 +6,14 @@
 *********************************************************************************/
 using WaterCloud.Code;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Threading.Tasks;
 using SqlSugar;
 
 namespace WaterCloud.DataBase
 {
-    /// <summary>
-    /// 非泛型仓储
-    /// </summary>
-    public class UnitOfWork: IUnitOfWork,IDisposable
+	/// <summary>
+	/// 非泛型仓储
+	/// </summary>
+	public class UnitOfWork: IUnitOfWork,IDisposable
     {
         private readonly ISqlSugarClient _context;
         public UnitOfWork(ISqlSugarClient context)
@@ -37,12 +32,32 @@ namespace WaterCloud.DataBase
             _context.Ado.CommandTimeOut = commandTimeout;
             _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
             {
-                Console.WriteLine("----------Start-----------");
-                Console.WriteLine("StartTime:" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                Console.WriteLine("NeedTime:" + _context.Ado.SqlExecutionTime.ToString());//输出SQL执行时间
-                Console.WriteLine("RunSql:"+sql);
-                Console.WriteLine("Parameters:"+string.Join(",", pars?.Select(it => it.ParameterName + ":" + it.Value)));
-                Console.WriteLine("-----------End------------");
+                if (sql.StartsWith("SELECT"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("[SELECT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                }
+                if (sql.StartsWith("INSERT"))
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("[INSERT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                }
+                if (sql.StartsWith("UPDATE"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("[UPDATE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+
+                }
+                if (sql.StartsWith("DELETE"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[DELETE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                }
+                Console.WriteLine("NeedTime-" + _context.Ado.SqlExecutionTime.ToString());
+                //App.PrintToMiniProfiler("SqlSugar", "Info", sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
+                Console.WriteLine("Content:" + SqlProfiler.ParameterFormat(sql, pars));
+                Console.WriteLine("---------------------------------");
+                Console.WriteLine("");
             };
         }
         public UnitOfWork(string ConnectStr, string providerName)
@@ -56,12 +71,32 @@ namespace WaterCloud.DataBase
             _context.Ado.CommandTimeOut = commandTimeout;
             _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
             {
-                Console.WriteLine("----------Start-----------");
-                Console.WriteLine("StartTime:" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                Console.WriteLine("NeedTime:" + _context.Ado.SqlExecutionTime.ToString());//输出SQL执行时间
-                Console.WriteLine("RunSql:" + sql);
-                Console.WriteLine("Parameters:" + string.Join(",", pars?.Select(it => it.ParameterName + ":" + it.Value)));
-                Console.WriteLine("-----------End------------");
+                if (sql.StartsWith("SELECT"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("[SELECT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                }
+                if (sql.StartsWith("INSERT"))
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("[INSERT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                }
+                if (sql.StartsWith("UPDATE"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("[UPDATE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+
+                }
+                if (sql.StartsWith("DELETE"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[DELETE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                }
+                Console.WriteLine("NeedTime-" + _context.Ado.SqlExecutionTime.ToString());
+                //App.PrintToMiniProfiler("SqlSugar", "Info", sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
+                Console.WriteLine("Content:" + SqlProfiler.ParameterFormat(sql, pars));
+                Console.WriteLine("---------------------------------");
+                Console.WriteLine("");
             };
         }
         public void BeginTrans()
