@@ -11,6 +11,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using SqlSugar;
+using System.Reflection;
 
 namespace WaterCloud.DataBase
 {
@@ -27,9 +28,11 @@ namespace WaterCloud.DataBase
         {
             get
             {
-                if (typeof(TEntity).GetTypeInfo().GetCustomAttributes(typeof(SugarTable), true).FirstOrDefault((x => x.GetType() == typeof(SugarTable))) is SugarTable sugarTable && !string.IsNullOrEmpty(sugarTable.TableDescription))
+                var entityType = typeof(TEntity);
+                if (entityType.IsDefined(typeof(TenantAttribute), false))
                 {
-                    _dbBase.ChangeDatabase(sugarTable.TableDescription.ToLower());
+                    var tenantAttribute = entityType.GetCustomAttribute<TenantAttribute>(false)!;
+                    _dbBase.ChangeDatabase(tenantAttribute.configId);
                 }
                 return _dbBase;
             }
