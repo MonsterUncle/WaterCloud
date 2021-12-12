@@ -134,63 +134,74 @@ namespace WaterCloud.Service.SystemOrganize
                 return false;
             }
             var authorizeurldata = new List<AuthorizeActionModel>();
-            var rolelist = user.F_RoleId.Split(',');
             var cachedata =await CacheHelper.Get<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey +repository.Db.CurrentConnectionConfig.ConfigId+ "_list");
             if (cachedata == null)
             {
                 cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
             }
-            foreach (var roles in rolelist)
+            if (user.F_IsAdmin == true)
             {
-                if (!cachedata.ContainsKey(roles))
+                if (unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_UrlAddress == action).Count() > 0 || unitofwork.GetDbClient().Queryable<ModuleButtonEntity>().Where(a => a.F_UrlAddress == action).Count() > 0)
                 {
-                    var moduledata = await moduleApp.GetList();
-                    moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
-                    var buttondata = await moduleButtonApp.GetList();
-                    buttondata = buttondata.Where(a => a.F_EnabledMark == true).ToList();
-                    var role = await roleApp.GetForm(roles);
-                    if (role != null && role.F_EnabledMark == true)
-                    {
-                        var authdata = new List<AuthorizeActionModel>();
-                        var authorizedata = await GetList(roles);
-                        foreach (var item in authorizedata)
-                        {
-                            try
-                            {
-                                if (item.F_ItemType == 1)
-                                {
-                                    ModuleEntity moduleEntity = moduledata.Where(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false).FirstOrDefault();
-                                    if (moduleEntity != null)
-                                    {
-                                        authdata.Add(new AuthorizeActionModel { F_Id = moduleEntity.F_Id, F_UrlAddress = moduleEntity.F_UrlAddress, F_Authorize = moduleEntity.F_Authorize });
-                                    }
-                                }
-                                else if (item.F_ItemType == 2)
-                                {
-                                    ModuleButtonEntity moduleButtonEntity = buttondata.Where(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false).FirstOrDefault();
-                                    if (moduleButtonEntity != null)
-                                    {
-                                        authdata.Add(new AuthorizeActionModel { F_Id = moduleButtonEntity.F_ModuleId, F_UrlAddress = moduleButtonEntity.F_UrlAddress, F_Authorize = moduleButtonEntity.F_Authorize });
-                                    }
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                string e = ex.Message;
-                                continue;
-                            }
-                        }
-                        authdata.AddRange(moduledata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_Id, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
-                        authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
-                        cachedata.Add(roles, authdata);
-                        authorizeurldata.AddRange(authdata);
-                        await CacheHelper.Remove(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
-                        await CacheHelper.Set(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list", cachedata);
-                    }
+                    return true;
                 }
-                else
+                return false;
+            }
+            else
+			{
+                var rolelist = user.F_RoleId.Split(',');
+                foreach (var roles in rolelist)
                 {
-                    authorizeurldata.AddRange(cachedata[roles]);
+                    if (!cachedata.ContainsKey(roles))
+                    {
+                        var moduledata = await moduleApp.GetList();
+                        moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
+                        var buttondata = await moduleButtonApp.GetList();
+                        buttondata = buttondata.Where(a => a.F_EnabledMark == true).ToList();
+                        var role = await roleApp.GetForm(roles);
+                        if (role != null && role.F_EnabledMark == true)
+                        {
+                            var authdata = new List<AuthorizeActionModel>();
+                            var authorizedata = await GetList(roles);
+                            foreach (var item in authorizedata)
+                            {
+                                try
+                                {
+                                    if (item.F_ItemType == 1)
+                                    {
+                                        ModuleEntity moduleEntity = moduledata.Where(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false).FirstOrDefault();
+                                        if (moduleEntity != null)
+                                        {
+                                            authdata.Add(new AuthorizeActionModel { F_Id = moduleEntity.F_Id, F_UrlAddress = moduleEntity.F_UrlAddress, F_Authorize = moduleEntity.F_Authorize });
+                                        }
+                                    }
+                                    else if (item.F_ItemType == 2)
+                                    {
+                                        ModuleButtonEntity moduleButtonEntity = buttondata.Where(a => a.F_Id == item.F_ItemId && a.F_IsPublic == false).FirstOrDefault();
+                                        if (moduleButtonEntity != null)
+                                        {
+                                            authdata.Add(new AuthorizeActionModel { F_Id = moduleButtonEntity.F_ModuleId, F_UrlAddress = moduleButtonEntity.F_UrlAddress, F_Authorize = moduleButtonEntity.F_Authorize });
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    string e = ex.Message;
+                                    continue;
+                                }
+                            }
+                            authdata.AddRange(moduledata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_Id, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
+                            authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
+                            cachedata.Add(roles, authdata);
+                            authorizeurldata.AddRange(authdata);
+                            await CacheHelper.Remove(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+                            await CacheHelper.Set(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list", cachedata);
+                        }
+                    }
+                    else
+                    {
+                        authorizeurldata.AddRange(cachedata[roles]);
+                    }
                 }
             }
             var module = authorizeurldata.Find(a => a.F_UrlAddress == action);

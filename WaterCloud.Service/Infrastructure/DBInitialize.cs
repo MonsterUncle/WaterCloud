@@ -6,15 +6,15 @@ using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemOrganize;
 
-namespace WaterCloud.Web
+namespace WaterCloud.Service
 {
 	public class DBInitialize
 	{
         private static string cacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_dblist";// 数据库键
-        public static List<ConnectionConfig> GetConnectionConfigs()
+        public static List<ConnectionConfig> GetConnectionConfigs(bool readDb=false)
 		{
             List<ConnectionConfig> list = CacheHelper.Get<List<ConnectionConfig>>(cacheKey).Result;
-            if (list == null || list.Count() == 0)
+            if (list == null || list.Count() == 0 || readDb)
 			{
                 list=new List<ConnectionConfig>();
                 var data = GlobalContext.SystemConfig;
@@ -25,9 +25,9 @@ namespace WaterCloud.Web
                 {
                     try
                     {
-                        using (var context = new UnitOfWork(new SqlSugarClient(defaultConfig)))
+                        using (var context =new SqlSugarClient(defaultConfig))
                         {
-                            var sqls = context.GetDbClient().Queryable<SystemSetEntity>().ToList();
+                            var sqls = context.Queryable<SystemSetEntity>().ToList();
                             foreach (var item in sqls.Where(a => a.F_EnabledMark == true && a.F_EndTime > DateTime.Now.Date && a.F_DbNumber != "0"))
                             {
                                 var config = DBContexHelper.Contex(item.F_DbString, item.F_DBProvider);

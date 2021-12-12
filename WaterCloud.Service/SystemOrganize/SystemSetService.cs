@@ -137,7 +137,8 @@ namespace WaterCloud.Service.SystemOrganize
                             modulebtns.Add(buttondata.Find(a => a.F_Id == itemId));
                         }
                     }
-                    modules.AddRange(moduledata.Where(a => a.F_IsPublic == true && a.F_EnabledMark == true && a.F_DeleteMark == false));
+                    //排除租户
+                    modules.AddRange(moduledata.Where(a => a.F_IsPublic == true && a.F_EnabledMark == true && a.F_DeleteMark == false && a.F_EnCode!= "SystemSet"));
                     modulebtns.AddRange(buttondata.Where(a => a.F_IsPublic == true && a.F_EnabledMark == true && a.F_DeleteMark == false));
                 }
                 if (permissionfieldsIds != null)
@@ -167,7 +168,10 @@ namespace WaterCloud.Service.SystemOrganize
                 //新建数据库和表
                 using (var db = new SqlSugarClient(DBContexHelper.Contex(entity.F_DbString, entity.F_DBProvider)))
 				{
+                    //判断数据库有没有被使用
                     db.DbMaintenance.CreateDatabase();
+                    if (db.DbMaintenance.GetTableInfoList(false).Where(a=>a.Name.ToLower()== "sys_module").Count()>0)
+                        throw new Exception("数据库已存在,请重新设置数据库");
                     var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
                     //反射取指定前后缀的dll
                     var referencedAssemblies = Directory.GetFiles(path, "WaterCloud.Domain.dll").Select(Assembly.LoadFrom).ToArray();
@@ -222,7 +226,6 @@ namespace WaterCloud.Service.SystemOrganize
                     await db.Insertable(itemsTypes).ExecuteCommandAsync();
                     await db.Insertable(itemsDetails).ExecuteCommandAsync();
                 }
-                await CacheHelper.Remove(cacheKey);
             }
             else
             {
@@ -344,6 +347,8 @@ namespace WaterCloud.Service.SystemOrganize
             }
             unitofwork.Commit();
             unitofwork.GetDbClient().ChangeDatabase("0");
+            //清空缓存，重新拉数据
+            DBInitialize.GetConnectionConfigs(true);
         }
 
         public async Task DeleteForm(string keyValue)
