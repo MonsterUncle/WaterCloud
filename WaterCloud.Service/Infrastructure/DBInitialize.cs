@@ -8,9 +8,17 @@ using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service
 {
+    /// <summary>
+    /// 初始数据库操作类
+    /// </summary>
 	public class DBInitialize
 	{
         private static string cacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_dblist";// 数据库键
+        /// <summary>
+        /// 获取注册数据库list
+        /// </summary>
+        /// <param name="readDb">重置数据库list</param>
+        /// <returns></returns>
         public static List<ConnectionConfig> GetConnectionConfigs(bool readDb=false)
 		{
             List<ConnectionConfig> list = CacheHelper.Get<List<ConnectionConfig>>(cacheKey).Result;
@@ -61,6 +69,9 @@ namespace WaterCloud.Service
             }
             return list;
         }
+        /// <summary>
+        /// 重置超管密码
+        /// </summary>
         public static void ReviseSuperSysem()
         {
             var data = GlobalContext.SystemConfig;
