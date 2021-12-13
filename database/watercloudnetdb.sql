@@ -6019,4 +6019,6 @@ CREATE TABLE `sys_openjob`  (
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
+INSERT INTO `sys_modulebutton` (`F_Id`, `F_ModuleId`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_Location`, `F_JsEvent`, `F_UrlAddress`, `F_Split`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d9bde2-f14d-4b33-8f9b-2af0bf40812b', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, 'NF-cancle', '撤回', NULL, 1, 'cancle', '/FlowManage/Flowinstance/CancleForm', NULL, 0, 0, 0, 4, 0, 1, '', '2021-12-13 10:47:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
+
 SET FOREIGN_KEY_CHECKS = 1;

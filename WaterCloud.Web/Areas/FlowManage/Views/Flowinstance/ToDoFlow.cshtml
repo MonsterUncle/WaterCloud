@@ -56,6 +56,9 @@
                         if (d.F_IsFinish == 0) {
                             return "<span class='layui-badge layui-bg-blue'>正在运行</span>";
                         }
+                        else if (d.F_IsFinish == 2) {
+                             return "<span class= 'layui-badge layui-bg-gray'>被撤回</span >";
+                        }
                         else if (d.F_IsFinish == 3) {
                             return "<span class= 'layui-badge'>不同意</span >";
                         }
