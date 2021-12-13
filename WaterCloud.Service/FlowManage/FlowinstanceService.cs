@@ -979,6 +979,68 @@ namespace WaterCloud.Service.FlowManage
                 F_EnabledMark = false
             });
         }
+        public async Task CancleForm(string keyValue)
+        {
+            var user = currentuser;
+
+            FlowinstanceEntity flowInstance = await GetForm(keyValue);
+            flowCreator = flowInstance.F_CreatorUserId;
+
+            FlowRuntime wfruntime = new FlowRuntime(flowInstance);
+
+            string resnode = "";
+            resnode =  wfruntime.RejectNode("1");
+
+            var tag = new Tag
+            {
+                Description = "流程撤回",
+                Taged = (int)TagState.Reject,
+                UserId = user.UserId,
+                UserName = user.UserName
+            };
+
+            wfruntime.MakeTagNode(wfruntime.currentNodeId, tag);
+            flowInstance.F_IsFinish = 2;//2表示撤回（需要申请者重新提交表单）
+            unitofwork.CurrentBeginTrans();
+            if (resnode != "")
+            {
+                wfruntime.RemoveNode(resnode);
+                flowInstance.F_SchemeContent = wfruntime.ToSchemeObj().ToJson();
+                flowInstance.F_ActivityId = resnode;
+                var prruntime = new FlowRuntime(flowInstance);
+                prruntime.MakeTagNode(prruntime.currentNodeId, tag);
+                flowInstance.F_PreviousId = prruntime.previousId;
+                flowInstance.F_ActivityType = prruntime.GetNodeType(resnode);
+                flowInstance.F_ActivityName = prruntime.Nodes[resnode].name;
+                if (resnode == wfruntime.startNodeId)
+                {
+                    flowInstance.F_MakerList = flowInstance.F_CreatorUserId;
+                }
+                else
+                {
+                    flowInstance.F_MakerList = await repository.Db.Queryable<FlowInstanceTransitionHistory>().Where(a => a.F_FromNodeId == resnode && a.F_ToNodeId == prruntime.nextNodeId).OrderBy(a => a.F_CreatorTime, OrderByType.Desc).Select(a => a.F_CreatorUserId).FirstAsync();//当前节点可执行的人信息
+                }
+                await AddRejectTransHistory(wfruntime, prruntime);
+                await repository.Update(flowInstance);
+            }
+            await repository.Db.Insertable(new FlowInstanceOperationHistory
+            {
+                F_Id = Utils.GuId(),
+                F_InstanceId = keyValue
+                ,
+                F_CreatorUserId = user.UserId
+                ,
+                F_CreatorUserName = user.UserName
+                ,
+                F_CreatorTime = DateTime.Now
+                ,
+                F_Content = "【"
+                          + wfruntime.currentNode.name
+                          + "】【" + DateTime.Now.ToString("yyyy-MM-dd HH:mm") + "】撤回,备注：流程撤回"
+            }).ExecuteCommandAsync();
+            unitofwork.CurrentCommit();
+            wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
+        }
         #endregion
 
     }

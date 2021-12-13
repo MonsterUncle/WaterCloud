@@ -21,7 +21,7 @@
                 useOperStack: true,
                 needNoTag: true,
                 useName: "处理人",
-                tagName: { "1": "通过", "2": "不通过", "3": "驳回" },
+                tagName: { "1": "通过", "2": "不通过", "3": "驳回/撤回" },
                 tagClass: { "1": "#5cb85c", "2": "#d9534f", "3": "#f0ad4e" },
                 resultName: "结果",
                 timeName: "处理时间",

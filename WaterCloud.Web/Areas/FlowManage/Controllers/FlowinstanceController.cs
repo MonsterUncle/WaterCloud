@@ -135,6 +135,21 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
                 return await Error(ex.Message, "", keyValue, DbLogType.Delete);
             }
         }
+        [HttpPost]
+        [HandlerAjaxOnly]
+        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        public async Task<ActionResult> CancleForm(string keyValue)
+        {
+            try
+            {
+                await _service.CancleForm(keyValue);
+                return await Success("操作成功。", "", keyValue, DbLogType.Other);
+            }
+            catch (Exception ex)
+            {
+                return await Error(ex.Message, "", keyValue, DbLogType.Other);
+            }
+        }
         #endregion
     }
 }

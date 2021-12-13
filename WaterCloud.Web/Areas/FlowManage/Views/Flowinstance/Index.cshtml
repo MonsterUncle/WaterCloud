@@ -24,12 +24,14 @@
          <script type="text/html" id="toolbarDemo">
              <div class="layui-btn-container" id="toolbar">
                  <button id="NF-add" name="NF-add" authorize class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>申请</button>
+                 <button id="NF-cancle" name="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger layui-hide" lay-event="cancle"> <i class="fa fa-undo">  </i>撤回</button>
                  <button id="NF-edit" name="NF-edit" authorize class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
                  <button id="NF-delete" name="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
                  <button id="NF-details" name="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>进度</button>
              </div>
          </script>
          <script type="text/html" id="currentTableBar">
+              <a id="NF-cancle" authorize class="layui-btn layui-btn-sm layui-btn-danger" lay-event="cancle"><i class="fa fa-undo">  </i></a>
              <a id="NF-edit" authorize class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
              <a id="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"><i class="layui-icon">&#xe640;</i></a>
              <a id="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"><i class="layui-icon">&#xe60b;</i></a>
@@ -58,6 +60,9 @@
                          if (d.F_IsFinish == 0) {
                              return "<span class='layui-badge layui-bg-blue'>正在运行</span>";
                          }
+                         else if (d.F_IsFinish == 2) {
+                             return "<span class= 'layui-badge layui-bg-gray'>被撤回</span >";
+                         }
                          else if (d.F_IsFinish == 3) {
                              return "<span class= 'layui-badge'>不同意</span >";
                          }
@@ -77,7 +82,7 @@
                      field: 'F_CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                  },
                  { field: 'F_CreatorUserName', title: '创建人', width: 120, sort: true, filter: true },
-                 { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
+                 { title: '操作', width: 225, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
              ]]
          });
          // 监听搜索操作
@@ -93,7 +98,7 @@
          });
          wcLoading.close();
          //行点击事件监听，控制按钮显示
-         var oneList = ["NF-edit", "NF-details", "NF-delete"];//选择1条显示
+         var oneList = ["NF-edit", "NF-details", "NF-delete","NF-cancle"];//选择1条显示
          commonTable.tableRowClick("radio", "currentTableFilter", "currentTableId", oneList);
          //toolbar监听事件
          table.on('toolbar(currentTableFilter)', function (obj) { 
@@ -109,12 +114,31 @@
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
-                 if (data[0].F_IsFinish != 4) {
+                 if (data[0].F_IsFinish != 4 && data[0].F_IsFinish != 2) {
                      common.modalMsg("申请已处理，无法删除", "warning");
                      return false;
                  }
                  common.deleteForm({
                      url: "/FlowManage/Flowinstance/DeleteForm",
+                     param: { keyValue: data[0].F_Id },
+                     success: function () {
+                         common.reload('data-search-btn');
+                         entity = null;
+                   }
+               });
+           }
+            else if (obj.event === 'cancle') {
+                 if (data.length == 0) {
+                     common.modalMsg("未选中数据", "warning");
+                     return false;
+                 }
+                 if (data[0].F_IsFinish != 0) {
+                     common.modalMsg("申请已处理，无法撤回", "warning");
+                     return false;
+                 }
+                common.submitPost({
+                    prompt:"注：您确定要撤回选中数据吗？",
+                     url: "/FlowManage/Flowinstance/CancleForm",
                      param: { keyValue: data[0].F_Id },
                      success: function () {
                          common.reload('data-search-btn');
@@ -128,7 +152,7 @@
                      return false;
                  }
                  var userId = top.currentUser.F_Id;
-                 if (data[0].F_IsFinish != 4 || data[0].F_MakerList.indexOf(userId)<0 ) {
+                 if ((data[0].F_IsFinish != 4 && data[0].F_IsFinish != 2) || data[0].F_MakerList.indexOf(userId)<0 ) {
                      common.modalMsg("申请已处理，无法修改", "warning");
                      return false;
                  }
@@ -163,7 +187,7 @@
          //toolrow监听事件
          table.on('tool(currentTableFilter)', function (obj) {
              if (obj.event === 'delete') {
-                 if (obj.data.F_IsFinish != 4) {
+                 if (obj.data.F_IsFinish != 4 && data[0].F_IsFinish != 2) {
                      common.modalMsg("申请已处理，无法删除", "warning");
                      return false;
                  }
@@ -176,9 +200,24 @@
                      }
                  });
              }
+             if (obj.event === 'cancle') {
+                 if (obj.data.F_IsFinish != 0) {
+                     common.modalMsg("申请已处理，无法撤回", "warning");
+                     return false;
+                 }
+                common.submitPost({
+                    prompt:"注：您确定要撤回选中数据吗？",
+                     url: "/FlowManage/Flowinstance/CancleForm",
+                     param: { keyValue: obj.data.F_Id },
+                     success: function () {
+                         common.reload('data-search-btn');
+                         entity = null;
+                   }
+               });
+            }
              else if (obj.event === 'edit') {
                  var userId = top.currentUser.F_Id;
-                 if (obj.data.F_IsFinish != 4 || obj.data.F_MakerList.indexOf(userId) < 0) {
+                 if ((obj.data.F_IsFinish != 4 && data[0].F_IsFinish != 2) || obj.data.F_MakerList.indexOf(userId) < 0) {
                      common.modalMsg("申请已处理，无法修改", "warning");
                      return false;
                  }
