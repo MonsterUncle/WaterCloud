@@ -171,11 +171,10 @@
                     NextNodeDesignateType = data.NextNodeDesignateType;
                     $('#NextMakerName').parent().parent().removeClass('layui-hide');
                     if (!data.NextNodeDesignateType) {
-                        $('#NextNodeDesignates').val('');
+                        $('#NextNodeDesignates').val('无人审核');
                         $('#NextMakerName').val('');
                         $('#NextMakerName').attr('disabled', 'disabled');
                         $('#NextMakerName').removeAttr('placeholder');
-                        $('#NextMakerName').parent().parent().addClass('layui-hide');
                     }
                     else if (data.NextNodeDesignateType == "RUNTIME_SPECIAL_ROLE") {
                         $('#NextNodeDesignates').val('');
@@ -189,6 +188,12 @@
                         $('#NextMakerName').removeAttr('disabled');
                         $('#NextMakerName').attr('placeholder', '请点击选择用户');
                     }
+                    else if (data.NextNodeDesignateType == "ALL_USER") {
+                        $('#NextNodeDesignates').val('');
+                        $('#NextMakerName').val('所有人');
+                        $('#NextMakerName').attr('disabled', 'disabled');
+                        $('#NextMakerName').removeAttr('placeholder');
+                    }
                     else {
                         $('#NextNodeDesignates').val('');
                         $('#NextMakerName').val('');
@@ -196,7 +201,7 @@
                         $('#NextMakerName').removeAttr('placeholder');
                         $('#NextMakerName').val(data.NextMakerName);
                         if (!data.NextMakerName) {
-                            $('#NextMakerName').val("所有人");
+                            $('#NextMakerName').val("无人审核");
                         }
                     }
                     //预览流程
@@ -320,6 +325,10 @@
             delete data.field.F_Code;
             delete data.field.F_Description;
             delete data.field.file;
+            if (postData.NextMakerName="无人审核") {
+                common.modalMsg("无人审核，请检查流程", "warning");
+                return false;
+            }
             postData.F_FrmData = JSON.stringify(data.field);
             step.next('#stepForm');
             return false;
@@ -371,7 +380,7 @@
         <div class="layuimini-main">
             <div class="layui-form layuimini-form" lay-filter="adminform">
                 <div class="layui-carousel" id="stepForm" lay-filter="stepForm">
-                    <div carousel-item>
+                    <div carousel-item style="overflow:scroll">
                         <div>
                             <form class="layui-form layuimini-form">
                                 <div class="layui-form-item layui-hide">
@@ -382,18 +391,18 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="layui-form-item" style="padding-top:15px">
-                                    <fieldset class="layui-elem-field">
-                                        <legend>申请内容</legend>
-                                        <div id="frmPreview"></div>
-                                    </fieldset>
-                                </div>
                                 <div class="layui-form-item layui-hide">
                                     <label class="layui-form-label required">下一步审核</label>
                                     <div class="layui-input-block">
                                         <input type="text" name="NextMakerName" disabled="disabled" id="NextMakerName" lay-verify="required" onclick="search()" class="layui-input">
                                         <input type="text" name="NextNodeDesignates" id="NextNodeDesignates" class="layui-input layui-hide">
                                     </div>
+                                </div>
+                                <div class="layui-form-item" style="padding-top:15px;">
+                                    <fieldset class="layui-elem-field">
+                                        <legend>申请内容</legend>
+                                        <div id="frmPreview"></div>
+                                    </fieldset>
                                 </div>
                                 <div class="form-group-bottom text-right">
                                     <div class="layui-input-block">

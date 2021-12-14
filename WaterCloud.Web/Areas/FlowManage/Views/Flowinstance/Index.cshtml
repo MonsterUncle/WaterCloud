@@ -31,7 +31,7 @@
              </div>
          </script>
          <script type="text/html" id="currentTableBar">
-             <a id="NF-cancle" authorize class="layui-btn layui-btn-sm layui-btn-danger" lay-event="cancle"><i class="fa fa-undo">  </i></a>
+              <a id="NF-cancle" authorize class="layui-btn layui-btn-sm layui-btn-danger" lay-event="cancle"><i class="fa fa-undo">  </i></a>
              <a id="NF-edit" authorize class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
              <a id="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"><i class="layui-icon">&#xe640;</i></a>
              <a id="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"><i class="layui-icon">&#xe60b;</i></a>
@@ -60,9 +60,9 @@
                          if (d.F_IsFinish == 0) {
                              return "<span class='layui-badge layui-bg-blue'>正在运行</span>";
                          }
-                        else if (d.F_IsFinish == 2) {
+                         else if (d.F_IsFinish == 2) {
                              return "<span class= 'layui-badge layui-bg-gray'>被撤回</span >";
-                        }
+                         }
                          else if (d.F_IsFinish == 3) {
                              return "<span class= 'layui-badge'>不同意</span >";
                          }
@@ -79,7 +79,7 @@
                  { field: 'F_ActivityName', title: '当前节点名称', width: 140, filter: true },
                  { field: 'F_Description', title: '实例备注', minWidth: 150, filter: true },
                  {
-                     field: 'F_CreatorTime', title: '创建时间', width: 160, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
+                     field: 'F_CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                  },
                  { field: 'F_CreatorUserName', title: '创建人', width: 120, sort: true, filter: true },
                  { title: '操作', width: 225, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
@@ -109,6 +109,24 @@
                      href: "/FlowManage/Flowinstance/Form",
                  });
              } 
+             else if (obj.event === 'delete') {
+                 if (data.length == 0) {
+                     common.modalMsg("未选中数据", "warning");
+                     return false;
+                 }
+                 if (data[0].F_IsFinish != 4 && data[0].F_IsFinish != 2) {
+                     common.modalMsg("申请已处理，无法删除", "warning");
+                     return false;
+                 }
+                 common.deleteForm({
+                     url: "/FlowManage/Flowinstance/DeleteForm",
+                     param: { keyValue: data[0].F_Id },
+                     success: function () {
+                         common.reload('data-search-btn');
+                         entity = null;
+                   }
+               });
+           }
             else if (obj.event === 'cancle') {
                  if (data.length == 0) {
                      common.modalMsg("未选中数据", "warning");
@@ -121,24 +139,6 @@
                 common.submitPost({
                     prompt:"注：您确定要撤回选中数据吗？",
                      url: "/FlowManage/Flowinstance/CancleForm",
-                     param: { keyValue: data[0].F_Id },
-                     success: function () {
-                         common.reload('data-search-btn');
-                         entity = null;
-                   }
-               });
-           }
-             else if (obj.event === 'delete') {
-                 if (data.length == 0) {
-                     common.modalMsg("未选中数据", "warning");
-                     return false;
-                 }
-                 if (data[0].F_IsFinish != 4 && data[0].F_IsFinish != 2) {
-                     common.modalMsg("申请已处理，无法删除", "warning");
-                     return false;
-                 }
-                 common.deleteForm({
-                     url: "/FlowManage/Flowinstance/DeleteForm",
                      param: { keyValue: data[0].F_Id },
                      success: function () {
                          common.reload('data-search-btn');
@@ -187,7 +187,7 @@
          //toolrow监听事件
          table.on('tool(currentTableFilter)', function (obj) {
              if (obj.event === 'delete') {
-                 if (obj.data.F_IsFinish != 4 && data[0].F_IsFinish != 2) {
+                 if (obj.data.F_IsFinish != 4 && obj.data.F_IsFinish != 2) {
                      common.modalMsg("申请已处理，无法删除", "warning");
                      return false;
                  }
@@ -217,7 +217,7 @@
             }
              else if (obj.event === 'edit') {
                  var userId = top.currentUser.F_Id;
-                 if ((obj.data.F_IsFinish != 4 && data[0].F_IsFinish != 2) || obj.data.F_MakerList.indexOf(userId) < 0) {
+                 if ((obj.data.F_IsFinish != 4 && obj.data.F_IsFinish != 2) || obj.data.F_MakerList.indexOf(userId) < 0) {
                      common.modalMsg("申请已处理，无法修改", "warning");
                      return false;
                  }
