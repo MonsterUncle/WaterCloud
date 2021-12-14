@@ -187,7 +187,7 @@
          //toolrow监听事件
          table.on('tool(currentTableFilter)', function (obj) {
              if (obj.event === 'delete') {
-                 if (obj.data.F_IsFinish != 4 && data[0].F_IsFinish != 2) {
+                 if (obj.data.F_IsFinish != 4 && obj.data.F_IsFinish != 2) {
                      common.modalMsg("申请已处理，无法删除", "warning");
                      return false;
                  }
@@ -217,7 +217,7 @@
             }
              else if (obj.event === 'edit') {
                  var userId = top.currentUser.F_Id;
-                 if ((obj.data.F_IsFinish != 4 && data[0].F_IsFinish != 2) || obj.data.F_MakerList.indexOf(userId) < 0) {
+                 if ((obj.data.F_IsFinish != 4 && obj.data.F_IsFinish != 2) || obj.data.F_MakerList.indexOf(userId) < 0) {
                      common.modalMsg("申请已处理，无法修改", "warning");
                      return false;
                  }
