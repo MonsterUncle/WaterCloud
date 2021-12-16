@@ -171,8 +171,8 @@
                     NextNodeDesignateType = data.NextNodeDesignateType;
                     $('#NextMakerName').parent().parent().removeClass('layui-hide');
                     if (!data.NextNodeDesignateType) {
-                        $('#NextNodeDesignates').val('无人审核');
-                        $('#NextMakerName').val('');
+                        $('#NextNodeDesignates').val('');
+                        $('#NextMakerName').val('无人审核');
                         $('#NextMakerName').attr('disabled', 'disabled');
                         $('#NextMakerName').removeAttr('placeholder');
                     }
@@ -325,7 +325,7 @@
             delete data.field.F_Code;
             delete data.field.F_Description;
             delete data.field.file;
-            if (postData.NextMakerName="无人审核") {
+            if (postData.NextMakerName == "无人审核") {
                 common.modalMsg("无人审核，请检查流程", "warning");
                 return false;
             }
