@@ -119,7 +119,7 @@ namespace WaterCloud.CodeGenerator
             {
                 var datatype = TableMappingHelper.GetPropertyDatatype(item.Datatype);
                 var isPrimaryKey = idColumn == item.TableColumn ? ",IsPrimaryKey = true" : "";
-                var isIdentity = item.TableIdentity=="Y" ? ",IsIdentity = true" : "";
+                var isIdentity = item.TableIdentity == "Y" ? ",IsIdentity = true" : "";
                 var isNull = (item.IsNullable == "Y" && item.Datatype != "string" && item.Datatype != "byte[]") ? "?" : "";
                 var isIgnore = item.IsIgnore == "Y" ? ",IsIgnore = true" : "";
                 var isJson = item.Datatype.StartsWith("json") ? ",IsJson= true" : "";

@@ -61,7 +61,7 @@ namespace WaterCloud.Service.CommonService
         {
             string strSql = @"SELECT  
                                   b.column_name TableColumn,
-                                  (CASE WHEN c.COLUMN_NAME=b.column_name THEN 'Y' ELSE '' END) TableIdentity,  
+                                  (CASE WHEN c.COLUMN_NAME=b.column_name THEN 'Y' ELSE '' END) TableKey,  
                                    b.data_type Datatype,  
                                    b.data_length FieldLength,   
                                    b.NULLABLE IsNullable,   

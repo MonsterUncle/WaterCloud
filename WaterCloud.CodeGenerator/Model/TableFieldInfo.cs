@@ -10,8 +10,9 @@
 
         public string IsNullable { get; set; }
         public string IsIgnore { get; set; }
-        public string TableIdentity { get; set; }
+        public string TableKey { get; set; }
         public string Key { get; set; }
+        public string TableIdentity { get; set; }
         public string FieldDefault { get; set; }
         public string Remark { get; set; }
     }

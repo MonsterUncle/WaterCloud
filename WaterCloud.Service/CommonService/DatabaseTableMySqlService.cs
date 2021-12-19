@@ -53,7 +53,7 @@ namespace WaterCloud.Service.CommonService
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT COLUMN_NAME TableColumn, 
 		                           DATA_TYPE Datatype,
-		                           (CASE COLUMN_KEY WHEN 'PRI' THEN 'Y' ELSE '' END) TableIdentity,
+		                           (CASE COLUMN_KEY WHEN 'PRI' THEN 'Y' ELSE '' END) TableKey,
 		                           REPLACE(REPLACE(SUBSTRING(COLUMN_TYPE,LOCATE('(',COLUMN_TYPE)),'(',''),')','') FieldLength,
 	                               (CASE IS_NULLABLE WHEN 'NO' THEN 'N' ELSE 'Y' END) IsNullable,
                                    IFNULL(COLUMN_DEFAULT,'') FieldDefault,

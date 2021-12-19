@@ -56,7 +56,7 @@ namespace WaterCloud.Service.CommonService
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT  
                                   TableColumn = rtrim(b.name),  
-                                  TableIdentity = CASE WHEN h.id IS NOT NULL  THEN 'Y' ELSE '' END,  
+                                  TableKey = CASE WHEN h.id IS NOT NULL  THEN 'Y' ELSE '' END,  
                                   Datatype = type_name(b.xusertype)+CASE WHEN b.colstat&1=1 THEN '[ID(' + CONVERT(varchar, ident_seed(a.name))+','+CONVERT(varchar,ident_incr(a.name))+')]' ELSE '' END,  
                                   FieldLength = b.length,   
                                   IsNullable = CASE b.isnullable WHEN 0 THEN 'N' ELSE 'Y' END,   
