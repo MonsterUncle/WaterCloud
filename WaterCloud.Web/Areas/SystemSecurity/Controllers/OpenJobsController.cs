@@ -70,8 +70,10 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HttpGet]
         public async Task<ActionResult> QueryLocalHandlers()
         {
-            var data = _service.QueryLocalHandlers();
-            return Content(data.ToJson());
+            return await Task.Run(() => {
+                var data = _service.QueryLocalHandlers();
+                return Content(data.ToJson());
+            });
         }
         [HttpGet]
         [HandlerAjaxOnly]

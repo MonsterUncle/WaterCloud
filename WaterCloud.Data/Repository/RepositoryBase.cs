@@ -98,7 +98,7 @@ namespace WaterCloud.DataBase
         public async Task<List<T>> OrderList<T>(ISugarQueryable<T> query, Pagination pagination)
         {
             var tempData = query;
-            int totalCount = 0;
+            RefAsync<int> totalCount = 0;
             if (pagination.order == "desc")
             {
                 tempData = tempData.OrderBy(pagination.field + " " + pagination.order);
@@ -107,7 +107,7 @@ namespace WaterCloud.DataBase
             {
                 tempData = tempData.OrderBy(pagination.field);
             }
-            var data = tempData.ToPageList(pagination.page, pagination.rows, ref totalCount);
+            var data = await tempData.ToPageListAsync(pagination.page, pagination.rows, totalCount);
             pagination.records = totalCount;
             return data;
         }
@@ -127,8 +127,8 @@ namespace WaterCloud.DataBase
             {
                 tempData = tempData.OrderBy(pagination.field);
             }
-            int totalCount = 0;
-            var data = tempData.ToPageList(pagination.page, pagination.rows, ref totalCount);
+            RefAsync<int> totalCount = 0;
+            var data = await tempData.ToPageListAsync(pagination.page, pagination.rows, totalCount);
             pagination.count = totalCount;
             return data;
         }

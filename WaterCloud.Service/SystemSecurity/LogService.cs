@@ -80,14 +80,16 @@ namespace WaterCloud.Service.SystemSecurity
         }
         public async Task<List<LogEntity>> GetList()
         {
-            if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
-            {
-                return repository.IQueryable().ToList();
-            }
-            else
-            {
-                return HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList(); ;
-            }
+            return await Task.Run(() => {
+                if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
+                {
+                    return repository.IQueryable().ToList();
+                }
+                else
+                {
+                    return HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList(); ;
+                }
+            });           
         }
         public async Task RemoveLog(string keepTime)
         {

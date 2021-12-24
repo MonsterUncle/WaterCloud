@@ -70,9 +70,9 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 cachedata = cachedata.Where(a => a.F_Account.Contains(keyword) || a.F_RealName.Contains(keyword) || a.F_MobilePhone.Contains(keyword));
             }
-            var data = cachedata.OrderBy(a => a.F_Account).ToList();
-            var roles = repository.Db.Queryable<RoleEntity>().ToList();
-            var orgs = repository.Db.Queryable<OrganizeEntity>().ToList();
+            var data = await cachedata.OrderBy(a => a.F_Account).ToListAsync();
+            var roles = await repository.Db.Queryable<RoleEntity>().ToListAsync();
+            var orgs = await repository.Db.Queryable<OrganizeEntity>().ToListAsync();
             foreach (var item in data)
             {
                 string[] roleIds = item.F_RoleId.Split(',');

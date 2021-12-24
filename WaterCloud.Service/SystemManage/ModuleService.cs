@@ -59,7 +59,7 @@ namespace WaterCloud.Service.SystemManage
         {
 			try
 			{
-                int F_SortCode = (int)repository.Db.Queryable<ModuleEntity>().Where(t => t.F_ParentId == F_ParentId).Max(a => a.F_SortCode);
+                int F_SortCode = (int)await repository.Db.Queryable<ModuleEntity>().Where(t => t.F_ParentId == F_ParentId).MaxAsync(a => a.F_SortCode);
 
                 return (F_SortCode + 1).ToString();
             }

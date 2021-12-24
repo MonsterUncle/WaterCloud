@@ -58,31 +58,33 @@ namespace WaterCloud.Service.SystemSecurity
         }
         public async Task<bool> CheckIP(string ip)
         {
-            var list = repository.IQueryable().Where(a => a.F_EnabledMark == true && a.F_DeleteMark == false && a.F_Type == false && a.F_EndTime > DateTime.Now).ToList();
-            long ipAddress = IP2Long(ip);
-            foreach (var item in list)
-            {
-                if (string.IsNullOrEmpty(item.F_EndIP))
+            return await Task.Run(() => {
+                var list = repository.IQueryable().Where(a => a.F_EnabledMark == true && a.F_DeleteMark == false && a.F_Type == false && a.F_EndTime > DateTime.Now).ToList();
+                long ipAddress = IP2Long(ip);
+                foreach (var item in list)
                 {
-                    long start = IP2Long(item.F_StartIP);
-                    bool inRange = ipAddress == start ;
-                    if (inRange)
+                    if (string.IsNullOrEmpty(item.F_EndIP))
                     {
-                        return false;
+                        long start = IP2Long(item.F_StartIP);
+                        bool inRange = ipAddress == start;
+                        if (inRange)
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        long start = IP2Long(item.F_StartIP);
+                        long end = IP2Long(item.F_EndIP);
+                        bool inRange = (ipAddress >= start && ipAddress <= end);
+                        if (inRange)
+                        {
+                            return false;
+                        }
                     }
                 }
-				else
-				{
-                    long start = IP2Long(item.F_StartIP);
-                    long end = IP2Long(item.F_EndIP);
-                    bool inRange = (ipAddress >= start && ipAddress <= end);
-                    if (inRange)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
+                return true;
+            });        
         }
         public static long IP2Long(string ip)
         {

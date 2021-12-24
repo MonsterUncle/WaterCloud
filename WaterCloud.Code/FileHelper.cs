@@ -504,15 +504,7 @@ namespace WaterCloud.Code
         /// <param name="directoryPath">指定目录的绝对路径</param>
         public static string[] GetDirectories(string directoryPath)
         {
-            try
-            {
-                return Directory.GetDirectories(directoryPath);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
+            return Directory.GetDirectories(directoryPath);
         }
 
         /// <summary>
@@ -524,21 +516,13 @@ namespace WaterCloud.Code
         /// <param name="isSearchChild">是否搜索子目录</param>
         public static string[] GetDirectories(string directoryPath, string searchPattern, bool isSearchChild)
         {
-            try
+            if (isSearchChild)
             {
-                if (isSearchChild)
-                {
-                    return Directory.GetDirectories(directoryPath, searchPattern, SearchOption.AllDirectories);
-                }
-                else
-                {
-                    return Directory.GetDirectories(directoryPath, searchPattern, SearchOption.TopDirectoryOnly);
-                }
+                return Directory.GetDirectories(directoryPath, searchPattern, SearchOption.AllDirectories);
             }
-            catch (Exception ex)
+            else
             {
-
-                throw ex;
+                return Directory.GetDirectories(directoryPath, searchPattern, SearchOption.TopDirectoryOnly);
             }
         }
         #endregion
@@ -626,10 +610,6 @@ namespace WaterCloud.Code
             {
                 //读取流
                 return reader.ReadToEnd();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {

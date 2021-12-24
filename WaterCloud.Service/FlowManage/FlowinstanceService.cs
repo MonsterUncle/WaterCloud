@@ -583,7 +583,7 @@ namespace WaterCloud.Service.FlowManage
         /// <returns></returns>
         public async Task<FlowinstanceEntity> GetForVerification(string id)
         {
-            var flowinstance = GetForm(id).GetAwaiter().GetResult();
+            var flowinstance = await GetForm(id);
             var runtime = new FlowRuntime(flowinstance);
             if (runtime.nextNodeType != -1 && runtime.nextNode != null && runtime.nextNode.setInfo != null && runtime.nextNodeType != 4)
             {

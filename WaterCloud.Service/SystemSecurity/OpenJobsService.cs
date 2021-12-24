@@ -54,14 +54,16 @@ namespace WaterCloud.Service.SystemSecurity
 
         public async Task<List<OpenJobLogEntity>> GetLogList(string keyValue)
         {
-            if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
-            {
-                return repository.Db.Queryable<OpenJobLogEntity>().Where(a => a.F_JobId == keyValue).OrderBy(a => a.F_CreatorTime, OrderByType.Desc).ToList();
-            }
-            else
-            {
-                return HandleLogHelper.HGetAll<OpenJobLogEntity>(keyValue).Values.OrderByDescending(a => a.F_CreatorTime).ToList(); ;
-            }
+            return await Task.Run(() => {
+                if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
+                {
+                    return repository.Db.Queryable<OpenJobLogEntity>().Where(a => a.F_JobId == keyValue).OrderBy(a => a.F_CreatorTime, OrderByType.Desc).ToList();
+                }
+                else
+                {
+                    return HandleLogHelper.HGetAll<OpenJobLogEntity>(keyValue).Values.OrderByDescending(a => a.F_CreatorTime).ToList(); ;
+                }
+            });
         }
         public async Task<List<OpenJobEntity>> GetList(string keyword = "")
         {
@@ -71,7 +73,7 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 query = query.Where(a => a.F_JobName.Contains(keyword));
             }
-            return query.Where(a => a.F_DeleteMark == false).ToList();
+            return await query.Where(a => a.F_DeleteMark == false).ToListAsync();
         }
         public async Task<List<OpenJobEntity>> GetAllList(string keyword = "")
         {
@@ -80,7 +82,7 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 query = query.Where(a => a.F_JobName.Contains(keyword));
             }
-            return query.Where(a => a.F_DeleteMark == false).ToList();
+            return await query.Where(a => a.F_DeleteMark == false).ToListAsync();
         }
         public async Task<OpenJobEntity> GetForm(string keyValue)
         {
