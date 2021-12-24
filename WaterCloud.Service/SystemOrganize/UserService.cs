@@ -72,9 +72,9 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 query = query.Where(t => t.F_Account.Contains(keyword) || t.F_RealName.Contains(keyword) || t.F_MobilePhone.Contains(keyword));
             }
-            var data = query.OrderBy(t => t.F_Account).ToList();
-            var roles = unitwork.IQueryable<RoleEntity>().ToList();
-            var orgs = unitwork.IQueryable<OrganizeEntity>().ToList();
+            var data = await query.OrderBy(t => t.F_Account).ToListAsync();
+            var roles = await unitwork.IQueryable<RoleEntity>().ToListAsync();
+            var orgs = await unitwork.IQueryable<OrganizeEntity>().ToListAsync();
             foreach (var item in data)
             {
                 string[] roleIds = item.F_RoleId.Split(',');
@@ -143,7 +143,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 data = data.Where(t => t.F_Account.Contains(keyword) || t.F_RealName.Contains(keyword) || t.F_MobilePhone.Contains(keyword));
             }
-            return data.Where(t => t.F_EnabledMark ==true && t.F_DeleteMark == false).OrderBy(t => t.F_Account).ToList();
+            return await data.Where(t => t.F_EnabledMark ==true && t.F_DeleteMark == false).OrderBy(t => t.F_Account).ToListAsync();
         }
 
         public async Task<UserEntity> GetForm(string keyValue)

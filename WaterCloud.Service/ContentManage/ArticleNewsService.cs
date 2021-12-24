@@ -30,7 +30,7 @@ namespace WaterCloud.Service.ContentManage
                 //此处需修改
                 data = data.Where(t => t.F_Title.Contains(keyword) || t.F_Tags.Contains(keyword));
             }
-            return data.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await data.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<ArticleNewsEntity>> GetLookList(SoulPage<ArticleNewsEntity> pagination, string keyword = "", string CategoryId="")
@@ -137,7 +137,7 @@ namespace WaterCloud.Service.ContentManage
                 query = query.Where(a => a.F_Id == keyValue);
             }
             //字段权限处理
-            return GetFieldsFilterData(query.FirstOrDefault());
+            return GetFieldsFilterData(await query.FirstOrDefaultAsync());
         }
         #endregion
 

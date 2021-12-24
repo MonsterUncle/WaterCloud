@@ -44,7 +44,7 @@ namespace WaterCloud.Service.SystemOrganize
             //{
             //    list = list.Where(t => t.F_Title.Contains(keyword) || t.F_Content.Contains(keyword)).ToList();
             //}
-            return list.Where(a => a.F_DeleteMark == false).ToList();
+            return await list.Where(a => a.F_DeleteMark == false).ToListAsync();
         }
         public async Task<List<NoticeEntity>> GetLookList(SoulPage<NoticeEntity> pagination, string keyword = "")
         {

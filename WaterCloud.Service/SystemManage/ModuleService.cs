@@ -31,19 +31,19 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ModuleEntity>> GetList()
         {
             var data =  repository.IQueryable();
-            return data.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
+            return await data.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToListAsync();
         }
         public async Task<List<ModuleEntity>> GetBesidesList()
         {
             var moduleList = unitwork.IQueryable<DataPrivilegeRuleEntity>().Select(a => a.F_ModuleId).ToList();
             var query = repository.IQueryable().Where(a => !moduleList.Contains(a.F_Id) && a.F_EnabledMark == true && a.F_Target == "iframe");
-            return query.OrderBy(a => a.F_SortCode).ToList();
+            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<List<ModuleEntity>> GetLookList()
         {
             var query = repository.IQueryable().Where(u => u.F_DeleteMark == false);
             query = GetDataPrivilege("u", "", query);
-            return query.OrderBy(u => u.F_SortCode).ToList();
+            return await query.OrderBy(u => u.F_SortCode).ToListAsync();
         }
         public async Task<ModuleEntity> GetLookForm(string keyValue)
         {
@@ -57,7 +57,7 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task<string> GetMaxSortCode(string F_ParentId)
         {
-            int F_SortCode = (int)repository.IQueryable().Where(t => t.F_ParentId == F_ParentId).Max(a => a.F_SortCode);
+            int F_SortCode = (int)await repository.IQueryable().Where(t => t.F_ParentId == F_ParentId).MaxAsync(a => a.F_SortCode);
 
             return (F_SortCode + 1).ToString();
         }
@@ -82,7 +82,7 @@ namespace WaterCloud.Service.SystemManage
         {
             var moduleList = unitwork.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
             var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
-            return query.OrderBy(a => a.F_SortCode).ToList();
+            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
         }
 
         public async Task SubmitForm(ModuleEntity moduleEntity, string keyValue)

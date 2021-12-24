@@ -177,15 +177,8 @@ namespace WaterCloud.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> GetQuickModule()
         {
-            try
-            {
-                var data =await this.GetQuickModuleList();
-                return Content(data.ToJson());
-            }
-            catch (Exception ex)
-            {
-                return Content("");
-            }
+            var data = await this.GetQuickModuleList();
+            return Content(data.ToJson());
         }
         /// <summary>
         /// 获取数据信息接口

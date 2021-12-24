@@ -85,7 +85,6 @@ namespace WaterCloud.Code
                                 result &= res;
                                 break;
                             }
-                            break;
                         case DataCompare.NotIn:
                             if (compare.FieldName == "申请人" || compare.FieldName == "所属部门")
                             {
@@ -112,7 +111,6 @@ namespace WaterCloud.Code
                                 result &= res;
                                 break;
                             }
-                            break;
                     }
                 }
 				else

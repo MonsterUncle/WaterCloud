@@ -13,12 +13,10 @@ using System.Threading.Tasks;
 using Chloe;
 using System.IO;
 using WaterCloud.DataBase;
-using WaterCloud.DataBase;
-using WaterCloud.Service.SystemManage;
 
 namespace WaterCloud.Service.SystemOrganize
 {
-    public class DutyService : DataFilterService<RoleEntity>, IDenpendency
+	public class DutyService : DataFilterService<RoleEntity>, IDenpendency
     {
         private SystemSetService setApp;
         public DutyService(IUnitOfWork unitOfWork) :base(unitOfWork)
@@ -33,7 +31,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 data = data.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
             }
-            return data.OrderBy(t => t.F_SortCode).ToList();
+            return await data.OrderBy(t => t.F_SortCode).ToListAsync();
         }
         public async Task<List<RoleExtend>> GetLookList(SoulPage<RoleExtend> pagination, string keyword = "")
         {
@@ -119,47 +117,49 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<List<RoleExtend>> CheckFile(string fileFullName)
         {
-            if (!FileHelper.IsExcel(fileFullName))
-            {
-                throw new Exception("文件不是有效的Excel文件!");
-            }
-            //文件解析
-            var list = new ExcelHelper<RoleExtend>().ImportFromExcel(fileFullName);
-            //删除文件
-            File.Delete(fileFullName);
-            foreach (var item in list)
-            {
-                item.F_Id = Utils.GuId();
-                item.F_EnabledMark = true;
-                item.F_DeleteMark = false;
-                item.F_OrganizeId = currentuser.CompanyId;
-                item.F_SortCode = 1;
-                item.F_Category = 2;
-                item.F_AllowEdit = false;
-                item.F_AllowDelete = false;
-                List<string> str = new List<string>();
-                if (string.IsNullOrEmpty(item.F_EnCode))
+            return await Task.Run(() => {
+                if (!FileHelper.IsExcel(fileFullName))
                 {
-                    item.F_EnabledMark = false;
-                    item.ErrorMsg = "编号不存在";
-                    continue;
+                    throw new Exception("文件不是有效的Excel文件!");
                 }
-                else if (repository.IQueryable(a => a.F_EnCode == item.F_EnCode).Count() > 0 || list.Where(a => a.F_EnCode == item.F_EnCode).Count() > 1)
+                //文件解析
+                var list = new ExcelHelper<RoleExtend>().ImportFromExcel(fileFullName);
+                //删除文件
+                File.Delete(fileFullName);
+                foreach (var item in list)
                 {
-                    str.Add("编号重复");
-                    item.F_EnabledMark = false;
+                    item.F_Id = Utils.GuId();
+                    item.F_EnabledMark = true;
+                    item.F_DeleteMark = false;
+                    item.F_OrganizeId = currentuser.CompanyId;
+                    item.F_SortCode = 1;
+                    item.F_Category = 2;
+                    item.F_AllowEdit = false;
+                    item.F_AllowDelete = false;
+                    List<string> str = new List<string>();
+                    if (string.IsNullOrEmpty(item.F_EnCode))
+                    {
+                        item.F_EnabledMark = false;
+                        item.ErrorMsg = "编号不存在";
+                        continue;
+                    }
+                    else if (repository.IQueryable(a => a.F_EnCode == item.F_EnCode).Count() > 0 || list.Where(a => a.F_EnCode == item.F_EnCode).Count() > 1)
+                    {
+                        str.Add("编号重复");
+                        item.F_EnabledMark = false;
+                    }
+                    if (string.IsNullOrEmpty(item.F_FullName))
+                    {
+                        str.Add("名称不存在");
+                        item.F_EnabledMark = false;
+                    }
+                    if (item.F_EnabledMark == false)
+                    {
+                        item.ErrorMsg = string.Join(',', str.ToArray());
+                    }
                 }
-                if (string.IsNullOrEmpty(item.F_FullName))
-                {
-                    str.Add("名称不存在");
-                    item.F_EnabledMark = false;
-                }
-                if (item.F_EnabledMark == false)
-                {
-                    item.ErrorMsg = string.Join(',', str.ToArray());
-                }
-            }
-            return list;
+                return list;
+            });    
         }
 
         public async Task ImportForm(List<RoleEntity> filterList)

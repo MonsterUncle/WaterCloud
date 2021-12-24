@@ -41,7 +41,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 data = data.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
             }
-            return data.ToList();
+            return await data.ToListAsync();
         }
         public async Task<List<RoleExtend>> GetLookList(SoulPage<RoleExtend> pagination, string keyword = "")
         {

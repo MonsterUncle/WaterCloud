@@ -31,7 +31,7 @@ namespace WaterCloud.Service.SystemManage
                 //此处需修改
                 data = data.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
             }
-            return data.Where(a => a.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await data.Where(a => a.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<ModuleFieldsEntity>> GetLookList(Pagination pagination, string moduleId, string keyword = "")
@@ -104,7 +104,7 @@ namespace WaterCloud.Service.SystemManage
         {
             var moduleList = unitwork.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 3).Select(a => a.F_ItemId).ToList();
             var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
-            return query.OrderByDesc(a => a.F_CreatorTime).ToList();
+            return await query.OrderByDesc(a => a.F_CreatorTime).ToListAsync();
         }
 
         internal async Task<List<ModuleFieldsEntity>> GetListNew(string moduleId = "")
@@ -132,7 +132,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 query = query.Where(a => a.F_ModuleId == moduleId);
             }
-            return query.OrderByDesc(a => a.F_CreatorTime).ToList();
+            return await query.OrderByDesc(a => a.F_CreatorTime).ToListAsync();
         }
         #endregion
 

@@ -23,13 +23,13 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<OrganizeEntity>> GetList()
         {
             var data = repository.IQueryable();
-            return data.Where(a=>a.F_DeleteMark==false).ToList();
+            return await data.Where(a=>a.F_DeleteMark==false).ToListAsync();
         }
         public async Task<List<OrganizeEntity>> GetLookList()
         {
             var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             query = GetDataPrivilege("u","",query);
-            return query.OrderBy(t => t.F_SortCode).ToList();
+            return await query.OrderBy(t => t.F_SortCode).ToListAsync();
         }
         public async Task<OrganizeEntity> GetLookForm(string keyValue)
         {

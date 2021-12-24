@@ -28,7 +28,7 @@ namespace WaterCloud.Service.SystemSecurity
                 list = list.Where(t => t.F_StartIP.Contains(keyword) || t.F_EndIP.Contains(keyword));
 
             }
-            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToList();
+            return await list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_CreatorTime).ToListAsync();
         }
         public async Task<List<FilterIPEntity>> GetLookList(string keyword)
         {
@@ -39,7 +39,7 @@ namespace WaterCloud.Service.SystemSecurity
                 query = query.Where(t => t.F_StartIP.Contains(keyword) || t.F_EndIP.Contains(keyword));
             }
             query = GetDataPrivilege("u", "", query);
-            return query.OrderBy(t => t.F_CreatorTime).ToList();
+            return await query.OrderBy(t => t.F_CreatorTime).ToListAsync();
         }
         public async Task<FilterIPEntity> GetLookForm(string keyValue)
         {
@@ -58,7 +58,7 @@ namespace WaterCloud.Service.SystemSecurity
         }
         public async Task<bool> CheckIP(string ip)
         {
-            var list = repository.IQueryable().Where(a => a.F_EnabledMark == true && a.F_DeleteMark == false && a.F_Type == false && a.F_EndTime > DateTime.Now).ToList();
+            var list = await repository.IQueryable().Where(a => a.F_EnabledMark == true && a.F_DeleteMark == false && a.F_Type == false && a.F_EndTime > DateTime.Now).ToListAsync();
             long ipAddress = IP2Long(ip);
             foreach (var item in list)
             {

@@ -157,24 +157,26 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         [HttpGet]
         public async Task<FileResult> Download()
         {
-            string fileName = "岗位导入模板.xlsx";
-            string fileValue = "model";
-            string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + fileValue + $@"/" + fileName;
-            if (!FileHelper.IsExistFile(filePath))
-            {
-                throw new Exception("文件不存在");
-            }
-            ///定义并实例化一个内存流，以存放图片的字节数组。
-            MemoryStream ms = new MemoryStream();
-            ///图片读入FileStream
-            FileStream f = new FileStream(filePath, FileMode.Open);
-            ///把FileStream写入MemoryStream
-            ms.SetLength(f.Length);
-            f.Read(ms.GetBuffer(), 0, (int)f.Length);
-            ms.Flush();
-            f.Close();
-            var contentType = MimeMapping.GetMimeMapping(fileName);
-            return File(ms, contentType, fileName);
+            return await Task.Run(() => {
+                string fileName = "岗位导入模板.xlsx";
+                string fileValue = "model";
+                string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + fileValue + $@"/" + fileName;
+                if (!FileHelper.IsExistFile(filePath))
+                {
+                    throw new Exception("文件不存在");
+                }
+                ///定义并实例化一个内存流，以存放图片的字节数组。
+                MemoryStream ms = new MemoryStream();
+                ///图片读入FileStream
+                FileStream f = new FileStream(filePath, FileMode.Open);
+                ///把FileStream写入MemoryStream
+                ms.SetLength(f.Length);
+                f.Read(ms.GetBuffer(), 0, (int)f.Length);
+                ms.Flush();
+                f.Close();
+                var contentType = MimeMapping.GetMimeMapping(fileName);
+                return File(ms, contentType, fileName);
+            });         
         }
         [HttpGet]
         public async Task<FileResult> ExportExcel(string keyword = "")

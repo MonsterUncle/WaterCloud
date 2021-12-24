@@ -42,12 +42,12 @@ namespace WaterCloud.Service.FlowManage
                 //此处需修改
                 data = data.Where(t => t.F_Code.Contains(keyword) || t.F_CustomName.Contains(keyword));
             }
-            return data.Where(a => a.F_EnabledMark == true).OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await data.Where(a => a.F_EnabledMark == true).OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<FlowInstanceOperationHistory>> QueryHistories(string keyValue)
         {
-            return unitwork.IQueryable<FlowInstanceOperationHistory>(u => u.F_InstanceId == keyValue).OrderBy(u => u.F_CreatorTime).ToList();
+            return await unitwork.IQueryable<FlowInstanceOperationHistory>(u => u.F_InstanceId == keyValue).OrderBy(u => u.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<FlowinstanceEntity>> GetLookList(string keyword = "")
@@ -59,7 +59,7 @@ namespace WaterCloud.Service.FlowManage
                 query = query.Where(u => u.F_Code.Contains(keyword) || u.F_CustomName.Contains(keyword));
             }
             query = GetDataPrivilege("u", "", query);
-            return query.Where(a => a.F_EnabledMark == true).OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await query.Where(a => a.F_EnabledMark == true).OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<FlowinstanceEntity>> GetLookList(SoulPage<FlowinstanceEntity> pagination, string type = "", string keyword = "")
@@ -584,7 +584,7 @@ namespace WaterCloud.Service.FlowManage
         /// <returns></returns>
         public async Task<FlowinstanceEntity> GetForVerification(string id)
         {
-            var flowinstance = GetForm(id).GetAwaiter().GetResult();
+            var flowinstance = await GetForm(id);
             var runtime = new FlowRuntime(flowinstance);
             if (runtime.nextNodeType != -1 && runtime.nextNode != null && runtime.nextNode.setInfo != null && runtime.nextNodeType != 4)
             {
@@ -1000,7 +1000,7 @@ namespace WaterCloud.Service.FlowManage
 
             wfruntime.MakeTagNode(wfruntime.currentNodeId, tag);
             flowInstance.F_IsFinish = 2;//2表示撤回（需要申请者重新提交表单）
-            unitofwork.CurrentBeginTrans();
+            unitOfWork.BeginTrans();
             if (resnode != "")
             {
                 wfruntime.RemoveNode(resnode);
@@ -1017,12 +1017,12 @@ namespace WaterCloud.Service.FlowManage
                 }
                 else
                 {
-                    flowInstance.F_MakerList = await repository.Db.Queryable<FlowInstanceTransitionHistory>().Where(a => a.F_FromNodeId == resnode && a.F_ToNodeId == prruntime.nextNodeId).OrderBy(a => a.F_CreatorTime, OrderByType.Desc).Select(a => a.F_CreatorUserId).FirstAsync();//当前节点可执行的人信息
+                    flowInstance.F_MakerList = await unitOfWork.IQueryable<FlowInstanceTransitionHistory>().Where(a => a.F_FromNodeId == resnode && a.F_ToNodeId == prruntime.nextNodeId).OrderByDesc(a => a.F_CreatorTime).Select(a => a.F_CreatorUserId).FirstAsync();//当前节点可执行的人信息
                 }
                 await AddRejectTransHistory(wfruntime, prruntime);
                 await repository.Update(flowInstance);
             }
-            await repository.Db.Insertable(new FlowInstanceOperationHistory
+            await unitOfWork.Insert(new FlowInstanceOperationHistory
             {
                 F_Id = Utils.GuId(),
                 F_InstanceId = keyValue
@@ -1036,8 +1036,8 @@ namespace WaterCloud.Service.FlowManage
                 F_Content = "【"
                           + wfruntime.currentNode.name
                           + "】【" + DateTime.Now.ToString("yyyy-MM-dd HH:mm") + "】撤回,备注：流程撤回"
-            }).ExecuteCommandAsync();
-            unitofwork.CurrentCommit();
+            });
+            unitOfWork.Commit();
             wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
         }
         #endregion

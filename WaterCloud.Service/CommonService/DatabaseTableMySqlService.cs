@@ -73,40 +73,6 @@ namespace WaterCloud.Service.CommonService
         }
         #endregion
 
-        #region 公有方法
-        public async Task<bool> DatabaseBackup(string backupPath)
-        {
-            string database = HtmlHelper.Resove(GlobalContext.SystemConfig.DBConnectionString.ToLower(), "database=", ";");
-            //不能备份
-            var result = DbHelper.ExecuteSqlCommand(database, backupPath);
-            return result > 0 ? true : false;
-        }
-
-        /// <summary>
-        /// 仅用在WaterCloud框架里面，同步不同数据库之间的数据，以 MySql 为主库，同步 MySql 的数据到SqlServer和Oracle，保证各个数据库的数据是一样的
-        /// </summary>
-        /// <returns></returns>
-        public async Task SyncDatabase()
-        {
-            #region 同步SqlServer数据库
-            await SyncSqlServerTable<ModuleEntity>();
-            await SyncSqlServerTable<ModuleButtonEntity>();
-            await SyncSqlServerTable<ItemsEntity>();
-            await SyncSqlServerTable<ItemsDetailEntity>();
-            await SyncSqlServerTable<NoticeEntity>();
-            await SyncSqlServerTable<OrganizeEntity>();
-            await SyncSqlServerTable<QuickModuleEntity>();
-            await SyncSqlServerTable<RoleAuthorizeEntity>();
-            await SyncSqlServerTable<RoleEntity>();
-            await SyncSqlServerTable<LogEntity>();
-            await SyncSqlServerTable<RoleEntity>();
-            await SyncSqlServerTable<UserEntity>();
-            await SyncSqlServerTable<UserLogOnEntity>();
-            await SyncSqlServerTable<ServerStateEntity>();
-            await SyncSqlServerTable<FilterIPEntity>();
-            await SyncSqlServerTable<DbBackupEntity>();
-            #endregion
-        }
         private async Task SyncSqlServerTable<T>() where T : class, new()
         {
             string sqlServerConnectionString = "192.168.1.17;Initial Catalog = WaterCloudNetDb;User ID=sa;Password=admin@12345;MultipleActiveResultSets=true";
@@ -118,7 +84,6 @@ namespace WaterCloud.Service.CommonService
                 await context.Insert<T>(item);
             }
         }
-        #endregion
 
         #region 私有方法
         /// <summary>

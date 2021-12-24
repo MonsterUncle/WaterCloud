@@ -29,7 +29,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 list = list.Where(t => t.F_ModuleCode.Contains(keyword) || t.F_Description.Contains(keyword));
             }
-            return list.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await list.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<DataPrivilegeRuleEntity>> GetLookList(SoulPage<DataPrivilegeRuleEntity> pagination, string keyword = "")

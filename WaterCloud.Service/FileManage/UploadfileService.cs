@@ -29,7 +29,7 @@ namespace WaterCloud.Service.FileManage
                 //此处需修改
                 data = data.Where(t => t.F_FileName.Contains(keyword) || t.F_Description.Contains(keyword));
             }
-            return data.OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await data.OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<UploadfileEntity>> GetLookList(string keyword = "")
@@ -41,7 +41,7 @@ namespace WaterCloud.Service.FileManage
                 query = query.Where(u => u.F_FileName.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             query = GetDataPrivilege("u", "", query);
-            var data = query.OrderByDesc(t => t.F_CreatorTime).ToList();
+            var data = await query.OrderByDesc(t => t.F_CreatorTime).ToListAsync();
             foreach (var item in data)
             {
                 string[] departments = item.F_OrganizeId.Split(',');

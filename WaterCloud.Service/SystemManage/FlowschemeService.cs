@@ -36,7 +36,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 return data.Where(t => t.F_DeleteMark == false && (t.F_OrganizeId == "" || t.F_OrganizeId == null || list.Contains(t.F_OrganizeId))).OrderByDesc(t => t.F_CreatorTime).ToList();
             }
-            return data.Where(t => t.F_DeleteMark == false && t.F_OrganizeId == "" || t.F_OrganizeId == null).OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await data.Where(t => t.F_DeleteMark == false && t.F_OrganizeId == "" || t.F_OrganizeId == null).OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<FlowschemeEntity>> GetLookList(string ItemId = "", string keyword = "")
@@ -51,7 +51,7 @@ namespace WaterCloud.Service.SystemManage
                 query = query.Where(u => u.F_SchemeCode.Contains(keyword) || u.F_SchemeName.Contains(keyword));
             }
             query = GetDataPrivilege("u","", query);
-            return query.OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await query.OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<FlowschemeEntity>> GetLookList(Pagination pagination,string keyword = "")

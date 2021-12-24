@@ -31,7 +31,7 @@ namespace WaterCloud.Service.SystemOrganize
                 //此处需修改
                 data = data.Where(t => t.F_CompanyName.Contains(keyword) || t.F_ProjectName.Contains(keyword));
             }
-            return data.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await data.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<SystemSetEntity>> GetLookList(string keyword = "")
@@ -43,7 +43,7 @@ namespace WaterCloud.Service.SystemOrganize
                 query = query.Where(u => u.F_CompanyName.Contains(keyword) || u.F_ProjectName.Contains(keyword));
             }
             query = GetDataPrivilege("u", "", query);
-            return query.OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await query.OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<SystemSetEntity> GetFormByHost(string host)
@@ -58,7 +58,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 data =  repository.IQueryable();
             }
-            return data.Where(t => t.F_DeleteMark == false).OrderBy(a=>a.F_CreatorTime).FirstOrDefault();
+            return await data.Where(t => t.F_DeleteMark == false).OrderBy(a=>a.F_CreatorTime).FirstOrDefaultAsync();
         }
 
         public async Task<List<SystemSetEntity>> GetLookList(Pagination pagination,string keyword = "")

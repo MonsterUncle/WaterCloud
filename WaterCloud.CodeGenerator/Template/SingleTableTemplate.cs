@@ -1396,19 +1396,21 @@ namespace WaterCloud.CodeGenerator
         #region EntityCreateCode
         public async Task EntityCreateCode(BaseConfigModel baseConfigModel, string code)
         {
-            string codeEntity = "";
-            string entityPath = "";
-            if (!string.IsNullOrEmpty(code))
-            {
-                codeEntity = code;
-                entityPath = Path.Combine(baseConfigModel.OutputConfig.OutputEntity, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.EntityName + ".cs");
-                if (File.Exists(entityPath))
+            await Task.Run(() => {
+                string codeEntity = "";
+                string entityPath = "";
+                if (!string.IsNullOrEmpty(code))
                 {
-                    throw new Exception("实体类已存在，实体类生成失败！");
+                    codeEntity = code;
+                    entityPath = Path.Combine(baseConfigModel.OutputConfig.OutputEntity, baseConfigModel.OutputConfig.OutputModule, baseConfigModel.FileConfig.EntityName + ".cs");
+                    if (File.Exists(entityPath))
+                    {
+                        throw new Exception("实体类已存在，实体类生成失败！");
 
+                    }
+                    FileHelper.CreateFile(entityPath, codeEntity);
                 }
-                FileHelper.CreateFile(entityPath, codeEntity);
-            }
+            }); 
         }
         #endregion
 

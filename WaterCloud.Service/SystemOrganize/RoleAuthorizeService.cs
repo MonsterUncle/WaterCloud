@@ -43,7 +43,7 @@ namespace WaterCloud.Service.SystemOrganize
         {
             var data = repository.IQueryable();
             data = data.Where(t => t.F_ObjectId == ObjectId);
-            return data.ToList();
+            return await data.ToListAsync();
         }
         public async Task<List<ModuleEntity>> GetMenuList(string roleId)
         {

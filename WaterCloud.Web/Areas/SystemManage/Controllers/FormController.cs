@@ -42,16 +42,18 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetExtendForm(string keyword)
         {
-            string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/form/";
-            DirectoryInfo root = new DirectoryInfo(filePath);
-            List<AppLogEntity> list = new List<AppLogEntity>();
-            foreach (FileInfo f in root.GetFiles())
-            {
-                AppLogEntity app = new AppLogEntity();
-                app.FileName = f.Name.Remove(f.Name.Length - 5, 5); ;
-                list.Add(app);
-            }
-            return Content(list.ToJson());
+            return await Task.Run(() => {
+                string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/form/";
+                DirectoryInfo root = new DirectoryInfo(filePath);
+                List<AppLogEntity> list = new List<AppLogEntity>();
+                foreach (FileInfo f in root.GetFiles())
+                {
+                    AppLogEntity app = new AppLogEntity();
+                    app.FileName = f.Name.Remove(f.Name.Length - 5, 5); ;
+                    list.Add(app);
+                }
+                return Content(list.ToJson());
+            });  
         }
         [HttpGet]
         [HandlerAjaxOnly]

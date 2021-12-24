@@ -43,7 +43,7 @@ namespace WaterCloud.Service.InfoManage
                 //此处需修改
                 query = query.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
             }
-            return query.Where(a => a.F_EnabledMark == true).OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await query.Where(a => a.F_EnabledMark == true).OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetLookList(string keyword = "")
@@ -55,7 +55,7 @@ namespace WaterCloud.Service.InfoManage
                 query = query.Where(t => t.F_MessageInfo.Contains(keyword) || t.F_CreatorUserName.Contains(keyword));
             }
             query = GetDataPrivilege("u","", query);
-            return query.OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await query.OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetUnReadListJson()
@@ -64,7 +64,7 @@ namespace WaterCloud.Service.InfoManage
             var tempList= repository.IQueryable(a => a.F_MessageType == 2).InnerJoin<MessageHistoryEntity>((a, b) => a.F_Id == b.F_MessageId).Select((a, b) => a.F_Id).ToList();
             hisquery.AddRange(tempList);
             var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId) || a.F_ToUserId == "") && a.F_EnabledMark == true).Where(a => !hisquery.Contains(a.F_Id));
-            return GetFieldsFilterDataNew("a",query.OrderByDesc(t => t.F_CreatorTime)).ToList();
+            return await GetFieldsFilterDataNew("a",query.OrderByDesc(t => t.F_CreatorTime)).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetLookList(SoulPage<MessageEntity> pagination, string keyword = "")

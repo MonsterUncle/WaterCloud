@@ -55,14 +55,16 @@ namespace WaterCloud.Service.SystemSecurity
 
         public async Task<List<OpenJobLogEntity>> GetLogList(string keyValue)
         {
-            if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
-            {
-                return uniwork.IQueryable<OpenJobLogEntity>().Where(a => a.F_JobId == keyValue).OrderByDesc(a => a.F_CreatorTime).ToList();
-            }
-            else
-            {
-                return HandleLogHelper.HGetAll<OpenJobLogEntity>(keyValue).Values.OrderByDescending(a => a.F_CreatorTime).ToList(); ;
-            }
+            return await Task.Run(() => {
+                if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
+                {
+                    return uniwork.IQueryable<OpenJobLogEntity>().Where(a => a.F_JobId == keyValue).OrderByDesc(a => a.F_CreatorTime).ToList();
+                }
+                else
+                {
+                    return HandleLogHelper.HGetAll<OpenJobLogEntity>(keyValue).Values.OrderByDescending(a => a.F_CreatorTime).ToList(); ;
+                }
+            });
         }
         public async Task<List<OpenJobEntity>> GetList(string keyword = "")
         {
@@ -71,7 +73,7 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 data = data.Where(t => t.F_JobName.Contains(keyword));
             }
-            return data.Where(a => a.F_DeleteMark == false).ToList();
+            return await data.Where(a => a.F_DeleteMark == false).ToListAsync();
         }
         public async Task<OpenJobEntity> GetForm(string keyValue)
         {

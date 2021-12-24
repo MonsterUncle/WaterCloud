@@ -30,7 +30,7 @@ namespace WaterCloud.Service.SystemManage
                 //此处需修改
                 data = data.Where(t => t.F_Name.Contains(keyword) || t.F_Description.Contains(keyword));
             }
-            return data.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await data.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<FormEntity>> GetLookList(string ItemId="", string keyword = "")
@@ -45,7 +45,7 @@ namespace WaterCloud.Service.SystemManage
                 query = query.Where(u => u.F_Name.Contains(keyword) || u.F_Description.Contains(keyword));
             }
             query = GetDataPrivilege("u", "", query);
-            return query.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToList();
+            return await query.Where(t => t.F_DeleteMark == false).OrderByDesc(t => t.F_CreatorTime).ToListAsync();
         }
 
         public async Task<List<FormEntity>> GetLookList(Pagination pagination,string keyword = "")

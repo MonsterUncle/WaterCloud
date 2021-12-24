@@ -27,7 +27,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 list = list.Where(t => t.F_Layers == layers);
             }
-            return list.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true).OrderBy(t => t.F_SortCode).ToList();
+            return await list.Where(t => t.F_DeleteMark == false && t.F_EnabledMark == true).OrderBy(t => t.F_SortCode).ToListAsync();
         }
         public async Task<List<AreaEntity>> GetLookList(int layers=0)
         {
@@ -37,7 +37,7 @@ namespace WaterCloud.Service.SystemManage
                 query = query.Where(t => t.F_Layers == layers);
             }
             query = GetDataPrivilege("u","", query);
-            return query.OrderBy(t => t.F_SortCode).ToList();
+            return await query.OrderBy(t => t.F_SortCode).ToListAsync();
         }
         public async Task<AreaEntity> GetLookForm(string keyValue)
         {

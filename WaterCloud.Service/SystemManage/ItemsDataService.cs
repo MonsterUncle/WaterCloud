@@ -35,7 +35,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 list = list.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword));
             }
-            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
+            return await list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToListAsync();
         }
         public async Task<List<ItemsDetailEntity>> GetLookList(string itemId = "", string keyword = "")
         {
@@ -49,14 +49,14 @@ namespace WaterCloud.Service.SystemManage
                 query = query.Where(t => t.F_ItemName.Contains(keyword) || t.F_ItemCode.Contains(keyword));
             }
             query = GetDataPrivilege("u","", query);
-            return query.OrderBy(t => t.F_SortCode).ToList();
+            return await query.OrderBy(t => t.F_SortCode).ToListAsync();
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {
             var itemdata = unitwork.IQueryable<ItemsEntity>().ToList();
             var item = itemdata.Find(a => a.F_EnCode == enCode);
             var data = repository.IQueryable();
-            return data.Where(a => a.F_DeleteMark == false && a.F_EnabledMark == true && a.F_ItemId == item.F_Id).OrderBy(a => a.F_SortCode).ToList();
+            return await data.Where(a => a.F_DeleteMark == false && a.F_EnabledMark == true && a.F_ItemId == item.F_Id).OrderBy(a => a.F_SortCode).ToListAsync();
         }
         public async Task<ItemsDetailEntity> GetLookForm(string keyValue)
         {

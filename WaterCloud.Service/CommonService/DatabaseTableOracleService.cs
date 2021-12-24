@@ -83,15 +83,6 @@ namespace WaterCloud.Service.CommonService
         }
         #endregion
 
-        #region 公有方法
-        public async Task<bool> DatabaseBackup(string backupPath)
-        {
-            string database = HtmlHelper.Resove(GlobalContext.SystemConfig.DBConnectionString, "Initial Catalog = ", ";");
-            var result = DbHelper.ExecuteSqlCommand(database, backupPath);
-            return result > 0 ? true : false;
-        }
-        #endregion
-
         #region 私有方法
         /// <summary>
         /// 获取所有表的主键、主键名称、记录数

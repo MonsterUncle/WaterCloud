@@ -166,7 +166,7 @@ namespace WaterCloud.DataBase
         }
         public async Task<TEntity> FindEntity<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
         {
-            return _context.Query<TEntity>().FirstOrDefault(predicate);
+            return await _context.Query<TEntity>().FirstOrDefaultAsync(predicate);
         }
         public IQuery<TEntity> IQueryable<TEntity>(LockType locktype = LockType.NoLock) where TEntity : class
         {
@@ -190,7 +190,7 @@ namespace WaterCloud.DataBase
             pagination.records = tempData.Count();
             tempData = tempData.OrderBy(pagination.field);
             tempData = tempData.TakePage(pagination.page, pagination.rows);
-            return tempData.ToList();
+            return await tempData.ToListAsync();
         }
         public async Task<List<TEntity>> FindList<TEntity>(Expression<Func<TEntity, bool>> predicate, Pagination pagination) where TEntity : class, new()
         {
@@ -198,7 +198,7 @@ namespace WaterCloud.DataBase
             pagination.records = tempData.Count();
             tempData = tempData.OrderBy(pagination.field);
             tempData = tempData.TakePage(pagination.page, pagination.rows);
-            return tempData.ToList();
+            return await tempData.ToListAsync();
         }
         public async Task<List<T>> OrderList<T>(IQuery<T> query, Pagination pagination)
         {
@@ -213,7 +213,7 @@ namespace WaterCloud.DataBase
                 tempData = tempData.OrderBy(pagination.field);
             }
             tempData = tempData.TakePage(pagination.page, pagination.rows);
-            return tempData.ToList();
+            return await tempData.ToListAsync();
         }
         public async Task<List<T>> OrderList<T>(IQuery<T> query, SoulPage<T> pagination)
         {
@@ -223,7 +223,7 @@ namespace WaterCloud.DataBase
             {
                 tempData = tempData.GenerateFilter("u", filterSos);
             }
-            pagination.count = tempData.Count();
+            pagination.count = await tempData.CountAsync();
             if (pagination.order == "desc")
             {
                 tempData = tempData.OrderBy(pagination.field + " " + pagination.order);
@@ -233,7 +233,7 @@ namespace WaterCloud.DataBase
                 tempData = tempData.OrderBy(pagination.field);
             }
             tempData = tempData.TakePage(pagination.page, pagination.rows);
-            return tempData.ToList();
+            return await tempData.ToListAsync();
         }
         public async Task<List<TEntity>> CheckCacheList<TEntity>(string cacheKey) where TEntity : class
         {

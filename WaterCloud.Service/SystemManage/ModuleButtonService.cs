@@ -29,7 +29,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 list = list.Where(t => t.F_ModuleId == moduleId);
             }
-            return list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToList();
+            return await list.Where(a => a.F_DeleteMark == false).OrderBy(t => t.F_SortCode).ToListAsync();
         }
         public async Task<List<ModuleButtonEntity>> GetLookList(string moduleId = "", string keyword = "")
         {
@@ -44,7 +44,7 @@ namespace WaterCloud.Service.SystemManage
                 query = query.Where(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
             }
             query = GetDataPrivilege("u", "", query);
-            return query.OrderBy(t => t.F_SortCode).ToList();
+            return await query.OrderBy(t => t.F_SortCode).ToListAsync();
         }
         public async Task<ModuleButtonEntity> GetLookForm(string keyValue)
         {
@@ -73,7 +73,7 @@ namespace WaterCloud.Service.SystemManage
         {
             var moduleList = unitwork.IQueryable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleid && a.F_ItemType == 2).Select(a => a.F_ItemId).ToList();
             var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
-            return query.OrderBy(a => a.F_SortCode).ToList();
+            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
         }
 
         public async Task SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
@@ -158,7 +158,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 query = query.Where(a => a.F_ModuleId == moduleId);
             }
-            return query.OrderBy(a => a.F_SortCode).ToList();
+            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
         }
     }
 }
