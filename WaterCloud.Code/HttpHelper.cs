@@ -39,7 +39,7 @@ namespace WaterCloud.Code
         /// <returns>System.String.</returns>
         public static string HttpGet(string Url, int timeout = 10 * 1000)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.CreateHttp(Url);
             request.Method = "GET";
             request.ContentType = "text/html;charset=UTF-8";
             request.Timeout = timeout;

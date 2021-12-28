@@ -35,7 +35,7 @@ namespace WaterCloud.Code
         /// <returns></returns> 
         public static string Encrypt(string Text, string sKey)
         {
-            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+            DES des = DES.Create();
             byte[] inputByteArray;
             inputByteArray = Encoding.Default.GetBytes(Text);
             des.Key = ASCIIEncoding.ASCII.GetBytes(DecryptMd5(sKey));
@@ -70,7 +70,7 @@ namespace WaterCloud.Code
         /// <returns></returns>
         public static string Encrypt2(string Text, string sKey)
         {
-            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+            DES des = DES.Create();
             byte[] inputByteArray;
             inputByteArray = Encoding.Default.GetBytes(Text);
             sKey = MD5(sKey).Substring(0, 8);
@@ -116,7 +116,7 @@ namespace WaterCloud.Code
         /// <returns></returns> 
         public static string Decrypt(string Text, string sKey)
         {
-            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+            DES des = DES.Create();
             int len;
             len = Text.Length / 2;
             byte[] inputByteArray = new byte[len];
@@ -174,7 +174,7 @@ namespace WaterCloud.Code
         /// <returns></returns> 
         public static string Decrypt2(string Text, string sKey)
         {
-            DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+            DES des = DES.Create();
             int len;
             len = Text.Length / 2;
             byte[] inputByteArray = new byte[len];
@@ -198,7 +198,7 @@ namespace WaterCloud.Code
 
         public static string MD5(string pwd)
         {
-            MD5 md5 = new MD5CryptoServiceProvider();
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
             byte[] data = System.Text.Encoding.Default.GetBytes(pwd);
             byte[] md5data = md5.ComputeHash(data);
             md5.Clear();
