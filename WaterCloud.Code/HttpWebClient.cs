@@ -13,35 +13,6 @@ namespace WaterCloud.Code
         {
             this._httpClientFactory = httpClientFactory;
         }
-        /// <summary>
-        /// Get请求
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="dicHeaders"></param>
-        /// <param name="timeoutSecond"></param>
-        /// <returns></returns>
-        //public async Task<string> GetAsync(string url, int timeoutSecond = 120)
-        //{
-        //    var client = _httpClientFactory.CreateClient();
-        //    #region 最好不要这样绑定header，
-        //    //DefaultRequestHeaders是和httpClient绑定的，当完成当前请求后，其它请求从factory中获取时，还是会有绑定的header的
-        //    //会造成错误
-        //    //if (dicHeaders != null)
-        //    //{
-        //    //    foreach (var header in dicHeaders)
-        //    //    {
-        //    //        client.DefaultRequestHeaders.Add(header.Key, header.Value);
-        //    //    }
-        //    //}
-        //    #endregion
-        //    client.Timeout = TimeSpan.FromSeconds(timeoutSecond);
-        //    var response = await client.GetAsync(url);
-        //    var result = await response.Content.ReadAsStringAsync();
-        //    return result;
-        //}
-
-
-
 
         /// <summary>
         /// Get异步请求

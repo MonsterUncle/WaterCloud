@@ -97,7 +97,7 @@ namespace WaterCloud.Service.CommonService
         }
         private string GetDatabase()
         {
-            string database = HtmlHelper.Resove(GlobalContext.SystemConfig.DBConnectionString.ToLower(), "database=", ";");
+            string database = WebHelper.Resove(GlobalContext.SystemConfig.DBConnectionString.ToLower(), "database=", ";");
             return database;
         }
         #endregion

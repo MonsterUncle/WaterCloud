@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Text.Encodings.Web;
 using System.Net.Sockets;
 using System.Linq;
+using System.Net.Http;
+using System.Collections.Generic;
 
 namespace WaterCloud.Code
 {
@@ -223,110 +225,6 @@ namespace WaterCloud.Code
         }
         #endregion
 
-        //#region GetFileControls(获取客户端文件控件集合)
-
-        ///// <summary>
-        ///// 获取有效客户端文件控件集合,文件控件必须上传了内容，为空将被忽略,
-        ///// 注意:Form标记必须加入属性 enctype="multipart/form-data",服务器端才能获取客户端file控件.
-        ///// </summary>
-        //public static List<HttpPostedFile> GetFileControls()
-        //{
-        //    var result = new List<HttpPostedFile>();
-        //    var files = HttpContext.Current.Request.Files;
-        //    if (files.Count == 0)
-        //        return result;
-        //    for (int i = 0; i < files.Count; i++)
-        //    {
-        //        var file = files[i];
-        //        if (file.ContentLength == 0)
-        //            continue;
-        //        result.Add(files[i]);
-        //    }
-        //    return result;
-        //}
-
-        //#endregion
-
-        //#region GetFileControl(获取第一个有效客户端文件控件)
-
-        ///// <summary>
-        ///// 获取第一个有效客户端文件控件,文件控件必须上传了内容，为空将被忽略,
-        ///// 注意:Form标记必须加入属性 enctype="multipart/form-data",服务器端才能获取客户端file控件.
-        ///// </summary>
-        //public static HttpPostedFile GetFileControl()
-        //{
-        //    var files = GetFileControls();
-        //    if (files == null || files.Count == 0)
-        //        return null;
-        //    return files[0];
-        //}
-
-        //#endregion
-
-        #region HttpWebRequest(请求网络资源)
-
-        /// <summary>
-        /// 请求网络资源,返回响应的文本
-        /// </summary>
-        /// <param name="url">网络资源地址</param>
-        public static string HttpWebRequest(string url)
-        {
-            return HttpWebRequest(url, string.Empty, Encoding.GetEncoding("utf-8"));
-        }
-
-        /// <summary>
-        /// 请求网络资源,返回响应的文本
-        /// </summary>
-        /// <param name="url">网络资源Url地址</param>
-        /// <param name="parameters">提交的参数,格式：参数1=参数值1&amp;参数2=参数值2</param>
-        public static string HttpWebRequest(string url, string parameters)
-        {
-            return HttpWebRequest(url, parameters, Encoding.GetEncoding("utf-8"), true);
-        }
-
-        /// <summary>
-        /// 请求网络资源,返回响应的文本
-        /// </summary>
-        /// <param name="url">网络资源地址</param>
-        /// <param name="parameters">提交的参数,格式：参数1=参数值1&amp;参数2=参数值2</param>
-        /// <param name="encoding">字符编码</param>
-        /// <param name="isPost">是否Post提交</param>
-        /// <param name="contentType">内容类型</param>
-        /// <param name="cookie">Cookie容器</param>
-        /// <param name="timeout">超时时间</param>
-        public static string HttpWebRequest(string url, string parameters, Encoding encoding, bool isPost = false,
-             string contentType = "application/x-www-form-urlencoded", CookieContainer cookie = null, int timeout = 120000)
-        {
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Timeout = timeout;
-            request.CookieContainer = cookie;
-            if (isPost)
-            {
-                byte[] postData = encoding.GetBytes(parameters);
-                request.Method = "POST";
-                request.ContentType = contentType;
-                request.ContentLength = postData.Length;
-                using (Stream stream = request.GetRequestStream())
-                {
-                    stream.Write(postData, 0, postData.Length);
-                }
-            }
-            var response = (HttpWebResponse)request.GetResponse();
-            string result;
-            using (Stream stream = response.GetResponseStream())
-            {
-                if (stream == null)
-                    return string.Empty;
-                using (var reader = new StreamReader(stream, encoding))
-                {
-                    result = reader.ReadToEnd();
-                }
-            }
-            return result;
-        }
-
-        #endregion
-
         #region 去除HTML标记
         /// <summary>
         /// 去除HTML标记
@@ -481,10 +379,16 @@ namespace WaterCloud.Code
             try
             {
                 string url = "http://www.net.cn/static/customercare/yourip.asp";
-                string html = HttpHelper.HttpGet(url);
+                string html = "";
+                using (var client=new HttpClient())
+				{
+                   var reponse= client.GetAsync(url).GetAwaiter().GetResult();
+                    reponse.EnsureSuccessStatusCode();
+                   html = reponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                }
                 if (!string.IsNullOrEmpty(html))
                 {
-                    ip = HtmlHelper.Resove(html, "<h2>", "</h2>");
+                    ip = WebHelper.Resove(html, "<h2>", "</h2>");
                 }
             }
             catch (Exception)
@@ -636,66 +540,30 @@ namespace WaterCloud.Code
             }
             return ipLocation;
         }
-        public static string GetPconlineIpLocation(string ClientIp)
-        {
-            string Location = "未知";
-            try
-            {
-                string url = "http://whois.pconline.com.cn/ipJson.jsp?json=true";
-                if (ClientIp != "")
-                {
-                    url += "&ip=" + ClientIp;
-                }
-                var request = (HttpWebRequest)WebRequest.Create(url);
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-                {
-                    StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding("GB2312"));
-                    string str = reader.ReadToEnd();
-                    reader.Close();
-                    reader.Dispose();
-
-                    if (string.IsNullOrEmpty(str))
-                    {
-                        Location = "未知";
-                    }
-                    else
-                    {
-                        var json = JsonHelper.ToJObject(str);
-
-                        var nameData = json["addr"];
-                        Location = nameData.ToString();
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                Location = "未知";
-            }
-            return Location;
-        }
 
         private static string GetIpLocationFromPCOnline(string ipAddress)
         {
+            string ipLocation = "未知";
             try
             {
-                HttpResult httpResult = new HttpHelper().GetHtml(new HttpItem
-                {
-                    URL = "http://whois.pconline.com.cn/ip.jsp?ip=" + ipAddress,
-                    ContentType = "text/html; charset=gb2312"
-                });
-
-                string ipLocation = "未知";
-                if (!string.IsNullOrEmpty(httpResult.Html))
-                {
-                    ipLocation = httpResult.Html.Trim();
+                var res = "";
+                using (var client=new HttpClient())
+				{
+                    var URL = "http://whois.pconline.com.cn/ip.jsp?ip=" + ipAddress;
+                    var response = client.GetAsync(URL).GetAwaiter().GetResult();
+                    response.EnsureSuccessStatusCode();
+                    res = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 }
-                return ipLocation;
+                if (!string.IsNullOrEmpty(res))
+                {
+                    ipLocation = res.Trim();
+                }
             }
-            catch (Exception)
-            {
-                return "未知";
-            }    
-
+            catch
+			{
+                ipLocation = "未知";
+            }
+            return ipLocation;
         }
         #endregion
 
@@ -740,6 +608,63 @@ namespace WaterCloud.Code
         private static bool IsInner(long userIp, long begin, long end)
         {
             return (userIp >= begin) && (userIp <= end);
+        }
+        #endregion
+
+        #region html处理
+        /// <summary>
+        /// Get part Content from HTML by apply prefix part and subfix part
+        /// </summary>
+        /// <param name="html">souce html</param>
+        /// <param name="prefix">prefix</param>
+        /// <param name="subfix">subfix</param>
+        /// <returns>part content</returns>
+        public static string Resove(string html, string prefix, string subfix)
+        {
+            int inl = html.IndexOf(prefix);
+            if (inl == -1)
+            {
+                return null;
+            }
+            inl += prefix.Length;
+            int inl2 = html.IndexOf(subfix, inl);
+            string s = html.Substring(inl, inl2 - inl);
+            return s;
+        }
+        public static string ResoveReverse(string html, string subfix, string prefix)
+        {
+            int inl = html.IndexOf(subfix);
+            if (inl == -1)
+            {
+                return null;
+            }
+            string subString = html.Substring(0, inl);
+            int inl2 = subString.LastIndexOf(prefix);
+            if (inl2 == -1)
+            {
+                return null;
+            }
+            string s = subString.Substring(inl2 + prefix.Length, subString.Length - inl2 - prefix.Length);
+            return s;
+        }
+        public static List<string> ResoveList(string html, string prefix, string subfix)
+        {
+            List<string> list = new List<string>();
+            int index = prefix.Length * -1;
+            do
+            {
+                index = html.IndexOf(prefix, index + prefix.Length);
+                if (index == -1)
+                {
+                    break;
+                }
+                index += prefix.Length;
+                int index4 = html.IndexOf(subfix, index);
+                string s78 = html.Substring(index, index4 - index);
+                list.Add(s78);
+            }
+            while (index > -1);
+            return list;
         }
         #endregion
     }
