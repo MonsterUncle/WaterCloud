@@ -38,6 +38,11 @@
     </None>
   </ItemGroup>
 
+  <!--自定义配置runtimeconfig.json 支持System.Drawing.Common在.net6.0非windows平台使用-->
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Drawing.EnableUnixSupport" Value="true" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 
