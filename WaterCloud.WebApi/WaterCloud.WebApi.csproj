@@ -11,6 +11,7 @@
     <DocumentationFile>C:\资料\WaterCloud_Core\WaterCloud.WebApi\WaterCloud.WebApi.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -35,10 +35,10 @@ namespace WaterCloud.Service.SystemOrganize
         {
             //反格式化显示只能用"等于"，其他不支持
             Dictionary<string, Dictionary<string, string>> dic = new Dictionary<string, Dictionary<string, string>>();
-            Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
-            enabledTemp.Add("有效", "1");
-            enabledTemp.Add("无效", "0");
-            dic.Add("F_EnabledMark", enabledTemp);
+            Dictionary<string, string> enabledDic = new Dictionary<string, string>();
+            enabledDic.Add("有效", "1");
+            enabledDic.Add("无效", "0");
+            dic.Add("F_EnabledMark", enabledDic);
             pagination = ChangeSoulData(dic, pagination);
             var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
