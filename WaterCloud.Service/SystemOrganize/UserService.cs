@@ -36,12 +36,12 @@ namespace WaterCloud.Service.SystemOrganize
             //反格式化显示只能用"等于"，其他不支持
             Dictionary<string, Dictionary<string, string>> dic = new Dictionary<string, Dictionary<string, string>>();
             Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
-            enabledTemp.Add("有效", "1");
-            enabledTemp.Add("无效", "0");
+            enabledTemp.Add("1", "有效");
+            enabledTemp.Add("0", "无效");
             dic.Add("F_EnabledMark", enabledTemp);
             Dictionary<string, string> sexTemp = new Dictionary<string, string>();
-            sexTemp.Add("男", "1");
-            sexTemp.Add("女", "0");
+            sexTemp.Add("1", "男");
+            sexTemp.Add("0", "女");
             dic.Add("F_Gender", sexTemp);
             pagination = ChangeSoulData(dic, pagination);
             //获取数据权限

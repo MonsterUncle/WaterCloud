@@ -71,7 +71,7 @@ namespace WaterCloud.Service.InfoManage
             Dictionary<string, string> messageTypeTemp = new Dictionary<string, string>();
             foreach (var item in setList)
             {
-                messageTypeTemp.Add(item.F_ItemName, item.F_ItemCode);
+                messageTypeTemp.Add(item.F_ItemCode,item.F_ItemName);
             }
             dic.Add("F_MessageType", messageTypeTemp);
             pagination = ChangeSoulData(dic, pagination);

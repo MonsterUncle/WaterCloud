@@ -66,11 +66,11 @@ namespace WaterCloud.Service.FlowManage
             //反格式化显示只能用"等于"，其他不支持
             Dictionary<string, Dictionary<string, string>> dic = new Dictionary<string, Dictionary<string, string>>();
             Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
-            enabledTemp.Add("正在运行", "0");
-            enabledTemp.Add("审批通过", "1");
-            //enabledTemp.Add("审批通过", "2");
-            enabledTemp.Add("不同意", "3");
-            enabledTemp.Add("被驳回", "4");
+            enabledTemp.Add("0", "正在运行");
+            enabledTemp.Add("1", "审批通过");
+            enabledTemp.Add("2", "被撤回");
+            enabledTemp.Add("3", "不同意");
+            enabledTemp.Add("4", "被驳回");
             dic.Add("F_IsFinish", enabledTemp);
             pagination = ChangeSoulData(dic, pagination);
             var query = repository.IQueryable();

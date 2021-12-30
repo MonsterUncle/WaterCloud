@@ -143,9 +143,9 @@ namespace WaterCloud.Service
         {
             foreach (var item in filterSos)
             {
-                if (item.mode == "condition" && dic.ContainsKey(item.field) && dic[item.field].ContainsKey(item.value))
+                if (item.mode == "condition" && dic.ContainsKey(item.field) && dic[item.field].Values.Contains(item.value))
                 {
-                    item.value = dic[item.field][item.value];
+                    item.value = dic[item.field].FirstOrDefault(a=>a.Value== item.value).Key;
                 }
                 if (item.children != null && item.children.Count > 0)
                 {
