@@ -204,7 +204,7 @@ namespace WaterCloud.Service.FlowManage
             msg.F_EnabledMark = true;
             msg.F_MessageType = 2;
             var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == flowInstance.F_Id).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).First();
-            if (lastmsg != null && repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
+            if (lastmsg != null && !await repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).AnyAsync())
             {
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
@@ -360,7 +360,7 @@ namespace WaterCloud.Service.FlowManage
             }
             msg.F_MessageType = 2;
             var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == flowInstance.F_Id).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).First();
-            if (lastmsg != null && repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
+            if (lastmsg != null && !await repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).AnyAsync())
             {
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
@@ -831,7 +831,7 @@ namespace WaterCloud.Service.FlowManage
             msg.F_MessageType = 2;
             msg.F_ToUserId = entity.F_MakerList == "1" ? "" : entity.F_MakerList;
             var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == entity.F_Id).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).First();
-            if (lastmsg != null && repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
+            if (lastmsg != null && !await repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).AnyAsync())
             {
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
@@ -961,7 +961,7 @@ namespace WaterCloud.Service.FlowManage
             msg.F_MessageType = 2;
             msg.F_ToUserId = entity.F_MakerList == "1" ? "" : entity.F_MakerList;
             var lastmsg = repository.Db.Queryable<MessageEntity>().Where(a => a.F_ClickRead == false && a.F_KeyValue == entity.F_Id).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).First();
-            if (lastmsg != null && repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).Count() == 0)
+            if (lastmsg != null && !await repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == lastmsg.F_Id).AnyAsync())
             {
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }

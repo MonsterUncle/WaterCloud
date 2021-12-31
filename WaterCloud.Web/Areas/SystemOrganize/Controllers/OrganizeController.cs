@@ -97,7 +97,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 var str = ids.Split(',');
 				foreach (var item in str)
 				{
-                    if (data.Where(a => a.F_Id == item).Count() > 0)
+                    if (data.Where(a => a.F_Id == item).Any())
                     {
                         var temp = data.Find(a => a.F_Id == item);
                         temp.LAY_CHECKED = true;

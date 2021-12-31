@@ -135,7 +135,7 @@ namespace WaterCloud.DataBase
         public async Task<List<TEntity>> CheckCacheList(string cacheKey)
         {
             var cachedata =await CacheHelper.Get<List<TEntity>>(cacheKey);
-            if (cachedata == null || cachedata.Count() == 0)
+            if (cachedata == null || !cachedata.Any())
             {
                 cachedata = _db.Queryable<TEntity>().ToList();
                 await CacheHelper.Set(cacheKey, cachedata);

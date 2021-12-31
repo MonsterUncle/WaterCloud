@@ -70,7 +70,7 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).Count() > 0)
+            if (await repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).AnyAsync())
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }

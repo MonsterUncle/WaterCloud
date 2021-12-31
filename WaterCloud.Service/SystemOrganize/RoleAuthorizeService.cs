@@ -141,7 +141,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             if (user.F_IsAdmin == true)
             {
-                if (unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_UrlAddress == action).Count() > 0 || unitofwork.GetDbClient().Queryable<ModuleButtonEntity>().Where(a => a.F_UrlAddress == action).Count() > 0)
+                if (await unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_UrlAddress == action).AnyAsync() || await unitofwork.GetDbClient().Queryable<ModuleButtonEntity>().Where(a => a.F_UrlAddress == action).AnyAsync())
                 {
                     return true;
                 }
@@ -217,16 +217,16 @@ namespace WaterCloud.Service.SystemOrganize
             return false;
         }
 
-        public async Task<bool> CheckReturnUrl(string userId, string url)
+        public async Task<bool> CheckReturnUrl(string userId, string url, bool isAll=false)
         {
             var user = await userApp.GetForm(userId);
-            if (user == null || user.F_EnabledMark == false)
+            if (isAll == false &&(user == null || user.F_EnabledMark == false))
             {
                 return false;
             }
-            if (user.F_IsAdmin == true)
+            if (user.F_IsAdmin == true|| isAll == true)
             {
-                if (unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a=>a.F_UrlAddress==url).Count()>0|| unitofwork.GetDbClient().Queryable<ModuleButtonEntity>().Where(a => a.F_UrlAddress == url).Count() > 0)
+                if (unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a=>a.F_UrlAddress==url).Any()|| unitofwork.GetDbClient().Queryable<ModuleButtonEntity>().Where(a => a.F_UrlAddress == url).Any())
                 {
                     return true;
                 }

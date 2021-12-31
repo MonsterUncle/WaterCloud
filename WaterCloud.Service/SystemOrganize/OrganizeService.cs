@@ -43,13 +43,13 @@ namespace WaterCloud.Service.SystemOrganize
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).Count() > 0)
+            if (await repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).AnyAsync())
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }
             else
             {
-                if (repository.Db.Queryable<UserEntity>().Where(a=>a.F_OrganizeId==keyValue).Count()>0|| repository.Db.Queryable<UserEntity>().Where(a => a.F_DepartmentId == keyValue).Count()>0)
+                if (await repository.Db.Queryable<UserEntity>().Where(a=>a.F_OrganizeId==keyValue).AnyAsync()|| await repository.Db.Queryable<UserEntity>().Where(a => a.F_DepartmentId == keyValue).AnyAsync())
                 {
                     throw new Exception("组织使用中，无法删除");
                 }

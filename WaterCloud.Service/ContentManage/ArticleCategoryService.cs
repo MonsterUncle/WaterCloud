@@ -87,7 +87,7 @@ namespace WaterCloud.Service.ContentManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            if (repository.Db.Queryable<ArticleNewsEntity>().Where(a=> ids.Contains(a.F_CategoryId)).Count()>0)
+            if (await repository.Db.Queryable<ArticleNewsEntity>().Where(a=> ids.Contains(a.F_CategoryId)).AnyAsync())
             {
                 throw new Exception("新闻类别使用中，无法删除");
             }

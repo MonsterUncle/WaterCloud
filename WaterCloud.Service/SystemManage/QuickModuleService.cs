@@ -67,7 +67,7 @@ namespace WaterCloud.Service.SystemManage
             List<QuickModuleExtend> list = new List<QuickModuleExtend>();
             List<QuickModuleEntity> quicks = new List<QuickModuleEntity>();
             unitofwork.CurrentBeginTrans();
-            if (quicklist.Count() == 0)
+            if (!await quicklist.AnyAsync())
             {
                 var user = await repository.Db.Queryable<UserEntity>().InSingleAsync(userId);
                 var roleId = user.F_RoleId;
