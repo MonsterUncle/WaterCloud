@@ -45,8 +45,10 @@ namespace WaterCloud.Web
                 if (filterContext.HttpContext.Request.Path != "/Home/Index")
                 {
                     var url = filterContext.HttpContext.Request.Path.Value.Substring(filterContext.HttpContext.Request.Path.Value.LastIndexOf('/') + 1, filterContext.HttpContext.Request.Path.Value.Length - 1 - filterContext.HttpContext.Request.Path.Value.LastIndexOf('/'));
-                    var view = _compositeViewEngine.FindView(filterContext, url, false)?.View;
-                    if (view != null)
+                    //使用MVC的方式获取视图是否存在
+                    //var view = _compositeViewEngine.FindView(filterContext, url, false)?.View;
+                    //检查菜单url查看是否存在
+                    if (_service.CheckReturnUrl("",url,true).GetAwaiter().GetResult())
                     {
                         WebHelper.WriteCookie("wc_realreturnurl", filterContext.HttpContext.Request.PathBase + filterContext.HttpContext.Request.Path, options);
                     }

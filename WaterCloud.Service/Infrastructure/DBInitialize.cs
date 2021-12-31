@@ -22,7 +22,7 @@ namespace WaterCloud.Service
         public static List<ConnectionConfig> GetConnectionConfigs(bool readDb=false)
 		{
             List<ConnectionConfig> list = CacheHelper.Get<List<ConnectionConfig>>(cacheKey).Result;
-            if (list == null || list.Count() == 0 || readDb)
+            if (list == null || !list.Any() || readDb)
 			{
                 list=new List<ConnectionConfig>();
                 var data = GlobalContext.SystemConfig;

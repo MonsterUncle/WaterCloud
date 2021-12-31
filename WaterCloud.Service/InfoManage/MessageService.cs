@@ -185,7 +185,7 @@ namespace WaterCloud.Service.InfoManage
             {
                 return true;
             }
-            if (repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == keyValue && a.F_CreatorUserId == currentuser.UserId).Count() > 0)
+            if (await repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == keyValue && a.F_CreatorUserId == currentuser.UserId).AnyAsync())
             {
                 return true;
             }

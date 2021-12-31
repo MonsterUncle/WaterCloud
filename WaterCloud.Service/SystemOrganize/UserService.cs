@@ -289,7 +289,7 @@ namespace WaterCloud.Service.SystemOrganize
                         {
                             var list = userEntity.F_RoleId.Split(',');
                             var rolelist =repository.Db.Queryable<RoleEntity>().Where(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
-                            if (rolelist.Count() == 0)
+                            if (!rolelist.Any())
                             {
                                 throw new Exception("账户未设置权限,请联系管理员");
                             }

@@ -44,7 +44,7 @@ namespace WaterCloud.Service.AutoJob
                     try
                     {
                         jobData = context.JobDetail.JobDataMap;
-                        jobId = jobData["F_Id"].ToString();
+                        jobId = jobData.GetString("F_Id");
                         OpenJobsService autoJobService = new OpenJobsService(unitwork, _schedulerFactory, _iocJobfactory, _httpClient);
                         // 获取数据库中的任务
                         dbJobEntity = await autoJobService.GetForm(jobId);

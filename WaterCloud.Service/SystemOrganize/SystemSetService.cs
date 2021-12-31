@@ -63,7 +63,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 query = query.Where(a => a.F_DbNumber == "0");
             }
-            if (query.Clone().Count()==0)
+            if (!await query.Clone().AnyAsync())
             {
                 query = repository.IQueryable();
                 query = query.Where(a => a.F_DbNumber == "0");
@@ -170,7 +170,7 @@ namespace WaterCloud.Service.SystemOrganize
 				{
                     //判断数据库有没有被使用
                     db.DbMaintenance.CreateDatabase();
-                    if (db.DbMaintenance.GetTableInfoList(false).Where(a=>a.Name.ToLower()== "sys_module").Count()>0)
+                    if (db.DbMaintenance.GetTableInfoList(false).Where(a=>a.Name.ToLower()== "sys_module").Any())
                         throw new Exception("数据库已存在,请重新设置数据库");
                     var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
                     //反射取指定前后缀的dll

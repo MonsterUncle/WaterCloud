@@ -140,7 +140,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             {
                 return Error("导入数据不存在!");
             }
-            if (filterList.Where(a => a.F_EnabledMark == false).Count() > 0)
+            if (filterList.Where(a => a.F_EnabledMark == false).Any())
             {
                 return Error("导入数据存在错误!");
             }

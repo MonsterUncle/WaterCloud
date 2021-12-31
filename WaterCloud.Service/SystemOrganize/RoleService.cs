@@ -103,7 +103,7 @@ namespace WaterCloud.Service.SystemOrganize
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (repository.Db.Queryable<UserEntity>().Where(a => a.F_RoleId.Contains(keyValue)).Count() > 0 )
+            if (await repository.Db.Queryable<UserEntity>().Where(a => a.F_RoleId.Contains(keyValue)).AnyAsync())
             {
                 throw new Exception("角色使用中，无法删除");
             }

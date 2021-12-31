@@ -162,7 +162,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 //构造虚拟参数
 				foreach (var item in baseConfig.PageIndex.ColumnList)
 				{
-					if (list.Where(a=>a.TableColumn == item.field).Count() == 0)
+					if (!list.Where(a=>a.TableColumn == item.field).Any())
 					{
                         TableFieldInfo temp=new TableFieldInfo();
                         temp.TableKey = "";

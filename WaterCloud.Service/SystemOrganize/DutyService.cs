@@ -84,7 +84,7 @@ namespace WaterCloud.Service.SystemOrganize
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (repository.Db.Queryable<UserEntity>().Where(a => a.F_DutyId == keyValue).Count() > 0)
+            if (await repository.Db.Queryable<UserEntity>().Where(a => a.F_DutyId == keyValue).AnyAsync())
             {
                 throw new Exception("岗位使用中，无法删除");
             }
@@ -135,7 +135,7 @@ namespace WaterCloud.Service.SystemOrganize
                     item.ErrorMsg = "编号不存在";
                     continue;
                 }
-                else if ((await repository.IQueryable(a => a.F_EnCode == item.F_EnCode).CountAsync()) > 0 || list.Where(a => a.F_EnCode == item.F_EnCode).Count() > 1)
+                else if (await repository.IQueryable(a => a.F_EnCode == item.F_EnCode).AnyAsync() || list.Where(a => a.F_EnCode == item.F_EnCode).Count() > 1)
                 {
                     str.Add("编号重复");
                     item.F_EnabledMark = false;

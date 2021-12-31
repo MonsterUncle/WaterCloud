@@ -83,7 +83,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             foreach (var item in result)
             {
-                item.haveChild = data.Where(a => a.F_ParentId == item.F_Id).Count() > 0 ? true : false;
+                item.haveChild = data.Where(a => a.F_ParentId == item.F_Id).Any() ? true : false;
             }
             return Success(data.Count, result);
         }

@@ -235,7 +235,7 @@ namespace WaterCloud.DataBase
                     var leftval = filterObj.Key.Split(',').ToList();
                     var val = rightval.Intersect(leftval);
 
-                    filter = Expression.Constant(val.Count() > 0);
+                    filter = Expression.Constant(val.Any());
                     break;
             }
 
