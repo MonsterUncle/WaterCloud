@@ -224,7 +224,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 return false;
             }
-            if (user.F_IsAdmin == true|| isAll == true)
+            if (isAll == true || user.F_IsAdmin == true)
             {
                 if (unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a=>a.F_UrlAddress==url).Any()|| unitofwork.GetDbClient().Queryable<ModuleButtonEntity>().Where(a => a.F_UrlAddress == url).Any())
                 {
