@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -41,8 +41,8 @@ namespace WaterCloud.Service.ContentManage
             enabledTemp.Add("0", "无效");
             dic.Add("F_EnabledMark", enabledTemp);
             Dictionary<string, string> isTrue = new Dictionary<string, string>();
-            enabledTemp.Add("1", "是");
-            enabledTemp.Add("0", "否");
+            isTrue.Add("1", "是");
+            isTrue.Add("0", "否");
             dic.Add("F_IsTop", isTrue);
             dic.Add("F_IsHot", isTrue);
             pagination = ChangeSoulData(dic, pagination);
