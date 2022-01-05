@@ -102,6 +102,10 @@
                     temp["Contrast"] = $('#symbol' + + i).val();
                     temp["Text"] = $('#lookname' + + i).val();
                     temp["Value"] = $('#values' + + i).val();
+                    if(temp["Key"]!="{loginRole}" && temp["Key"]!="{loginUser}" && temp["Key"]!="{loginOrg}")
+                    {
+                        temp["Value"] = null;
+                    }
                     if (!temp["Value"]) {
                         temp["Value"] = temp["Text"];
                     }
