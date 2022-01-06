@@ -58,6 +58,8 @@
     //表单数据
     var formtext;
     var NextNodeDesignateType;
+    var readonly=false;
+    var dataJson={};
     layui.use(['form', 'layer', 'element', 'jquery', 'table', 'waterflow', 'flowlayout', 'common', 'step', 'dtree', 'formPreview', 'layedit', 'optimizeSelectOption'], function () {
         var form = layui.form,
             element = layui.element,
@@ -239,53 +241,23 @@
                         common.val('adminform', data);
                         flowDesignPanel.loadData(JSON.parse(data.F_SchemeContent));
                         changeScheme(data.F_SchemeId);
+                        postData.F_FrmType=data.F_FrmType;
                         if (data.F_FrmType == 0) {
                             var temp = JSON.parse(data.F_FrmData);
-                            var arr = JSON.parse(data.F_FrmContent);
-                            arr = setFormValue(arr, temp);
-                            //表单设计器
-                            formPreview.render({
-                                data: arr,
-                                elem: '#frmPreview',
-                                readonly: false,
-                            });
+                            dataJson = JSON.parse(data.F_FrmContent);
+                            $("#frmPreview").attr("src",document.location.origin + '/form/' + data.F_WebId + '.html');
+                            document.querySelector("iframe").contentWindow.document
+                               .renderForm.setFormData(temp);
                         }
                         else {
                             formtext = data.F_FrmData;
-                            $("#frmPreview").load(document.location.origin + '/form/' + data.F_DbName + '.html');
+                            $("#frmPreview").attr("src",document.location.origin + '/form/' + data.F_WebId + '.html');
                         }
                     }
                 });
             }
             form.render();
         });
-        var editor;
-        function setFormValue(arr, temp) {
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i].tag == "grid") {
-                    for (var j = 0; j < arr[i].columns.length; j++) {
-                        arr[i].columns[j].list = setFormValue(arr[i].columns[j].list, temp);
-                    }
-                }
-                else if (arr[i].tag == "checkbox") {
-                    if (!!temp) {
-                        for (var j = 0; j < arr[i].options.length; j++) {
-                            arr[i].options[j].checked = temp[arr[i].options[j].value] == "on";
-                        }
-                    }
-                }
-                else if (!!temp) {
-                    if (!!temp[arr[i].id]) {
-                        arr[i].defaultValue = temp[arr[i].id];
-                    }
-                }
-                if (arr[i].tag == "editor") {
-                    editor = arr[i];
-                }
-            }
-            return arr;
-
-        };
         function initControl() {
             $("#F_SchemeId").bindSelect({
                 url: "/SystemManage/Flowscheme/GetListJson",
@@ -312,10 +284,6 @@
         //监听提交
         form.on('submit(formStep)', function (data) {
             postData = $.extend(postData, data.field);
-            if (!!layedit.index) {
-                layedit.sync(layedit.index);
-                data.field[editor.id] = $('#' + editor.id).val();
-            }
             var content = flowDesignPanel.exportData();
             if (content == -1) {
                 return false; //阻止表单跳转。
@@ -329,7 +297,16 @@
                 common.modalMsg("无人审核，请检查流程", "warning");
                 return false;
             }
-            postData.F_FrmData = JSON.stringify(data.field);
+            if(postData.F_FrmType==0)
+            {
+                var tempdata= document.querySelector("iframe").contentWindow.document.renderForm.getFormData();
+                postData.F_FrmData = JSON.stringify(tempdata);
+            }
+            else
+            {
+                var tempdata= document.querySelector("iframe").contentWindow.document.getFormData();
+                postData.F_FrmData = JSON.stringify(tempdata);
+            }
             step.next('#stepForm');
             return false;
         });
@@ -401,7 +378,8 @@
                                 <div class="layui-form-item" style="padding-top:15px;">
                                     <fieldset class="layui-elem-field">
                                         <legend>申请内容</legend>
-                                        <div id="frmPreview"></div>
+                                        <iframe src="~/page/preview.html" id="frmPreview" onload="setIframeHeight(this)"style="width:100%;min-height:300px">
+                                        </iframe>
                                     </fieldset>
                                 </div>
                                 <div class="form-group-bottom text-right">

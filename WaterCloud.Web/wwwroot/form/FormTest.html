@@ -78,8 +78,8 @@
                 , format: 'yyyy-MM-dd HH:mm',
             });
             $(function () {
-                if (typeof formtext != "undefined" && !!formtext) {
-                    form.val('FormTest', JSON.parse(formtext));
+                if (typeof parent.formtext != "undefined" && !! parent.formtext) {
+                    form.val('FormTest', JSON.parse(parent.formtext));
                 }
                 if (typeof parent.readonly != "undefined" && parent.readonly) {
                     common.setReadOnly('FormTest');
