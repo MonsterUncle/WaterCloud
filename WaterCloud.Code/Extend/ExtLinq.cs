@@ -22,6 +22,10 @@ namespace WaterCloud.Code
         {
             return Expression.AndAlso(left, right);
         }
+        public static Expression OrElse(this Expression left, Expression right)
+        {
+            return Expression.OrElse(left, right);
+        }
         public static Expression Call(this Expression instance, string methodName, params Expression[] arguments)
         {
             return Expression.Call(instance, instance.Type.GetMethod(methodName), arguments);
@@ -36,11 +40,11 @@ namespace WaterCloud.Code
         }
         public static Expression<Func<T, bool>> True<T>() { return param => true; }
         public static Expression<Func<T, bool>> False<T>() { return param => false; }
-        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
+        public static Expression<Func<T, bool>> AndAlso<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
             return first.Compose(second, Expression.AndAlso);
         }
-        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
+        public static Expression<Func<T, bool>> OrElse<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
             return first.Compose(second, Expression.OrElse);
         }

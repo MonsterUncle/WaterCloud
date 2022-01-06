@@ -109,7 +109,7 @@ namespace WaterCloud.Service.SystemSecurity
             if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
                 var expression = ExtLinq.True<LogEntity>();
-                expression = expression.And(a => a.F_Date <= operateTime);
+                expression = expression.AndAlso(a => a.F_Date <= operateTime);
                 await repository.Delete(expression);
             }
             else
