@@ -47,7 +47,7 @@ namespace WaterCloud.Service.SystemSecurity
                 default:
                     break;
             }
-            expression = expression.And(t => t.F_Date >= startTime && t.F_Date <= endTime);
+            expression = expression.AndAlso(t => t.F_Date >= startTime && t.F_Date <= endTime);
             return await repository.IQueryable(expression).ToListAsync();
         }
 
