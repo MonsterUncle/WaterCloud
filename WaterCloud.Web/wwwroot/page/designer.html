@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=http://www.thymeleaf.org>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=0,maximum-scale=0,user-scalable=yes,shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>表单设计器</title>
+    <link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../js/lay-module/cron/cron.css" media="all" />
+    <link rel="stylesheet" href="../js/lay-module/labelGeneration/labelGeneration.css" media="all" />
+    <link rel="stylesheet" href="../js/lay-module/formDesigner/formDesigner.css" media="all" />
+</head>
+
+<body class="layui-layout-body">
+    <!--<button type="button" id="test">aa</button>-->
+    <input type="hidden" th:value="${formId}" id="fromId">
+    <div style="height: 100%; width: 100%;" id="formdesigner">
+
+    </div>
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script src="../js/lay-config.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/Sortable/Sortable.js" charset="utf-8"></script>
+    <!--htmlformat 为js-beautify代码-->
+    <script type="text/javascript" src="../js/lay-module/htmlformat.js"></script>
+    <script type="text/javascript" src="../js/lay-module/jsformat.js"></script>
+    <script type="text/javascript" src="../js/lay-module/iceEditor/iceEditor.js"></script>
+    <script>
+        layui.use(['layer', 'formDesigner'], function () {
+            var formDesigner = layui.formDesigner;
+            var data = [];
+            data = parent.designJson;
+            var render = formDesigner.render({
+                data: data,
+                elem: '#formdesigner'
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

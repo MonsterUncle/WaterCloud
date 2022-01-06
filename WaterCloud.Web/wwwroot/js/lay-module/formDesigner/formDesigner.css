@@ -35,7 +35,7 @@
     width       : auto;
     overflow-y  : auto;
     box-sizing  : border-box;
-    min-width   : 760px;
+    min-width   : 250px;
     border-left : 1px solid #e6e6e6;
     border-right: 1px solid #e6e6e6;
 }
@@ -103,7 +103,7 @@
 }
 
 .ghost {
- 
+
     border       : 1px dashed #e06c1d;
     outline-width: 0;
     height       : 39px;
@@ -117,9 +117,10 @@
     background-color:#fff;
     color:#fff;
 }
- .active {
-    outline: 2px solid #409EFF;
-    border: 1px solid #409EFF;
+
+.layui-body .active {
+    outline       : 2px solid #409EFF;
+    border        : 1px solid #409EFF;
     outline-offset: 0;
 }
 
@@ -197,6 +198,7 @@
 #formDesignerForm .widget-slider {
     margin: 18px 10px;
     width : 90%;
+    position: absolute!important;
 }
 
 .layui-empty {
@@ -294,6 +296,7 @@ body .cool-black .layui-layer-btn a {
 }
 
 .htmlcodeview textarea,
+.getFormData textarea,
 .importjsoncodeview textarea {
     display         : block;
     width           : 760px;
@@ -327,15 +330,41 @@ body .cool-black .layui-layer-btn a {
 }
 .aboutusview .about p{
     line-height: 30px;
-    
+
 }
 
 .aboutusview .about .yellow{
     color:#e6ec8d;
 }
-.coltitle {
-    text-align: center;
-    background-color: lightgrey;
-    height:30px;
-    border:1px solid #fff;
+
+.layui-disabled {
+    background-color: #f5f7fa;
+    border-color: #dfe4ed;
+    color: #c0c4cc;
+}
+
+.custom-lg{
+    margin: -3px 0px 0px 10px;
+}
+.custom-zc{
+    margin: 0px 0px 0px 10px;
+}
+.custom-sm{
+    margin: 5px 0px 0px 10px;
+}
+.custom-xs{
+    margin: 10px 0px 0px 10px;
+}
+
+.iceEditor-disabled {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(245,247,250,0.79) !important;
+    border-color: #dfe4ed !important;
+    color: #c0c4cc !important;
+    z-index: 1 !important;
+    display: block;
 }
