@@ -72,7 +72,7 @@
                 <div>
                     <form class="layui-form layuimini-form">
                         <div id="commonform" >
-                            <iframe src="~/page/designer.html" id="formdesigner" onload="setIframeHeight(this)"style="width:100%;min-height:300px">
+                            <iframe src="~/page/designer.html" id="formdesigner" onload="setIframeHeight(this)"style="width:100%;min-height:400px">
                             </iframe>
                         </div>
                         <div class="form-group-bottom text-right">
@@ -130,7 +130,7 @@
                     success: function (data) {
                         common.val('adminform', data);
                         if (data.F_FrmType != 0) {
-                            $("#formdesigner").attr('src',document.location.origin + '/form/' + data.F_WebId + '.html');
+                            $("#commonform").load(document.location.origin + '/form/' + data.F_WebId + '.html');
                         }
                         else {
                             designJson=JSON.parse(data.F_Content);

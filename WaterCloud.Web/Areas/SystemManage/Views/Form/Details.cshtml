@@ -4,17 +4,18 @@
 }
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <iframe src="~/page/preview.html" id="frmPreview" onload="setIframeHeight(this)"style="width:100%;min-height:300px">
-        </iframe>
+        <div id="frmPreview">
+        </div>
     </div>
 </div>
 <script>
     //只读参数
     var readonly = true;
     var dataJson=[];
-    layui.use(['jquery', 'form', 'common'], function () {
+    layui.use(['jquery', 'form', 'common','formPreview'], function () {
         var form = layui.form,
             common = layui.common,
+            formPreview = layui.formPreview,
             $ = layui.jquery;
         var keyValue = $.request("keyValue");
         $(function () {
@@ -25,13 +26,16 @@
                 async: false,
                 success: function (data) {
                     if (data.F_FrmType != 0) {
-                        $("#frmPreview").attr("src",document.location.origin + '/form/' + data.F_WebId + '.html');
+                        $("#frmPreview").load(document.location.origin + '/form/' + data.F_WebId + '.html');
                     }
                     else {
                         //表单设计器
                         dataJson = JSON.parse(data.F_Content);
-                        $("#frmPreview").attr("src",document.location.origin +'/page/preview.html');
-
+                        renderForm = formPreview.render({
+                            elem: '#frmPreview',
+                            data: dataJson,
+                            readonly: true
+                        });
                     }
                 }
             });

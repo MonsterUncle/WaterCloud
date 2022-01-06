@@ -1,125 +1,111 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>预览 - Layui</title>
-    <link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="../css/public.css" media="all">
-    <link href="../css/watercloud.css" rel="stylesheet" media="all" />
-</head>
-
-<body style="background:unset;">
-    <div class="layui-form layuimini-form " lay-filter="FormTest">
-        <div class="layui-form-item">
-            <label class="layui-form-label required">请假类型</label>
-            <div class="layui-input-block">
-                <input type="radio" name="F_RequestType" lay-verify="required" value="病假" title="病假">
-                <input type="radio" name="F_RequestType" value="事假" title="事假">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label required">请假人</label>
-            <div class="layui-input-block">
-                <input type="text" id="F_UserName" name="F_UserName" maxlength="50" lay-verify="required" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label required">开始时间</label>
-            <div class="layui-input-block">
-                <input class="layui-input" id="F_StartTime" name="F_StartTime" type="datetime" lay-verify="required" autocomplete="off" />
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label required">结束时间</label>
-            <div class="layui-input-block">
-                <input class="layui-input" id="F_EndTime" name="F_EndTime" type="datetime" lay-verify="required" autocomplete="off" />
-            </div>
-        </div>
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label required">请假说明</label>
-            <div class="layui-input-block">
-                <textarea id="F_RequestComment" name="F_RequestComment" class="layui-textarea" lay-verify="required" placeholder="请输入说明"></textarea>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <div class="layui-upload-list">
-                    <p id="demoText"></p>
-                </div>
-                <button type="button" class="layui-btn" id="test1">上传附件</button>
-                <input class="layui-hide" hidden type="text" id="F_Attachment" name="F_Attachment">
-            </div>
+﻿<div class="layui-form layuimini-form " lay-filter="FormTest">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">请假类型</label>
+        <div class="layui-input-block">
+            <input type="radio" name="F_RequestType" lay-verify="required" value="病假" title="病假">
+            <input type="radio" name="F_RequestType" value="事假" title="事假">
         </div>
     </div>
-    <script src="../lib/layui/layui.js" charset="utf-8"></script>
-    <script src="../js/lay-config.js" charset="utf-8"></script>
-    <script>
-        layui.use(['jquery', 'upload', 'form', 'laydate', 'common'], function () {
-            var $ = layui.$,
-                upload = layui.upload,
-                form = layui.form,
-                common = layui.common,
-                laydate = layui.laydate;
-            //此处需修改
-            //类型为时间时
-            laydate.render({
-                elem: '#F_StartTime'
-                , trigger: 'click'
-                , type: 'datetime'
-                , min: 0
-                , format: 'yyyy-MM-dd HH:mm',
-            });
-            laydate.render({
-                elem: '#F_EndTime'
-                , trigger: 'click'
-                , type: 'datetime'
-                , min: 0
-                , format: 'yyyy-MM-dd HH:mm',
-            });
-            $(function () {
-                if (typeof parent.formtext != "undefined" && !! parent.formtext) {
-                    form.val('FormTest', JSON.parse(parent.formtext));
-                }
-                if (typeof parent.readonly != "undefined" && parent.readonly) {
-                    common.setReadOnly('FormTest');
-                }
-                form.render();
-            });
+    <div class="layui-form-item">
+        <label class="layui-form-label required">请假人</label>
+        <div class="layui-input-block">
+            <input type="text" id="F_UserName" name="F_UserName" maxlength="50" lay-verify="required" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">开始时间</label>
+        <div class="layui-input-block">
+            <input class="layui-input" id="F_StartTime" name="F_StartTime" type="datetime" lay-verify="required" autocomplete="off" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">结束时间</label>
+        <div class="layui-input-block">
+            <input class="layui-input" id="F_EndTime" name="F_EndTime" type="datetime" lay-verify="required" autocomplete="off" />
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label required">请假说明</label>
+        <div class="layui-input-block">
+            <textarea id="F_RequestComment" name="F_RequestComment" class="layui-textarea" lay-verify="required" placeholder="请输入说明"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <div class="layui-upload-list">
+                <p id="demoText"></p>
+            </div>
+            <button type="button" class="layui-btn" id="test1">上传附件</button>
+            <input class="layui-hide" hidden type="text" id="F_Attachment" name="F_Attachment">
+        </div>
+    </div>
+    <div class="layui-form-item layui-hide">
+        <button class="layui-btn site-demo-active" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+    </div>
+</div>
+<script>
+    layui.use(['jquery', 'upload', 'form', 'laydate', 'common'], function () {
+        var $ = layui.$,
+            upload = layui.upload,
+            form = layui.form,
+            common = layui.common,
+            laydate = layui.laydate;
+        //此处需修改
+        //类型为时间时
+        laydate.render({
+            elem: '#F_StartTime'
+            , trigger: 'click'
+            , type: 'datetime'
+            , min: 0
+            , format: 'yyyy-MM-dd HH:mm',
+        });
+        laydate.render({
+            elem: '#F_EndTime'
+            , trigger: 'click'
+            , type: 'datetime'
+            , min: 0
+            , format: 'yyyy-MM-dd HH:mm',
+        });
+        $(function () {
+            if (typeof formtext != "undefined" && !!formtext) {
+                form.val('FormTest', JSON.parse(formtext));
+            }
+            if (typeof readonly != "undefined" && readonly) {
+                common.setReadOnly('FormTest');
+            }
             form.render();
-            //普通图片上传
-            var uploadInst = upload.render({
-                elem: '#test1'
-                , url: '/FileManage/Uploadfile/Upload' //改成您自己的上传接口
-                , data: { filetype: 1, fileby: '流程表单' }
-                , size: 1024
-                , accept: 'file'
-                , done: function (res) {
-                    //如果上传失败
-                    if (res.code > 0) {
-                        //失败状态，并实现重传
-                        var demoText = $('#demoText');
-                        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                        demoText.find('.demo-reload').on('click', function () {
-                            uploadInst.upload();
-                        });
-                        common.modalMsg(res.msg, "warning");
-                        return false;
-                    }
-                    $('#F_Attachment').val(res.data[0].src);
-                }
-                , error: function () {
-                    //演示失败状态，并实现重传
+        });
+        form.render();
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            , url: '/FileManage/Uploadfile/Upload' //改成您自己的上传接口
+            , data: { filetype: 1, fileby: '流程表单' }
+            , size: 1024
+            , accept: 'file'
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    //失败状态，并实现重传
                     var demoText = $('#demoText');
                     demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
                     demoText.find('.demo-reload').on('click', function () {
                         uploadInst.upload();
                     });
+                    common.modalMsg(res.msg, "warning");
+                    return false;
                 }
-            });
-            return false;
+                $('#F_Attachment').val(res.data[0].src);
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
         });
-    </script>
-</body>
-
-</html>
+        return false;
+    });
+</script>
