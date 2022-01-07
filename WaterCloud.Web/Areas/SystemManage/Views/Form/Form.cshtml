@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <link href="~/css/stepcss.css" rel="stylesheet" />
+<link href="~/css/upload.css" rel="stylesheet" />
 <div class="layuimini-container">
     <div class="layuimini-main">
         <div class="layui-carousel" id="adminform" lay-filter="adminform">
@@ -75,6 +76,9 @@
                             <iframe src="~/page/designer.html" id="formdesigner" onload="setIframeHeight(this)"style="width:100%;min-height:400px">
                             </iframe>
                         </div>
+                        <fieldset class="layui-elem-field">
+                            <div id="frmPreview"></div>
+                        </fieldset>
                         <div class="form-group-bottom text-right">
                             <div class="layui-input-block">
                                 <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
@@ -130,9 +134,15 @@
                     success: function (data) {
                         common.val('adminform', data);
                         if (data.F_FrmType != 0) {
-                            $("#commonform").load(document.location.origin + '/form/' + data.F_WebId + '.html');
+                            $("#frmPreview").load(document.location.origin + '/form/' + data.F_WebId + '.html');
+                            $('#commonform').addClass('layui-hide');
+                            $('#frmPreview').removeClass('layui-hide');
+                            $('#frmPreview').parent().removeClass('layui-hide');
                         }
                         else {
+                            $('#commonform').removeClass('layui-hide');
+                            $('#frmPreview').addClass('layui-hide');
+                            $('#frmPreview').parent().addClass('layui-hide');
                             designJson=JSON.parse(data.F_Content);
                             $("#formdesigner").attr('src',document.location.origin + '/page/designer.html');
                         }
@@ -146,6 +156,9 @@
                        designJson = result;
                     }
                 });
+                $('#commonform').removeClass('layui-hide');
+                $('#frmPreview').addClass('layui-hide');
+                $('#frmPreview').parent().addClass('layui-hide');
                 $("#formdesigner").attr('src',document.location.origin + '/page/designer.html');
             }
             form.render();
@@ -181,16 +194,28 @@
         form.on('select(WebId)',
             function (data) {
                 if (!!data.value) {
-                    $("#formdesigner").attr('src',document.location.origin + '/form/' + data.value + '.html');
+                    $('#frmPreview').removeClass('layui-hide');
+                    $('#commonform').addClass('layui-hide');
+                    $("#frmPreview").load(document.location.origin + '/form/' + data.value + '.html');
                     form.render();
                 }
                 else {
-                    $("#formdesigner").html("");
+                    $("#frmPreview").html("");
                 }
             });
         var postData;
         form.on('submit(formStep)', function (data) {
             postData = $.extend(postData, data.field);
+            if (postData.F_FrmType != 0) {
+                $('#commonform').addClass('layui-hide');
+                $('#frmPreview').removeClass('layui-hide');
+                $('#frmPreview').parent().removeClass('layui-hide');
+            }
+            else {
+                $('#commonform').removeClass('layui-hide');
+                $('#frmPreview').addClass('layui-hide');
+                $('#frmPreview').parent().addClass('layui-hide');
+            }
             step.next('#adminform');
             return false;
         });

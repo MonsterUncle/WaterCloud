@@ -3,19 +3,19 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <link href="~/js/lay-module/flow/WaterFlow.css" rel="stylesheet" />
-@*<link href="/css/formpreview.css" rel="stylesheet" />*@
 <link href="~/css/stepcss.css" rel="stylesheet" />
+<link href="~/css/upload.css" rel="stylesheet" />
 <script>
     //只读参数
     var readonly = true;
-    var dataJson=[];
-    layui.use(['form', 'layer', 'element', 'jquery', 'table', 'waterflow', 'flowlayout', 'common', 'step', 'optimizeSelectOption'], function () {
+    layui.use(['form', 'layer', 'element', 'jquery', 'table', 'waterflow', 'flowlayout', 'common', 'step','formPreview', 'optimizeSelectOption'], function () {
         var form = layui.form,
             element = layui.element,
             layer = layui.layer,
             $ = layui.jquery,
             step = layui.step,
             common = layui.common,
+            formPreview = layui.formPreview,
             table = layui.table;
 
         var keyValue = $.request("keyValue");
@@ -75,12 +75,15 @@
                 success: function (data) {
                     postData.F_FrmType = data.F_FrmType;
                     if (data.F_FrmType == 0) {
-                        dataJson=JSON.parse(data.F_Content)
                         //表单设计器
-                        $("#frmPreview").attr('src',document.location.origin +'/page/preview.html');
+                        formPreview.render({
+                            data: JSON.parse(data.F_Content),
+                            elem: '#frmPreview',
+                            readonly:true
+                        });
                     }
                     else {
-                        $("#frmPreview").attr('src',document.location.origin + '/form/' + data.F_WebId + '.html');
+                        $("#frmPreview").load(document.location.origin + '/form/' + data.F_WebId + '.html');
                     }
                     if (!!data.F_ContentData) {
                         $("#valueList").val(data.F_ContentData);
@@ -346,8 +349,7 @@
                                     </select>
                                 </div>
                                 <fieldset class="layui-elem-field">
-                                    <iframe src="~/page/preview.html" id="frmPreview" onload="setIframeHeight(this)"style="width:100%;min-height:300px">
-                                    </iframe>
+                                    <div id="frmPreview"></div>
                                 </fieldset>
                                 <div class="form-group-bottom text-right">
                                     <div class="layui-input-block">
