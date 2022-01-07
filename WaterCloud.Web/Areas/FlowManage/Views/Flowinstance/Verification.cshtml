@@ -3,57 +3,11 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <link href="~/js/lay-module/flow/WaterFlow.css" rel="stylesheet" />
-@*<link href="/css/formpreview.css" rel="stylesheet" />*@
+<link href="~/js/lay-module/formDesigner/formPreview.css" rel="stylesheet" />
 <style type="text/css">
     div.layui-table-cell {
         color: rgb(102, 102, 102) !important;
     }
-    /* 图片上传 */
-    .uploader-list {
-        margin-left: -15px;
-    }
-
-        .uploader-list .info {
-            position: relative;
-            margin-top: -25px;
-            background-color: black;
-            color: white;
-            filter: alpha(Opacity=80);
-            -moz-opacity: 0.5;
-            opacity: 0.5;
-            width: 100px;
-            height: 25px;
-            text-align: center;
-            display: none;
-        }
-
-        .uploader-list .handle {
-            position: relative;
-            background-color: black;
-            color: white;
-            filter: alpha(Opacity=80);
-            -moz-opacity: 0.5;
-            opacity: 0.5;
-            width: 100px;
-            text-align: right;
-            height: 18px;
-            margin-bottom: -18px;
-            display: none;
-        }
-
-            .uploader-list .handle i {
-                margin-right: 5px;
-            }
-
-                .uploader-list .handle i:hover {
-                    cursor: pointer;
-                }
-
-        .uploader-list .file-iteme {
-            margin: 12px 0 0 15px;
-            padding: 1px;
-            float: left;
-        }
 </style>
 <script>
     //参数传递到表单页
@@ -144,18 +98,19 @@
                         , nodeData: schemeContent.nodes
                         , flowcontent: schemeContent
                     });
+                    formtext = data.F_FrmData;
                     if (data.F_FrmType == 0) {
-                        var temp = JSON.parse(data.F_FrmData);
-                        var arr = JSON.parse(data.F_FrmContent);
-                        arr = setFormValue(arr, temp);
+                        var dataJson = JSON.parse(data.F_FrmContent);
                         //表单设计器
-                        formPreview.render({
-                            data: arr,
-                            elem: '#frmPreview'
+                        var renderForm= formPreview.render({
+                            data: dataJson,
+                            elem: '#frmPreview',
+                            readonly:true
                         });
+                        renderForm.setFormData(JSON.parse(formtext));
                     }
                     else {
-                        formtext = data.F_FrmData;
+
                         $("#frmPreview").load(document.location.origin + '/form/' + data.F_DbName + '.html');
                     }
                     flowDesignPanel.reinitSize($(window).width() * 2 / 3 - 40, $(window).height() - 100);
@@ -163,26 +118,6 @@
             });
             form.render();
         });
-        function setFormValue(arr, temp) {
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i].tag == "grid") {
-                    for (var j = 0; j < arr[i].columns.length; j++) {
-                        arr[i].columns[j].list = setFormValue(arr[i].columns[j].list, temp);
-                    }
-                }
-                else if (arr[i].tag == "checkbox") {
-                    for (var j = 0; j < arr[i].options.length; j++) {
-                        arr[i].options[j].checked = temp[arr[i].options[j].value] == "on";
-                    }
-                }
-                else {
-                    if (!!temp[arr[i].id]) {
-                        arr[i].defaultValue = temp[arr[i].id];
-                    }
-                }
-            }
-            return arr;
-        };
         $(window).resize(function () {
             flowDesignPanel.reinitSize($(window).width() * 2 / 3 - 40, $(window).height() - 100);
         });

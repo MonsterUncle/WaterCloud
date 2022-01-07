@@ -1249,7 +1249,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 , options = that.config;
             options.elem = $(options.elem);
             options.id = options.id || options.elem.attr('id') || that.index;
-            options.elem.html('<form  class="layui-form  layui-form-pane" style="height:100%;" id="formPreviewForm" lay-filter="formPreviewForm"></form>');
+            options.elem.html('<div  class="layui-form  layui-form-pane" style="height:100%;" id="formPreviewForm" lay-filter="formPreviewForm"></div>');
             that.renderForm();
             if (options.readonly) {
                 var readForm = $('#formPreviewForm');

@@ -3,14 +3,15 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <link href="~/js/lay-module/flow/WaterFlow.css" rel="stylesheet" />
-<link href="~/css/upload.css" rel="stylesheet" />
+<link href="~/js/lay-module/formDesigner/formPreview.css" rel="stylesheet" />
 <script>
     //只读参数
     var readonly = true;
-    layui.use(['form', 'layer', 'jquery', 'waterflow', 'flowlayout', 'common', 'element', 'optimizeSelectOption'], function () {
+    layui.use(['form', 'layer', 'jquery', 'waterflow', 'flowlayout', 'common','formPreview', 'element', 'optimizeSelectOption'], function () {
         var form = layui.form, element = layui.element,
             layer = layui.layer,
             common = layui.common,
+            formPreview = layui.formPreview,
             $ = layui.jquery;
 
         //var index = layer.getFrameIndex(window.name); //获取窗口索引

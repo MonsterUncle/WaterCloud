@@ -2,56 +2,13 @@
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
-<link href="~/js/lay-module/flow/WaterFlow.css" rel="stylesheet" />
-@*<link href="/css/formpreview.css" rel="stylesheet" />*@
-<link href="~/css/stepcss.css" rel="stylesheet" />
+<link href="~/js/lay-module/flow/WaterFlow.css" rel="stylesheet"  media="all"/>
+<link href="~/css/stepcss.css" rel="stylesheet"  media="all"/>
+<link href="~/js/lay-module/formDesigner/formPreview.css" rel="stylesheet" media="all"/>
 <style type="text/css">
-    /* 图片上传 */
-    .uploader-list {
-        margin-left: -15px;
+    div.layui-table-cell {
+        color: rgb(102, 102, 102) !important;
     }
-
-        .uploader-list .info {
-            position: relative;
-            margin-top: -25px;
-            background-color: black;
-            color: white;
-            filter: alpha(Opacity=80);
-            -moz-opacity: 0.5;
-            opacity: 0.5;
-            width: 100px;
-            height: 25px;
-            text-align: center;
-            display: none;
-        }
-
-        .uploader-list .handle {
-            position: relative;
-            background-color: black;
-            color: white;
-            filter: alpha(Opacity=80);
-            -moz-opacity: 0.5;
-            opacity: 0.5;
-            width: 100px;
-            text-align: right;
-            height: 18px;
-            margin-bottom: -18px;
-            display: none;
-        }
-
-            .uploader-list .handle i {
-                margin-right: 5px;
-            }
-
-                .uploader-list .handle i:hover {
-                    cursor: pointer;
-                }
-
-        .uploader-list .file-iteme {
-            margin: 12px 0 0 15px;
-            padding: 1px;
-            float: left;
-        }
 </style>
 <script>
     //参数传递到表单页
@@ -158,11 +115,10 @@
                 async: false,
                 success: function (data) {
                     if (data.F_FrmType == 0) {
-                        var arr = JSON.parse(data.F_FrmContent);
-                        setFormValue(arr);
+                        var dataJson = JSON.parse(data.F_FrmContent);
                         //表单设计器
                         formPreview.render({
-                            data: arr,
+                            data: dataJson,
                             elem: '#frmPreview',
                             readonly: false,
                         });
@@ -228,6 +184,7 @@
             }
             form.render();
         });
+        var renderForm;
         $(function () {
             $('#F_Code').val(new Date().getTime());
             initControl();
@@ -242,16 +199,20 @@
                         flowDesignPanel.loadData(JSON.parse(data.F_SchemeContent));
                         changeScheme(data.F_SchemeId);
                         postData.F_FrmType=data.F_FrmType;
+                        formtext = data.F_FrmData;
                         if (data.F_FrmType == 0) {
-                            var temp = JSON.parse(data.F_FrmData);
-                            dataJson = JSON.parse(data.F_FrmContent);
-                            $("#frmPreview").attr("src",document.location.origin + '/form/' + data.F_WebId + '.html');
-                            document.querySelector("iframe").contentWindow.document
-                               .renderForm.setFormData(temp);
+                            var dataJson = JSON.parse(data.F_FrmContent);
+                            //表单设计器
+                            renderForm= formPreview.render({
+                                data: dataJson,
+                                elem: '#frmPreview',
+                                readonly:false
+                            });
+                            renderForm.setFormData(JSON.parse(formtext));
                         }
                         else {
-                            formtext = data.F_FrmData;
-                            $("#frmPreview").attr("src",document.location.origin + '/form/' + data.F_WebId + '.html');
+                            $("#frmPreview").load(document.location.origin + '/form/' + data.F_DbName + '.html');
+                            form.render();
                         }
                     }
                 });
@@ -297,15 +258,14 @@
                 common.modalMsg("无人审核，请检查流程", "warning");
                 return false;
             }
-            if(postData.F_FrmType==0)
+            if(postData.F_FrmType == 0)
             {
-                var tempdata= document.querySelector("iframe").contentWindow.document.renderForm.getFormData();
+                var tempdata= renderForm.getFormData();
                 postData.F_FrmData = JSON.stringify(tempdata);
             }
             else
             {
-                var tempdata= document.querySelector("iframe").contentWindow.document.getFormData();
-                postData.F_FrmData = JSON.stringify(tempdata);
+                postData.F_FrmData = JSON.stringify(data.field);
             }
             step.next('#stepForm');
             return false;
@@ -378,8 +338,7 @@
                                 <div class="layui-form-item" style="padding-top:15px;">
                                     <fieldset class="layui-elem-field">
                                         <legend>申请内容</legend>
-                                        <iframe src="~/page/preview.html" id="frmPreview" onload="setIframeHeight(this)"style="width:100%;min-height:300px">
-                                        </iframe>
+                                        <div id="frmPreview"></div>
                                     </fieldset>
                                 </div>
                                 <div class="form-group-bottom text-right">
