@@ -76,3 +76,13 @@
     padding: 1px;
     float: left;
 }
+.layui-form-item .layui-form-required:after {
+    content: '*';
+    color: red;
+    position: absolute;
+    margin-left: 4px;
+    font-weight: bold;
+    line-height: 1.8em;
+    top: 6px;
+    right: 5px;
+}

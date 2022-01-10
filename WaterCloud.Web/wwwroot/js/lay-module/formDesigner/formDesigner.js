@@ -580,7 +580,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                 , '</div>'
                 , '<div class="layui-body">'
                 , '<!-- 内容主体区域 -->'
-                , '<form class="layui-form layui-form-pane" style="height:98%;">'
+                , '<form class="layui-form" id="designerForm" style="height:98%;">'
                 , '<div class="layui-form" id="formDesignerForm" lay-filter="formDesignerForm">'
                 , '<div class="layui-row layui-empty">'
                 , '从左侧拖拽控件到此设计区域来添加字段'
@@ -3361,6 +3361,12 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
             $('body').append(TP_HTML_VIEW);
             $('body').append(TP_IMPORT_VIEW);//TP_IMPORT_VIEW
             $('body').append(TP_ABOUT_VIEW);
+            if (!!options.formStyle) {
+                $('#designerForm').addClass('layui-form-pane');
+            }
+            else {
+                $('#designerForm').removeClass('layui-form-pane');
+            }
             //排序事件注册
             var sortable1 = Sortable.create(document.getElementById("c1"), {
                 group: {
@@ -4232,6 +4238,10 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
 
         //核心入口 初始化一个 regionSelect 类
         formDesigner.render = function (options) {
+            var defaults = {
+                formStyle: false,//是否方框
+            };
+            options = $.extend(defaults, options);
             var ins = new Class(options);
             return thisIns.call(ins);
         };
