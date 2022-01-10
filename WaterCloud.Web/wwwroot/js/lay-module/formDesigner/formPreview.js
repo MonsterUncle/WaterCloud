@@ -1084,8 +1084,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var _readonly = json.readonly ? 'readonly=""' : '';
                     var _disabledClass = json.disabled ? ' layui-disabled' : '';
                     var _html = '<div id="{0}" class="layui-form-item layui-form-text {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
-                    _html += '<label class="layui-form-label {0}" style="width: {2};">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.width);
-                    _html += '<div class="layui-input-block"  style="width: {0}">'.format(json.width);
+                    _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
+                    _html += '<div class="layui-input-block">';
                     _html += '<textarea name="{0}" placeholder="{3}" width="{2}" class="layui-textarea{6}" {4} {5} {7}>{1}</textarea>'
                         .format(json.id, json.defaultValue ? json.defaultValue : '', json.width, json.placeholder, _disabled, _required, _disabledClass, _readonly);
                     _html += '</div>';

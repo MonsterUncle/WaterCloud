@@ -368,3 +368,16 @@ body .cool-black .layui-layer-btn a {
     z-index: 1 !important;
     display: block;
 }
+.layui-form-label {
+    box-sizing: border-box;
+}
+.layui-form-item .layui-form-required:after {
+    content: '*';
+    color: red;
+    position: absolute;
+    margin-left: 4px;
+    font-weight: bold;
+    line-height: 1.8em;
+    top: 6px;
+    right: 5px;
+}

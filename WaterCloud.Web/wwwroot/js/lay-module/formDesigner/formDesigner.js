@@ -842,7 +842,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                         }
                     }
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
-                    _html += '<label class="layui-form-label {0}" style="width: {3}px;"><span style="color:red;">{2}</span>{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.required ? '*' : '',json.labelWidth);
+                    _html += '<label class="layui-form-label {0}" style="width: {2}px;">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.labelWidth);
                     _html += '<div class="layui-input-block" style="margin-left: {0}px">'.format(json.labelWidth);
                     _html += '<input name="{0}" value="{1}" placeholder="{3}" class="layui-input{7}" lay-vertype="tips" lay-verify="{6}" {4} {5} style="width:{2}">'
                         .format(json.id, json.defaultValue ? json.defaultValue : '', json.width, json.placeholder, _readonly, _disabled, _required, _disabledClass);
@@ -1174,7 +1174,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                         _width = 100 - parseInt(_width);
                     }
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
-                    _html += '<label class="layui-form-label {0}" style="width: {3}px"><span style="color:red;">{2}</span>{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.required ? '*' : '',json.labelWidth);
+                    _html += '<label class="layui-form-label {0}" style="width: {2}px">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.labelWidth);
                     _html += '<div class="layui-input-block" style="width:calc({0} - {1}px);margin-left: {1}px;">'.format(json.width,json.labelWidth);
                     _html += '<input type="cronExpression" name="{0}" id="{5}" value="{1}" lay-verify="{6}" placeholder="{2}" class="layui-input{4}" lay-filter="iconPicker" lay-vertype="tips" {3}>'
                         .format(json.id, json.defaultValue ? json.defaultValue : '', json.placeholder, _disabled, _disabledClass,json.tag + json.id,_required);
@@ -1405,7 +1405,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     var _required = json.required ? 'lay-verify="required"' : '';
                     var _disabledClass = json.disabled ? ' layui-disabled' : '';
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
-                    _html += '<label class="layui-form-label {0}" style="width: {3}px"><span style="color:red;">{2}</span>{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.required ? '*' : '',json.labelWidth);
+                    _html += '<label class="layui-form-label {0}" style="width: {2}px">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.labelWidth);
                     _html += '<div class="layui-input-block" style="margin-left: {0}px">'.format(json.labelWidth);
                     _html += '<input type="password" name="{0}" placeholder="{3}" value="{1}" autocomplete="off" style="width:{2}" {4}  {5} {6} class="layui-input{7}">'
                         .format(json.id, json.defaultValue ? json.defaultValue : '', json.width, json.placeholder, _readonly, _disabled, _required, _disabledClass);
@@ -1470,7 +1470,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     var _disabled = json.disabled ? 'disabled=""' : '';
                     var _required = json.required ? 'required' : '';
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
-                    _html += '<label class="layui-form-label {0}" style="width: {3}px;"><span style="color:red;">{2}</span>{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.required ? '*' : '',json.labelWidth);
+                    _html += '<label class="layui-form-label {0}" style="width: {2}px;">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.labelWidth);
                     _html += '<div class="layui-input-block layui-form" lay-filter="{0}" style="margin-left: {1}px">'.format(json.id,json.labelWidth);
                     _html += '<select name="{0}" lay-verify="{2}" {1} >'.format(json.id, _disabled,_required);
                     /*if (json.defaultValue === undefined) {
@@ -1625,7 +1625,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     var _disabled = json.disabled ? 'disabled=""' : '';
                     var _required = json.required ? 'lay-verify="otherReq"' : '';
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
-                    _html += '<label class="layui-form-label {0}" style="width: {3}px"><span style="color:red;">{2}</span>{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.required ? '*' : '',json.labelWidth);
+                    _html += '<label class="layui-form-label {0}" style="width: {2}px">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.labelWidth);
                     _html += '<div class="layui-input-block" style="width:calc({0} - {1}px);margin-left: {1}px;">'.format(json.width,json.labelWidth);
                     for (var i = 0; i < json.options.length; i++) {
                         if (json.options[i].checked) {
@@ -1821,7 +1821,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     var _required = json.required ? 'required' : '';
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
                     _html += '<div class="layui-inline">';
-                    _html += '<label class="layui-form-label {0}" style="width: {3}px;"><span style="color:red;">{2}</span>{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.required ? '*' : '',json.labelWidth);
+                    _html += '<label class="layui-form-label {0}" style="width: {2}px;">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.labelWidth);
                     _html += '<div class="layui-inline" id="{0}" style="line-height: 40px;{1}">'.format(json.tag + json.id,_disabledStyle);
                     _html += '<div class="layui-input-inline">';
                     _html += '<input id="start-{0}" lay-verify="{3}" name="start{2}" class="layui-input {1}" autocomplete="off" placeholder="开始日期"></input>'.format(json.tag + json.id,_disabledClass,json.id,_required);
@@ -1840,7 +1840,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     var _disabledStyle = json.disabled ? ' pointer-events: none;' : '';
                     var _required = json.required ? 'required' : '';
                     var _html = '<div class="layui-inline">';
-                    _html += '<label class="layui-form-label {0}" style="width: {3}px;"><span style="color:red;">{2}</span>{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.required ? '*' : '',json.labelWidth);
+                    _html += '<label class="layui-form-label {0}" style="width: {2}px;">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.labelWidth);
                     _html += '<div class="layui-inline" id="{0}" style="line-height: 40px;{1}">'.format(json.tag + json.id,_disabledStyle);
                     _html += '<div class="layui-input-inline">';
                     _html += '<input id="start-{0}" lay-verify="{3}" name="start{2}" class="layui-input {1}" autocomplete="off" placeholder="开始日期" ></input>'.format(json.tag + json.id,_disabledClass,json.id,_required);
@@ -1906,7 +1906,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     var _disabledStyle = json.disabled ? ' pointer-events: none;' : '';
                     var _required = json.required ? 'required' : '';
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
-                    _html += '<label class="layui-form-label {0}" style="width: {3}px;"><span style="color:red;">{2}</span>{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.required ? '*' : '',json.labelWidth);
+                    _html += '<label class="layui-form-label {0}" style="width: {2}px;">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.labelWidth);
                     _html += '<div class="layui-input-block" style="width:calc({0} - {1}px);margin-left: {1}px;">'.format(json.width,json.labelWidth);
                     _html += '<input id="{0}" name="{0}" lay-verify="{3}" class="layui-input icon-date widget-date {1}" style="line-height: 40px;{2}"></input>'.format(json.tag + json.id,_disabledClass,_disabledStyle,_required);
                     _html += '</div>';
@@ -2106,7 +2106,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                         selected = false;
                     }
                     var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
-                    _html += '<label class="layui-form-label {0}" style="width: {3}px;"><span style="color:red;">{2}</span>{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.required ? '*' : '',json.labelWidth);
+                    _html += '<label class="layui-form-label {0}" style="width: {2}px;">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.labelWidth);
                     _html += '<div class="layui-input-block" style="margin-left: {0}px">'.format(json.labelWidth);
                     if (json.disabled) {
                         _html += '<div class="iceEditor-disabled"></div>';
@@ -2230,8 +2230,8 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     var _readonly = json.readonly ? 'readonly=""' : '';
                     var _disabledClass = json.disabled ? ' layui-disabled' : '';
                     var _html = '<div id="{0}" class="layui-form-item layui-form-text {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
-                    _html += '<label class="layui-form-label {0}" style="width: {3};"><span style="color:red;">{2}</span>{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label,json.required ? '*' : '',json.width);
-                    _html += '<div class="layui-input-block"  style="width: {0}">'.format(json.width);
+                    _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
+                    _html += '<div class="layui-input-block">';
                     _html += '<textarea name="{0}" placeholder="{3}" width="{2}" class="layui-textarea{6}" {4} {5} {7}>{1}</textarea>'
                         .format(json.id, json.defaultValue ? json.defaultValue : '', json.width, json.placeholder, _disabled, _required, _disabledClass, _readonly);
                     _html += '</div>';
@@ -3503,6 +3503,19 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     }
                     , end: function () {
                         $('.htmlcodeview').css("display","none")
+                    }
+                });
+            });
+            //模板数据
+            $('.templateList').on('click', function () {
+                $.ajax({
+                    url: document.location.origin + '/json/demo.json',
+                    dataType: "json",
+                    async: true,
+                    type: "GET",
+                    success: function (result) {
+                        options.data = result;
+                        that.renderForm();
                     }
                 });
             });
