@@ -192,7 +192,8 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                         if (key === 'tag') {
                             _html += '    <input type="text" readonly id="{0}" name="{0}" value="{1}" required lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input">'
                                 .format(key, json[key] == undefined ? '' : json[key]);
-                        } else {
+                        }
+                        else {
                             _html += '    <input type="text" id="{0}" name="{0}" value="{1}" required lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input">'
                                 .format(key, json[key] == undefined ? '' : json[key]);
                         }
@@ -2215,6 +2216,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
 
                     }
                     $('#columnProperty').append(_html);
+                    $('#uploadData').val(json[key] == undefined ? '' : json[key]);
                 }
             },
             textarea: {
@@ -2313,7 +2315,9 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     var e = iceEditorObjects[json.id];
                     e.width=json.width;   //宽度
                     e.height=json.height;  //高度
-                    e.uploadUrl=json.uploadUrl; //上传文件路径
+                    e.uploadUrl = json.uploadUrl; //上传文件路径
+                    e.urlPrefix = json.urlPrefix;
+                    e.uploadData = json.uploadData;
                     e.disabled=json.disabled;
                     e.menu = json.menu;
                     e.create();
@@ -2340,6 +2344,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
 
                     }
                     $('#columnProperty').append(_html);
+                    $('#uploadData').val(json[key] == undefined ? '' : json[key]);
                 }
             },
             grid: {
@@ -2454,6 +2459,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
 
                     }
                     $('#columnProperty').append(_html);
+                    $('#uploadData').val(json[key] == undefined ? '' : json[key]);
                 }
             },
         };
@@ -3017,7 +3023,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                         _json[_key] = _value;
                         that.components[_json.tag].update(_json);//局部更新
                     }
-                    if (_key === 'uploadUrl' ||_key ===  'cronUrl') {
+                    if (_key === 'uploadUrl' || _key === 'uploadData' || _key === 'urlPrefix' ||_key ===  'cronUrl') {
                         _json[_key] = _value;
                     }
                     if (_key === 'placeholder') {
@@ -3862,7 +3868,9 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     var e = new ice.editor(item.tag + item.id);
                     e.width=item.width;   //宽度
                     e.height=item.height;  //高度
-                    e.uploadUrl=item.uploadUrl; //上传文件路径
+                    e.uploadUrl = item.uploadUrl; //上传文件路径
+                    e.urlPrefix = json.urlPrefix;
+                    e.uploadData = json.uploadData;
                     e.disabled=item.disabled;
                     e.menu = item.menu;
                     e.create();

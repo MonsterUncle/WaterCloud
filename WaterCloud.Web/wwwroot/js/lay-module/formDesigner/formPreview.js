@@ -1,5 +1,3 @@
-const { isArray } = require("node:util");
-
 /**
  +------------------------------------------------------------------------------------+
  + ayq-layui-form-designer(layui表单设计器)
@@ -1046,12 +1044,13 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     if (selected === undefined) {
                         selected = false;
                     }
-                    var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
+                    var _html = '<div class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
                     _html += '<div class="layui-input-block">';
 
                     _html += '<div class="layui-upload">';
                     _html += '<button type="button" class="layui-btn" id="{0}">多图片上传</button>'.format(json.tag + json.id);
+                    _html += '<input class="layui-hide" hidden type="text" id="{0}" lay-verify="{2}" name="{0}" value="{1}">'.format(json.id, json.defaultValue ? json.defaultValue : '', json.required ? 'required' : '');
                     _html += '<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;width: 88%">预览图：';
                     _html += '<div class="layui-upload-list uploader-list" style="overflow: auto;" id="uploader-list-{0}">'.format(json.id);
                     _html += '</div>';
@@ -1201,7 +1200,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     if (selected === undefined) {
                         selected = false;
                     }
-                    var _html = '<div id="{0}" class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
+                    var _html = '<div class="layui-form-item {2}"  data-id="{0}" data-tag="{1}" data-index="{3}">'.format(json.id, json.tag, selected ? 'active' : '', json.index);
                     _html += '<label class="layui-form-label {0}">{1}:</label>'.format(json.required ? 'layui-form-required' : '', json.label);
                     _html += '<div class="layui-input-block">';
 
@@ -1387,6 +1386,10 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     || item.tag === 'sign' || item.tag === 'iconPicker'
                     || item.tag === 'cron' || item.tag === 'colorpicker') {
                     that.components[item.tag].update(item,json[key]);
+                }
+                //设值
+                if (item === 'image') {
+                    continue;
                 }
             }
             form.val("formPreviewForm",json);
@@ -1596,7 +1599,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     e.width=item.width;   //宽度
                     e.height=item.height;  //高度
                     e.uploadUrl = item.uploadUrl; //上传文件路径
-                    e.uploadData = JSON.parse(item.uploadData);//上传文件参数
+                    e.uploadData = !!item.uploadData ? JSON.parse(item.uploadData) : null;//上传文件参数
                     e.disabled=item.disabled;
                     e.menu = item.menu;
                     e.create();
@@ -1613,10 +1616,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     });
                 } else if (item.tag === 'image') {
                     let itemConfig = item;
+                    var imageList  =$('#' + item.id).val().split(',');
                     upload.render({
                         elem: '#' + item.tag + item.id
                         , url: '' + item.uploadUrl + ''
-                        , data:JSON.parse(item.uploadData)
+                        , data: !!item.uploadData ? JSON.parse(item.uploadData) : null
                         , multiple: true
                         , before: function (obj) {
                             layer.msg('图片上传中...', {
@@ -1638,6 +1642,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                                         '</div>'
                                     );
                                 }
+                                imageList.push(res.data[i].src);
                             }
                             else {
                                 $('#uploader-list-' + item.id).append(
@@ -1647,7 +1652,9 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                                     '<div class="info">' + res.data.title + '</div>' +
                                     '</div>'
                                 );
+                                imageList.push(res.data[i].src);
                             }
+                            $('#' + itemConfig.id).val(imageList.join(','));
                         }
                     });
                 } else if (item.tag === 'file') {
@@ -1656,7 +1663,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         elem: '#' + item.tag + item.id
                         , elemList: $('#list-' + item.tag + item.id) //列表元素对象
                         , url: '' + item.uploadUrl + ''
-                        , data: JSON.parse(item.uploadData)
+                        , data: !!item.uploadData ? JSON.parse(item.uploadData) : null
                         , accept: 'file'
                         , multiple: true
                         , number: 3
