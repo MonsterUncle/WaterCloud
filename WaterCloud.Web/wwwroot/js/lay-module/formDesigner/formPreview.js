@@ -1271,6 +1271,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
         Class.prototype.getFormData = function () {
             //获取表单区域所有值
             var json = form.val("formPreviewForm");
+            delete json.file;
             for(let key  in iceEditorObjects){
                 json[key] = iceEditorObjects[key].getHTML();
             }
@@ -1388,8 +1389,18 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     that.components[item.tag].update(item,json[key]);
                 }
                 //设值
-                if (item === 'image') {
-                    continue;
+                if (item.tag === 'image') {
+                    $('#uploader-list-' + item.id).empty();
+                    var imageList = json[key].split(',');
+                    for (var i = 0; i < imageList.length; i++) {
+                        $('#uploader-list-' + item.id).append(
+                            '<div id="" class="file-iteme">' +
+                            '<div class="handle"><i class="layui-icon layui-icon-delete"></i></div>' +
+                            '<img style="width: 100px;height: 100px;" src=' + item.urlPrefix + imageList[i] + '>' +
+                            '<div class="info">' + imageList[i] + '</div>' +
+                            '</div>'
+                        );
+                    }
                 }
             }
             form.val("formPreviewForm",json);
@@ -1616,7 +1627,6 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     });
                 } else if (item.tag === 'image') {
                     let itemConfig = item;
-                    var imageList  =$('#' + item.id).val().split(',');
                     upload.render({
                         elem: '#' + item.tag + item.id
                         , url: '' + item.uploadUrl + ''
@@ -1630,6 +1640,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                             })
                         }
                         , done: function (res) {
+                            var imageList = !!$('#' + itemConfig.id).val() ? $('#' + itemConfig.id).val().split(','):[];
                             layer.close(layer.msg());//关闭上传提示窗口
                             //上传完毕
                             if (Array.isArray(res.data)) {
@@ -1641,8 +1652,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                                         '<div class="info">' + res.data[i].title + '</div>' +
                                         '</div>'
                                     );
+                                    imageList.push(res.data[i].src);
                                 }
-                                imageList.push(res.data[i].src);
                             }
                             else {
                                 $('#uploader-list-' + item.id).append(
@@ -1652,7 +1663,7 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                                     '<div class="info">' + res.data.title + '</div>' +
                                     '</div>'
                                 );
-                                imageList.push(res.data[i].src);
+                                imageList.push(res.data.src);
                             }
                             $('#' + itemConfig.id).val(imageList.join(','));
                         }

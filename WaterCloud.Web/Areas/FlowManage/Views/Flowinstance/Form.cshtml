@@ -198,7 +198,6 @@
                         common.val('adminform', data);
                         flowDesignPanel.loadData(JSON.parse(data.F_SchemeContent));
                         changeScheme(data.F_SchemeId);
-                        postData.F_FrmType=data.F_FrmType;
                         formtext = data.F_FrmData;
                         if (data.F_FrmType == 0) {
                             var dataJson = JSON.parse(data.F_FrmContent);
@@ -258,13 +257,12 @@
                 common.modalMsg("无人审核，请检查流程", "warning");
                 return false;
             }
-            if(postData.F_FrmType == 0)
+            if(!!renderForm)
             {
-                var tempdata= renderForm.getFormData();
+                var tempdata = renderForm.getFormData();
                 postData.F_FrmData = JSON.stringify(tempdata);
             }
-            else
-            {
+            else{
                 postData.F_FrmData = JSON.stringify(data.field);
             }
             step.next('#stepForm');
