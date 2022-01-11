@@ -873,7 +873,10 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     $block.css("margin-left",json.labelWidth);
                     $label.css("width",json.labelWidth);
                     if (json.required) {
-                        $label.append('<span style="color:red;">*</span>');
+                        $label.addClass('layui-form-required');
+                    }
+                    else {
+                        $label.removeClass('layui-form-required');
                     }
                     $label.append(json.label + ":");
                     var _html = '';
@@ -1200,7 +1203,10 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     $label.css("width",json.labelWidth);
                     $block.css({width: 'calc({0} - {1}px)'.format(json.width,json.labelWidth)});
                     if (json.required) {
-                        $label.append('<span style="color:red;">*</span>');
+                        $label.addClass('layui-form-required');
+                    }
+                    else {
+                        $label.removeClass('layui-form-required');
                     }
                     $label.append(json.label + ":");
                     var _html = '';
@@ -1428,7 +1434,10 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     $block.css("margin-left",json.labelWidth);
                     $label.css("width",json.labelWidth);
                     if (json.required) {
-                        $label.append('<span style="color:red;">*</span>');
+                        $label.addClass('layui-form-required');
+                    }
+                    else {
+                        $label.removeClass('layui-form-required');
                     }
                     $label.append(json.label + ":");
                     var _html = '';
@@ -1516,7 +1525,10 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     $block.css("margin-left",json.labelWidth);
                     $label.css("width",json.labelWidth);
                     if (json.required) {
-                        $label.append('<span style="color:red;">*</span>');
+                        $label.addClass('layui-form-required');
+                    }
+                    else {
+                        $label.removeClass('layui-form-required');
                     }
                     $label.append(json.label + ":");
                     form.render('select',json.id);
@@ -1661,7 +1673,10 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     $block.css("margin-left",json.labelWidth);
                     $label.css("width",json.labelWidth);
                     if (json.required) {
-                        $label.append('<span style="color:red;">*</span>');
+                        $label.addClass('layui-form-required');
+                    }
+                    else {
+                        $label.removeClass('layui-form-required');
                     }
                     $label.append(json.label + ":");
                     form.render('checkbox');
@@ -1927,7 +1942,10 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     $block.css("margin-left",json.labelWidth);
                     $label.css("width",json.labelWidth);
                     if (json.required) {
-                        $label.append('<span style="color:red;">*</span>');
+                        $label.addClass('layui-form-required');
+                    }
+                    else {
+                        $label.removeClass('layui-form-required');
                     }
                     $label.append(json.label + ":");
                     $block.css({width: 'calc({0} - {1}px)'.format(json.width,json.labelWidth)});
@@ -2255,10 +2273,11 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     _html += '<textarea name="{0}" placeholder="{3}" width="{2}" class="layui-textarea{6}" {4} {5} {7}>{1}</textarea>'
                         .format(json.id, json.defaultValue ? json.defaultValue : '', json.width, json.placeholder, _disabled, _required, _disabledClass, _readonly);
                     $('#' + json.id + ' .layui-input-block').append(_html);
-                    $label.css({width: '{0}'.format(json.width)});
-                    $block.css({width: '{0}'.format(json.width)});
                     if (json.required) {
-                        $label.append('<span style="color:red;">*</span>');
+                        $label.addClass('layui-form-required');
+                    }
+                    else {
+                        $label.removeClass('layui-form-required');
                     }
                     $label.append(json.label + ":");
                 },
