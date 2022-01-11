@@ -110,6 +110,8 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                 carousel: "轮播",
                 text: "显示文本",
                 uploadUrl: "上传路径",
+                urlPrefix: "上传前缀",
+                uploadData: '上传参数',
                 expression: "验证",
                 file: "文件",
                 autoplay: "自动切换",
@@ -183,7 +185,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     if (key === 'index') {
                         continue;
                     }
-                    if (key === 'tag' || key === 'id' || key === 'uploadUrl' || key === 'document' || key === 'interval' || key === 'cronUrl') { //只读字段
+                    if (key === 'tag' || key === 'id' || key === 'uploadUrl' || key === 'urlPrefix' || key === 'uploadData' || key === 'document' || key === 'interval' || key === 'cronUrl') { //只读字段
                         _html += '<div class="layui-form-item" >';
                         _html += '  <label class="layui-form-label">{0}</label>'.format(lang[key]);
                         _html += '  <div class="layui-input-block">';

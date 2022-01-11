@@ -117,7 +117,7 @@
                     if (data.F_FrmType == 0) {
                         var dataJson = JSON.parse(data.F_FrmContent);
                         //表单设计器
-                        formPreview.render({
+                        renderForm = formPreview.render({
                             data: dataJson,
                             elem: '#frmPreview',
                             readonly: false,
@@ -169,6 +169,7 @@
             });
             form.render();
         }
+        var renderForm;
         form.on('select(schemeChangeFilter)', function (obj) {
             if (!!obj.value) {
                 change = true;
@@ -184,7 +185,6 @@
             }
             form.render();
         });
-        var renderForm;
         $(function () {
             $('#F_Code').val(new Date().getTime());
             initControl();

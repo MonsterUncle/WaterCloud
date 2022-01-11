@@ -1,3 +1,5 @@
+const { isArray } = require("node:util");
+
 /**
  +------------------------------------------------------------------------------------+
  + ayq-layui-form-designer(layui表单设计器)
@@ -111,6 +113,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 password: "密码框",
                 carousel: "轮播",
                 uploadUrl: "上传路径",
+                urlPrefix: "上传前缀",
+                uploadData: '上传参数',
                 expression: "验证",
                 file: "文件",
                 numberInput:"排序文本框",
@@ -1591,7 +1595,8 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     var e = new ice.editor(item.tag + item.id);
                     e.width=item.width;   //宽度
                     e.height=item.height;  //高度
-                    e.uploadUrl=item.uploadUrl; //上传文件路径
+                    e.uploadUrl = item.uploadUrl; //上传文件路径
+                    e.uploadData = JSON.parse(item.uploadData);//上传文件参数
                     e.disabled=item.disabled;
                     e.menu = item.menu;
                     e.create();
@@ -1607,11 +1612,111 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                         autoplay: item.autoplay
                     });
                 } else if (item.tag === 'image') {
-                    var data = {"select":item.tag + item.id,"uploadUrl": item.uploadUrl};
-                    images.push(data);
+                    let itemConfig = item;
+                    upload.render({
+                        elem: '#' + item.tag + item.id
+                        , url: '' + item.uploadUrl + ''
+                        , data:JSON.parse(item.uploadData)
+                        , multiple: true
+                        , before: function (obj) {
+                            layer.msg('图片上传中...', {
+                                icon: 16,
+                                shade: 0.01,
+                                time: 0
+                            })
+                        }
+                        , done: function (res) {
+                            layer.close(layer.msg());//关闭上传提示窗口
+                            //上传完毕
+                            if (Array.isArray(res.data)) {
+                                for (var i = 0; i < res.data.length; i++) {
+                                    $('#uploader-list-' + item.id).append(
+                                        '<div id="" class="file-iteme">' +
+                                        '<div class="handle"><i class="layui-icon layui-icon-delete"></i></div>' +
+                                        '<img style="width: 100px;height: 100px;" src=' + itemConfig.urlPrefix + res.data[i].src + '>' +
+                                        '<div class="info">' + res.data[i].title + '</div>' +
+                                        '</div>'
+                                    );
+                                }
+                            }
+                            else {
+                                $('#uploader-list-' + item.id).append(
+                                    '<div id="" class="file-iteme">' +
+                                    '<div class="handle"><i class="layui-icon layui-icon-delete"></i></div>' +
+                                    '<img style="width: 100px;height: 100px;" src=' + itemConfig.urlPrefix + res.data.src + '>' +
+                                    '<div class="info">' + res.data.title + '</div>' +
+                                    '</div>'
+                                );
+                            }
+                        }
+                    });
                 } else if (item.tag === 'file') {
-                    var data = {"select":item.tag + item.id,"uploadUrl": item.uploadUrl};
-                    files.push(data);
+                    let itemConfig = item;
+                    upload.render({
+                        elem: '#' + item.tag + item.id
+                        , elemList: $('#list-' + item.tag + item.id) //列表元素对象
+                        , url: '' + item.uploadUrl + ''
+                        , data: JSON.parse(item.uploadData)
+                        , accept: 'file'
+                        , multiple: true
+                        , number: 3
+                        , auto: false
+                        , bindAction: '#listAction-' + item.tag + item.id
+                        , choose: function (obj) {
+                            var that = this;
+                            var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                            //读取本地文件
+                            obj.preview(function (index, file, result) {
+                                var tr = $(['<tr id="upload-' + index + '">'
+                                    , '<td>' + file.name + '</td>'
+                                    , '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>'
+                                    , '<td><div class="layui-progress" lay-filter="progress-demo-' + index + '"><div class="layui-progress-bar" lay-percent=""></div></div></td>'
+                                    , '<td>'
+                                    , '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+                                    , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                                    , '</td>'
+                                    , '</tr>'].join(''));
+
+                                //单个重传
+                                tr.find('.demo-reload').on('click', function () {
+                                    obj.upload(index, file);
+                                });
+
+                                //删除
+                                tr.find('.demo-delete').on('click', function () {
+                                    delete files[index]; //删除对应的文件
+                                    tr.remove();
+                                    uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                                });
+
+                                that.elemList.append(tr);
+                                element.render('progress'); //渲染新加的进度条组件
+                            });
+                        }
+                        , done: function (res, index, upload) { //成功的回调
+                            var that = this;
+                            //if(res.code == 0){ //上传成功
+                            var tr = that.elemList.find('tr#upload-' + index)
+                                , tds = tr.children();
+                            tds.eq(3).html(''); //清空操作
+                            delete this.files[index]; //删除文件队列已经上传成功的文件
+                            return;
+                            //}
+                            this.error(index, upload);
+                        }
+                        , allDone: function (obj) { //多文件上传完毕后的状态回调
+                            console.log(obj)
+                        }
+                        , error: function (index, upload) { //错误回调
+                            var that = this;
+                            var tr = that.elemList.find('tr#upload-' + index)
+                                , tds = tr.children();
+                            tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+                        }
+                        , progress: function (n, elem, e, index) {
+                            element.progress('progress-demo-' + index, n + '%'); //执行进度条。n 即为返回的进度百分比
+                        }
+                    });
                 }
             });
         };

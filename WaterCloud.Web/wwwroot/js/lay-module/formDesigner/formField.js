@@ -387,6 +387,8 @@ layui.define(['layer'], function (exports) {
             required: true,
             document: '',
             uploadUrl: '',
+            urlPrefix: '',
+            uploadData:''
         },
         file: {
             id:'-1',
@@ -401,6 +403,8 @@ layui.define(['layer'], function (exports) {
             required: true,
             document: '',
             uploadUrl: '',
+            urlPrefix: '',
+            uploadData: ''
         },
         textarea: {
             id:'-1',
@@ -430,7 +434,9 @@ layui.define(['layer'], function (exports) {
             height: "200px",
             uploadUrl: '/upload/',
             disabled:false,
-            document: ''
+            document: '',
+            urlPrefix: '',
+            uploadData: ''
         },
         grid:{
             id:'-1',
