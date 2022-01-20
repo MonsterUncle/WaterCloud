@@ -129,6 +129,10 @@ namespace WaterCloud.Service.AutoJob
                                                 break;
                                         }
                                         var dic = dbJobEntity.F_RequestHeaders.ToObject<Dictionary<string, string>>();
+										if (dic == null)
+										{
+                                            dic = new Dictionary<string, string>();
+                                        }
                                         //请求头添加租户号
                                         dic.Add("dbNumber", dbJobEntity.F_DbNumber);
                                         unitwork.GetDbClient().ChangeDatabase("0");

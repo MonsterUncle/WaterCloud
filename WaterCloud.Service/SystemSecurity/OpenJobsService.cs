@@ -273,6 +273,12 @@ namespace WaterCloud.Service.SystemSecurity
                             break;
                     }
                     var dic = dbJobEntity.F_RequestHeaders.ToObject<Dictionary<string, string>>();
+                    if (dic == null)
+                    {
+                        dic = new Dictionary<string, string>();
+                    }
+                    //请求头添加租户号
+                    dic.Add("dbNumber", dbJobEntity.F_DbNumber);
                     try
                     {
                         var temp = await _httpClient.ExecuteAsync(dbJobEntity.F_RequestUrl, method, dbJobEntity.F_RequestString, dic);
