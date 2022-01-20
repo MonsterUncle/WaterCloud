@@ -235,7 +235,7 @@ namespace WaterCloud.Service.SystemOrganize
             //根据登录公司查找公司
             if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
             {
-                unitofwork.GetDbClient().ChangeDatabase("0");
+                unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
                 var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).FirstOrDefault();
                 if (setTemp!=null)
                 {

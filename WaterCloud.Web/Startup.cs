@@ -235,7 +235,6 @@ namespace WaterCloud.Web
             //注册特性
             builder.RegisterType(typeof(HandlerLoginAttribute)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(HandlerAuthorizeAttribute)).InstancePerLifetimeScope();
-            builder.RegisterType(typeof(HandlerAdminAttribute)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(HandlerLockAttribute)).InstancePerLifetimeScope();
             ////注册ue编辑器
             //Config.ConfigFile = "config.json";

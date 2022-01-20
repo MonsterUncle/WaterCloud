@@ -53,6 +53,7 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<SystemSetEntity> GetFormByHost(string host)
         {
+            unitOfWork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(host))
             {
@@ -68,7 +69,8 @@ namespace WaterCloud.Service.SystemOrganize
                 query = repository.IQueryable();
                 query = query.Where(a => a.F_DbNumber == "0");
             }
-            return await query.Where(a => a.F_DeleteMark == false).FirstAsync();
+            var data = await query.Where(a => a.F_DeleteMark == false).FirstAsync();
+            return data;
         }
 
         public async Task<List<SystemSetEntity>> GetLookList(Pagination pagination,string keyword = "")
@@ -99,7 +101,7 @@ namespace WaterCloud.Service.SystemOrganize
         #region 提交数据
         public async Task SubmitForm(SystemSetEntity entity, string keyValue, string[] permissionIds = null, string[] permissionfieldsIds = null)
         {
-            unitofwork.GetDbClient().ChangeDatabase("0");
+            unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
             List<RoleAuthorizeEntity> roleAuthorizeEntitys = new List<RoleAuthorizeEntity>();
             List<ModuleEntity> modules = new List<ModuleEntity>();
             List<ModuleButtonEntity> modulebtns = new List<ModuleButtonEntity>();
@@ -346,7 +348,7 @@ namespace WaterCloud.Service.SystemOrganize
                 await CacheHelper.Remove(cacheKeyOperator + "info_" + tempkey);
             }
             unitofwork.Commit();
-            unitofwork.GetDbClient().ChangeDatabase("0");
+            unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
             //清空缓存，重新拉数据
             DBInitialize.GetConnectionConfigs(true);
         }

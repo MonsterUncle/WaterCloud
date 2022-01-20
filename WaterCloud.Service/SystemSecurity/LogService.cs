@@ -146,7 +146,7 @@ namespace WaterCloud.Service.SystemSecurity
             logEntity.F_Id = Utils.GuId();
             logEntity.F_Date = DateTime.Now;
             var dbNumber = unitofwork.GetDbClient().CurrentConnectionConfig.ConfigId;
-            unitOfWork.GetDbClient().ChangeDatabase("0");
+            unitOfWork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
             var systemSet = await unitOfWork.GetDbClient().Queryable<SystemSetEntity>().Where(a => a.F_DbNumber == "0").FirstAsync();
             unitOfWork.GetDbClient().ChangeDatabase(dbNumber);
             try
