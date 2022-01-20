@@ -22,7 +22,7 @@ namespace WaterCloud.Domain.SystemManage
         /// 分类Id
         /// </summary>
         [Required(ErrorMessage = "分类不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_ItemId", ColumnDataType = "nvarchar(50)", ColumnDescription = "分类Id")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ItemId", ColumnDataType = "nvarchar(50)", ColumnDescription = "分类Id", UniqueGroupNameList = new string[] { "sys_itemsdetail" })]
         public string F_ItemId { get; set; }
         /// <summary>
         /// 父级Id

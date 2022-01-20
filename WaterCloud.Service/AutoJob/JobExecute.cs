@@ -86,7 +86,7 @@ namespace WaterCloud.Service.AutoJob
                                         MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
                                         object[] parameters = null;
                                         result = ((Task<AlwaysResult>)method.Invoke(obj, parameters)).GetAwaiter().GetResult();     // 调用方法，参数为空
-                                        unitwork.GetDbClient().ChangeDatabase("0");
+                                        unitwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
                                         if (result.state.ToString() == ResultType.success.ToString())
                                         {
                                             log.F_EnabledMark = true;
@@ -135,7 +135,7 @@ namespace WaterCloud.Service.AutoJob
                                         }
                                         //请求头添加租户号
                                         dic.Add("dbNumber", dbJobEntity.F_DbNumber);
-                                        unitwork.GetDbClient().ChangeDatabase("0");
+                                        unitwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
                                         try
                                         {
                                             var temp = await new HttpWebClient(_httpClient).ExecuteAsync(dbJobEntity.F_RequestUrl, method, dbJobEntity.F_RequestString, dic);

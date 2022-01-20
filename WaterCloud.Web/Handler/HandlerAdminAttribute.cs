@@ -13,9 +13,14 @@ namespace WaterCloud.Web
 {
     public class HandlerAdminAttribute : ActionFilterAttribute
     {
+        private readonly bool _isSuper;
+        public HandlerAdminAttribute(bool isSuper=true)
+		{
+            _isSuper = isSuper;
+        }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (OperatorProvider.Provider.GetCurrent() != null && OperatorProvider.Provider.GetCurrent().IsSuperAdmin)
+            if (OperatorProvider.Provider.GetCurrent() != null && _isSuper==true?OperatorProvider.Provider.GetCurrent().IsSuperAdmin: OperatorProvider.Provider.GetCurrent().IsAdmin)
             {
                 return;
             }
