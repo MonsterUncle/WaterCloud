@@ -45,6 +45,28 @@ namespace WaterCloud.DataBase
         {
             get { return _unitOfWork; }
         }
+        /// <summary>
+        /// 切换上下文，不存参切换到实体租户
+        /// </summary>
+        /// <param name="configId"></param>
+        /// <returns></returns>
+        public ISqlSugarClient ChangeEntityDb(object configId = null)
+		{
+			if (!configId.IsEmpty())
+			{
+                _dbBase.ChangeDatabase(configId);
+            }
+			else
+			{
+                var entityType = typeof(TEntity);
+                if (entityType.IsDefined(typeof(TenantAttribute), false))
+                {
+                    var tenantAttribute = entityType.GetCustomAttribute<TenantAttribute>(false)!;
+                    configId = tenantAttribute.configId;
+                }
+            }
+            return _dbBase;
+        }
         public RepositoryBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;

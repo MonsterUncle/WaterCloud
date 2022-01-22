@@ -19,7 +19,13 @@ namespace WaterCloud.DataBase
 		/// SqlsugarClient实体
 		/// </summary>
 		ISqlSugarClient Db { get; }
-		Task<TEntity> Insert(TEntity entity);
+        /// <summary>
+        /// 切换上下文，不传参切换到实体租户
+        /// </summary>
+        /// <param name="configId"></param>
+        /// <returns></returns>
+        ISqlSugarClient ChangeEntityDb(object configId = null);
+        Task<TEntity> Insert(TEntity entity);
 		Task<int> Insert(List<TEntity> entitys);
         Task<int> Update(TEntity entity);
         Task<int> Update(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> content);
