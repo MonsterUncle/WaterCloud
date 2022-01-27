@@ -25,6 +25,7 @@ layui.config({
     tableSelect: 'tableSelect/tableSelect', // table选择扩展
     tableEdit: 'tableSelect/tableEdit', // table编辑扩展
     iconPickerFa: 'iconPicker/iconPickerFa', // fa图标选择扩展
+    iconPicker: 'iconPicker/iconPicker', // fa图标选择扩展
     echarts: 'echarts/echarts', // echarts图表扩展
     wangEditor: 'wangEditor/wangEditor', // wangEditor富文本扩展
     layarea: 'layarea/layarea', //  省市县区三级联动下拉选择器
@@ -48,5 +49,7 @@ layui.config({
     cardTable: 'cardTable/cardTable',//卡片表格
     cron: 'cron/cron',//cron表达式
     tabletree: 'tabletree/tabletree',//基于layui的树形扩展
-    mobileTable: 'mobileTable/mobileTable',
+    numberInput: 'numberInput/numberInput',//数字输入框组件
+    labelGeneration: 'labelGeneration/labelGeneration',//动态标签组件
+    HandwrittenSignature: 'HandwrittenSignature/HandwrittenSignature',//签名组件
 });

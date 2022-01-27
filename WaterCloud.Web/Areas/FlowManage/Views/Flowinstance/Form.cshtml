@@ -2,62 +2,21 @@
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
-<link href="~/js/lay-module/flow/WaterFlow.css" rel="stylesheet" />
-@*<link href="/css/formpreview.css" rel="stylesheet" />*@
-<link href="~/css/stepcss.css" rel="stylesheet" />
+<link href="~/js/lay-module/flow/WaterFlow.css" rel="stylesheet"  media="all"/>
+<link href="~/css/stepcss.css" rel="stylesheet"  media="all"/>
+<link href="~/js/lay-module/formDesigner/formPreview.css" rel="stylesheet" media="all"/>
 <style type="text/css">
-    /* 图片上传 */
-    .uploader-list {
-        margin-left: -15px;
+    div.layui-table-cell {
+        color: rgb(102, 102, 102) !important;
     }
-
-        .uploader-list .info {
-            position: relative;
-            margin-top: -25px;
-            background-color: black;
-            color: white;
-            filter: alpha(Opacity=80);
-            -moz-opacity: 0.5;
-            opacity: 0.5;
-            width: 100px;
-            height: 25px;
-            text-align: center;
-            display: none;
-        }
-
-        .uploader-list .handle {
-            position: relative;
-            background-color: black;
-            color: white;
-            filter: alpha(Opacity=80);
-            -moz-opacity: 0.5;
-            opacity: 0.5;
-            width: 100px;
-            text-align: right;
-            height: 18px;
-            margin-bottom: -18px;
-            display: none;
-        }
-
-            .uploader-list .handle i {
-                margin-right: 5px;
-            }
-
-                .uploader-list .handle i:hover {
-                    cursor: pointer;
-                }
-
-        .uploader-list .file-iteme {
-            margin: 12px 0 0 15px;
-            padding: 1px;
-            float: left;
-        }
 </style>
 <script>
     //参数传递到表单页
     //表单数据
     var formtext;
     var NextNodeDesignateType;
+    var readonly=false;
+    var dataJson={};
     layui.use(['form', 'layer', 'element', 'jquery', 'table', 'waterflow', 'flowlayout', 'common', 'step', 'dtree', 'formPreview', 'layedit', 'optimizeSelectOption'], function () {
         var form = layui.form,
             element = layui.element,
@@ -156,11 +115,10 @@
                 async: false,
                 success: function (data) {
                     if (data.F_FrmType == 0) {
-                        var arr = JSON.parse(data.F_FrmContent);
-                        setFormValue(arr);
+                        var dataJson = JSON.parse(data.F_FrmContent);
                         //表单设计器
-                        formPreview.render({
-                            data: arr,
+                        renderForm = formPreview.render({
+                            data: dataJson,
                             elem: '#frmPreview',
                             readonly: false,
                         });
@@ -211,6 +169,7 @@
             });
             form.render();
         }
+        var renderForm;
         form.on('select(schemeChangeFilter)', function (obj) {
             if (!!obj.value) {
                 change = true;
@@ -239,53 +198,26 @@
                         common.val('adminform', data);
                         flowDesignPanel.loadData(JSON.parse(data.F_SchemeContent));
                         changeScheme(data.F_SchemeId);
+                        formtext = data.F_FrmData;
                         if (data.F_FrmType == 0) {
-                            var temp = JSON.parse(data.F_FrmData);
-                            var arr = JSON.parse(data.F_FrmContent);
-                            arr = setFormValue(arr, temp);
+                            var dataJson = JSON.parse(data.F_FrmContent);
                             //表单设计器
-                            formPreview.render({
-                                data: arr,
+                            renderForm= formPreview.render({
+                                data: dataJson,
                                 elem: '#frmPreview',
-                                readonly: false,
+                                readonly:false
                             });
+                            renderForm.setFormData(JSON.parse(formtext));
                         }
                         else {
-                            formtext = data.F_FrmData;
                             $("#frmPreview").load(document.location.origin + '/form/' + data.F_DbName + '.html');
+                            form.render();
                         }
                     }
                 });
             }
             form.render();
         });
-        var editor;
-        function setFormValue(arr, temp) {
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i].tag == "grid") {
-                    for (var j = 0; j < arr[i].columns.length; j++) {
-                        arr[i].columns[j].list = setFormValue(arr[i].columns[j].list, temp);
-                    }
-                }
-                else if (arr[i].tag == "checkbox") {
-                    if (!!temp) {
-                        for (var j = 0; j < arr[i].options.length; j++) {
-                            arr[i].options[j].checked = temp[arr[i].options[j].value] == "on";
-                        }
-                    }
-                }
-                else if (!!temp) {
-                    if (!!temp[arr[i].id]) {
-                        arr[i].defaultValue = temp[arr[i].id];
-                    }
-                }
-                if (arr[i].tag == "editor") {
-                    editor = arr[i];
-                }
-            }
-            return arr;
-
-        };
         function initControl() {
             $("#F_SchemeId").bindSelect({
                 url: "/SystemManage/Flowscheme/GetListJson",
@@ -312,10 +244,6 @@
         //监听提交
         form.on('submit(formStep)', function (data) {
             postData = $.extend(postData, data.field);
-            if (!!layedit.index) {
-                layedit.sync(layedit.index);
-                data.field[editor.id] = $('#' + editor.id).val();
-            }
             var content = flowDesignPanel.exportData();
             if (content == -1) {
                 return false; //阻止表单跳转。
@@ -329,7 +257,14 @@
                 common.modalMsg("无人审核，请检查流程", "warning");
                 return false;
             }
-            postData.F_FrmData = JSON.stringify(data.field);
+            if(!!renderForm)
+            {
+                var tempdata = renderForm.getFormData();
+                postData.F_FrmData = JSON.stringify(tempdata);
+            }
+            else{
+                postData.F_FrmData = JSON.stringify(data.field);
+            }
             step.next('#stepForm');
             return false;
         });
@@ -398,7 +333,7 @@
                                         <input type="text" name="NextNodeDesignates" id="NextNodeDesignates" class="layui-input layui-hide">
                                     </div>
                                 </div>
-                                <div class="layui-form-item" style="padding-top:15px;">
+                                <div class="layui-form-item">
                                     <fieldset class="layui-elem-field">
                                         <legend>申请内容</legend>
                                         <div id="frmPreview"></div>

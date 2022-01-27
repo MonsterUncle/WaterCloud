@@ -3,60 +3,11 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <link href="~/js/lay-module/flow/WaterFlow.css" rel="stylesheet" />
-@*<link href="~/lib/ueditor/formdesign/bootstrap/css/bootstrap.css" rel="stylesheet" />*@
-<style>
-
-    /* 图片上传 */
-    .uploader-list {
-        margin-left: -15px;
-    }
-
-        .uploader-list .info {
-            position: relative;
-            margin-top: -25px;
-            background-color: black;
-            color: white;
-            filter: alpha(Opacity=80);
-            -moz-opacity: 0.5;
-            opacity: 0.5;
-            width: 100px;
-            height: 25px;
-            text-align: center;
-            display: none;
-        }
-
-        .uploader-list .handle {
-            position: relative;
-            background-color: black;
-            color: white;
-            filter: alpha(Opacity=80);
-            -moz-opacity: 0.5;
-            opacity: 0.5;
-            width: 100px;
-            text-align: right;
-            height: 18px;
-            margin-bottom: -18px;
-            display: none;
-        }
-
-            .uploader-list .handle i {
-                margin-right: 5px;
-            }
-
-                .uploader-list .handle i:hover {
-                    cursor: pointer;
-                }
-
-        .uploader-list .file-iteme {
-            margin: 12px 0 0 15px;
-            padding: 1px;
-            float: left;
-        }
-</style>
+<link href="~/js/lay-module/formDesigner/formPreview.css" rel="stylesheet" />
 <script>
     //只读参数
     var readonly = true;
-    layui.use(['form', 'layer', 'jquery', 'waterflow', 'flowlayout', 'common', 'element', 'formPreview', 'optimizeSelectOption'], function () {
+    layui.use(['form', 'layer', 'jquery', 'waterflow', 'flowlayout', 'common','formPreview', 'element', 'optimizeSelectOption'], function () {
         var form = layui.form, element = layui.element,
             layer = layui.layer,
             common = layui.common,
@@ -171,7 +122,8 @@
                             //表单设计器
                             formPreview.render({
                                 data: JSON.parse(data.F_Content),
-                                elem: '#frmPreview'
+                                elem: '#frmPreview',
+                                readonly:true
                             });
                         }
                         else {
@@ -204,9 +156,14 @@
             <div class="layui-tab-content">
                 <input type="text" name="valueList" id="valueList" class="layui-hide" hidden>
                 <div class="layui-tab-item layui-fluid layui-show">
-                    <div id="frmPreview"></div>
+                    <form class="layui-form layuimini-form">
+                        <div class="layui-form-item">
+                            <fieldset class="layui-elem-field" style="padding-top:15px;">
+                                <div id="frmPreview"></div>
+                            </fieldset>
+                        </div>
+                    </form>
                 </div>
-
                 <div class="layui-tab-item">
                     <div id="flowPanel" style=""></div>
                 </div>

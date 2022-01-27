@@ -1,4 +1,4 @@
-﻿<div class="layui-form layuimini-form " lay-filter="FormTest">
+﻿﻿<div class="layui-form layuimini-form " lay-filter="FormTest">
     <div class="layui-form-item">
         <label class="layui-form-label required">请假类型</label>
         <div class="layui-input-block">
@@ -9,7 +9,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">请假人</label>
         <div class="layui-input-block">
-            <input type="text" id="F_UserName" name="F_UserName" maxlength="50"  lay-verify="required" class="layui-input">
+            <input type="text" id="F_UserName" name="F_UserName" maxlength="50" lay-verify="required" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -64,7 +64,7 @@
             , format: 'yyyy-MM-dd HH:mm',
         });
         $(function () {
-            if (typeof formtext != "undefined"&&!!formtext) {
+            if (typeof formtext != "undefined" && !!formtext) {
                 form.val('FormTest', JSON.parse(formtext));
             }
             if (typeof readonly != "undefined" && readonly) {

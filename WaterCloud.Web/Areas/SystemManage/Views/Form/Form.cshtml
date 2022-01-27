@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <link href="~/css/stepcss.css" rel="stylesheet" />
-<link href="~/js/lay-module/formDesigner/formDesigner.css" rel="stylesheet" />
+<link href="~/js/lay-module/formDesigner/formPreview.css" rel="stylesheet" />
 <div class="layuimini-container">
     <div class="layuimini-main">
         <div class="layui-carousel" id="adminform" lay-filter="adminform">
@@ -72,9 +72,9 @@
                 </div>
                 <div>
                     <form class="layui-form layuimini-form">
-                        <div id="commonform">
-                            <div id="formdesigner">
-                            </div>
+                        <div id="commonform" >
+                            <iframe src="~/page/designer.html" id="formdesigner" onload="setIframeHeight(this)"style="width:100%;min-height:400px">
+                            </iframe>
                         </div>
                         <fieldset class="layui-elem-field">
                             <div id="frmPreview"></div>
@@ -93,21 +93,16 @@
         </div>
     </div>
 </div>
-<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
-<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-<script type="text/javascript" charset="utf-8" src="~/js/lay-module/formDesigner/Sortable/Sortable.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="~/js/lay-module/htmlformat.js"></script>
-<script type="text/javascript" charset="utf-8" src="~/js/lay-module/jsformat.js"></script>
 <script>
     //只读参数
+    var designJson = {};
     var readonly = true;
-    layui.use(['jquery', 'form', 'common', 'element', 'step', 'formDesigner'], function () {
+    layui.use(['jquery', 'form', 'common', 'element', 'step'], function () {
         var form = layui.form,
             $ = layui.$,
             common = layui.common,
             step = layui.step,
             element = layui.element;
-        var formDesigner = layui.formDesigner;
         var keyValue = $.request("keyValue");
         var ItemId = $.request("ItemId");
         step.render({
@@ -148,12 +143,8 @@
                             $('#commonform').removeClass('layui-hide');
                             $('#frmPreview').addClass('layui-hide');
                             $('#frmPreview').parent().addClass('layui-hide');
-                            //表单设计器
-                            formDesigner.render({
-                                data: JSON.parse(data.F_Content),
-                                elem: '#formdesigner',
-                                headerHide:false
-                            });
+                            designJson=JSON.parse(data.F_Content);
+                            $("#formdesigner").attr('src',document.location.origin + '/page/designer.html');
                         }
                     }
                 });
@@ -162,13 +153,13 @@
                 common.ajax({
                     url: document.location.origin + '/json/demo.json',
                     success: function (result) {
-                        formDesigner.render({
-                            data: result,
-                            elem: '#formdesigner',
-                            headerHide: false
-                        });
+                       designJson = result;
                     }
                 });
+                $('#commonform').removeClass('layui-hide');
+                $('#frmPreview').addClass('layui-hide');
+                $('#frmPreview').parent().addClass('layui-hide');
+                $("#formdesigner").attr('src',document.location.origin + '/page/designer.html');
             }
             form.render();
         });
@@ -203,6 +194,8 @@
         form.on('select(WebId)',
             function (data) {
                 if (!!data.value) {
+                    $('#frmPreview').removeClass('layui-hide');
+                    $('#commonform').addClass('layui-hide');
                     $("#frmPreview").load(document.location.origin + '/form/' + data.value + '.html');
                     form.render();
                 }
@@ -232,8 +225,9 @@
             var formeditor = '';
             if (postData.F_FrmType != 1) {
                 //获取表单设计器里的内容
-                $('#generateSetValue').click();
-                formeditor = document.getElementById('generate-code-view').value;
+                document.querySelector("iframe").contentWindow.document
+                               .getElementsByClassName('saveJson')[0].click();
+                formeditor =window.localStorage.getItem('layui_form_json');
                 if (!formeditor) {
                     common.modalMsg("请编辑设计器", "warning");
                     return false;
