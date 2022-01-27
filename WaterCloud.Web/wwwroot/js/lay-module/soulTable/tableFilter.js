@@ -2673,28 +2673,24 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                 heightConfig = {},
                 $table = $(myTable.elem),
                 $tableBody = $table.next().children('.layui-table-box').children('.layui-table-body').children('table'),
-                mainExcel = typeof myTable.excel === 'undefined' || ((myTable.excel && (typeof myTable.excel.on === 'undefined' || myTable.excel.on)) ? myTable.excel : false);
+                $tableTotal = myTable.totalRow ? $table.next().children('.layui-table-total').children(":first") : null,
+                finalExcel = Object.assign({}, myTable.excel, curExcel);
 
-            mainExcel = mainExcel === true ? {} : mainExcel || {};
-            curExcel = curExcel || {};
-
-            var filename = curExcel.filename ? (typeof curExcel.filename === 'function' ? curExcel.filename.call(this) : curExcel.filename)
-                : mainExcel.filename ? (typeof mainExcel.filename === 'function' ? mainExcel.filename.call(this) : mainExcel.filename)
-                    : '表格数据.xlsx',
-                checked = curExcel.checked === true ? true : mainExcel.checked === true,
-                curPage = curExcel.curPage === true ? true : mainExcel.curPage === true,
-                customColumns = typeof curExcel.columns === 'undefined' ? mainExcel.columns : curExcel.columns,
-                totalRow = typeof curExcel.totalRow === 'undefined' ? mainExcel.totalRow : curExcel.totalRow,
+            var filename = finalExcel.filename ? (typeof finalExcel.filename === 'function' ? finalExcel.filename.call(this) : finalExcel.filename) : '表格数据.xlsx',
+                checked = finalExcel.checked === true,
+                curPage = finalExcel.curPage === true,
+                customColumns = finalExcel.columns,
+                totalRow = finalExcel.totalRow,
                 type = filename.substring(filename.lastIndexOf('.') + 1, filename.length),
-                tableStartIndex = mainExcel.add && mainExcel.add.top && Array.isArray(mainExcel.add.top.data) ? mainExcel.add.top.data.length + 1 : 1,  //表格内容从哪一行开始
-                bottomLength = mainExcel.add && mainExcel.add.bottom && Array.isArray(mainExcel.add.bottom.data) ? mainExcel.add.bottom.data.length : 0,// 底部自定义行数
+                tableStartIndex = finalExcel.add && finalExcel.add.top && Array.isArray(finalExcel.add.top.data) ? finalExcel.add.top.data.length + 1 : 1,  //表格内容从哪一行开始
+                bottomLength = finalExcel.add && finalExcel.add.bottom && Array.isArray(finalExcel.add.bottom.data) ? finalExcel.add.bottom.data.length : 0,// 底部自定义行数
                 i, j, k;
 
-            if (curExcel.data) {
-                if (Array.isArray(curExcel.data)) {
-                    data = curExcel.data
+            if (finalExcel.data) {
+                if (Array.isArray(finalExcel.data)) {
+                    data = finalExcel.data
                 } else {
-                    console.error('导出指定数据 data 不符合数组格式', curExcel.data)
+                    console.error('导出指定数据 data 不符合数组格式', finalExcel.data)
                     layer.close(loading)
                     return;
                 }
@@ -2814,21 +2810,32 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
             // 处理合计行
             if (totalRow !== false && myTable.totalRow) {
                 var obj = {}, totalRows = {};
-                for (i = 0; i < columns.length; i++) {
-                    if (columns[i].totalRowText) {
-                        obj[columns[i].key] = columns[i].totalRowText
-                    } else if (columns[i].totalRow) {
-                        totalRows[columns[i].key] = 0
-                    }
-                }
-                if (JSON.stringify(totalRows) !== '{}') {
-                    for (i = 0; i < data.length; i++) {
-                        for (var key in totalRows) {
-                            totalRows[key] = (parseFloat(totalRows[key]) + (parseFloat(data[i][key]) || 0)).toFixed(2)
+                if (typeof totalRow === 'object' && totalRow.type === 'origin') {
+                    // 通过 dom 解析
+                    for (i = 0; i < columns.length; i++) {
+                        if (columns[i].field) {
+                            obj[columns[i].key] = $tableTotal.find('[data-field="' + columns[i].field + '"]').text().trim()
                         }
                     }
+                    data.push(obj);
+                } else {
+                    // 通过数据解析
+                    for (i = 0; i < columns.length; i++) {
+                        if (columns[i].totalRowText) {
+                            obj[columns[i].key] = columns[i].totalRowText
+                        } else if (columns[i].totalRow) {
+                            totalRows[columns[i].key] = 0
+                        }
+                    }
+                    if (JSON.stringify(totalRows) !== '{}') {
+                        for (i = 0; i < data.length; i++) {
+                            for (var key in totalRows) {
+                                totalRows[key] = (parseFloat(totalRows[key]) + (parseFloat(data[i][key]) || 0)).toFixed(2)
+                            }
+                        }
+                    }
+                    data.push(Object.assign(obj, totalRows));
                 }
-                data.push(Object.assign(obj, totalRows));
             }
 
             if (customColumns && Array.isArray(customColumns)) {
@@ -2864,9 +2871,9 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
             }
 
             //添加自定义内容
-            if (mainExcel.add) {
-                var addTop = mainExcel.add.top,
-                    addBottom = mainExcel.add.bottom,
+            if (finalExcel.add) {
+                var addTop = finalExcel.add.top,
+                    addBottom = finalExcel.add.bottom,
                     startPos, endPos, jumpColsNum;
 
                 if (addTop && Array.isArray(addTop.data) && addTop.data.length > 0) {
@@ -2959,14 +2966,14 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                                     color: { indexed: 64 }
                                 }
                             }
-                        if (mainExcel.border) {
+                        if (finalExcel.border) {
                             for (j = 0; j < borderTypes.length; j++) {
-                                if (mainExcel.border[borderTypes[j]]) {
-                                    border[borderTypes[j]].style = mainExcel.border[borderTypes[j]].style || border[borderTypes[j]].style
-                                    border[borderTypes[j]].color = handleRgb(mainExcel.border[borderTypes[j]].color) || border[borderTypes[j]].color
-                                } else if (mainExcel.border['color'] || mainExcel.border['style']) {
-                                    border[borderTypes[j]].style = mainExcel.border['style'] || border[borderTypes[j]].style
-                                    border[borderTypes[j]].color = handleRgb(mainExcel.border['color']) || border[borderTypes[j]].color
+                                if (finalExcel.border[borderTypes[j]]) {
+                                    border[borderTypes[j]].style = finalExcel.border[borderTypes[j]].style || border[borderTypes[j]].style
+                                    border[borderTypes[j]].color = handleRgb(finalExcel.border[borderTypes[j]].color) || border[borderTypes[j]].color
+                                } else if (finalExcel.border['color'] || finalExcel.border['style']) {
+                                    border[borderTypes[j]].style = finalExcel.border['style'] || border[borderTypes[j]].style
+                                    border[borderTypes[j]].color = handleRgb(finalExcel.border['color']) || border[borderTypes[j]].color
                                 }
                             }
                         }
@@ -2987,43 +2994,35 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                                 t: cellType
                             }
                         } else if (bodyIndex < 0) {
+                            // 头部样式
                             bgColor = 'C7C7C7';
-                            if (mainExcel.head) {
-                                bgColor = mainExcel.head.bgColor || bgColor;
-                                color = mainExcel.head.color || color;
-                                family = mainExcel.head.family || family;
-                                size = mainExcel.head.size || size;
-                            }
-                            if (curExcel.head) {
-                                bgColor = curExcel.head.bgColor || bgColor;
-                                color = curExcel.head.color || color;
-                                family = curExcel.head.family || family;
-                                size = curExcel.head.size || size;
+                            if (finalExcel.head) {
+                                bgColor = finalExcel.head.bgColor || bgColor;
+                                color = finalExcel.head.color || color;
+                                family = finalExcel.head.family || family;
+                                size = finalExcel.head.size || size;
                             }
                         } else {
-                            if (mainExcel.font) {
-                                bgColor = mainExcel.font.bgColor || bgColor;
-                                color = mainExcel.font.color || color;
-                                family = mainExcel.font.family || family;
-                                size = mainExcel.font.size || size;
+                            // 默认全局字体样式
+                            if (finalExcel.font) {
+                                bgColor = finalExcel.font.bgColor || bgColor;
+                                color = finalExcel.font.color || color;
+                                family = finalExcel.font.family || family;
+                                size = finalExcel.font.size || size;
                             }
-                            if (curExcel.font) {
-                                bgColor = curExcel.font.bgColor || bgColor;
-                                color = curExcel.font.color || color;
-                                family = curExcel.font.family || family;
-                                size = curExcel.head.size || size;
-                            }
-                            if (curExcel.border) {
+                            // 默认全局边框样式
+                            if (finalExcel.border) {
                                 for (j = 0; j < borderTypes.length; j++) {
-                                    if (curExcel.border[borderTypes[j]]) {
-                                        border[borderTypes[j]].style = curExcel.border[borderTypes[j]].style || border[borderTypes[j]].style
-                                        border[borderTypes[j]].color = handleRgb(curExcel.border[borderTypes[j]].color) || border[borderTypes[j]].color
-                                    } else if (curExcel.border['color'] || curExcel.border['style']) {
-                                        border[borderTypes[j]].style = curExcel.border['style'] || border[borderTypes[j]].style
-                                        border[borderTypes[j]].color = handleRgb(curExcel.border['color']) || border[borderTypes[j]].color
+                                    if (finalExcel.border[borderTypes[j]]) {
+                                        border[borderTypes[j]].style = finalExcel.border[borderTypes[j]].style || border[borderTypes[j]].style
+                                        border[borderTypes[j]].color = handleRgb(finalExcel.border[borderTypes[j]].color) || border[borderTypes[j]].color
+                                    } else if (finalExcel.border['color'] || finalExcel.border['style']) {
+                                        border[borderTypes[j]].style = finalExcel.border['style'] || border[borderTypes[j]].style
+                                        border[borderTypes[j]].color = handleRgb(finalExcel.border['color']) || border[borderTypes[j]].color
                                     }
                                 }
                             }
+                            // 列上配置了自定义样式
                             if (columnsMap[columnsMap.length - 1][field].excel) {
                                 var colExcel = typeof columnsMap[columnsMap.length - 1][field].excel === 'function' ? columnsMap[columnsMap.length - 1][field].excel.call(this, line, bodyIndex, data.length - cols.length - tableStartIndex + 1 - bottomLength) : columnsMap[columnsMap.length - 1][field].excel
                                 if (colExcel) {
