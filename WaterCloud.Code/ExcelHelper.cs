@@ -265,7 +265,7 @@ namespace WaterCloud.Code
                             {
                                 case "System.DateTime":
                                 case "System.Nullable`1[System.DateTime]":
-                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).ParseToString().ToDate());
+                                    mapPropertyInfoDict[j].SetValue(entity, row.GetCell(j).DateCellValue);
                                     break;
 
                                 case "System.Boolean":
