@@ -38,7 +38,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 			, dataName: 'data' //规定数据列表的字段名称，默认：data
 		},
 		// 完 成 函 数
-		done: function () {
+		done: function (res, curr, count) {
 
 		}
 	};
@@ -89,7 +89,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 				option.count = 0;
             } else {
 				option.data = data.data;
-				option.count = option.data.length;
+				option.count = data.count;
 			}
 
 		}
@@ -129,6 +129,10 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 					}
 				}
 			});
+		}
+		var doneCallback = options.done;
+		if (doneCallback) {
+			doneCallback(res, curr, count);
 		}
 	}
 	card.prototype.reload = function (opt) {
