@@ -26,7 +26,6 @@
 							<div class="layui-inline">
 								<button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon">&#xe615;</i> 搜 索</button>
 								<button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-btn"><i class="layui-icon">&#xe615;</i> 获取数据</button>
-								<button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-checked-btn"><i class="layui-icon">&#xe615;</i> 获取选中数据</button>
 							</div>
 						</div>
 					</form>
@@ -36,16 +35,16 @@
 		</div>
 	</div>
 	<script>
-		layui.use(['table','layer', 'form', 'jquery', 'cardTable'], function () {
-			let table = layui.table;
+		layui.use(['layer', 'form', 'jquery', 'cardTable'], function () {
 			let form = layui.form;
 			let $ = layui.jquery;
             let layer = layui.layer;
 			let cardTable = layui.cardTable;
 
-			cardTable.render({
+			var currentTable = cardTable.render({
 				elem: '#currentTableId',
 				url: '../json/card.json',
+				filterName:'getCheckData'
 			})
 			// 监听搜索操作
 			form.on('submit(data-search-btn)', function (data) {
@@ -55,9 +54,9 @@
 				});
 				return false;
 			});
-            form.on('submit(data-checked-btn)', function () {
-                var data = cardTable.getChecked("currentTableId");
-                layer.msg(JSON.stringify(data));
+			//卡片点击事件
+            currentTable.on('card(getCheckData)', function (data) {
+                layer.msg(JSON.stringify(data.value));
                 return false;
             });
 			form.on('submit(data-btn)', function () {

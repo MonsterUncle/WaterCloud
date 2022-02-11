@@ -40,7 +40,8 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		// 完 成 函 数
 		done: function (res, curr, count) {
 
-		}
+		},
+		filterName:null
 	};
 	var card = function(opt) {
 		_instances[opt.elem.substring(1)] = this;
@@ -108,7 +109,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		}
 		// 根据结果进行相应结构的创建
 		if (!!option.data && option.data.length > 0) {
-			html = createComponent(option.elem.substring(1), option.linenum, option.data);
+			html = createComponent(option.linenum, option.data,option.filterName);
 			html += "<div id='cardpage'></div>";
 		}
 		else {
@@ -130,35 +131,66 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 				}
 			});
 		}
-		typeof options.done === 'function' && options.done(option, option.curr, option.count);
+		typeof option.done === 'function' && option.done(option, option.curr, option.count);
 	}
 	card.prototype.reload = function (opt) {
 		this.initOptions(this.option ? $.extend(true, this.option, opt) : opt);
 		this.init();  // 初始化表格
+		//注册点击事件
+		var cards = $(opt.elem).find('div[type=card]')
+		var events = function (reElem) {
+			reElem.on('click', function () {
+				var card = $(this);
+				var filter = card.attr('lay-filter'); //获取过滤器
+				card.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+				var item = {};
+				item.id = reElem[0].id;
+				if (item.id ) {	
+					item.id = item.id.replace('card_', '');
+                }
+				item.image = $(reElem).find('.project-list-item-cover')[0].src;
+				item.title = $(reElem).find('h2')[0].innerHTML;
+				item.remark = $(reElem).find('.project-list-item-text')[0].innerHTML;
+				item.time = $(reElem).find('.time')[0].innerHTML;
+				_instances[opt.elem.substring(1)].option.checkedItem = item;
+				layui.event.call(card[0], MOD_NAME, 'card(' + filter + ')', {
+					elem: card[0]
+					, value: item
+					, othis: reElem
+				});
+			});
+		};
+		cards.each(function (index, card) {
+			var othis = $(this)
+			events.call(this, othis);
+		});
     }
-
-	function createComponent(elem,linenum,data) {
+	//表单事件
+	card.prototype.on = function (events, callback) {
+		return layui.onevent.call(this, MOD_NAME, events, callback);
+	};
+	function createComponent(linenum, data, filterName) {
 		var html = "<div class='cloud-card-component'>"
-		var content = createCards(elem, linenum,data);
+		var content = createCards(linenum, data, filterName);
         var page = "";
         content = content + page;
         html += content + "</div>"
         return html;
 	}
 	/** 创建指定数量的卡片 */
-	function createCards(elem, linenum,data) {	
+	function createCards(linenum, data, filterName) {
 		var content = "<div class='layui-row layui-col-space30'>";
 		for (var i = 0; i < data.length; i++) {
-			content += createCard(elem, linenum,data[i],i);
+			content += createCard(linenum, data[i], i, filterName);
         }
 		content += "</div>";
 		return content;
 	}
 	/** 创建一个卡片 */
-	function createCard(elem, linenum, item, no) {
+	function createCard(linenum, item, index, filterName) {
 		var line = 12 / linenum;
 		var card =
-			'<div id=' + item.id + ' onclick="cardTableCheckedCard(' + elem + ',this)" class="layui-col-md' + line + ' ew-datagrid-item" data-index="' + no+'" data-number="1"> <div class="project-list-item"> <img class="project-list-item-cover" src="' +item.image + '"> <div class="project-list-item-body"> <h2>' + item.title + '</h2> <div class="project-list-item-text layui-text">' + item.remark + '</div> <div class="project-list-item-desc"> <span class="time">' +item.time + '</span> <div class="ew-head-list"></div> </div> </div > </div > </div > '
+			'<div type=card id=card_' + item.id + (!!filterName ?' lay-filter="'+filterName+'"':'')+ ' class="layui-col-md' + line + ' ew-datagrid-item" data-index="' + index+'" data-number="1"> <div class="project-list-item"> <img class="project-list-item-cover" src="' +item.image + '"> <div class="project-list-item-body"> <h2>' + item.title + '</h2> <div class="project-list-item-text layui-text">' + item.remark + '</div> <div class="project-list-item-desc"> <span class="time">' +item.time + '</span> <div class="ew-head-list"></div> </div> </div > </div > </div > '
 		return card;
 	}
 	/** 格式化返回参数 */
@@ -191,17 +223,17 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		});
 		return redata;
 	}
-	//卡片点击事件
-	window.cardTableCheckedCard = function (elem,obj) {
-		$(obj).addClass('layui-table-click').siblings().removeClass('layui-table-click');
-		var item = {};
-		item.id = obj.id;
-		item.image = $(obj).find('.project-list-item-cover')[0].src;
-		item.title = $(obj).find('h2')[0].innerHTML;
-		item.remark = $(obj).find('.project-list-item-text')[0].innerHTML;
-		item.time = $(obj).find('.time')[0].innerHTML;
-		_instances[elem.id].option.checkedItem = item;
-	}
+	////卡片点击事件
+	//window.cardTableCheckedCard = function (elem,obj) {
+	//	$(obj).addClass('layui-table-click').siblings().removeClass('layui-table-click');
+	//	var item = {};
+	//	item.id = obj.id;
+	//	item.image = $(obj).find('.project-list-item-cover')[0].src;
+	//	item.title = $(obj).find('h2')[0].innerHTML;
+	//	item.remark = $(obj).find('.project-list-item-text')[0].innerHTML;
+	//	item.time = $(obj).find('.time')[0].innerHTML;
+	//	_instances[elem.id].option.checkedItem = item;
+	//}
 	/** 对外提供的方法 */
 	var tt = {
 		/* 渲染 */
@@ -243,6 +275,9 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
             }
 			return data;
 		},
+		on: function(events, callback) {
+			return this.on(this, MOD_NAME, events, callback);
+		}
 	}
 	exports(MOD_NAME, tt);
 })
