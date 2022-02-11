@@ -130,10 +130,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 				}
 			});
 		}
-		var doneCallback = options.done;
-		if (doneCallback) {
-			doneCallback(res, curr, count);
-		}
+		typeof options.done === 'function' && options.done(option, option.curr, option.count);
 	}
 	card.prototype.reload = function (opt) {
 		this.initOptions(this.option ? $.extend(true, this.option, opt) : opt);
