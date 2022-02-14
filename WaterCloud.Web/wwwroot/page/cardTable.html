@@ -17,11 +17,11 @@
 						<div class="layui-form-item">
 							<label class="layui-form-label">卡片标题</label>
 							<div class="layui-input-inline">
-								<input type="text" name="realName"id="realName" placeholder="" class="layui-input">
+								<input type="text" name="realName" id="realName" placeholder="" class="layui-input">
 							</div>
 							<label class="layui-form-label">卡片名称</label>
 							<div class="layui-input-inline">
-								<input type="text" name="username"id="username" placeholder="" class="layui-input">
+								<input type="text" name="username" id="username" placeholder="" class="layui-input">
 							</div>
 							<div class="layui-inline">
 								<button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon">&#xe615;</i> 搜 索</button>
@@ -31,7 +31,10 @@
 					</form>
 				</div>
 			</fieldset>
-			<div id="currentTableId"></div>
+			<div id="currentTableId" lay-filter="currentTableFilter"></div>
+			<script type="text/html" id="currentTableBar">
+				<a class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"><i class="layui-icon">&#xe60b;</i></a>
+			</script>
 		</div>
 	</div>
 	<script>
@@ -44,7 +47,7 @@
 			var currentTable = cardTable.render({
 				elem: '#currentTableId',
 				url: '../json/card.json',
-				filterName:'getCheckData'
+                toolbar:'currentTableBar',
 			})
 			// 监听搜索操作
 			form.on('submit(data-search-btn)', function (data) {
@@ -54,9 +57,21 @@
 				});
 				return false;
 			});
-			//卡片点击事件
-            currentTable.on('card(getCheckData)', function (data) {
-                layer.msg(JSON.stringify(data.value));
+			//卡片单击事件
+            currentTable.on('row(currentTableFilter)', function (obj) {
+                layer.msg("单击事件");
+                return false;
+			});
+            //卡片双击事件
+            currentTable.on('rowDouble(currentTableFilter)', function (obj) {
+                layer.msg("双击事件");
+                return false;
+            });
+            //toolrow监听事件
+            currentTable.on('tool(currentTableFilter)', function (obj) {
+                if (obj.event === 'details') {
+                    layer.msg("按钮事件");
+                }
                 return false;
             });
 			form.on('submit(data-btn)', function () {

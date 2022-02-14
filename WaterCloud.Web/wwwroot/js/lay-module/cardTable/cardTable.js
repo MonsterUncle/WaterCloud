@@ -1,4 +1,4 @@
-layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
+layui.define(['table', 'laypage','jquery', 'element','laytpl'], function(exports) {
 	"use strict";
 	var filePath = layui.cache.modules.cardTable
 		.substr(0, layui.cache.modules.cardTable.lastIndexOf('/'));
@@ -7,6 +7,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 	var MOD_NAME = 'cardTable',
 		$ = layui.jquery,
 		element = layui.element,
+		laytpl = layui.laytpl,
 		laypage = layui.laypage;
 	var _instances = {};  // 记录所有实例
 	/* 默认参数 */
@@ -41,7 +42,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		done: function (res, curr, count) {
 
 		},
-		filterName:null
+		toobar:null
 	};
 	var card = function(opt) {
 		_instances[opt.elem.substring(1)] = this;
@@ -109,7 +110,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		}
 		// 根据结果进行相应结构的创建
 		if (!!option.data && option.data.length > 0) {
-			html = createComponent(option.linenum, option.data,option.filterName);
+			html = createComponent(option.linenum, option.data, option.toolbar);
 			html += "<div id='cardpage'></div>";
 		}
 		else {
@@ -136,61 +137,90 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 	card.prototype.reload = function (opt) {
 		this.initOptions(this.option ? $.extend(true, this.option, opt) : opt);
 		this.init();  // 初始化表格
-		//注册点击事件
-		var cards = $(opt.elem).find('div[type=card]')
-		var events = function (reElem) {
-			reElem.on('click', function () {
-				var card = $(this);
-				var filter = card.attr('lay-filter'); //获取过滤器
-				card.addClass('layui-table-click').siblings().removeClass('layui-table-click');
-				var item = {};
-				item.id = reElem[0].id;
-				if (item.id ) {	
-					item.id = item.id.replace('card_', '');
-                }
-				item.image = $(reElem).find('.project-list-item-cover')[0].src;
-				item.title = $(reElem).find('h2')[0].innerHTML;
-				item.remark = $(reElem).find('.project-list-item-text')[0].innerHTML;
-				item.time = $(reElem).find('.time')[0].innerHTML;
-				_instances[opt.elem.substring(1)].option.checkedItem = item;
-				layui.event.call(card[0], MOD_NAME, 'card(' + filter + ')', {
-					elem: card[0]
-					, value: item
-					, othis: reElem
-				});
-			});
-		};
-		cards.each(function (index, card) {
-			var othis = $(this)
-			events.call(this, othis);
-		});
+		this.events(); //事件
     }
 	//表单事件
 	card.prototype.on = function (events, callback) {
 		return layui.onevent.call(this, MOD_NAME, events, callback);
 	};
-	function createComponent(linenum, data, filterName) {
+	card.prototype.events = function ()
+	{
+		var that = this;
+		var option = that.option;
+		var filter = $(option.elem).attr('lay-filter');
+		var elem = option.elem.substring(1);
+
+		//行事件
+		$(option.elem).on('click', 'div[type=card]', function () { //单击行
+			getCheckedData(this, elem);
+			var reElem = this;
+			layui.event.call(this, MOD_NAME, 'row(' + filter + ')', {
+				elem: this
+				, value: _instances[elem].option.checkedItem
+				, othis: reElem
+			});
+		}).on('dblclick', 'div[type=card]', function () { //双击行
+			getCheckedData(this, elem);
+			var reElem = this;
+			layui.event.call(this, MOD_NAME, 'rowDouble(' + filter + ')', {
+				elem: this
+				, value: _instances[elem].option.checkedItem
+				, othis: reElem
+			});
+		});
+		//行工具条操作事件
+		$(option.elem).on('click', '*[lay-event]', function () {
+			getCheckedData(this, elem);
+			layui.event.call(this, MOD_NAME, 'tool(' + filter + ')', { event: $(this).attr('lay-event'), value: _instances[elem].option.checkedItem });
+		});
+	};
+	function getCheckedData(obj,elem) {
+		var item = {};
+		if (!obj.id) {
+			return getCheckedData(obj.parentElement, elem);
+		}
+		var reElem = obj;
+		$(reElem).addClass('layui-table-click').siblings().removeClass('layui-table-click');
+		item.id = reElem.id;
+		if (item.id) {
+			item.id = item.id.replace('card_', '');
+		}
+		item.image = $(reElem).find('.project-list-item-cover')[0].src;
+		item.title = $(reElem).find('h2')[0].innerHTML;
+		item.remark = $(reElem).find('.project-list-item-text')[0].innerHTML;
+		item.time = $(reElem).find('.time')[0].innerHTML;
+		_instances[elem].option.checkedItem = item;
+		return item;
+    }
+	function createComponent(linenum, data, toolbar) {
 		var html = "<div class='cloud-card-component'>"
-		var content = createCards(linenum, data, filterName);
+		var content = createCards(linenum, data, toolbar);
         var page = "";
         content = content + page;
         html += content + "</div>"
         return html;
 	}
 	/** 创建指定数量的卡片 */
-	function createCards(linenum, data, filterName) {
+	function createCards(linenum, data, toolbar) {
 		var content = "<div class='layui-row layui-col-space30'>";
 		for (var i = 0; i < data.length; i++) {
-			content += createCard(linenum, data[i], i, filterName);
+			content += createCard(linenum, data[i], i, toolbar);
         }
 		content += "</div>";
 		return content;
 	}
 	/** 创建一个卡片 */
-	function createCard(linenum, item, index, filterName) {
+	function createCard(linenum, item, index, toolbar) {
 		var line = 12 / linenum;
+		var tplData = $.extend(true, {
+			LAY_INDEX: index
+		}, item)
+		var template = '';
+		if (!!toolbar) {
+			template = laytpl($('#'+toolbar).html() || '').render(tplData);
+		}
 		var card =
-			'<div type=card id=card_' + item.id + (!!filterName ?' lay-filter="'+filterName+'"':'')+ ' class="layui-col-md' + line + ' ew-datagrid-item" data-index="' + index+'" data-number="1"> <div class="project-list-item"> <img class="project-list-item-cover" src="' +item.image + '"> <div class="project-list-item-body"> <h2>' + item.title + '</h2> <div class="project-list-item-text layui-text">' + item.remark + '</div> <div class="project-list-item-desc"> <span class="time">' +item.time + '</span> <div class="ew-head-list"></div> </div> </div > </div > </div > '
+			'<div type=card id=card_' + item.id + ' class="layui-col-md' + line + ' ew-datagrid-item" data-index="' + index + '" data-number="1"> <div class="project-list-item">' + (!!item.image ? ' <img class="project-list-item-cover" src="' + item.image + '">' : '') + '<div class="project-list-item-body"> <h2>' + item.title + '</h2> <div class="project-list-item-text layui-text">' + item.remark + '</div> <div class="project-list-item-desc"> <span class="time">' + item.time + '</span>' + (!!template ? ' <div class="ew-head-list">' + template+'</div>':'') +' </div> </div > </div > </div > '
 		return card;
 	}
 	/** 格式化返回参数 */
