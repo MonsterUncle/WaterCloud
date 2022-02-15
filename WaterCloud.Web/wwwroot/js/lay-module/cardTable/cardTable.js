@@ -185,11 +185,34 @@ layui.define(['table', 'laypage','jquery', 'element','laytpl'], function(exports
 		if (item.id) {
 			item.id = item.id.replace('card_', '');
 		}
-		item.image = $(reElem).find('.project-list-item-cover')[0].src;
-		item.title = $(reElem).find('h2')[0].innerHTML;
-		item.remark = $(reElem).find('.project-list-item-text')[0].innerHTML;
-		item.time = $(reElem).find('.time')[0].innerHTML;
-		_instances[elem].option.checkedItem = item;
+		var option = _instances[elem].option;
+		for (var i = 0; i < option.data.length; i++) {
+			if (item.id = option.data[i].id) {
+				item[option.request.idName] = option.data[i].id;
+				item[option.request.imageName] = option.data[i].image;
+				item[option.request.titleName] = option.data[i].title;
+				item[option.request.remarkName] = option.data[i].remark;
+				item[option.request.timeName] = option.data[i].time;
+				item = $.extend(JSON.parse(JSON.stringify(option.data[i])), item);
+				if (option.request.idName!="id") {
+					delete item.id;
+				}
+				if (option.request.imageName != "image") {
+					delete item.image;
+				}
+				if (option.request.titleName != "title") {
+					delete item.title;
+				}
+				if (option.request.remarkName != "remark") {
+					delete item.remark;
+				}
+				if (option.request.timeName != "time") {
+					delete item.time;
+				}
+				_instances[elem].option.checkedItem = item;
+				break;
+            }
+		}
 		return item;
     }
 	function createComponent(linenum, data, toolbar) {
@@ -238,6 +261,22 @@ layui.define(['table', 'laypage','jquery', 'element','laytpl'], function(exports
 			item.title = dataList[i][option.request.titleName];
 			item.remark = dataList[i][option.request.remarkName];
 			item.time = dataList[i][option.request.timeName];
+			item = $.extend(JSON.parse(JSON.stringify(dataList[i])), item);
+			if (option.request.idName != "id") {
+				delete item[option.request.idName];
+			}
+			if (option.request.imageName != "image") {
+				delete item[option.request.imageName];
+			}
+			if (option.request.titleName != "title") {
+				delete item[option.request.titleName];
+			}
+			if (option.request.remarkName != "remark") {
+				delete item[option.request.remarkName];
+			}
+			if (option.request.timeName != "time") {
+				delete item[option.request.timeName];
+			}
 			data.data.push(item);
 		}
 		return data;
@@ -279,16 +318,10 @@ layui.define(['table', 'laypage','jquery', 'element','laytpl'], function(exports
 		getChecked: function (id) {
 			var option = _instances[id].option;
 			var data = option.checkedItem;
-			var item = {};
             if (!data) {
 				return null;
             }
-			item[option.request.idName] = data.id;
-			item[option.request.imageName] = data.image;
-			item[option.request.titleName] = data.title;
-			item[option.request.remarkName] = data.remark;
-			item[option.request.timeName] = data.time;
-			return item;
+			return data;
 		},
 		/* 获取表格数据 */
 		getAllData: function (id) {
@@ -301,6 +334,22 @@ layui.define(['table', 'laypage','jquery', 'element','laytpl'], function(exports
 				item[option.request.titleName] = option.data[i].title;
 				item[option.request.remarkName] = option.data[i].remark;
 				item[option.request.timeName] = option.data[i].time;
+				item = $.extend(JSON.parse(JSON.stringify(option.data[i])), item);
+				if (option.request.idName != "id") {
+					delete item.id;
+				}
+				if (option.request.imageName != "image") {
+					delete item.image;
+				}
+				if (option.request.titleName != "title") {
+					delete item.title;
+				}
+				if (option.request.remarkName != "remark") {
+					delete item.remark;
+				}
+				if (option.request.timeName != "time") {
+					delete item.time;
+				}
 				data.push(item);
             }
 			return data;
