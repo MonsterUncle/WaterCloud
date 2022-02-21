@@ -187,7 +187,7 @@ layui.define(['table', 'laypage','jquery', 'element','laytpl'], function(exports
 		}
 		var option = _instances[elem].option;
 		for (var i = 0; i < option.data.length; i++) {
-			if (item.id = option.data[i].id) {
+			if (item.id == option.data[i].id) {
 				item[option.request.idName] = option.data[i].id;
 				item[option.request.imageName] = option.data[i].image;
 				item[option.request.titleName] = option.data[i].title;
