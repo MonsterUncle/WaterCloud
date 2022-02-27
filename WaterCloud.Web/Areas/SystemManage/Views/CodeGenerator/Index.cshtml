@@ -20,7 +20,19 @@
                 { type: "radio", width: 50, fixed: 'left' },
                 { field: 'Name', title: '表名称', width: 200 },
                 { field: 'Description', title: '表备注', minWidth: 250 },
-                { field: 'DbObjectType', title: '表类型', minWidth: 150 },
+                { field: 'DbObjectType', title: '表类型', minWidth: 150,
+                     templet: function (d) {
+                         switch(d.DbObjectType)
+                         {
+                             case 0:
+                                return "数据库表";
+                             case 1:
+                                return "数据库表";
+                             default:
+                                return "其他";
+                         }
+                     } 
+                },
                 { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]]
         });
