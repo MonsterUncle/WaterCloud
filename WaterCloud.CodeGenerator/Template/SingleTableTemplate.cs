@@ -114,22 +114,22 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("    public class " + baseConfigModel.FileConfig.EntityName + " : " + baseEntity);
             }
             sb.AppendLine("    {");
-            var list = dt.ToDataList<TableFieldInfo>();
+            var list = dt.ToDataList<DbColumnInfo>();
             foreach (var item in list)
             {
-                var datatype = TableMappingHelper.GetPropertyDatatype(item.Datatype);
-                var isPrimaryKey = idColumn == item.TableColumn ? ",IsPrimaryKey = true" : "";
-                var isIdentity = item.TableIdentity == "Y" ? ",IsIdentity = true" : "";
-                var isNull = (item.IsNullable == "Y" && item.Datatype != "string" && item.Datatype != "byte[]") ? "?" : "";
-                var isIgnore = item.IsIgnore == "Y" ? ",IsIgnore = true" : "";
-                var isJson = item.Datatype.StartsWith("json") ? ",IsJson= true" : "";
-                var columntype = item.Datatype;
-                if (item.FieldLength != null && !string.IsNullOrEmpty(item.FieldLength))
+                var datatype = TableMappingHelper.GetPropertyDatatype(item.DataType);
+                var isPrimaryKey = idColumn == item.DbColumnName ? ",IsPrimaryKey = true" : "";
+                var isIdentity = item.IsIdentity ? ",IsIdentity = true" : "";
+                var isNull = (item.IsNullable && datatype != "string") ? "?" : "";
+                var isIgnore = item.TableName.IsNullOrZero() ? ",IsIgnore = true" : "";
+                var isJson = item.DataType.ToLower().StartsWith("json") ? ",IsJson= true" : "";
+                var columntype = item.DataType;
+                if (item.Length != 0)
                 {
-                    columntype = columntype + "(" + item.FieldLength + ")";
+                    columntype = columntype + "(" + item.Length + ")";
                 }
                 var IsNullable = "";
-                if (item.IsNullable == "Y")
+                if (item.IsNullable)
                 {
                     IsNullable = ", IsNullable = true";
                 }
@@ -138,10 +138,10 @@ namespace WaterCloud.CodeGenerator
                     isPrimaryKey = isIdentity = isNull = "";
                 }
                 sb.AppendLine("        /// <summary>");
-                sb.AppendLine("        /// " + item.Remark);
+                sb.AppendLine("        /// " + item.ColumnDescription);
                 sb.AppendLine("        /// </summary>");
-                sb.AppendLine("        [SugarColumn(ColumnName=\"" + item.TableColumn + "\", ColumnDescription = \""+item.Remark+ "\",ColumnDataType = \""+ columntype + "\""+ IsNullable + isIgnore+isJson+isIdentity+isPrimaryKey+")]");
-                sb.AppendLine("        public " + datatype + isNull + " " + item.TableColumn + " { get; set; }");
+                sb.AppendLine("        [SugarColumn(ColumnName=\"" + item.DbColumnName + "\", ColumnDescription = \""+item.ColumnDescription+ "\",ColumnDataType = \""+ columntype + "\""+ IsNullable + isIgnore+isJson+isIdentity+isPrimaryKey+")]");
+                sb.AppendLine("        public " + datatype + isNull + " " + item.DbColumnName + " { get; set; }");
                 //switch (datatype)
                 //{
                 //    case "long?":
@@ -1440,7 +1440,7 @@ namespace WaterCloud.CodeGenerator
         private string GetBaseEntity(string EntityName, DataTable dt, string idColumn = "F_Id",bool keyIsNull = false)
         {
             string entity = string.Empty;
-            var columnList = dt.AsEnumerable().Select(p => p["TableColumn"].ParseToString()).ToList();
+            var columnList = dt.AsEnumerable().Select(p => p["DbColumnName"].ParseToString()).ToList();
 
             bool id = columnList.Where(p => p == idColumn).Any();
             bool baseIsDelete = columnList.Where(p => p == "F_DeleteUserId").Any() && columnList.Where(p => p == "F_DeleteTime").Any() && columnList.Where(p => p == "F_DeleteMark").Any();

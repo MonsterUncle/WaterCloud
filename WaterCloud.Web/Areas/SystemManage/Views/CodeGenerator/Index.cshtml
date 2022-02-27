@@ -18,21 +18,9 @@
             url: '/SystemManage/CodeGenerator/GetTablePageListJson',
             cols: [[
                 { type: "radio", width: 50, fixed: 'left' },
-                { field: 'TableName', title: '表名称', width: 200 },
-                { field: 'TableKeyName', title: '主键名称', minWidth: 250 },
-                { field: 'TableKey', title: '主键字段', width: 150 },
-                { field: 'TableCount', title: '记录数', width: 80 },
-                {
-                    field: 'CreateTime', title: '创建时间', width: 170,
-                    templet: function (d) {
-                        if (d.CreateTime) {
-                            var time = new Date(d.CreateTime);
-                            return time.Format("yyyy-MM-dd hh:mm:ss");
-                        }
-                        return '';
-                    }
-                },
-                { field: 'Remark', title: '备注', minWidth: 150 },
+                { field: 'Name', title: '表名称', width: 200 },
+                { field: 'Description', title: '表备注', minWidth: 250 },
+                { field: 'DbObjectType', title: '表类型', minWidth: 150 },
                 { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]]
         });
@@ -61,7 +49,7 @@
                 }
                 common.openNewTabByIframe({
                     title: "模板代码生成",
-                    href: "/SystemManage/CodeGenerator/Form?keyValue=" + data[0].TableName,
+                    href: "/SystemManage/CodeGenerator/Form?keyValue=" + data[0].Name,
                 });
             }
             else if (obj.event === 'entitycode') {
@@ -71,7 +59,7 @@
                 }
                 common.modalOpen({
                     title: "实体类生成",
-                    url: "/SystemManage/CodeGenerator/EntityCode?keyValue=" + data[0].TableName,
+                    url: "/SystemManage/CodeGenerator/EntityCode?keyValue=" + data[0].Name,
                     width: "700px",
                     height: "600px",
                 });
@@ -83,7 +71,7 @@
                 }
                 common.modalOpen({
                     title: "查看数据表",
-                    url: "/SystemManage/CodeGenerator/Details?keyValue=" + data[0].TableName,
+                    url: "/SystemManage/CodeGenerator/Details?keyValue=" + data[0].Name,
                     width: "700px",
                     height: "600px",
                     btn: []
@@ -104,13 +92,13 @@
             if (obj.event === 'add') {  // 监听
                 common.openNewTabByIframe({
                     title: "模板代码生成",
-                    href: "/SystemManage/CodeGenerator/Form?keyValue=" + obj.data.TableName,
+                    href: "/SystemManage/CodeGenerator/Form?keyValue=" + obj.data.Name,
                 });
             }
             else if (obj.event === 'entitycode') {
                 common.modalOpen({
                     title: "实体类生成",
-                    url: "/SystemManage/CodeGenerator/EntityCode?keyValue=" + obj.data.TableName,
+                    url: "/SystemManage/CodeGenerator/EntityCode?keyValue=" + obj.data.Name,
                     width: "700px",
                     height: "600px",
                 });
@@ -118,7 +106,7 @@
             else if (obj.event === 'details') {
                 common.modalOpen({
                     title: "查看数据表",
-                    url: "/SystemManage/CodeGenerator/Details?keyValue=" + obj.data.TableName,
+                    url: "/SystemManage/CodeGenerator/Details?keyValue=" + obj.data.Name,
                     width: "700px",
                     height: "600px",
                     btn: []

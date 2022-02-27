@@ -16,13 +16,13 @@
             page: false,
             search:false,
             cols: [[
-                { field: 'TableColumn', title: '列名', width: 150, sort: true },
-                { field: 'Datatype', title: '数据类型', width: 120, sort: true },
-                { field: 'TableKey', title: '主键', width: 100, sort: true },
-                { field: 'TableIdentity', title: '自增', width: 100, sort: true },
+                { field: 'DbColumnName', title: '列名', width: 150, sort: true },
+                { field: 'DataType', title: '数据类型', width: 120, sort: true },
+                { field: 'IsPrimarykey', title: '主键', width: 100, sort: true },
+                { field: 'IsIdentity', title: '自增', width: 100, sort: true },
                 { field: 'IsNullable', title: '可空', width: 100, sort: true },
-                { field: 'FieldLength', title: '长度', width: 100 },
-                { field: 'Remark', title: '说明', width: 150 },
+                { field: 'Length', title: '长度', width: 100 },
+                { field: 'ColumnDescription', title: '说明', width: 150 },
             ]],
         });
         // 监听搜索操作
