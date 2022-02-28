@@ -50,6 +50,10 @@ namespace WaterCloud.Service
                     {
                         var config = DBContexHelper.Contex(item.DBConnectionString, item.DBProvider);
                         config.ConfigId = item.DBNumber;
+						if (list.Any(a=>a.ConfigId == config.ConfigId))
+						{
+                            throw new Exception($"数据库编号重复，请检查{config.ConfigId}");
+						}
                         list.Add(config);
                     }
                 }

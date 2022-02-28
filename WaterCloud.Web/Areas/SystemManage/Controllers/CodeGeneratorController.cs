@@ -27,13 +27,27 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             _unitOfWork = unitOfWork;
         }
         #region 视图功能
-
+        [HttpGet]
+        public virtual ActionResult AddForm()
+        {
+            return View();
+        }
+        [HttpGet]
+        public virtual ActionResult RuleForm()
+        {
+            return View();
+        }
+        [HttpGet]
+        public virtual ActionResult EntityCode()
+        {
+            return View();
+        }
         #endregion
 
         #region 获取数据
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTablePageListJson(Pagination pagination, string keyword)
+        public ActionResult GetTablePageListJson(Pagination pagination, string keyword,string dbNumber)
         {
             //导出全部页使用
             if (pagination.rows == 0 && pagination.page == 0)
@@ -41,21 +55,28 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 pagination.rows = 99999999;
                 pagination.page = 1;
             }
-            List<DbTableInfo> data = _service.GetTablePageList(keyword, pagination);
+            List<DbTableInfo> data = _service.GetTablePageList(keyword, dbNumber, pagination);
             return Success(pagination.records, data);
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTableJson(string keyword)
+        public ActionResult GetDbNumberListJson()
         {
-            List<DbTableInfo> data = _service.GetTableList(keyword);
+            List<dynamic> data = _service.GetDbNumberListJson();
             return Content(data.ToJson());
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTableSelectJson(string keyword)
+        public ActionResult GetTableJson(string keyword,string dbNumber)
         {
-            List<DbTableInfo> data = _service.GetTableList(keyword);
+            List<DbTableInfo> data = _service.GetTableList(keyword, dbNumber);
+            return Content(data.ToJson());
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetTableSelectJson(string keyword, string dbNumber)
+        {
+            List<DbTableInfo> data = _service.GetTableList(keyword, dbNumber);
             List<object> list = new List<object>();
             foreach (var item in data)
             {
@@ -65,9 +86,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTableFieldJson(string keyValue, string keyword)
+        public ActionResult GetTableFieldJson(string keyValue, string keyword, string dbNumber)
         {
-            List<DbColumnInfo> data = _service.GetTableFieldList(keyValue);
+            List<DbColumnInfo> data = _service.GetTableFieldList(keyValue, dbNumber);
             if (!string.IsNullOrEmpty(keyword))
             {
                 data = data.Where(a => a.DbColumnName.Contains(keyword)).ToList();
@@ -76,9 +97,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetTableFieldSelectJson(string keyValue)
+        public ActionResult GetTableFieldSelectJson(string keyValue, string dbNumber)
         {
-            List<DbColumnInfo> data = _service.GetTableFieldList(keyValue);
+            List<DbColumnInfo> data = _service.GetTableFieldList(keyValue,dbNumber);
             List<object> list = new List<object>();
             foreach (var item in data)
             {
@@ -88,12 +109,12 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpGet]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> GetBaseConfigJson(string keyValue)
+        public ActionResult GetBaseConfigJson(string keyValue, string dbNumber)
         {
             BaseConfigModel data = new BaseConfigModel();
 
             string tableDescription = string.Empty;
-            List<DbColumnInfo> tDataTableField = _service.GetTableFieldList(keyValue);
+            List<DbColumnInfo> tDataTableField = _service.GetTableFieldList(keyValue, dbNumber);
 
             var columnList = tDataTableField.Where(p => !BaseField.BaseFieldList.Contains(p.DbColumnName) && !p.IsPrimarykey).Select(p => new { p.DbColumnName, p.ColumnDescription }).ToList();
             List<ColumnField> dic = new List<ColumnField>();
@@ -119,24 +140,24 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [IgnoreAntiforgeryToken]
-        public async Task<ActionResult> CodePreviewJson(BaseConfigModel baseConfig)
+        public ActionResult CodePreviewJson(BaseConfigModel baseConfig, string dbNumber)
         {
             try
             {
-                List<DbColumnInfo> list = _service.GetTableFieldList(baseConfig.TableName);
+                List<DbColumnInfo> list = _service.GetTableFieldList(baseConfig.TableName, dbNumber);
                 SingleTableTemplate template = new SingleTableTemplate(_unitOfWork.GetDbClient());
-                string idcolumn = list.FirstOrDefault(a=>a.IsPrimarykey==true)?.DbColumnName;
+                string idcolumn = list.FirstOrDefault(a => a.IsPrimarykey == true)?.DbColumnName;
                 Dictionary<string, string> dic = new Dictionary<string, string>();
                 baseConfig.PageIndex.ButtonList = ExtList.removeNull(baseConfig.PageIndex.ButtonList);
                 baseConfig.PageIndex.ColumnList = baseConfig.PageIndex.ColumnList.Where(a => a.field != "").ToList();
                 baseConfig.PageForm.FieldList.Remove("");
                 string idType = "string";
                 //构造虚拟参数
-				foreach (var item in baseConfig.PageIndex.ColumnList)
-				{
-					if (!list.Where(a=>a.DbColumnName == item.field).Any())
-					{
-                        DbColumnInfo temp =new DbColumnInfo();
+                foreach (var item in baseConfig.PageIndex.ColumnList)
+                {
+                    if (!list.Where(a => a.DbColumnName == item.field).Any())
+                    {
+                        DbColumnInfo temp = new DbColumnInfo();
                         temp.IsPrimarykey = false;
                         temp.DbColumnName = item.field;
                         temp.ColumnDescription = item.title;
@@ -144,7 +165,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                         temp.IsNullable = true;
                         list.Add(temp);
                     }
-				}
+                }
                 DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
                 var tableinfo = _unitOfWork.GetDbClient().DbMaintenance.GetColumnInfosByTableName(baseConfig.TableName, false);
                 string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
@@ -172,21 +193,6 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
 
         }
-        [HttpGet]
-        public virtual ActionResult AddForm()
-        {
-            return View();
-        }
-        [HttpGet]
-        public virtual ActionResult RuleForm()
-        {
-            return View();
-        }
-        [HttpGet]
-        public virtual ActionResult EntityCode()
-        {
-            return View();
-        }
         [HttpPost]
         [HandlerAjaxOnly]
         public async Task<ActionResult> CodeGenerateJson(BaseConfigModel baseConfig, string Code)
@@ -211,7 +217,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> EntityCodeGenerateJson(BaseConfigModel baseConfig, string keyValue)
+        public async Task<ActionResult> EntityCodeGenerateJson(BaseConfigModel baseConfig, string keyValue,string dbNumber)
         {
             try
             {
@@ -221,7 +227,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 }
                 else
                 {
-                    List<DbColumnInfo> list = _service.GetTableFieldList(baseConfig.TableName);
+                    List<DbColumnInfo> list = _service.GetTableFieldList(baseConfig.TableName, dbNumber);
                     SingleTableTemplate template = new SingleTableTemplate(_unitOfWork.GetDbClient());
                     DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
                     string idcolumn = list.FirstOrDefault(a => a.IsPrimarykey == true)?.DbColumnName;

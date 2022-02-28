@@ -8,10 +8,11 @@
             form = layui.form,
             commonTable = layui.commonTable;
         var keyValue = $.request("keyValue");
+        var dbNumber = $.request("dbNumber");
         wcLoading.close();
         commonTable.rendertable({
             elem: '#currentTableId',
-            url: '/SystemManage/CodeGenerator/GetTableFieldJson?keyValue=' + keyValue,
+            url: '/SystemManage/CodeGenerator/GetTableFieldJson?keyValue=' + keyValue + "&dbNumber=" + dbNumber,
             toolbar: false,
             page: false,
             search:false,

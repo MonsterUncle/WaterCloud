@@ -10,6 +10,7 @@
                 laydate = layui.laydate;
             var keyValue = $.request("keyValue");
             var event = $.request("event");
+            var dbNumber = $.request("dbNumber");
             //权限字段
             common.authorizeFields('adminform');
             var baseConfig;
@@ -21,7 +22,7 @@
                     common.ajax({
                         url: "/SystemManage/CodeGenerator/GetBaseConfigJson",
                         dataType: "json",
-                        data: { keyValue: keyValue },
+                        data: { keyValue: keyValue，dbNumber:dbNumber },
                         async: false,
                         success: function (data) {
                             baseConfig = data;
@@ -44,7 +45,7 @@
                 baseConfig.FileConfig.CreateDate = data.field.CreateDate;
                 baseConfig.OutputConfig.OutputModule = $("#OutputModule option:selected").text().replace(/^\s+|\s+$/g, "");
                 common.submitForm({
-                    url: "/SystemManage/CodeGenerator/EntityCodeGenerateJson?keyValue=" + keyValue,
+                    url: "/SystemManage/CodeGenerator/EntityCodeGenerateJson?keyValue=" + keyValue+"&dbNumber="+dbNumber,
                     param: baseConfig,
                     success: function () {
                     }

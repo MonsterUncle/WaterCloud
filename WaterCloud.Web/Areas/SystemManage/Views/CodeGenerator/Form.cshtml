@@ -47,6 +47,7 @@
             common = layui.common,
             step = layui.step;
         var keyValue = $.request("keyValue");
+        var dbNumber = $.request("dbNumber");
         //权限字段
         common.authorizeFields('stepForm');
         wcLoading.close();
@@ -85,7 +86,7 @@
                 common.ajax({
                     url: "/SystemManage/CodeGenerator/GetBaseConfigJson",
                     dataType: "json",
-                    data: { keyValue: keyValue },
+                    data: { keyValue: keyValue，dbNumber:dbNumber },
                     async: false,
                     success: function (data) {
                         baseConfig = data;
@@ -550,7 +551,7 @@
                 return false;
             }
             $.ajax({
-                url: "/SystemManage/CodeGenerator/CodePreviewJson",
+                url: "/SystemManage/CodeGenerator/CodePreviewJson?dbNumber=" + dbNumber,
                 type: "post",
                 dataType: 'json',
                 async: false,
@@ -582,6 +583,7 @@
         form.on('submit(formStep4)', function (data) {
             var postData = baseConfig;
             postData.Code = encodeURIComponent(JSON.stringify(codeList));
+            postData.dbNumber = dbNumber;
             common.submitForm({
                 url: "/SystemManage/CodeGenerator/CodeGenerateJson",
                 param: postData,
