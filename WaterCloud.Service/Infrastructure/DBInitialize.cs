@@ -29,11 +29,12 @@ namespace WaterCloud.Service
                 var defaultConfig = DBContexHelper.Contex(data.DBConnectionString, data.DBProvider);
                 defaultConfig.ConfigId = "0";
                 list.Add(defaultConfig);
-                if (data.SqlMode == "TenantSql")
+                try
                 {
-                    try
-                    {
-                        using (var context =new SqlSugarClient(defaultConfig))
+                    //租户数据库
+					if (data.SqlMode== Define.SQL_TENANT)
+					{
+                        using (var context = new SqlSugarClient(defaultConfig))
                         {
                             var sqls = context.Queryable<SystemSetEntity>().ToList();
                             foreach (var item in sqls.Where(a => a.F_EnabledMark == true && a.F_EndTime > DateTime.Now.Date && a.F_DbNumber != "0"))
@@ -44,26 +45,17 @@ namespace WaterCloud.Service
                             }
                         }
                     }
-                    catch (Exception ex)
+                    //扩展数据库
+                    foreach (var item in data.SqlConfig)
                     {
-                        LogHelper.WriteWithTime(ex);
+                        var config = DBContexHelper.Contex(item.DBConnectionString, item.DBProvider);
+                        config.ConfigId = item.DBNumber;
+                        list.Add(config);
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        foreach (var item in data.SqlConfig)
-                        {
-                            var config = DBContexHelper.Contex(item.DBConnectionString, item.DBProvider);
-                            config.ConfigId = item.DBNumber;
-                            list.Add(config);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        LogHelper.WriteWithTime(ex);
-                    }
+                    LogHelper.WriteWithTime(ex);
                 }
                 CacheHelper.Set(cacheKey, list);
             }

@@ -46,7 +46,7 @@ namespace WaterCloud.DataBase
             get { return _unitOfWork; }
         }
         /// <summary>
-        /// 切换上下文，不存参切换到实体租户
+        /// 切换上下文，不传参切换到实体租户
         /// </summary>
         /// <param name="configId"></param>
         /// <returns></returns>
@@ -63,6 +63,7 @@ namespace WaterCloud.DataBase
                 {
                     var tenantAttribute = entityType.GetCustomAttribute<TenantAttribute>(false)!;
                     configId = tenantAttribute.configId;
+                    _dbBase.ChangeDatabase(configId);
                 }
             }
             return _dbBase;
