@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SqlSugar;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Service;
@@ -72,6 +73,13 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 }
                 return Content(data.ToJson());
             }
+        }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetDbTypeJson()
+        {
+            var data = EnumHelper.EnumToList<DbType>();
+            return Content(data.ToJson());
         }
 
         [HttpGet]

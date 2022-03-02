@@ -37,6 +37,10 @@
             }]
         });
         $(function () {
+            $("#F_DBProvider").bindSelect({
+                url: "/SystemOrganize/SystemSet/GetDbTypeJson",
+                id:""
+            });
             if (!!keyValue) {
                 common.ajax({
                     url: "/SystemOrganize/SystemSet/GetFormJson",
@@ -195,9 +199,6 @@
                                 <label class="layui-form-label required">数据库类型</label>
                                 <div class="layui-input-block">
                                     <select id="F_DBProvider" name="F_DBProvider" lay-verify="required">
-                                        <option value="MySql">MySql</option>
-                                        <option value="MSSql">MSSql</option>
-                                        <option value="Oracle">Oracle</option>
                                     </select>
                                 </div>
                             </div>
