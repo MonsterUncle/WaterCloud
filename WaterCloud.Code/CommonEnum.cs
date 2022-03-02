@@ -90,5 +90,36 @@ namespace WaterCloud.Code
         [Description("支付失败(其他原因，如银行返回失败)")]
         PayError = 7
     }
+    public class EnumHelper
+    {
+        /// <summary>
+        /// 获取枚举列表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static Dictionary<int, string> EnumToDic<T>()
+        {
+            Dictionary<int, string> list = new Dictionary<int, string>();
+            foreach (var e in Enum.GetValues(typeof(T)))
+            {
+                list.Add(Convert.ToInt32(e), e.GetDescriptionByEnum<T>());
+            }
+            return list;
+        }
+        /// <summary>
+        /// 获取枚举列表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<string> EnumToList<T>()
+        {
+            List<string> list = new List<string>();
 
+            foreach (var e in Enum.GetValues(typeof(T)))
+            {
+                list.Add(e.GetDescriptionByEnum<T>());
+            }
+            return list;
+        }
+    }
 }
