@@ -43,7 +43,7 @@ namespace WaterCloud.Service.AutoJob
                 try
                 {
                     jobData = context.JobDetail.JobDataMap;
-                    jobId = jobData["F_Id"].ToString();
+                    jobId = jobData.GetString("F_Id");
                     using (IUnitOfWork unitOfWork = new UnitOfWork(DBContexHelper.Contex()))
                     {
                         OpenJobsService autoJobService = new OpenJobsService(unitOfWork, _schedulerFactory, _iocJobfactory, _httpClient);

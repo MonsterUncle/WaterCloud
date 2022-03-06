@@ -276,7 +276,7 @@ namespace WaterCloud.DataBase
             foreach (var item in filterList.Skip(1))
             {
                 var gresult = ConvertFilters<T>(JsonHelper.ToObject<Filter[]>(item.Filters), param, item.Operation);
-                result = result.Or(gresult);
+                result = result.OrElse(gresult);
             }
             return result;
         }
@@ -313,7 +313,7 @@ namespace WaterCloud.DataBase
             {
                 foreach (var filter in filters.Skip(1))
                 {
-                    result = result.Or(param.GenerateBody<T>(filter));
+                    result = result.OrElse(param.GenerateBody<T>(filter));
                 }
             }
 
@@ -648,7 +648,7 @@ namespace WaterCloud.DataBase
                         {
                             if (result != null)
                             {
-                                result = result.Or(gresult);
+                                result = result.OrElse(gresult);
                             }
                             else
                             {
@@ -677,7 +677,7 @@ namespace WaterCloud.DataBase
                         {
                             if (result != null)
                             {
-                                result = result.Or(gresult);
+                                result = result.OrElse(gresult);
                             }
                             else
                             {
@@ -892,12 +892,12 @@ namespace WaterCloud.DataBase
                             if (isNull)
                             {
                                 gresult = Expression.GreaterThanOrEqual(left, Expression.Constant(startTime, typeof(DateTime?)));
-                                gresult = gresult.And(Expression.LessThan(left, Expression.Constant(endTime, typeof(DateTime?))));
+                                gresult = gresult.AndAlso(Expression.LessThan(left, Expression.Constant(endTime, typeof(DateTime?))));
                             }
                             else
                             {
                                 gresult = Expression.GreaterThanOrEqual(left, Expression.Constant((DateTime)startTime));
-                                gresult = gresult.And(Expression.LessThan(left, Expression.Constant((DateTime)endTime)));
+                                gresult = gresult.AndAlso(Expression.LessThan(left, Expression.Constant((DateTime)endTime)));
                             }
                         }
                         if (result != null)

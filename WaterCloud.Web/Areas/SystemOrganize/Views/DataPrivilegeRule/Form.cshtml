@@ -231,6 +231,7 @@
                     return false;
                 }
                 var postData = data.field;
+                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
                 postData.listData = JSON.stringify(cachedata);
                 common.submitForm({
                     url: '/SystemOrganize/DataPrivilegeRule/SubmitForm?keyValue=' + keyValue,
