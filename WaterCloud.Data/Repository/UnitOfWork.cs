@@ -18,10 +18,8 @@ namespace WaterCloud.DataBase
         private readonly ISqlSugarClient _context;
         public UnitOfWork(ISqlSugarClient context)
         {
-            int commandTimeout =30;
 			if (GlobalContext.SystemConfig!=null)
 			{
-                commandTimeout = GlobalContext.SystemConfig.CommandTimeout;
                 var current = OperatorProvider.Provider.GetCurrent();
                 if (GlobalContext.SystemConfig.SqlMode==Define.SQL_TENANT && current != null && !string.IsNullOrEmpty(current.DbNumber))
                 {
@@ -29,40 +27,6 @@ namespace WaterCloud.DataBase
                 }
             }
             _context = context;
-            _context.Ado.CommandTimeOut = commandTimeout;
-            _context.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
-            {
-                DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
-            };
-            _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
-            {
-                if (sql.StartsWith("SELECT"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("[SELECT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                }
-                if (sql.StartsWith("INSERT"))
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("[INSERT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                }
-                if (sql.StartsWith("UPDATE"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("[UPDATE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-
-                }
-                if (sql.StartsWith("DELETE"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[DELETE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                }
-                Console.WriteLine("NeedTime-" + _context.Ado.SqlExecutionTime.ToString());
-                //App.PrintToMiniProfiler("SqlSugar", "Info", sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
-                Console.WriteLine("Content:" + SqlProfiler.ParameterFormat(sql, pars));
-                Console.WriteLine("---------------------------------");
-                Console.WriteLine("");
-            };
         }
         public UnitOfWork(string ConnectStr, string providerName)
         {

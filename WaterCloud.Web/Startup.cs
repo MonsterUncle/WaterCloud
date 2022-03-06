@@ -48,6 +48,7 @@ namespace WaterCloud.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -64,14 +65,14 @@ namespace WaterCloud.Web
             //代替HttpContext.Current
             services.AddHttpContextAccessor();
             //缓存缓存选择
-            if (Configuration.GetSection("SystemConfig:CacheProvider").Value!= Define.CACHEPROVIDER_REDIS)
+            if (GlobalContext.SystemConfig.CacheProvider!= Define.CACHEPROVIDER_REDIS)
             {
                 services.AddMemoryCache();
             }
             else
             {
                 //redis 注入服务
-                string redisConnectiong = Configuration.GetSection("SystemConfig:RedisConnectionString").Value;
+                string redisConnectiong = GlobalContext.SystemConfig.RedisConnectionString;
                 // 多客户端 1、基础 2、操作日志
                 var redisDB1 = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
                 BaseHelper.Initialization(redisDB1);
@@ -84,10 +85,48 @@ namespace WaterCloud.Web
             services.AddSingleton<IDistributedIDGenerator, SequentialGuidIDGenerator>();
 			#region 依赖注入
 			//注入数据库连接
-			// 注册 SqlSugar 客户端 多租户模式
+			// 注册 SqlSugar
 			services.AddScoped<ISqlSugarClient>(u =>
             {
-                return new SqlSugarClient(DBInitialize.GetConnectionConfigs());
+                var db = new SqlSugarClient(DBInitialize.GetConnectionConfigs());
+                DBInitialize.GetConnectionConfigs().ForEach(config => {
+                    db.GetConnection(config.ConfigId);
+                    db.Ado.CommandTimeOut = GlobalContext.SystemConfig.CommandTimeout;
+                    db.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
+                    {
+                        DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
+                    };
+                    db.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
+                    {
+                        if (sql.StartsWith("SELECT"))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("[SELECT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                        }
+                        if (sql.StartsWith("INSERT"))
+                        {
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine("[INSERT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                        }
+                        if (sql.StartsWith("UPDATE"))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine("[UPDATE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+
+                        }
+                        if (sql.StartsWith("DELETE"))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("[DELETE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                        }
+                        Console.WriteLine("NeedTime-" + db.Ado.SqlExecutionTime.ToString());
+                        //App.PrintToMiniProfiler("SqlSugar", "Info", sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
+                        Console.WriteLine("Content:" + SqlProfiler.ParameterFormat(sql, pars));
+                        Console.WriteLine("---------------------------------");
+                        Console.WriteLine("");
+                    };
+                });
+                return db;
             });
             services.AddScoped<IUnitOfWork,UnitOfWork>();
             #region 注入 Quartz调度类
@@ -199,7 +238,6 @@ namespace WaterCloud.Web
             });
             services.AddOptions();
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(GlobalContext.HostingEnvironment.ContentRootPath + Path.DirectorySeparatorChar + "DataProtection"));
-            GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
             DBInitialize.ReviseSuperSysem();

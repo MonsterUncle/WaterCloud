@@ -64,61 +64,49 @@ namespace WaterCloud.WebApi
             }
             //连续guid初始化,示例IDGen.NextId()
             services.AddSingleton<IDistributedIDGenerator, SequentialGuidIDGenerator>();
-
-            #region 数据库模式
-            List<ConnectionConfig> list = new List<ConnectionConfig>();
-            var defaultConfig = DBContexHelper.Contex(Configuration.GetSection("SystemConfig:DBConnectionString").Value, Configuration.GetSection("SystemConfig:DBProvider").Value);
-            defaultConfig.ConfigId = "0";
-            list.Add(defaultConfig);
-            if (Configuration.GetSection("SystemConfig:SqlMode").Value == "TenantSql")
-            {
-                try
-                {
-                    using (var context = new UnitOfWork(new SqlSugarClient(defaultConfig)))
-                    {
-                        var _setService = new Service.SystemOrganize.SystemSetService(context);
-                        var sqls = _setService.GetList().GetAwaiter().GetResult();
-                        foreach (var item in sqls.Where(a => a.F_EnabledMark == true && a.F_EndTime > DateTime.Now.Date && a.F_DbNumber != "0"))
-                        {
-                            var config = DBContexHelper.Contex(item.F_DbString, item.F_DBProvider);
-                            config.ConfigId = item.F_DbNumber;
-                            list.Add(config);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Write(ex);
-                }
-            }
-            else
-            {
-                try
-                {
-                    var configs = Configuration.GetSection("SystemConfig:SqlConfig");
-                    for (int i = 1; i < 9999; i++)
-                    {
-                        if (!configs.GetSection(i.ToString()).Exists())
-                        {
-                            break;
-                        }
-                        var config = DBContexHelper.Contex(configs.GetSection(i.ToString()).GetSection("DBConnectionString").Value, configs.GetSection(i.ToString()).GetSection("DBProvider").Value);
-                        config.ConfigId = i.ToString();
-                        list.Add(config);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Write(ex);
-                }
-            }
-            #endregion
-
             //注入数据库连接
-            // 注册 SqlSugar 客户端
+            // 注册 SqlSugar
             services.AddScoped<ISqlSugarClient>(u =>
             {
-                return new SqlSugarClient(list);
+                var db = new SqlSugarClient(DBInitialize.GetConnectionConfigs());
+                DBInitialize.GetConnectionConfigs().ForEach(config => {
+                    db.GetConnection(config.ConfigId);
+                    db.Ado.CommandTimeOut = GlobalContext.SystemConfig.CommandTimeout;
+                    db.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
+                    {
+                        DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
+                    };
+                    db.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
+                    {
+                        if (sql.StartsWith("SELECT"))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("[SELECT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                        }
+                        if (sql.StartsWith("INSERT"))
+                        {
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine("[INSERT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                        }
+                        if (sql.StartsWith("UPDATE"))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine("[UPDATE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+
+                        }
+                        if (sql.StartsWith("DELETE"))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("[DELETE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                        }
+                        Console.WriteLine("NeedTime-" + db.Ado.SqlExecutionTime.ToString());
+                        //App.PrintToMiniProfiler("SqlSugar", "Info", sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
+                        Console.WriteLine("Content:" + SqlProfiler.ParameterFormat(sql, pars));
+                        Console.WriteLine("---------------------------------");
+                        Console.WriteLine("");
+                    };
+                });
+                return db;
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             //代替HttpContext.Current
