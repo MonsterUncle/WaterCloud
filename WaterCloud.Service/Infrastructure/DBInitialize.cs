@@ -61,7 +61,7 @@ namespace WaterCloud.Service
                 {
                     LogHelper.WriteWithTime(ex);
                 }
-                CacheHelper.SetAsync(cacheKey, list);
+                CacheHelper.SetBySecond(cacheKey, list);
             }
             return list;
         }
