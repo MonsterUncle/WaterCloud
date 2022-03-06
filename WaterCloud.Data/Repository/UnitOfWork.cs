@@ -30,6 +30,10 @@ namespace WaterCloud.DataBase
             }
             _context = context;
             _context.Ado.CommandTimeOut = commandTimeout;
+            _context.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
+            {
+                DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
+            };
             _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
             {
                 if (sql.StartsWith("SELECT"))
@@ -69,6 +73,10 @@ namespace WaterCloud.DataBase
                 commandTimeout = GlobalContext.SystemConfig.CommandTimeout;
             }
             _context.Ado.CommandTimeOut = commandTimeout;
+            _context.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
+            {
+                DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
+            };
             _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
             {
                 if (sql.StartsWith("SELECT"))

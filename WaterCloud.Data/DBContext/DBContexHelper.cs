@@ -15,7 +15,6 @@ namespace WaterCloud.DataBase
             ConnectStr = string.IsNullOrEmpty(ConnectStr) ? defaultDbConnectionString : ConnectStr;
             providerName = string.IsNullOrEmpty(providerName) ? defaultDbType : providerName;
             var dbType = Convert.ToInt32(Enum.Parse(typeof(DbType), providerName));
-            ICacheService myCache = new SqlSugarCache();
             if (dbType == Convert.ToInt32(DbType.SqlServer))
             {
                 return new ConnectionConfig()
@@ -31,7 +30,7 @@ namespace WaterCloud.DataBase
                     },
                     ConfigureExternalServices = new ConfigureExternalServices()
                     {
-                        DataInfoCacheService = myCache //配置我们创建的缓存类
+                        DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
                     }
                 };
             }
@@ -45,7 +44,7 @@ namespace WaterCloud.DataBase
                     ConnectionString = ConnectStr,
                     ConfigureExternalServices = new ConfigureExternalServices()
                     {
-                        DataInfoCacheService = myCache //配置我们创建的缓存类
+                        DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
                     },
                     MoreSettings = new ConnMoreSettings()
                     {
