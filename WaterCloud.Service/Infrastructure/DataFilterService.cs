@@ -49,7 +49,7 @@ namespace WaterCloud.Service
             {
                 return GetFieldsFilterDataNew(parametername,query, moduleName);
             }
-            var rule = unitwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
+            var rule = unitwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName && u.F_EnabledMark == true && u.F_DeleteMark == false).FirstOrDefault();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
@@ -86,7 +86,7 @@ namespace WaterCloud.Service
             {
                 return GetFieldsFilterDataNew(parametername,query, moduleName);
             }
-            var rule = unitwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
+            var rule = unitwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName && u.F_EnabledMark == true && u.F_DeleteMark == false).FirstOrDefault();
             if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
                                              rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
@@ -114,7 +114,7 @@ namespace WaterCloud.Service
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             if (currentuser.IsSuperAdmin) return false;  //管理员特权
-            var rule = unitwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName).FirstOrDefault();
+            var rule = unitwork.IQueryable<DataPrivilegeRuleEntity>(u => u.F_ModuleCode == moduleName && u.F_EnabledMark == true && u.F_DeleteMark == false).FirstOrDefault();
             ////系统菜单也不需要数据权限 跟字段重合取消这样处理
             //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).GetAwaiter().GetResult();
             if (rule == null)
