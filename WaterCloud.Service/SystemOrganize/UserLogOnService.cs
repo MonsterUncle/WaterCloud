@@ -51,7 +51,7 @@ namespace WaterCloud.Service.SystemOrganize
                 await repository.Update(entity);
             }
             //缓存用户账户信息
-            var userLogOnEntity =await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
+            var userLogOnEntity =await CacheHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
             if (userLogOnEntity == null)
             {
                 userLogOnEntity = new OperatorUserInfo();
@@ -72,8 +72,8 @@ namespace WaterCloud.Service.SystemOrganize
             }
             userLogOnEntity.F_UserPassword = entity.F_UserPassword;
             userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
-            await CacheHelper.Remove(cacheKeyOperator + "info_" + keyValue);
-            await CacheHelper.Set(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
+            await CacheHelper.RemoveAsync(cacheKeyOperator + "info_" + keyValue);
+            await CacheHelper.SetAsync(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
         }
 
         public async Task ReviseSelfPassword(string userPassword, string keyValue)
@@ -83,10 +83,10 @@ namespace WaterCloud.Service.SystemOrganize
             entity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
             entity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.F_UserSecretkey).ToLower(), 32).ToLower();
             await repository.Update(entity);
-            var userLogOnEntity = await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
+            var userLogOnEntity = await CacheHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
             userLogOnEntity.F_UserPassword = entity.F_UserPassword;
             userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
-            await CacheHelper.Set(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
+            await CacheHelper.SetAsync(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
         }
     }
 }

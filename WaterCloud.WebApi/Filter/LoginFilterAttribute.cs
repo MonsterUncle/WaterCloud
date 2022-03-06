@@ -46,8 +46,8 @@ namespace WaterCloud.WebApi
                     //延长过期时间
                     int LoginExpire = GlobalContext.SystemConfig.LoginExpire;
                     string cacheKeyOperator = GlobalContext.SystemConfig.ProjectPrefix + "_operator_";// +登录者token
-                    await CacheHelper.Expire(cacheKeyOperator + token, LoginExpire);
-                    await CacheHelper.Expire(cacheKeyOperator + "api_" + user.UserId, LoginExpire);
+                    await CacheHelper.ExpireAsync(cacheKeyOperator + token, LoginExpire);
+                    await CacheHelper.ExpireAsync(cacheKeyOperator + "api_" + user.UserId, LoginExpire);
                     // 根据传入的Token，添加token和客户参数
                     if (context.ActionArguments != null && context.ActionArguments.Count > 0)
                     {

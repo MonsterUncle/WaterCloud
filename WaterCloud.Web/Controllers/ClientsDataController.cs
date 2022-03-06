@@ -70,7 +70,7 @@ namespace WaterCloud.Web.Controllers
                 {
                     return Content(new { code = 0, msg = "此功能需要管理员权限" }.ToJson());
                 }
-                await CacheHelper.FlushAll();
+                await CacheHelper.FlushAllAsync();
                 await OperatorProvider.Provider.EmptyCurrent("pc_");
                 return Content(new { code = 1, msg = "服务端清理缓存成功" }.ToJson());
             }
@@ -200,7 +200,7 @@ namespace WaterCloud.Web.Controllers
                 return Content("");
             }
             int usercout =(await _userService.GetUserList("")).Count();
-            var temp =await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + currentuser.UserId);
+            var temp =await CacheHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + currentuser.UserId);
             int logincout = temp!=null&&temp.F_LogOnCount!=null? (int)temp.F_LogOnCount : 0;
             int modulecout =(await _moduleService.GetList()).Where(a => a.F_EnabledMark == true && a.F_UrlAddress != null).Count();
             int logcout = (await _logService.GetList()).Count();

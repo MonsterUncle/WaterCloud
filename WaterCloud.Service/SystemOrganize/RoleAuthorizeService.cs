@@ -134,7 +134,7 @@ namespace WaterCloud.Service.SystemOrganize
                 return false;
             }
             var authorizeurldata = new List<AuthorizeActionModel>();
-            var cachedata =await CacheHelper.Get<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey +repository.Db.CurrentConnectionConfig.ConfigId+ "_list");
+            var cachedata =await CacheHelper.GetAsync<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey +repository.Db.CurrentConnectionConfig.ConfigId+ "_list");
             if (cachedata == null)
             {
                 cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
@@ -194,8 +194,8 @@ namespace WaterCloud.Service.SystemOrganize
                             authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
                             cachedata.Add(roles, authdata);
                             authorizeurldata.AddRange(authdata);
-                            await CacheHelper.Remove(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
-                            await CacheHelper.Set(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list", cachedata);
+                            await CacheHelper.RemoveAsync(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+                            await CacheHelper.SetAsync(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list", cachedata);
                         }
                     }
                     else
@@ -236,7 +236,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 var authorizeurldata = new List<AuthorizeActionModel>();
                 var rolelist = user.F_RoleId.Split(',');
-                var cachedata = await CacheHelper.Get<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+                var cachedata = await CacheHelper.GetAsync<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
                 if (cachedata == null)
                 {
                     cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
@@ -285,8 +285,8 @@ namespace WaterCloud.Service.SystemOrganize
                             authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
                             cachedata.Add(roles, authdata);
                             authorizeurldata.AddRange(authdata);
-                            await CacheHelper.Remove(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
-                            await CacheHelper.Set(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list", cachedata);
+                            await CacheHelper.RemoveAsync(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+                            await CacheHelper.SetAsync(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list", cachedata);
                         }
                     }
                     else
@@ -321,7 +321,7 @@ namespace WaterCloud.Service.SystemOrganize
 			}
             var authorizeurldata = new List<AuthorizeActionModel>();
             var rolelist = user.F_RoleId.Split(',');
-            var cachedata = await CacheHelper.Get<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+            var cachedata = await CacheHelper.GetAsync<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
             if (cachedata == null)
             {
                 cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
@@ -370,8 +370,8 @@ namespace WaterCloud.Service.SystemOrganize
                         authdata.AddRange(buttondata.Where(a => a.F_IsPublic == true).Select(a => new AuthorizeActionModel { F_Id = a.F_ModuleId, F_UrlAddress = a.F_UrlAddress, F_Authorize = a.F_Authorize }).ToList());
                         cachedata.Add(roles, authdata);
                         authorizeurldata.AddRange(authdata);
-                        await CacheHelper.Remove(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
-                        await CacheHelper.Set(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list", cachedata);
+                        await CacheHelper.RemoveAsync(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+                        await CacheHelper.SetAsync(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list", cachedata);
                     }
                 }
                 else

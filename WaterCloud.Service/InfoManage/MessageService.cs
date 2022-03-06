@@ -141,7 +141,7 @@ namespace WaterCloud.Service.InfoManage
                 foreach (var item in users)
                 {
                     //存在就私信
-                    var connectionIDs = await CacheHelper.Get<List<string>>(cacheHubKey + item);
+                    var connectionIDs = await CacheHelper.GetAsync<List<string>>(cacheHubKey + item);
                     if (connectionIDs == null)
                     {
                         continue;

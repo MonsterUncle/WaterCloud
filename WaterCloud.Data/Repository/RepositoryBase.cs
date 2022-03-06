@@ -157,23 +157,23 @@ namespace WaterCloud.DataBase
         }
         public async Task<List<TEntity>> CheckCacheList(string cacheKey)
         {
-            var cachedata =await CacheHelper.Get<List<TEntity>>(cacheKey);
+            var cachedata =await CacheHelper.GetAsync<List<TEntity>>(cacheKey);
             if (cachedata == null || !cachedata.Any())
             {
                 cachedata = _db.Queryable<TEntity>().ToList();
-                await CacheHelper.Set(cacheKey, cachedata);
+                await CacheHelper.SetAsync(cacheKey, cachedata);
             }
             return cachedata;
         }
         public async Task<TEntity> CheckCache(string cacheKey, object keyValue)
         {
-            var cachedata = await CacheHelper.Get<TEntity>(cacheKey + keyValue);
+            var cachedata = await CacheHelper.GetAsync<TEntity>(cacheKey + keyValue);
             if (cachedata == null)
             {
                 cachedata = await _db.Queryable<TEntity>().InSingleAsync(keyValue);
                 if (cachedata != null)
                 {
-                    await CacheHelper.Set(cacheKey + keyValue, cachedata);
+                    await CacheHelper.SetAsync(cacheKey + keyValue, cachedata);
                 }
             }
             return cachedata;

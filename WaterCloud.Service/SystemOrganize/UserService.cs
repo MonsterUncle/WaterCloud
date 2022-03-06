@@ -257,7 +257,7 @@ namespace WaterCloud.Service.SystemOrganize
                 if (userEntity.F_EnabledMark == true)
                 {
                     //缓存用户账户信息
-                    var userLogOnEntity=await CacheHelper.Get<OperatorUserInfo>(cacheKeyOperator + "info_" + userEntity.F_Id);
+                    var userLogOnEntity=await CacheHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + userEntity.F_Id);
                     if (userLogOnEntity==null)
                     {
                         userLogOnEntity = new OperatorUserInfo();
@@ -276,7 +276,7 @@ namespace WaterCloud.Service.SystemOrganize
                         userLogOnEntity.F_PreviousVisitTime = entity.F_PreviousVisitTime;
                         userLogOnEntity.F_Question = entity.F_Question;
                         userLogOnEntity.F_Theme = entity.F_Theme;
-                        await CacheHelper.Set(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
+                        await CacheHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
                     }
                     if (userLogOnEntity == null)
                     {
@@ -303,8 +303,8 @@ namespace WaterCloud.Service.SystemOrganize
                         userLogOnEntity.F_LastVisitTime = lastVisitTime;
                         userLogOnEntity.F_LogOnCount = LogOnCount;
                         userLogOnEntity.F_UserOnLine = true;
-                        await CacheHelper.Remove(cacheKeyOperator + "info_" + userEntity.F_Id);
-                        await CacheHelper.Set(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
+                        await CacheHelper.RemoveAsync(cacheKeyOperator + "info_" + userEntity.F_Id);
+                        await CacheHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
                         await OperatorProvider.Provider.ClearCurrentErrorNum();
                         return userEntity;
                     }

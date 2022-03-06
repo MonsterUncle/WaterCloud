@@ -1327,7 +1327,7 @@ namespace WaterCloud.CodeGenerator
                     await uniwork.GetDbClient().Insertable(moduleFieldsList).ExecuteCommandAsync();
                 }
                 uniwork.CurrentCommit();
-                await CacheHelper.Remove(authorizecacheKey+ OperatorProvider.Provider.GetCurrent().DbNumber+ "_list");
+                await CacheHelper.RemoveAsync(authorizecacheKey+ OperatorProvider.Provider.GetCurrent().DbNumber+ "_list");
                 FileHelper.CreateFile(indexPath, codeIndex);
                 result.Add(new KeyValue { Key = "列表页", Value = indexPath, Description = "生成成功！" });
             }

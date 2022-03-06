@@ -111,7 +111,7 @@ namespace WaterCloud.Service.SystemOrganize
             await repository.Delete(a => a.F_Id == keyValue);
             await repository.Db.Deleteable<RoleAuthorizeEntity>(a => a.F_ObjectId == keyValue).ExecuteCommandAsync();
             unitofwork.CurrentCommit();
-            await CacheHelper.Remove(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+            await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
         public async Task SubmitForm(RoleEntity roleEntity, string[] permissionIds,string[] permissionfieldsIds, string keyValue)
         {
@@ -176,7 +176,7 @@ namespace WaterCloud.Service.SystemOrganize
             await repository.Db.Deleteable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleEntity.F_Id).ExecuteCommandAsync();
             await repository.Db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
             unitofwork.CurrentCommit();
-            await CacheHelper.Remove(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+            await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
     }
 }

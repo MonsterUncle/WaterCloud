@@ -81,7 +81,7 @@ namespace WaterCloud.Service.SystemManage
                 await repository.Db.Deleteable<ModuleButtonEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
                 await repository.Db.Deleteable<ModuleFieldsEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
                 unitofwork.CurrentCommit();
-                await CacheHelper.Remove(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+                await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
             }
         }
 
@@ -108,7 +108,7 @@ namespace WaterCloud.Service.SystemManage
                 moduleEntity.Create();
                 await repository.Insert(moduleEntity);
             }
-            await CacheHelper.Remove(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+            await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
         /// <summary>
         /// 更新菜单排序

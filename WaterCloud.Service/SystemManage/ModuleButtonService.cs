@@ -66,7 +66,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 await repository.Delete(a => a.F_Id == keyValue);
             }
-            await CacheHelper.Remove(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+            await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
 
         public async Task<List<ModuleButtonEntity>> GetListByRole(string roleid)
@@ -100,7 +100,7 @@ namespace WaterCloud.Service.SystemManage
                 moduleButtonEntity.Create();
                 await repository.Insert(moduleButtonEntity);
             }
-            await CacheHelper.Remove(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+            await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
         public async Task SubmitCloneButton(string moduleId, string Ids)
         {
@@ -120,7 +120,7 @@ namespace WaterCloud.Service.SystemManage
                 entitys.Add(moduleButtonEntity);
             }
             await repository.Insert(entitys);
-            await CacheHelper.Remove(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+            await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
 
         public async Task<List<ModuleButtonEntity>> GetListNew(string moduleId = "")

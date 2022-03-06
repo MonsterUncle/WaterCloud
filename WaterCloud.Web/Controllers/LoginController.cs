@@ -192,7 +192,7 @@ namespace WaterCloud.Web.Controllers
                 //防重复token
                 string token = Utils.GuId();
                 HttpContext.Response.Cookies.Append("pc_" + GlobalContext.SystemConfig.TokenName, token);
-                await CacheHelper.Set("pc_" + GlobalContext.SystemConfig.TokenName + "_" + operatorModel.UserId + "_" + operatorModel.LoginTime, token, GlobalContext.SystemConfig.LoginExpire, true);
+                await CacheHelper.SetAsync("pc_" + GlobalContext.SystemConfig.TokenName + "_" + operatorModel.UserId + "_" + operatorModel.LoginTime, token, GlobalContext.SystemConfig.LoginExpire, true);
                 logEntity.F_Account = userEntity.F_Account;
                 logEntity.F_NickName = userEntity.F_RealName;
                 logEntity.F_Result = true;

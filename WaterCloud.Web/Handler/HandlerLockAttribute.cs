@@ -24,7 +24,7 @@ namespace WaterCloud.Web
             else
             {
                 string token = filterContext.HttpContext.Request.Cookies["pc_" + GlobalContext.SystemConfig.TokenName];
-                string cacheToken = CacheHelper.Get<string>("pc_" + GlobalContext.SystemConfig.TokenName + "_" + OperatorProvider.Provider.GetCurrent().UserId + "_" + OperatorProvider.Provider.GetCurrent().LoginTime).GetAwaiter().GetResult();
+                string cacheToken = CacheHelper.GetAsync<string>("pc_" + GlobalContext.SystemConfig.TokenName + "_" + OperatorProvider.Provider.GetCurrent().UserId + "_" + OperatorProvider.Provider.GetCurrent().LoginTime).GetAwaiter().GetResult();
                 if (string.IsNullOrWhiteSpace(token))
                 {
                     filterContext.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "token不能空" });
@@ -41,7 +41,7 @@ namespace WaterCloud.Web
                     return;
                 }
                 //固定加锁5秒
-                bool result = CacheHelper.SetNx(token, token, 5).GetAwaiter().GetResult();
+                bool result = CacheHelper.SetNxAsync(token, token, 5).GetAwaiter().GetResult();
                 if (!result)
                 {
                     filterContext.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "请求太频繁，请稍后" });

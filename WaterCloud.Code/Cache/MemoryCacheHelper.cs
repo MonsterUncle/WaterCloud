@@ -120,7 +120,7 @@ namespace WaterCloud.Code
         /// </summary>
         /// <param name="key">缓存Key</param>
         /// <returns></returns>
-        public static T Get<T>(string key) where T : class
+        public static T Get<T>(string key)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
@@ -129,7 +129,7 @@ namespace WaterCloud.Code
             {
                return temp.ToString().ToObject<T>();
             }
-            return null;
+            return default(T);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace WaterCloud.Code
         /// <returns></returns>
         public static void RemoveCacheRegex(string pattern)
         {
-            IList<string> l = SearchCacheRegex(pattern);
+            IEnumerable<string> l = SearchCacheRegex(pattern);
             foreach (var s in l)
             {
                 Remove(s);
@@ -195,7 +195,7 @@ namespace WaterCloud.Code
         /// </summary>
         /// <param name="pattern"></param>
         /// <returns></returns>
-        public static IList<string> SearchCacheRegex(string pattern)
+        public static IEnumerable<string> SearchCacheRegex(string pattern)
         {
             var cacheKeys = GetCacheKeys();
             var l = cacheKeys.Where(k => Regex.IsMatch(k, pattern)).ToList();

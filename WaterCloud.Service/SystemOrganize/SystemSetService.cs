@@ -345,7 +345,7 @@ namespace WaterCloud.Service.SystemOrganize
                 var set = await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
                 unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT ? set.F_DbNumber : "0");
                 var tempkey = unitofwork.GetDbClient().Queryable<UserEntity>().First(a => a.F_IsAdmin == true).F_Id;
-                await CacheHelper.Remove(cacheKeyOperator + "info_" + tempkey);
+                await CacheHelper.RemoveAsync(cacheKeyOperator + "info_" + tempkey);
             }
             unitofwork.Commit();
             unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
