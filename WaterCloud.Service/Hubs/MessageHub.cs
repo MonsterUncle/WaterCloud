@@ -29,7 +29,7 @@ namespace WaterCloud.Service
             var user = _service.currentuser;
             if (user == null || user.UserId == null)
             {
-                user = CacheHelper.GetAsync<OperatorModel>(cacheKeyOperator + token).GetAwaiter().GetResult();
+                user = CacheHelper.Get<OperatorModel>(cacheKeyOperator + token);
             }
             if (user != null && user.CompanyId != null)
             {

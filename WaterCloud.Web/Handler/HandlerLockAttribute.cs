@@ -41,7 +41,7 @@ namespace WaterCloud.Web
                     return;
                 }
                 //固定加锁5秒
-                bool result = CacheHelper.SetNxAsync(token, token, 5).GetAwaiter().GetResult();
+                bool result = CacheHelper.SetNx(token, token, 5);
                 if (!result)
                 {
                     filterContext.Result = new JsonResult(new AlwaysResult { state = ResultType.error.ToString(), message = "请求太频繁，请稍后" });

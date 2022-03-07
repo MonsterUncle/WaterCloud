@@ -7,6 +7,8 @@
 using WaterCloud.Code;
 using System;
 using SqlSugar;
+using WaterCloud.Code.Model;
+using System.Linq;
 
 namespace WaterCloud.DataBase
 {
@@ -21,7 +23,7 @@ namespace WaterCloud.DataBase
 			if (GlobalContext.SystemConfig!=null)
 			{
                 var current = OperatorProvider.Provider.GetCurrent();
-                if (GlobalContext.SystemConfig.SqlMode==Define.SQL_TENANT && current != null && !string.IsNullOrEmpty(current.DbNumber))
+                if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT && current != null && !string.IsNullOrEmpty(current.DbNumber))
                 {
                     (context as SqlSugarClient).ChangeDatabase(current.DbNumber);
                 }
@@ -30,46 +32,27 @@ namespace WaterCloud.DataBase
         }
         public UnitOfWork(string ConnectStr, string providerName)
         {
-            _context = new SqlSugarClient(DBContexHelper.Contex(ConnectStr, providerName));
-            int commandTimeout = 30;
-            if (GlobalContext.SystemConfig != null)
-            {
-                commandTimeout = GlobalContext.SystemConfig.CommandTimeout;
+            var list = GlobalContext.SystemConfig.SqlConfig.MapToList<DBConfig>();
+            DBConfig config = list.FirstOrDefault(a => a.DBProvider == providerName && a.DBConnectionString == ConnectStr);
+            var context = (SqlSugarClient)GlobalContext.ServiceProvider.GetService(typeof(ISqlSugarClient));
+            _context = context;
+            if (config == null)
+			{
+                config = new DBConfig();
+                config.DBNumber = DateTime.Now.ToString();
+                config.DBConnectionString = ConnectStr;
+                config.DBProvider = providerName;
+                list.Add(config);
+                GlobalContext.SystemConfig.SqlConfig = list.ToArray();
+                if (!context.IsAnyConnection(config.DBNumber))
+                {
+                    var connect = DBContexHelper.Contex(ConnectStr, providerName);
+                    context.AddConnection(connect);
+                }
+                //清除注入的数据库缓存
+                CacheHelper.Remove(GlobalContext.SystemConfig.ProjectPrefix + "_dblist");
             }
-            _context.Ado.CommandTimeOut = commandTimeout;
-            _context.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
-            {
-                DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
-            };
-            _context.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
-            {
-                if (sql.StartsWith("SELECT"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("[SELECT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                }
-                if (sql.StartsWith("INSERT"))
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("[INSERT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                }
-                if (sql.StartsWith("UPDATE"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("[UPDATE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-
-                }
-                if (sql.StartsWith("DELETE"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[DELETE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                }
-                Console.WriteLine("NeedTime-" + _context.Ado.SqlExecutionTime.ToString());
-                //App.PrintToMiniProfiler("SqlSugar", "Info", sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
-                Console.WriteLine("Content:" + SqlProfiler.ParameterFormat(sql, pars));
-                Console.WriteLine("---------------------------------");
-                Console.WriteLine("");
-            };
+            context.ChangeDatabase(config.DBNumber);
         }
         public void BeginTrans()
         {

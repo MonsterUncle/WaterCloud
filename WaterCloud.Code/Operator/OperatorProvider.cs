@@ -124,7 +124,7 @@ namespace WaterCloud.Code
             try
             {
                 string loginMark = GetProvider(LoginUserMarkKey);
-                operatorModel = CacheHelper.GetAsync<OperatorModel>(cacheKeyOperator + loginMark).GetAwaiter().GetResult();
+                operatorModel = CacheHelper.Get<OperatorModel>(cacheKeyOperator + loginMark);
             }
             catch
             {

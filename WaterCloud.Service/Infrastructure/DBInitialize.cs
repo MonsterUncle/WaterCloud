@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using WaterCloud.Code;
+using WaterCloud.Code.Model;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemOrganize;
 
@@ -21,7 +22,7 @@ namespace WaterCloud.Service
         /// <returns></returns>
         public static List<ConnectionConfig> GetConnectionConfigs(bool readDb=false)
 		{
-            List<ConnectionConfig> list = CacheHelper.GetAsync<List<ConnectionConfig>>(cacheKey).Result;
+            List<ConnectionConfig> list = CacheHelper.Get<List<ConnectionConfig>>(cacheKey);
             if (list == null || !list.Any() || readDb)
 			{
                 list=new List<ConnectionConfig>();
