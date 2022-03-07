@@ -47,6 +47,7 @@ namespace WaterCloud.DataBase
                 if (!context.IsAnyConnection(config.DBNumber))
                 {
                     var connect = DBContexHelper.Contex(ConnectStr, providerName);
+                    connect.ConfigId = config.DBNumber;
                     context.AddConnection(connect);
                 }
                 //清除注入的数据库缓存
