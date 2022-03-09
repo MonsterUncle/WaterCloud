@@ -184,6 +184,8 @@
                     $('#noticeMarker').html('');
                 }
             };
+            //表格人性化开关 默认开启传任意参数关闭
+            sessionStorage.setItem('watercloudButtonHumanized','');
             var bgcolor = localStorage.getItem('watercloudBgcolorId');
             var options = {
                 iniUrl: "/ClientsData/GetInitDataJson?v=" + new Date().Format("yyyy-MM-dd hh:mm:ss"),    // 初始化接口

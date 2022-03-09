@@ -566,6 +566,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             }
             var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
             if (innerHTML.indexOf('</button>') > -1) {
+                var buttonHumanized = sessionStorage.getItem('watercloudButtonHumanized');
                 var tempList = innerHTML.split('</button>');
                 for (var i = 0; i < tempList.length; i++) {
                     if (tempList[i].indexOf('<button ') > -1) {
@@ -581,6 +582,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                                     return false;
                                 }
                             });
+                        }
+                        if (!!buttonHumanized) {
+                            returnhtml = returnhtml.replace('layui-hide','');
                         }
                         if (itemList.length>2) {
                             returnhtml = returnhtml + itemList[2];
@@ -639,10 +643,13 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             var $element = $('#' + id);
             $element.find('button[authorize=yes]').attr('authorize', 'no');
             if (dataJson != undefined) {
+                var buttonHumanized = sessionStorage.getItem('watercloudButtonHumanized');
                 $.each(dataJson, function (i) {
                     $element.find("#" + dataJson[i].F_EnCode).attr('authorize', 'yes');
                     //去除隐藏
-                    //$element.find("#" + dataJson[i].F_EnCode).removeClass('layui-hide');
+                    if (!!buttonHumanized) {
+                       $element.find("#" + dataJson[i].F_EnCode).removeClass('layui-hide');
+                    }
                 });
             }
             $element.find("[authorize=no]").parents('button').prev('.split').remove();
@@ -891,7 +898,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             treeTable.on('row(' + tableId + ')', function (obj) {
                 obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
                 obj.tr.find("div.layui-unselect.layui-form-" + type)[0].click();
-                if (type =="radio") {
+                if (type == "radio") {
                     for (var i = 0; i < oneList.length; i++) {
                         $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
                     }
@@ -905,11 +912,40 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             })
             //多选框监听
             treeTable.on(type + '(' + tableId + ')', function (obj) {
+                var buttonHumanized = sessionStorage.getItem('watercloudButtonHumanized');
                 //控制按钮
                 var data = rendertree.checkStatus(false);
-                if (obj.type == "all") {
-                    if (obj.checked && rendertree.options.data.length != 0) {
-                        if (rendertree.options.data.length > 1) {
+                if (!buttonHumanized) {
+                    if (obj.type == "all") {
+                        if (obj.checked && rendertree.options.data.length != 0) {
+                            if (rendertree.options.data.length > 1) {
+                                for (var i = 0; i < oneList.length; i++) {
+                                    $('[name="' + oneList[i] + '"]').addClass("layui-hide");
+                                }
+                                for (var i = 0; i < moreList.length; i++) {
+                                    $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
+                                }
+                            }
+                            else {
+                                for (var i = 0; i < oneList.length; i++) {
+                                    $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
+                                }
+                                for (var i = 0; i < moreList.length; i++) {
+                                    $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
+                                }
+                            }
+                        }
+                        else {
+                            for (var i = 0; i < oneList.length; i++) {
+                                $('[name="' + oneList[i] + '"]').addClass("layui-hide");
+                            }
+                            for (var i = 0; i < moreList.length; i++) {
+                                $('[name="' + moreList[i] + '"]').addClass("layui-hide");
+                            }
+                        }
+                    }
+                    else {
+                        if (data.length > 1) {
                             for (var i = 0; i < oneList.length; i++) {
                                 $('[name="' + oneList[i] + '"]').addClass("layui-hide");
                             }
@@ -917,7 +953,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                                 $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
                             }
                         }
-                        else {
+                        else if (data.length == 1) {
                             for (var i = 0; i < oneList.length; i++) {
                                 $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
                             }
@@ -925,40 +961,22 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                                 $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
                             }
                         }
-                    }
-                    else {
-                        for (var i = 0; i < oneList.length; i++) {
-                            $('[name="' + oneList[i] + '"]').addClass("layui-hide");
-                        }
-                        for (var i = 0; i < moreList.length; i++) {
-                            $('[name="' + moreList[i] + '"]').addClass("layui-hide");
+                        else {
+                            for (var i = 0; i < oneList.length; i++) {
+                                $('[name="' + oneList[i] + '"]').addClass("layui-hide");
+                            }
+                            for (var i = 0; i < moreList.length; i++) {
+                                $('[name="' + moreList[i] + '"]').addClass("layui-hide");
+                            }
                         }
                     }
                 }
                 else {
-                    if (data.length > 1) {
-                        for (var i = 0; i < oneList.length; i++) {
-                            $('[name="' + oneList[i] + '"]').addClass("layui-hide");
-                        }
-                        for (var i = 0; i < moreList.length; i++) {
-                            $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
-                        }
+                    for (var i = 0; i < oneList.length; i++) {
+                        $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
                     }
-                    else if (data.length == 1) {
-                        for (var i = 0; i < oneList.length; i++) {
-                            $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
-                        }
-                        for (var i = 0; i < moreList.length; i++) {
-                            $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
-                        }
-                    }
-                    else {
-                        for (var i = 0; i < oneList.length; i++) {
-                            $('[name="' + oneList[i] + '"]').addClass("layui-hide");
-                        }
-                        for (var i = 0; i < moreList.length; i++) {
-                            $('[name="' + moreList[i] + '"]').addClass("layui-hide");
-                        }
+                    for (var i = 0; i < moreList.length; i++) {
+                        $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
                     }
                 }
             });

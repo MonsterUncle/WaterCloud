@@ -348,17 +348,46 @@ layui.define(["jquery", "layer", 'table', 'soulTable', 'common', 'tabletree'], f
             table.on(type+'(' + tableFilter + ')', function (obj) {
                 //控制按钮
                 var data = table.checkStatus(tableId).data;
-                if (obj.type == "all") {
-                    if (obj.checked && table.cache[tableId].length != 0) {
-                        if (table.cache[tableId].length > 1) {
+                var buttonHumanized = sessionStorage.getItem('watercloudButtonHumanized');
+                if (!buttonHumanized) {
+                    if (obj.type == "all") {
+                        if (obj.checked && table.cache[tableId].length != 0) {
+                            if (table.cache[tableId].length > 1) {
+                                for (var i = 0; i < oneList.length; i++) {
+                                    $('[name="' + oneList[i] + '"]').addClass("layui-hide");
+                                }
+                                for (var i = 0; i < moreList.length; i++) {
+                                    $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
+                                }
+                            }
+                            else {
+                                for (var i = 0; i < oneList.length; i++) {
+                                    $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
+                                }
+                                for (var i = 0; i < moreList.length; i++) {
+                                    $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
+                                }
+                            }
+                        }
+                        else {
                             for (var i = 0; i < oneList.length; i++) {
-                                $('[name="' + oneList[i]+'"]').addClass("layui-hide");
+                                $('[name="' + oneList[i] + '"]').addClass("layui-hide");
+                            }
+                            for (var i = 0; i < moreList.length; i++) {
+                                $('[name="' + moreList[i] + '"]').addClass("layui-hide");
+                            }
+                        }
+                    }
+                    else {
+                        if (data.length > 1) {
+                            for (var i = 0; i < oneList.length; i++) {
+                                $('[name="' + oneList[i] + '"]').addClass("layui-hide");
                             }
                             for (var i = 0; i < moreList.length; i++) {
                                 $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
                             }
                         }
-                        else {
+                        else if (data.length == 1) {
                             for (var i = 0; i < oneList.length; i++) {
                                 $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
                             }
@@ -366,40 +395,22 @@ layui.define(["jquery", "layer", 'table', 'soulTable', 'common', 'tabletree'], f
                                 $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
                             }
                         }
-                    }
-                    else {
-                        for (var i = 0; i < oneList.length; i++) {
-                            $('[name="' + oneList[i] + '"]').addClass("layui-hide");
-                        }
-                        for (var i = 0; i < moreList.length; i++) {
-                            $('[name="' + moreList[i] + '"]').addClass("layui-hide");
+                        else {
+                            for (var i = 0; i < oneList.length; i++) {
+                                $('[name="' + oneList[i] + '"]').addClass("layui-hide");
+                            }
+                            for (var i = 0; i < moreList.length; i++) {
+                                $('[name="' + moreList[i] + '"]').addClass("layui-hide");
+                            }
                         }
                     }
                 }
                 else {
-                    if (data.length > 1) {
-                        for (var i = 0; i < oneList.length; i++) {
-                            $('[name="' + oneList[i] + '"]').addClass("layui-hide");
-                        }
-                        for (var i = 0; i < moreList.length; i++) {
-                            $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
-                        }
+                    for (var i = 0; i < oneList.length; i++) {
+                        $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
                     }
-                    else if (data.length == 1) {
-                        for (var i = 0; i < oneList.length; i++) {
-                            $('[name="' + oneList[i] + '"]').removeClass("layui-hide");
-                        }
-                        for (var i = 0; i < moreList.length; i++) {
-                            $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
-                        }
-                    }
-                    else {
-                        for (var i = 0; i < oneList.length; i++) {
-                            $('[name="' + oneList[i] + '"]').addClass("layui-hide");
-                        }
-                        for (var i = 0; i < moreList.length; i++) {
-                            $('[name="' + moreList[i] + '"]').addClass("layui-hide");
-                        }
+                    for (var i = 0; i < moreList.length; i++) {
+                        $('[name="' + moreList[i] + '"]').removeClass("layui-hide");
                     }
                 }
                 table.resize();
