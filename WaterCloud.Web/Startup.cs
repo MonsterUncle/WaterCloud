@@ -90,7 +90,7 @@ namespace WaterCloud.Web
             {
                 var configList = DBInitialize.GetConnectionConfigs();
                 var db = new SqlSugarClient(configList);
-                DBInitialize.GetConnectionConfigs().ForEach(config => {
+                configList.ForEach(config => {
                     db.GetConnection(config.ConfigId).Ado.CommandTimeOut = GlobalContext.SystemConfig.CommandTimeout;
                     db.GetConnection(config.ConfigId).CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
                     {
