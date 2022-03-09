@@ -68,11 +68,11 @@ namespace WaterCloud.WebApi
             // 注册 SqlSugar
             services.AddScoped<ISqlSugarClient>(u =>
             {
-                var db = new SqlSugarClient(DBInitialize.GetConnectionConfigs());
+                var configList = DBInitialize.GetConnectionConfigs();
+                var db = new SqlSugarClient(configList);
                 DBInitialize.GetConnectionConfigs().ForEach(config => {
-                    db.GetConnection(config.ConfigId);
-                    db.Ado.CommandTimeOut = GlobalContext.SystemConfig.CommandTimeout;
-                    db.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
+                    db.GetConnection(config.ConfigId).Ado.CommandTimeOut = GlobalContext.SystemConfig.CommandTimeout;
+                    db.GetConnection(config.ConfigId).CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
                     {
                         DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
                     };
@@ -99,6 +99,7 @@ namespace WaterCloud.WebApi
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("[DELETE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
                         }
+                        Console.WriteLine($"执行库{config.ConfigId}");
                         Console.WriteLine("NeedTime-" + db.Ado.SqlExecutionTime.ToString());
                         //App.PrintToMiniProfiler("SqlSugar", "Info", sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
                         Console.WriteLine("Content:" + SqlProfiler.ParameterFormat(sql, pars));
