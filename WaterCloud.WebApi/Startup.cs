@@ -71,12 +71,13 @@ namespace WaterCloud.WebApi
                 var configList = DBInitialize.GetConnectionConfigs();
                 var db = new SqlSugarClient(configList);
                 configList.ForEach(config => {
-                    db.GetConnection(config.ConfigId).Ado.CommandTimeOut = GlobalContext.SystemConfig.CommandTimeout;
-                    db.GetConnection(config.ConfigId).CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
+                    string temp = config.ConfigId;
+                    db.GetConnection(temp).Ado.CommandTimeOut = GlobalContext.SystemConfig.CommandTimeout;
+                    db.GetConnection(temp).CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
                     {
                         DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
                     };
-                    db.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
+                    db.GetConnection(temp).Aop.OnLogExecuted = (sql, pars) => //SQL执行完
                     {
                         if (sql.StartsWith("SELECT"))
                         {
