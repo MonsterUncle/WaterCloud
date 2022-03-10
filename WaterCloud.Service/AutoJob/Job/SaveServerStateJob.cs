@@ -9,6 +9,7 @@ using WaterCloud.Service.SystemSecurity;
 
 namespace WaterCloud.Service.AutoJob
 {
+    [ServiceDescription("服务器监控")]
 	public class SaveServerStateJob : IJobTask
     {
         private IWebHostEnvironment _hostingEnvironment;

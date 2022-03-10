@@ -145,13 +145,21 @@ namespace WaterCloud.Service.SystemSecurity
         /// 返回系统的job接口
         /// </summary>
         /// <returns></returns>
-        public List<string> QueryLocalHandlers()
+        public List<KeyValue> QueryLocalHandlers()
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes().Where(a => a.GetInterfaces()
                     .Contains(typeof(IJobTask))))
                 .ToArray();
-            return types.Select(a => a.FullName).ToList();
+            var list = new List<KeyValue>();
+			foreach (var item in types)
+			{
+                list.Add(new KeyValue { 
+                    Key=item.FullName,
+                    Description = item.GetCustomAttribute<ServiceDescription>(false)!.ClassDescription
+                });
+			}
+            return list;
         }
 
         public async Task ChangeJobStatus(string keyValue, int status)

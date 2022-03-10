@@ -131,11 +131,12 @@
         function initControl() {
             $("#F_FileName").bindSelect({
                 url: "/SystemSecurity/OpenJobs/QueryLocalHandlers",
-                id: ""
+                id: "Key",
+                text:"Description"
             });
             $("#F_JobType").bindRadio({
                 data: top.clients.dataItems["JobType"],
-                id: "",
+                id: ""
             });
         }
         form.on('radio(F_JobType)', function (data) {
