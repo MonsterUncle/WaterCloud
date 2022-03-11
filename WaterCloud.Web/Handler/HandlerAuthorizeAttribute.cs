@@ -23,7 +23,7 @@ namespace WaterCloud.Web
         {
             //反射获取Authorize中的参数 控制器方法前加[Authorize("SystemManage:Area:Delete")]
             var description = (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)filterContext.ActionDescriptor;
-            var methodanonymous = (AuthorizeAttribute)description.MethodInfo.GetCustomAttribute(typeof(AuthorizeAttribute));
+            var methodanonymous = description.MethodInfo.GetCustomAttribute<Authorize>(false)!;
 			if (methodanonymous!=null)
 			{
                 _authorize = methodanonymous._authorize;

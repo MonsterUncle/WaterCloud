@@ -36,7 +36,7 @@ namespace WaterCloud.WebApi
                 OperatorModel user = OperatorProvider.Provider.GetCurrent();
                 var description =
                 (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)context.ActionDescriptor;
-                var methodanonymous = (AuthorizeAttribute)description.MethodInfo.GetCustomAttribute(typeof(AuthorizeAttribute));
+                var methodanonymous = description.MethodInfo.GetCustomAttribute<Authorize>(false)!;
                 if (user == null || methodanonymous == null)
                 {
                     AlwaysResult obj = new AlwaysResult();
