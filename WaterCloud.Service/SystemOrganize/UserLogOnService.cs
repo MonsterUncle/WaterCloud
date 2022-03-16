@@ -34,20 +34,20 @@ namespace WaterCloud.Service.SystemOrganize
             if (entity == null)
             {
                 entity = new UserLogOnEntity();
-                entity.F_Id = keyValue;
-                entity.F_UserId = keyValue;
-                entity.F_LogOnCount = 0;
-                entity.F_UserOnLine = false;
-                entity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                entity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.F_UserSecretkey).ToLower(), 32).ToLower();
+                entity.Id = keyValue;
+                entity.UserId = keyValue;
+                entity.LogOnCount = 0;
+                entity.UserOnLine = false;
+                entity.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                entity.UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.UserSecretkey).ToLower(), 32).ToLower();
                 await repository.Insert(entity);
             }
             else
             {
                 //userLogOnEntity = new UserLogOnEntity();
-                //userLogOnEntity.F_Id = keyValue;
-                entity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                entity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.F_UserSecretkey).ToLower(), 32).ToLower();
+                //userLogOnEntity.Id = keyValue;
+                entity.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                entity.UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.UserSecretkey).ToLower(), 32).ToLower();
                 await repository.Update(entity);
             }
             //缓存用户账户信息
@@ -55,23 +55,23 @@ namespace WaterCloud.Service.SystemOrganize
             if (userLogOnEntity == null)
             {
                 userLogOnEntity = new OperatorUserInfo();
-                userLogOnEntity.F_UserPassword = entity.F_UserPassword;
-                userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
-                userLogOnEntity.F_AllowEndTime = entity.F_AllowEndTime;
-                userLogOnEntity.F_AllowStartTime = entity.F_AllowStartTime;
-                userLogOnEntity.F_AnswerQuestion = entity.F_AnswerQuestion;
-                userLogOnEntity.F_ChangePasswordDate = entity.F_ChangePasswordDate;
-                userLogOnEntity.F_FirstVisitTime = entity.F_FirstVisitTime;
-                userLogOnEntity.F_LastVisitTime = entity.F_LastVisitTime;
-                userLogOnEntity.F_LockEndDate = entity.F_LockEndDate;
-                userLogOnEntity.F_LockStartDate = entity.F_LockStartDate;
-                userLogOnEntity.F_LogOnCount = entity.F_LogOnCount;
-                userLogOnEntity.F_PreviousVisitTime = entity.F_PreviousVisitTime;
-                userLogOnEntity.F_Question = entity.F_Question;
-                userLogOnEntity.F_Theme = entity.F_Theme;
+                userLogOnEntity.UserPassword = entity.UserPassword;
+                userLogOnEntity.UserSecretkey = entity.UserSecretkey;
+                userLogOnEntity.AllowEndTime = entity.AllowEndTime;
+                userLogOnEntity.AllowStartTime = entity.AllowStartTime;
+                userLogOnEntity.AnswerQuestion = entity.AnswerQuestion;
+                userLogOnEntity.ChangePasswordDate = entity.ChangePasswordDate;
+                userLogOnEntity.FirstVisitTime = entity.FirstVisitTime;
+                userLogOnEntity.LastVisitTime = entity.LastVisitTime;
+                userLogOnEntity.LockEndDate = entity.LockEndDate;
+                userLogOnEntity.LockStartDate = entity.LockStartDate;
+                userLogOnEntity.LogOnCount = entity.LogOnCount;
+                userLogOnEntity.PreviousVisitTime = entity.PreviousVisitTime;
+                userLogOnEntity.Question = entity.Question;
+                userLogOnEntity.Theme = entity.Theme;
             }
-            userLogOnEntity.F_UserPassword = entity.F_UserPassword;
-            userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
+            userLogOnEntity.UserPassword = entity.UserPassword;
+            userLogOnEntity.UserSecretkey = entity.UserSecretkey;
             await CacheHelper.RemoveAsync(cacheKeyOperator + "info_" + keyValue);
             await CacheHelper.SetAsync(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
         }
@@ -80,12 +80,12 @@ namespace WaterCloud.Service.SystemOrganize
         {
             UserLogOnEntity entity = new UserLogOnEntity();
             entity = repository.IQueryable().InSingle(keyValue);
-            entity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-            entity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.F_UserSecretkey).ToLower(), 32).ToLower();
+            entity.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+            entity.UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), entity.UserSecretkey).ToLower(), 32).ToLower();
             await repository.Update(entity);
             var userLogOnEntity = await CacheHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + keyValue);
-            userLogOnEntity.F_UserPassword = entity.F_UserPassword;
-            userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
+            userLogOnEntity.UserPassword = entity.UserPassword;
+            userLogOnEntity.UserSecretkey = entity.UserSecretkey;
             await CacheHelper.SetAsync(cacheKeyOperator + "info_" + keyValue, userLogOnEntity);
         }
     }

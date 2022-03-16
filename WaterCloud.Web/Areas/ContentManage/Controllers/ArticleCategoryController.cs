@@ -29,7 +29,7 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
             if (string.IsNullOrEmpty(pagination.field))
             {
                 pagination.order = "desc";
-                pagination.field = "F_Id";
+                pagination.field = "Id";
             }
             var data = await _service.GetLookList(pagination,keyword);
             return Success(pagination.records, data);
@@ -41,7 +41,7 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
             var data = await _service.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
-                data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
+                data = data.TreeWhere(t => t.FullName.Contains(keyword));
             }
             return Success(data.Count, data);
         }

@@ -23,13 +23,13 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<OrganizeEntity>> GetList()
         {
             var query = repository.IQueryable();
-            return await query.Where(a=>a.F_DeleteMark==false).ToListAsync();
+            return await query.Where(a=>a.DeleteMark==false).ToListAsync();
         }
         public async Task<List<OrganizeEntity>> GetLookList()
         {
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             query = GetDataPrivilege("a","",query);
-            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
+            return await query.OrderBy(a => a.SortCode).ToListAsync();
         }
         public async Task<OrganizeEntity> GetLookForm(string keyValue)
         {
@@ -43,17 +43,17 @@ namespace WaterCloud.Service.SystemOrganize
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (await repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).AnyAsync())
+            if (await repository.IQueryable(a => a.ParentId.Equals(keyValue)).AnyAsync())
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }
             else
             {
-                if (await repository.Db.Queryable<UserEntity>().Where(a=>a.F_OrganizeId==keyValue).AnyAsync()|| await repository.Db.Queryable<UserEntity>().Where(a => a.F_DepartmentId == keyValue).AnyAsync())
+                if (await repository.Db.Queryable<UserEntity>().Where(a=>a.OrganizeId==keyValue).AnyAsync()|| await repository.Db.Queryable<UserEntity>().Where(a => a.DepartmentId == keyValue).AnyAsync())
                 {
                     throw new Exception("组织使用中，无法删除");
                 }
-                await repository.Delete(a => a.F_Id == keyValue);
+                await repository.Delete(a => a.Id == keyValue);
             }
         }
         public async Task SubmitForm(OrganizeEntity organizeEntity, string keyValue)
@@ -65,9 +65,9 @@ namespace WaterCloud.Service.SystemOrganize
             }
             else
             {
-                organizeEntity.F_AllowDelete = false;
-                organizeEntity.F_AllowEdit = false;
-                organizeEntity.F_DeleteMark = false;
+                organizeEntity.AllowDelete = false;
+                organizeEntity.AllowEdit = false;
+                organizeEntity.DeleteMark = false;
                 organizeEntity.Create();
                 await repository.Insert(organizeEntity);
             }

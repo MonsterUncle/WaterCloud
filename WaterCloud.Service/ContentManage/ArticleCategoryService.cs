@@ -26,28 +26,28 @@ namespace WaterCloud.Service.ContentManage
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.FullName.Contains(keyword) || a.Description.Contains(keyword));
             }
-            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.DeleteMark == false).OrderBy(a => a.Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<ArticleCategoryEntity>> GetLookList(string keyword = "")
         {
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a =>a.F_FullName.Contains(keyword) || a.F_Description.Contains(keyword));
+                query = query.Where(a =>a.FullName.Contains(keyword) || a.Description.Contains(keyword));
             }
             query = GetDataPrivilege("a","", query);
-            return await query.OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
+            return await query.OrderBy(a => a.Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<ArticleCategoryEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.FullName.Contains(keyword) || a.Description.Contains(keyword));
             }
             //权限过滤
             query = GetDataPrivilege("a","", query);
@@ -71,7 +71,7 @@ namespace WaterCloud.Service.ContentManage
         {
             if (string.IsNullOrEmpty(keyValue))
             {
-                entity.F_DeleteMark = false;
+                entity.DeleteMark = false;
                 //此处需修改
                 entity.Create();
                 await repository.Insert(entity);
@@ -87,11 +87,11 @@ namespace WaterCloud.Service.ContentManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            if (await repository.Db.Queryable<ArticleNewsEntity>().Where(a=> ids.Contains(a.F_CategoryId)).AnyAsync())
+            if (await repository.Db.Queryable<ArticleNewsEntity>().Where(a=> ids.Contains(a.CategoryId)).AnyAsync())
             {
                 throw new Exception("新闻类别使用中，无法删除");
             }
-            await repository.Delete(t => ids.Contains(t.F_Id));
+            await repository.Delete(t => ids.Contains(t.Id));
         }
         #endregion
 

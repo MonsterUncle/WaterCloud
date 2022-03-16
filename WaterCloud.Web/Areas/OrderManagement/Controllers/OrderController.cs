@@ -28,7 +28,7 @@ namespace WaterCloud.Web.Areas.OrderManagement.Controllers
         {
             if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.field = "F_NeedTime";
+                pagination.field = "NeedTime";
                 pagination.order = "asc";
             }
             var data = await _service.GetLookList(pagination,keyword);

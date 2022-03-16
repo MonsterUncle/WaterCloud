@@ -25,21 +25,21 @@ namespace WaterCloud.Service.SystemSecurity
             var list = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(a => a.F_StartIP.Contains(keyword) || a.F_EndIP.Contains(keyword));
+                list = list.Where(a => a.StartIP.Contains(keyword) || a.EndIP.Contains(keyword));
 
             }
-            return await list.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id).ToListAsync();
+            return await list.Where(a => a.DeleteMark == false).OrderBy(a => a.Id).ToListAsync();
         }
         public async Task<List<FilterIPEntity>> GetLookList(string keyword)
         {
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(a => a.F_StartIP.Contains(keyword) || a.F_EndIP.Contains(keyword));
+                query = query.Where(a => a.StartIP.Contains(keyword) || a.EndIP.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
-            return await query.OrderBy(a => a.F_Id).ToListAsync();
+            return await query.OrderBy(a => a.Id).ToListAsync();
         }
         public async Task<FilterIPEntity> GetLookForm(string keyValue)
         {
@@ -54,18 +54,18 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(",");
-            await repository.Delete(a => ids.Contains(a.F_Id));
+            await repository.Delete(a => ids.Contains(a.Id));
         }
         public async Task<bool> CheckIP(string ip)
         {
             return await Task.Run(() => {
-                var list = repository.IQueryable().Where(a => a.F_EnabledMark == true && a.F_DeleteMark == false && a.F_Type == false && a.F_EndTime > DateTime.Now).ToList();
+                var list = repository.IQueryable().Where(a => a.EnabledMark == true && a.DeleteMark == false && a.Type == false && a.EndTime > DateTime.Now).ToList();
                 long ipAddress = IP2Long(ip);
                 foreach (var item in list)
                 {
-                    if (string.IsNullOrEmpty(item.F_EndIP))
+                    if (string.IsNullOrEmpty(item.EndIP))
                     {
-                        long start = IP2Long(item.F_StartIP);
+                        long start = IP2Long(item.StartIP);
                         bool inRange = ipAddress == start;
                         if (inRange)
                         {
@@ -74,8 +74,8 @@ namespace WaterCloud.Service.SystemSecurity
                     }
                     else
                     {
-                        long start = IP2Long(item.F_StartIP);
-                        long end = IP2Long(item.F_EndIP);
+                        long start = IP2Long(item.StartIP);
+                        long end = IP2Long(item.EndIP);
                         bool inRange = (ipAddress >= start && ipAddress <= end);
                         if (inRange)
                         {
@@ -102,7 +102,7 @@ namespace WaterCloud.Service.SystemSecurity
         }
         public async Task SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
         {
-            filterIPEntity.F_Type = false;
+            filterIPEntity.Type = false;
             if (!string.IsNullOrEmpty(keyValue))
             {
                 filterIPEntity.Modify(keyValue);

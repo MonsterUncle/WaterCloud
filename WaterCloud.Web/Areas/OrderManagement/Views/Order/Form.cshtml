@@ -15,7 +15,7 @@
         var keyValue = $.request("keyValue");
         //执行一个laydate实例
         laydate.render({
-            elem: '#F_NeedTime'
+            elem: '#NeedTime'
             , trigger: 'click',
             format: 'yyyy/MM/dd',
         });
@@ -40,21 +40,21 @@
             }
             else {
                 var code = new Date().formatDate('yyyyMMddhhmmss');
-                $('#F_OrderCode').val("OR-" + code);
+                $('#OrderCode').val("OR-" + code);
             }
             form.render();
             var params = [{ name: '未完成', value: 0 }, { name: '已完成', value: 1 }];
             var cols = [[
                 { type: "checkbox", width: 50 },
                 {
-                    field: 'F_OrderState', title: '订单状态', width: 120, sort: true, event: 'orderState', config: { type: 'select', data: params, verify: { type: "required" } }
+                    field: 'OrderState', title: '订单状态', width: 120, sort: true, event: 'orderState', config: { type: 'select', data: params, verify: { type: "required" } }
                     , templet: function (d) {
-                        if (d.F_OrderState || d.F_OrderState == 0) {
-                            if (d.F_OrderState.value || d.F_OrderState.value == 0) {
-                                return d.F_OrderState.name;
+                        if (d.OrderState || d.OrderState == 0) {
+                            if (d.OrderState.value || d.OrderState.value == 0) {
+                                return d.OrderState.name;
                             }
                             for (var i = 0; i < params.length; i++) {
-                                if (params[i].value == d.F_OrderState) {
+                                if (params[i].value == d.OrderState) {
                                     return params[i].name;
                                 }
                             }
@@ -63,14 +63,14 @@
                     }
                 },
                 {
-                    field: 'F_ActualTime', title: '实际时间', minWidth: 160, sort: true, event: 'actualTime', config: { type: 'date', dateType: 'date' }
+                    field: 'ActualTime', title: '实际时间', minWidth: 160, sort: true, event: 'actualTime', config: { type: 'date', dateType: 'date' }
                 },
-                { field: 'F_ProductName', title: '产品名称', minWidth: 145, sort: true, event: 'productName', config: { type: 'input', verify: { type: "required" } } },
-                { field: 'F_ProductDescription', title: '产品规格', minWidth: 145, event: 'productDescription', config: { type: 'input'} },
-                { field: 'F_ProductUnit', title: '产品单位', width: 120, event: 'productUnit', config: { type: 'input' } },
-                { field: 'F_NeedNum', title: '需求数量', width: 140, event: 'needNum', config: { type: 'signedInput' } },
-                { field: 'F_ActualNum', title: '实际数量', width: 140, event: 'actualNum', config: { type: 'signedInput' } },
-                { field: 'F_Description', title: '备注', minWidth: 145, event: 'Description', config: { type: 'input' } },
+                { field: 'ProductName', title: '产品名称', minWidth: 145, sort: true, event: 'productName', config: { type: 'input', verify: { type: "required" } } },
+                { field: 'ProductDescription', title: '产品规格', minWidth: 145, event: 'productDescription', config: { type: 'input'} },
+                { field: 'ProductUnit', title: '产品单位', width: 120, event: 'productUnit', config: { type: 'input' } },
+                { field: 'NeedNum', title: '需求数量', width: 140, event: 'needNum', config: { type: 'signedInput' } },
+                { field: 'ActualNum', title: '实际数量', width: 140, event: 'actualNum', config: { type: 'signedInput' } },
+                { field: 'Description', title: '备注', minWidth: 145, event: 'Description', config: { type: 'input' } },
             ]];
             commonTable.rendertable({
                 elem: '#currentTableId',
@@ -111,7 +111,7 @@
             var data = table.checkStatus('currentTableId').data;
             if (obj.event === 'add') {  // 监听添加操作\
                 var alldata = table.cache.currentTableId;
-                alldata.push({ F_Id: uuid(), F_OrderState: 0, F_NeedNum: '0', F_ActualNum: '0', F_ActualTime: '', F_ProductName: '', F_ProductDescription: '', F_ProductUnit: '',F_Description:'' })
+                alldata.push({ Id: uuid(), OrderState: 0, NeedNum: '0', ActualNum: '0', ActualTime: '', ProductName: '', ProductDescription: '', ProductUnit: '',Description:'' })
                 table.reload('currentTableId', { data: alldata })
             }
             else if (obj.event === 'delete') {
@@ -124,7 +124,7 @@
                         var alldata = table.cache.currentTableId;
                         for (var j = 0; j < data.length; j++) {
                             for (var i = alldata.length-1; i >= 0; i--) {
-                                if (alldata[i].F_Id == data[j].F_Id) {
+                                if (alldata[i].Id == data[j].Id) {
                                     alldata.splice(i, 1);
                                     break;
                                 }
@@ -151,13 +151,13 @@
                 return false;
             }
             for (var i = 0; i < postData.list.length; i++) {
-                if (!postData.list[i].F_ProductName) {
+                if (!postData.list[i].ProductName) {
                     common.modalMsg("请输入明细的产品名称!");
                     return false;
                 }
-                postData.list[i].F_OrderState = !!postData.list[i].F_OrderState.value ? postData.list[i].F_OrderState.value : postData.list[i].F_OrderState;
+                postData.list[i].OrderState = !!postData.list[i].OrderState.value ? postData.list[i].OrderState.value : postData.list[i].OrderState;
             }
-            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+            if (!postData["EnabledMark"]) postData["EnabledMark"] = false;
             common.submitForm({
                 url: '/OrderManagement/Order/SubmitForm?keyValue=' + keyValue,
                 param: postData,
@@ -178,13 +178,13 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label required">订单编号</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_OrderCode" name="F_OrderCode" autocomplete="off" maxlength="50" lay-verify="required" placeholder="请输入订单编号" class="layui-input">
+                            <input type="text" id="OrderCode" name="OrderCode" autocomplete="off" maxlength="50" lay-verify="required" placeholder="请输入订单编号" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label required">订单状态</label>
                         <div class="layui-input-block">
-                            <select id="F_OrderState" name="F_OrderState"  disabled>
+                            <select id="OrderState" name="OrderState"  disabled>
                                 <option value="0">未完成</option>
                                 <option value="1">已完成</option>
                             </select>
@@ -195,13 +195,13 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label required">需求时间</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_NeedTime" name="F_NeedTime" autocomplete="off" lay-verify="required" class="layui-input">
+                            <input type="text" id="NeedTime" name="NeedTime" autocomplete="off" lay-verify="required" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">选项</label>
                         <div class="layui-input-block">
-                            <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
+                            <input type="checkbox" name="EnabledMark" id="EnabledMark" checked="" value="true" title="有效标识">
                         </div>
                     </div>
                 </div>
@@ -209,7 +209,7 @@
                     <div class="layui-col-md12 layui-col-xs12 layui-hide">
                         <label class="layui-form-label">备注</label>
                         <div class="layui-input-block">
-                            <input id="F_Description" name="F_Description" class="layui-input" placeholder="请输入备注">
+                            <input id="Description" name="Description" class="layui-input" placeholder="请输入备注">
                         </div>
                     </div>
                 </div>

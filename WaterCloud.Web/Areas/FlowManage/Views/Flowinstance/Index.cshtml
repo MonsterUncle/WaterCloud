@@ -55,18 +55,18 @@
              cols: [[
                  { type: "radio", width: 50, fixed: 'left' },
                  {
-                     field: 'F_IsFinish', title: '流程状态', width: 120, sort: true, filter: true, 
+                     field: 'IsFinish', title: '流程状态', width: 120, sort: true, filter: true, 
                      templet: function (d) {
-                         if (d.F_IsFinish == 0) {
+                         if (d.IsFinish == 0) {
                              return "<span class='layui-badge layui-bg-blue'>正在运行</span>";
                          }
-                         else if (d.F_IsFinish == 2) {
+                         else if (d.IsFinish == 2) {
                              return "<span class= 'layui-badge layui-bg-gray'>被撤回</span >";
                          }
-                         else if (d.F_IsFinish == 3) {
+                         else if (d.IsFinish == 3) {
                              return "<span class= 'layui-badge'>不同意</span >";
                          }
-                         else if (d.F_IsFinish == 4) {
+                         else if (d.IsFinish == 4) {
                              return "<span class= 'layui-badge layui-bg-gray'>被驳回</span >";
                          }
                          else{
@@ -74,14 +74,14 @@
                          }
                      }
                  },
-                 { field: 'F_Code', title: '实例编号', width: 150, sort: true, filter: true },
-                 { field: 'F_CustomName', title: '实例名称', minWidth: 150, sort: true, filter: true },
-                 { field: 'F_ActivityName', title: '当前节点名称', width: 140, filter: true },
-                 { field: 'F_Description', title: '实例备注', minWidth: 150, filter: true },
+                 { field: 'Code', title: '实例编号', width: 150, sort: true, filter: true },
+                 { field: 'CustomName', title: '实例名称', minWidth: 150, sort: true, filter: true },
+                 { field: 'ActivityName', title: '当前节点名称', width: 140, filter: true },
+                 { field: 'Description', title: '实例备注', minWidth: 150, filter: true },
                  {
-                     field: 'F_CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
+                     field: 'CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                  },
-                 { field: 'F_CreatorUserName', title: '创建人', width: 120, sort: true, filter: true },
+                 { field: 'CreatorUserName', title: '创建人', width: 120, sort: true, filter: true },
                  { title: '操作', width: 225, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
              ]]
          });
@@ -114,13 +114,13 @@
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
-                 if (data[0].F_IsFinish != 4 && data[0].F_IsFinish != 2) {
+                 if (data[0].IsFinish != 4 && data[0].IsFinish != 2) {
                      common.modalMsg("申请已处理，无法删除", "warning");
                      return false;
                  }
                  common.deleteForm({
                      url: "/FlowManage/Flowinstance/DeleteForm",
-                     param: { keyValue: data[0].F_Id },
+                     param: { keyValue: data[0].Id },
                      success: function () {
                          common.reload('data-search-btn');
                          entity = null;
@@ -132,14 +132,14 @@
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
-                 if (data[0].F_IsFinish != 0) {
+                 if (data[0].IsFinish != 0) {
                      common.modalMsg("申请已处理，无法撤回", "warning");
                      return false;
                  }
                 common.submitPost({
                     prompt:"注：您确定要撤回选中数据吗？",
                      url: "/FlowManage/Flowinstance/CancleForm",
-                     param: { keyValue: data[0].F_Id },
+                     param: { keyValue: data[0].Id },
                      success: function () {
                          common.reload('data-search-btn');
                          entity = null;
@@ -151,14 +151,14 @@
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
-                 var userId = top.currentUser.F_Id;
-                 if ((data[0].F_IsFinish != 4 && data[0].F_IsFinish != 2) || data[0].F_MakerList.indexOf(userId)<0 ) {
+                 var userId = top.currentUser.Id;
+                 if ((data[0].IsFinish != 4 && data[0].IsFinish != 2) || data[0].MakerList.indexOf(userId)<0 ) {
                      common.modalMsg("申请已处理，无法修改", "warning");
                      return false;
                  }
                  common.openNewTabByIframe({
                      title: "修改申请",
-                     href: "/FlowManage/Flowinstance/Form?keyValue=" + data[0].F_Id,
+                     href: "/FlowManage/Flowinstance/Form?keyValue=" + data[0].Id,
                  });
            }
            else if (obj.event === 'details') {
@@ -168,7 +168,7 @@
                  }
                  common.modalOpen({
                      title: "查看进度",
-                     url: "/FlowManage/Flowinstance/Details?keyValue=" + data[0].F_Id,
+                     url: "/FlowManage/Flowinstance/Details?keyValue=" + data[0].Id,
                      width: "700px",
                      height: "600px",
                      btn: []
@@ -187,13 +187,13 @@
          //toolrow监听事件
          table.on('tool(currentTableFilter)', function (obj) {
              if (obj.event === 'delete') {
-                 if (obj.data.F_IsFinish != 4 && obj.data.F_IsFinish != 2) {
+                 if (obj.data.IsFinish != 4 && obj.data.IsFinish != 2) {
                      common.modalMsg("申请已处理，无法删除", "warning");
                      return false;
                  }
                  common.deleteForm({
                      url: "/FlowManage/Flowinstance/DeleteForm",
-                     param: { keyValue: obj.data.F_Id },
+                     param: { keyValue: obj.data.Id },
                      success: function () {
                          common.reload('data-search-btn');
                          entity = null;
@@ -201,14 +201,14 @@
                  });
              }
              if (obj.event === 'cancle') {
-                 if (obj.data.F_IsFinish != 0) {
+                 if (obj.data.IsFinish != 0) {
                      common.modalMsg("申请已处理，无法撤回", "warning");
                      return false;
                  }
                 common.submitPost({
                     prompt:"注：您确定要撤回选中数据吗？",
                      url: "/FlowManage/Flowinstance/CancleForm",
-                     param: { keyValue: obj.data.F_Id },
+                     param: { keyValue: obj.data.Id },
                      success: function () {
                          common.reload('data-search-btn');
                          entity = null;
@@ -216,20 +216,20 @@
                });
             }
              else if (obj.event === 'edit') {
-                 var userId = top.currentUser.F_Id;
-                 if ((obj.data.F_IsFinish != 4 && obj.data.F_IsFinish != 2) || obj.data.F_MakerList.indexOf(userId) < 0) {
+                 var userId = top.currentUser.Id;
+                 if ((obj.data.IsFinish != 4 && obj.data.IsFinish != 2) || obj.data.MakerList.indexOf(userId) < 0) {
                      common.modalMsg("申请已处理，无法修改", "warning");
                      return false;
                  }
                  common.openNewTabByIframe({
                      title: "修改申请",
-                     href: "/FlowManage/Flowinstance/Form?keyValue=" + obj.data.F_Id,
+                     href: "/FlowManage/Flowinstance/Form?keyValue=" + obj.data.Id,
                  });
              }
              else if (obj.event === 'details') {
                  common.modalOpen({
                      title: "查看进度",
-                     url: "/FlowManage/Flowinstance/Details?keyValue=" + obj.data.F_Id,
+                     url: "/FlowManage/Flowinstance/Details?keyValue=" + obj.data.Id,
                      width: "700px",
                      height: "600px",
                      btn: []

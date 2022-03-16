@@ -31,12 +31,12 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         {
             if (string.IsNullOrEmpty(keyValue))
             {
-                entity.F_EnabledMark = false;
-                entity.F_DeleteMark = false;
+                entity.EnabledMark = false;
+                entity.DeleteMark = false;
             }
             else
             {
-                entity.F_EnabledMark = null;
+                entity.EnabledMark = null;
             }
             try
             {
@@ -80,7 +80,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         public async Task<ActionResult> GetGridJson(Pagination pagination, string keyword)
         {
             pagination.order = "desc";
-            pagination.field = "F_EnabledMark";
+            pagination.field = "EnabledMark";
             //导出全部页使用
             if (pagination.rows == 0 && pagination.page == 0)
             {
@@ -90,9 +90,9 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             var data = await _service.GetLookList(pagination, keyword);
             foreach (var item in data)
             {
-                if (item.F_EnabledMark == true)
+                if (item.EnabledMark == true)
                 {
-                    CronExpression cronExpression = new CronExpression(item.F_CronExpress);
+                    CronExpression cronExpression = new CronExpression(item.CronExpress);
                     item.NextValidTimeAfter = cronExpression.GetNextValidTimeAfter(DateTime.Now).Value.ToLocalTime().DateTime;
                 }
                 else
@@ -109,7 +109,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             var data = await _service.GetLogList(keyValue);
             if (!string.IsNullOrEmpty(keyword))
             {
-                data = data.Where(a => a.F_Description.Contains(keyword)).ToList();
+                data = data.Where(a => a.Description.Contains(keyword)).ToList();
             }
             return Success(data.Count, data);
         }

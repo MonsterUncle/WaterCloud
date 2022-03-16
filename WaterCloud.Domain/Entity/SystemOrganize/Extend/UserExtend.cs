@@ -17,8 +17,8 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 备注
         /// </summary>
         /// <returns></returns>
-        public string F_Remark { get; set; }
-        public string F_DutyName { get; set; }
-        public string F_CompanyName { get; set; }
+        public string Remark { get; set; }
+        public string DutyName { get; set; }
+        public string CompanyName { get; set; }
     }
 }

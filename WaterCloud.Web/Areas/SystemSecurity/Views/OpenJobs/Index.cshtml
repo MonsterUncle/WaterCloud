@@ -19,46 +19,46 @@
             page: false,
             cols: [[
                 { type: "radio", width: 50, fixed: 'left' },
-                { field: 'F_JobName', title: '名称', minWidth: 230, sort: true },
-                { field: 'F_JobGroup', title: '组名', minWidth: 180, sort: true },
-                { field: 'F_IsLog', title: '是否记录日志', width: 130, sort: true },
+                { field: 'JobName', title: '名称', minWidth: 230, sort: true },
+                { field: 'JobGroup', title: '组名', minWidth: 180, sort: true },
+                { field: 'IsLog', title: '是否记录日志', width: 130, sort: true },
                 {
-                    field: 'F_JobType', title: '类型', width: 100, sort: true,
+                    field: 'JobType', title: '类型', width: 100, sort: true,
                     templet: function (d) {
-                        return top.clients.dataItems["JobType"][d.F_JobType] == undefined ? "" : top.clients.dataItems["JobType"][d.F_JobType];
+                        return top.clients.dataItems["JobType"][d.JobType] == undefined ? "" : top.clients.dataItems["JobType"][d.JobType];
                     }
                 },
                 {
-                    field: 'F_EnabledMark', title: '任务状态', width: 110, sort: true,
+                    field: 'EnabledMark', title: '任务状态', width: 110, sort: true,
                     templet: function (d) {
-                        if (d.F_EnabledMark == true) {
+                        if (d.EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                         }
                     }
                 },
-                { field: 'F_LastRunTime', title: '最近执行时间', width: 160, sort: true },
+                { field: 'LastRunTime', title: '最近执行时间', width: 160, sort: true },
                 { field: 'NextValidTimeAfter', title: '下次执行时间', width: 160 },
                 {
-                    field: 'F_LastRunMark', title: '最近执行状态', width: 130, sort: true,
+                    field: 'LastRunMark', title: '最近执行状态', width: 130, sort: true,
                     templet: function (d) {
-                        if (d.F_LastRunMark == true) {
+                        if (d.LastRunMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>成功</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>失败</span>";
                         }
                     }
                 },
-                { field: 'F_LastRunErrTime', title: '上次发生错误时间', width: 160, sort: true },
-                { field: 'F_LastRunErrMsg', title: '上次发生错误信息', width: 180, sort: true },
-                { field: 'F_StarRunTime', title: '最近启动时间', width: 170, sort: true },
-                { field: 'F_EndRunTime', title: '最近关闭时间', width: 170, sort: true },
-                { field: 'F_FileName', title: '文件名', width: 180, sort: true },
-                { field: 'F_RequestUrl', title: '请求地址', width: 180, sort: true },
-                { field: 'F_RequestString', title: '请求参数', width: 180, sort: true },
-                { field: 'F_CronExpress', title: 'CRON', width: 150 },
-                { field: 'F_Description', title: '备注', width: 150, sort: true },
+                { field: 'LastRunErrTime', title: '上次发生错误时间', width: 160, sort: true },
+                { field: 'LastRunErrMsg', title: '上次发生错误信息', width: 180, sort: true },
+                { field: 'StarRunTime', title: '最近启动时间', width: 170, sort: true },
+                { field: 'EndRunTime', title: '最近关闭时间', width: 170, sort: true },
+                { field: 'FileName', title: '文件名', width: 180, sort: true },
+                { field: 'RequestUrl', title: '请求地址', width: 180, sort: true },
+                { field: 'RequestString', title: '请求参数', width: 180, sort: true },
+                { field: 'CronExpress', title: 'CRON', width: 150 },
+                { field: 'Description', title: '备注', width: 150, sort: true },
                 { title: '操作', width: 310, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
 
             ]]
@@ -97,7 +97,7 @@
                 }
                 common.deleteForm({
                     url: "/SystemSecurity/OpenJobs/DeleteForm",
-                    param: { keyValue: data[0].F_Id },
+                    param: { keyValue: data[0].Id },
                     success: function () {
                         common.reload('data-search-btn');
                     }
@@ -110,7 +110,7 @@
                 }
                 common.modalOpen({
                     title: "修改任务",
-                    url: "/SystemSecurity/OpenJobs/Form?keyValue=" + data[0].F_Id,
+                    url: "/SystemSecurity/OpenJobs/Form?keyValue=" + data[0].Id,
                     width: "750px",
                     height: "650px",
                 });
@@ -132,7 +132,7 @@
                 common.submitPost({
                     prompt: "注：您确定要【执行】该项任务吗？",
                     url: "/SystemSecurity/OpenJobs/DoNow",
-                    param: { keyValue: data[0].F_Id },
+                    param: { keyValue: data[0].Id },
                     success: function () {
                         common.reload('data-search-btn');
                     }
@@ -143,14 +143,14 @@
                     common.modalMsg("未选中数据", "warning");
                     return false;
                 }
-                if (data[0].F_EnabledMark != true) {
+                if (data[0].EnabledMark != true) {
                     common.modalMsg("任务未启动，无法关闭！", "warning");
                     return false;
                 }
                 common.submitPost({
                     prompt: "注：您确定要【关闭】该项任务吗？",
                     url: "/SystemSecurity/OpenJobs/ChangeStatus",
-                    param: { keyValue: data[0].F_Id, status: 0 },
+                    param: { keyValue: data[0].Id, status: 0 },
                     success: function () {
                         common.reload('data-search-btn');
                     }
@@ -161,14 +161,14 @@
                     common.modalMsg("未选中数据", "warning");
                     return false;
                 }
-                if (data[0].F_EnabledMark == true) {
+                if (data[0].EnabledMark == true) {
                     common.modalMsg("任务已启动，无法启动！", "warning");
                     return false;
                 }
                 common.submitPost({
                     prompt: "注：您确定要【启动】该项任务吗？",
                     url: "/SystemSecurity/OpenJobs/ChangeStatus",
-                    param: { keyValue: data[0].F_Id, status: 1 },
+                    param: { keyValue: data[0].Id, status: 1 },
                     success: function () {
                         common.reload('data-search-btn');
                     }
@@ -181,7 +181,7 @@
                 }
                 common.modalOpen({
                     title: "任务日志",
-                    url: "/SystemSecurity/OpenJobs/Details?keyValue=" + data[0].F_Id,
+                    url: "/SystemSecurity/OpenJobs/Details?keyValue=" + data[0].Id,
                     width: "700px",
                     height: "600px",
                     btn: []
@@ -202,7 +202,7 @@
             if (obj.event === 'delete') {
                 common.deleteForm({
                     url: "/SystemSecurity/OpenJobs/DeleteForm",
-                    param: { keyValue: obj.data.F_Id },
+                    param: { keyValue: obj.data.Id },
                     success: function () {
                         obj.del();
                     }
@@ -211,7 +211,7 @@
             else if (obj.event === 'edit') {
                 common.modalOpen({
                     title: "修改任务",
-                    url: "/SystemSecurity/OpenJobs/Form?keyValue=" + obj.data.F_Id,
+                    url: "/SystemSecurity/OpenJobs/Form?keyValue=" + obj.data.Id,
                     width: "750px",
                     height: "650px",
                 });
@@ -220,35 +220,35 @@
                 common.submitPost({
                     prompt: "注：您确定要【执行】该项任务吗？",
                     url: "/SystemSecurity/OpenJobs/DoNow",
-                    param: { keyValue: obj.data.F_Id },
+                    param: { keyValue: obj.data.Id },
                     success: function () {
                         common.reload('data-search-btn');
                     }
                 });
             }
             else if (obj.event === 'disabled') {
-                if (obj.data.F_EnabledMark != true) {
+                if (obj.data.EnabledMark != true) {
                     common.modalMsg("任务未启动，无法关闭！", "warning");
                     return false;
                 }
                 common.submitPost({
                     prompt: "注：您确定要【关闭】该项任务吗？",
                     url: "/SystemSecurity/OpenJobs/ChangeStatus",
-                    param: { keyValue: obj.data.F_Id, status: 0 },
+                    param: { keyValue: obj.data.Id, status: 0 },
                     success: function () {
                         common.reload('data-search-btn');
                     }
                 });
             }
             else if (obj.event === 'enabled') {
-                if (obj.data.F_EnabledMark == true) {
+                if (obj.data.EnabledMark == true) {
                     common.modalMsg("任务已启动，无法启动！", "warning");
                     return false;
                 }
                 common.submitPost({
                     prompt: "注：您确定要【启动】该项任务吗？",
                     url: "/SystemSecurity/OpenJobs/ChangeStatus",
-                    param: { keyValue: obj.data.F_Id, status: 1 },
+                    param: { keyValue: obj.data.Id, status: 1 },
                     success: function () {
                         common.reload('data-search-btn');
                     }
@@ -257,7 +257,7 @@
             else if (obj.event === 'log') {
                 common.modalOpen({
                     title: "任务日志",
-                    url: "/SystemSecurity/OpenJobs/Details?keyValue=" + obj.data.F_Id,
+                    url: "/SystemSecurity/OpenJobs/Details?keyValue=" + obj.data.Id,
                     width: "700px",
                     height: "600px",
                     btn: []

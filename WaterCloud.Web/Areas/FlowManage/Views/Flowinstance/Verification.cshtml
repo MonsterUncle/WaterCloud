@@ -24,7 +24,7 @@
             formPreview = layui.formPreview,
             $ = layui.jquery;
         var keyValue = $.request("keyValue");
-        $("#F_FlowInstanceId").val(keyValue);
+        $("#FlowInstanceId").val(keyValue);
         //权限字段
         common.authorizeFields('adminform');
         var flowDesignPanel;
@@ -34,13 +34,13 @@
             url: '/FlowManage/Flowinstance/QueryHistories',
             where: { time: new Date().Format("yyyy-MM-dd hh:mm:ss") },
             cols: [[ //标题栏
-                { field: 'F_Content', title: '流转记录', minWidth: 150 }
-                , { field: 'F_CreatorUserName', title: '操作人', width: 150 }
+                { field: 'Content', title: '流转记录', minWidth: 150 }
+                , { field: 'CreatorUserName', title: '操作人', width: 150 }
                 , {
-                    field: 'F_CreatorTime', title: '创建时间', width: 180,
+                    field: 'CreatorTime', title: '创建时间', width: 180,
                     templet: function (d) {
-                        if (d.F_CreatorTime) {
-                            var time = new Date(d.F_CreatorTime);
+                        if (d.CreatorTime) {
+                            var time = new Date(d.CreatorTime);
                             return time.Format("yyyy-MM-dd hh:mm:ss");
                         }
                         return '';
@@ -66,7 +66,7 @@
                 data: { keyValue: keyValue },
                 async: false,
                 success: function (data) {
-                    var schemeContent = JSON.parse(data.F_SchemeContent);
+                    var schemeContent = JSON.parse(data.SchemeContent);
                     if (!!data.CurrentMakerName) {
                         $('#CurrentMakerName').val(data.CurrentMakerName);
                     }
@@ -94,13 +94,13 @@
                     flowDesignPanel = $('#flowPanel').flowdesign({
                         haveTool: false
                         , isprocessing: true
-                        , activityId: data.F_ActivityId
+                        , activityId: data.ActivityId
                         , nodeData: schemeContent.nodes
                         , flowcontent: schemeContent
                     });
-                    formtext = data.F_FrmData;
-                    if (data.F_FrmType == 0) {
-                        var dataJson = JSON.parse(data.F_FrmContent);
+                    formtext = data.FrmData;
+                    if (data.FrmType == 0) {
+                        var dataJson = JSON.parse(data.FrmContent);
                         //表单设计器
                         var renderForm= formPreview.render({
                             data: dataJson,
@@ -111,7 +111,7 @@
                     }
                     else {
 
-                        $("#frmPreview").load(document.location.origin + '/form/' + data.F_DbName + '.html');
+                        $("#frmPreview").load(document.location.origin + '/form/' + data.DbName + '.html');
                     }
                     flowDesignPanel.reinitSize($(window).width() * 2 / 3 - 40, $(window).height() - 100);
                 }
@@ -207,12 +207,12 @@
 
                 </div>
                 <div class="layui-col-xs4" style="background-color: #1e9fff7d; min-height: 500px;">
-                    <input type="hidden" id="F_FlowInstanceId" name="F_FlowInstanceId" />
+                    <input type="hidden" id="FlowInstanceId" name="FlowInstanceId" />
 
                     <div class="layui-form-item layui-hide">
                         <label class="layui-form-label">审核结果</label>
                         <div class="layui-input-block">
-                            <select id="F_VerificationFinally" name="F_VerificationFinally" lay-filter='VerificationFinally' required lay-verify="required" lay-search>
+                            <select id="VerificationFinally" name="VerificationFinally" lay-filter='VerificationFinally' required lay-verify="required" lay-search>
                                 <option value="1">同意</option>
                                 <option value="2">不同意</option>
                                 <option value="3">驳回</option>
@@ -223,7 +223,7 @@
                     <div class="layui-form-item  layui-hide">
                         <label class="layui-form-label">审核意见</label>
                         <div class="layui-input-block">
-                            <textarea name="F_VerificationOpinion" id="F_VerificationOpinion"
+                            <textarea name="VerificationOpinion" id="VerificationOpinion"
                                       placeholder="" autocomplete="off" class="layui-textarea"></textarea>
                         </div>
                     </div>

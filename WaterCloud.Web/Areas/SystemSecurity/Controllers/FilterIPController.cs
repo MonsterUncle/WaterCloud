@@ -42,7 +42,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             {
                 if (string.IsNullOrEmpty(keyValue))
                 {
-                    filterIPEntity.F_DeleteMark = false;
+                    filterIPEntity.DeleteMark = false;
                 }
                 await _service.SubmitForm(filterIPEntity, keyValue);
                 return await Success("操作成功。", "", keyValue);

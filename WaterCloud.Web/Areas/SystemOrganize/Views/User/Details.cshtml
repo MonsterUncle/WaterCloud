@@ -13,21 +13,21 @@
         common.authorizeFields('adminform');
         //执行一个laydate实例
         laydate.render({
-            elem: '#F_Birthday'
+            elem: '#Birthday'
             , btns: ['clear', 'now']
             , trigger: 'click',
             format: 'yyyy-MM-dd',
         });
         function initControl() {
-            $("#F_OrganizeId").bindSelect({
+            $("#OrganizeId").bindSelect({
                 url: "/SystemOrganize/SystemSet/GetListJson",
-                id: "F_Id",
-                text: "F_CompanyName"
+                id: "Id",
+                text: "CompanyName"
             });
-            $("#F_DutyId").bindSelect({
+            $("#DutyId").bindSelect({
                 url: "/SystemOrganize/Duty/GetListJson",
-                id: "F_Id",
-                text: "F_FullName"
+                id: "Id",
+                text: "FullName"
             });
         }
         $(function () {
@@ -40,7 +40,7 @@
                 success: function (data) {
                     common.val('adminform', data);
                     common.setReadOnly('adminform');
-                    $("#F_UserPassword").val("******").attr('disabled', 'disabled');
+                    $("#UserPassword").val("******").attr('disabled', 'disabled');
                     form.render();
                 }
             });
@@ -56,13 +56,13 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">账号</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_Account" name="F_Account" lay-verify="required" autocomplete="off" class="layui-input">
+                            <input type="text" id="Account" name="Account" lay-verify="required" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">密码</label>
                         <div class="layui-input-block">
-                            <input type="password" id="F_UserPassword" name="F_UserPassword" lay-verify="required" autocomplete="off" class="layui-input">
+                            <input type="password" id="UserPassword" name="UserPassword" lay-verify="required" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -70,15 +70,15 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">公司</label>
                         <div class="layui-input-block">
-                            <select id="F_OrganizeId" name="F_OrganizeId" lay-verify="required" lay-search="">
+                            <select id="OrganizeId" name="OrganizeId" lay-verify="required" lay-search="">
                             </select>
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">部门</label>
                         <div class="layui-input-block">
-                            <input id="F_DepartmentName" name="F_DepartmentName" type="text" lay-verify="required" maxlength="50" autocomplete="off" class="layui-input" onclick="search('部门')" />
-                            <input id="F_DepartmentId" name="F_DepartmentId" type="text" hidden />
+                            <input id="DepartmentName" name="DepartmentName" type="text" lay-verify="required" maxlength="50" autocomplete="off" class="layui-input" onclick="search('部门')" />
+                            <input id="DepartmentId" name="DepartmentId" type="text" hidden />
                         </div>
                     </div>
                 </div>
@@ -86,14 +86,14 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">角色</label>
                         <div class="layui-input-block">
-                            <input id="F_RoleName" name="F_RoleName" type="text" lay-verify="required" maxlength="50" autocomplete="off" class="layui-input" onclick="search('角色')" />
-                            <input id="F_RoleId" name="F_RoleId" type="text" hidden />
+                            <input id="RoleName" name="RoleName" type="text" lay-verify="required" maxlength="50" autocomplete="off" class="layui-input" onclick="search('角色')" />
+                            <input id="RoleId" name="RoleId" type="text" hidden />
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6">
                         <label class="layui-form-label">职位</label>
                         <div class="layui-input-block">
-                            <select id="F_DutyId" name="F_DutyId" lay-verify="required" lay-search="">
+                            <select id="DutyId" name="DutyId" lay-verify="required" lay-search="">
                                 <option value="">==请选择==</option>
                             </select>
                         </div>
@@ -103,13 +103,13 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">姓名</label>
                         <div class="layui-input-block">
-                            <input id="F_RealName" name="F_RealName" type="text" lay-verify="required" autocomplete="off" class="layui-input" />
+                            <input id="RealName" name="RealName" type="text" lay-verify="required" autocomplete="off" class="layui-input" />
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">性别</label>
                         <div class="layui-input-block">
-                            <select id="F_Gender" name="F_Gender" lay-verify="required">
+                            <select id="Gender" name="Gender" lay-verify="required">
                                 <option value="true">男</option>
                                 <option value="false">女</option>
                             </select>
@@ -120,13 +120,13 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">手机</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_MobilePhone" name="F_MobilePhone" autocomplete="off" class="layui-input">
+                            <input type="text" id="MobilePhone" name="MobilePhone" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">生日</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_Birthday" name="F_Birthday" autocomplete="off" class="layui-input">
+                            <input type="text" id="Birthday" name="Birthday" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -134,13 +134,13 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">微信</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_WeChat" name="F_WeChat" autocomplete="off" class="layui-input">
+                            <input type="text" id="WeChat" name="WeChat" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">邮箱</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_Email" name="F_Email" autocomplete="off" class="layui-input">
+                            <input type="text" id="Email" name="Email" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">高管</label>
                         <div class="layui-input-block">
-                            <select id="F_IsSenior" name="F_IsSenior" lay-verify="required">
+                            <select id="IsSenior" name="IsSenior" lay-verify="required">
                                 <option value="false">否</option>
                                 <option value="true">是</option>
                             </select>
@@ -157,7 +157,7 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">部门主管</label>
                         <div class="layui-input-block">
-                            <select id="F_IsLeaderInDepts" name="F_IsLeaderInDepts" lay-verify="required">
+                            <select id="IsLeaderInDepts" name="IsLeaderInDepts" lay-verify="required">
                                 <option value="false">否</option>
                                 <option value="true">是</option>
                             </select>
@@ -168,7 +168,7 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">类型</label>
                         <div class="layui-input-block">
-                            <select id="F_IsAdministrator" name="F_IsSenior" lay-verify="required">
+                            <select id="IsAdministrator" name="IsSenior" lay-verify="required">
                                 <option value="false">普通用户</option>
                                 <option value="true">系统管理员</option>
                             </select>
@@ -177,7 +177,7 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">允许登录</label>
                         <div class="layui-input-block">
-                            <select id="F_EnabledMark" name="F_IsLeaderInDepts" lay-verify="required">
+                            <select id="EnabledMark" name="IsLeaderInDepts" lay-verify="required">
                                 <option value="true">是</option>
                                 <option value="false">否</option>
                             </select>

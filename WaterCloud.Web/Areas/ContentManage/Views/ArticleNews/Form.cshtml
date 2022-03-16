@@ -14,7 +14,7 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">新闻类别</label>
                                 <div class="layui-input-block">
-                                    <select id="F_CategoryId" name="F_CategoryId" lay-filter="F_CategoryId" lay-verify="required" lay-search>
+                                    <select id="CategoryId" name="CategoryId" lay-filter="CategoryId" lay-verify="required" lay-search>
                                         <option value="">请选择</option>
                                     </select>
                                 </div>
@@ -22,20 +22,20 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">内容标题</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Title" name="F_Title" autocomplete="off" maxlength="200" lay-verify="required" class="layui-input">
+                                    <input type="text" id="Title" name="Title" autocomplete="off" maxlength="200" lay-verify="required" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">URL链接</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_LinkUrl" name="F_LinkUrl" autocomplete="off" maxlength="255" class="layui-input" placeholder="填写后直接跳转到该网址">
+                                    <input type="text" id="LinkUrl" name="LinkUrl" autocomplete="off" maxlength="255" class="layui-input" placeholder="填写后直接跳转到该网址">
                                 </div>
                             </div>
 
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">封面图片</label>
                                 <div class="layui-input-block">
-                                    <input type="text" class="layui-input" name="F_ImgUrl" id="F_ImgUrl" maxlength="255" readonly="readonly">
+                                    <input type="text" class="layui-input" name="ImgUrl" id="ImgUrl" maxlength="255" readonly="readonly">
                                     <button type="button" class="layui-btn" id="upload" style=" margin-top: 10px">上传图片</button>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                                 <label class="layui-form-label"></label>
                                 <div class="layui-input-block">
                                     <div class="layui-upload-list">
-                                        <img id="F_ImgUrlPic" width="200" height="200" onclick="previewImg(this)" />
+                                        <img id="ImgUrlPic" width="200" height="200" onclick="previewImg(this)" />
                                         <p id="demoText"></p>
                                     </div>
                                 </div>
@@ -51,22 +51,22 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">排序数字</label>
                                 <div class="layui-input-block">
-                                    <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" class="layui-input ">
+                                    <input type="number" pattern="[0-9]*" id="SortCode" name="SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" class="layui-input ">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">选项</label>
                                 <div class="layui-input-block">
-                                    <input id="F_IsTop" name="F_IsTop" type="checkbox" value="true" title="是否置顶">
-                                    <input id="F_IsRed" name="F_IsRed" type="checkbox" value="true" title="是否热门">
-                                    <input id="F_IsHot" name="F_IsHot" type="checkbox" value="true" title="是否推荐">
-                                    <input id="F_EnabledMark" name="F_EnabledMark" type="checkbox" value="true" checked="checked" title="是否发布">
+                                    <input id="IsTop" name="IsTop" type="checkbox" value="true" title="是否置顶">
+                                    <input id="IsRed" name="IsRed" type="checkbox" value="true" title="是否热门">
+                                    <input id="IsHot" name="IsHot" type="checkbox" value="true" title="是否推荐">
+                                    <input id="EnabledMark" name="EnabledMark" type="checkbox" value="true" checked="checked" title="是否发布">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">点击次数</label>
                                 <div class="layui-input-block">
-                                    <input type="number" pattern="[0-9]*" id="F_Click" name="F_Click" lay-verify="required" class="layui-input" value="0">
+                                    <input type="number" pattern="[0-9]*" id="Click" name="Click" lay-verify="required" class="layui-input" value="0">
                                 </div>
                             </div>
                             <div class="form-group-bottom text-right">
@@ -83,26 +83,26 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">内容描述</label>
                                 <div class="layui-input-block">
-                                    <textarea class=" layui-hide" id="F_Description" name="F_Description" lay-verify="required" type="text/plain" style="width:100%;height:400px;"></textarea>
+                                    <textarea class=" layui-hide" id="Description" name="Description" lay-verify="required" type="text/plain" style="width:100%;height:400px;"></textarea>
                                     <div id="editor"></div>
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">摘要</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Zhaiyao" name="F_Zhaiyao" autocomplete="off" class="layui-input" placeholder="不填写则自动截取内容前255字符">
+                                    <input type="text" id="Zhaiyao" name="Zhaiyao" autocomplete="off" class="layui-input" placeholder="不填写则自动截取内容前255字符">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">来源</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Source" name="F_Source" autocomplete="off" value="本站" lay-verify="required" class="layui-input">
+                                    <input type="text" id="Source" name="Source" autocomplete="off" value="本站" lay-verify="required" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label required">作者</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Author" name="F_Author" autocomplete="off" value="@ViewBag.UserName" lay-verify="required" class="layui-input">
+                                    <input type="text" id="Author" name="Author" autocomplete="off" value="@ViewBag.UserName" lay-verify="required" class="layui-input">
                                 </div>
                             </div>
                             <div class="form-group-bottom text-right">
@@ -120,25 +120,25 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">Seo标题</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_SeoTitle" name="F_SeoTitle" autocomplete="off" class="layui-input" placeholder="不填写则默认为网站标题">
+                                    <input type="text" id="SeoTitle" name="SeoTitle" autocomplete="off" class="layui-input" placeholder="不填写则默认为网站标题">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">Seo关键字</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_SeoKeywords" name="F_SeoKeywords" autocomplete="off" class="layui-input" placeholder="不填写则默认为网站摘要">
+                                    <input type="text" id="SeoKeywords" name="SeoKeywords" autocomplete="off" class="layui-input" placeholder="不填写则默认为网站摘要">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">Seo描述</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_SeoDescription" name="F_SeoDescription" autocomplete="off" class="layui-input" placeholder="不填写则自动截取内容前255字符">
+                                    <input type="text" id="SeoDescription" name="SeoDescription" autocomplete="off" class="layui-input" placeholder="不填写则自动截取内容前255字符">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">Tags标签</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Tags" name="F_Tags" autocomplete="off" class="layui-input" placeholder="多个可用英文逗号分隔开，如：a,b">
+                                    <input type="text" id="Tags" name="Tags" autocomplete="off" class="layui-input" placeholder="多个可用英文逗号分隔开，如：a,b">
                                 </div>
                             </div>
                             <div class="form-group-bottom text-right">
@@ -183,7 +183,7 @@
                 }
             }
             editor.config.onchange = function (newHtml) {
-                $("#F_Description").val(newHtml);
+                $("#Description").val(newHtml);
             }
             function uploadResult(res) {
                 if (res.code == 0) {
@@ -203,7 +203,7 @@
                 , choose: function (obj) {
                     //预读本地文件示例，不支持ie8
                     obj.preview(function (index, file, result) {
-                        $('#F_ImgUrlPic').attr('src', result); //图片链接（base64）
+                        $('#ImgUrlPic').attr('src', result); //图片链接（base64）
                     });
                 }
                 , done: function (res) {
@@ -218,7 +218,7 @@
                         common.modalMsg(res.msg, "warning");
                         return false;
                     }
-                    $('#F_ImgUrl').val(res.data[0].src);
+                    $('#ImgUrl').val(res.data[0].src);
                 }
                 , error: function () {
                     //演示失败状态，并实现重传
@@ -274,8 +274,8 @@
                         async: false,
                         success: function (data) {
                             common.val('stepForm', data);
-                            $('#F_ImgUrlPic').attr('src', data.F_ImgUrl); //图片链接
-                            editor.txt.text($("#F_Description").val());
+                            $('#ImgUrlPic').attr('src', data.ImgUrl); //图片链接
+                            editor.txt.text($("#Description").val());
 
                         }
                     });
@@ -285,21 +285,21 @@
             function initControl() {
                 //绑定数据源
                 //类型为下拉框时
-                $("#F_CategoryId").bindSelect({
+                $("#CategoryId").bindSelect({
                     url: "/ContentManage/ArticleCategory/GetListJson",
-                    id: "F_Id",
-                    text: "F_FullName",
+                    id: "Id",
+                    text: "FullName",
                     search: true,
                 });
             }
             //监听提交
             form.on('submit(saveBtn)', function (data) {
                 postData = $.extend(postData, data.field);
-                if (!postData["F_IsTop"]) postData["F_IsTop"] = false;
-                if (!postData["F_IsHot"]) postData["F_IsHot"] = false;
-                if (!postData["F_IsRed"]) postData["F_IsRed"] = false;
-                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-                postData["F_Description"] = postData["F_Description"];
+                if (!postData["IsTop"]) postData["IsTop"] = false;
+                if (!postData["IsHot"]) postData["IsHot"] = false;
+                if (!postData["IsRed"]) postData["IsRed"] = false;
+                if (!postData["EnabledMark"]) postData["EnabledMark"] = false;
+                postData["Description"] = postData["Description"];
                 common.submitForm({
                     url: '/ContentManage/ArticleNews/SubmitForm?keyValue=' + keyValue,
                     param: postData,

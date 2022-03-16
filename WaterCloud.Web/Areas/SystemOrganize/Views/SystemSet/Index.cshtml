@@ -51,47 +51,47 @@
              url: '/SystemOrganize/SystemSet/GetGridJson',
              cols: [[
                  { type: "radio", width: 50, fixed: 'left' },
-                 { field: 'F_ProjectName', title: '项目名称', width: 120, sort: true },
-                 { field: 'F_CompanyName', title: '公司名称', width: 120, sort: true },
-                 { field: 'F_PrincipalMan', title: '联系人', width: 120, sort: true },
-                 { field: 'F_MobilePhone', title: '联系方式', width: 120, sort: true },
-                 { field: 'F_Logo', title: 'Logo图标', width: 120, sort: true },
-                 { field: 'F_LogoCode', title: 'Logo编号', width: 120, sort: true },
-                 { field: 'F_AdminAccount', title: '系统账户', width: 120, sort: true },
-                 { field: 'F_DbString', title: '连接字符串', width: 120, sort: true },
-                 { field: 'F_DBProvider', title: '数据库类型', width: 120, sort: true },
-                 { field: 'F_DbNumber', title: '数据库序号', width: 120, sort: true },
-                 { field: 'F_HostUrl', title: '域名', width: 120, sort: true },
+                 { field: 'ProjectName', title: '项目名称', width: 120, sort: true },
+                 { field: 'CompanyName', title: '公司名称', width: 120, sort: true },
+                 { field: 'PrincipalMan', title: '联系人', width: 120, sort: true },
+                 { field: 'MobilePhone', title: '联系方式', width: 120, sort: true },
+                 { field: 'Logo', title: 'Logo图标', width: 120, sort: true },
+                 { field: 'LogoCode', title: 'Logo编号', width: 120, sort: true },
+                 { field: 'AdminAccount', title: '系统账户', width: 120, sort: true },
+                 { field: 'DbString', title: '连接字符串', width: 120, sort: true },
+                 { field: 'DBProvider', title: '数据库类型', width: 120, sort: true },
+                 { field: 'DbNumber', title: '数据库序号', width: 120, sort: true },
+                 { field: 'HostUrl', title: '域名', width: 120, sort: true },
                  {
-                     field: 'F_CreatorTime', title: '创建时间', minWidth: 120, sort: true,
+                     field: 'CreatorTime', title: '创建时间', minWidth: 120, sort: true,
                      templet: function (d) {
-                         if (d.F_CreatorTime) {
-                             var time = new Date(d.F_CreatorTime);
+                         if (d.CreatorTime) {
+                             var time = new Date(d.CreatorTime);
                              return time.Format("yyyy-MM-dd");
                          }
                          return '';
                      }
                  },
                  {
-                     field: 'F_EndTime', title: '到期时间', width: 120, sort: true, templet: function (d) {
-                         if (d.F_EndTime) {
-                             var time = new Date(d.F_EndTime);
+                     field: 'EndTime', title: '到期时间', width: 120, sort: true, templet: function (d) {
+                         if (d.EndTime) {
+                             var time = new Date(d.EndTime);
                              return time.Format("yyyy-MM-dd");
                          }
                          return '';
                      }
                  },
                  {
-                     field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
+                     field: 'EnabledMark', title: '状态', width: 80, sort: true,
                      templet: function (d) {
-                         if (d.F_EnabledMark == true) {
+                         if (d.EnabledMark == true) {
                              return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                          } else {
                              return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                          }
                      }
                  },
-                 { field: 'F_Description', title: '备注', minWidth: 120, sort: true },
+                 { field: 'Description', title: '备注', minWidth: 120, sort: true },
                  { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
              ]]
          });
@@ -111,7 +111,7 @@
          //toolbar监听事件
          table.on('toolbar(currentTableFilter)', function (obj) {
              var data = table.checkStatus('currentTableId').data;
-             var id = data.length > 0 ? data[0].F_Id : null;
+             var id = data.length > 0 ? data[0].Id : null;
              if (obj.event === 'add') {  // 监听添加操作
                  common.modalOpen({
                      title: "添加界面",
@@ -159,7 +159,7 @@
          });
          //toolrow监听事件
          table.on('tool(currentTableFilter)', function (obj) {
-             var id = obj.data.F_Id;
+             var id = obj.data.Id;
              if (obj.event === 'edit') {
                  common.modalOpen({
                      title: "编辑界面",

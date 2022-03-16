@@ -38,7 +38,7 @@
             }]
         });
         $(function () {
-            $('#F_SchemeCode').val(new Date().getTime());
+            $('#SchemeCode').val(new Date().getTime());
             initControl();
             if (!!keyValue) {
                 common.ajax({
@@ -49,44 +49,44 @@
                     success: function (data) {
                         common.val('adminform', data);
                         form.render();
-                        changeForm(data.F_FrmId)
-                        flowDesignPanel.loadData(JSON.parse(data.F_SchemeContent));
+                        changeForm(data.FrmId)
+                        flowDesignPanel.loadData(JSON.parse(data.SchemeContent));
                     }
                 });
             }
         });
         wcLoading.close();
         function initControl() {
-            $("#F_FrmId").bindSelect({
+            $("#FrmId").bindSelect({
                 url: "/SystemManage/Form/GetListJson",
-                id: 'F_Id',
-                text: 'F_Name'
+                id: 'Id',
+                text: 'Name'
             });
             form.render();
         }
 
         var changeForm = function (id) { //切换表单
-            $('#F_FrmId').val(id);
+            $('#FrmId').val(id);
             common.ajax({
                 url: '/SystemManage/Form/GetFormJson',
                 dataType: 'json',
                 data: { keyValue: id },
                 async: false,
                 success: function (data) {
-                    postData.F_FrmType = data.F_FrmType;
-                    if (data.F_FrmType == 0) {
+                    postData.FrmType = data.FrmType;
+                    if (data.FrmType == 0) {
                         //表单设计器
                         formPreview.render({
-                            data: JSON.parse(data.F_Content),
+                            data: JSON.parse(data.Content),
                             elem: '#frmPreview',
                             readonly:true
                         });
                     }
                     else {
-                        $("#frmPreview").load(document.location.origin + '/form/' + data.F_WebId + '.html');
+                        $("#frmPreview").load(document.location.origin + '/form/' + data.WebId + '.html');
                     }
-                    if (!!data.F_ContentData) {
-                        $("#valueList").val(data.F_ContentData);
+                    if (!!data.ContentData) {
+                        $("#valueList").val(data.ContentData);
                     }
                 }
             });
@@ -224,7 +224,7 @@
                     return false; //阻止表单跳转。
                 }
                 var schemecontent = {
-                    F_SchemeContent: JSON.stringify(content)
+                    SchemeContent: JSON.stringify(content)
                 }
                 $.extend(data.field, schemecontent);
 
@@ -244,7 +244,7 @@
         });
 
         form.on('submit(formStep2)', function (data) {
-            if (!data.field.F_FrmId) {
+            if (!data.field.FrmId) {
                 common.modalMsg("请选择表单", "warning");
                 return false;
             }
@@ -259,12 +259,12 @@
                 return false; //阻止表单跳转。
             }
             var schemecontent = {
-                F_SchemeContent: JSON.stringify(content)
+                SchemeContent: JSON.stringify(content)
             }
-            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+            if (!postData["EnabledMark"]) postData["EnabledMark"] = false;
             $.extend(data.field, schemecontent);
             $.extend(postData, data.field);
-            postData.F_AuthorizeType = 0;
+            postData.AuthorizeType = 0;
             common.submitForm({
                 url: "/SystemManage/Flowscheme/SubmitForm?keyValue=" + keyValue,
                 param: postData,
@@ -303,33 +303,33 @@
                                     <label class="layui-form-label required">流程编号</label>
                                     <input type="text" name="valueList" id="valueList" class="layui-hide" hidden>
                                     <div class="layui-input-block">
-                                        <input type="text" name="F_SchemeCode" id="F_SchemeCode" required lay-verify="required"
+                                        <input type="text" name="SchemeCode" id="SchemeCode" required lay-verify="required"
                                                placeholder="流程编号" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-form-item layui-hide">
                                     <label class="layui-form-label required">流程名称</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="F_SchemeName" id="F_SchemeName" required lay-verify="required"
+                                        <input type="text" name="SchemeName" id="SchemeName" required lay-verify="required"
                                                placeholder="流程名称" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-form-item layui-hide">
                                     <label class="layui-form-label required">排序</label>
                                     <div class="layui-input-block">
-                                        <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
+                                        <input type="number" pattern="[0-9]*" id="SortCode" name="SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-form-item layui-hide">
                                     <label class="layui-form-label">选项</label>
                                     <div class="layui-input-block">
-                                        <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
+                                        <input type="checkbox" name="EnabledMark" id="EnabledMark" checked="" value="true" title="有效标识">
                                     </div>
                                 </div>
                                 <div class="layui-form-item layui-form-text layui-hide">
                                     <label class="layui-form-label">备注</label>
                                     <div class="layui-input-block">
-                                        <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入备注"></textarea>
+                                        <textarea id="Description" name="Description" class="layui-textarea" placeholder="请输入备注"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group-bottom text-right">
@@ -344,7 +344,7 @@
                         <div>
                             <form class="layui-form layuimini-form">
                                 <div class="layui-form-item">
-                                    <select id="F_FrmId" name="F_FrmId" lay-filter='formChangeFilter' lay-search>
+                                    <select id="FrmId" name="FrmId" lay-filter='formChangeFilter' lay-search>
                                         <option value="" selected>请选择</option>
                                     </select>
                                 </div>

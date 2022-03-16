@@ -111,26 +111,26 @@
             async: false,
             success: function (data) {
                 var obj = data;
-                flowDesignPanel.loadData(JSON.parse(obj.F_SchemeContent));
+                flowDesignPanel.loadData(JSON.parse(obj.SchemeContent));
                 common.ajax({
                     url: '/SystemManage/Form/GetFormJson',
                     dataType: 'json',
-                    data: { keyValue: obj.F_FrmId },
+                    data: { keyValue: obj.FrmId },
                     async: false,
                     success: function (data) {
-                        if (data.F_FrmType == 0) {
+                        if (data.FrmType == 0) {
                             //表单设计器
                             formPreview.render({
-                                data: JSON.parse(data.F_Content),
+                                data: JSON.parse(data.Content),
                                 elem: '#frmPreview',
                                 readonly:true
                             });
                         }
                         else {
-                            $("#frmPreview").load(document.location.origin + '/form/' + data.F_WebId + '.html');
+                            $("#frmPreview").load(document.location.origin + '/form/' + data.WebId + '.html');
                         }
-                        if (!!data.F_ContentData) {
-                            $("#valueList").val(data.F_ContentData);
+                        if (!!data.ContentData) {
+                            $("#valueList").val(data.ContentData);
                         }
                     }
                 });

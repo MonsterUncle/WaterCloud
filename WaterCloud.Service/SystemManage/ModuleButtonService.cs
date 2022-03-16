@@ -27,24 +27,24 @@ namespace WaterCloud.Service.SystemManage
             var list = repository.IQueryable();
             if (!string.IsNullOrEmpty(moduleId))
             {
-                list = list.Where(a => a.F_ModuleId == moduleId);
+                list = list.Where(a => a.ModuleId == moduleId);
             }
-            return await list.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_SortCode).ToListAsync();
+            return await list.Where(a => a.DeleteMark == false).OrderBy(a => a.SortCode).ToListAsync();
         }
         public async Task<List<ModuleButtonEntity>> GetLookList(string moduleId = "", string keyword = "")
         {
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(moduleId))
             {
-                query = query.Where(a => a.F_ModuleId == moduleId);
+                query = query.Where(a => a.ModuleId == moduleId);
             }
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.FullName.Contains(keyword) || a.EnCode.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
-            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
+            return await query.OrderBy(a => a.SortCode).ToListAsync();
         }
         public async Task<ModuleButtonEntity> GetLookForm(string keyValue)
         {
@@ -58,29 +58,29 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (await repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).AnyAsync())
+            if (await repository.IQueryable(a => a.ParentId.Equals(keyValue)).AnyAsync())
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }
             else
             {
-                await repository.Delete(a => a.F_Id == keyValue);
+                await repository.Delete(a => a.Id == keyValue);
             }
             await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
 
         public async Task<List<ModuleButtonEntity>> GetListByRole(string roleid)
         {
-            var moduleList = repository.Db.Queryable<RoleAuthorizeEntity>().Where(a => a.F_ObjectId == roleid && a.F_ItemType == 2).Select(a => a.F_ItemId).ToList();
-            var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
-            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
+            var moduleList = repository.Db.Queryable<RoleAuthorizeEntity>().Where(a => a.ObjectId == roleid && a.ItemType == 2).Select(a => a.ItemId).ToList();
+            var query = repository.IQueryable().Where(a => (moduleList.Contains(a.Id) || a.IsPublic == true) && a.DeleteMark == false && a.EnabledMark == true);
+            return await query.OrderBy(a => a.SortCode).ToListAsync();
         }
 
         public async Task SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
         {
-            if (!string.IsNullOrEmpty(moduleButtonEntity.F_Authorize))
+            if (!string.IsNullOrEmpty(moduleButtonEntity.Authorize))
             {
-                moduleButtonEntity.F_Authorize = moduleButtonEntity.F_Authorize.ToLower();
+                moduleButtonEntity.Authorize = moduleButtonEntity.Authorize.ToLower();
             }
             if (!string.IsNullOrEmpty(keyValue))
             {
@@ -89,11 +89,11 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
-                moduleButtonEntity.F_DeleteMark = false;
-                moduleButtonEntity.F_AllowEdit = false;
-                moduleButtonEntity.F_AllowDelete = false;
-                var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.F_Id == moduleButtonEntity.F_ModuleId).FirstAsync();
-                if (module.F_Target != "iframe" && module.F_Target != "expand")
+                moduleButtonEntity.DeleteMark = false;
+                moduleButtonEntity.AllowEdit = false;
+                moduleButtonEntity.AllowDelete = false;
+                var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.Id == moduleButtonEntity.ModuleId).FirstAsync();
+                if (module.Target != "iframe" && module.Target != "expand")
                 {
                     throw new Exception("菜单不能创建按钮");
                 }
@@ -107,16 +107,16 @@ namespace WaterCloud.Service.SystemManage
             string[] ArrayId = Ids.Split(',');
             var data =await this.GetList();
             List<ModuleButtonEntity> entitys = new List<ModuleButtonEntity>();
-            var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.F_Id == moduleId).FirstAsync();
-            if (module.F_Target != "iframe" && module.F_Target != "expand")
+            var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.Id == moduleId).FirstAsync();
+            if (module.Target != "iframe" && module.Target != "expand")
             {
                 throw new Exception("菜单不能创建按钮");
             }
             foreach (string item in ArrayId)
             {
-                ModuleButtonEntity moduleButtonEntity = data.Find(a => a.F_Id == item);
+                ModuleButtonEntity moduleButtonEntity = data.Find(a => a.Id == item);
                 moduleButtonEntity.Create();
-                moduleButtonEntity.F_ModuleId = moduleId;
+                moduleButtonEntity.ModuleId = moduleId;
                 entitys.Add(moduleButtonEntity);
             }
             await repository.Insert(entitys);
@@ -126,41 +126,41 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ModuleButtonEntity>> GetListNew(string moduleId = "")
         {
             var query = repository.Db.Queryable<ModuleButtonEntity, ModuleEntity>((a,b)=>new JoinQueryInfos(
-                JoinType.Inner, a.F_ModuleId == b.F_Id && b.F_EnabledMark == true && b.F_DeleteMark == false
+                JoinType.Inner, a.ModuleId == b.Id && b.EnabledMark == true && b.DeleteMark == false
 
-                )).Where(a => a.F_EnabledMark == true && a.F_DeleteMark == false)
+                )).Where(a => a.EnabledMark == true && a.DeleteMark == false)
             .Select((a, b) => new ModuleButtonEntity
             {
-                F_Id = a.F_Id,
-                F_AllowDelete = a.F_AllowDelete,
-                F_AllowEdit = a.F_AllowEdit,
-                F_UrlAddress = a.F_UrlAddress,
-                F_CreatorTime = a.F_CreatorTime,
-                F_CreatorUserId = a.F_CreatorUserId,
-                F_DeleteMark = a.F_DeleteMark,
-                F_DeleteTime = a.F_DeleteTime,
-                F_DeleteUserId = a.F_DeleteUserId,
-                F_Description = a.F_Description,
-                F_EnabledMark = a.F_EnabledMark,
-                F_EnCode = a.F_EnCode,
-                F_FullName = a.F_FullName,
-                F_Icon = a.F_Icon,
-                F_IsPublic = a.F_IsPublic,
-                F_JsEvent = a.F_JsEvent,
-                F_LastModifyTime = a.F_LastModifyTime,
-                F_LastModifyUserId = a.F_LastModifyUserId,
-                F_Layers = a.F_Layers,
-                F_Location = a.F_Location,
-                F_ModuleId = b.F_UrlAddress,
-                F_ParentId = a.F_ParentId,
-                F_SortCode = a.F_SortCode,
-                F_Split = a.F_Split,
+                Id = a.Id,
+                AllowDelete = a.AllowDelete,
+                AllowEdit = a.AllowEdit,
+                UrlAddress = a.UrlAddress,
+                CreatorTime = a.CreatorTime,
+                CreatorUserId = a.CreatorUserId,
+                DeleteMark = a.DeleteMark,
+                DeleteTime = a.DeleteTime,
+                DeleteUserId = a.DeleteUserId,
+                Description = a.Description,
+                EnabledMark = a.EnabledMark,
+                EnCode = a.EnCode,
+                FullName = a.FullName,
+                Icon = a.Icon,
+                IsPublic = a.IsPublic,
+                JsEvent = a.JsEvent,
+                LastModifyTime = a.LastModifyTime,
+                LastModifyUserId = a.LastModifyUserId,
+                Layers = a.Layers,
+                Location = a.Location,
+                ModuleId = b.UrlAddress,
+                ParentId = a.ParentId,
+                SortCode = a.SortCode,
+                Split = a.Split,
             }).MergeTable();
             if (!string.IsNullOrEmpty(moduleId))
             {
-                query = query.Where(a => a.F_ModuleId == moduleId);
+                query = query.Where(a => a.ModuleId == moduleId);
             }
-            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
+            return await query.OrderBy(a => a.SortCode).ToListAsync();
         }
     }
 }

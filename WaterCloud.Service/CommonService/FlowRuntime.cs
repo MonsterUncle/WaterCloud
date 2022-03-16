@@ -21,18 +21,18 @@ namespace WaterCloud.Service.CommonService
         /// </summary>
         public FlowRuntime(FlowinstanceEntity instance)
         {
-            dynamic schemeContentJson = instance.F_SchemeContent.ToObject();//获取工作流模板内容的json对象;
+            dynamic schemeContentJson = instance.SchemeContent.ToObject();//获取工作流模板内容的json对象;
 
             InitLines(schemeContentJson);
             InitNodes(schemeContentJson);
 
-            currentNodeId = (string.IsNullOrEmpty(instance.F_ActivityId)? startNodeId : instance.F_ActivityId);
+            currentNodeId = (string.IsNullOrEmpty(instance.ActivityId)? startNodeId : instance.ActivityId);
             currentNodeType = GetNodeType(currentNodeId);
-            FrmData = instance.F_FrmData;
+            FrmData = instance.FrmData;
             title = schemeContentJson.title;
             initNum = schemeContentJson.initNum?? 0;
             previousId = GetPreviousNodeId(currentNodeId);
-            flowInstanceId = instance.F_Id;
+            flowInstanceId = instance.Id;
 
             //会签开始节点和流程结束节点没有下一步
             if (currentNodeType == 0 || currentNodeType == 4)

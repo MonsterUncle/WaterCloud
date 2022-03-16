@@ -92,8 +92,8 @@
                     async: false,
                     success: function (data) {
                         common.val('stepForm', data);
-                        $('#F_ImgUrlPic').attr('src', data.F_ImgUrl); //图片链接
-                        editor.txt.text($("#F_Description").val());
+                        $('#ImgUrlPic').attr('src', data.ImgUrl); //图片链接
+                        editor.txt.text($("#Description").val());
                         common.setReadOnly('adminform');
                     }
                 });
@@ -104,10 +104,10 @@
         function initControl() {
             //绑定数据源
             //类型为下拉框时
-            $("#F_CategoryId").bindSelect({
+            $("#CategoryId").bindSelect({
                 url: "/ContentManage/ArticleCategory/GetListJson",
-                id: "F_Id",
-                text: "F_FullName",
+                id: "Id",
+                text: "FullName",
                 search: true,
             });
         }
@@ -146,7 +146,7 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">新闻类别</label>
                                 <div class="layui-input-block">
-                                    <select id="F_CategoryId" name="F_CategoryId" lay-filter="F_CategoryId" lay-search>
+                                    <select id="CategoryId" name="CategoryId" lay-filter="CategoryId" lay-search>
                                         <option value="">请选择</option>
                                     </select>
                                 </div>
@@ -154,48 +154,48 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">内容标题</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Title" name="F_Title" autocomplete="off" class="layui-input">
+                                    <input type="text" id="Title" name="Title" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">URL链接</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_LinkUrl" name="F_LinkUrl" autocomplete="off" class="layui-input">
+                                    <input type="text" id="LinkUrl" name="LinkUrl" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">封面图片</label>
                                 <div class="layui-input-block">
-                                    <input type="text" class="layui-input" name="F_ImgUrl" id="F_ImgUrl" readonly="readonly">
+                                    <input type="text" class="layui-input" name="ImgUrl" id="ImgUrl" readonly="readonly">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label"></label>
                                 <div class="layui-input-block">
                                     <div class="layui-upload-list">
-                                        <img id="F_ImgUrlPic" width="200" height="200" onclick="previewImg(this)" />
+                                        <img id="ImgUrlPic" width="200" height="200" onclick="previewImg(this)" />
                                     </div>
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">排序数字</label>
                                 <div class="layui-input-block">
-                                    <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required" class="layui-input ">
+                                    <input type="number" pattern="[0-9]*" id="SortCode" name="SortCode" lay-verify="required" class="layui-input ">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">选项</label>
                                 <div class="layui-input-block">
-                                    <input id="F_IsTop" name="F_IsTop" type="checkbox" value="true" title="是否置顶">
-                                    <input id="F_IsRed" name="F_IsRed" type="checkbox" value="true" title="是否热门">
-                                    <input id="F_IsHot" name="F_IsHot" type="checkbox" value="true" title="是否推荐">
-                                    <input id="F_EnabledMark" name="F_EnabledMark" type="checkbox" value="true" checked="checked" title="是否发布">
+                                    <input id="IsTop" name="IsTop" type="checkbox" value="true" title="是否置顶">
+                                    <input id="IsRed" name="IsRed" type="checkbox" value="true" title="是否热门">
+                                    <input id="IsHot" name="IsHot" type="checkbox" value="true" title="是否推荐">
+                                    <input id="EnabledMark" name="EnabledMark" type="checkbox" value="true" checked="checked" title="是否发布">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">点击次数</label>
                                 <div class="layui-input-block">
-                                    <input type="number" pattern="[0-9]*" id="F_Click" name="F_Click" lay-verify="required" class="layui-input" value="0">
+                                    <input type="number" pattern="[0-9]*" id="Click" name="Click" lay-verify="required" class="layui-input" value="0">
                                 </div>
                             </div>
                             <div class="form-group-bottom text-right">
@@ -212,26 +212,26 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">内容描述</label>
                                 <div class="layui-input-block">
-                                    <textarea  class=" layui-hide" id="F_Description" name="F_Description" type="text/plain" style="width:100%;height:400px;"></textarea>
+                                    <textarea  class=" layui-hide" id="Description" name="Description" type="text/plain" style="width:100%;height:400px;"></textarea>
                                     <div id="editor"></div>
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">摘要</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Zhaiyao" name="F_Zhaiyao" autocomplete="off" class="layui-input">
+                                    <input type="text" id="Zhaiyao" name="Zhaiyao" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">来源</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Source" name="F_Source" autocomplete="off" value="本站" class="layui-input">
+                                    <input type="text" id="Source" name="Source" autocomplete="off" value="本站" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">作者</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Author" name="F_Author" autocomplete="off" class="layui-input">
+                                    <input type="text" id="Author" name="Author" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="form-group-bottom text-right">
@@ -249,25 +249,25 @@
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">Seo标题</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_SeoTitle" name="F_SeoTitle" autocomplete="off" class="layui-input">
+                                    <input type="text" id="SeoTitle" name="SeoTitle" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">Seo关键字</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_SeoKeywords" name="F_SeoKeywords" autocomplete="off" class="layui-input">
+                                    <input type="text" id="SeoKeywords" name="SeoKeywords" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">Seo描述</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_SeoDescription" name="F_SeoDescription" autocomplete="off" class="layui-input">
+                                    <input type="text" id="SeoDescription" name="SeoDescription" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-hide">
                                 <label class="layui-form-label">Tags标签</label>
                                 <div class="layui-input-block">
-                                    <input type="text" id="F_Tags" name="F_Tags" autocomplete="off" class="layui-input">
+                                    <input type="text" id="Tags" name="Tags" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="form-group-bottom text-right">

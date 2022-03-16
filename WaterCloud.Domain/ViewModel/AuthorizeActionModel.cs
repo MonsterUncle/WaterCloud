@@ -14,8 +14,8 @@ namespace WaterCloud.Domain.ViewModel
 {
     public class AuthorizeActionModel
     {
-        public string F_Id { set; get; }
-        public string F_UrlAddress { set; get; }
-        public string F_Authorize { get; set; }
+        public string Id { set; get; }
+        public string UrlAddress { set; get; }
+        public string Authorize { get; set; }
     }
 }

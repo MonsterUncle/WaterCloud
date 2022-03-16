@@ -54,13 +54,13 @@
              },
              cols: [[
                  { type: "radio", width: 50, fixed: 'left' },
-                 { field: 'F_ModuleCode', title: '模块编号', width: 120, sort: true, filter: true },
-                 { field: 'F_PrivilegeRules', title: '权限规则', width: 200, sort: true, filter: true },
-                 { field: 'F_SortCode', title: '排序号', width: 120, sort: true, filter: true },
+                 { field: 'ModuleCode', title: '模块编号', width: 120, sort: true, filter: true },
+                 { field: 'PrivilegeRules', title: '权限规则', width: 200, sort: true, filter: true },
+                 { field: 'SortCode', title: '排序号', width: 120, sort: true, filter: true },
                  {
-                     field: 'F_EnabledMark', title: '状态', width: 80, sort: true, filter: true,
+                     field: 'EnabledMark', title: '状态', width: 80, sort: true, filter: true,
                      templet: function (d) {
-                         if (d.F_EnabledMark == true) {
+                         if (d.EnabledMark == true) {
                              return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                          } else {
                              return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
@@ -68,9 +68,9 @@
                      }
                  }, 
                  {
-                     field: 'F_CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
+                     field: 'CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                  },
-                 { field: 'F_Description', title: '备注', minWidth: 150, sort: true, filter: true },
+                 { field: 'Description', title: '备注', minWidth: 150, sort: true, filter: true },
                  { title: '操作', width: 130, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
              ]]
          });
@@ -90,7 +90,7 @@
          //toolbar监听事件
          table.on('toolbar(currentTableFilter)', function (obj) { 
              var data = table.checkStatus('currentTableId').data;
-             var id = data.length > 0 ? data[0].F_Id : null;
+             var id = data.length > 0 ? data[0].Id : null;
              if (obj.event === 'add') {  // 监听添加操作
                  common.openNewTabByIframe({
                      title: "新增规则",
@@ -132,7 +132,7 @@
          });
          //toolrow监听事件
          table.on('tool(currentTableFilter)', function (obj) {
-             var id = obj.data.F_Id;
+             var id = obj.data.Id;
              if (obj.event === 'delete') {
                  common.deleteForm({
                      url: "/SystemOrganize/DataPrivilegeRule/DeleteForm",

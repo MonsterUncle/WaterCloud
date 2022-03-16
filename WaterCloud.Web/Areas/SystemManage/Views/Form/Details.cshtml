@@ -31,12 +31,12 @@
                 data: { keyValue: keyValue },
                 async: false,
                 success: function (data) {
-                    if (data.F_FrmType != 0) {
-                        $("#frmPreview").load(document.location.origin + '/form/' + data.F_WebId + '.html');
+                    if (data.FrmType != 0) {
+                        $("#frmPreview").load(document.location.origin + '/form/' + data.WebId + '.html');
                     }
                     else {
                         //表单设计器
-                        dataJson = JSON.parse(data.F_Content);
+                        dataJson = JSON.parse(data.Content);
                         renderForm = formPreview.render({
                             elem: '#frmPreview',
                             data: dataJson,

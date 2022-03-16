@@ -31,13 +31,13 @@
             url: '/FlowManage/Flowinstance/QueryHistories',
             where: { time: new Date().Format("yyyy-MM-dd hh:mm:ss") },
             cols: [[ //标题栏
-                { field: 'F_Content', title: '流转记录', minWidth: 150 }
-                , { field: 'F_CreatorUserName', title: '操作人', width: 150 }
+                { field: 'Content', title: '流转记录', minWidth: 150 }
+                , { field: 'CreatorUserName', title: '操作人', width: 150 }
                 , {
-                    field: 'F_CreatorTime', title: '创建时间', width: 180,
+                    field: 'CreatorTime', title: '创建时间', width: 180,
                     templet: function (d) {
-                        if (d.F_CreatorTime) {
-                            var time = new Date(d.F_CreatorTime);
+                        if (d.CreatorTime) {
+                            var time = new Date(d.CreatorTime);
                             return time.Format("yyyy-MM-dd hh:mm:ss");
                         }
                         return '';
@@ -63,7 +63,7 @@
                 data: { keyValue: keyValue },
                 async: false,
                 success: function (data) {
-                    var schemeContent = JSON.parse(data.F_SchemeContent);
+                    var schemeContent = JSON.parse(data.SchemeContent);
                     if (!!data.CurrentMakerName) {
                         $('#CurrentMakerName').val(data.CurrentMakerName);
                     }
@@ -73,13 +73,13 @@
                     flowDesignPanel = $('#flowPanel').flowdesign({
                         haveTool: false
                         , isprocessing: true
-                        , activityId: data.F_ActivityId
+                        , activityId: data.ActivityId
                         , nodeData: schemeContent.nodes
                         , flowcontent: schemeContent
                     });
-                    formtext = data.F_FrmData;
-                    if (data.F_FrmType == 0) {
-                        var dataJson = JSON.parse(data.F_FrmContent);
+                    formtext = data.FrmData;
+                    if (data.FrmType == 0) {
+                        var dataJson = JSON.parse(data.FrmContent);
                         //表单设计器
                         var renderForm= formPreview.render({
                             data: dataJson,
@@ -89,7 +89,7 @@
                         renderForm.setFormData(JSON.parse(formtext));
                     }
                     else {
-                        $("#frmPreview").load(document.location.origin + '/form/' + data.F_DbName + '.html');
+                        $("#frmPreview").load(document.location.origin + '/form/' + data.DbName + '.html');
                         form.render();
                     }
                     flowDesignPanel.reinitSize($(window).width() - 50, $(window).height() - 100);

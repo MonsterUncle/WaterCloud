@@ -193,8 +193,8 @@ layui.define(["jquery", "layer", 'table', 'soulTable', 'common', 'tabletree'], f
                 defaultToolbar: ['filter', 'exports', 'print'],//默认工具栏
                 search: true,//搜索按钮
                 loading: false,
-                treeIdName: 'F_Id',  // id字段名称
-                treePidName: 'F_ParentId',     // pid字段名称
+                treeIdName: 'Id',  // id字段名称
+                treePidName: 'ParentId',     // pid字段名称
                 filter:true,
                 treeColIndex: 1,
                 treeSpid: 0,

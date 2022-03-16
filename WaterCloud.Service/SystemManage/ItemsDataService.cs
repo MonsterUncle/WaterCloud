@@ -30,34 +30,34 @@ namespace WaterCloud.Service.SystemManage
             var list = repository.IQueryable();
             if (!string.IsNullOrEmpty(itemId))
             {
-                list = list.Where(a => a.F_ItemId == itemId);
+                list = list.Where(a => a.ItemId == itemId);
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(a => a.F_ItemName.Contains(keyword) || a.F_ItemCode.Contains(keyword));
+                list = list.Where(a => a.ItemName.Contains(keyword) || a.ItemCode.Contains(keyword));
             }
-            return await list.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_SortCode).ToListAsync();
+            return await list.Where(a => a.DeleteMark == false).OrderBy(a => a.SortCode).ToListAsync();
         }
         public async Task<List<ItemsDetailEntity>> GetLookList(string itemId = "", string keyword = "")
         {
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(itemId))
             {
-                query = query.Where(a => a.F_ItemId == itemId);
+                query = query.Where(a => a.ItemId == itemId);
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_ItemName.Contains(keyword) || a.F_ItemCode.Contains(keyword));
+                query = query.Where(a => a.ItemName.Contains(keyword) || a.ItemCode.Contains(keyword));
             }
             query = GetDataPrivilege("a","", query);
-            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
+            return await query.OrderBy(a => a.SortCode).ToListAsync();
         }
         public async Task<List<ItemsDetailEntity>> GetItemList(string enCode)
         {
             var itemcachedata = await itemApp.GetList();
-            var item = itemcachedata.Find(a => a.F_EnCode == enCode);
+            var item = itemcachedata.Find(a => a.EnCode == enCode);
             var data = repository.IQueryable();
-            return data.Where(a => a.F_DeleteMark == false && a.F_EnabledMark == true && a.F_ItemId == item.F_Id).OrderBy(a => a.F_SortCode).ToList();
+            return data.Where(a => a.DeleteMark == false && a.EnabledMark == true && a.ItemId == item.Id).OrderBy(a => a.SortCode).ToList();
         }
         public async Task<ItemsDetailEntity> GetLookForm(string keyValue)
         {
@@ -71,7 +71,7 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task DeleteForm(string keyValue)
         {
-            await repository.Delete(a => a.F_Id == keyValue);
+            await repository.Delete(a => a.Id == keyValue);
         }
         public async Task SubmitForm(ItemsDetailEntity itemsDetailEntity, string keyValue)
         {
@@ -82,7 +82,7 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
-                itemsDetailEntity.F_DeleteMark = false;
+                itemsDetailEntity.DeleteMark = false;
                 itemsDetailEntity.Create();
                 await repository.Insert(itemsDetailEntity);
             }

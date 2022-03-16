@@ -338,11 +338,11 @@
                     var noticeHtml = '';
                     for (var i = 0; i < data.length; i++) {
                         noticeHtml += '<div class="layuimini-notice">';
-                        noticeHtml += '<div class="layuimini-notice-title">' + data[i].F_Title + '</div>';
-                        noticeHtml += '<div class="layuimini-notice-extra">' + new Date(data[i].F_CreatorTime).Format("yyyy-MM-dd hh:mm") + '</div>';
+                        noticeHtml += '<div class="layuimini-notice-title">' + data[i].Title + '</div>';
+                        noticeHtml += '<div class="layuimini-notice-extra">' + new Date(data[i].CreatorTime).Format("yyyy-MM-dd hh:mm") + '</div>';
                         noticeHtml += '<div class="layuimini-notice-content layui-hide">';
                         noticeHtml += '<pre>';
-                        var str = data[i].F_Content;
+                        var str = data[i].Content;
                         noticeHtml += str;
                         noticeHtml += '</pre></div></div >';
                     }
@@ -431,14 +431,14 @@
                     success: function (data) {
                         var length = data.length;
                         for (var i = 0; i < length; i++) {
-                            if (data[i]['F_Date'] !== null) {
-                                xData.push(new Date(data[i]['F_Date']).Format("yyyy-MM-dd"));
+                            if (data[i]['Date'] !== null) {
+                                xData.push(new Date(data[i]['Date']).Format("yyyy-MM-dd"));
                             }
-                            if (data[i]['F_ARM'] !== null) {
-                                armData.push(data[i]['F_ARM']);
+                            if (data[i]['ARM'] !== null) {
+                                armData.push(data[i]['ARM']);
                             }
-                            if (data[i]['F_CPU'] !== null) {
-                                cpuData.push(data[i]['F_CPU']);
+                            if (data[i]['CPU'] !== null) {
+                                cpuData.push(data[i]['CPU']);
                             }
                         }
                     }

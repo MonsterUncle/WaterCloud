@@ -36,12 +36,12 @@ namespace WaterCloud.Web.Controllers
                 var systemset = await _setService.GetFormByHost("");
                 if (GlobalContext.SystemConfig.Demo)
                 {
-                    ViewBag.UserName = systemset.F_AdminAccount;
-                    ViewBag.Password = systemset.F_AdminPassword;
+                    ViewBag.UserName = systemset.AdminAccount;
+                    ViewBag.Password = systemset.AdminPassword;
                 }
                 ViewBag.SqlMode = GlobalContext.SystemConfig.SqlMode;
-                ViewBag.ProjectName = systemset.F_ProjectName;
-                ViewBag.LogoIcon = ".." + systemset.F_Logo;
+                ViewBag.ProjectName = systemset.ProjectName;
+                ViewBag.LogoIcon = ".." + systemset.Logo;
                 return View();
             }
             catch (Exception)
@@ -57,17 +57,17 @@ namespace WaterCloud.Web.Controllers
         public async Task<ActionResult> GetListJsonByLogin(string keyword)
         {
             var data = await _setService.GetList(keyword);
-            data = data.OrderBy(a=>a.F_DbNumber).ToList();
+            data = data.OrderBy(a=>a.DbNumber).ToList();
             foreach (var item in data)
             {
-                item.F_AdminAccount = null;
-                item.F_AdminPassword = null;
-                item.F_DBProvider = null;
-                item.F_DbString = null;
-                item.F_PrincipalMan = null;
-                item.F_MobilePhone = null;
-                item.F_CompanyName = null;
-                item.F_LogoCode= null;
+                item.AdminAccount = null;
+                item.AdminPassword = null;
+                item.DBProvider = null;
+                item.DbString = null;
+                item.PrincipalMan = null;
+                item.MobilePhone = null;
+                item.CompanyName = null;
+                item.LogoCode= null;
             }
             return Content(data.ToJson());
         }
@@ -85,12 +85,12 @@ namespace WaterCloud.Web.Controllers
         {
             await _logService.WriteDbLog(new LogEntity
             {
-                F_ModuleName = "系统登录",
-                F_Type = DbLogType.Exit.ToString(),
-                F_Account = _setService.currentuser.UserCode,
-                F_NickName = _setService.currentuser.UserName,
-                F_Result = true,
-                F_Description = "安全退出系统",
+                ModuleName = "系统登录",
+                Type = DbLogType.Exit.ToString(),
+                Account = _setService.currentuser.UserCode,
+                NickName = _setService.currentuser.UserName,
+                Result = true,
+                Description = "安全退出系统",
             });
             await OperatorProvider.Provider.EmptyCurrent("pc_");
             return Content(new AlwaysResult { state = ResultType.success.ToString() }.ToJson());
@@ -143,8 +143,8 @@ namespace WaterCloud.Web.Controllers
         {
             //根据域名判断租户
             LogEntity logEntity = new LogEntity();
-            logEntity.F_ModuleName ="系统登录";
-            logEntity.F_Type = DbLogType.Login.ToString();
+            logEntity.ModuleName ="系统登录";
+            logEntity.Type = DbLogType.Login.ToString();
             if (GlobalContext.SystemConfig.SqlMode==Define.SQL_MORE)
             {
                 localurl = "";
@@ -153,12 +153,12 @@ namespace WaterCloud.Web.Controllers
             {
                 UserEntity userEntity =await _userService.CheckLogin(username, password, localurl);
                 OperatorModel operatorModel = new OperatorModel();
-                operatorModel.UserId = userEntity.F_Id;
-                operatorModel.UserCode = userEntity.F_Account;
-                operatorModel.UserName = userEntity.F_RealName;
-                operatorModel.CompanyId = userEntity.F_OrganizeId;
-                operatorModel.DepartmentId = userEntity.F_DepartmentId;
-                operatorModel.RoleId = userEntity.F_RoleId;
+                operatorModel.UserId = userEntity.Id;
+                operatorModel.UserCode = userEntity.Account;
+                operatorModel.UserName = userEntity.RealName;
+                operatorModel.CompanyId = userEntity.OrganizeId;
+                operatorModel.DepartmentId = userEntity.DepartmentId;
+                operatorModel.RoleId = userEntity.RoleId;
                 operatorModel.LoginIPAddress = WebHelper.Ip;
                 if (GlobalContext.SystemConfig.LocalLAN != false)
                 {
@@ -169,16 +169,16 @@ namespace WaterCloud.Web.Controllers
                     operatorModel.LoginIPAddressName = WebHelper.GetIpLocation(operatorModel.LoginIPAddress);
                 }
                 operatorModel.LoginTime = DateTime.Now;
-                operatorModel.DdUserId = userEntity.F_DingTalkUserId;
-                operatorModel.WxOpenId = userEntity.F_WxOpenId;
+                operatorModel.DdUserId = userEntity.DingTalkUserId;
+                operatorModel.WxOpenId = userEntity.WxOpenId;
                 //各租户的管理员也是当前数据库的全部权限
-                operatorModel.IsSuperAdmin = userEntity.F_IsAdmin.Value;
-                operatorModel.IsAdmin = userEntity.F_IsAdmin.Value;
-                operatorModel.IsBoss = userEntity.F_IsBoss.Value;
-                operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
-                operatorModel.IsSenior = userEntity.F_IsSenior.Value;
-                SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
-                operatorModel.DbNumber = setEntity.F_DbNumber;
+                operatorModel.IsSuperAdmin = userEntity.IsAdmin.Value;
+                operatorModel.IsAdmin = userEntity.IsAdmin.Value;
+                operatorModel.IsBoss = userEntity.IsBoss.Value;
+                operatorModel.IsLeaderInDepts = userEntity.IsLeaderInDepts.Value;
+                operatorModel.IsSenior = userEntity.IsSenior.Value;
+                SystemSetEntity setEntity = await _setService.GetForm(userEntity.OrganizeId);
+                operatorModel.DbNumber = setEntity.DbNumber;
                 if (operatorModel.DbNumber == GlobalContext.SystemConfig.MainDbNumber)
                 {
                     operatorModel.IsSuperAdmin = true;
@@ -193,10 +193,10 @@ namespace WaterCloud.Web.Controllers
                 string token = Utils.GuId();
                 HttpContext.Response.Cookies.Append("pc_" + GlobalContext.SystemConfig.TokenName, token);
                 await CacheHelper.SetAsync("pc_" + GlobalContext.SystemConfig.TokenName + "_" + operatorModel.UserId + "_" + operatorModel.LoginTime, token, GlobalContext.SystemConfig.LoginExpire, true);
-                logEntity.F_Account = userEntity.F_Account;
-                logEntity.F_NickName = userEntity.F_RealName;
-                logEntity.F_Result = true;
-                logEntity.F_Description = "登录成功";
+                logEntity.Account = userEntity.Account;
+                logEntity.NickName = userEntity.RealName;
+                logEntity.Result = true;
+                logEntity.Description = "登录成功";
                 await _logService.WriteDbLog(logEntity);
                 //验证回退路由是否有权限，没有就删除
                 await CheckReturnUrl(operatorModel.UserId);
@@ -204,10 +204,10 @@ namespace WaterCloud.Web.Controllers
             }
             catch (Exception ex)
             {
-                logEntity.F_Account = username;
-                logEntity.F_NickName = username;
-                logEntity.F_Result = false;
-                logEntity.F_Description = "登录失败，" + ex.Message;
+                logEntity.Account = username;
+                logEntity.NickName = username;
+                logEntity.Result = false;
+                logEntity.Description = "登录失败，" + ex.Message;
                 await _logService.WriteDbLog(logEntity);
                 return Content(new AlwaysResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
             }

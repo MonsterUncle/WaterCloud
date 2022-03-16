@@ -27,9 +27,9 @@ namespace WaterCloud.Service.SystemOrganize
             var list =  repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(a => a.F_ModuleCode.Contains(keyword) || a.F_Description.Contains(keyword));
+                list = list.Where(a => a.ModuleCode.Contains(keyword) || a.Description.Contains(keyword));
             }
-            return await list.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
+            return await list.Where(a => a.DeleteMark == false).OrderBy(a => a.Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<DataPrivilegeRuleEntity>> GetLookList(SoulPage<DataPrivilegeRuleEntity> pagination, string keyword = "")
@@ -39,12 +39,12 @@ namespace WaterCloud.Service.SystemOrganize
             Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
             enabledTemp.Add("1", "有效");
             enabledTemp.Add("0", "无效");
-            dic.Add("F_EnabledMark", enabledTemp);
+            dic.Add("EnabledMark", enabledTemp);
             pagination = ChangeSoulData(dic, pagination);
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_ModuleCode.Contains(keyword) || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.ModuleCode.Contains(keyword) || a.Description.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
             return await repository.OrderList(query, pagination);
@@ -65,10 +65,10 @@ namespace WaterCloud.Service.SystemOrganize
         #region 提交数据
         public async Task SubmitForm(DataPrivilegeRuleEntity entity, string keyValue)
         {
-            entity.F_ModuleCode = repository.Db.Queryable<ModuleEntity>().InSingle(entity.F_ModuleId).F_EnCode;
+            entity.ModuleCode = repository.Db.Queryable<ModuleEntity>().InSingle(entity.ModuleId).EnCode;
             if (string.IsNullOrEmpty(keyValue))
             {
-                entity.F_DeleteMark = false;
+                entity.DeleteMark = false;
                 entity.Create();
                 await repository.Insert(entity);
             }
@@ -81,7 +81,7 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task DeleteForm(string keyValue)
         {
-            await repository.Delete(a => a.F_Id == keyValue);
+            await repository.Delete(a => a.Id == keyValue);
         }
         #endregion
 

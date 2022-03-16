@@ -96,9 +96,9 @@ namespace WaterCloud.Web.Controllers
             }
             Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
             var list= await _roleAuthorizeService.GetMenuList(roleId);
-            foreach (ModuleEntity item in list.Where(a=>a.F_UrlAddress!=null))
+            foreach (ModuleEntity item in list.Where(a=>a.UrlAddress!=null))
             {
-                dictionary.Add(item.F_UrlAddress, item.F_IsFields??false);
+                dictionary.Add(item.UrlAddress, item.IsFields??false);
             }
             return dictionary;
         }
@@ -123,7 +123,7 @@ namespace WaterCloud.Web.Controllers
         /// <returns></returns>
         private async Task<object> GetNoticeList()
         {
-            var data = (await _noticeService.GetList("")).Where(a => a.F_EnabledMark == true).OrderByDescending(a => a.F_CreatorTime).Take(6).ToList();
+            var data = (await _noticeService.GetList("")).Where(a => a.EnabledMark == true).OrderByDescending(a => a.CreatorTime).Take(6).ToList();
             return data;
         }
         /// <summary>
@@ -201,8 +201,8 @@ namespace WaterCloud.Web.Controllers
             }
             int usercout =(await _userService.GetUserList("")).Count();
             var temp =await CacheHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + currentuser.UserId);
-            int logincout = temp!=null&&temp.F_LogOnCount!=null? (int)temp.F_LogOnCount : 0;
-            int modulecout =(await _moduleService.GetList()).Where(a => a.F_EnabledMark == true && a.F_UrlAddress != null).Count();
+            int logincout = temp!=null&&temp.LogOnCount!=null? (int)temp.LogOnCount : 0;
+            int modulecout =(await _moduleService.GetList()).Where(a => a.EnabledMark == true && a.UrlAddress != null).Count();
             int logcout = (await _logService.GetList()).Count();
             var data= new { usercout = usercout, logincout = logincout, modulecout = modulecout, logcout = logcout };
             return Content(data.ToJson());
@@ -222,8 +222,8 @@ namespace WaterCloud.Web.Controllers
             init.logoInfo = new LogoInfoEntity();
             var systemset =await _setService.GetForm(currentuser.CompanyId);
             //修改主页及logo参数
-            init.logoInfo.title = systemset.F_LogoCode;
-            init.logoInfo.image = ".."+systemset.F_Logo;
+            init.logoInfo.title = systemset.LogoCode;
+            init.logoInfo.image = ".."+systemset.Logo;
             init.menuInfo = new List<MenuInfoEntity>();
             init.menuInfo = ToMenuJsonNew(await _roleAuthorizeService.GetMenuList(roleId), "0");
             sbJson.Append(init.ToJson());
@@ -238,16 +238,16 @@ namespace WaterCloud.Web.Controllers
         private List<MenuInfoEntity> ToMenuJsonNew(List<ModuleEntity> data, string parentId)
         {
             List<MenuInfoEntity> list = new List<MenuInfoEntity>();
-            List<ModuleEntity> entitys = data.FindAll(t => t.F_ParentId == parentId);
+            List<ModuleEntity> entitys = data.FindAll(t => t.ParentId == parentId);
             if (entitys.Count > 0)
             {
                 foreach (var item in entitys)
                 {
                     MenuInfoEntity munu = new MenuInfoEntity();
-                    munu.title = item.F_FullName;
-                    munu.icon = item.F_Icon;
-                    munu.href = item.F_UrlAddress;
-                    switch (item.F_Target)
+                    munu.title = item.FullName;
+                    munu.icon = item.Icon;
+                    munu.href = item.UrlAddress;
+                    switch (item.Target)
                     {
                         case "iframe":
                             munu.target = "_self";
@@ -262,12 +262,12 @@ namespace WaterCloud.Web.Controllers
                             munu.target = "_self";
                             break;
                     }                    
-                    if (data.FindAll(t => t.F_ParentId == item.F_Id).Count>0)
+                    if (data.FindAll(t => t.ParentId == item.Id).Count>0)
                     {
                         munu.child = new List<MenuInfoEntity>();
-                        munu.child = ToMenuJsonNew(data, item.F_Id);
+                        munu.child = ToMenuJsonNew(data, item.Id);
                     }
-                    if (item.F_IsMenu ==true)
+                    if (item.IsMenu ==true)
                     {
                         list.Add(munu);
                     }
@@ -285,15 +285,15 @@ namespace WaterCloud.Web.Controllers
             var itemdata =await _itemsDetailService.GetList();
             Dictionary<string, object> dictionaryItem = new Dictionary<string, object>();
             var itemlist = await _itemsService.GetList();
-            foreach (var item in itemlist.Where(a=>a.F_EnabledMark==true).ToList())
+            foreach (var item in itemlist.Where(a=>a.EnabledMark==true).ToList())
             {
-                var dataItemList = itemdata.FindAll(t => t.F_ItemId==item.F_Id);
+                var dataItemList = itemdata.FindAll(t => t.ItemId==item.Id);
                 Dictionary<string, string> dictionaryItemList = new Dictionary<string, string>();
                 foreach (var itemList in dataItemList)
                 {
-                    dictionaryItemList.Add(itemList.F_ItemCode, itemList.F_ItemName);
+                    dictionaryItemList.Add(itemList.ItemCode, itemList.ItemName);
                 }
-                dictionaryItem.Add(item.F_EnCode, dictionaryItemList);
+                dictionaryItem.Add(item.EnCode, dictionaryItemList);
             }
 
             return dictionaryItem;
@@ -324,19 +324,19 @@ namespace WaterCloud.Web.Controllers
             {
                 var dictionarytemp = new Dictionary<string, List<ModuleButtonEntity>>();
                 var data = await _roleAuthorizeService.GetButtonList(roles);
-                var dataModuleId = data.Where(a => a.F_ModuleId != null && a.F_ModuleId != "").Distinct(new ExtList<ModuleButtonEntity>("F_ModuleId"));
+                var dataModuleId = data.Where(a => a.ModuleId != null && a.ModuleId != "").Distinct(new ExtList<ModuleButtonEntity>("ModuleId"));
                 foreach (ModuleButtonEntity item in dataModuleId)
                 {
-                    var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId).ToList();
-                    dictionarytemp.Add(item.F_ModuleId, buttonList);
-                    if (dictionarylist.ContainsKey(item.F_ModuleId))
+                    var buttonList = data.Where(t => t.ModuleId == item.ModuleId).ToList();
+                    dictionarytemp.Add(item.ModuleId, buttonList);
+                    if (dictionarylist.ContainsKey(item.ModuleId))
                     {
-                        dictionarylist[item.F_ModuleId].AddRange(buttonList);
-                        dictionarylist[item.F_ModuleId]= dictionarylist[item.F_ModuleId].GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
+                        dictionarylist[item.ModuleId].AddRange(buttonList);
+                        dictionarylist[item.ModuleId]= dictionarylist[item.ModuleId].GroupBy(p => p.Id).Select(q => q.First()).ToList();
                     }
                     else
                     {
-                        dictionarylist.Add(item.F_ModuleId, buttonList);
+                        dictionarylist.Add(item.ModuleId, buttonList);
                     }
                 }
             }
@@ -368,19 +368,19 @@ namespace WaterCloud.Web.Controllers
             {
                 var dictionarytemp = new Dictionary<string, List<ModuleFieldsEntity>>();
                 var data = await _roleAuthorizeService.GetFieldsList(roles);
-                var dataModuleId = data.Where(a => a.F_ModuleId != null && a.F_ModuleId != "").Distinct(new ExtList<ModuleFieldsEntity>("F_ModuleId"));
+                var dataModuleId = data.Where(a => a.ModuleId != null && a.ModuleId != "").Distinct(new ExtList<ModuleFieldsEntity>("ModuleId"));
                 foreach (ModuleFieldsEntity item in dataModuleId)
                 {
-                    var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId).ToList();
-                    dictionarytemp.Add(item.F_ModuleId, buttonList);
-                    if (dictionarylist.ContainsKey(item.F_ModuleId))
+                    var buttonList = data.Where(t => t.ModuleId == item.ModuleId).ToList();
+                    dictionarytemp.Add(item.ModuleId, buttonList);
+                    if (dictionarylist.ContainsKey(item.ModuleId))
                     {
-                        dictionarylist[item.F_ModuleId].AddRange(buttonList);
-                        dictionarylist[item.F_ModuleId] = dictionarylist[item.F_ModuleId].GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
+                        dictionarylist[item.ModuleId].AddRange(buttonList);
+                        dictionarylist[item.ModuleId] = dictionarylist[item.ModuleId].GroupBy(p => p.Id).Select(q => q.First()).ToList();
                     }
                     else
                     {
-                        dictionarylist.Add(item.F_ModuleId, buttonList);
+                        dictionarylist.Add(item.ModuleId, buttonList);
                     }
                 }
             }

@@ -10,8 +10,8 @@ namespace WaterCloud.Domain
 {
     public interface ICreationAudited
     {
-        string F_Id { get; set; }
-        string F_CreatorUserId { get; set; }
-        DateTime? F_CreatorTime { get; set; }
+        string Id { get; set; }
+        string CreatorUserId { get; set; }
+        DateTime? CreatorTime { get; set; }
     }
 }

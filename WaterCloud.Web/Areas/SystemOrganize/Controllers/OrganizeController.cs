@@ -36,9 +36,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             foreach (OrganizeEntity item in data)
             {
                 TreeSelectModel treeModel = new TreeSelectModel();
-                treeModel.id = item.F_Id;
-                treeModel.text = item.F_FullName;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.id = item.Id;
+                treeModel.text = item.FullName;
+                treeModel.parentId = item.ParentId;
                 treeModel.data = item;
                 treeList.Add(treeModel);
             }
@@ -49,14 +49,14 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> GetSelectJson()
         {
             var data = await _service.GetList();
-            data = data.Where(a => a.F_EnabledMark == true).ToList();
+            data = data.Where(a => a.EnabledMark == true).ToList();
             var treeList = new List<TreeSelectModel>();
             foreach (OrganizeEntity item in data)
             {
                 TreeSelectModel treeModel = new TreeSelectModel();
-                treeModel.id = item.F_Id;
-                treeModel.text = item.F_FullName;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.id = item.Id;
+                treeModel.text = item.FullName;
+                treeModel.parentId = item.ParentId;
                 treeModel.data = item;
                 treeList.Add(treeModel);
             }
@@ -71,11 +71,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             foreach (OrganizeEntity item in data)
             {
                 TreeViewModel tree = new TreeViewModel();
-                bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
-                tree.id = item.F_Id;
-                tree.text = item.F_FullName;
-                tree.value = item.F_EnCode;
-                tree.parentId = item.F_ParentId;
+                bool hasChildren = data.Count(t => t.ParentId == item.Id) == 0 ? false : true;
+                tree.id = item.Id;
+                tree.text = item.FullName;
+                tree.value = item.EnCode;
+                tree.parentId = item.ParentId;
                 tree.isexpand = true;
                 tree.complete = true;
                 tree.hasChildren = hasChildren;
@@ -90,16 +90,16 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             var data =await _service.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
-                data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
+                data = data.TreeWhere(t => t.FullName.Contains(keyword));
             }
 			if (!string.IsNullOrEmpty(ids))
 			{
                 var str = ids.Split(',');
 				foreach (var item in str)
 				{
-                    if (data.Where(a => a.F_Id == item).Any())
+                    if (data.Where(a => a.Id == item).Any())
                     {
-                        var temp = data.Find(a => a.F_Id == item);
+                        var temp = data.Find(a => a.Id == item);
                         temp.LAY_CHECKED = true;
                     }
 				}
@@ -119,13 +119,13 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             try
             {
-                if (organizeEntity.F_ParentId=="0")
+                if (organizeEntity.ParentId=="0")
                 {
-                    organizeEntity.F_Layers = 1;
+                    organizeEntity.Layers = 1;
                 }
                 else
                 {
-                    organizeEntity.F_Layers =(await _service.GetForm(organizeEntity.F_ParentId)).F_Layers + 1;
+                    organizeEntity.Layers =(await _service.GetForm(organizeEntity.ParentId)).Layers + 1;
                 }
                 await _service.SubmitForm(organizeEntity, keyValue);
                 return await Success("操作成功。", "", keyValue);

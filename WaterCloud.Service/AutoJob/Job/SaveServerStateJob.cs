@@ -26,10 +26,10 @@ namespace WaterCloud.Service.AutoJob
             {
                 ServerStateEntity entity = new ServerStateEntity();
                 var computer = ComputerHelper.GetComputerInfo();
-                entity.F_ARM = computer.RAMRate;
-                entity.F_CPU = computer.CPURate;
-                entity.F_IIS = "0";
-                entity.F_WebSite = _hostingEnvironment.ContentRootPath;
+                entity.ARM = computer.RAMRate;
+                entity.CPU = computer.CPURate;
+                entity.IIS = "0";
+                entity.WebSite = _hostingEnvironment.ContentRootPath;
                 await _server.SubmitForm(entity);
                 obj.state = ResultType.success.ToString();
                 obj.message = "服务器状态更新成功！";

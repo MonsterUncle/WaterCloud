@@ -31,19 +31,19 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ModuleEntity>> GetList()
         {
             var query = repository.IQueryable();
-            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_SortCode).ToListAsync();
+            return await query.Where(a => a.DeleteMark == false).OrderBy(a => a.SortCode).ToListAsync();
         }
         public async Task<List<ModuleEntity>> GetBesidesList()
         {
-            var moduleList = repository.Db.Queryable<DataPrivilegeRuleEntity>().Select(a => a.F_ModuleId).ToList();
-            var query = repository.IQueryable().Where(a => !moduleList.Contains(a.F_Id) && a.F_EnabledMark == true && a.F_Target == "iframe");
-            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
+            var moduleList = repository.Db.Queryable<DataPrivilegeRuleEntity>().Select(a => a.ModuleId).ToList();
+            var query = repository.IQueryable().Where(a => !moduleList.Contains(a.Id) && a.EnabledMark == true && a.Target == "iframe");
+            return await query.OrderBy(a => a.SortCode).ToListAsync();
         }
         public async Task<List<ModuleEntity>> GetLookList()
         {
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             query = GetDataPrivilege("a", "", query);
-            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
+            return await query.OrderBy(a => a.SortCode).ToListAsync();
         }
         public async Task<ModuleEntity> GetLookForm(string keyValue)
         {
@@ -55,13 +55,13 @@ namespace WaterCloud.Service.SystemManage
             var data = await repository.FindEntity(keyValue);
             return data;
         }
-        public async Task<string> GetMaxSortCode(string F_ParentId)
+        public async Task<string> GetMaxSortCode(string ParentId)
         {
 			try
 			{
-                int F_SortCode = (int)await repository.Db.Queryable<ModuleEntity>().Where(t => t.F_ParentId == F_ParentId).MaxAsync(a => a.F_SortCode);
+                int SortCode = (int)await repository.Db.Queryable<ModuleEntity>().Where(t => t.ParentId == ParentId).MaxAsync(a => a.SortCode);
 
-                return (F_SortCode + 1).ToString();
+                return (SortCode + 1).ToString();
             }
 			catch (Exception)
 			{
@@ -70,16 +70,16 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (await repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).AnyAsync())
+            if (await repository.IQueryable(a => a.ParentId.Equals(keyValue)).AnyAsync())
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }
             else
             {
                 unitofwork.CurrentBeginTrans();
-                await repository.Delete(a => a.F_Id == keyValue);
-                await repository.Db.Deleteable<ModuleButtonEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
-                await repository.Db.Deleteable<ModuleFieldsEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
+                await repository.Delete(a => a.Id == keyValue);
+                await repository.Db.Deleteable<ModuleButtonEntity>().Where(a => a.ModuleId == keyValue).ExecuteCommandAsync();
+                await repository.Db.Deleteable<ModuleFieldsEntity>().Where(a => a.ModuleId == keyValue).ExecuteCommandAsync();
                 unitofwork.CurrentCommit();
                 await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
             }
@@ -87,16 +87,16 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<ModuleEntity>> GetListByRole(string roleid)
         {
-            var moduleList = repository.Db.Queryable<RoleAuthorizeEntity>().Where(a => a.F_ObjectId == roleid && a.F_ItemType == 1).Select(a => a.F_ItemId).ToList();
-            var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
-            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
+            var moduleList = repository.Db.Queryable<RoleAuthorizeEntity>().Where(a => a.ObjectId == roleid && a.ItemType == 1).Select(a => a.ItemId).ToList();
+            var query = repository.IQueryable().Where(a => (moduleList.Contains(a.Id) || a.IsPublic == true) && a.DeleteMark == false && a.EnabledMark == true);
+            return await query.OrderBy(a => a.SortCode).ToListAsync();
         }
 
         public async Task SubmitForm(ModuleEntity moduleEntity, string keyValue)
         {
-			if (!string.IsNullOrEmpty(moduleEntity.F_Authorize))
+			if (!string.IsNullOrEmpty(moduleEntity.Authorize))
 			{
-                moduleEntity.F_Authorize = moduleEntity.F_Authorize.ToLower();
+                moduleEntity.Authorize = moduleEntity.Authorize.ToLower();
             }
             if (!string.IsNullOrEmpty(keyValue))
             {
@@ -113,15 +113,15 @@ namespace WaterCloud.Service.SystemManage
         /// <summary>
         /// 更新菜单排序
         /// </summary>
-        /// <param name="F_Id">内码</param>
+        /// <param name="Id">内码</param>
         /// <param name="SortCode">排序数字</param>
         /// <returns></returns>
-        public async Task SubmitUpdateForm(string F_Id, int SortCode)
+        public async Task SubmitUpdateForm(string Id, int SortCode)
         {
             //更新
-            await repository.Update(a => a.F_Id == F_Id, a => new ModuleEntity()
+            await repository.Update(a => a.Id == Id, a => new ModuleEntity()
             {
-                F_SortCode = SortCode
+                SortCode = SortCode
             });
         }
     }

@@ -2,32 +2,32 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">请假类型</label>
         <div class="layui-input-block">
-            <input type="radio" name="F_RequestType" lay-verify="required" value="病假" title="病假">
-            <input type="radio" name="F_RequestType" value="事假" title="事假">
+            <input type="radio" name="RequestType" lay-verify="required" value="病假" title="病假">
+            <input type="radio" name="RequestType" value="事假" title="事假">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label required">请假人</label>
         <div class="layui-input-block">
-            <input type="text" id="F_UserName" name="F_UserName" maxlength="50" lay-verify="required" class="layui-input">
+            <input type="text" id="UserName" name="UserName" maxlength="50" lay-verify="required" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label required">开始时间</label>
         <div class="layui-input-block">
-            <input class="layui-input" id="F_StartTime" name="F_StartTime" type="datetime" lay-verify="required" autocomplete="off" />
+            <input class="layui-input" id="StartTime" name="StartTime" type="datetime" lay-verify="required" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label required">结束时间</label>
         <div class="layui-input-block">
-            <input class="layui-input" id="F_EndTime" name="F_EndTime" type="datetime" lay-verify="required" autocomplete="off" />
+            <input class="layui-input" id="EndTime" name="EndTime" type="datetime" lay-verify="required" autocomplete="off" />
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label required">请假说明</label>
         <div class="layui-input-block">
-            <textarea id="F_RequestComment" name="F_RequestComment" class="layui-textarea" lay-verify="required" placeholder="请输入说明"></textarea>
+            <textarea id="RequestComment" name="RequestComment" class="layui-textarea" lay-verify="required" placeholder="请输入说明"></textarea>
         </div>
     </div>
     <div class="layui-form-item">
@@ -36,7 +36,7 @@
                 <p id="demoText"></p>
             </div>
             <button type="button" class="layui-btn" id="test1">上传附件</button>
-            <input class="layui-hide" hidden type="text" id="F_Attachment" name="F_Attachment">
+            <input class="layui-hide" hidden type="text" id="Attachment" name="Attachment">
         </div>
     </div>
 </div>
@@ -50,14 +50,14 @@
         //此处需修改
         //类型为时间时
         laydate.render({
-            elem: '#F_StartTime'
+            elem: '#StartTime'
             , trigger: 'click'
             , type: 'datetime'
             , min: 0
             , format: 'yyyy-MM-dd HH:mm',
         });
         laydate.render({
-            elem: '#F_EndTime'
+            elem: '#EndTime'
             , trigger: 'click'
             , type: 'datetime'
             , min: 0
@@ -92,7 +92,7 @@
                     common.modalMsg(res.msg, "warning");
                     return false;
                 }
-                $('#F_Attachment').val(res.data[0].src);
+                $('#Attachment').val(res.data[0].src);
             }
             , error: function () {
                 //演示失败状态，并实现重传

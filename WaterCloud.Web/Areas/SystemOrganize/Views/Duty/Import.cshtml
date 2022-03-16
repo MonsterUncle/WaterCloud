@@ -42,19 +42,19 @@
             cols: [[
                 { type: 'checkbox', fixed: "left", width: 70 },
                 { field: 'ErrorMsg', title: '错误信息', width: 150, sort: true, filter: true },
-                { field: 'F_FullName', title: '岗位名称', width: 120, sort: true, filter: true },
-                { field: 'F_EnCode', title: '岗位编号', width: 120, sort: true, filter: true },
+                { field: 'FullName', title: '岗位名称', width: 120, sort: true, filter: true },
+                { field: 'EnCode', title: '岗位编号', width: 120, sort: true, filter: true },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80, sort: true, filter: true,
+                    field: 'EnabledMark', title: '状态', width: 80, sort: true, filter: true,
                     templet: function (d) {
-                        if (d.F_EnabledMark == true) {
+                        if (d.EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                         }
                     }
                 },
-                { field: 'F_Description', title: '备注', minWidth: 150, sort: true, filter: true },
+                { field: 'Description', title: '备注', minWidth: 150, sort: true, filter: true },
             ]]
         });
         //普通图片上传
@@ -125,7 +125,7 @@
                     return false;
                 }
                 for (var i = 0; i < cachedata.length; i++) {
-                    if (cachedata[i].F_EnabledMark == false) {
+                    if (cachedata[i].EnabledMark == false) {
                         common.modalMsg("存在错误数据", "warning");
                         return false;
                     }
@@ -155,7 +155,7 @@
                             var cachedata = soulTable.cache['currentTableId'];
                             for (var i = 0; i < data.length; i++) {
                                 for (let j = cachedata.length - 1; j >= 0; j--) {
-                                    if (cachedata[j].F_Id === data[i].F_Id) {
+                                    if (cachedata[j].Id === data[i].Id) {
                                         cachedata.splice(j, 1);
                                     }
                                 }

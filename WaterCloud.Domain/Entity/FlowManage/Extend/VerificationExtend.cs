@@ -7,16 +7,16 @@ namespace WaterCloud.Domain.FlowManage
 {
     public class VerificationExtend:NodeDesignateEntity
     {
-        public string F_FlowInstanceId { get; set; }
+        public string FlowInstanceId { get; set; }
         /// <summary>
         /// 1:同意；2：不同意；3：驳回
         /// </summary>
-        public string F_VerificationFinally { get; set; }
+        public string VerificationFinally { get; set; }
 
         /// <summary>
         /// 审核意见
         /// </summary>
-        public string F_VerificationOpinion { get; set; }
+        public string VerificationOpinion { get; set; }
 
         /// <summary>
         /// 驳回的步骤，即驳回到的节点ID

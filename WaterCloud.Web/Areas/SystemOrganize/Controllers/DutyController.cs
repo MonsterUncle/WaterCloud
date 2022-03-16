@@ -39,7 +39,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.field = "F_Id";
+                pagination.field = "Id";
                 pagination.order = "desc";
             }
             var data =await _service.GetLookList(pagination,keyword);
@@ -140,7 +140,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             {
                 return Error("导入数据不存在!");
             }
-            if (filterList.Where(a => a.F_EnabledMark == false).Any())
+            if (filterList.Where(a => a.EnabledMark == false).Any())
             {
                 return Error("导入数据存在错误!");
             }
@@ -202,13 +202,13 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             {
                 IRow rowtemp = sheet1.CreateRow(i + 1);
                 rowtemp.CreateCell(0).SetCellValue((i + 1).ToString());
-                rowtemp.CreateCell(1).SetCellValue(list[i].F_EnCode != null ? list[i].F_EnCode.ToString() : "");
-                rowtemp.CreateCell(2).SetCellValue(list[i].F_FullName != null ? list[i].F_FullName.ToString() : "");
+                rowtemp.CreateCell(1).SetCellValue(list[i].EnCode != null ? list[i].EnCode.ToString() : "");
+                rowtemp.CreateCell(2).SetCellValue(list[i].FullName != null ? list[i].FullName.ToString() : "");
                 var set=await _setService.GetForm(_service.currentuser.CompanyId);
-                rowtemp.CreateCell(3).SetCellValue(set != null ? set.F_CompanyName : "");
-                rowtemp.CreateCell(4).SetCellValue(list[i].F_EnabledMark == true ? "有效" : "无效");
-                rowtemp.CreateCell(5).SetCellValue(list[i].F_CreatorTime != null ? list[i].F_CreatorTime.ToString() : "");
-                rowtemp.CreateCell(6).SetCellValue(list[i].F_Description != null ? list[i].F_Description.ToString() : "");
+                rowtemp.CreateCell(3).SetCellValue(set != null ? set.CompanyName : "");
+                rowtemp.CreateCell(4).SetCellValue(list[i].EnabledMark == true ? "有效" : "无效");
+                rowtemp.CreateCell(5).SetCellValue(list[i].CreatorTime != null ? list[i].CreatorTime.ToString() : "");
+                rowtemp.CreateCell(6).SetCellValue(list[i].Description != null ? list[i].Description.ToString() : "");
             }
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
             book.Write(ms);
@@ -279,13 +279,13 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                 table = new PdfPTable(new float[] { 5, 5, 5, 5, 5, 5, 5 });
                 table.WidthPercentage = 100f;
                 table.AddCell(new Phrase(i.ToString(), Font12));
-                table.AddCell(new Phrase(item.F_EnCode != null ? item.F_EnCode.ToString() : "", Font12));
-                table.AddCell(new Phrase(item.F_FullName != null ? item.F_EnCode.ToString() : "", Font12));
+                table.AddCell(new Phrase(item.EnCode != null ? item.EnCode.ToString() : "", Font12));
+                table.AddCell(new Phrase(item.FullName != null ? item.EnCode.ToString() : "", Font12));
                 var set = await _setService.GetForm(_service.currentuser.CompanyId);
-                table.AddCell(new Phrase(set != null ? set.F_CompanyName.ToString() : "", Font12));
-                table.AddCell(new Phrase(item.F_EnabledMark != true ? "无效" : "有效", Font12));
-                table.AddCell(new Phrase(item.F_CreatorTime!=null?((DateTime)item.F_CreatorTime).ToString("yyyy-MM-dd") :"", Font12));
-                table.AddCell(new Phrase(item.F_Description, Font12));
+                table.AddCell(new Phrase(set != null ? set.CompanyName.ToString() : "", Font12));
+                table.AddCell(new Phrase(item.EnabledMark != true ? "无效" : "有效", Font12));
+                table.AddCell(new Phrase(item.CreatorTime!=null?((DateTime)item.CreatorTime).ToString("yyyy-MM-dd") :"", Font12));
+                table.AddCell(new Phrase(item.Description, Font12));
                 Doc.Add(table);
             }
             table = new PdfPTable(new float[] { 35 });

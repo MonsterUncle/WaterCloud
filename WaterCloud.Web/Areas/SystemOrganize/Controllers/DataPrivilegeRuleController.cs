@@ -28,7 +28,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.field = "F_Id";
+                pagination.field = "Id";
                 pagination.order = "desc";
             }
             var data = await _service.GetLookList(pagination, keyword);
@@ -67,14 +67,14 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             {
                 if (!string.IsNullOrEmpty(item.Description))
                 {
-                    entity.F_Description += item.Description+",";
+                    entity.Description += item.Description+",";
                 }
             }
-            if (!string.IsNullOrEmpty(entity.F_Description))
+            if (!string.IsNullOrEmpty(entity.Description))
             {
-                entity.F_Description = entity.F_Description.Substring(0, entity.F_Description.Length - 1);
+                entity.Description = entity.Description.Substring(0, entity.Description.Length - 1);
             }
-            entity.F_PrivilegeRules = filterList.ToJson();
+            entity.PrivilegeRules = filterList.ToJson();
             try
             {
                 await _service.SubmitForm(entity, keyValue);

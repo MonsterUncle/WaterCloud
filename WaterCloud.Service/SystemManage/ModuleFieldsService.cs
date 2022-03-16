@@ -27,18 +27,18 @@ namespace WaterCloud.Service.SystemManage
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.FullName.Contains(keyword) || a.EnCode.Contains(keyword));
             }
-            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.DeleteMark == false).OrderBy(a => a.Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<ModuleFieldsEntity>> GetLookList(Pagination pagination, string moduleId, string keyword = "")
         {
             //获取数据权限
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false && a.F_ModuleId == moduleId);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false && a.ModuleId == moduleId);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.FullName.Contains(keyword) || a.EnCode.Contains(keyword));
             }
             query = GetDataPrivilege("a","", query);
             return await repository.OrderList(query, pagination);
@@ -62,7 +62,7 @@ namespace WaterCloud.Service.SystemManage
         {
             if (string.IsNullOrEmpty(keyValue))
             {
-                entity.F_DeleteMark = false;
+                entity.DeleteMark = false;
                 entity.Create();
                 await repository.Insert(entity);
             }
@@ -75,7 +75,7 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task DeleteForm(string keyValue)
         {
-            await repository.Delete(a => a.F_Id == keyValue);
+            await repository.Delete(a => a.Id == keyValue);
         }
 
         public async Task SubmitCloneFields(string moduleId, string ids)
@@ -83,16 +83,16 @@ namespace WaterCloud.Service.SystemManage
             string[] ArrayId = ids.Split(',');
             var data = await this.GetList();
             List<ModuleFieldsEntity> entitys = new List<ModuleFieldsEntity>();
-            var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.F_Id == moduleId).FirstAsync();
-            if (string.IsNullOrEmpty(module.F_UrlAddress) || module.F_Target != "iframe")
+            var module = await repository.Db.Queryable<ModuleEntity>().Where(a => a.Id == moduleId).FirstAsync();
+            if (string.IsNullOrEmpty(module.UrlAddress) || module.Target != "iframe")
             {
                 throw new Exception("框架页才能创建字段");
             }
             foreach (string item in ArrayId)
             {
-                ModuleFieldsEntity moduleFieldsEntity = data.Find(a => a.F_Id == item);
+                ModuleFieldsEntity moduleFieldsEntity = data.Find(a => a.Id == item);
                 moduleFieldsEntity.Create();
-                moduleFieldsEntity.F_ModuleId = moduleId;
+                moduleFieldsEntity.ModuleId = moduleId;
                 entitys.Add(moduleFieldsEntity);
             }
             await repository.Insert(entitys);
@@ -100,38 +100,38 @@ namespace WaterCloud.Service.SystemManage
 
         public async Task<List<ModuleFieldsEntity>> GetListByRole(string roleid)
         {
-            var moduleList = repository.Db.Queryable<RoleAuthorizeEntity>().Where(a => a.F_ObjectId == roleid && a.F_ItemType == 3).Select(a => a.F_ItemId).ToList();
-            var query = repository.IQueryable().Where(a => (moduleList.Contains(a.F_Id) || a.F_IsPublic == true) && a.F_DeleteMark == false && a.F_EnabledMark == true);
-            return await query.OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToListAsync();
+            var moduleList = repository.Db.Queryable<RoleAuthorizeEntity>().Where(a => a.ObjectId == roleid && a.ItemType == 3).Select(a => a.ItemId).ToList();
+            var query = repository.IQueryable().Where(a => (moduleList.Contains(a.Id) || a.IsPublic == true) && a.DeleteMark == false && a.EnabledMark == true);
+            return await query.OrderBy(a => a.CreatorTime,OrderByType.Desc).ToListAsync();
         }
 
         internal async Task<List<ModuleFieldsEntity>> GetListNew(string moduleId = "")
         {
             var query = repository.Db.Queryable<ModuleFieldsEntity, ModuleEntity>((a,b) => new JoinQueryInfos (
-                JoinType.Inner,a.F_ModuleId==b.F_Id && b.F_EnabledMark == true
+                JoinType.Inner,a.ModuleId==b.Id && b.EnabledMark == true
                 ))
             .Select((a, b) => new ModuleFieldsEntity
             {
-                F_Id = a.F_Id,
-                F_CreatorTime = a.F_CreatorTime,
-                F_CreatorUserId = a.F_CreatorUserId,
-                F_DeleteMark = a.F_DeleteMark,
-                F_DeleteTime = a.F_DeleteTime,
-                F_DeleteUserId = a.F_DeleteUserId,
-                F_Description = a.F_Description,
-                F_EnabledMark = a.F_EnabledMark,
-                F_EnCode = a.F_EnCode,
-                F_FullName = a.F_FullName,
-                F_LastModifyTime = a.F_LastModifyTime,
-                F_LastModifyUserId = a.F_LastModifyUserId,
-                F_ModuleId = b.F_UrlAddress,
-                F_IsPublic = a.F_IsPublic
+                Id = a.Id,
+                CreatorTime = a.CreatorTime,
+                CreatorUserId = a.CreatorUserId,
+                DeleteMark = a.DeleteMark,
+                DeleteTime = a.DeleteTime,
+                DeleteUserId = a.DeleteUserId,
+                Description = a.Description,
+                EnabledMark = a.EnabledMark,
+                EnCode = a.EnCode,
+                FullName = a.FullName,
+                LastModifyTime = a.LastModifyTime,
+                LastModifyUserId = a.LastModifyUserId,
+                ModuleId = b.UrlAddress,
+                IsPublic = a.IsPublic
             }).MergeTable();
             if (!string.IsNullOrEmpty(moduleId))
             {
-                query = query.Where(a => a.F_ModuleId == moduleId);
+                query = query.Where(a => a.ModuleId == moduleId);
             }
-            return await query.OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToListAsync();
+            return await query.OrderBy(a => a.CreatorTime,OrderByType.Desc).ToListAsync();
         }
         #endregion
 

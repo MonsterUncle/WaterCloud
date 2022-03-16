@@ -35,20 +35,20 @@ namespace WaterCloud.Service.SystemOrganize
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_CompanyName.Contains(keyword) || a.F_ProjectName.Contains(keyword));
+                query = query.Where(a => a.CompanyName.Contains(keyword) || a.ProjectName.Contains(keyword));
             }
-            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.DeleteMark == false).OrderBy(a => a.Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<SystemSetEntity>> GetLookList(string keyword = "")
         {
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_CompanyName.Contains(keyword) || a.F_ProjectName.Contains(keyword));
+                query = query.Where(a => a.CompanyName.Contains(keyword) || a.ProjectName.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
-            return await query.OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
+            return await query.OrderBy(a => a.Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<SystemSetEntity> GetFormByHost(string host)
@@ -58,28 +58,28 @@ namespace WaterCloud.Service.SystemOrganize
             if (!string.IsNullOrEmpty(host))
             {
                 //此处需修改
-                query = query.Where(a => a.F_HostUrl.Contains(host));
+                query = query.Where(a => a.HostUrl.Contains(host));
             }
             else
             {
-                query = query.Where(a => a.F_DbNumber == "0");
+                query = query.Where(a => a.DbNumber == "0");
             }
             if (!await query.Clone().AnyAsync())
             {
                 query = repository.IQueryable();
-                query = query.Where(a => a.F_DbNumber == "0");
+                query = query.Where(a => a.DbNumber == "0");
             }
-            var data = await query.Where(a => a.F_DeleteMark == false).FirstAsync();
+            var data = await query.Where(a => a.DeleteMark == false).FirstAsync();
             return data;
         }
 
         public async Task<List<SystemSetEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false && a.F_DbNumber != "0");
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false && a.DbNumber != "0");
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(a => a.F_CompanyName.Contains(keyword) || a.F_ProjectName.Contains(keyword));
+                query = query.Where(a => a.CompanyName.Contains(keyword) || a.ProjectName.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
             return await repository.OrderList(query, pagination);
@@ -112,7 +112,7 @@ namespace WaterCloud.Service.SystemOrganize
             unitofwork.BeginTrans();
             if (string.IsNullOrEmpty(keyValue))
             {
-                entity.F_DeleteMark = false;
+                entity.DeleteMark = false;
                 entity.Create();
                 await repository.Insert(entity);
                 if (permissionIds != null)
@@ -122,26 +122,26 @@ namespace WaterCloud.Service.SystemOrganize
                     foreach (var itemId in permissionIds.Distinct())
                     {
                         RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
-                        roleAuthorizeEntity.F_Id = Utils.GuId();
-                        roleAuthorizeEntity.F_ObjectType = 1;
-                        roleAuthorizeEntity.F_ObjectId = entity.F_Id;
-                        roleAuthorizeEntity.F_ItemId = itemId;
-                        if (moduledata.Find(a => a.F_Id == itemId) != null)
+                        roleAuthorizeEntity.Id = Utils.GuId();
+                        roleAuthorizeEntity.ObjectType = 1;
+                        roleAuthorizeEntity.ObjectId = entity.Id;
+                        roleAuthorizeEntity.ItemId = itemId;
+                        if (moduledata.Find(a => a.Id == itemId) != null)
                         {
-                            roleAuthorizeEntity.F_ItemType = 1;
+                            roleAuthorizeEntity.ItemType = 1;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modules.Add(moduledata.Find(a => a.F_Id == itemId));
+                            modules.Add(moduledata.Find(a => a.Id == itemId));
                         }
-                        if (buttondata.Find(a => a.F_Id == itemId) != null)
+                        if (buttondata.Find(a => a.Id == itemId) != null)
                         {
-                            roleAuthorizeEntity.F_ItemType = 2;
+                            roleAuthorizeEntity.ItemType = 2;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modulebtns.Add(buttondata.Find(a => a.F_Id == itemId));
+                            modulebtns.Add(buttondata.Find(a => a.Id == itemId));
                         }
                     }
                     //排除租户
-                    modules.AddRange(moduledata.Where(a => a.F_IsPublic == true && a.F_EnabledMark == true && a.F_DeleteMark == false && a.F_EnCode!= "SystemSet"));
-                    modulebtns.AddRange(buttondata.Where(a => a.F_IsPublic == true && a.F_EnabledMark == true && a.F_DeleteMark == false));
+                    modules.AddRange(moduledata.Where(a => a.IsPublic == true && a.EnabledMark == true && a.DeleteMark == false && a.EnCode!= "SystemSet"));
+                    modulebtns.AddRange(buttondata.Where(a => a.IsPublic == true && a.EnabledMark == true && a.DeleteMark == false));
                 }
                 if (permissionfieldsIds != null)
                 {
@@ -149,18 +149,18 @@ namespace WaterCloud.Service.SystemOrganize
                     foreach (var itemId in permissionfieldsIds.Distinct())
                     {
                         RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
-                        roleAuthorizeEntity.F_Id = Utils.GuId();
-                        roleAuthorizeEntity.F_ObjectType = 1;
-                        roleAuthorizeEntity.F_ObjectId = entity.F_Id;
-                        roleAuthorizeEntity.F_ItemId = itemId;
-                        if (fieldsdata.Find(a => a.F_Id == itemId) != null)
+                        roleAuthorizeEntity.Id = Utils.GuId();
+                        roleAuthorizeEntity.ObjectType = 1;
+                        roleAuthorizeEntity.ObjectId = entity.Id;
+                        roleAuthorizeEntity.ItemId = itemId;
+                        if (fieldsdata.Find(a => a.Id == itemId) != null)
                         {
-                            roleAuthorizeEntity.F_ItemType = 3;
+                            roleAuthorizeEntity.ItemType = 3;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modulefileds.Add(fieldsdata.Find(a => a.F_Id == itemId));
+                            modulefileds.Add(fieldsdata.Find(a => a.Id == itemId));
                         }
                     }
-                    modulefileds.AddRange(fieldsdata.Where(a => a.F_IsPublic == true && a.F_EnabledMark == true && a.F_DeleteMark == false));
+                    modulefileds.AddRange(fieldsdata.Where(a => a.IsPublic == true && a.EnabledMark == true && a.DeleteMark == false));
                 }
                 //新建租户权限
                 if (roleAuthorizeEntitys.Count>0)
@@ -168,7 +168,7 @@ namespace WaterCloud.Service.SystemOrganize
                     await repository.Db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
                 }
                 //新建数据库和表
-                using (var db = new SqlSugarClient(DBContexHelper.Contex(entity.F_DbString, entity.F_DBProvider)))
+                using (var db = new SqlSugarClient(DBContexHelper.Contex(entity.DbString, entity.DBProvider)))
 				{
                     //判断数据库有没有被使用
                     db.DbMaintenance.CreateDatabase();
@@ -198,22 +198,22 @@ namespace WaterCloud.Service.SystemOrganize
                     //新建账户,密码
                     UserEntity user = new UserEntity();
                     user.Create();
-                    user.F_Account = entity.F_AdminAccount;
-                    user.F_RealName = entity.F_CompanyName;
-                    user.F_Gender = true;
-                    user.F_OrganizeId = entity.F_Id;
-                    user.F_IsAdmin = true;
-                    user.F_DeleteMark = false;
-                    user.F_EnabledMark = true;
-                    user.F_IsBoss = false;
-                    user.F_IsLeaderInDepts = false;
-                    user.F_SortCode = 0;
-                    user.F_IsSenior = false;
+                    user.Account = entity.AdminAccount;
+                    user.RealName = entity.CompanyName;
+                    user.Gender = true;
+                    user.OrganizeId = entity.Id;
+                    user.IsAdmin = true;
+                    user.DeleteMark = false;
+                    user.EnabledMark = true;
+                    user.IsBoss = false;
+                    user.IsLeaderInDepts = false;
+                    user.SortCode = 0;
+                    user.IsSenior = false;
                     UserLogOnEntity logon = new UserLogOnEntity();
-                    logon.F_Id = user.F_Id;
-                    logon.F_UserId = user.F_Id;
-                    logon.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                    logon.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), logon.F_UserSecretkey).ToLower(), 32).ToLower();
+                    logon.Id = user.Id;
+                    logon.UserId = user.Id;
+                    logon.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                    logon.UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.AdminPassword, 32).ToLower(), logon.UserSecretkey).ToLower(), 32).ToLower();
                     db.Insertable(user).ExecuteCommand();
                     db.Insertable(logon).ExecuteCommand();
                     await db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
@@ -239,21 +239,21 @@ namespace WaterCloud.Service.SystemOrganize
                     foreach (var itemId in permissionIds.Distinct())
                     {
                         RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
-                        roleAuthorizeEntity.F_Id = Utils.GuId();
-                        roleAuthorizeEntity.F_ObjectType = 1;
-                        roleAuthorizeEntity.F_ObjectId = entity.F_Id;
-                        roleAuthorizeEntity.F_ItemId = itemId;
-                        if (moduledata.Find(a => a.F_Id == itemId) != null)
+                        roleAuthorizeEntity.Id = Utils.GuId();
+                        roleAuthorizeEntity.ObjectType = 1;
+                        roleAuthorizeEntity.ObjectId = entity.Id;
+                        roleAuthorizeEntity.ItemId = itemId;
+                        if (moduledata.Find(a => a.Id == itemId) != null)
                         {
-                            roleAuthorizeEntity.F_ItemType = 1;
+                            roleAuthorizeEntity.ItemType = 1;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modules.Add(moduledata.Find(a => a.F_Id == itemId));
+                            modules.Add(moduledata.Find(a => a.Id == itemId));
                         }
-                        if (buttondata.Find(a => a.F_Id == itemId) != null)
+                        if (buttondata.Find(a => a.Id == itemId) != null)
                         {
-                            roleAuthorizeEntity.F_ItemType = 2;
+                            roleAuthorizeEntity.ItemType = 2;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modulebtns.Add(buttondata.Find(a => a.F_Id == itemId));
+                            modulebtns.Add(buttondata.Find(a => a.Id == itemId));
                         }
                     }
                 }
@@ -263,21 +263,21 @@ namespace WaterCloud.Service.SystemOrganize
                     foreach (var itemId in permissionfieldsIds.Distinct())
                     {
                         RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
-                        roleAuthorizeEntity.F_Id = Utils.GuId();
-                        roleAuthorizeEntity.F_ObjectType = 1;
-                        roleAuthorizeEntity.F_ObjectId = entity.F_Id;
-                        roleAuthorizeEntity.F_ItemId = itemId;
-                        if (fieldsdata.Find(a => a.F_Id == itemId) != null)
+                        roleAuthorizeEntity.Id = Utils.GuId();
+                        roleAuthorizeEntity.ObjectType = 1;
+                        roleAuthorizeEntity.ObjectId = entity.Id;
+                        roleAuthorizeEntity.ItemId = itemId;
+                        if (fieldsdata.Find(a => a.Id == itemId) != null)
                         {
-                            roleAuthorizeEntity.F_ItemType = 3;
+                            roleAuthorizeEntity.ItemType = 3;
                             roleAuthorizeEntitys.Add(roleAuthorizeEntity);
-                            modulefileds.Add(fieldsdata.Find(a => a.F_Id == itemId));
+                            modulefileds.Add(fieldsdata.Find(a => a.Id == itemId));
                         }
                     }
                 }
                 if (roleAuthorizeEntitys.Count>0)
 				{
-                    await repository.Db.Deleteable<RoleAuthorizeEntity>(a => a.F_ObjectId == entity.F_Id).ExecuteCommandAsync();
+                    await repository.Db.Deleteable<RoleAuthorizeEntity>(a => a.ObjectId == entity.Id).ExecuteCommandAsync();
                     await repository.Db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
                 }
                 //更新主库
@@ -287,28 +287,28 @@ namespace WaterCloud.Service.SystemOrganize
                 }
                 else
                 {
-                    entity.F_AdminAccount = null;
-                    entity.F_AdminPassword = null;
+                    entity.AdminAccount = null;
+                    entity.AdminPassword = null;
                     await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
                 }
                 //更新租户库
                 if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
 				{
-                    var tenant = await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
-                    unitofwork.GetDbClient().ChangeDatabase(tenant.F_DbNumber);
-                    var user = unitofwork.GetDbClient().Queryable<UserEntity>().First(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true);
-                    var userinfo = unitofwork.GetDbClient().Queryable<UserLogOnEntity>().First(a => a.F_UserId == user.F_Id);
-                    userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                    userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
+                    var tenant = await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.Id);
+                    unitofwork.GetDbClient().ChangeDatabase(tenant.DbNumber);
+                    var user = unitofwork.GetDbClient().Queryable<UserEntity>().First(a => a.OrganizeId == entity.Id && a.IsAdmin == true);
+                    var userinfo = unitofwork.GetDbClient().Queryable<UserLogOnEntity>().First(a => a.UserId == user.Id);
+                    userinfo.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                    userinfo.UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.AdminPassword, 32).ToLower(), userinfo.UserSecretkey).ToLower(), 32).ToLower();
                     await unitofwork.GetDbClient().Updateable<UserEntity>(a => new UserEntity
                     {
-                        F_Account = entity.F_AdminAccount
-                    }).Where(a => a.F_Id == user.F_Id).ExecuteCommandAsync();
+                        Account = entity.AdminAccount
+                    }).Where(a => a.Id == user.Id).ExecuteCommandAsync();
                     await unitofwork.GetDbClient().Updateable<UserLogOnEntity>(a => new UserLogOnEntity
                     {
-                        F_UserPassword = userinfo.F_UserPassword,
-                        F_UserSecretkey = userinfo.F_UserSecretkey
-                    }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
+                        UserPassword = userinfo.UserPassword,
+                        UserSecretkey = userinfo.UserSecretkey
+                    }).Where(a => a.Id == userinfo.Id).ExecuteCommandAsync();
                     await unitofwork.GetDbClient().Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
                     //更新菜单
                     if (roleAuthorizeEntitys.Count > 0)
@@ -328,23 +328,23 @@ namespace WaterCloud.Service.SystemOrganize
                 }
 				else
 				{
-                    var user = repository.Db.Queryable<UserEntity>().First(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true);
-                    var userinfo = repository.Db.Queryable<UserLogOnEntity>().First(a => a.F_UserId == user.F_Id);
-                    userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                    userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
+                    var user = repository.Db.Queryable<UserEntity>().First(a => a.OrganizeId == entity.Id && a.IsAdmin == true);
+                    var userinfo = repository.Db.Queryable<UserLogOnEntity>().First(a => a.UserId == user.Id);
+                    userinfo.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                    userinfo.UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.AdminPassword, 32).ToLower(), userinfo.UserSecretkey).ToLower(), 32).ToLower();
                     await repository.Db.Updateable<UserEntity>(a => new UserEntity
                     {
-                        F_Account = entity.F_AdminAccount
-                    }).Where(a => a.F_Id == user.F_Id).ExecuteCommandAsync();
+                        Account = entity.AdminAccount
+                    }).Where(a => a.Id == user.Id).ExecuteCommandAsync();
                     await repository.Db.Updateable<UserLogOnEntity>(a => new UserLogOnEntity
                     {
-                        F_UserPassword = userinfo.F_UserPassword,
-                        F_UserSecretkey = userinfo.F_UserSecretkey
-                    }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
+                        UserPassword = userinfo.UserPassword,
+                        UserSecretkey = userinfo.UserSecretkey
+                    }).Where(a => a.Id == userinfo.Id).ExecuteCommandAsync();
                 }
-                var set = await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
-                unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT ? set.F_DbNumber : "0");
-                var tempkey = unitofwork.GetDbClient().Queryable<UserEntity>().First(a => a.F_IsAdmin == true).F_Id;
+                var set = await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.Id);
+                unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT ? set.DbNumber : "0");
+                var tempkey = unitofwork.GetDbClient().Queryable<UserEntity>().First(a => a.IsAdmin == true).Id;
                 await CacheHelper.RemoveAsync(cacheKeyOperator + "info_" + tempkey);
             }
             unitofwork.Commit();
@@ -355,10 +355,10 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task DeleteForm(string keyValue)
         {
-            await repository.Update(a => a.F_Id == keyValue,a=>new SystemSetEntity { 
-                F_DeleteMark=true,
-                F_EnabledMark=false,
-                F_DeleteUserId=currentuser.UserId
+            await repository.Update(a => a.Id == keyValue,a=>new SystemSetEntity { 
+                DeleteMark=true,
+                EnabledMark=false,
+                DeleteUserId=currentuser.UserId
             });
         }
         #endregion

@@ -16,113 +16,113 @@ namespace WaterCloud.Domain.SystemOrganize
         /// <summary>
         /// 主键Id
         /// </summary>
-        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]
-        public string F_Id { get; set; }
+        [SugarColumn(ColumnName ="Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]
+        public string Id { get; set; }
         /// <summary>
         /// 用户Id
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_UserId",ColumnDataType = "nvarchar(50)", ColumnDescription = "用户Id", UniqueGroupNameList = new string[] { "sys_userlogon" })]
-        public string F_UserId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "UserId",ColumnDataType = "nvarchar(50)", ColumnDescription = "用户Id", UniqueGroupNameList = new string[] { "sys_userlogon" })]
+        public string UserId { get; set; }
         /// <summary>
         /// 用户密码
         /// </summary>
         [Required(ErrorMessage = "密码不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_UserPassword",ColumnDataType = "nvarchar(50)", ColumnDescription = "用户密码")]
-        public string F_UserPassword { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "UserPassword",ColumnDataType = "nvarchar(50)", ColumnDescription = "用户密码")]
+        public string UserPassword { get; set; }
         /// <summary>
         /// 用户密钥
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_UserSecretkey", ColumnDataType = "nvarchar(50)", ColumnDescription = "用户密钥")]
-        public string F_UserSecretkey { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "UserSecretkey", ColumnDataType = "nvarchar(50)", ColumnDescription = "用户密钥")]
+        public string UserSecretkey { get; set; }
         /// <summary>
         /// 登录开始时间
         /// </summary>
         [SugarColumn(IsNullable = true,ColumnDescription = "登录开始时间")]
-        public DateTime? F_AllowStartTime { get; set; }
+        public DateTime? AllowStartTime { get; set; }
         /// <summary>
         /// 登录结束时间
         /// </summary>
         [SugarColumn(IsNullable = true,ColumnDescription = "登录结束时间")]
-        public DateTime? F_AllowEndTime { get; set; }
+        public DateTime? AllowEndTime { get; set; }
         /// <summary>
         /// 锁定开始时间
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "锁定开始时间")]
-        public DateTime? F_LockStartDate { get; set; }
+        public DateTime? LockStartDate { get; set; }
         /// <summary>
         /// 锁定结束时间
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "锁定结束时间")]
-        public DateTime? F_LockEndDate { get; set; }
+        public DateTime? LockEndDate { get; set; }
         /// <summary>
         /// 第一次访问时间
         /// </summary>
         [SugarColumn(IsNullable = true,ColumnDescription = "第一次访问时间")]
-        public DateTime? F_FirstVisitTime { get; set; }
+        public DateTime? FirstVisitTime { get; set; }
         /// <summary>
         /// 上一次访问时间
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "上一次访问时间")]
-        public DateTime? F_PreviousVisitTime { get; set; }
+        public DateTime? PreviousVisitTime { get; set; }
         /// <summary>
         /// 最后访问时间
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "最后访问时间")]
-        public DateTime? F_LastVisitTime { get; set; }
+        public DateTime? LastVisitTime { get; set; }
         /// <summary>
         /// 修改密码时间
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "修改密码时间")]
-        public DateTime? F_ChangePasswordDate { get; set; }
+        public DateTime? ChangePasswordDate { get; set; }
         /// <summary>
         /// 是否允许多用户登录
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "是否允许多用户登录")]
-        public bool? F_MultiUserLogin { get; set; }
+        public bool? MultiUserLogin { get; set; }
         /// <summary>
         /// 登录次数
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "登录次数")]
-        public int? F_LogOnCount { get; set; }
+        public int? LogOnCount { get; set; }
         /// <summary>
         /// 是否在线
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "是否在线")]
-        public bool? F_UserOnLine { get; set; }
+        public bool? UserOnLine { get; set; }
         /// <summary>
         /// 密保问题
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Question",ColumnDataType = "nvarchar(50)", ColumnDescription = "密保问题")]
-        public string F_Question { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "Question",ColumnDataType = "nvarchar(50)", ColumnDescription = "密保问题")]
+        public string Question { get; set; }
         /// <summary>
         /// 密保答案
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_AnswerQuestion",ColumnDataType = "longtext", ColumnDescription = "密保答案")]
-        public string F_AnswerQuestion { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "AnswerQuestion",ColumnDataType = "longtext", ColumnDescription = "密保答案")]
+        public string AnswerQuestion { get; set; }
         /// <summary>
         /// 是否校验登录IP
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "是否校验登录IP")]
-        public bool? F_CheckIPAddress { get; set; }
+        public bool? CheckIPAddress { get; set; }
         /// <summary>
         /// 系统语言
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Language", ColumnDataType = "nvarchar(50)", ColumnDescription = "系统语言")]
-        public string F_Language { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "Language", ColumnDataType = "nvarchar(50)", ColumnDescription = "系统语言")]
+        public string Language { get; set; }
         /// <summary>
         /// 系统主题
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Theme", ColumnDataType = "nvarchar(50)", ColumnDescription = "系统主题")]
-        public string F_Theme { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "Theme", ColumnDataType = "nvarchar(50)", ColumnDescription = "系统主题")]
+        public string Theme { get; set; }
         /// <summary>
         /// 登录session
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_LoginSession", ColumnDataType = "nvarchar(100)", ColumnDescription = "登录session")]
-        public string F_LoginSession { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "LoginSession", ColumnDataType = "nvarchar(100)", ColumnDescription = "登录session")]
+        public string LoginSession { get; set; }
         /// <summary>
         /// 错误码
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "错误码")]
-        public Int32 F_ErrorNum { get; set; }
+        public Int32 ErrorNum { get; set; }
     }
 }

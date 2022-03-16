@@ -22,13 +22,13 @@
             //懒加载设置
             tree: {
                 iconIndex: 1,           // 折叠图标显示在第几列
-                idName: 'F_Id',  // id字段名称
+                idName: 'Id',  // id字段名称
                 arrowType: 'arrow2',
                 getIcon: 'ew-tree-icon-style2',
                 haveChildName: 'haveChild'  // 自定义标识是否还有子节点的字段名称
             },
             reqData: function (data, callback) {
-                var pid = data ? data.F_Id : '0';
+                var pid = data ? data.Id : '0';
                 common.ajax({
                     url: "/SystemManage/Area/GetListJson",
                     dataType: "json",
@@ -42,12 +42,12 @@
             },
             cols: [[ 
                 { type: "radio", width: 50 },
-                { field: 'F_FullName', title: '名称', width: 200 },
-                { field: 'F_EnCode', title: '编号', width: 150 },
+                { field: 'FullName', title: '名称', width: 200 },
+                { field: 'EnCode', title: '编号', width: 150 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80,
+                    field: 'EnabledMark', title: '状态', width: 80,
                     templet: function (d) {
-                        if (d.F_EnabledMark == true) {
+                        if (d.EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
@@ -55,16 +55,16 @@
                     }
                 }, 
                 {
-                    field: 'F_CreatorTime', title: '创建时间', width: 120,
+                    field: 'CreatorTime', title: '创建时间', width: 120,
                     templet: function (d) {
-                        if (d.F_CreatorTime) {
-                            var time = new Date(d.F_CreatorTime);
+                        if (d.CreatorTime) {
+                            var time = new Date(d.CreatorTime);
                             return time.Format("yyyy-MM-dd");
                         }
                         return '';
                     }
                 },
-                { field: 'F_Description', title: '备注', minWidth: 150 },
+                { field: 'Description', title: '备注', minWidth: 150 },
                 { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center" }
             ]]
         });
@@ -82,7 +82,7 @@
         treeTable.on('toolbar(currentTableId)', function (obj) {
             var data = rendertree.checkStatus();
             if (obj.event === 'add') {  // 监听操作
-                var keyValue = data.length==1 ? data[0].F_Id : null;
+                var keyValue = data.length==1 ? data[0].Id : null;
                 common.modalOpen({
                     title: "添加区域",
                     url: "/SystemManage/Area/Form?event=add&keyValue=" + keyValue,
@@ -97,7 +97,7 @@
                 }
                 common.deleteForm({
                     url: "/SystemManage/Area/DeleteForm",
-                    param: { keyValue: data[0].F_Id },
+                    param: { keyValue: data[0].Id },
                     success: function () {
                         common.reload('data-search-btn');
                     }
@@ -110,7 +110,7 @@
                 }
                 common.modalOpen({
                     title: "编辑区域",
-                    url: "/SystemManage/Area/Form?event=edit&keyValue=" + data[0].F_Id,
+                    url: "/SystemManage/Area/Form?event=edit&keyValue=" + data[0].Id,
                     width: "450px",
                     height: "450px",
                 });
@@ -122,7 +122,7 @@
                 }
                 common.modalOpen({
                     title: "查看区域",
-                    url: "/SystemManage/Area/Details?keyValue=" + data[0].F_Id,
+                    url: "/SystemManage/Area/Details?keyValue=" + data[0].Id,
                     width: "450px",
                     height: "450px",
                     btn:[]
@@ -143,7 +143,7 @@
             if (obj.event === 'delete') {
                 common.deleteForm({
                     url: "/SystemManage/Area/DeleteForm",
-                    param: { keyValue: obj.data.F_Id },
+                    param: { keyValue: obj.data.Id },
                     success: function () {
                         obj.del();
                     }
@@ -152,7 +152,7 @@
             else if (obj.event === 'edit') {
                 common.modalOpen({
                     title: "编辑区域",
-                    url: "/SystemManage/Area/Form?event=edit&keyValue=" + obj.data.F_Id,
+                    url: "/SystemManage/Area/Form?event=edit&keyValue=" + obj.data.Id,
                     width: "450px",
                     height: "450px",
                 });
@@ -160,7 +160,7 @@
             else if (obj.event === 'details') {
                 common.modalOpen({
                     title: "查看区域",
-                    url: "/SystemManage/Area/Details?keyValue=" + obj.data.F_Id,
+                    url: "/SystemManage/Area/Details?keyValue=" + obj.data.Id,
                     width: "500px",
                     height: "500px",
                     btn: []

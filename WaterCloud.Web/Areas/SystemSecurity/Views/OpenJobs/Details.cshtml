@@ -18,12 +18,12 @@
             page: false,
             height: 'full-110',
             cols: [[
-                { field: 'F_JobName', title: '任务名称', width: 150, sort: true },
-                { field: 'F_Description', title: '任务说明', minWwidth: 120, sort: true },
+                { field: 'JobName', title: '任务名称', width: 150, sort: true },
+                { field: 'Description', title: '任务说明', minWwidth: 120, sort: true },
                 {
-                    field: 'F_EnabledMark', title: '执行结果', width: 120, sort: true,
+                    field: 'EnabledMark', title: '执行结果', width: 120, sort: true,
                     templet: function (d) {
-                        if (d.F_EnabledMark == true) {
+                        if (d.EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>成功</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>失败</span>";
@@ -31,10 +31,10 @@
                     }
                 },
                 {
-                    field: 'F_CreatorTime', title: '执行时间', width: 160, sort: true,
+                    field: 'CreatorTime', title: '执行时间', width: 160, sort: true,
                     templet: function (d) {
-                        if (d.F_CreatorTime) {
-                            var time = new Date(d.F_CreatorTime);
+                        if (d.CreatorTime) {
+                            var time = new Date(d.CreatorTime);
                             return time.Format("yyyy-MM-dd hh:mm:ss");
                         }
                         return '';

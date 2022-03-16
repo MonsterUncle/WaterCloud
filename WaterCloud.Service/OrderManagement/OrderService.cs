@@ -25,37 +25,37 @@ namespace WaterCloud.Service.OrderManagement
             var data = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                data = data.Where(a => a.F_OrderCode.Contains(keyword)
-                || a.F_Description.Contains(keyword));
+                data = data.Where(a => a.OrderCode.Contains(keyword)
+                || a.Description.Contains(keyword));
             }
-            return await data.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_NeedTime).ToListAsync();
+            return await data.Where(a => a.DeleteMark == false).OrderBy(a => a.NeedTime).ToListAsync();
         }
 
         public async Task<List<OrderEntity>> GetLookList(string keyword = "")
         {
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(a => a.F_OrderCode.Contains(keyword)
-                || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.OrderCode.Contains(keyword)
+                || a.Description.Contains(keyword));
             }
             //权限过滤
             query = GetDataPrivilege("a", "", query);
-            return await query.OrderBy(a => a.F_NeedTime).ToListAsync();
+            return await query.OrderBy(a => a.NeedTime).ToListAsync();
         }
 
         public async Task<List<OrderEntity>> GetLookList(SoulPage<OrderEntity> pagination, string keyword = "", string id = "")
         {
-            var query = IQuery().Where(a => a.F_DeleteMark == false);
+            var query = IQuery().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_OrderCode.Contains(keyword)
-                || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.OrderCode.Contains(keyword)
+                || a.Description.Contains(keyword));
             }
             if (!string.IsNullOrEmpty(id))
             {
-                query = query.Where(a => a.F_Id == id);
+                query = query.Where(a => a.Id == id);
             }
             //权限过滤
             query = GetDataPrivilege("a", "", query);
@@ -64,30 +64,30 @@ namespace WaterCloud.Service.OrderManagement
 
         private ISugarQueryable<OrderEntity> IQuery()
         {
-            var details = repository.Db.Queryable<OrderDetailEntity>().GroupBy(a => a.F_OrderId).Select<Object>(a => new {
-                a.F_OrderId,
-                F_NeedNum = SqlFunc.AggregateSum(a.F_NeedNum),
-                F_ActualNum = SqlFunc.AggregateSum(a.F_ActualNum),
+            var details = repository.Db.Queryable<OrderDetailEntity>().GroupBy(a => a.OrderId).Select<Object>(a => new {
+                a.OrderId,
+                NeedNum = SqlFunc.AggregateSum(a.NeedNum),
+                ActualNum = SqlFunc.AggregateSum(a.ActualNum),
             });
             var order = repository.Db.Queryable<OrderEntity>();
-            var query = repository.Db.Queryable(order, details, JoinType.Inner, (a, b) => a.F_Id == SqlFunc.MappingColumn(default(string), "b.F_OrderId")).Select((a, b) => new OrderEntity {
-                F_Id = a.F_Id,
-                F_ActualTime = a.F_ActualTime,
-                F_CreatorTime = a.F_CreatorTime,
-                F_CreatorUserId = a.F_CreatorUserId,
-                F_CreatorUserName = a.F_CreatorUserName,
-                F_DeleteMark = a.F_DeleteMark,
-                F_DeleteTime = a.F_DeleteTime,
-                F_DeleteUserId = a.F_DeleteUserId,
-                F_Description = a.F_Description,
-                F_EnabledMark = a.F_EnabledMark,
-                F_LastModifyTime = a.F_LastModifyTime,
-                F_LastModifyUserId = a.F_LastModifyUserId,
-                F_NeedTime = a.F_NeedTime,
-                F_OrderCode = a.F_OrderCode,
-                F_OrderState = a.F_OrderState,
-                F_NeedNum = SqlFunc.MappingColumn(default(int), "b.F_NeedNum"),
-                F_ActualNum = SqlFunc.MappingColumn(default(int), "b.F_ActualNum"),
+            var query = repository.Db.Queryable(order, details, JoinType.Inner, (a, b) => a.Id == SqlFunc.MappingColumn(default(string), "b.OrderId")).Select((a, b) => new OrderEntity {
+                Id = a.Id,
+                ActualTime = a.ActualTime,
+                CreatorTime = a.CreatorTime,
+                CreatorUserId = a.CreatorUserId,
+                CreatorUserName = a.CreatorUserName,
+                DeleteMark = a.DeleteMark,
+                DeleteTime = a.DeleteTime,
+                DeleteUserId = a.DeleteUserId,
+                Description = a.Description,
+                EnabledMark = a.EnabledMark,
+                LastModifyTime = a.LastModifyTime,
+                LastModifyUserId = a.LastModifyUserId,
+                NeedTime = a.NeedTime,
+                OrderCode = a.OrderCode,
+                OrderState = a.OrderState,
+                NeedNum = SqlFunc.MappingColumn(default(int), "b.NeedNum"),
+                ActualNum = SqlFunc.MappingColumn(default(int), "b.ActualNum"),
             }).MergeTable();
             return query;
         }
@@ -95,7 +95,7 @@ namespace WaterCloud.Service.OrderManagement
         public async Task<OrderEntity> GetForm(string keyValue)
         {
             var data = await repository.FindEntity(keyValue);
-            data.list = await repository.Db.Queryable<OrderDetailEntity>().Where(a => a.F_OrderId == keyValue).ToListAsync();
+            data.list = await repository.Db.Queryable<OrderDetailEntity>().Where(a => a.OrderId == keyValue).ToListAsync();
             return data;
         }
         #endregion
@@ -103,7 +103,7 @@ namespace WaterCloud.Service.OrderManagement
         public async Task<OrderEntity> GetLookForm(string keyValue)
         {
             var data = await repository.FindEntity(keyValue);
-            data.list = await repository.Db.Queryable<OrderDetailEntity>().Where(a => a.F_OrderId == keyValue).ToListAsync();
+            data.list = await repository.Db.Queryable<OrderDetailEntity>().Where(a => a.OrderId == keyValue).ToListAsync();
             return GetFieldsFilterData(data);
         }
 
@@ -113,8 +113,8 @@ namespace WaterCloud.Service.OrderManagement
             if (string.IsNullOrEmpty(keyValue))
             {
                 entity.Create();
-                entity.F_DeleteMark = false;
-                entity.F_CreatorUserName = currentuser.UserName;
+                entity.DeleteMark = false;
+                entity.CreatorUserName = currentuser.UserName;
             }
             else
             {
@@ -129,27 +129,27 @@ namespace WaterCloud.Service.OrderManagement
             foreach (var item in entity.list)
             {
                 item.Create();
-                item.F_CreatorUserName = currentuser.UserName;
-                item.F_CreatorTime = entity.F_CreatorTime;
-                item.F_NeedTime = entity.F_NeedTime;
-                item.F_OrderId = entity.F_Id;
-                item.F_OrderState = item.F_OrderState == null ? 0 : item.F_OrderState;
-                if (item.F_OrderState == 0)
+                item.CreatorUserName = currentuser.UserName;
+                item.CreatorTime = entity.CreatorTime;
+                item.NeedTime = entity.NeedTime;
+                item.OrderId = entity.Id;
+                item.OrderState = item.OrderState == null ? 0 : item.OrderState;
+                if (item.OrderState == 0)
                 {
                     isdone = false;
                 }
-                else if (item.F_ActualTime == null)
+                else if (item.ActualTime == null)
                 {
-                    item.F_ActualTime = entity.F_NeedTime;
+                    item.ActualTime = entity.NeedTime;
                 }
-                if (string.IsNullOrEmpty(item.F_ProductName))
+                if (string.IsNullOrEmpty(item.ProductName))
                 {
                     throw new Exception("请输入明细的产品名称");
                 }
                 dataList.Add(item);
             }
-            entity.F_OrderState = isdone ? 1 : 0;
-            entity.F_ActualTime = isdone ?dataList.Max(a=>a.F_ActualTime):null;
+            entity.OrderState = isdone ? 1 : 0;
+            entity.ActualTime = isdone ?dataList.Max(a=>a.ActualTime):null;
             unitOfWork.CurrentBeginTrans();
             if (string.IsNullOrEmpty(keyValue))
             {
@@ -159,7 +159,7 @@ namespace WaterCloud.Service.OrderManagement
             {
                 await repository.Update(entity);
             }
-            await repository.Db.Deleteable<OrderDetailEntity>().Where(a => a.F_OrderId == entity.F_Id).ExecuteCommandAsync();
+            await repository.Db.Deleteable<OrderDetailEntity>().Where(a => a.OrderId == entity.Id).ExecuteCommandAsync();
             await repository.Db.Insertable(dataList).ExecuteCommandAsync();
             unitOfWork.CurrentCommit();
         }
@@ -167,10 +167,10 @@ namespace WaterCloud.Service.OrderManagement
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Update(a => ids.Contains(a.F_Id),a=>new OrderEntity { 
-                F_DeleteMark=true,
-                F_DeleteTime=DateTime.Now,
-                F_DeleteUserId=currentuser.UserId
+            await repository.Update(a => ids.Contains(a.Id),a=>new OrderEntity { 
+                DeleteMark=true,
+                DeleteTime=DateTime.Now,
+                DeleteUserId=currentuser.UserId
             });
         }
         #endregion

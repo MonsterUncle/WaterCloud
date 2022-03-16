@@ -23,13 +23,13 @@ namespace WaterCloud.Service.SystemManage
         public async Task<List<ItemsEntity>> GetList()
         {
             var query = repository.IQueryable();
-            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_SortCode).ToListAsync();
+            return await query.Where(a => a.DeleteMark == false).OrderBy(a => a.SortCode).ToListAsync();
         }
         public async Task<List<ItemsEntity>> GetLookList()
         {
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             query = GetDataPrivilege("a","",query);
-            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
+            return await query.OrderBy(a => a.SortCode).ToListAsync();
         }
         public async Task<ItemsEntity> GetLookForm(string keyValue)
         {
@@ -45,13 +45,13 @@ namespace WaterCloud.Service.SystemManage
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (await repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).AnyAsync())
+            if (await repository.IQueryable(a => a.ParentId.Equals(keyValue)).AnyAsync())
             {
                 throw new Exception("删除失败！操作的对象包含了下级数据。");
             }
             else
             {
-                await repository.Delete(a => a.F_Id == keyValue);
+                await repository.Delete(a => a.Id == keyValue);
             }
         }
         public async Task SubmitForm(ItemsEntity itemsEntity, string keyValue)
@@ -63,8 +63,8 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
-                itemsEntity.F_DeleteMark = false;
-                itemsEntity.F_IsTree = false;
+                itemsEntity.DeleteMark = false;
+                itemsEntity.IsTree = false;
                 itemsEntity.Create();
                 await repository.Insert(itemsEntity);
             }

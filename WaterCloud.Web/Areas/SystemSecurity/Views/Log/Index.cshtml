@@ -69,33 +69,33 @@
                 id: 'currentTableId',
                 url: '/SystemSecurity/Log/GetGridJson',
                 cols: [[
-                    { field: 'F_Account', title: '账户', width: 150, sort: true },
-                    { field: 'F_NickName', title: '姓名', width: 120, sort: true },
-                    { field: 'F_ModuleName', title: '操作菜单', width: 220, sort: true },
+                    { field: 'Account', title: '账户', width: 150, sort: true },
+                    { field: 'NickName', title: '姓名', width: 120, sort: true },
+                    { field: 'ModuleName', title: '操作菜单', width: 220, sort: true },
                     {
-                        field: 'F_Type', title: '操作类型', width: 120, sort: true,
+                        field: 'Type', title: '操作类型', width: 120, sort: true,
                         templet: function (d) {
-                            return top.clients.dataItems["DbLogType"][d.F_Type] == undefined ? "" : top.clients.dataItems["DbLogType"][d.F_Type]
+                            return top.clients.dataItems["DbLogType"][d.Type] == undefined ? "" : top.clients.dataItems["DbLogType"][d.Type]
                         }
                     },
                     {
-                        field: 'F_IPAddress', title: 'IP地址', width: 200,
+                        field: 'IPAddress', title: 'IP地址', width: 200,
                         templet: function (d) {
-                            return d.F_IPAddress + ";" + d.F_IPAddressName;
+                            return d.IPAddress + ";" + d.IPAddressName;
                         }, sort: true
                     },
-                    { field: 'F_KeyValue', title: '操作对象', width: 300, hide: true },
+                    { field: 'KeyValue', title: '操作对象', width: 300, hide: true },
                     {
-                        field: 'F_CreatorTime', title: '创建时间', width: 180, sort: true,
+                        field: 'CreatorTime', title: '创建时间', width: 180, sort: true,
                         templet: function (d) {
-                            if (d.F_CreatorTime) {
-                                return new Date(d.F_CreatorTime).Format("yyyy-MM-dd hh:mm:ss");
+                            if (d.CreatorTime) {
+                                return new Date(d.CreatorTime).Format("yyyy-MM-dd hh:mm:ss");
 
                             }
                             return '';
                         }
                     },
-                    { field: 'F_Description', title: '备注', minWidth: 250 },
+                    { field: 'Description', title: '备注', minWidth: 250 },
                 ]]
             });
             //select验证

@@ -78,16 +78,16 @@
                 postData.isFilter = !data.field.isFilter || data.field.isFilter != "true" ? false : true;
                 postData.isSorted = !data.field.isSorted || data.field.isSorted != "true" ? false : true;
                 postData.isShow = !data.field.isShow || data.field.isShow != "true" ? false : true;
-                if (!!entity && !!entity.F_Id) {
-                    postData.F_Id = entity.F_Id;
+                if (!!entity && !!entity.Id) {
+                    postData.Id = entity.Id;
                 }
                 else {
-                    postData.F_Id = uuid();
+                    postData.Id = uuid();
                 }
                 var tempdata = common.parentWindow().layui.table.cache.currentTableId;
-                if (!!entity && !!entity.F_Id) {
+                if (!!entity && !!entity.Id) {
                     for (var i = 0; i < tempdata.length; i++) {
-                        if (entity.F_Id == tempdata[i].F_Id) {
+                        if (entity.Id == tempdata[i].Id) {
                             tempdata[i].field = postData.field;
                             tempdata[i].title = postData.title;
                             tempdata[i].width = postData.width;

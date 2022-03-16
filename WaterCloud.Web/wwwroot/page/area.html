@@ -49,8 +49,8 @@
             $(function () {
                 //设置省份数据
                 $("#provid").bindSelect({
-                    id: "F_Id",
-                    text: "F_FullName",
+                    id: "Id",
+                    text: "FullName",
                     url: "/SystemManage/Area/GetSelectJson?keyValue=0",
                 });
                 $("#provid").val("120000000000");
@@ -73,8 +73,8 @@
                 $("#areaid").append($("<option></option>").val("").html("请选择区"));
                 //alert(areaId);
                 $("#cityid").bindSelect({
-                    id: "F_Id",
-                    text: "F_FullName",
+                    id: "Id",
+                    text: "FullName",
                     url: "/SystemManage/Area/GetSelectJson?keyValue=" + value,
                 });
                 $("#cityid").val(null);
@@ -91,8 +91,8 @@
                 $("#areaid").append($("<option></option>").val("").html("请选择区"));
                 //alert(areaId);
                 $("#areaid").bindSelect({
-                    id: "F_Id",
-                    text: "F_FullName",
+                    id: "Id",
+                    text: "FullName",
                     url: "/SystemManage/Area/GetSelectJson?keyValue=" + value,
                 });
                 $("#areaid").val(null);

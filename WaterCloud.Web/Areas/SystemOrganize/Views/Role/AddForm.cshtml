@@ -31,20 +31,20 @@
             toolbar: false,//工具栏
             cols: [[
                 { type: 'checkbox' },
-                { field: 'F_FullName', title: '角色名称', width: 200, sort: true },
+                { field: 'FullName', title: '角色名称', width: 200, sort: true },
                 {
-                    field: 'F_Type', title: '角色类型', width: 200, sort: true,
+                    field: 'Type', title: '角色类型', width: 200, sort: true,
                     templet: function (d) {
-                        return top.clients.dataItems["RoleType"][d.F_Type] == undefined ? "" : top.clients.dataItems["RoleType"][d.F_Type];
+                        return top.clients.dataItems["RoleType"][d.Type] == undefined ? "" : top.clients.dataItems["RoleType"][d.Type];
                     }
                 },
                 {
-                    field: 'F_CompanyName', title: '归属公司', width: 120, sort: true
+                    field: 'CompanyName', title: '归属公司', width: 120, sort: true
                 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
+                    field: 'EnabledMark', title: '状态', width: 80, sort: true,
                     templet: function (d) {
-                        if (d.F_EnabledMark == true) {
+                        if (d.EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
@@ -56,8 +56,8 @@
         commonTable.tableRowClick("checkbox", "currentTableFilter", "currentTableId");
         // 监听双击事件
         table.on('rowDouble(currentTableFilter)', function (obj) {
-            var pvalue = obj.data.F_Id;
-            var pname = obj.data.F_FullName;
+            var pvalue = obj.data.Id;
+            var pname = obj.data.FullName;
             common.modalConfirm("注：您确定要选择{名称：" + pname + "}的数据吗？", function (r) {
                 if (r) {
                     if (!!pvalue) {
@@ -98,8 +98,8 @@
             var pvalue = [];
             var pname = [];
             for (var i = 0; i < checkStatus.length; i++) {
-                pvalue.push(checkStatus[i].F_Id);
-                pname.push(checkStatus[i].F_FullName);
+                pvalue.push(checkStatus[i].Id);
+                pname.push(checkStatus[i].FullName);
             }
             if (pvalue.length == 0) {
                 common.modalConfirm("注：您确定要清除选择的数据吗？", function (r) {

@@ -27,14 +27,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         {
             var data =await _areaService.GetList();
             //默认三级区域
-            data = data.Where(a => a.F_Layers < 3).ToList();
+            data = data.Where(a => a.Layers < 3).ToList();
             var treeList = new List<TreeSelectModel>();
             foreach (AreaEntity item in data)
             {
                 TreeSelectModel treeModel = new TreeSelectModel();
-                treeModel.id = item.F_Id;
-                treeModel.text = item.F_FullName;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.id = item.Id;
+                treeModel.text = item.FullName;
+                treeModel.parentId = item.ParentId;
                 treeList.Add(treeModel);
             }
             return Content(treeList.TreeSelectJson());
@@ -44,7 +44,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetSelectJson(string keyValue)
         {
             var data = await _areaService.GetList();
-            data = data.Where(a => a.F_ParentId== keyValue).ToList();
+            data = data.Where(a => a.ParentId== keyValue).ToList();
             return Content(data.ToJson());
         }
         [HttpGet]
@@ -54,7 +54,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             var data =await _areaService.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
-                data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
+                data = data.TreeWhere(t => t.FullName.Contains(keyword));
             }
             return Success(data.Count, data);
         }
@@ -70,20 +70,20 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                result = data.TreeWhere(t => t.F_FullName.Contains(keyword) || t.F_EnCode.Contains(keyword));
+                result = data.TreeWhere(t => t.FullName.Contains(keyword) || t.EnCode.Contains(keyword));
             }
             else
             {
                 result = data;
             }
-            result = result.Where(t => t.F_ParentId == keyValue).ToList();
+            result = result.Where(t => t.ParentId == keyValue).ToList();
             if (result.Count==0)
             {
-                result= data.Where(t => t.F_ParentId == keyValue).ToList();
+                result= data.Where(t => t.ParentId == keyValue).ToList();
             }
             foreach (var item in result)
             {
-                item.haveChild = data.Where(a => a.F_ParentId == item.F_Id).Any() ? true : false;
+                item.haveChild = data.Where(a => a.ParentId == item.Id).Any() ? true : false;
             }
             return Success(data.Count, result);
         }
@@ -98,13 +98,13 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> SubmitForm(AreaEntity areaEntity, string keyValue)
         {
-            if (areaEntity.F_ParentId=="0")
+            if (areaEntity.ParentId=="0")
             {
-                areaEntity.F_Layers = 1;
+                areaEntity.Layers = 1;
             }
             else
             {
-                areaEntity.F_Layers =(await _areaService.GetForm(areaEntity.F_ParentId)).F_Layers + 1;
+                areaEntity.Layers =(await _areaService.GetForm(areaEntity.ParentId)).Layers + 1;
             }
             try
             {

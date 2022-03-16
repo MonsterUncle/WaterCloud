@@ -15,31 +15,31 @@ namespace WaterCloud.Domain.InfoManage
         /// 主键Id
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]
-        public string F_Id { get; set; }
+        [SugarColumn(ColumnName ="Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]
+        public string Id { get; set; }
         /// <summary>
         /// 信息Id
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_MessageId",ColumnDataType = "nvarchar(50)", ColumnDescription = "信息Id")]
-        public string F_MessageId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "MessageId",ColumnDataType = "nvarchar(50)", ColumnDescription = "信息Id")]
+        public string MessageId { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>
         /// <returns></returns>
         [SugarColumn(IsNullable = true, ColumnDescription = "创建时间")]
-        public DateTime? F_CreatorTime { get; set; }
+        public DateTime? CreatorTime { get; set; }
         /// <summary>
         /// 创建用户主键
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_CreatorUserId",ColumnDataType = "nvarchar(50)", ColumnDescription = "创建用户主键")]
-        public string F_CreatorUserId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "CreatorUserId",ColumnDataType = "nvarchar(50)", ColumnDescription = "创建用户主键")]
+        public string CreatorUserId { get; set; }
         /// <summary>
         /// 创建用户
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_CreatorUserName", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建用户")]
-        public string F_CreatorUserName { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "CreatorUserName", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建用户")]
+        public string CreatorUserName { get; set; }
     }
 }

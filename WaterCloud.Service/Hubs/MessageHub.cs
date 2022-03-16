@@ -69,12 +69,12 @@ namespace WaterCloud.Service
             else
             {
                 MessageEntity msg = new MessageEntity();
-                msg.F_EnabledMark = true;
-                msg.F_MessageType = 1;
-                msg.F_CreatorUserName = _service.currentuser.UserName;
-                msg.F_MessageInfo = message;
-                msg.F_ToUserId = reUserId;
-                msg.F_ClickRead = true;
+                msg.EnabledMark = true;
+                msg.MessageType = 1;
+                msg.CreatorUserName = _service.currentuser.UserName;
+                msg.MessageInfo = message;
+                msg.ToUserId = reUserId;
+                msg.ClickRead = true;
                 await _msgService.SubmitForm(msg);
             }
         }

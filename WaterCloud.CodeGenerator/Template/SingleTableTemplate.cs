@@ -65,16 +65,16 @@ namespace WaterCloud.CodeGenerator
             baseConfigModel.PageIndex.IsPublic = false;
             baseConfigModel.PageIndex.IsCache = false;
             baseConfigModel.PageIndex.IsAsc = false;
-            baseConfigModel.PageIndex.SortColumn = "F_Id";
+            baseConfigModel.PageIndex.SortColumn = "Id";
             baseConfigModel.PageIndex.ButtonList = new List<string>();
             baseConfigModel.PageIndex.ColumnList = tableFieldList;
             baseConfigModel.PageIndex.KeywordColum = new List<string>();
-            baseConfigModel.PageIndex.KeywordColum.Add("F_EnCode");
-            baseConfigModel.PageIndex.KeywordColum.Add("F_FullName");
-            baseConfigModel.PageIndex.ParentColum = "F_ParentId";
-            baseConfigModel.PageIndex.TreeColum = "F_FullName";
-            baseConfigModel.PageIndex.DeleteColum = "F_DeleteMark";
-            baseConfigModel.PageIndex.CreateColum = "F_CreatorTime";
+            baseConfigModel.PageIndex.KeywordColum.Add("EnCode");
+            baseConfigModel.PageIndex.KeywordColum.Add("FullName");
+            baseConfigModel.PageIndex.ParentColum = "ParentId";
+            baseConfigModel.PageIndex.TreeColum = "FullName";
+            baseConfigModel.PageIndex.DeleteColum = "DeleteMark";
+            baseConfigModel.PageIndex.CreateColum = "CreatorTime";
             #endregion
 
             #region PageFormModel
@@ -88,7 +88,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildEntity
-        public string BuildEntity(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id", bool keyIsNull = false)
+        public string BuildEntity(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "Id", bool keyIsNull = false)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
@@ -162,7 +162,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildService
-        public string BuildService(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "F_Id", string idType = "int")
+        public string BuildService(BaseConfigModel baseConfigModel, DataTable dt, string idColumn = "Id", string idType = "int")
         {
             var baseEntity = GetBaseEntity(baseConfigModel.FileConfig.EntityName, dt, idColumn);
             StringBuilder sb = new StringBuilder();
@@ -427,7 +427,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildController
-        public string BuildController(BaseConfigModel baseConfigModel, string idColumn = "F_Id", string idType = "string")
+        public string BuildController(BaseConfigModel baseConfigModel, string idColumn = "Id", string idType = "string")
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
@@ -558,7 +558,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildIndex
-        public string BuildIndex(BaseConfigModel baseConfigModel, string idColumn = "F_Id")
+        public string BuildIndex(BaseConfigModel baseConfigModel, string idColumn = "Id")
         {
             #region 初始化集合
             if (baseConfigModel.PageIndex.ButtonList == null)
@@ -911,7 +911,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        //此处需修改");
             sb.AppendLine("        //类型为时间时");
             sb.AppendLine("        //laydate.render({");
-            sb.AppendLine("            //elem: '#F_Birthday'");
+            sb.AppendLine("            //elem: '#Birthday'");
             sb.AppendLine("            //, btns: ['clear', 'now']");
             sb.AppendLine("            //, trigger: 'click',");
             sb.AppendLine("            //format: 'yyyy-MM-dd',");
@@ -943,9 +943,9 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("       //监听提交");
             sb.AppendLine("       form.on('submit(saveBtn)', function (data) {");
             sb.AppendLine("           var postData = data.field;");
-            //if (baseConfigModel.PageForm.FieldList.Contains("F_EnabledMark"))
+            //if (baseConfigModel.PageForm.FieldList.Contains("EnabledMark"))
             //{
-            //    sb.AppendLine("           if (!postData['F_EnabledMark']) postData['F_EnabledMark'] = false;");
+            //    sb.AppendLine("           if (!postData['EnabledMark']) postData['EnabledMark'] = false;");
             //}
             sb.AppendLine("           common.submitForm({");
             sb.AppendLine("               url: '/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/SubmitForm?keyValue=' + keyValue,");
@@ -1046,7 +1046,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("        //此处需修改");
             sb.AppendLine("        //类型为时间时");
             sb.AppendLine("        //laydate.render({");
-            sb.AppendLine("            //elem: '#F_Birthday'");
+            sb.AppendLine("            //elem: '#Birthday'");
             sb.AppendLine("            //, btns: ['clear', 'now']");
             sb.AppendLine("            //, trigger: 'click',");
             sb.AppendLine("            //format: 'yyyy-MM-dd',");
@@ -1135,7 +1135,7 @@ namespace WaterCloud.CodeGenerator
         #endregion
 
         #region BuildMenu
-        public string BuildMenu(BaseConfigModel baseConfigModel, string idColumn = "F_Id")
+        public string BuildMenu(BaseConfigModel baseConfigModel, string idColumn = "Id")
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine();
@@ -1251,22 +1251,22 @@ namespace WaterCloud.CodeGenerator
                 string menuUrl = "/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + baseConfigModel.FileConfig.PageIndexName;
                 ModuleEntity moduleEntity = new ModuleEntity();
                 moduleEntity.Create();
-                moduleEntity.F_Layers = uniwork.GetDbClient().Queryable<ModuleEntity>().First(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).F_Layers + 1; ;
-                moduleEntity.F_FullName = baseConfigModel.FileConfig.ClassDescription;
-                moduleEntity.F_UrlAddress = menuUrl;
-                moduleEntity.F_EnCode = baseConfigModel.FileConfig.ClassPrefix;
-                moduleEntity.F_IsExpand = false;
-                moduleEntity.F_IsMenu = baseConfigModel.PageIndex.IsMunu == true ? true : false;
-                moduleEntity.F_IsFields = baseConfigModel.PageIndex.IsFields == true ? true : false;
-                moduleEntity.F_IsPublic = baseConfigModel.PageIndex.IsPublic == true ? true : false;
-                moduleEntity.F_Target = "iframe";
-                moduleEntity.F_AllowEdit = false;
-                moduleEntity.F_AllowDelete = false;
-                moduleEntity.F_EnabledMark = true;
-                moduleEntity.F_DeleteMark = false;
-                moduleEntity.F_ParentId = uniwork.GetDbClient().Queryable<ModuleEntity>().First(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule).F_Id;
-                var parentModule = await uniwork.GetDbClient().Queryable<ModuleEntity>().FirstAsync(a => a.F_EnCode == baseConfigModel.OutputConfig.OutputModule);
-                moduleEntity.F_SortCode = (uniwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_ParentId == parentModule.F_Id).Max(a => a.F_SortCode) ?? 0) + 1;
+                moduleEntity.Layers = uniwork.GetDbClient().Queryable<ModuleEntity>().First(a => a.EnCode == baseConfigModel.OutputConfig.OutputModule).Layers + 1; ;
+                moduleEntity.FullName = baseConfigModel.FileConfig.ClassDescription;
+                moduleEntity.UrlAddress = menuUrl;
+                moduleEntity.EnCode = baseConfigModel.FileConfig.ClassPrefix;
+                moduleEntity.IsExpand = false;
+                moduleEntity.IsMenu = baseConfigModel.PageIndex.IsMunu == true ? true : false;
+                moduleEntity.IsFields = baseConfigModel.PageIndex.IsFields == true ? true : false;
+                moduleEntity.IsPublic = baseConfigModel.PageIndex.IsPublic == true ? true : false;
+                moduleEntity.Target = "iframe";
+                moduleEntity.AllowEdit = false;
+                moduleEntity.AllowDelete = false;
+                moduleEntity.EnabledMark = true;
+                moduleEntity.DeleteMark = false;
+                moduleEntity.ParentId = uniwork.GetDbClient().Queryable<ModuleEntity>().First(a => a.EnCode == baseConfigModel.OutputConfig.OutputModule).Id;
+                var parentModule = await uniwork.GetDbClient().Queryable<ModuleEntity>().FirstAsync(a => a.EnCode == baseConfigModel.OutputConfig.OutputModule);
+                moduleEntity.SortCode = (uniwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.ParentId == parentModule.Id).Max(a => a.SortCode) ?? 0) + 1;
                 List<ModuleButtonEntity> moduleButtonList = new List<ModuleButtonEntity>();
                 int sort = 0;
                 foreach (var item in baseConfigModel.PageIndex.ButtonList)
@@ -1288,22 +1288,22 @@ namespace WaterCloud.CodeGenerator
                     string url = "/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/" + form;
                     ModuleButtonEntity modulebutton = new ModuleButtonEntity();
                     modulebutton.Create();
-                    modulebutton.F_ModuleId = moduleEntity.F_Id;
-                    modulebutton.F_ParentId = "0";
-                    modulebutton.F_Layers = 1;
-                    modulebutton.F_EnCode = button.Value;
-                    modulebutton.F_JsEvent = button.Key;
-                    modulebutton.F_FullName = button.Description;
-                    modulebutton.F_Location = button.Key == "add" ? 1 : 2;
-                    modulebutton.F_SortCode = sort;
+                    modulebutton.ModuleId = moduleEntity.Id;
+                    modulebutton.ParentId = "0";
+                    modulebutton.Layers = 1;
+                    modulebutton.EnCode = button.Value;
+                    modulebutton.JsEvent = button.Key;
+                    modulebutton.FullName = button.Description;
+                    modulebutton.Location = button.Key == "add" ? 1 : 2;
+                    modulebutton.SortCode = sort;
                     sort++;
-                    modulebutton.F_EnabledMark = true;
-                    modulebutton.F_DeleteMark = false;
-                    modulebutton.F_Split = false;
-                    modulebutton.F_AllowDelete = false;
-                    modulebutton.F_AllowEdit = false;
-                    modulebutton.F_IsPublic = false;
-                    modulebutton.F_UrlAddress = url;
+                    modulebutton.EnabledMark = true;
+                    modulebutton.DeleteMark = false;
+                    modulebutton.Split = false;
+                    modulebutton.AllowDelete = false;
+                    modulebutton.AllowEdit = false;
+                    modulebutton.IsPublic = false;
+                    modulebutton.UrlAddress = url;
                     moduleButtonList.Add(modulebutton);
                 }
                 List<ModuleFieldsEntity> moduleFieldsList = new List<ModuleFieldsEntity>();
@@ -1311,12 +1311,12 @@ namespace WaterCloud.CodeGenerator
                 {
                     ModuleFieldsEntity moduleFields = new ModuleFieldsEntity();
                     moduleFields.Create();
-                    moduleFields.F_ModuleId = moduleEntity.F_Id;
-                    moduleFields.F_EnCode = item.field;
-                    moduleFields.F_FullName = item.title;
-                    moduleFields.F_IsPublic = true;
-                    moduleFields.F_EnabledMark = true;
-                    moduleFields.F_DeleteMark = false;
+                    moduleFields.ModuleId = moduleEntity.Id;
+                    moduleFields.EnCode = item.field;
+                    moduleFields.FullName = item.title;
+                    moduleFields.IsPublic = true;
+                    moduleFields.EnabledMark = true;
+                    moduleFields.DeleteMark = false;
                     moduleFieldsList.Add(moduleFields);
                 }
                 uniwork.CurrentBeginTrans();
@@ -1437,20 +1437,20 @@ namespace WaterCloud.CodeGenerator
         }
         #endregion 
 
-        private string GetBaseEntity(string EntityName, DataTable dt, string idColumn = "F_Id",bool keyIsNull = false)
+        private string GetBaseEntity(string EntityName, DataTable dt, string idColumn = "Id",bool keyIsNull = false)
         {
             string entity = string.Empty;
             var columnList = dt.AsEnumerable().Select(p => p["DbColumnName"].ParseToString()).ToList();
 
             bool id = columnList.Where(p => p == idColumn).Any();
-            bool baseIsDelete = columnList.Where(p => p == "F_DeleteUserId").Any() && columnList.Where(p => p == "F_DeleteTime").Any() && columnList.Where(p => p == "F_DeleteMark").Any();
-            bool baseIsCreate = columnList.Where(p => p == "F_Id").Any() && columnList.Where(p => p == "F_CreatorUserId").Any() && columnList.Where(p => p == "F_CreatorTime").Any();
-            bool baseIsModifie = columnList.Where(p => p == "F_Id").Any() && columnList.Where(p => p == "F_LastModifyUserId").Any() && columnList.Where(p => p == "F_LastModifyTime").Any();
+            bool baseIsDelete = columnList.Where(p => p == "DeleteUserId").Any() && columnList.Where(p => p == "DeleteTime").Any() && columnList.Where(p => p == "DeleteMark").Any();
+            bool baseIsCreate = columnList.Where(p => p == "Id").Any() && columnList.Where(p => p == "CreatorUserId").Any() && columnList.Where(p => p == "CreatorTime").Any();
+            bool baseIsModifie = columnList.Where(p => p == "Id").Any() && columnList.Where(p => p == "LastModifyUserId").Any() && columnList.Where(p => p == "LastModifyTime").Any();
             if (!id && !keyIsNull)
             {
                 throw new Exception("数据库表必须有主键id字段");
             }
-            if (idColumn != "F_Id")
+            if (idColumn != "Id")
             {
                 return null;
             }

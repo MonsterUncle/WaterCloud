@@ -26,33 +26,33 @@ namespace WaterCloud.Service.SystemManage
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_Name.Contains(keyword) || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.Name.Contains(keyword) || a.Description.Contains(keyword));
             }
-            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.DeleteMark == false).OrderBy(a => a.Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<FormEntity>> GetLookList(string ItemId="", string keyword = "")
         {
-            var query = GetQuery().Where(a => a.F_DeleteMark == false);
+            var query = GetQuery().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(ItemId))
             {
-                query = query.Where(a => a.F_OrganizeId == ItemId || a.F_OrganizeId == null || a.F_OrganizeId == "");
+                query = query.Where(a => a.OrganizeId == ItemId || a.OrganizeId == null || a.OrganizeId == "");
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_Name.Contains(keyword) || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.Name.Contains(keyword) || a.Description.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
-            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.DeleteMark == false).OrderBy(a => a.Id, OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<FormEntity>> GetLookList(Pagination pagination,string keyword = "")
         {
             //获取数据权限
-            var query = GetQuery().Where(a => a.F_DeleteMark == false);
+            var query = GetQuery().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_Name.Contains(keyword) || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.Name.Contains(keyword) || a.Description.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
             return await repository.OrderList(query, pagination);
@@ -60,12 +60,12 @@ namespace WaterCloud.Service.SystemManage
         private ISugarQueryable<FormEntity> GetQuery()
         {
             var query = repository.Db.Queryable<FormEntity, OrganizeEntity>((a,b)=>new JoinQueryInfos(
-                    JoinType.Left,a.F_OrganizeId==b.F_Id            
+                    JoinType.Left,a.OrganizeId==b.Id            
                 ))
                 .Select((a, b) => new FormEntity
                 {
-                    F_Id = a.F_Id.SelectAll(),
-                    F_OrganizeName = b.F_FullName,
+                    Id = a.Id.SelectAll(),
+                    OrganizeName = b.FullName,
                 }).MergeTable();
             return query;
         }
@@ -84,22 +84,22 @@ namespace WaterCloud.Service.SystemManage
         #region 提交数据
         public async Task SubmitForm(FormEntity entity, string keyValue)
         {
-            if (entity.F_FrmType!=1)
+            if (entity.FrmType!=1)
             {
-                var temp = FormUtil.SetValue(entity.F_Content);
-                entity.F_ContentData =string.Join(',', temp.ToArray()) ;
-                entity.F_Fields = temp.Count();
+                var temp = FormUtil.SetValue(entity.Content);
+                entity.ContentData =string.Join(',', temp.ToArray()) ;
+                entity.Fields = temp.Count();
             }
             else
             {
-                var temp = FormUtil.SetValueByWeb(entity.F_WebId);
-                entity.F_ContentData = string.Join(',', temp.ToArray());
-                entity.F_Fields = temp.Count();
+                var temp = FormUtil.SetValueByWeb(entity.WebId);
+                entity.ContentData = string.Join(',', temp.ToArray());
+                entity.Fields = temp.Count();
             }
             if (string.IsNullOrEmpty(keyValue))
             {
                 //此处需修改
-                entity.F_DeleteMark = false;
+                entity.DeleteMark = false;
                 entity.Create();
                 await repository.Insert(entity);
             }
@@ -114,7 +114,7 @@ namespace WaterCloud.Service.SystemManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Delete(a => ids.Contains(a.F_Id));
+            await repository.Delete(a => ids.Contains(a.Id));
         }
         #endregion
 

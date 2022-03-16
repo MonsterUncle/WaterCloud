@@ -27,9 +27,9 @@ namespace WaterCloud.Service.SystemOrganize
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_Title.Contains(keyword) || a.F_Content.Contains(keyword));
+                query = query.Where(a => a.Title.Contains(keyword) || a.Content.Contains(keyword));
             }
-            return await query.Where(a => a.F_DeleteMark == false).ToListAsync();
+            return await query.Where(a => a.DeleteMark == false).ToListAsync();
         }
         public async Task<List<NoticeEntity>> GetLookList(SoulPage<NoticeEntity> pagination, string keyword = "")
         {
@@ -38,12 +38,12 @@ namespace WaterCloud.Service.SystemOrganize
             Dictionary<string, string> enabledDic = new Dictionary<string, string>();
             enabledDic.Add("1", "有效");
             enabledDic.Add("0", "无效");
-            dic.Add("F_EnabledMark", enabledDic);
+            dic.Add("EnabledMark", enabledDic);
             pagination = ChangeSoulData(dic, pagination);
-            var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+            var query = repository.IQueryable().Where(a => a.DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_Title.Contains(keyword) || a.F_Content.Contains(keyword));
+                query = query.Where(a => a.Title.Contains(keyword) || a.Content.Contains(keyword));
             }
             //权限过滤（保证分页参数存在）
             query = GetDataPrivilege("a", "", query);
@@ -68,8 +68,8 @@ namespace WaterCloud.Service.SystemOrganize
             }
             else
             {
-                entity.F_CreatorUserName = currentuser.UserName;
-                entity.F_DeleteMark = false;
+                entity.CreatorUserName = currentuser.UserName;
+                entity.DeleteMark = false;
                 entity.Create();
                 await repository.Insert(entity);
             }
@@ -78,7 +78,7 @@ namespace WaterCloud.Service.SystemOrganize
 		public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Delete(a => ids.Contains(a.F_Id));
+            await repository.Delete(a => ids.Contains(a.Id));
         }
 
     }

@@ -22,21 +22,21 @@
             },
             cols: [[
                 { type: "radio", width: 50, fixed: 'left' },
-                { field: 'F_FullName', title: '角色名称', width: 200, sort: true, filter: true },
-                { field: 'F_EnCode', title: '角色编号', width: 200, sort: true, filter: true },
+                { field: 'FullName', title: '角色名称', width: 200, sort: true, filter: true },
+                { field: 'EnCode', title: '角色编号', width: 200, sort: true, filter: true },
                 {
-                    field: 'F_Type', title: '角色类型', width: 120, sort: true, filter: true,
+                    field: 'Type', title: '角色类型', width: 120, sort: true, filter: true,
                     templet: function (d) {
-                        return top.clients.dataItems["RoleType"][d.F_Type] == undefined ? "" : top.clients.dataItems["RoleType"][d.F_Type];
+                        return top.clients.dataItems["RoleType"][d.Type] == undefined ? "" : top.clients.dataItems["RoleType"][d.Type];
                     }
                 },
                 {
-                    field: 'F_CompanyName', title: '归属公司', width: 120, sort: true, filter: true,
+                    field: 'CompanyName', title: '归属公司', width: 120, sort: true, filter: true,
                 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80, sort: true, filter: true,
+                    field: 'EnabledMark', title: '状态', width: 80, sort: true, filter: true,
                     templet: function (d) {
-                        if (d.F_EnabledMark == true) {
+                        if (d.EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
@@ -44,9 +44,9 @@
                     }
                 },
                 {
-                    field: 'F_CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
+                    field: 'CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                 },
-                { field: 'F_Description', title: '备注', minWidth: 150, sort: true, filter: true },
+                { field: 'Description', title: '备注', minWidth: 150, sort: true, filter: true },
                 { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right'}
             ]]
         });
@@ -69,7 +69,7 @@
          */
         table.on('toolbar(currentTableFilter)', function (obj) {
             var data = table.checkStatus('currentTableId').data;
-            var id = data.length > 0 ? data[0].F_Id : null;
+            var id = data.length > 0 ? data[0].Id : null;
             if (obj.event === 'add') {  // 监听操作
                 common.modalOpen({
                     title: "添加角色",
@@ -130,7 +130,7 @@
         });
         //toolrow监听事件
         table.on('tool(currentTableFilter)', function (obj) {
-            var id = obj.data.F_Id;
+            var id = obj.data.Id;
             if (obj.event === 'delete') {
                 common.deleteForm({
                     url: "/SystemOrganize/Role/DeleteForm",

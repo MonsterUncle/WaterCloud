@@ -43,12 +43,12 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task<List<OpenJobEntity>> GetLookList(Pagination pagination, string keyword = "")
         {
             var DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
-            var list = repository.IQueryable().Where(a => a.F_DbNumber == DbNumber);
+            var list = repository.IQueryable().Where(a => a.DbNumber == DbNumber);
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(a => a.F_JobName.Contains(keyword) || a.F_Description.Contains(keyword));
+                list = list.Where(a => a.JobName.Contains(keyword) || a.Description.Contains(keyword));
             }
-            list = list.Where(a => a.F_DeleteMark == false);
+            list = list.Where(a => a.DeleteMark == false);
             return await repository.OrderList(list, pagination);
         }
 
@@ -57,32 +57,32 @@ namespace WaterCloud.Service.SystemSecurity
             return await Task.Run(() => {
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
-                    return repository.Db.Queryable<OpenJobLogEntity>().Where(a => a.F_JobId == keyValue).OrderBy(a => a.F_CreatorTime, OrderByType.Desc).ToList();
+                    return repository.Db.Queryable<OpenJobLogEntity>().Where(a => a.JobId == keyValue).OrderBy(a => a.CreatorTime, OrderByType.Desc).ToList();
                 }
                 else
                 {
-                    return HandleLogHelper.HGetAll<OpenJobLogEntity>(keyValue).Values.OrderByDescending(a => a.F_CreatorTime).ToList(); ;
+                    return HandleLogHelper.HGetAll<OpenJobLogEntity>(keyValue).Values.OrderByDescending(a => a.CreatorTime).ToList(); ;
                 }
             });
         }
         public async Task<List<OpenJobEntity>> GetList(string keyword = "")
         {
             var DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
-            var query = repository.IQueryable().Where(a => a.F_DbNumber == DbNumber);
+            var query = repository.IQueryable().Where(a => a.DbNumber == DbNumber);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_JobName.Contains(keyword));
+                query = query.Where(a => a.JobName.Contains(keyword));
             }
-            return await query.Where(a => a.F_DeleteMark == false).ToListAsync();
+            return await query.Where(a => a.DeleteMark == false).ToListAsync();
         }
         public async Task<List<OpenJobEntity>> GetAllList(string keyword = "")
         {
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_JobName.Contains(keyword));
+                query = query.Where(a => a.JobName.Contains(keyword));
             }
-            return await query.Where(a => a.F_DeleteMark == false).ToListAsync();
+            return await query.Where(a => a.DeleteMark == false).ToListAsync();
         }
         public async Task<OpenJobEntity> GetForm(string keyValue)
         {
@@ -91,7 +91,7 @@ namespace WaterCloud.Service.SystemSecurity
         }
         public async Task SubmitForm(OpenJobEntity entity, string keyValue)
         {
-            bool IsTrue = CronExpression.IsValidExpression(entity.F_CronExpress);
+            bool IsTrue = CronExpression.IsValidExpression(entity.CronExpress);
             if (IsTrue == false)
             {
                 throw new Exception("定时任务的Cron表达式不正确！");
@@ -105,13 +105,13 @@ namespace WaterCloud.Service.SystemSecurity
             else
             {
                 entity.Create();
-                entity.F_DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
+                entity.DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
                 await repository.Insert(entity);
             }
-            if (entity.F_DoItNow == true)
+            if (entity.DoItNow == true)
             {
-                await ChangeJobStatus(entity.F_Id, 1);
-                await DoNow(entity.F_Id, false);
+                await ChangeJobStatus(entity.Id, 1);
+                await DoNow(entity.Id, false);
             }
             repository.unitOfWork.CurrentCommit();
         }
@@ -133,11 +133,11 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task DeleteForm(string keyValue)
         {
             var job = await repository.FindEntity(keyValue);
-            TriggerKey triggerKey = new TriggerKey(job.F_JobName, job.F_JobGroup);
+            TriggerKey triggerKey = new TriggerKey(job.JobName, job.JobGroup);
             await _scheduler.PauseTrigger(triggerKey);
             await _scheduler.UnscheduleJob(triggerKey);
-            await _scheduler.DeleteJob(new JobKey(job.F_JobName, job.F_JobGroup));
-            await repository.Delete(a => a.F_Id == keyValue);
+            await _scheduler.DeleteJob(new JobKey(job.JobName, job.JobGroup));
+            await repository.Delete(a => a.Id == keyValue);
         }
         #region 定时任务运行相关操作
 
@@ -164,48 +164,48 @@ namespace WaterCloud.Service.SystemSecurity
 
         public async Task ChangeJobStatus(string keyValue, int status)
         {
-            var job = await repository.FindEntity(a => a.F_Id == keyValue);
+            var job = await repository.FindEntity(a => a.Id == keyValue);
             if (job == null)
             {
                 throw new Exception("任务不存在");
             }
             if (status == 0) //停止
             {
-                TriggerKey triggerKey = new TriggerKey(job.F_JobName, job.F_JobGroup);
+                TriggerKey triggerKey = new TriggerKey(job.JobName, job.JobGroup);
                 // 停止触发器
                 await _scheduler.PauseTrigger(triggerKey);
                 // 移除触发器
                 await _scheduler.UnscheduleJob(triggerKey);
                 // 删除任务
-                await _scheduler.DeleteJob(new JobKey(job.F_JobName, job.F_JobGroup));
-                job.F_EnabledMark = false;
-                job.F_EndRunTime = DateTime.Now;
+                await _scheduler.DeleteJob(new JobKey(job.JobName, job.JobGroup));
+                job.EnabledMark = false;
+                job.EndRunTime = DateTime.Now;
             }
             else  //启动
             {
-                DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(job.F_StarRunTime, 1);
+                DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(job.StarRunTime, 1);
                 DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(DateTime.MaxValue.AddDays(-1), 1);
 
                 ITrigger trigger = TriggerBuilder.Create()
                                                  .StartAt(starRunTime)
                                                  .EndAt(endRunTime)
-                                                 .WithIdentity(job.F_JobName, job.F_JobGroup)
-                                                 .WithCronSchedule(job.F_CronExpress)
+                                                 .WithIdentity(job.JobName, job.JobGroup)
+                                                 .WithCronSchedule(job.CronExpress)
                                                  .Build();
                 ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
                 // 判断数据库中有没有记录过，有的话，quartz会自动从数据库中提取信息创建 schedule
-                if (!await _scheduler.CheckExists(new JobKey(job.F_JobName, job.F_JobGroup)))
+                if (!await _scheduler.CheckExists(new JobKey(job.JobName, job.JobGroup)))
                 {
-                    IJobDetail jobdetail = JobBuilder.Create<JobExecute>().WithIdentity(job.F_JobName, job.F_JobGroup).Build();
-                    jobdetail.JobDataMap.Add("F_Id", job.F_Id);
+                    IJobDetail jobdetail = JobBuilder.Create<JobExecute>().WithIdentity(job.JobName, job.JobGroup).Build();
+                    jobdetail.JobDataMap.Add("Id", job.Id);
 
                     await _scheduler.ScheduleJob(jobdetail, trigger);
                 }
 
-                job.F_EnabledMark = true;
-                job.F_StarRunTime = DateTime.Now;
+                job.EnabledMark = true;
+                job.StarRunTime = DateTime.Now;
             }
-            job.Modify(job.F_Id);
+            job.Modify(job.Id);
             await repository.Update(job);
         }
 
@@ -218,13 +218,13 @@ namespace WaterCloud.Service.SystemSecurity
                 DateTime now = DateTime.Now;
                 #region 执行任务
                 OpenJobLogEntity log = new OpenJobLogEntity();
-                log.F_Id = Utils.GuId();
-                log.F_JobId = keyValue;
-                log.F_JobName = dbJobEntity.F_JobName;
-                log.F_CreatorTime = now;
+                log.Id = Utils.GuId();
+                log.JobId = keyValue;
+                log.JobName = dbJobEntity.JobName;
+                log.CreatorTime = now;
                 repository.unitOfWork.CurrentBeginTrans();
                 AlwaysResult result = new AlwaysResult();
-                if (dbJobEntity.F_JobType == 0)
+                if (dbJobEntity.JobType == 0)
                 {
                     //反射执行就行
                     var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
@@ -233,7 +233,7 @@ namespace WaterCloud.Service.SystemSecurity
                     var types = referencedAssemblies
                         .SelectMany(a => a.GetTypes().Where(t => t.GetInterfaces()
                         .Contains(typeof(IJobTask)))).ToArray();
-                    string filename = dbJobEntity.F_FileName;
+                    string filename = dbJobEntity.FileName;
                     var implementType = types.Where(x => x.IsClass && x.FullName == filename).FirstOrDefault();
                     var obj = System.Activator.CreateInstance(implementType, repository.unitOfWork);       // 创建实例(带参数)
                     MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
@@ -241,31 +241,31 @@ namespace WaterCloud.Service.SystemSecurity
                     result = ((Task<AlwaysResult>)method.Invoke(obj, parameters)).GetAwaiter().GetResult();     // 调用方法，参数为空
                     if (result.state.ToString() == ResultType.success.ToString())
                     {
-                        log.F_EnabledMark = true;
-                        log.F_Description = "执行成功，" + result.message.ToString();
-                        await repository.Update(a => a.F_Id == keyValue, a => new OpenJobEntity
+                        log.EnabledMark = true;
+                        log.Description = "执行成功，" + result.message.ToString();
+                        await repository.Update(a => a.Id == keyValue, a => new OpenJobEntity
                         {
-                            F_LastRunMark = true,
-                            F_LastRunTime = now
+                            LastRunMark = true,
+                            LastRunTime = now
                         });
                     }
                     else
                     {
-                        log.F_EnabledMark = false;
-                        log.F_Description = "执行失败，" + result.message.ToString();
-                        await repository.Update(a => a.F_Id == keyValue, a => new OpenJobEntity
+                        log.EnabledMark = false;
+                        log.Description = "执行失败，" + result.message.ToString();
+                        await repository.Update(a => a.Id == keyValue, a => new OpenJobEntity
                         {
-                            F_LastRunMark = false,
-                            F_LastRunTime = now,
-                            F_LastRunErrTime = now,
-                            F_LastRunErrMsg = log.F_Description
+                            LastRunMark = false,
+                            LastRunTime = now,
+                            LastRunErrTime = now,
+                            LastRunErrMsg = log.Description
                         });
                     }
                 }
                 else
                 {
                     HttpMethod method = HttpMethod.Get;
-                    switch (dbJobEntity.F_JobType)
+                    switch (dbJobEntity.JobType)
                     {
                         case 1:
                             method = HttpMethod.Get;
@@ -280,39 +280,39 @@ namespace WaterCloud.Service.SystemSecurity
                             method = HttpMethod.Delete;
                             break;
                     }
-                    var dic = dbJobEntity.F_RequestHeaders.ToObject<Dictionary<string, string>>();
+                    var dic = dbJobEntity.RequestHeaders.ToObject<Dictionary<string, string>>();
                     if (dic == null)
                     {
                         dic = new Dictionary<string, string>();
                     }
                     //请求头添加租户号
-                    dic.Add("dbNumber", dbJobEntity.F_DbNumber);
+                    dic.Add("dbNumber", dbJobEntity.DbNumber);
                     try
                     {
-                        var temp = await _httpClient.ExecuteAsync(dbJobEntity.F_RequestUrl, method, dbJobEntity.F_RequestString, dic);
-                        log.F_EnabledMark = true;
-                        log.F_Description = "执行成功。";
-                        await repository.Update(a => a.F_Id == keyValue, a => new OpenJobEntity
+                        var temp = await _httpClient.ExecuteAsync(dbJobEntity.RequestUrl, method, dbJobEntity.RequestString, dic);
+                        log.EnabledMark = true;
+                        log.Description = "执行成功。";
+                        await repository.Update(a => a.Id == keyValue, a => new OpenJobEntity
                         {
-                            F_LastRunMark = true,
-                            F_LastRunTime = now
+                            LastRunMark = true,
+                            LastRunTime = now
                         });
                     }
                     catch (Exception ex)
                     {
-                        log.F_EnabledMark = false;
-                        log.F_Description = "执行失败，" + ex.Message.ToString();
-                        await repository.Update(a => a.F_Id == keyValue, a => new OpenJobEntity
+                        log.EnabledMark = false;
+                        log.Description = "执行失败，" + ex.Message.ToString();
+                        await repository.Update(a => a.Id == keyValue, a => new OpenJobEntity
                         {
-                            F_LastRunMark = false,
-                            F_LastRunTime = now,
-                            F_LastRunErrTime = now,
-                            F_LastRunErrMsg = log.F_Description
+                            LastRunMark = false,
+                            LastRunTime = now,
+                            LastRunErrTime = now,
+                            LastRunErrMsg = log.Description
                         });
                     }
                 }
 				#endregion
-				if (dbJobEntity.F_IsLog=="是")
+				if (dbJobEntity.IsLog=="是")
 				{
                     string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
                     if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
@@ -321,7 +321,7 @@ namespace WaterCloud.Service.SystemSecurity
                     }
                     else
                     {
-                        await HandleLogHelper.HSetAsync(log.F_JobId, log.F_Id, log);
+                        await HandleLogHelper.HSetAsync(log.JobId, log.Id, log);
                     }
                 }
                 if (commit)
@@ -335,7 +335,7 @@ namespace WaterCloud.Service.SystemSecurity
         {
             if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
-                await repository.Db.Deleteable<OpenJobLogEntity>(a => a.F_JobId == keyValue).ExecuteCommandAsync();
+                await repository.Db.Deleteable<OpenJobLogEntity>(a => a.JobId == keyValue).ExecuteCommandAsync();
             }
             else
             {

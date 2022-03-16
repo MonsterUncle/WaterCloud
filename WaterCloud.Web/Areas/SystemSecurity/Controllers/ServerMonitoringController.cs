@@ -36,7 +36,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HttpGet]
         public async Task<ActionResult> GetServerData()
         {
-            var data =(await _serverStateService.GetList(2)).OrderBy(a => a.F_Date).ToList() ;
+            var data =(await _serverStateService.GetList(2)).OrderBy(a => a.Date).ToList() ;
             return Content(data.ToJson());
         }
     }

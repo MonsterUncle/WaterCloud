@@ -35,7 +35,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             List<object> list = new List<object>();
             foreach (ItemsDetailEntity item in data)
             {
-                list.Add(new { id = item.F_ItemCode, text = item.F_ItemName });
+                list.Add(new { id = item.ItemCode, text = item.ItemName });
             }
             return Content(list.ToJson());
         }

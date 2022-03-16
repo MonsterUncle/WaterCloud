@@ -158,18 +158,18 @@
             cols: [[
                 { type: 'checkbox' },
 
-                { field: 'F_Account', title: '账户', width: 120, sort: true },
-                { field: 'F_RealName', title: '姓名', width: 120, sort: true },
+                { field: 'Account', title: '账户', width: 120, sort: true },
+                { field: 'RealName', title: '姓名', width: 120, sort: true },
                 {
-                    field: 'F_CompanyName', title: '公司名称', width: 120, sort: true
+                    field: 'CompanyName', title: '公司名称', width: 120, sort: true
                 },
                 {
-                    field: 'F_DepartmentName', title: '部门名称', width: 120, sort: true
+                    field: 'DepartmentName', title: '部门名称', width: 120, sort: true
                 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 100, sort: true,
+                    field: 'EnabledMark', title: '状态', width: 100, sort: true,
                     templet: function (d) {
-                        if (d.F_EnabledMark == true) {
+                        if (d.EnabledMark == true) {
                             return "<span class=\"layui-bg-green\">正常</span>";
                         } else {
                             return "<span class=\"layui-bg-red\">禁用</span>";
@@ -189,20 +189,20 @@
             cols: [[
                 { type: 'checkbox' },
 
-                { field: 'F_FullName', title: '角色名称', width: 120, sort: true },
+                { field: 'FullName', title: '角色名称', width: 120, sort: true },
                 {
-                    field: 'F_Type', title: '角色类型', width: 120, sort: true,
+                    field: 'Type', title: '角色类型', width: 120, sort: true,
                     templet: function (d) {
-                        return top.clients.dataItems["RoleType"][d.F_Type] == undefined ? "" : top.clients.dataItems["RoleType"][d.F_Type];
+                        return top.clients.dataItems["RoleType"][d.Type] == undefined ? "" : top.clients.dataItems["RoleType"][d.Type];
                     }
                 },
                 {
-                    field: 'F_CompanyName', title: '归属公司', width: 120, sort: true
+                    field: 'CompanyName', title: '归属公司', width: 120, sort: true
                 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 100, sort: true,
+                    field: 'EnabledMark', title: '状态', width: 100, sort: true,
                     templet: function (d) {
-                        if (d.F_EnabledMark == true) {
+                        if (d.EnabledMark == true) {
                             return "<span class=\"layui-bg-green\">正常</span>";
                         } else {
                             return "<span class=\"layui-bg-red\">禁用</span>";
@@ -254,12 +254,12 @@
             if (tmp.NodeDesignate === "SPECIAL_USER") {
                 var checkStatus = table.checkStatus("UserId").data;
                 for (var i = 0; i < checkStatus.length; i++) {
-                    users.push(checkStatus[i].F_Id);
+                    users.push(checkStatus[i].Id);
                 }
             } else if (tmp.NodeDesignate === "SPECIAL_ROLE") {
                 var checkStatus = table.checkStatus("RoleId").data;
                 for (var i = 0; i < checkStatus.length; i++) {
-                    roles.push(checkStatus[i].F_Id);
+                    roles.push(checkStatus[i].Id);
                 }
             }
             tmp.NodeRejectType = $('#NodeRejectType').val();

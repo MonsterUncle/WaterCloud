@@ -7,27 +7,27 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `cms_articlecategory`;
 CREATE TABLE `cms_articlecategory`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
-  `F_FullName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '类别名称',
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '父级Id',
-  `F_SortCode` int NOT NULL COMMENT '排序',
-  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '描述',
-  `F_LinkUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '链接地址',
-  `F_ImgUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '图片地址',
-  `F_SeoTitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'SEO标题',
-  `F_SeoKeywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'SEO关键字',
-  `F_SeoDescription` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'SEO描述',
-  `F_IsHot` tinyint NULL DEFAULT NULL COMMENT '是否热门',
-  `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
-  `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '删除标志',
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `cms_articlecategory_key1`(`F_FullName`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `FullName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '类别名称',
+  `ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '父级Id',
+  `SortCode` int NOT NULL COMMENT '排序',
+  `Description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '描述',
+  `LinkUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '链接地址',
+  `ImgUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '图片地址',
+  `SeoTitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'SEO标题',
+  `SeoKeywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'SEO关键字',
+  `SeoDescription` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'SEO描述',
+  `IsHot` tinyint NULL DEFAULT NULL COMMENT '是否热门',
+  `EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
+  `DeleteMark` tinyint NULL DEFAULT NULL COMMENT '删除标志',
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `cms_articlecategory_key1`(`FullName`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -41,34 +41,34 @@ INSERT INTO `cms_articlecategory` VALUES ('c71f577a-8c9b-409b-b21c-bb7081060338'
 -- ----------------------------
 DROP TABLE IF EXISTS `cms_articlenews`;
 CREATE TABLE `cms_articlenews`  (
-  `F_Id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文章主键Id',
-  `F_CategoryId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '类别Id',
-  `F_Title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '标题',
-  `F_LinkUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '链接地址',
-  `F_ImgUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '图片地址',
-  `F_SeoTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'SEO标题',
-  `F_SeoKeywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'SEO关键字',
-  `F_SeoDescription` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'SEO描述',
-  `F_Tags` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '标签',
-  `F_Zhaiyao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '摘要',
-  `F_Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '内容',
-  `F_SortCode` int NULL DEFAULT NULL COMMENT '排序',
-  `F_IsTop` tinyint NULL DEFAULT NULL COMMENT '是否置顶',
-  `F_IsHot` tinyint NULL DEFAULT NULL COMMENT '是否热门',
-  `F_IsRed` tinyint NULL DEFAULT NULL,
-  `F_Click` int NULL DEFAULT NULL COMMENT '点击次数',
-  `F_Source` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '来源',
-  `F_Author` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '作者',
-  `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
-  `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '逻辑删除标志',
-  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建人',
-  `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '最后修改人',
-  `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '删除人',
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `cms_articlenews_key1`(`F_CategoryId`, `F_Title`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文章主键Id',
+  `CategoryId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '类别Id',
+  `Title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '标题',
+  `LinkUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '链接地址',
+  `ImgUrl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '图片地址',
+  `SeoTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'SEO标题',
+  `SeoKeywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'SEO关键字',
+  `SeoDescription` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'SEO描述',
+  `Tags` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '标签',
+  `Zhaiyao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '摘要',
+  `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '内容',
+  `SortCode` int NULL DEFAULT NULL COMMENT '排序',
+  `IsTop` tinyint NULL DEFAULT NULL COMMENT '是否置顶',
+  `IsHot` tinyint NULL DEFAULT NULL COMMENT '是否热门',
+  `IsRed` tinyint NULL DEFAULT NULL,
+  `Click` int NULL DEFAULT NULL COMMENT '点击次数',
+  `Source` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '来源',
+  `Author` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '作者',
+  `EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
+  `DeleteMark` tinyint NULL DEFAULT NULL COMMENT '逻辑删除标志',
+  `CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `CreatorUserId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '创建人',
+  `LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '最后修改人',
+  `DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
+  `DeleteUserId` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '删除人',
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `cms_articlenews_key1`(`CategoryId`, `Title`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -82,42 +82,42 @@ INSERT INTO `cms_articlenews` VALUES ('7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', 'c
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_flowinstance`;
 CREATE TABLE `oms_flowinstance`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
-  `F_InstanceSchemeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '流程实例模板Id',
-  `F_Code` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '实例编号',
-  `F_CustomName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '自定义名称',
-  `F_ActivityId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '当前节点ID',
-  `F_ActivityType` int NULL DEFAULT NULL COMMENT '当前节点类型（0会签节点）',
-  `F_ActivityName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '当前节点名称',
-  `F_PreviousId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '前一个ID',
-  `F_SchemeContent` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '流程模板内容',
-  `F_SchemeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程模板ID',
-  `F_DbName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '数据库名称',
-  `F_FrmData` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单数据',
-  `F_FrmType` int NOT NULL COMMENT '表单类型',
-  `F_FrmContentData` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单字段',
-  `F_FrmContentParse` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单参数（冗余）',
-  `F_FrmId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '表单ID',
-  `F_SchemeType` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程类型',
-  `F_FlowLevel` int NOT NULL DEFAULT 0 COMMENT '等级',
-  `F_Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '实例备注',
-  `F_IsFinish` int NOT NULL DEFAULT 0 COMMENT '是否完成',
-  `F_MakerList` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '执行人',
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属部门',
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
-  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
-  `F_FrmContent` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单元素json',
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `oms_flowinstance_key1`(`F_Code`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `InstanceSchemeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '流程实例模板Id',
+  `Code` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '实例编号',
+  `CustomName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '自定义名称',
+  `ActivityId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '当前节点ID',
+  `ActivityType` int NULL DEFAULT NULL COMMENT '当前节点类型（0会签节点）',
+  `ActivityName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '当前节点名称',
+  `PreviousId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '前一个ID',
+  `SchemeContent` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '流程模板内容',
+  `SchemeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程模板ID',
+  `DbName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '数据库名称',
+  `FrmData` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单数据',
+  `FrmType` int NOT NULL COMMENT '表单类型',
+  `FrmContentData` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单字段',
+  `FrmContentParse` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单参数（冗余）',
+  `FrmId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '表单ID',
+  `SchemeType` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程类型',
+  `FlowLevel` int NOT NULL DEFAULT 0 COMMENT '等级',
+  `Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '实例备注',
+  `IsFinish` int NOT NULL DEFAULT 0 COMMENT '是否完成',
+  `MakerList` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '执行人',
+  `OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属部门',
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
+  `CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
+  `FrmContent` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单元素json',
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `oms_flowinstance_key1`(`Code`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '工作流流程实例表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of oms_flowinstance
 -- ----------------------------
 INSERT INTO `oms_flowinstance` VALUES ('08d92a8d-5355-4f4a-8290-0878fe4a2ab5', '', '1623163860504', '444 2021-06-08 22:51:02', '1623161368159', 2, '结点_3', '1623161365419', '{\"title\":\"newFlow_1\",\"nodes\":[{\"name\":\"开始_1\",\"left\":216,\"top\":55,\"type\":\"start round mix\",\"id\":\"1623161365419\",\"width\":120,\"height\":30,\"alt\":true},{\"name\":\"结束_2\",\"left\":260,\"top\":228,\"type\":\"end round\",\"id\":\"1623161366761\",\"width\":120,\"height\":30,\"alt\":true},{\"name\":\"结点_3\",\"left\":266,\"top\":142,\"type\":\"node\",\"id\":\"1623161368159\",\"width\":120,\"height\":40,\"alt\":true,\"setInfo\":{\"NodeName\":\"结点_3\",\"NodeCode\":\"1623161368159\",\"NodeRejectType\":\"1\",\"NodeDesignate\":\"ALL_USER\",\"NodeConfluenceType\":\"all\",\"ThirdPartyUrl\":\"\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[],\"currentDepart\":false}}}],\"lines\":[{\"type\":\"sl\",\"from\":\"1623161365419\",\"to\":\"1623161368159\",\"id\":\"1623161371322\",\"name\":\"\",\"dash\":false},{\"type\":\"sl\",\"from\":\"1623161368159\",\"to\":\"1623161366761\",\"id\":\"1623161372230\",\"name\":\"\",\"dash\":false}],\"areas\":[],\"initNum\":6}', '08d92a87-0ce5-4cab-8359-8536c3763dcc', '', '{\"input_4\":\"aaaa\",\"password_5\":\"3333\",\"NextMakerName\":\"所有人\",\"NextNodeDesignates\":\"\",\"editor_1\":\"\",\"申请人\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"所属部门\":\"5AB270C0-5D33-4203-A54F-4552699FDA3C\"}', 0, 'input_4,password_5,date_9,date_10,image_7,editor_1', NULL, '08d92a58-531c-43ec-8546-d359e0f81347', NULL, 0, NULL, 0, '1', NULL, 1, '2021-06-08 22:54:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '[\n    {\n        \"id\": \"grid_3\",\n        \"index\": 0,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"input_4\",\n                        \"index\": 0,\n                        \"label\": \"用户名\",\n                        \"tag\": \"input\",\n                        \"tagIcon\": \"input\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"expression\": \"\",\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"password_5\",\n                        \"index\": 0,\n                        \"label\": \"密码\",\n                        \"tag\": \"password\",\n                        \"tagIcon\": \"password\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"grid_6\",\n        \"index\": 1,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"date_9\",\n                        \"index\": 0,\n                        \"label\": \"起始\",\n                        \"tag\": \"date\",\n                        \"tagIcon\": \"date\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"dateDefaultValue\": \"2021-05-25\",\n                        \"datetype\": \"date\",\n                        \"range\": false,\n                        \"dateformat\": \"yyyy-MM-dd\",\n                        \"isInitValue\": false,\n                        \"dataMaxValue\": \"2088-12-31\",\n                        \"dataMinValue\": \"1900-01-01\",\n                        \"trigger\": null,\n                        \"position\": \"absolute\",\n                        \"theme\": \"default\",\n                        \"mark\": null,\n                        \"showBottom\": true,\n                        \"zindex\": 66666666,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"date_10\",\n                        \"index\": 0,\n                        \"label\": \"目标\",\n                        \"tag\": \"date\",\n                        \"tagIcon\": \"date\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"dateDefaultValue\": \"2021-05-25\",\n                        \"datetype\": \"date\",\n                        \"range\": false,\n                        \"dateformat\": \"yyyy-MM-dd\",\n                        \"isInitValue\": false,\n                        \"dataMaxValue\": \"2088-12-31\",\n                        \"dataMinValue\": \"1900-01-01\",\n                        \"trigger\": null,\n                        \"position\": \"absolute\",\n                        \"theme\": \"default\",\n                        \"mark\": null,\n                        \"showBottom\": true,\n                        \"zindex\": 66666666,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"image_7\",\n        \"index\": 2,\n        \"label\": \"凭据\",\n        \"tag\": \"image\",\n        \"tagIcon\": \"image\",\n        \"placeholder\": \"请输入\",\n        \"defaultValue\": null,\n        \"labelWidth\": null,\n        \"disabled\": false,\n        \"required\": true,\n        \"document\": \"\",\n        \"uploadUrl\": \"/FileManage/Uploadfile/Upload?filetype=1&fileby=\'流程表单\'&isLayui=true\"\n    },\n    {\n        \"id\": \"editor_1\",\n        \"index\": 3,\n        \"label\": \"编辑器\",\n        \"tag\": \"editor\",\n        \"tagIcon\": \"editor\",\n        \"labelWidth\": null,\n        \"clearable\": true,\n        \"maxlength\": null,\n        \"showWordLimit\": false,\n        \"tool\": [],\n        \"hideTool\": [],\n        \"height\": \"120px\",\n        \"document\": \"\",\n        \"uploadUrl\": \"/FileManage/Uploadfile/Upload?filetype=1&fileby=\'流程表单\'&isLayui=true\"\n    }\n]');
-INSERT INTO `oms_flowinstance` VALUES ('39fcc2eb-9367-b566-9078-9f411bc4f050', '', '1622167949311', '复杂表单流程 2021-05-28 10:12:32', '1595465821942', 2, '第二级', '1595465820221', '{\"title\":\"newFlow_1\",\"initNum\":9,\"lines\":[{\"id\":\"1595465828057\",\"label\":null,\"type\":\"sl\",\"from\":\"1595465816935\",\"to\":\"1595465820221\",\"name\":\"\",\"dash\":false,\"M\":0.0,\"alt\":false,\"Compares\":[]},{\"id\":\"1595465829568\",\"label\":null,\"type\":\"sl\",\"from\":\"1595465820221\",\"to\":\"1595465821942\",\"name\":\"\",\"dash\":false,\"M\":0.0,\"alt\":false,\"Compares\":[]},{\"id\":\"1595465830589\",\"label\":null,\"type\":\"sl\",\"from\":\"1595465821942\",\"to\":\"1595465823573\",\"name\":\"\",\"dash\":false,\"M\":0.0,\"alt\":false,\"Compares\":[]}],\"nodes\":[{\"id\":\"1595465816935\",\"name\":\"node_1\",\"type\":\"start round mix\",\"left\":358,\"top\":22,\"width\":26,\"height\":26,\"alt\":true,\"setInfo\":null},{\"id\":\"1595465820221\",\"name\":\"第一级\",\"type\":\"node\",\"left\":360,\"top\":94,\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeDesignate\":\"ALL_USER\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[],\"currentDepart\":false},\"NodeCode\":\"1595465820221\",\"NodeName\":\"第一级\",\"ThirdPartyUrl\":\"\",\"NodeRejectType\":\"0\",\"Taged\":1,\"UserName\":\"超级管理员\",\"UserId\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"Description\":\"\",\"TagedTime\":\"2021-05-28 10:15\",\"NodeConfluenceType\":\"all\",\"ConfluenceOk\":null,\"ConfluenceNo\":null}},{\"id\":\"1595465821942\",\"name\":\"第二级\",\"type\":\"node\",\"left\":383,\"top\":170,\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeDesignate\":\"ALL_USER\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[],\"currentDepart\":false},\"NodeCode\":\"1595465821942\",\"NodeName\":\"第二级\",\"ThirdPartyUrl\":\"\",\"NodeRejectType\":\"0\",\"Taged\":2,\"UserName\":\"超级管理员\",\"UserId\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"Description\":\"\",\"TagedTime\":\"2021-05-28 10:16\",\"NodeConfluenceType\":\"all\",\"ConfluenceOk\":null,\"ConfluenceNo\":null}},{\"id\":\"1595465823573\",\"name\":\"node_4\",\"type\":\"end round\",\"left\":420,\"top\":254,\"width\":26,\"height\":26,\"alt\":true,\"setInfo\":null}],\"areas\":[]}', '0f4924b8-22a6-4f28-958c-488265d0bcc1', 'FormTest', '{\"F_RequestType\":\"事假\",\"F_UserName\":\"222233\",\"F_StartTime\":\"2021-05-28 00:00\",\"F_EndTime\":\"2021-05-28 00:00\",\"F_RequestComment\":\"3333\",\"F_Attachment\":\"\",\"NextMakerName\":\"所有人\",\"NextNodeDesignates\":\"\",\"申请人\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"所属部门\":\"5AB270C0-5D33-4203-A54F-4552699FDA3C\"}', 1, 'F_Id,F_UserName,F_RequestType,F_StartTime,F_EndTime,F_RequestComment,F_Attachment,F_FlowInstanceId,F_CreatorTime,F_CreatorUserId,F_CreatorUserName', '', '8faff4e5-b729-44d2-ac26-e899a228f63d', NULL, 0, NULL, 3, '1', NULL, 1, '2021-05-28 10:12:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '');
+INSERT INTO `oms_flowinstance` VALUES ('39fcc2eb-9367-b566-9078-9f411bc4f050', '', '1622167949311', '复杂表单流程 2021-05-28 10:12:32', '1595465821942', 2, '第二级', '1595465820221', '{\"title\":\"newFlow_1\",\"initNum\":9,\"lines\":[{\"id\":\"1595465828057\",\"label\":null,\"type\":\"sl\",\"from\":\"1595465816935\",\"to\":\"1595465820221\",\"name\":\"\",\"dash\":false,\"M\":0.0,\"alt\":false,\"Compares\":[]},{\"id\":\"1595465829568\",\"label\":null,\"type\":\"sl\",\"from\":\"1595465820221\",\"to\":\"1595465821942\",\"name\":\"\",\"dash\":false,\"M\":0.0,\"alt\":false,\"Compares\":[]},{\"id\":\"1595465830589\",\"label\":null,\"type\":\"sl\",\"from\":\"1595465821942\",\"to\":\"1595465823573\",\"name\":\"\",\"dash\":false,\"M\":0.0,\"alt\":false,\"Compares\":[]}],\"nodes\":[{\"id\":\"1595465816935\",\"name\":\"node_1\",\"type\":\"start round mix\",\"left\":358,\"top\":22,\"width\":26,\"height\":26,\"alt\":true,\"setInfo\":null},{\"id\":\"1595465820221\",\"name\":\"第一级\",\"type\":\"node\",\"left\":360,\"top\":94,\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeDesignate\":\"ALL_USER\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[],\"currentDepart\":false},\"NodeCode\":\"1595465820221\",\"NodeName\":\"第一级\",\"ThirdPartyUrl\":\"\",\"NodeRejectType\":\"0\",\"Taged\":1,\"UserName\":\"超级管理员\",\"UserId\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"Description\":\"\",\"TagedTime\":\"2021-05-28 10:15\",\"NodeConfluenceType\":\"all\",\"ConfluenceOk\":null,\"ConfluenceNo\":null}},{\"id\":\"1595465821942\",\"name\":\"第二级\",\"type\":\"node\",\"left\":383,\"top\":170,\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeDesignate\":\"ALL_USER\",\"NodeDesignateData\":{\"users\":[],\"roles\":[],\"orgs\":[],\"currentDepart\":false},\"NodeCode\":\"1595465821942\",\"NodeName\":\"第二级\",\"ThirdPartyUrl\":\"\",\"NodeRejectType\":\"0\",\"Taged\":2,\"UserName\":\"超级管理员\",\"UserId\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"Description\":\"\",\"TagedTime\":\"2021-05-28 10:16\",\"NodeConfluenceType\":\"all\",\"ConfluenceOk\":null,\"ConfluenceNo\":null}},{\"id\":\"1595465823573\",\"name\":\"node_4\",\"type\":\"end round\",\"left\":420,\"top\":254,\"width\":26,\"height\":26,\"alt\":true,\"setInfo\":null}],\"areas\":[]}', '0f4924b8-22a6-4f28-958c-488265d0bcc1', 'FormTest', '{\"RequestType\":\"事假\",\"UserName\":\"222233\",\"StartTime\":\"2021-05-28 00:00\",\"EndTime\":\"2021-05-28 00:00\",\"RequestComment\":\"3333\",\"Attachment\":\"\",\"NextMakerName\":\"所有人\",\"NextNodeDesignates\":\"\",\"申请人\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"所属部门\":\"5AB270C0-5D33-4203-A54F-4552699FDA3C\"}', 1, 'Id,UserName,RequestType,StartTime,EndTime,RequestComment,Attachment,FlowInstanceId,CreatorTime,CreatorUserId,CreatorUserName', '', '8faff4e5-b729-44d2-ac26-e899a228f63d', NULL, 0, NULL, 3, '1', NULL, 1, '2021-05-28 10:12:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '');
 INSERT INTO `oms_flowinstance` VALUES ('39fcc2ee-4d76-d970-35de-99271eada270', '', '1622168125187', '正常动态表单流程 2021-05-28 10:15:27', '1595465950174', 2, '002角色审核', '1595465947319', '{\"title\":\"newFlow_1\",\"nodes\":[{\"name\":\"node_1\",\"left\":225,\"top\":32,\"type\":\"start round mix\",\"id\":\"1595465947319\",\"width\":26,\"height\":26,\"alt\":true},{\"name\":\"002角色审核\",\"left\":232,\"top\":100,\"type\":\"node\",\"id\":\"1595465950174\",\"width\":104,\"height\":26,\"alt\":true,\"setInfo\":{\"NodeName\":\"002角色审核\",\"NodeCode\":\"1595465950174\",\"NodeRejectType\":\"0\",\"NodeDesignate\":\"SPECIAL_ROLE\",\"NodeConfluenceType\":\"all\",\"ThirdPartyUrl\":\"\",\"NodeDesignateData\":{\"users\":[],\"roles\":[\"8c119bce-0d70-4a56-8389-214d8e14e107\"],\"orgs\":[]}}},{\"name\":\"node_3\",\"left\":282,\"top\":214,\"type\":\"end round\",\"id\":\"1595465952758\",\"width\":26,\"height\":26,\"alt\":true}],\"lines\":[{\"type\":\"sl\",\"from\":\"1595465947319\",\"to\":\"1595465950174\",\"id\":\"1595465955629\",\"name\":\"\",\"dash\":false,\"alt\":true},{\"type\":\"sl\",\"from\":\"1595465950174\",\"to\":\"1595465952758\",\"id\":\"1595465956878\",\"name\":\"\",\"dash\":false,\"alt\":true}],\"areas\":[],\"initNum\":7}', '49c506c3-ee0b-43eb-ac64-b1c31fd5eb57', '', '{\"input_2\":\"3333\",\"password_3\":\"333333\",\"radio_6\":\"value2\",\"select_7\":\"value1\",\"date_14\":\"2021-05-28\",\"input_15\":\"3333\",\"rate_11\":\"4\",\"editor_16\":\"333\",\"NextMakerName\":\"xxxx\",\"NextNodeDesignates\":\"\",\"申请人\":\"9f2ec079-7d0f-4fe2-90ab-8b09a8302aba\",\"所属部门\":\"5AB270C0-5D33-4203-A54F-4552699FDA3C\"}', 0, 'input_2,password_3,radio_6,select_7,date_14,input_15,rate_11,editor_16', NULL, '3b6922f9-b4ba-4615-aa3f-b00110da54c6', NULL, 0, NULL, 0, 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 1, '2021-05-28 10:15:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '[\n    {\n        \"id\": \"grid_1\",\n        \"index\": 0,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"input_2\",\n                        \"index\": 0,\n                        \"label\": \"用户名\",\n                        \"tag\": \"input\",\n                        \"tagIcon\": \"input\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"expression\": \"string\",\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"password_3\",\n                        \"index\": 0,\n                        \"label\": \"密码\",\n                        \"tag\": \"password\",\n                        \"tagIcon\": \"password\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"grid_4\",\n        \"index\": 1,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"radio_6\",\n                        \"index\": 0,\n                        \"label\": \"性别\",\n                        \"tag\": \"radio\",\n                        \"tagIcon\": \"radio\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\",\n                        \"options\": [\n                            {\n                                \"text\": \"男\",\n                                \"value\": \"value1\"\n                            },\n                            {\n                                \"text\": \"女\",\n                                \"value\": \"value2\"\n                            }\n                        ]\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"select_7\",\n                        \"index\": 0,\n                        \"label\": \"类型\",\n                        \"tag\": \"select\",\n                        \"tagIcon\": \"select\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\",\n                        \"optionType\": \"local\",\n                        \"remoteUrl\": \"http://www.fishpro.com.cn/demo1/\",\n                        \"remoteMethod\": \"post\",\n                        \"remoteOptionText\": \"options.data.dictName\",\n                        \"remoteOptionValue\": \"options.data.dictId\",\n                        \"remoteDefaultValue\": \"12\",\n                        \"options\": [\n                            {\n                                \"text\": \"管理员\",\n                                \"value\": \"value1\"\n                            },\n                            {\n                                \"text\": \"供应商\",\n                                \"value\": \"value2\"\n                            },\n                            {\n                                \"text\": \"经销商\",\n                                \"value\": \"value3\"\n                            }\n                        ]\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"grid_12\",\n        \"index\": 2,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"date_14\",\n                        \"index\": 0,\n                        \"label\": \"出生日期\",\n                        \"tag\": \"date\",\n                        \"tagIcon\": \"date\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"defaultValue\": null,\n                        \"datetype\": \"date\",\n                        \"range\": false,\n                        \"dateformat\": \"yyyy-MM-dd\",\n                        \"isInitValue\": false,\n                        \"maxValue\": \"9999-12-31\",\n                        \"minValue\": \"1900-1-1\",\n                        \"trigger\": null,\n                        \"position\": \"absolute\",\n                        \"theme\": \"default\",\n                        \"mark\": null,\n                        \"showBottom\": true,\n                        \"zindex\": 66666666,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"input_15\",\n                        \"index\": 0,\n                        \"label\": \"身份证号\",\n                        \"tag\": \"input\",\n                        \"tagIcon\": \"input\",\n                        \"placeholder\": \"输入身份证号\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"expression\": \"string\",\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"rate_11\",\n        \"index\": 3,\n        \"label\": \"用户评价\",\n        \"tag\": \"rate\",\n        \"tagIcon\": \"rate\",\n        \"labelWidth\": null,\n        \"defaultValue\": 0,\n        \"rateLength\": 5,\n        \"half\": false,\n        \"text\": false,\n        \"theme\": \"default\",\n        \"showBottom\": true,\n        \"readonly\": false,\n        \"required\": true,\n        \"document\": \"\"\n    },\n    {\n        \"id\": \"editor_16\",\n        \"index\": 4,\n        \"label\": \"备注\",\n        \"tag\": \"editor\",\n        \"tagIcon\": \"editor\",\n        \"placeholder\": \"请输入\",\n        \"defaultValue\": null,\n        \"labelWidth\": null,\n        \"width\": \"100%\",\n        \"clearable\": true,\n        \"maxlength\": null,\n        \"showWordLimit\": false,\n        \"tool\": [],\n        \"hideTool\": [],\n        \"height\": \"120px\",\n        \"uploadImage\": {},\n        \"readonly\": false,\n        \"disabled\": false,\n        \"required\": true,\n        \"document\": \"\"\n    }\n]');
 
 -- ----------------------------
@@ -125,20 +125,20 @@ INSERT INTO `oms_flowinstance` VALUES ('39fcc2ee-4d76-d970-35de-99271eada270', '
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_flowinstancehis`;
 CREATE TABLE `oms_flowinstancehis`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
-  `F_InstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '实例Id',
-  `F_FromNodeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '开始节点Id',
-  `F_FromNodeType` int NULL DEFAULT NULL COMMENT '开始节点类型',
-  `F_FromNodeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '开始节点名称',
-  `F_ToNodeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '结束节点Id',
-  `F_ToNodeType` int NULL DEFAULT NULL COMMENT '结束节点类型',
-  `F_ToNodeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '结束节点名称',
-  `F_TransitionSate` tinyint(1) NOT NULL COMMENT '转化状态',
-  `F_IsFinish` tinyint(1) NOT NULL COMMENT '是否结束',
-  `F_CreatorTime` datetime NOT NULL COMMENT '转化时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '操作人Id',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '操作人名称',
-  PRIMARY KEY (`F_Id`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `InstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '实例Id',
+  `FromNodeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '开始节点Id',
+  `FromNodeType` int NULL DEFAULT NULL COMMENT '开始节点类型',
+  `FromNodeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '开始节点名称',
+  `ToNodeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '结束节点Id',
+  `ToNodeType` int NULL DEFAULT NULL COMMENT '结束节点类型',
+  `ToNodeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '结束节点名称',
+  `TransitionSate` tinyint(1) NOT NULL COMMENT '转化状态',
+  `IsFinish` tinyint(1) NOT NULL COMMENT '是否结束',
+  `CreatorTime` datetime NOT NULL COMMENT '转化时间',
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '操作人Id',
+  `CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '操作人名称',
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '工作流实例流转历史记录' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -154,13 +154,13 @@ INSERT INTO `oms_flowinstancehis` VALUES ('39fcc2ee-6de9-98e4-ac77-31cf2f20d65b'
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_flowinstanceinfo`;
 CREATE TABLE `oms_flowinstanceinfo`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
-  `F_InstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '实例进程Id',
-  `F_Content` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '操作内容',
-  `F_CreatorTime` datetime NOT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
-  PRIMARY KEY (`F_Id`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `InstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '实例进程Id',
+  `Content` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '操作内容',
+  `CreatorTime` datetime NOT NULL COMMENT '创建时间',
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '工作流实例操作记录' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -177,18 +177,18 @@ INSERT INTO `oms_flowinstanceinfo` VALUES ('39fcc2ee-adc8-16fb-6be5-d62abe26a19f
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_formtest`;
 CREATE TABLE `oms_formtest`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'ID',
-  `F_UserName` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '请假人姓名',
-  `F_RequestType` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '请假分类，病假，事假，公休等',
-  `F_StartTime` datetime NULL DEFAULT NULL COMMENT '开始时间',
-  `F_EndTime` datetime NULL DEFAULT NULL COMMENT '结束时间',
-  `F_RequestComment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '请假说明',
-  `F_Attachment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '附件，用于提交病假证据等',
-  `F_CreatorTime` datetime NOT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
-  `F_FlowInstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属流程ID',
-  PRIMARY KEY (`F_Id`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'ID',
+  `UserName` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '请假人姓名',
+  `RequestType` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '请假分类，病假，事假，公休等',
+  `StartTime` datetime NULL DEFAULT NULL COMMENT '开始时间',
+  `EndTime` datetime NULL DEFAULT NULL COMMENT '结束时间',
+  `RequestComment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '请假说明',
+  `Attachment` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '附件，用于提交病假证据等',
+  `CreatorTime` datetime NOT NULL COMMENT '创建时间',
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
+  `FlowInstanceId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属流程ID',
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '模拟一个自定页面的表单，该数据会关联到流程实例FrmData，可用于复杂页面的设计及后期的数据分析' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -201,20 +201,20 @@ INSERT INTO `oms_formtest` VALUES ('39fcc2eb-95c4-ce62-2429-46be05704627', '2222
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_message`;
 CREATE TABLE `oms_message`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
-  `F_MessageType` int NULL DEFAULT NULL COMMENT '信息类型（通知、私信、处理）',
-  `F_ToUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '收件人主键',
-  `F_ToUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '收件人',
-  `F_MessageInfo` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '内容',
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
-  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
-  `F_HrefTarget` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '跳转类型',
-  `F_Href` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '跳转地址',
-  `F_KeyValue` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '待办关联键',
-  `F_ClickRead` tinyint(1) NULL DEFAULT NULL COMMENT '点击已读',
-  PRIMARY KEY (`F_Id`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `MessageType` int NULL DEFAULT NULL COMMENT '信息类型（通知、私信、处理）',
+  `ToUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '收件人主键',
+  `ToUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '收件人',
+  `MessageInfo` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '内容',
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
+  `CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
+  `HrefTarget` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '跳转类型',
+  `Href` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '跳转地址',
+  `KeyValue` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '待办关联键',
+  `ClickRead` tinyint(1) NULL DEFAULT NULL COMMENT '点击已读',
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -241,12 +241,12 @@ INSERT INTO `oms_message` VALUES ('ff60d258-409c-4770-97d0-3f9eddbef6a5', 2, '',
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_messagehis`;
 CREATE TABLE `oms_messagehis`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
-  `F_MessageId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '信息Id',
-  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
-  PRIMARY KEY (`F_Id`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `MessageId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '信息Id',
+  `CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -273,21 +273,21 @@ INSERT INTO `oms_messagehis` VALUES ('ed831440-0710-4158-9d13-0e69e44b4026', 'f1
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_uploadfile`;
 CREATE TABLE `oms_uploadfile`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
-  `F_FilePath` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件路径',
-  `F_FileName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '文件名称',
-  `F_FileType` int NULL DEFAULT NULL COMMENT '文件类型（0 文件，1 图片）',
-  `F_FileSize` int NULL DEFAULT NULL COMMENT '文件大小',
-  `F_FileExtension` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件扩展名',
-  `F_FileBy` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件所属',
-  `F_Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '备注',
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属部门',
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
-  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `oms_uploadfile_key1`(`F_FileName`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `FilePath` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件路径',
+  `FileName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '文件名称',
+  `FileType` int NULL DEFAULT NULL COMMENT '文件类型（0 文件，1 图片）',
+  `FileSize` int NULL DEFAULT NULL COMMENT '文件大小',
+  `FileExtension` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件扩展名',
+  `FileBy` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '文件所属',
+  `Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '备注',
+  `OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属部门',
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
+  `CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `oms_uploadfile_key1`(`FileName`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -301,24 +301,24 @@ INSERT INTO `oms_uploadfile` VALUES ('08d92c85-3e43-4b93-80d5-526b5525ee95', '/i
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_area`;
 CREATE TABLE `sys_area`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键',
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '父级',
-  `F_Layers` int NULL DEFAULT NULL COMMENT '层次',
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '编码',
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '名称',
-  `F_SimpleSpelling` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '简拼',
-  `F_SortCode` bigint NULL DEFAULT NULL COMMENT '排序码',
-  `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '删除标志',
-  `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '有效标志',
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '描述',
-  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建日期',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '最后修改用户',
-  `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '删除用户',
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_area_key1`(`F_EnCode`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键',
+  `ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '父级',
+  `Layers` int NULL DEFAULT NULL COMMENT '层次',
+  `EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '编码',
+  `FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '名称',
+  `SimpleSpelling` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '简拼',
+  `SortCode` bigint NULL DEFAULT NULL COMMENT '排序码',
+  `DeleteMark` tinyint NULL DEFAULT NULL COMMENT '删除标志',
+  `EnabledMark` tinyint NULL DEFAULT NULL COMMENT '有效标志',
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '描述',
+  `CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建日期',
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '最后修改用户',
+  `DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '删除用户',
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_area_key1`(`EnCode`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '行政区域表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3693,50 +3693,50 @@ INSERT INTO `sys_area` VALUES ('659006000000', '659000000000', 3, '659006000000'
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dataprivilegerule`;
 CREATE TABLE `sys_dataprivilegerule`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ModuleCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_PrivilegeRules` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_SortCode` int NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_dataprivilegerule_key1`(`F_ModuleId`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ModuleCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `PrivilegeRules` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `SortCode` int NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_dataprivilegerule_key1`(`ModuleId`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dataprivilegerule
 -- ----------------------------
-INSERT INTO `sys_dataprivilegerule` VALUES ('07999ec1-9fbb-46b5-bcea-d343bf49e6d8', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'Notice', '[{\"Operation\":\"and\",\"Filters\":\"[{\\\"Key\\\":\\\"{loginRole}\\\",\\\"Contrast\\\":\\\"contains\\\",\\\"Text\\\":\\\"0003\\\",\\\"Value\\\":\\\"d71324b7-e7eb-47b2-bdea-f0293d36bb7f\\\"},{\\\"Key\\\":\\\"F_CreatorUserId\\\",\\\"Contrast\\\":\\\"==\\\",\\\"Text\\\":\\\"{loginUser}\\\",\\\"Value\\\":\\\"{loginUser}\\\"}]\",\"Description\":\"0003角色只能查看自己的\"},{\"Operation\":\"and\",\"Filters\":\"[{\\\"Key\\\":\\\"{loginRole}\\\",\\\"Contrast\\\":\\\"contains\\\",\\\"Text\\\":\\\"0002\\\",\\\"Value\\\":\\\"8c119bce-0d70-4a56-8389-214d8e14e107\\\"},{\\\"Key\\\":\\\"F_EnabledMark\\\",\\\"Contrast\\\":\\\"==\\\",\\\"Text\\\":\\\"0\\\",\\\"Value\\\":\\\"0\\\"}]\",\"Description\":\"0002查看全部的\"}]', 0, 0, 1, '0003角色只能查看自己的,0002查看全部的', '2020-06-03 11:21:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-08-31 10:40:11', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, NULL);
+INSERT INTO `sys_dataprivilegerule` VALUES ('07999ec1-9fbb-46b5-bcea-d343bf49e6d8', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'Notice', '[{\"Operation\":\"and\",\"Filters\":\"[{\\\"Key\\\":\\\"{loginRole}\\\",\\\"Contrast\\\":\\\"contains\\\",\\\"Text\\\":\\\"0003\\\",\\\"Value\\\":\\\"d71324b7-e7eb-47b2-bdea-f0293d36bb7f\\\"},{\\\"Key\\\":\\\"CreatorUserId\\\",\\\"Contrast\\\":\\\"==\\\",\\\"Text\\\":\\\"{loginUser}\\\",\\\"Value\\\":\\\"{loginUser}\\\"}]\",\"Description\":\"0003角色只能查看自己的\"},{\"Operation\":\"and\",\"Filters\":\"[{\\\"Key\\\":\\\"{loginRole}\\\",\\\"Contrast\\\":\\\"contains\\\",\\\"Text\\\":\\\"0002\\\",\\\"Value\\\":\\\"8c119bce-0d70-4a56-8389-214d8e14e107\\\"},{\\\"Key\\\":\\\"EnabledMark\\\",\\\"Contrast\\\":\\\"==\\\",\\\"Text\\\":\\\"0\\\",\\\"Value\\\":\\\"0\\\"}]\",\"Description\":\"0002查看全部的\"}]', 0, 0, 1, '0003角色只能查看自己的,0002查看全部的', '2020-06-03 11:21:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-08-31 10:40:11', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_filterip
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_filterip`;
 CREATE TABLE `sys_filterip`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_Type` tinyint NULL DEFAULT NULL,
-  `F_StartIP` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_EndIP` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_SortCode` int NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_EndTime` datetime NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Type` tinyint NULL DEFAULT NULL,
+  `StartIP` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `EndIP` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `SortCode` int NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `EndTime` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3748,31 +3748,31 @@ CREATE TABLE `sys_filterip`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_flowscheme`;
 CREATE TABLE `sys_flowscheme`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
-  `F_SchemeCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程编号',
-  `F_SchemeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程名称',
-  `F_SchemeType` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程分类',
-  `F_SchemeVersion` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程内容版本',
-  `F_SchemeCanUser` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '流程模板使用者',
-  `F_SchemeContent` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '流程内容',
-  `F_FrmId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '表单ID',
-  `F_FrmType` int NOT NULL DEFAULT 0 COMMENT '表单类型',
-  `F_AuthorizeType` int NOT NULL DEFAULT 0 COMMENT '模板权限类型：0完全公开,1指定部门/人员',
-  `F_SortCode` int NULL DEFAULT NULL COMMENT '排序码',
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL COMMENT '删除标记',
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
-  `F_Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '备注',
-  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
-  `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '修改时间',
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '修改用户主键',
-  `F_LastModifyUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '修改用户',
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属部门',
-  `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '删除人',
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_flowscheme_key1`(`F_SchemeCode`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '主键Id',
+  `SchemeCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程编号',
+  `SchemeName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程名称',
+  `SchemeType` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程分类',
+  `SchemeVersion` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '流程内容版本',
+  `SchemeCanUser` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '流程模板使用者',
+  `SchemeContent` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '流程内容',
+  `FrmId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '表单ID',
+  `FrmType` int NOT NULL DEFAULT 0 COMMENT '表单类型',
+  `AuthorizeType` int NOT NULL DEFAULT 0 COMMENT '模板权限类型：0完全公开,1指定部门/人员',
+  `SortCode` int NULL DEFAULT NULL COMMENT '排序码',
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL COMMENT '删除标记',
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL COMMENT '有效',
+  `Description` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '备注',
+  `CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户主键',
+  `CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建用户',
+  `LastModifyTime` datetime NULL DEFAULT NULL COMMENT '修改时间',
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '修改用户主键',
+  `LastModifyUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '修改用户',
+  `OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属部门',
+  `DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '删除人',
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_flowscheme_key1`(`SchemeCode`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '工作流模板信息表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -3786,59 +3786,59 @@ INSERT INTO `sys_flowscheme` VALUES ('0f4924b8-22a6-4f28-958c-488265d0bcc1', '15
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_form`;
 CREATE TABLE `sys_form`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '表单模板Id',
-  `F_Name` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '表单名称',
-  `F_FrmType` int NULL DEFAULT 0 COMMENT '表单类型，0：默认动态表单；1：Web自定义表单',
-  `F_WebId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '系统页面标识，当表单类型为用Web自定义的表单时，需要标识加载哪个页面',
-  `F_Fields` int NULL DEFAULT NULL COMMENT '字段个数',
-  `F_ContentData` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单中的控件属性描述',
-  `F_ContentParse` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单控件位置模板',
-  `F_Content` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单原html模板未经处理的',
-  `F_SortCode` int NULL DEFAULT NULL COMMENT '排序码',
-  `F_EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
-  `F_DeleteMark` tinyint NULL DEFAULT NULL COMMENT '逻辑删除标志',
-  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建人',
-  `F_LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '最后修改人',
-  `F_DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '删除人',
-  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '内容',
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属组织',
-  `F_DbName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '数据库名称',
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_form_key1`(`F_Name`) USING BTREE COMMENT '唯一'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '表单模板Id',
+  `Name` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '表单名称',
+  `FrmType` int NULL DEFAULT 0 COMMENT '表单类型，0：默认动态表单；1：Web自定义表单',
+  `WebId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '系统页面标识，当表单类型为用Web自定义的表单时，需要标识加载哪个页面',
+  `Fields` int NULL DEFAULT NULL COMMENT '字段个数',
+  `ContentData` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单中的控件属性描述',
+  `ContentParse` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单控件位置模板',
+  `Content` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '表单原html模板未经处理的',
+  `SortCode` int NULL DEFAULT NULL COMMENT '排序码',
+  `EnabledMark` tinyint NULL DEFAULT NULL COMMENT '是否启用',
+  `DeleteMark` tinyint NULL DEFAULT NULL COMMENT '逻辑删除标志',
+  `CreatorTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '创建人',
+  `LastModifyTime` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '最后修改人',
+  `DeleteTime` datetime NULL DEFAULT NULL COMMENT '删除时间',
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '删除人',
+  `Description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '内容',
+  `OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '所属组织',
+  `DbName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '数据库名称',
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_form_key1`(`Name`) USING BTREE COMMENT '唯一'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci COMMENT = '表单模板表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of sys_form
 -- ----------------------------
 INSERT INTO `sys_form` VALUES ('08d92a58-531c-43ec-8546-d359e0f81347', '333', 0, '', 6, 'input_4,password_5,date_9,date_10,image_7,editor_1', NULL, '[\n    {\n        \"id\": \"grid_3\",\n        \"index\": 0,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"input_4\",\n                        \"index\": 0,\n                        \"label\": \"用户名\",\n                        \"tag\": \"input\",\n                        \"tagIcon\": \"input\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"expression\": \"\",\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"password_5\",\n                        \"index\": 0,\n                        \"label\": \"密码\",\n                        \"tag\": \"password\",\n                        \"tagIcon\": \"password\",\n                        \"placeholder\": \"请输入\",\n                        \"defaultValue\": null,\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"showWordLimit\": false,\n                        \"readonly\": false,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"grid_6\",\n        \"index\": 1,\n        \"tag\": \"grid\",\n        \"span\": 2,\n        \"columns\": [\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"date_9\",\n                        \"index\": 0,\n                        \"label\": \"起始\",\n                        \"tag\": \"date\",\n                        \"tagIcon\": \"date\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"dateDefaultValue\": \"2021-05-25\",\n                        \"datetype\": \"date\",\n                        \"range\": false,\n                        \"dateformat\": \"yyyy-MM-dd\",\n                        \"isInitValue\": false,\n                        \"dataMaxValue\": \"2088-12-31\",\n                        \"dataMinValue\": \"1900-01-01\",\n                        \"trigger\": null,\n                        \"position\": \"absolute\",\n                        \"theme\": \"default\",\n                        \"mark\": null,\n                        \"showBottom\": true,\n                        \"zindex\": 66666666,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            },\n            {\n                \"span\": 12,\n                \"list\": [\n                    {\n                        \"id\": \"date_10\",\n                        \"index\": 0,\n                        \"label\": \"目标\",\n                        \"tag\": \"date\",\n                        \"tagIcon\": \"date\",\n                        \"labelWidth\": null,\n                        \"width\": \"100%\",\n                        \"clearable\": true,\n                        \"maxlength\": null,\n                        \"dateDefaultValue\": \"2021-05-25\",\n                        \"datetype\": \"date\",\n                        \"range\": false,\n                        \"dateformat\": \"yyyy-MM-dd\",\n                        \"isInitValue\": false,\n                        \"dataMaxValue\": \"2088-12-31\",\n                        \"dataMinValue\": \"1900-01-01\",\n                        \"trigger\": null,\n                        \"position\": \"absolute\",\n                        \"theme\": \"default\",\n                        \"mark\": null,\n                        \"showBottom\": true,\n                        \"zindex\": 66666666,\n                        \"disabled\": false,\n                        \"required\": true,\n                        \"document\": \"\"\n                    }\n                ]\n            }\n        ]\n    },\n    {\n        \"id\": \"image_7\",\n        \"index\": 2,\n        \"label\": \"凭据\",\n        \"tag\": \"image\",\n        \"tagIcon\": \"image\",\n        \"placeholder\": \"请输入\",\n        \"defaultValue\": null,\n        \"labelWidth\": null,\n        \"disabled\": false,\n        \"required\": true,\n        \"document\": \"\",\n        \"uploadUrl\": \"/FileManage/Uploadfile/Upload?filetype=1&fileby=\'流程表单\'&isLayui=true\"\n    },\n    {\n        \"id\": \"editor_1\",\n        \"index\": 3,\n        \"label\": \"编辑器\",\n        \"tag\": \"editor\",\n        \"tagIcon\": \"editor\",\n        \"labelWidth\": null,\n        \"clearable\": true,\n        \"maxlength\": null,\n        \"showWordLimit\": false,\n        \"tool\": [],\n        \"hideTool\": [],\n        \"height\": \"120px\",\n        \"document\": \"\",\n        \"uploadUrl\": \"/FileManage/Uploadfile/Upload?filetype=1&fileby=\'流程表单\'&isLayui=true\"\n    }\n]', 33, 1, 0, '2021-06-08 16:35:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-06-08 22:49:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '', '', NULL);
-INSERT INTO `sys_form` VALUES ('8faff4e5-b729-44d2-ac26-e899a228f63d', '系统内置的复杂请假条表单', 1, 'FormTest', 11, 'F_Id,F_UserName,F_RequestType,F_StartTime,F_EndTime,F_RequestComment,F_Attachment,F_FlowInstanceId,F_CreatorTime,F_CreatorUserId,F_CreatorUserName', '', '', 0, 1, 0, '2019-07-29 01:03:36', '6ba79766-faa0-4259-8139-a4a6d35784e0', '2020-07-23 08:49:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2019-07-29 01:03:36', '6ba79766-faa0-4259-8139-a4a6d35784e0', '企业版内置的复杂请假条表单', '', NULL);
+INSERT INTO `sys_form` VALUES ('8faff4e5-b729-44d2-ac26-e899a228f63d', '系统内置的复杂请假条表单', 1, 'FormTest', 11, 'Id,UserName,RequestType,StartTime,EndTime,RequestComment,Attachment,FlowInstanceId,CreatorTime,CreatorUserId,CreatorUserName', '', '', 0, 1, 0, '2019-07-29 01:03:36', '6ba79766-faa0-4259-8139-a4a6d35784e0', '2020-07-23 08:49:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2019-07-29 01:03:36', '6ba79766-faa0-4259-8139-a4a6d35784e0', '企业版内置的复杂请假条表单', '', NULL);
 
 -- ----------------------------
 -- Table structure for sys_items
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_items`;
 CREATE TABLE `sys_items`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_IsTree` tinyint(1) NULL DEFAULT NULL,
-  `F_Layers` int NULL DEFAULT NULL,
-  `F_SortCode` int NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_items_key1`(`F_EnCode`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `IsTree` tinyint(1) NULL DEFAULT NULL,
+  `Layers` int NULL DEFAULT NULL,
+  `SortCode` int NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_items_key1`(`EnCode`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3864,26 +3864,26 @@ INSERT INTO `sys_items` VALUES ('FA7537E2-1C64-4431-84BF-66158DD63269', '7707011
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_itemsdetail`;
 CREATE TABLE `sys_itemsdetail`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_ItemId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ItemCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ItemName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_SimpleSpelling` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_IsDefault` tinyint(1) NULL DEFAULT NULL,
-  `F_Layers` int NULL DEFAULT NULL,
-  `F_SortCode` int NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_itemsdetail_key1`(`F_ItemId`, `F_ItemCode`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ItemId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ItemCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ItemName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `SimpleSpelling` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `IsDefault` tinyint(1) NULL DEFAULT NULL,
+  `Layers` int NULL DEFAULT NULL,
+  `SortCode` int NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_itemsdetail_key1`(`ItemId`, `ItemCode`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3962,22 +3962,22 @@ INSERT INTO `sys_itemsdetail` VALUES ('fa6c1873-888c-4b70-a2cc-59fccbb22078', '0
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log`;
 CREATE TABLE `sys_log`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_Date` datetime NULL DEFAULT NULL,
-  `F_Account` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_NickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Type` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_IPAddress` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_IPAddressName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ModuleName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Result` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_KeyValue` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CompanyId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Date` datetime NULL DEFAULT NULL,
+  `Account` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `NickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Type` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `IPAddress` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `IPAddressName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ModuleName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Result` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `KeyValue` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CompanyId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3998,8 +3998,8 @@ INSERT INTO `sys_log` VALUES ('02e38376-7212-46e5-8dc3-8d4addf9c9c7', '2020-06-2
 INSERT INTO `sys_log` VALUES ('0336e7a1-3cfa-4a23-8104-5540ea0b10dd', '2021-02-10 11:15:58', '20000', 'xxxx', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 11:15:59', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('035a572b-7e8b-451d-bd56-ab9b01f883af', '2020-07-31 17:31:21', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-07-31 17:31:21', NULL, NULL, NULL);
 INSERT INTO `sys_log` VALUES ('04b9d1e4-4da9-44d2-9991-1e03dccceb2b', '2020-07-23 08:59:52', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,新增操作成功', '2020-07-23 08:59:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('0504a623-ccd8-4650-9958-093d0e21a59c', '2020-07-13 16:06:58', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_AuthorizeType\' cannot be null', '2020-07-13 16:06:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('05919823-d70a-4465-b2de-e96deb1d3c66', '2020-07-13 16:43:16', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_SchemeType\' cannot be null', '2020-07-13 16:43:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('0504a623-ccd8-4650-9958-093d0e21a59c', '2020-07-13 16:06:58', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'AuthorizeType\' cannot be null', '2020-07-13 16:06:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('05919823-d70a-4465-b2de-e96deb1d3c66', '2020-07-13 16:43:16', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'SchemeType\' cannot be null', '2020-07-13 16:43:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('0623896b-3b04-417b-a9ac-c60ef430441b', '2020-06-28 14:18:07', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-06-28 14:18:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('06325602-a8bd-461e-a3f6-75aa975b9c4c', '2020-08-03 16:35:20', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,删除操作成功', '2020-08-03 16:35:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('0679eb47-1f45-48f3-9837-88196efe2fdb', '2020-07-31 17:50:03', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:50:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4257,7 +4257,7 @@ INSERT INTO `sys_log` VALUES ('30cb9a42-5b53-4466-a3ca-95e9e94ff55a', '2020-07-2
 INSERT INTO `sys_log` VALUES ('31a823ea-1539-4430-818f-46c3ce14eba7', '2020-07-31 16:23:32', '20000', 'xxxx', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 16:23:32', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('31b9cb98-452b-4125-aaea-db2137b0d27d', '2020-07-23 11:50:09', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功', '2020-07-23 11:50:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '873db213-2d22-4c00-af03-2d1898f13481', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('31c52261-6aaf-4b6e-9091-118d909dcf1e', '2020-07-31 17:50:35', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 17:50:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('3207046e-5887-43b4-ad53-7a9fd1177807', '2020-06-28 12:27:57', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_Title\' at row 1', '2020-06-28 12:28:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c2c5efce-96a2-4793-bbee-89a989f4eaf5', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3207046e-5887-43b4-ad53-7a9fd1177807', '2020-06-28 12:27:57', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'Title\' at row 1', '2020-06-28 12:28:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c2c5efce-96a2-4793-bbee-89a989f4eaf5', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('332ad5ef-71d2-4d07-b4e2-fc14e9702351', '2020-10-19 12:38:11', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:38:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('33722239-549a-48ea-b5fb-2e8d4e1ac7e6', '2020-06-30 10:45:51', '20000', 'xxxx', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-30 10:45:51', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('338ebe3b-ae99-45f3-90da-7ffefe2b6c33', '2020-07-07 13:50:02', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-角色管理', 1, '角色管理操作,删除操作成功', '2020-07-07 13:50:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4270,7 +4270,7 @@ INSERT INTO `sys_log` VALUES ('3456acad-2b52-40c5-8105-a3041c1119b8', '2020-07-0
 INSERT INTO `sys_log` VALUES ('3595c3f3-a727-4e8c-b5eb-63c58bf0b493', '2020-07-06 10:15:12', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功', '2020-07-06 10:15:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('35ada9db-c28d-47a1-9bbb-3a8a6ac1cf66', '2020-07-31 16:08:57', '20000', 'xxxx', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-07-31 16:08:57', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('35e129d7-dcde-4191-8f88-08ef89e99de1', '2020-06-30 12:03:22', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:03:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('365d0486-fd4e-4611-8011-a05e8fcd1623', '2020-06-28 14:05:52', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_MobilePhone\' at row 1', '2020-06-28 14:05:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('365d0486-fd4e-4611-8011-a05e8fcd1623', '2020-06-28 14:05:52', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'MobilePhone\' at row 1', '2020-06-28 14:05:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('366db9df-03d6-4aa7-ab5a-7d47b870242e', '2021-06-02 22:26:06', 'admin', '超级管理员', 'Login', '127.0.0.1', '本地局域网', NULL, '系统登录', 1, '登录成功', '2021-06-02 22:26:06', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('36e6f632-e72f-4430-a874-adc25ce9c6eb', '2020-07-02 08:42:17', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-07-02 08:42:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1dff096a-db2f-410c-af2f-12294bdbeccd', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('3712a3c9-4c13-454c-a828-a696dfaa5a4d', '2020-10-19 09:23:32', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 09:23:32', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4346,7 +4346,7 @@ INSERT INTO `sys_log` VALUES ('39fcc2bb-a16b-2b74-d931-4428a9466bc7', '2021-05-2
 INSERT INTO `sys_log` VALUES ('39fcc2bc-41a2-a564-5e84-f49ed7e21bb1', '2021-05-28 09:20:59', 'admin', '超级管理员', 'Delete', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,删除操作成功。', '2021-05-28 09:20:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc2bb-a151-ff0a-4cc2-4055454da90c', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fcc2bc-6048-0e0e-4f83-a776a978585d', '2021-05-28 09:21:07', 'admin', '超级管理员', 'Create', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2021-05-28 09:21:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fcc2bc-6e07-cb31-acc4-9f3967530e3c', '2021-05-28 09:21:11', 'admin', '超级管理员', 'Create', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2021-05-28 09:21:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fcc2bd-d034-68a4-aaa2-72de0a1468d8', '2021-05-28 09:22:41', 'admin', '超级管理员', 'Delete', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,删除操作失败，Data too long for column \'F_KeyValue\' at row 1', '2021-05-28 09:22:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc2bc-6de1-239f-27cd-f2449059daa7,39fcc2bc-6022-5d40-c23d-c966a302ca59', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fcc2bd-d034-68a4-aaa2-72de0a1468d8', '2021-05-28 09:22:41', 'admin', '超级管理员', 'Delete', '127.0.0.1', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,删除操作失败，Data too long for column \'KeyValue\' at row 1', '2021-05-28 09:22:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '39fcc2bc-6de1-239f-27cd-f2449059daa7,39fcc2bc-6022-5d40-c23d-c966a302ca59', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fcc2c1-a490-d724-9451-13379df668e5', '2021-05-28 09:26:52', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 09:26:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fcc2c9-899a-953e-8841-011dafa3c471', '2021-05-28 09:35:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2021-05-28 09:35:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fcc2cc-4e58-eba1-2f57-875363c22964', '2021-05-28 09:38:31', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-28 09:38:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4364,26 +4364,26 @@ INSERT INTO `sys_log` VALUES ('39fccfaa-dc37-480e-b8ba-8d1a212259d4', '2021-05-3
 INSERT INTO `sys_log` VALUES ('39fccfab-4d70-51d8-14a7-b87bf8e3571f', '2021-05-30 21:37:32', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2021-05-30 21:37:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfae-91b4-e049-c663-9bd48a03e626', '2021-05-30 21:41:06', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:41:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfae-9278-1b06-c9d9-ab8154ef3e3f', '2021-05-30 21:41:06', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:41:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfae-98fd-f9c4-d2e5-16aa921a13b0', '2021-05-30 21:41:08', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 21:41:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfae-98fd-f9c4-d2e5-16aa921a13b0', '2021-05-30 21:41:08', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 21:41:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfae-d55c-8c8b-6e23-d5d030c123b3', '2021-05-30 21:41:23', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:41:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfae-d5f6-a0b7-cc73-1e0ceb0b2048', '2021-05-30 21:41:24', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:41:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfaf-b295-5609-2da0-a27112f66df5', '2021-05-30 21:42:20', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 21:42:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfaf-b295-5609-2da0-a27112f66df5', '2021-05-30 21:42:20', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 21:42:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfb1-6992-4d40-4c61-6175aa0f3d6d', '2021-05-30 21:44:12', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:44:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfb1-6a2a-7f47-6926-cfb0ecc82c1c', '2021-05-30 21:44:13', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:44:13', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfb1-7cd3-87d8-0df2-f4fc980db59d', '2021-05-30 21:44:17', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 21:44:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb1-7cd3-87d8-0df2-f4fc980db59d', '2021-05-30 21:44:17', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 21:44:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfb1-e437-1299-ce35-d8ca1d94e633', '2021-05-30 21:44:44', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:44:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfb1-e4cc-c9cf-1919-3aba8c6c26b2', '2021-05-30 21:44:44', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:44:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfb1-e9f0-d540-379d-85812097ad14', '2021-05-30 21:44:45', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 21:44:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb1-e9f0-d540-379d-85812097ad14', '2021-05-30 21:44:45', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 21:44:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfb2-2d36-b883-2342-4a46e265ee75', '2021-05-30 21:45:03', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:45:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfb2-2dda-748d-e80d-01f09f7a0f5d', '2021-05-30 21:45:03', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:45:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfb3-72a8-864b-89e5-762fa9a23520', '2021-05-30 21:46:26', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 21:46:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfb3-72a8-864b-89e5-762fa9a23520', '2021-05-30 21:46:26', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 21:46:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfb5-510c-427d-ecde-2e5cd1b30756', '2021-05-30 21:48:28', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 21:48:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfb6-9dff-ef7e-ddd2-aaedc44348ae', '2021-05-30 21:49:54', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:49:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfb6-9eb3-1387-2f6b-c32d6bbc55d6', '2021-05-30 21:49:54', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:49:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfbb-bc59-028c-0a07-261491c763b4', '2021-05-30 21:55:29', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'(50) DEFAULT NULL   , Primary key(`F_Id`))\' at line 14', '2021-05-30 21:55:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfbb-bc59-028c-0a07-261491c763b4', '2021-05-30 21:55:29', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'(50) DEFAULT NULL   , Primary key(`Id`))\' at line 14', '2021-05-30 21:55:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfbb-ca4c-5315-65fe-5e5558e2038c', '2021-05-30 21:55:33', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 21:55:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfbb-cade-7088-c688-f28dd98a520d', '2021-05-30 21:55:33', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 21:55:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfbc-cd60-5339-9554-43867483bb8b', '2021-05-30 21:56:39', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'(50) DEFAULT NULL   , Primary key(`F_Id`))\' at line 14', '2021-05-30 21:56:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfbc-cd60-5339-9554-43867483bb8b', '2021-05-30 21:56:39', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'(50) DEFAULT NULL   , Primary key(`Id`))\' at line 14', '2021-05-30 21:56:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfc3-fc56-37fa-5011-44ec4f8165ff', '2021-05-30 22:04:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:04:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfc3-fcdb-c19f-3d10-cf1af2a60a53', '2021-05-30 22:04:30', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:04:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfc4-d554-c8ab-84dc-6bb82fb0f814', '2021-05-30 22:05:25', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:05:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4392,19 +4392,19 @@ INSERT INTO `sys_log` VALUES ('39fccfc6-1e45-bd6b-91c5-c6c30b67a191', '2021-05-3
 INSERT INTO `sys_log` VALUES ('39fccfca-1acd-7ce2-d256-2191df227dc3', '2021-05-30 22:11:11', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:11:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfcb-4095-28bf-7dc8-814c65f292ad', '2021-05-30 22:12:26', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:12:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfcb-41ac-43ec-e7e8-3337cd262b16', '2021-05-30 22:12:26', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:12:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfce-03d5-6eac-645d-9b8b1f2a488f', '2021-05-30 22:15:27', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:15:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfce-03d5-6eac-645d-9b8b1f2a488f', '2021-05-30 22:15:27', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 22:15:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfce-0e81-e644-dd84-ceae9ade914d', '2021-05-30 22:15:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:15:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfce-0ef9-7941-9023-880372b3c86a', '2021-05-30 22:15:30', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:15:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfd2-5ba6-2d58-6124-7de985b5a8a4', '2021-05-30 22:20:11', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:20:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfd2-65d0-ed99-c230-32aa6844eed3', '2021-05-30 22:20:14', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:20:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfd2-6677-9c2e-5faf-a861fae04fe3', '2021-05-30 22:20:14', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:20:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfd3-1129-a513-f0d3-99a28676d532', '2021-05-30 22:20:58', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:20:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd3-1129-a513-f0d3-99a28676d532', '2021-05-30 22:20:58', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 22:20:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfd3-1cdb-9da0-5b58-d2841b41b811', '2021-05-30 22:21:01', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:21:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfd3-1d6c-6c35-44a4-adbebf8930c8', '2021-05-30 22:21:01', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:21:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfd3-b361-bcae-b8b9-c724723bf4a1', '2021-05-30 22:21:40', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:21:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd3-b361-bcae-b8b9-c724723bf4a1', '2021-05-30 22:21:40', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 22:21:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfd3-be87-420d-6c77-b8442b485763', '2021-05-30 22:21:42', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:21:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfd3-bf61-59e9-cac7-00b4c89dcc07', '2021-05-30 22:21:43', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:21:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfd3-ecc5-c047-9da3-85c7a7dddf6b', '2021-05-30 22:21:54', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:21:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfd3-ecc5-c047-9da3-85c7a7dddf6b', '2021-05-30 22:21:54', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 22:21:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfd5-19c6-c06a-83fa-be78832d5d26', '2021-05-30 22:23:11', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:23:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfd5-1aa9-caa5-4eb3-3e75c88a3f1d', '2021-05-30 22:23:12', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:23:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfd8-4ae2-e1cd-abc9-3bf2ffd19295', '2021-05-30 22:26:40', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:26:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4419,14 +4419,14 @@ INSERT INTO `sys_log` VALUES ('39fccfdc-bf3b-9cb0-8af0-f9250db7cdb4', '2021-05-3
 INSERT INTO `sys_log` VALUES ('39fccfe4-8832-843a-e4a3-cee6a3c95c17', '2021-05-30 22:40:02', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:40:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfe4-b4af-2f67-77ec-8f988a908081', '2021-05-30 22:40:14', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:40:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfe4-b562-8fc4-9ce2-35782f2448f8', '2021-05-30 22:40:14', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:40:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfe5-a40a-8761-6767-fde61153529d', '2021-05-30 22:41:15', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:41:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfe5-a40a-8761-6767-fde61153529d', '2021-05-30 22:41:15', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 22:41:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfec-32d3-b966-92a4-631334140bd3', '2021-05-30 22:48:25', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:48:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfec-70e2-8cc9-13d8-1296b952977f', '2021-05-30 22:48:41', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:48:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfec-7189-a532-1118-7170bf6083ba', '2021-05-30 22:48:41', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:48:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfec-79a5-2594-032a-23236967939e', '2021-05-30 22:48:43', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:48:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfec-79a5-2594-032a-23236967939e', '2021-05-30 22:48:43', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 22:48:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfed-2d4c-ce31-f322-b64eff2de5c4', '2021-05-30 22:49:29', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:49:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccfed-2de9-2e5a-bbad-80cb3db9890b', '2021-05-30 22:49:29', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:49:29', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('39fccfed-972d-eb42-3ea7-fa9e732cc792', '2021-05-30 22:49:56', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`F_CreatorTime` datetime DEFAULT NULL  ,\r\n`F_CreatorUserId\' at line 12', '2021-05-30 22:49:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('39fccfed-972d-eb42-3ea7-fa9e732cc792', '2021-05-30 22:49:56', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near \'Max) DEFAULT NULL  ,\r\n`CreatorTime` datetime DEFAULT NULL  ,\r\n`CreatorUserId\' at line 12', '2021-05-30 22:49:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccff2-94e1-674f-5aa0-f95c11da18a4', '2021-05-30 22:55:23', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-05-30 22:55:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccff2-ad4f-eead-f0c9-54acac73dac3', '2021-05-30 22:55:30', 'admin', '超级管理员', 'Create', '0.0.0.1', 'iana保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2021-05-30 22:55:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('39fccff2-ae2a-763b-434f-8d3dea597e66', '2021-05-30 22:55:30', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'iana保留地址', NULL, '', 1, '操作,访问操作成功。', '2021-05-30 22:55:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4492,7 +4492,7 @@ INSERT INTO `sys_log` VALUES ('3d1f0207-04fd-456d-83d0-d8eeab8ca4af', '2020-07-0
 INSERT INTO `sys_log` VALUES ('3d2a2572-53a3-455b-aed5-2e756d447c0e', '2020-07-30 10:18:19', '10000', 'hhh', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-30 10:18:19', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', '2b1a2313-6b79-4e07-9866-fb0aa93805f7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('3d5bec94-43cd-475d-bbd7-026ea7d0fcdf', '2020-07-29 16:52:21', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功', '2020-07-29 16:52:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('3d7f30fe-2870-4359-b909-9b18094d50ba', '2020-10-12 10:02:57', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 10:02:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('3df592e2-ab9e-4a60-b284-ebb33fa75423', '2020-07-22 17:30:39', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 0, '我的流程操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_CreatorTime\' cannot be null', '2020-07-22 17:30:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'edbbf77a-6321-4be5-a000-8fc70c9cf895', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('3df592e2-ab9e-4a60-b284-ebb33fa75423', '2020-07-22 17:30:39', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 0, '我的流程操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'CreatorTime\' cannot be null', '2020-07-22 17:30:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'edbbf77a-6321-4be5-a000-8fc70c9cf895', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('3e59fa1d-22a2-4dd3-b905-50defb3278eb', '2020-10-19 12:57:36', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:57:36', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('3f13dfbf-6f8b-4ce6-9818-30c773ee5dec', '2020-08-04 10:33:38', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-04 10:33:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('3f9a4a6c-1718-45fa-95b7-3b0c58cadcd4', '2020-07-03 10:54:38', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-03 10:54:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4540,11 +4540,11 @@ INSERT INTO `sys_log` VALUES ('4d410009-0ce5-4359-81fc-eeef00a74130', '2020-10-2
 INSERT INTO `sys_log` VALUES ('4e27cb6f-9145-46f3-9615-45459a21bc1e', '2020-10-09 16:00:02', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-09 16:00:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('4ee41510-ede5-4676-a559-7073a4b805e1', '2020-08-04 11:35:44', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-04 11:35:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('4f7d332d-f0a3-43c0-b89d-83cc345da6b5', '2020-07-22 15:23:22', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 15:23:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('4f98b790-fd2b-424a-9821-61e78f745b4a', '2020-07-13 16:02:09', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_FrmType\' cannot be null', '2020-07-13 16:02:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4f98b790-fd2b-424a-9821-61e78f745b4a', '2020-07-13 16:02:09', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'FrmType\' cannot be null', '2020-07-13 16:02:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('4f9e05f8-73b8-43f1-98f6-b342fd6cba9d', '2020-10-15 10:39:16', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:39:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('4fc7cb85-af23-4f28-ac3e-6c59fa51e128', '2020-06-24 08:31:03', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,删除操作成功', '2020-06-24 08:31:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('4ff78831-1c06-4278-bea2-fc6c65681e09', '2020-07-13 16:44:24', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_SchemeType\' cannot be null', '2020-07-13 16:44:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('5145fe05-9a1c-4dc4-801b-9418daf9ee27', '2020-07-02 14:02:12', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_Title\' at row 1', '2020-07-02 14:02:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('4ff78831-1c06-4278-bea2-fc6c65681e09', '2020-07-13 16:44:24', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'SchemeType\' cannot be null', '2020-07-13 16:44:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('5145fe05-9a1c-4dc4-801b-9418daf9ee27', '2020-07-02 14:02:12', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'Title\' at row 1', '2020-07-02 14:02:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('5164dd51-7592-4e6e-b88b-618fcbcf4fc3', '2020-07-21 16:31:21', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 1, '流程设计操作,新增操作成功', '2020-07-21 16:31:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('525f1e4c-1651-41cf-b8d9-181b1daa9637', '2020-07-30 10:15:26', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-30 10:15:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('5307c499-d737-49fe-b496-475e097b5eaa', '2020-07-23 09:02:08', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-23 09:02:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4626,7 +4626,7 @@ INSERT INTO `sys_log` VALUES ('7744b823-c7ac-43bc-a6db-c82c2934ed55', '2020-10-1
 INSERT INTO `sys_log` VALUES ('77bf6f4b-becf-4ff7-a347-71fdf2fbbbc2', '2020-08-12 11:11:15', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-08-12 11:11:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7809aae2-0945-4366-9712-0bc618fc7b96', '2020-06-30 11:34:14', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 0, '新闻类别操作,删除操作失败，新闻类别使用中，无法删除', '2020-06-30 11:34:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7815c85b-4813-4434-add1-27d80bf37191', '2020-06-30 10:02:24', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-06-30 10:02:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('78335eae-2772-4f49-8334-48e68856f2bb', '2020-07-13 15:57:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_FrmType\' cannot be null', '2020-07-13 15:57:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('78335eae-2772-4f49-8334-48e68856f2bb', '2020-07-13 15:57:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'FrmType\' cannot be null', '2020-07-13 15:57:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('78969a7a-ac7a-4d13-9127-a470579ef78a', '2020-07-21 11:00:58', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-21 11:00:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '11847a81-b6fe-4de9-864d-9b1f5dd89d0e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('78ed971a-9f9d-41b6-9a94-727da3bec2f8', '2020-07-14 17:23:46', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-14 17:23:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7919e50f-a3ab-4e96-ab10-3967983a0303', '2020-07-23 11:44:46', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,删除操作成功', '2020-07-23 11:44:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4635,10 +4635,10 @@ INSERT INTO `sys_log` VALUES ('794cc647-afee-4abc-a4ce-0055751e3028', '2020-06-3
 INSERT INTO `sys_log` VALUES ('798b362b-69cf-4253-8eb8-da68d9c2805e', '2020-07-07 13:45:16', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-用户管理', 1, '用户管理操作,修改操作成功', '2020-07-07 13:45:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'df821722-2fae-4023-ae57-23bebfccad85', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('79929902-588e-4164-a829-00a4dd7ed14e', '2020-07-01 17:23:56', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-01 17:23:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('79cf66ae-6121-45b7-ba56-4d883266ee5f', '2020-10-14 10:27:28', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:27:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('7a957e41-b2a2-4f72-a60d-2ab193373aaf', '2020-07-13 16:03:18', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_AuthorizeType\' cannot be null', '2020-07-13 16:03:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7a957e41-b2a2-4f72-a60d-2ab193373aaf', '2020-07-13 16:03:18', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'AuthorizeType\' cannot be null', '2020-07-13 16:03:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7a9807ab-25e7-4833-b56c-f71f49480397', '2020-06-28 13:55:34', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-28 13:55:34', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7aaa13b5-bbab-4446-84ca-a77d904e19f4', '2020-09-09 11:52:27', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2020-09-09 11:52:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('7b382d9f-c58c-40b3-81b0-c863494adeb8', '2020-07-02 14:46:56', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_Title\' at row 1', '2020-07-02 14:46:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7b382d9f-c58c-40b3-81b0-c863494adeb8', '2020-07-02 14:46:56', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 0, '系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'Title\' at row 1', '2020-07-02 14:46:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7b425510-f963-401a-b0e0-e9bd62093880', '2020-10-14 10:27:25', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:27:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7bdc566b-ad81-4a73-927f-1e86c4f88fe9', '2020-07-02 12:13:21', '20000', 'xxxx', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-02 12:13:21', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7bf9b6d5-669a-46ac-adcf-cf3c60f43a2c', '2020-07-22 12:05:35', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4650,7 +4650,7 @@ INSERT INTO `sys_log` VALUES ('7cf18a26-3e7b-4161-b612-9756cb8eefe7', '2020-10-1
 INSERT INTO `sys_log` VALUES ('7cf83261-fa41-47e7-b732-31fbe784a6d8', '2020-07-14 17:11:42', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，Value cannot be null. (Parameter \'key\')', '2020-07-14 17:11:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7d0f9c7c-ba82-497a-b9fb-a56223c7440a', '2020-08-12 11:24:24', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-08-12 11:24:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7dca8cad-d5ea-4b5a-850f-5475c54d0627', '2020-09-09 11:35:44', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,修改操作成功。', '2020-09-09 11:35:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'cde8cdbb-86df-419e-9074-a38911936df7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('7e0a085d-b4b8-4332-b52f-1190257737c6', '2020-06-28 13:04:23', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_MobilePhone\' at row 1', '2020-06-28 13:04:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('7e0a085d-b4b8-4332-b52f-1190257737c6', '2020-06-28 13:04:23', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 0, '租户设置操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'MobilePhone\' at row 1', '2020-06-28 13:04:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'd69fd66a-6a77-4011-8a25-53a79bdf5001', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7e3cde3a-84d4-4c4d-9393-c7d7c8862bfa', '2020-08-03 17:03:46', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-03 17:03:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('7e4f5713-6943-4c81-a1d6-f6b2d7ae2b2d', '2020-08-04 08:36:46', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-04 08:36:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_log` VALUES ('7ed44a0c-3a7f-40dc-a484-fc07464ef32f', '2020-10-28 13:01:24', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 13:01:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4665,7 +4665,7 @@ INSERT INTO `sys_log` VALUES ('7fba68c5-feb2-4e30-bd41-6c3b67513094', '2020-07-3
 INSERT INTO `sys_log` VALUES ('80655c79-5932-41d6-bf1b-b49cd3efcb73', '2020-10-14 10:27:31', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2020-10-14 10:27:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('808f72a9-ea13-4fa8-b84e-4234f2a99feb', '2020-06-29 17:36:09', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,删除操作成功', '2020-06-29 17:36:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('80a2f968-e427-40a7-9ca2-dd3f1c0bdeb4', '2020-07-24 14:07:47', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-24 14:07:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('811d0eb9-b719-4e97-a050-edc72a6a7119', '2020-07-13 16:43:57', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_SchemeType\' cannot be null', '2020-07-13 16:43:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('811d0eb9-b719-4e97-a050-edc72a6a7119', '2020-07-13 16:43:57', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'SchemeType\' cannot be null', '2020-07-13 16:43:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('811d5a80-d22a-4144-903f-670a3725d79c', '2021-02-10 11:18:58', '20000', 'xxxx', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-02-10 11:18:58', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('81235a5e-09ec-48ab-915b-384fc9d07485', '2020-10-12 10:06:58', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-12 10:06:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('8236abe8-05c2-4b91-bf77-a8b5193b239d', '2020-10-19 12:52:04', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:52:04', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4681,7 +4681,7 @@ INSERT INTO `sys_log` VALUES ('84ca40d3-d147-43a0-a23c-cacfddb4f286', '2020-08-2
 INSERT INTO `sys_log` VALUES ('84fac8bd-d0ec-470f-834d-d42d1c785dd6', '2020-08-20 16:50:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-08-20 16:50:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('853ddc07-364d-4b57-bc98-e282cde45cf5', '2020-07-14 08:52:44', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,新增操作成功', '2020-07-14 08:52:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('854c602e-a217-4b68-89e2-bf004c66bdfd', '2020-08-03 16:44:40', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,新增操作成功', '2020-08-03 16:44:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('8551ed87-dc7b-47a2-9b6f-6386b1b5250f', '2020-07-13 15:40:39', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_FrmType\' cannot be null', '2020-07-13 15:40:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('8551ed87-dc7b-47a2-9b6f-6386b1b5250f', '2020-07-13 15:40:39', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'FrmType\' cannot be null', '2020-07-13 15:40:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('860e1a98-5c1d-4359-bb41-e9ea6f3799fd', '2020-07-21 11:05:51', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-21 11:05:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '11847a81-b6fe-4de9-864d-9b1f5dd89d0e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('8706cb52-6724-4258-933f-625b68516fd3', '2020-07-13 13:59:37', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-表单设计', 1, '表单设计操作,修改操作成功', '2020-07-13 13:59:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b08bb00f-e1df-44f8-904f-58ee5b1f4eb4', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('871dc075-9e32-46d4-b505-f8d08c6a36ab', '2020-08-03 16:15:09', 'admin', '超级管理员', 'Login', NULL, NULL, NULL, '系统登录', 1, '登录成功', '2020-08-03 16:15:09', NULL, NULL, NULL);
@@ -4787,7 +4787,7 @@ INSERT INTO `sys_log` VALUES ('ab845c40-e11a-4c9a-a195-f7e953970c21', '2020-08-0
 INSERT INTO `sys_log` VALUES ('ab8f7cd5-8419-481c-a4c7-dbb94ce0dc64', '2020-07-14 13:58:40', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-14 13:58:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '153e4773-7425-403f-abf7-42db13f84c8d', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('acbc9484-dcf2-43f6-88b5-153a80a0069a', '2020-07-22 14:32:58', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-22 14:32:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('ad44686c-bda2-417f-bfb2-ddd85910150f', '2020-10-15 10:06:31', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-15 10:06:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('ad8db02e-a3bb-4a9b-b589-a7dafc9c340f', '2020-07-14 11:33:37', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-我的流程', 0, '我的流程操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_InstanceSchemeId\' cannot be null', '2020-07-14 11:33:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ad8db02e-a3bb-4a9b-b589-a7dafc9c340f', '2020-07-14 11:33:37', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-我的流程', 0, '我的流程操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'InstanceSchemeId\' cannot be null', '2020-07-14 11:33:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('addc9339-97d0-4c90-9fdd-daf50cd3b166', '2020-07-24 09:50:25', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-24 09:50:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('ae239b1e-8e85-4eb9-8b20-2dc9d7df0a17', '2020-06-29 17:24:23', 'admin', '超级管理员', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-29 17:24:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('ae565ca4-dc6a-4d5a-a2cc-9430f3d85d06', '2021-02-10 11:14:09', 'admin', '超级管理员', 'Update', '0.0.0.1', 'iana保留地址', NULL, '常规管理-单位组织-用户管理', 1, '用户管理操作,修改重置密码成功。', '2021-02-10 11:14:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'df821722-2fae-4023-ae57-23bebfccad85', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4848,7 +4848,7 @@ INSERT INTO `sys_log` VALUES ('bd3f93e0-6923-43ec-ac85-c2c74bda6ada', '2020-10-1
 INSERT INTO `sys_log` VALUES ('bda7067d-d0fe-4572-977b-cd778383e1f9', '2020-07-24 15:57:47', '10000', 'hhh', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-07-24 15:57:47', 'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('be674239-a654-4524-ac9f-6c1b4741c34d', '2020-07-02 10:55:01', 'admin', '超级管理员', 'Visit', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-租户设置', 1, '租户设置操作,新增操作成功', '2020-07-02 10:55:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('beb64490-f21d-48de-94bf-201c3715ce3e', '2020-10-13 16:11:18', 'admin', '超级管理员', 'Update', '192.168.3.41', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-13 16:11:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '8f7b8d82-53c2-4d0e-885f-145a06141c81', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('beda3d6d-3b59-429e-87b5-9a5bd52b955d', '2020-07-13 16:06:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_AuthorizeType\' cannot be null', '2020-07-13 16:06:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('beda3d6d-3b59-429e-87b5-9a5bd52b955d', '2020-07-13 16:06:41', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'AuthorizeType\' cannot be null', '2020-07-13 16:06:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('befdeea1-f7f8-422c-b282-3f93498d734d', '2020-07-23 10:47:04', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功', '2020-07-23 10:47:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '0b1b307b-2aac-456b-acfb-484a05c71bd7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('bf675bfa-9547-4ec2-9e8f-6b9c47fcc61c', '2020-07-22 15:23:22', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功', '2020-07-22 15:23:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('bfbc149a-f07f-47db-9e3d-74af45952399', '2020-08-03 17:14:25', 'admin', '超级管理员', 'Delete', '192.168.1.117', '本地局域网', NULL, '办公管理-信息中心-通知管理', 1, '通知管理操作,删除操作成功', '2020-08-03 17:14:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4942,7 +4942,7 @@ INSERT INTO `sys_log` VALUES ('db919a56-292a-425e-8a18-7aa786b74fe6', '2020-08-0
 INSERT INTO `sys_log` VALUES ('db965db1-42ca-45ee-bb85-0c25481cfb02', '2020-09-29 14:22:58', 'admin', '?????', 'Login', '192.168.3.41', '?????', NULL, '????', 1, '????', '2020-09-29 14:22:58', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('dba85c5e-b364-42fa-9e29-f0a716dd5a5a', '2020-07-31 15:23:45', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,新增操作成功', '2020-07-31 15:23:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('dbb3a55a-1630-4a31-bbd9-804bd4fc23e2', '2020-06-28 14:07:24', '10000', 'hhh', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-28 14:07:24', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('dbc3fae6-09be-4097-bf52-81116c7de50b', '2020-07-13 16:06:32', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_AuthorizeType\' cannot be null', '2020-07-13 16:06:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('dbc3fae6-09be-4097-bf52-81116c7de50b', '2020-07-13 16:06:32', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'AuthorizeType\' cannot be null', '2020-07-13 16:06:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('dbcef240-8cd4-4f51-a1ca-38ef55196c9b', '2020-07-14 17:03:43', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '流程管理-流程中心-我的流程', 0, '我的流程操作,新增操作失败，\'string\' does not contain a definition for \'lines\'', '2020-07-14 17:03:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('dbd22967-b8b1-433a-aeaf-3760a54fb112', '2020-10-19 14:59:03', 'admin', '超级管理员', 'Create', '192.168.3.42', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功。', '2020-10-19 14:59:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('dc1ae85e-660b-4726-ab7d-89f1c55c60ff', '2020-06-30 17:43:42', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-06-30 17:43:42', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -4998,7 +4998,7 @@ INSERT INTO `sys_log` VALUES ('eff9dd15-8b1a-415f-b592-88bfe60c8257', '2020-10-1
 INSERT INTO `sys_log` VALUES ('f07d8cbe-fbe4-4147-8663-fd332b7884c1', '2020-11-02 11:18:24', 'admin', '超级管理员', 'Login', '192.168.3.50', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-11-02 11:18:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('f11f277a-eda5-4247-8da9-f5f43e1b5c2b', '2020-08-28 10:44:28', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-08-28 10:44:28', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('f13b5641-5f5c-4c38-9968-7eaf16575afc', '2020-07-22 17:11:25', 'admin', '超级管理员', 'Submit', '192.168.1.117', '本地局域网', NULL, '办公管理-流程中心-我的流程', 1, '我的流程操作,提交操作成功', '2020-07-22 17:11:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '29c5321d-9625-4f97-a750-f49761082d6e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('f18373cc-5c93-4bd6-958b-c2ab1534fd3f', '2020-07-13 15:42:47', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_FrmType\' cannot be null', '2020-07-13 15:42:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f18373cc-5c93-4bd6-958b-c2ab1534fd3f', '2020-07-13 15:42:47', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'FrmType\' cannot be null', '2020-07-13 15:42:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('f1aa3465-0173-4044-8d65-b11050eeac00', '2020-06-30 12:06:26', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 12:06:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('f1b058c8-2a99-4633-9a83-9e0010367069', '2020-06-30 10:47:49', '20000', 'xxxx', 'Exit', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2020-06-30 10:47:49', 'df821722-2fae-4023-ae57-23bebfccad85', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('f1c5f093-fc28-42a3-b3ab-6a74b58b2bb7', '2020-10-13 11:13:32', 'admin', '超级管理员', 'Login', '192.168.3.41', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-13 11:13:32', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -5020,7 +5020,7 @@ INSERT INTO `sys_log` VALUES ('f4a30a78-8deb-43ea-8dc7-f7cd240b163a', '2020-07-0
 INSERT INTO `sys_log` VALUES ('f4d53c3d-0efc-499a-984b-da44161a6f50', '2020-08-11 13:21:33', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,修改操作成功', '2020-08-11 13:21:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('f4e70de5-e713-4d46-8f54-4aacc7f1be69', '2020-08-12 11:18:03', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-12 11:18:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'bcd52760-009f-4673-80e5-ff166aa07687', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('f4f46cdd-2624-4313-a2d2-332f09a372bf', '2020-06-30 11:56:49', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻类别', 1, '新闻类别操作,修改操作成功', '2020-06-30 11:56:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'c71f577a-8c9b-409b-b21c-bb7081060338', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('f5061b15-e214-445f-8385-02964b41a50c', '2020-06-28 12:24:57', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 0, '系统菜单操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'F_EnCode\' at row 1', '2020-06-28 12:24:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('f5061b15-e214-445f-8385-02964b41a50c', '2020-06-28 12:24:57', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 0, '系统菜单操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column \'EnCode\' at row 1', '2020-06-28 12:24:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('f547c971-0c61-4173-bf1f-ed881eef1ab3', '2021-06-02 22:09:19', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-02 22:09:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('f6b3f275-35cf-4358-9121-d89ccef2ac2d', '2020-07-24 14:07:56', '10000', 'hhh', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-07-24 14:07:56', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('f6c61edd-a80b-471f-86a8-3c8ba8d3c84a', '2020-10-19 11:01:46', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 11:01:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -5045,7 +5045,7 @@ INSERT INTO `sys_log` VALUES ('fe7258d9-a415-4c9b-bec5-a0b67b9e42d5', '2020-07-1
 INSERT INTO `sys_log` VALUES ('fe81a2f4-de5c-48f6-84af-acc295142619', '2020-10-19 12:53:41', 'admin', '超级管理员', 'Login', '192.168.3.42', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-10-19 12:53:41', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('fec62b77-6727-4c1c-b7d2-36589429e938', '2020-08-29 10:36:18', 'admin', '超级管理员', 'Login', '192.168.1.117', '本地局域网', NULL, '系统登录', 1, '登录成功', '2020-08-29 10:36:18', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('ff0189d4-d500-4bf1-ae47-18944c21cfc2', '2020-08-03 17:22:25', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-单位组织-系统公告', 1, '系统公告操作,新增操作成功', '2020-08-03 17:22:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
-INSERT INTO `sys_log` VALUES ('ff9355a5-4197-49c7-a5cd-289cc82093bc', '2020-07-13 16:05:20', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'F_AuthorizeType\' cannot be null', '2020-07-13 16:05:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('ff9355a5-4197-49c7-a5cd-289cc82093bc', '2020-07-13 16:05:20', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-流程设计', 0, '流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column \'AuthorizeType\' cannot be null', '2020-07-13 16:05:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('ffecd92d-ba79-463c-9695-4f065f3684b4', '2020-08-12 11:18:28', 'admin', '超级管理员', 'Update', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功', '2020-08-12 11:18:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'b4fc0b00-6101-4166-8396-520735f0cdec', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 
 -- ----------------------------
@@ -5053,33 +5053,33 @@ INSERT INTO `sys_log` VALUES ('ffecd92d-ba79-463c-9695-4f065f3684b4', '2020-08-1
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_module`;
 CREATE TABLE `sys_module`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Layers` int NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_UrlAddress` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_Target` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_IsMenu` tinyint(1) NULL DEFAULT NULL,
-  `F_IsExpand` tinyint(1) NULL DEFAULT NULL,
-  `F_IsFields` tinyint(1) NULL DEFAULT NULL,
-  `F_IsPublic` tinyint(1) UNSIGNED ZEROFILL NULL DEFAULT 0,
-  `F_AllowEdit` tinyint(1) NULL DEFAULT NULL,
-  `F_AllowDelete` tinyint(1) NULL DEFAULT NULL,
-  `F_SortCode` int NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Authorize` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_module_key1`(`F_EnCode`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Layers` int NULL DEFAULT NULL,
+  `EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `UrlAddress` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `Target` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `IsMenu` tinyint(1) NULL DEFAULT NULL,
+  `IsExpand` tinyint(1) NULL DEFAULT NULL,
+  `IsFields` tinyint(1) NULL DEFAULT NULL,
+  `IsPublic` tinyint(1) UNSIGNED ZEROFILL NULL DEFAULT 0,
+  `AllowEdit` tinyint(1) NULL DEFAULT NULL,
+  `AllowDelete` tinyint(1) NULL DEFAULT NULL,
+  `SortCode` int NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Authorize` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_module_key1`(`EnCode`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5139,33 +5139,33 @@ INSERT INTO `sys_module` VALUES ('f82fd629-5f3a-45d6-8681-5ec47e66a807', '462027
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_modulebutton`;
 CREATE TABLE `sys_modulebutton`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Layers` int NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Location` int NULL DEFAULT NULL,
-  `F_JsEvent` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_UrlAddress` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_Split` tinyint(1) NULL DEFAULT NULL,
-  `F_IsPublic` tinyint(1) UNSIGNED ZEROFILL NULL DEFAULT 0,
-  `F_AllowEdit` tinyint(1) NULL DEFAULT NULL,
-  `F_AllowDelete` tinyint(1) NULL DEFAULT NULL,
-  `F_SortCode` int NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Authorize` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_modulebutton_key1`(`F_ModuleId`, `F_ParentId`, `F_EnCode`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Layers` int NULL DEFAULT NULL,
+  `EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Icon` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Location` int NULL DEFAULT NULL,
+  `JsEvent` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `UrlAddress` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `Split` tinyint(1) NULL DEFAULT NULL,
+  `IsPublic` tinyint(1) UNSIGNED ZEROFILL NULL DEFAULT 0,
+  `AllowEdit` tinyint(1) NULL DEFAULT NULL,
+  `AllowDelete` tinyint(1) NULL DEFAULT NULL,
+  `SortCode` int NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Authorize` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_modulebutton_key1`(`ModuleId`, `ParentId`, `EnCode`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5287,155 +5287,155 @@ INSERT INTO `sys_modulebutton` VALUES ('ffffe7f8-900c-413a-9970-bee7d6599cce', '
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_modulefields`;
 CREATE TABLE `sys_modulefields`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_IsPublic` tinyint(1) NULL DEFAULT 0,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_modulefields_key1`(`F_ModuleId`, `F_EnCode`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `IsPublic` tinyint(1) NULL DEFAULT 0,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_modulefields_key1`(`ModuleId`, `EnCode`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_modulefields
 -- ----------------------------
-INSERT INTO `sys_modulefields` VALUES ('00a79cc3-a490-4772-909a-38567e3ea6da', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_ProjectName', '项目名称', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 16:13:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('035d9296-1e17-42b7-9d8f-c9cc3b1d8e3f', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_FileExtension', '文件扩展名', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('0917606f-f448-49d3-b78d-e08a17a1cc4f', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_CreatorTime', '创建时间', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('0927895a-9d35-435c-b980-13f7102043c3', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_PrincipalMan', '联系人', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('0986da5b-16a3-4330-8449-0508699c93e3', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_SchemeName', '流程名称', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('0d216246-f372-48fb-8c2f-dda9924a4625', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_Content', '表单原html模板未经处理的', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('1406d021-de90-4246-af02-6950716214c1', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_Description', '备注', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('1641a15d-87cf-4658-8d39-a1197fb26c43', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_ActivityName', '当前节点名称', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('186b9cc1-f4d2-43ad-9369-3f34c1dd7b90', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_Code', '实例编号', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('18d606fa-4baf-49e7-987d-8dde8561385a', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_LogoCode', 'Logo编号', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('1ba8ebaf-b89c-4699-be3a-520b16efeeb4', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_FrmId', '表单ID', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('1cecc967-7ea1-46d0-b4fa-f90a15783d1c', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'F_Title', '标题', 0, 1, '', '2020-05-22 16:41:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-23 09:12:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('1ffb5d50-2dc3-41f0-b863-93c45afd7709', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_LastModifyUserName', '修改用户', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('21a53e80-9887-4ca3-908f-a858c2def860', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_FilePath', '文件路径', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('21d40431-d289-415f-bfaf-5a23bf4dac9c', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_AdminPassword', '系统密码', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-15 14:23:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('22289940-a299-4d46-b68a-204bfab51b01', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_EnabledMark', '有效', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('25612b64-9499-46fd-9a3d-779362a3cba2', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_CreatorUserName', '创建用户', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('263acbf3-44b2-4be5-82ce-8a038d43a5c5', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_Description', '备注', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('309c622d-2217-499f-aa83-2eccd72205a1', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_CreatorTime', '创建时间', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 14:35:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('33f55a8a-1daf-4adb-9931-1b6cace1c13a', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_EnabledMark', '是否启用', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('344cf340-e664-446f-ba79-6d37e466f9d8', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_FileSize', '文件大小', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('36df66b8-bcf1-43bf-92d5-ea915faa8b94', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_Description', '内容', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('3961f233-46ef-4fd2-815e-733bb288946c', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_ContentData', '表单中的控件属性描述', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('3b304c8d-a54d-47b7-ad21-e6d01c283904', '91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', 'F_CreatorUserName', '创建人', 0, 1, '', '2020-06-03 09:57:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('3fee41bd-64a6-4280-ac93-0ce835fecf41', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_CreatorTime', '创建时间', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('45f62f54-8ad4-45f2-9f37-a7f0d15ee815', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_Description', '备注', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('47b8d043-aa5e-4a09-98b1-aaf24d6589dd', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_FileBy', '文件所属', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('49d6a83e-646f-48af-b71e-8f8d60f73396', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_DbString', '连接字符串', 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('4b2b3c5b-22f0-4a64-9857-c794f1d8a181', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_LogoCode', 'Logo编号', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('4e90e4dc-fc8d-456e-aa7d-2420e31212c2', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'F_ToUserId', '收件人主键', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('5a218598-40b4-4046-a61e-e7b4f8dd0d85', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_SchemeContent', '流程内容', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('5b2cb54c-5fe8-4f8f-b281-d6de27dcfc18', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_FileType', '文件类型', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('642e8c4b-7762-42b6-9fbd-8495c54606a2', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_Logo', 'Logo图标', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('6d1a0016-9634-4425-b840-af55f4fb383f', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_DBProvider', '数据库类型', 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('6e177e5f-4ce8-4f7b-b790-b320bb2659db', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_EnabledMark', '有效', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('6ec6ed61-884c-4519-904c-2f3cb717aef7', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_PrincipalMan', '联系人', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('702f2c2e-b66e-44e8-a846-fd96c38027e3', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_CustomName', '实例名称', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('7496086e-32ec-4875-8013-73ce1c2784a2', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'F_CreatorUserId', '创建用户主键', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('756ce041-ad4f-4895-b184-d9c9c4df9a04', '38CA5A66-C993-4410-AF95-50489B22939C', 'F_OrganizeId', '部门Id', 0, 1, '', '2020-06-08 16:25:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('76cbcdd9-ffeb-41a1-8f9c-51dea4a02fa2', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_EndTime', '到期时间', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('76e64bb6-cb36-45c4-852f-6a044d5b2c3d', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_SchemeType', '流程分类', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('770af4b6-29ef-47b1-aea8-6092562d9800', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_ContentParse', '表单控件位置模板', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('78a9a6c0-e854-4225-b75e-5e7cfaf46c67', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_ProjectName', '项目名称', 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:56:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('7dfa39c1-a8d3-4460-922b-5a770d6e307f', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_SchemeCode', '流程编号', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('8024dfbc-8236-4a86-8869-d09e59c3dfe3', '91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', 'F_CreatorTime', '创建时间', 0, 1, '', '2020-06-03 09:57:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-22 17:06:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('80899139-2938-4e0a-9f80-16bf70d00658', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_CreatorTime', '创建时间', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('81d404d1-5639-4d5a-8ac1-d47b0414c321', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'F_MessageType', '信息类型（通知、私信、处理）', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('81d74921-21be-4360-bae3-653d0fade184', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_CreatorUserName', '创建用户', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('823b9649-030c-4dbb-b790-b184565f4746', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_MakerList', '执行人', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('82f21e4c-0d14-4559-92d4-657b34640a47', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_SortCode', '排序码', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('83584b47-0a29-446d-8ff2-6c6d3eccca3d', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_FrmId', '表单ID', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('8376537c-b23b-4b51-a6f0-75fc3467c574', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_Fields', '字段个数', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('84b3ac62-5d85-4263-946d-e12be86cbfa1', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_FileName', '文件名称', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('889fc780-cd2f-45c9-b07c-030e6d3ddc29', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'F_CreatorUserName', '创建用户', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('8ba0c532-4b85-4a02-aec8-499d93b97dcb', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_CreatorTime', '创建时间', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('8cf11fd0-8ee5-408d-9d5d-15c4342befda', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_OrganizeId', '所属部门', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('8f5ce993-986c-4825-b3bc-f34f54d4f37f', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_FlowLevel', '等级', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('90386357-54f8-4aeb-8b24-f45ee8c08ba4', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_OrganizeId', '所属部门', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('91b3ca56-61e8-444d-b506-7dec452f1daa', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_SchemeContent', '流程模板内容', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('936023df-503f-4322-b243-47158c9617a6', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_EndTime', '到期时间', 0, 1, NULL, '2020-06-16 09:38:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('9507a93a-a258-4ba1-93db-d51798268c5e', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_CreatorUserId', '创建人Id', 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('98e7930d-37f0-4499-874d-b89207657eaa', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_OrganizeId', '所属部门', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('99ecc5e7-2b02-49d8-b091-ee1aec8130ee', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_Description', '备注', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('a24c6ed3-8c91-4ade-a5c1-8c5eb9719368', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_AdminAccount', '系统账户', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-15 14:23:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('a619715a-46b9-4b3e-81d2-a450038dceb6', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_Description', '实例备注', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('a6320b89-1c15-4afa-9c30-2e1f508212e2', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_HostUrl', '域名', 0, 1, '', '2020-06-15 17:01:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-15 17:01:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('a983cc2e-d045-4c35-a53e-2f0775edf639', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_CreatorUserName', '创建用户', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('aa75975a-bf00-429b-8c58-825b43d29eb4', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_SortCode', '排序码', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('b06b2f6f-c392-473f-bea7-96bcf04a025d', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_IsFinish', '是否完成', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('b2e8a59b-99ce-432b-b5ed-e7c8859dcfad', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_SchemeType', '流程类型', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('b3e6bab9-7e4c-4f87-83ff-d0f1bf6f9df8', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_FrmType', '表单类型', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('b56a98de-4f9d-4753-ae06-e3bea339dc9f', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_WebId', '系统页面标识，当表单类型为用Web自定义的表单时，需要标识加载哪个页面', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('b67b5eb6-ecae-4156-8ef8-9e80b7a1345a', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'F_CreatorUserName', '创建人', 0, 1, '', '2020-05-22 16:53:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('b68b00b4-6f56-4832-8774-eab1d02e2fc1', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_AdminPassword', '系统密码', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('b765ca2a-4337-4e24-b330-9c923ca793f0', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_CreatorUserId', '创建用户主键', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('b8e360f7-817f-4dc7-82c4-11fd51fc77de', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_FrmContentParse', '表单控件位置模板', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('bd8b0f82-43fd-44ed-9814-de1876fced8c', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_SchemeCanUser', '流程模板使用者', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('be804654-d6d7-44d1-8950-6841a2626720', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_CreatorUserId', '创建人Id', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('bf5a2919-281c-44e2-a83b-74576e08743e', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'F_EnabledMark', '状态', 0, 1, '', '2020-05-22 16:53:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-08 16:49:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('bfbe0195-3fae-42d2-9d46-6bf5400d64ea', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_DbString', '连接字符串', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('c077b982-c595-43e8-9095-711bee01e830', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_AuthorizeType', '模板权限类型：0完全公开,1指定部门/人员', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('c0a08cd8-43bc-4d57-844a-2a39c4a408e6', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_CompanyName', '公司名称', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('c4a2499d-780c-42db-a2a4-a3c1084533ca', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'F_MessageInfo', '内容', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('c4c5840c-90a5-4a4e-aea4-9f284ece3921', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_AdminAccount', '系统账户', 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:56:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('c87b90e3-6949-47f3-b8c5-c4f69af92200', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_CompanyName', '公司名称', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('cba04ab7-b1b2-406e-a889-53484469cfe7', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'F_CreatorUserId', '创建人Id', 0, 0, '', '2020-06-03 16:42:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-23 09:05:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('cddfb494-6d34-408d-8364-1c0bf270d4cd', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_FrmType', '表单类型，0：默认动态表单；1：Web自定义表单', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('d4b49a55-491e-494c-b2d2-082a414bcbb9', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_Logo', 'Logo图标', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('d52c6878-9283-45d7-82f9-b465fa33a89b', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_DBProvider', '数据库类型', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('d53cf640-037a-4126-9b75-daa77fa712b3', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_FrmContentData', '表单中的控件属性描述', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('d782d010-89af-4c1d-8e96-35833c38c3d8', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_SchemeVersion', '流程内容版本', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('d88a3d04-4a0d-4bfe-b34f-4130eb0accc9', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_Name', '表单名称', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('d9e2a9fe-8a87-4266-aaae-f8e47b63187b', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'F_FrmData', '表单数据', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('dc4cd5fd-8933-44f8-9500-fc36285f50b2', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'F_CreatorTime', '创建时间', 0, 1, '', '2020-05-22 16:53:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-22 17:06:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('ddd93ca7-d821-4abd-a342-9be1782dabe9', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'F_Content', '内容', 0, 1, '', '2020-05-22 16:42:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-22 16:53:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
-INSERT INTO `sys_modulefields` VALUES ('e175859e-9284-47fd-a168-d1a12ddd125d', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'F_MobilePhone', '联系方式', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('e7a49b29-0c59-4665-9e73-5f495fced4d4', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_CreatorTime', '创建时间', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('eb6b22e7-a804-4f6d-b969-d5c6db5f3043', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_CreatorUserId', '创建人', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('ec413c38-4472-4e36-b406-84f883d48609', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'F_CreatorTime', '创建时间', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('ed938b87-a291-40cd-8a23-204e15f81cb3', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_EnabledMark', '有效', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('edeabb1a-de3c-48d0-b677-5d35807632dc', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_EnabledMark', '有效', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('edf1d2cb-07dd-41cb-a475-41b982c43dff', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_MobilePhone', '联系方式', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('f0e838e8-c07c-4f24-9dd3-0c1727074441', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_EnabledMark', '有效', 0, 1, NULL, '2020-06-16 09:38:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('f2c75a6b-ad06-49b2-93cf-7a7312c97ff5', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'F_EnabledMark', '有效', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('f8a85900-44e6-4786-ad64-e219eb8cffbe', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_FrmType', '表单类型', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('fc7f572d-6dc2-4592-8d67-4b3155b49dd9', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'F_ToUserName', '收件人', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` VALUES ('ff60fd1e-d0df-4847-bc5a-1bf4c3310c9c', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_CreatorUserId', '创建用户主键', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('00a79cc3-a490-4772-909a-38567e3ea6da', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'ProjectName', '项目名称', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 16:13:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('035d9296-1e17-42b7-9d8f-c9cc3b1d8e3f', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'FileExtension', '文件扩展名', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('0917606f-f448-49d3-b78d-e08a17a1cc4f', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'CreatorTime', '创建时间', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('0927895a-9d35-435c-b980-13f7102043c3', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'PrincipalMan', '联系人', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('0986da5b-16a3-4330-8449-0508699c93e3', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'SchemeName', '流程名称', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('0d216246-f372-48fb-8c2f-dda9924a4625', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'Content', '表单原html模板未经处理的', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('1406d021-de90-4246-af02-6950716214c1', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'Description', '备注', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('1641a15d-87cf-4658-8d39-a1197fb26c43', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'ActivityName', '当前节点名称', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('186b9cc1-f4d2-43ad-9369-3f34c1dd7b90', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'Code', '实例编号', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('18d606fa-4baf-49e7-987d-8dde8561385a', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'LogoCode', 'Logo编号', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('1ba8ebaf-b89c-4699-be3a-520b16efeeb4', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'FrmId', '表单ID', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('1cecc967-7ea1-46d0-b4fa-f90a15783d1c', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'Title', '标题', 0, 1, '', '2020-05-22 16:41:18', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-23 09:12:07', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('1ffb5d50-2dc3-41f0-b863-93c45afd7709', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'LastModifyUserName', '修改用户', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('21a53e80-9887-4ca3-908f-a858c2def860', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'FilePath', '文件路径', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('21d40431-d289-415f-bfaf-5a23bf4dac9c', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'AdminPassword', '系统密码', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-15 14:23:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('22289940-a299-4d46-b68a-204bfab51b01', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'EnabledMark', '有效', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('25612b64-9499-46fd-9a3d-779362a3cba2', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'CreatorUserName', '创建用户', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('263acbf3-44b2-4be5-82ce-8a038d43a5c5', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'Description', '备注', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('309c622d-2217-499f-aa83-2eccd72205a1', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'CreatorTime', '创建时间', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 14:35:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('33f55a8a-1daf-4adb-9931-1b6cace1c13a', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'EnabledMark', '是否启用', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('344cf340-e664-446f-ba79-6d37e466f9d8', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'FileSize', '文件大小', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('36df66b8-bcf1-43bf-92d5-ea915faa8b94', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'Description', '内容', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('3961f233-46ef-4fd2-815e-733bb288946c', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'ContentData', '表单中的控件属性描述', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('3b304c8d-a54d-47b7-ad21-e6d01c283904', '91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', 'CreatorUserName', '创建人', 0, 1, '', '2020-06-03 09:57:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('3fee41bd-64a6-4280-ac93-0ce835fecf41', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'CreatorTime', '创建时间', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('45f62f54-8ad4-45f2-9f37-a7f0d15ee815', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'Description', '备注', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('47b8d043-aa5e-4a09-98b1-aaf24d6589dd', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'FileBy', '文件所属', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('49d6a83e-646f-48af-b71e-8f8d60f73396', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'DbString', '连接字符串', 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('4b2b3c5b-22f0-4a64-9857-c794f1d8a181', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'LogoCode', 'Logo编号', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('4e90e4dc-fc8d-456e-aa7d-2420e31212c2', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'ToUserId', '收件人主键', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('5a218598-40b4-4046-a61e-e7b4f8dd0d85', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'SchemeContent', '流程内容', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('5b2cb54c-5fe8-4f8f-b281-d6de27dcfc18', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'FileType', '文件类型', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('642e8c4b-7762-42b6-9fbd-8495c54606a2', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'Logo', 'Logo图标', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('6d1a0016-9634-4425-b840-af55f4fb383f', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'DBProvider', '数据库类型', 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('6e177e5f-4ce8-4f7b-b790-b320bb2659db', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'EnabledMark', '有效', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('6ec6ed61-884c-4519-904c-2f3cb717aef7', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'PrincipalMan', '联系人', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('702f2c2e-b66e-44e8-a846-fd96c38027e3', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'CustomName', '实例名称', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('7496086e-32ec-4875-8013-73ce1c2784a2', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'CreatorUserId', '创建用户主键', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('756ce041-ad4f-4895-b184-d9c9c4df9a04', '38CA5A66-C993-4410-AF95-50489B22939C', 'OrganizeId', '部门Id', 0, 1, '', '2020-06-08 16:25:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('76cbcdd9-ffeb-41a1-8f9c-51dea4a02fa2', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'EndTime', '到期时间', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('76e64bb6-cb36-45c4-852f-6a044d5b2c3d', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'SchemeType', '流程分类', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('770af4b6-29ef-47b1-aea8-6092562d9800', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'ContentParse', '表单控件位置模板', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('78a9a6c0-e854-4225-b75e-5e7cfaf46c67', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'ProjectName', '项目名称', 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:56:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('7dfa39c1-a8d3-4460-922b-5a770d6e307f', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'SchemeCode', '流程编号', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('8024dfbc-8236-4a86-8869-d09e59c3dfe3', '91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', 'CreatorTime', '创建时间', 0, 1, '', '2020-06-03 09:57:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-22 17:06:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('80899139-2938-4e0a-9f80-16bf70d00658', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'CreatorTime', '创建时间', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('81d404d1-5639-4d5a-8ac1-d47b0414c321', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'MessageType', '信息类型（通知、私信、处理）', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('81d74921-21be-4360-bae3-653d0fade184', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'CreatorUserName', '创建用户', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('823b9649-030c-4dbb-b790-b184565f4746', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'MakerList', '执行人', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('82f21e4c-0d14-4559-92d4-657b34640a47', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'SortCode', '排序码', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('83584b47-0a29-446d-8ff2-6c6d3eccca3d', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'FrmId', '表单ID', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('8376537c-b23b-4b51-a6f0-75fc3467c574', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'Fields', '字段个数', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('84b3ac62-5d85-4263-946d-e12be86cbfa1', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'FileName', '文件名称', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('889fc780-cd2f-45c9-b07c-030e6d3ddc29', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'CreatorUserName', '创建用户', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('8ba0c532-4b85-4a02-aec8-499d93b97dcb', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'CreatorTime', '创建时间', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('8cf11fd0-8ee5-408d-9d5d-15c4342befda', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'OrganizeId', '所属部门', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('8f5ce993-986c-4825-b3bc-f34f54d4f37f', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'FlowLevel', '等级', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('90386357-54f8-4aeb-8b24-f45ee8c08ba4', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'OrganizeId', '所属部门', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('91b3ca56-61e8-444d-b506-7dec452f1daa', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'SchemeContent', '流程模板内容', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('936023df-503f-4322-b243-47158c9617a6', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'EndTime', '到期时间', 0, 1, NULL, '2020-06-16 09:38:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('9507a93a-a258-4ba1-93db-d51798268c5e', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'CreatorUserId', '创建人Id', 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('98e7930d-37f0-4499-874d-b89207657eaa', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'OrganizeId', '所属部门', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('99ecc5e7-2b02-49d8-b091-ee1aec8130ee', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'Description', '备注', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('a24c6ed3-8c91-4ade-a5c1-8c5eb9719368', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'AdminAccount', '系统账户', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-15 14:23:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('a619715a-46b9-4b3e-81d2-a450038dceb6', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'Description', '实例备注', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('a6320b89-1c15-4afa-9c30-2e1f508212e2', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'HostUrl', '域名', 0, 1, '', '2020-06-15 17:01:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-15 17:01:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('a983cc2e-d045-4c35-a53e-2f0775edf639', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'CreatorUserName', '创建用户', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('aa75975a-bf00-429b-8c58-825b43d29eb4', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'SortCode', '排序码', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('b06b2f6f-c392-473f-bea7-96bcf04a025d', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'IsFinish', '是否完成', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('b2e8a59b-99ce-432b-b5ed-e7c8859dcfad', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'SchemeType', '流程类型', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('b3e6bab9-7e4c-4f87-83ff-d0f1bf6f9df8', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'FrmType', '表单类型', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('b56a98de-4f9d-4753-ae06-e3bea339dc9f', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'WebId', '系统页面标识，当表单类型为用Web自定义的表单时，需要标识加载哪个页面', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('b67b5eb6-ecae-4156-8ef8-9e80b7a1345a', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'CreatorUserName', '创建人', 0, 1, '', '2020-05-22 16:53:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('b68b00b4-6f56-4832-8774-eab1d02e2fc1', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'AdminPassword', '系统密码', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('b765ca2a-4337-4e24-b330-9c923ca793f0', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'CreatorUserId', '创建用户主键', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('b8e360f7-817f-4dc7-82c4-11fd51fc77de', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'FrmContentParse', '表单控件位置模板', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('bd8b0f82-43fd-44ed-9814-de1876fced8c', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'SchemeCanUser', '流程模板使用者', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('be804654-d6d7-44d1-8950-6841a2626720', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'CreatorUserId', '创建人Id', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('bf5a2919-281c-44e2-a83b-74576e08743e', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'EnabledMark', '状态', 0, 1, '', '2020-05-22 16:53:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-08 16:49:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('bfbe0195-3fae-42d2-9d46-6bf5400d64ea', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'DbString', '连接字符串', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:26', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('c077b982-c595-43e8-9095-711bee01e830', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'AuthorizeType', '模板权限类型：0完全公开,1指定部门/人员', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('c0a08cd8-43bc-4d57-844a-2a39c4a408e6', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'CompanyName', '公司名称', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('c4a2499d-780c-42db-a2a4-a3c1084533ca', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'MessageInfo', '内容', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('c4c5840c-90a5-4a4e-aea4-9f284ece3921', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'AdminAccount', '系统账户', 0, 1, '', '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:56:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('c87b90e3-6949-47f3-b8c5-c4f69af92200', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'CompanyName', '公司名称', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('cba04ab7-b1b2-406e-a889-53484469cfe7', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'CreatorUserId', '创建人Id', 0, 0, '', '2020-06-03 16:42:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-23 09:05:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('cddfb494-6d34-408d-8364-1c0bf270d4cd', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'FrmType', '表单类型，0：默认动态表单；1：Web自定义表单', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('d4b49a55-491e-494c-b2d2-082a414bcbb9', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'Logo', 'Logo图标', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('d52c6878-9283-45d7-82f9-b465fa33a89b', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'DBProvider', '数据库类型', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 13:57:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('d53cf640-037a-4126-9b75-daa77fa712b3', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'FrmContentData', '表单中的控件属性描述', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('d782d010-89af-4c1d-8e96-35833c38c3d8', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'SchemeVersion', '流程内容版本', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('d88a3d04-4a0d-4bfe-b34f-4130eb0accc9', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'Name', '表单名称', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('d9e2a9fe-8a87-4266-aaae-f8e47b63187b', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 'FrmData', '表单数据', 0, 1, NULL, '2020-07-14 09:21:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('dc4cd5fd-8933-44f8-9500-fc36285f50b2', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'CreatorTime', '创建时间', 0, 1, '', '2020-05-22 16:53:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-22 17:06:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('ddd93ca7-d821-4abd-a342-9be1782dabe9', '7e4e4a48-4d51-4159-a113-2a211186f13a', 'Content', '内容', 0, 1, '', '2020-05-22 16:42:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-22 16:53:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 0);
+INSERT INTO `sys_modulefields` VALUES ('e175859e-9284-47fd-a168-d1a12ddd125d', 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 'MobilePhone', '联系方式', 0, 1, NULL, '2020-06-12 13:54:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('e7a49b29-0c59-4665-9e73-5f495fced4d4', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'CreatorTime', '创建时间', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('eb6b22e7-a804-4f6d-b969-d5c6db5f3043', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'CreatorUserId', '创建人', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('ec413c38-4472-4e36-b406-84f883d48609', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'CreatorTime', '创建时间', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('ed938b87-a291-40cd-8a23-204e15f81cb3', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'EnabledMark', '有效', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('edeabb1a-de3c-48d0-b677-5d35807632dc', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'EnabledMark', '有效', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('edf1d2cb-07dd-41cb-a475-41b982c43dff', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'MobilePhone', '联系方式', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('f0e838e8-c07c-4f24-9dd3-0c1727074441', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'EnabledMark', '有效', 0, 1, NULL, '2020-06-16 09:38:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('f2c75a6b-ad06-49b2-93cf-7a7312c97ff5', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'EnabledMark', '有效', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('f8a85900-44e6-4786-ad64-e219eb8cffbe', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'FrmType', '表单类型', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('fc7f572d-6dc2-4592-8d67-4b3155b49dd9', 'e9190a56-e173-4483-8a3e-f17b86e4766e', 'ToUserName', '收件人', 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('ff60fd1e-d0df-4847-bc5a-1bf4c3310c9c', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'CreatorUserId', '创建用户主键', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
 
 -- ----------------------------
 -- Table structure for sys_notice
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_notice`;
 CREATE TABLE `sys_notice`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_Title` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Content` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_notice_key1`(`F_Title`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Title` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Content` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_notice_key1`(`Title`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5443,7 +5443,7 @@ CREATE TABLE `sys_notice`  (
 -- ----------------------------
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa1', '1.0.0版本说明', '2020/7/23 \n功能变更：\n1、增加表单设计；\n2、增加流程设计；\n3、增加流程中心；\n4、增加文件管理。\n4、去除Respository实现类和接口\n5、代码生成增加实体生成功能\nbug修复：\n1、tab iframe刷新tab iframe问题；\n2、流程中心处理界面显示问题。\n3、修复公告换行问题', 0, 1, NULL, '2020-07-23 11:44:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-08-12 11:11:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa2', '1.0.1版本更新', '2020/8/3\n功能变更：\n1、增加信息中心；\n2、完善通知功能（除私信）；\nbug修复：\n1、当前用户信息对象为空问题；\n2、流程中心部分问题；\n3、代码生成实体生成显示问题；', 0, 1, NULL, '2020-08-03 17:22:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-08-12 11:11:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa3', '1.0.2版本更新', '2020/8/10\n功能变更：\n1、更新流程2张表和信息历史表名称长度\n2、修改清空缓存功能，只对管理员开放，成功跳转登录页\n3、增加oracle数据库脚本\n4、信息和流程删除设置为假删\n5、更新tableselect插件\n6、修改系统设置提交关闭问题\n7、选择弹框增加清除方法\n8、选择弹框增加双击事件\n9、区域查询把下级数据也加进去\nbug修复：\n1、通知中心加载问题修复；\n2、修复oracle数据库查询服务bug\n3、修复流程新增缺少F_EnabledMark字段问题\n4、修复用户查看明细显示问题\n5、模板修复树生成问题\n6、修复选择组织、角色、用户弹窗 鉴权异常\n7、修复用户中角色和部门显示问题\n8、二次确认框解决确认没有关闭的问题\n9、修复检测图片 gif异常问题\n', 0, 1, NULL, '2020-08-12 11:11:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa3', '1.0.2版本更新', '2020/8/10\n功能变更：\n1、更新流程2张表和信息历史表名称长度\n2、修改清空缓存功能，只对管理员开放，成功跳转登录页\n3、增加oracle数据库脚本\n4、信息和流程删除设置为假删\n5、更新tableselect插件\n6、修改系统设置提交关闭问题\n7、选择弹框增加清除方法\n8、选择弹框增加双击事件\n9、区域查询把下级数据也加进去\nbug修复：\n1、通知中心加载问题修复；\n2、修复oracle数据库查询服务bug\n3、修复流程新增缺少EnabledMark字段问题\n4、修复用户查看明细显示问题\n5、模板修复树生成问题\n6、修复选择组织、角色、用户弹窗 鉴权异常\n7、修复用户中角色和部门显示问题\n8、二次确认框解决确认没有关闭的问题\n9、修复检测图片 gif异常问题\n', 0, 1, NULL, '2020-08-12 11:11:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa4', '1.0.3版本更新', '2020/8/12\n功能变更：\n1、upload报错信息改为动态信息；\n2、upload上传地址修改；\n3、导入文件路径修改，增加日期\n4、修改弹窗，改为top.layer.open，修改相应界面\n6、去掉界面中的isMax参数\n7、弹窗大小取消判断\nbug修复：\n1、修复多列模板样式问题；', 0, 1, NULL, '2020-08-12 11:15:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa5', '1.0.4版本更新', '2020/8/12\n功能变更：\n1、upload增加excel类别；\n2、岗位管理增加导入导出功能；\n3、菜单全移入常规管理以便二次开发使用新模块\n4、数据库更新、增加导入导出按钮，菜单更新', 0, 1, NULL, '2020-08-12 11:24:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa6', '1.0.5版本更新', '2020/8/17\n功能变更：\n1、增加字典管理分类查询功能\n2、增加字段管理分类的滚动条\n3、模板生成表单，input增加默认显示\n4、自定义测试表单，添加创建人名称\nBUG修复：\n1、修复首次启动更新信息的问题\n2、修复表单设计中date 点击不出现的bug\n3、权限bug修复\n4、修复弹窗超出界面bug\n5、修改addform返回有效的数据\n6、submitPost方法取消关闭loading修复\n7、模板修复是否树的引用\n8、修改modalOpen方法 增加返回值index\n9、修改modalOpen方法 高度宽度不对问题\n10、修复获取用户信息bug', 0, 1, NULL, '2020-08-20 16:48:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-05-28 08:32:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
@@ -5469,7 +5469,7 @@ INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac8', '1.9.0�
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac9', '2.0.0版本更新', '2020/01/05\n功能变更：\n1、增加防重复锁特性，用户本身默认5秒\n2、优化.Result改成同步方式执行\n3、api增加防重复验证，用户本身默认5秒\n4、优化soultable过滤\n\nBUG修复：\n1、修复用户管理按钮bug\n2、修复上传安全问题，指定文件格式\n3、权限问题修复\n4、api修复刷新token问题\n5、datetime2生成问题修复\n6、修复oracle number参数生成问题\n7、修复快捷菜单显示非菜单模块的Bug', 0, 1, NULL, '2021-01-05 22:10:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad0', '2.1.0版本更新', '2020/01/10\n功能变更：\n1、前端新增单个按钮权限控制方法\n2、按钮界面增加编号显示\n3、修复token文字\n4、修改流程图配置，增加自定义显示功能\n5、替换前端流程样式', 0, 1, NULL, '2021-01-10 12:43:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-01-10 12:44:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad1', '2.2.0版本更新', '2020/01/29\n功能变更：\n1、更新日志传入key 类型\n2、岗位导入前端显示增加soultable\n3、更新信息服务 hub默认不传\n4、给系统设置加上管理员验证\n5、前端增加参数null删除表单元素的方法\n6、消息未读查询优化\n7、增加自适应大屏\nBUG修复：\n1、岗位导入修复文件名重复异常\n2、修复定时任务没有后台启动的BUG\n3、修复ip控制多选bug\n4、修复数据库连接保留问题\n5、修复字段权限对象为空的bug', 0, 1, NULL, '2021-01-29 10:24:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-01-29 10:24:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad2', '2.3.0版本更新', '2020/02/10\n功能变更：\n1、更新信息即时通知，改成http调用，方便api调用，需要修改配置文件配合\n2、更新ip获取地址方法，增加配置是否本地局域网\n3、删除多余前端文件\n4、更新echarts文件，删除主题\n5、增加权限验证方法，可根据参数进行验证，菜单和按钮增加字段F_Authorize\n6、新增api权限验证\n\nBUG修复：\n1、table修复点击按钮触发行点击事件的bug\n2、修复获取ip的bug', 0, 1, NULL, '2021-02-10 13:50:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad2', '2.3.0版本更新', '2020/02/10\n功能变更：\n1、更新信息即时通知，改成http调用，方便api调用，需要修改配置文件配合\n2、更新ip获取地址方法，增加配置是否本地局域网\n3、删除多余前端文件\n4、更新echarts文件，删除主题\n5、增加权限验证方法，可根据参数进行验证，菜单和按钮增加字段Authorize\n6、新增api权限验证\n\nBUG修复：\n1、table修复点击按钮触发行点击事件的bug\n2、修复获取ip的bug', 0, 1, NULL, '2021-02-10 13:50:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad3', '2.4.0版本更新', '2020/02/26\n功能变更：\n1、更新树形表格插件，增加复选框联动设置\n2、重构代码生成\n3、表单设计器优化，表单设计增加表头和上传url设置\n4、优化实时通讯，支持其他客户端登录者连接\n5、表单设计增加表头和上传url设置\n6、前端优化重复提交方式，统一放到submitForm中\n\nBUG修复：\n1、修复api 登录参数异常', 0, 1, NULL, '2021-02-26 10:02:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-02-26 10:17:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad4', '2.5.0版本更新', '2020/03/10\n功能变更：\n1、启动增加清理缓存，快捷菜单优化\n2、表单设计器赋值优化，实体模板删除多余\n3、定时任务增加cron表达式\n\nBUG修复：\n1、修复树形单选不触发行点击事件bug', 0, 1, NULL, '2021-03-10 16:01:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-03-10 16:01:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad5', '2.6.0版本更新', '2020/03/23\n功能变更：\n1、更新前端插件，如layui、soultable\n2、增加雪花id方法\n3、更新layui库，改成layui，方便以后升级\n4、配置增加后台定时任务开关\n5、优化权限判断，优先使用缓存数据\n6、更正配置跨域参数名称\n7、代码生成新增删除字段和创建字段，优化代码生成\n8、代码生成列表增加上下移动\n9、删除cardtable中的 缓存验证\n10、新增树形表格插件，增加soultable支持，更新代码生成\n\nBUG修复：\n1、修复菜单按钮 关键字查询无效BUG\n2、修复表单number验证问题\n3、修复省市区联动初始化赋值示例\n4、修复消息提示全部清空无效的BUG\n5、修复权限验证登录验证 读取缓存的BUG\n6、修复ie11访问异常问题\n7、修复用户查询报错问题，暂时去掉岗位部门的过滤\n8、修复获取lanip方法iv6异常的BUG\n9、修复代码生成添加字段失败的BUG\n10、解决表单设计器日期的BUG\n11、修复一些界面操作列还存在按钮的BUG', 0, 1, NULL, '2021-03-23 16:26:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-03-23 16:26:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
@@ -5483,29 +5483,29 @@ INSERT INTO `sys_notice` VALUES ('39fcc2c9-894f-48c7-5e87-bb2f4505cbe1', '2.10.0
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_openjob`;
 CREATE TABLE `sys_openjob`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_FileName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_JobGroup` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_StarRunTime` datetime NULL DEFAULT NULL,
-  `F_EndRunTime` datetime NULL DEFAULT NULL,
-  `F_CronExpress` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastRunTime` datetime NULL DEFAULT NULL COMMENT '最后一次执行时间',
-  `F_JobType` int NOT NULL DEFAULT 0 COMMENT '任务类型0Run,1Get,2Post,3Put,4Delete',
-  `F_RequestHeaders` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求头',
-  `F_RequestString` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求内容',
-  `F_RequestUrl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求地址',
-  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据库数字',
-  PRIMARY KEY (`F_Id`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `FileName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `JobGroup` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `StarRunTime` datetime NULL DEFAULT NULL,
+  `EndRunTime` datetime NULL DEFAULT NULL,
+  `CronExpress` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `LastRunTime` datetime NULL DEFAULT NULL COMMENT '最后一次执行时间',
+  `JobType` int NOT NULL DEFAULT 0 COMMENT '任务类型0Run,1Get,2Post,3Put,4Delete',
+  `RequestHeaders` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求头',
+  `RequestString` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求内容',
+  `RequestUrl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求地址',
+  `DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据库数字',
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5519,13 +5519,13 @@ INSERT INTO `sys_openjob` VALUES ('1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'Water
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_openjoblog`;
 CREATE TABLE `sys_openjoblog`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_JobId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '任务Id',
-  `F_Description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '任务信息',
-  `F_CreatorTime` datetime NULL DEFAULT NULL COMMENT '执行时间',
-  `F_EnabledMark` tinyint NOT NULL COMMENT '执行状态',
-  `F_JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '任务名称',
-  PRIMARY KEY (`F_Id`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `JobId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '任务Id',
+  `Description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '任务信息',
+  `CreatorTime` datetime NULL DEFAULT NULL COMMENT '执行时间',
+  `EnabledMark` tinyint NOT NULL COMMENT '执行状态',
+  `JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '任务名称',
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5543,35 +5543,35 @@ INSERT INTO `sys_openjoblog` VALUES ('08d92c83-874f-4a00-800f-19e729e4b4a1', '08
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_organize`;
 CREATE TABLE `sys_organize`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Layers` int NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ShortName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_CategoryId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ManagerId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_TelePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_WeChat` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Fax` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_AreaId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Address` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_AllowEdit` tinyint(1) NULL DEFAULT NULL,
-  `F_AllowDelete` tinyint(1) NULL DEFAULT NULL,
-  `F_SortCode` int NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_organize_key1`(`F_EnCode`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ParentId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Layers` int NULL DEFAULT NULL,
+  `EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ShortName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `CategoryId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ManagerId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `TelePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `WeChat` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Fax` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `AreaId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Address` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `AllowEdit` tinyint(1) NULL DEFAULT NULL,
+  `AllowDelete` tinyint(1) NULL DEFAULT NULL,
+  `SortCode` int NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_organize_key1`(`EnCode`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5591,19 +5591,19 @@ INSERT INTO `sys_organize` VALUES ('F02A66CA-3D8B-491B-8A17-C9ACA3E3B5DD', '5AB2
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_quickmodule`;
 CREATE TABLE `sys_quickmodule`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_quickmodule_key1`(`F_ModuleId`, `F_CreatorUserId`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ModuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_quickmodule_key1`(`ModuleId`, `CreatorUserId`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5624,26 +5624,26 @@ INSERT INTO `sys_quickmodule` VALUES ('39fcd21d-5575-f2b5-227f-b92f88bb8817', '2
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Category` int NULL DEFAULT NULL,
-  `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Type` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_AllowEdit` tinyint(1) NULL DEFAULT NULL,
-  `F_AllowDelete` tinyint(1) NULL DEFAULT NULL,
-  `F_SortCode` int NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_role_key1`(`F_EnCode`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Category` int NULL DEFAULT NULL,
+  `EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Type` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `AllowEdit` tinyint(1) NULL DEFAULT NULL,
+  `AllowDelete` tinyint(1) NULL DEFAULT NULL,
+  `SortCode` int NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_role_key1`(`EnCode`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5655,15 +5655,15 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_roleauthorize`;
 CREATE TABLE `sys_roleauthorize`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_ItemType` int NULL DEFAULT NULL,
-  `F_ItemId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ObjectType` int NULL DEFAULT NULL,
-  `F_ObjectId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_SortCode` int NULL DEFAULT NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `ItemType` int NULL DEFAULT NULL,
+  `ItemId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ObjectType` int NULL DEFAULT NULL,
+  `ObjectId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `SortCode` int NULL DEFAULT NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5675,15 +5675,15 @@ CREATE TABLE `sys_roleauthorize`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_serverstate`;
 CREATE TABLE `sys_serverstate`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_WebSite` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ARM` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_CPU` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_IIS` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Date` date NULL DEFAULT NULL,
-  `F_Cout` int NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `IX_Sys_ServerState`(`F_WebSite`, `F_Date`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `WebSite` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ARM` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `CPU` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `IIS` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Date` date NULL DEFAULT NULL,
+  `Cout` int NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `IX_Sys_ServerState`(`WebSite`, `Date`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5799,31 +5799,31 @@ INSERT INTO `sys_serverstate` VALUES ('fb323d9c-abb1-41fb-810d-615ce8f79d7f', 'C
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_systemset`;
 CREATE TABLE `sys_systemset`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_Logo` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_LogoCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ProjectName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_CompanyName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_AdminAccount` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_AdminPassword` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_PrincipalMan` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_EndTime` datetime NULL DEFAULT NULL,
-  `F_DbString` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_DBProvider` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_HostUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_systemset_key1`(`F_DbNumber`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Logo` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `LogoCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ProjectName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `CompanyName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `AdminAccount` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `AdminPassword` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `PrincipalMan` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `EndTime` datetime NULL DEFAULT NULL,
+  `DbString` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `DBProvider` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `HostUrl` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_systemset_key1`(`DbNumber`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5836,45 +5836,45 @@ INSERT INTO `sys_systemset` VALUES ('d69fd66a-6a77-4011-8a25-53a79bdf5001', '/ic
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_Account` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_RealName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_NickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_HeadIcon` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Gender` tinyint(1) NULL DEFAULT NULL,
-  `F_Birthday` datetime NULL DEFAULT NULL,
-  `F_MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_WeChat` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ManagerId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_SecurityLevel` int NULL DEFAULT NULL,
-  `F_Signature` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DepartmentId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_RoleId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_DutyId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_IsAdmin` tinyint(1) NULL DEFAULT NULL,
-  `F_IsBoss` tinyint(1) NULL DEFAULT NULL,
-  `F_IsLeaderInDepts` tinyint(1) NULL DEFAULT NULL,
-  `F_IsSenior` tinyint(1) NULL DEFAULT NULL,
-  `F_SortCode` int NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DingTalkUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DingTalkUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DingTalkAvatar` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_WxOpenId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_WxNickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_HeadImgUrl` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_user_key1`(`F_Account`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Account` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `RealName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `NickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `HeadIcon` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Gender` tinyint(1) NULL DEFAULT NULL,
+  `Birthday` datetime NULL DEFAULT NULL,
+  `MobilePhone` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `WeChat` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ManagerId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `SecurityLevel` int NULL DEFAULT NULL,
+  `Signature` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DepartmentId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `RoleId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `DutyId` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `IsAdmin` tinyint(1) NULL DEFAULT NULL,
+  `IsBoss` tinyint(1) NULL DEFAULT NULL,
+  `IsLeaderInDepts` tinyint(1) NULL DEFAULT NULL,
+  `IsSenior` tinyint(1) NULL DEFAULT NULL,
+  `SortCode` int NULL DEFAULT NULL,
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DingTalkUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DingTalkUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DingTalkAvatar` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `WxOpenId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `WxNickName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `HeadImgUrl` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_user_key1`(`Account`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5887,30 +5887,30 @@ INSERT INTO `sys_user` VALUES ('9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', 'admin', 
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_userlogon`;
 CREATE TABLE `sys_userlogon`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_UserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_UserPassword` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_UserSecretkey` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_AllowStartTime` datetime NULL DEFAULT NULL,
-  `F_AllowEndTime` datetime NULL DEFAULT NULL,
-  `F_LockStartDate` datetime NULL DEFAULT NULL,
-  `F_LockEndDate` datetime NULL DEFAULT NULL,
-  `F_FirstVisitTime` datetime NULL DEFAULT NULL,
-  `F_PreviousVisitTime` datetime NULL DEFAULT NULL,
-  `F_LastVisitTime` datetime NULL DEFAULT NULL,
-  `F_ChangePasswordDate` datetime NULL DEFAULT NULL,
-  `F_MultiUserLogin` tinyint(1) NULL DEFAULT NULL,
-  `F_LogOnCount` int NULL DEFAULT NULL,
-  `F_UserOnLine` tinyint(1) NULL DEFAULT NULL,
-  `F_Question` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_AnswerQuestion` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CheckIPAddress` tinyint(1) NULL DEFAULT NULL,
-  `F_Language` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_Theme` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LoginSession` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_ErrorNum` int NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_userlogon_key1`(`F_UserId`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `UserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `UserPassword` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `UserSecretkey` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `AllowStartTime` datetime NULL DEFAULT NULL,
+  `AllowEndTime` datetime NULL DEFAULT NULL,
+  `LockStartDate` datetime NULL DEFAULT NULL,
+  `LockEndDate` datetime NULL DEFAULT NULL,
+  `FirstVisitTime` datetime NULL DEFAULT NULL,
+  `PreviousVisitTime` datetime NULL DEFAULT NULL,
+  `LastVisitTime` datetime NULL DEFAULT NULL,
+  `ChangePasswordDate` datetime NULL DEFAULT NULL,
+  `MultiUserLogin` tinyint(1) NULL DEFAULT NULL,
+  `LogOnCount` int NULL DEFAULT NULL,
+  `UserOnLine` tinyint(1) NULL DEFAULT NULL,
+  `Question` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `AnswerQuestion` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CheckIPAddress` tinyint(1) NULL DEFAULT NULL,
+  `Language` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `Theme` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LoginSession` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `ErrorNum` int NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `sys_userlogon_key1`(`UserId`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5920,23 +5920,23 @@ INSERT INTO `sys_userlogon` VALUES ('9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '9f2
 
 
 CREATE TABLE `crm_order`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
-  `F_OrderCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单编号',
-  `F_OrderState` int NOT NULL COMMENT '订单状态(0未完成，1已完成)',
-  `F_NeedTime` datetime NULL DEFAULT NULL COMMENT '需求时间',
-  `F_ActualTime` datetime NULL DEFAULT NULL COMMENT '实际完成时间',
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `crm_order_key1`(`F_OrderCode`) USING BTREE COMMENT '编号唯一'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `OrderCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单编号',
+  `OrderState` int NOT NULL COMMENT '订单状态(0未完成，1已完成)',
+  `NeedTime` datetime NULL DEFAULT NULL COMMENT '需求时间',
+  `ActualTime` datetime NULL DEFAULT NULL COMMENT '实际完成时间',
+  `DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `crm_order_key1`(`OrderCode`) USING BTREE COMMENT '编号唯一'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -5948,22 +5948,22 @@ INSERT INTO `crm_order` VALUES ('08d9459c-5cd7-453f-8240-d566f1fe058c', 'OR-2021
 -- Table structure for crm_orderdetail
 -- ----------------------------
 CREATE TABLE `crm_orderdetail`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
-  `F_OrderId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_OrderState` int NOT NULL COMMENT '订单状态',
-  `F_ProductName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品名称',
-  `F_ProductDescription` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品规格',
-  `F_ProductUnit` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品单位',
-  `F_NeedNum` int NULL DEFAULT NULL COMMENT '需求数量',
-  `F_ActualNum` int NULL DEFAULT NULL COMMENT '实际数量',
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_NeedTime` datetime NULL DEFAULT NULL COMMENT '需求时间',
-  `F_ActualTime` datetime NULL DEFAULT NULL COMMENT '实际时间',
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `crm_orderdetail_key1`(`F_OrderId`, `F_ProductName`) USING BTREE COMMENT '唯一键'
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `OrderId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `OrderState` int NOT NULL COMMENT '订单状态',
+  `ProductName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品名称',
+  `ProductDescription` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品规格',
+  `ProductUnit` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品单位',
+  `NeedNum` int NULL DEFAULT NULL COMMENT '需求数量',
+  `ActualNum` int NULL DEFAULT NULL COMMENT '实际数量',
+  `Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `NeedTime` datetime NULL DEFAULT NULL COMMENT '需求时间',
+  `ActualTime` datetime NULL DEFAULT NULL COMMENT '实际时间',
+  PRIMARY KEY (`Id`) USING BTREE,
+  UNIQUE INDEX `crm_orderdetail_key1`(`OrderId`, `ProductName`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -5971,54 +5971,54 @@ CREATE TABLE `crm_orderdetail`  (
 -- ----------------------------
 INSERT INTO `crm_orderdetail` VALUES ('08d9459d-b222-4ad5-8e4e-c5153e69a752', '08d9459c-5cd7-453f-8240-d566f1fe058c', 1, '222', '', '', 3, 2, '', NULL, '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-07-13 00:00:00', '2021-07-13 00:00:00');
 
-INSERT INTO `sys_module` (`F_Id`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_UrlAddress`, `F_Target`, `F_IsMenu`, `F_IsExpand`, `F_IsFields`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-98ac-4751-8cd4-c6c5ec4048e6', '08d94532-39d1-4822-80b3-0c25a8183155', 3, 'Order', '订单信息', 'fa fa-anchor', '/OrderManagement/Order/Index', 'iframe', 1, 0, 0, 0, 0, 0, 1, 0, 1, '', '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-07-13 09:45:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
-INSERT INTO `sys_module` (`F_Id`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_UrlAddress`, `F_Target`, `F_IsMenu`, `F_IsExpand`, `F_IsFields`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-39d1-4822-80b3-0c25a8183155', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, 'OrderManagement', '订单管理', 'fa fa-first-order', NULL, 'expand', 1, 1, 0, 0, 0, 0, 7, 0, 1, '', '2021-07-12 20:40:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
-INSERT INTO `sys_modulebutton` (`F_Id`, `F_ModuleId`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_Location`, `F_JsEvent`, `F_UrlAddress`, `F_Split`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-98b0-4b60-86a7-eca606765531', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-add', '新增', NULL, 1, 'add', '/OrderManagement/Order/Form', 0, 0, 0, 0, 0, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_modulebutton` (`F_Id`, `F_ModuleId`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_Location`, `F_JsEvent`, `F_UrlAddress`, `F_Split`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-98b0-4b92-8a2f-4da9f59afa21', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-edit', '修改', NULL, 2, 'edit', '/OrderManagement/Order/Form', 0, 0, 0, 0, 1, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_modulebutton` (`F_Id`, `F_ModuleId`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_Location`, `F_JsEvent`, `F_UrlAddress`, `F_Split`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-98b0-4ba2-87b3-6c976665cb6b', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-delete', '删除', NULL, 2, 'delete', '/OrderManagement/Order/DeleteForm', 0, 0, 0, 0, 2, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_modulebutton` (`F_Id`, `F_ModuleId`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_Location`, `F_JsEvent`, `F_UrlAddress`, `F_Split`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-98b0-4bac-8e49-471d5b61be95', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-details', '查看', NULL, 2, 'details', '/OrderManagement/Order/Details', 0, 0, 0, 0, 3, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4bb9-843f-6a42d29d5b04', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_OrderCode', '订单编号', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4bca-822e-9e44e86864e5', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_OrderState', '订单状态(0待确认，待采购，1已完成)', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4bd5-8ba3-fc7834814f3e', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_NeedTime', '需求时间', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4be2-8991-3b929d082f6c', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_ActualTime', '实际时间', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4beb-89d3-425505eb2d36', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_EnabledMark', 'F_EnabledMark', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4bf6-82f3-9f62b0b5cec6', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_Description', 'F_Description', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4c01-86ff-7b056e669066', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_CreatorTime', 'F_CreatorTime', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4c0c-81e2-b66009a2420f', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_CreatorUserName', 'F_CreatorUserName', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_module` (`Id`, `ParentId`, `Layers`, `EnCode`, `FullName`, `Icon`, `UrlAddress`, `Target`, `IsMenu`, `IsExpand`, `IsFields`, `IsPublic`, `AllowEdit`, `AllowDelete`, `SortCode`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `Authorize`) VALUES ('08d94532-98ac-4751-8cd4-c6c5ec4048e6', '08d94532-39d1-4822-80b3-0c25a8183155', 3, 'Order', '订单信息', 'fa fa-anchor', '/OrderManagement/Order/Index', 'iframe', 1, 0, 0, 0, 0, 0, 1, 0, 1, '', '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-07-13 09:45:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
+INSERT INTO `sys_module` (`Id`, `ParentId`, `Layers`, `EnCode`, `FullName`, `Icon`, `UrlAddress`, `Target`, `IsMenu`, `IsExpand`, `IsFields`, `IsPublic`, `AllowEdit`, `AllowDelete`, `SortCode`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `Authorize`) VALUES ('08d94532-39d1-4822-80b3-0c25a8183155', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, 'OrderManagement', '订单管理', 'fa fa-first-order', NULL, 'expand', 1, 1, 0, 0, 0, 0, 7, 0, 1, '', '2021-07-12 20:40:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
+INSERT INTO `sys_modulebutton` (`Id`, `ModuleId`, `ParentId`, `Layers`, `EnCode`, `FullName`, `Icon`, `Location`, `JsEvent`, `UrlAddress`, `Split`, `IsPublic`, `AllowEdit`, `AllowDelete`, `SortCode`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `Authorize`) VALUES ('08d94532-98b0-4b60-86a7-eca606765531', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-add', '新增', NULL, 1, 'add', '/OrderManagement/Order/Form', 0, 0, 0, 0, 0, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` (`Id`, `ModuleId`, `ParentId`, `Layers`, `EnCode`, `FullName`, `Icon`, `Location`, `JsEvent`, `UrlAddress`, `Split`, `IsPublic`, `AllowEdit`, `AllowDelete`, `SortCode`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `Authorize`) VALUES ('08d94532-98b0-4b92-8a2f-4da9f59afa21', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-edit', '修改', NULL, 2, 'edit', '/OrderManagement/Order/Form', 0, 0, 0, 0, 1, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` (`Id`, `ModuleId`, `ParentId`, `Layers`, `EnCode`, `FullName`, `Icon`, `Location`, `JsEvent`, `UrlAddress`, `Split`, `IsPublic`, `AllowEdit`, `AllowDelete`, `SortCode`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `Authorize`) VALUES ('08d94532-98b0-4ba2-87b3-6c976665cb6b', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-delete', '删除', NULL, 2, 'delete', '/OrderManagement/Order/DeleteForm', 0, 0, 0, 0, 2, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` (`Id`, `ModuleId`, `ParentId`, `Layers`, `EnCode`, `FullName`, `Icon`, `Location`, `JsEvent`, `UrlAddress`, `Split`, `IsPublic`, `AllowEdit`, `AllowDelete`, `SortCode`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `Authorize`) VALUES ('08d94532-98b0-4bac-8e49-471d5b61be95', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-details', '查看', NULL, 2, 'details', '/OrderManagement/Order/Details', 0, 0, 0, 0, 3, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulefields` (`Id`, `ModuleId`, `EnCode`, `FullName`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `IsPublic`) VALUES ('08d94532-98b0-4bb9-843f-6a42d29d5b04', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'OrderCode', '订单编号', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` (`Id`, `ModuleId`, `EnCode`, `FullName`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `IsPublic`) VALUES ('08d94532-98b0-4bca-822e-9e44e86864e5', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'OrderState', '订单状态(0待确认，待采购，1已完成)', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` (`Id`, `ModuleId`, `EnCode`, `FullName`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `IsPublic`) VALUES ('08d94532-98b0-4bd5-8ba3-fc7834814f3e', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'NeedTime', '需求时间', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` (`Id`, `ModuleId`, `EnCode`, `FullName`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `IsPublic`) VALUES ('08d94532-98b0-4be2-8991-3b929d082f6c', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'ActualTime', '实际时间', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` (`Id`, `ModuleId`, `EnCode`, `FullName`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `IsPublic`) VALUES ('08d94532-98b0-4beb-89d3-425505eb2d36', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'EnabledMark', 'EnabledMark', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` (`Id`, `ModuleId`, `EnCode`, `FullName`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `IsPublic`) VALUES ('08d94532-98b0-4bf6-82f3-9f62b0b5cec6', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'Description', 'Description', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` (`Id`, `ModuleId`, `EnCode`, `FullName`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `IsPublic`) VALUES ('08d94532-98b0-4c01-86ff-7b056e669066', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'CreatorTime', 'CreatorTime', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` (`Id`, `ModuleId`, `EnCode`, `FullName`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `IsPublic`) VALUES ('08d94532-98b0-4c0c-81e2-b66009a2420f', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'CreatorUserName', 'CreatorUserName', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
 -- ----------------------------
 -- Table structure for sys_openjob
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_openjob`;
 CREATE TABLE `sys_openjob`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_FileName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_JobGroup` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_StarRunTime` datetime NULL DEFAULT NULL,
-  `F_EndRunTime` datetime NULL DEFAULT NULL,
-  `F_CronExpress` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastRunTime` datetime NULL DEFAULT NULL,
-  `F_LastRunMark` tinyint NULL DEFAULT NULL,
-  `F_LastRunErrTime` datetime NULL DEFAULT NULL,
-  `F_LastRunErrMsg` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_JobType` int NOT NULL,
-  `F_IsLog` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_RequestHeaders` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_RequestString` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_RequestUrl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE
+  `Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `FileName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `JobGroup` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `StarRunTime` datetime NULL DEFAULT NULL,
+  `EndRunTime` datetime NULL DEFAULT NULL,
+  `CronExpress` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `DeleteMark` tinyint NULL DEFAULT NULL,
+  `EnabledMark` tinyint NULL DEFAULT NULL,
+  `Description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `CreatorTime` datetime NULL DEFAULT NULL,
+  `CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `LastModifyTime` datetime NULL DEFAULT NULL,
+  `LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `DeleteTime` datetime NULL DEFAULT NULL,
+  `DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `LastRunTime` datetime NULL DEFAULT NULL,
+  `LastRunMark` tinyint NULL DEFAULT NULL,
+  `LastRunErrTime` datetime NULL DEFAULT NULL,
+  `LastRunErrMsg` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `JobType` int NOT NULL,
+  `IsLog` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `RequestHeaders` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `RequestString` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `RequestUrl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
-INSERT INTO `sys_modulebutton` (`F_Id`, `F_ModuleId`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_Location`, `F_JsEvent`, `F_UrlAddress`, `F_Split`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d9bde2-f14d-4b33-8f9b-2af0bf40812b', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, 'NF-cancle', '撤回', NULL, 1, 'cancle', '/FlowManage/Flowinstance/CancleForm', NULL, 0, 0, 0, 4, 0, 1, '', '2021-12-13 10:47:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
+INSERT INTO `sys_modulebutton` (`Id`, `ModuleId`, `ParentId`, `Layers`, `EnCode`, `FullName`, `Icon`, `Location`, `JsEvent`, `UrlAddress`, `Split`, `IsPublic`, `AllowEdit`, `AllowDelete`, `SortCode`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `Authorize`) VALUES ('08d9bde2-f14d-4b33-8f9b-2af0bf40812b', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, 'NF-cancle', '撤回', NULL, 1, 'cancle', '/FlowManage/Flowinstance/CancleForm', NULL, 0, 0, 0, 4, 0, 1, '', '2021-12-13 10:47:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -54,19 +54,19 @@
              cols: [[       
                  { type: "checkbox", width: 50, fixed: 'left' },
                  {
-                     field: 'F_MessageType', title: '信息类型', width: 120, sort: true, filter: true,
+                     field: 'MessageType', title: '信息类型', width: 120, sort: true, filter: true,
                      templet: function (d) {
-                         return top.clients.dataItems["MessageType"][d.F_MessageType] == undefined ? "" : top.clients.dataItems["MessageType"][d.F_MessageType]
+                         return top.clients.dataItems["MessageType"][d.MessageType] == undefined ? "" : top.clients.dataItems["MessageType"][d.MessageType]
                      }
                  },
-                 { field: 'F_ToUserId', title: '收件人主键', width: 120, sort: true, hide: true, filter: true },
-                 { field: 'F_ToUserName', title: '收件人', width: 120, sort: true, filter: true },
-                 { field: 'F_MessageInfo', title: '内容', minWidth: 150, sort: true, filter: true },
+                 { field: 'ToUserId', title: '收件人主键', width: 120, sort: true, hide: true, filter: true },
+                 { field: 'ToUserName', title: '收件人', width: 120, sort: true, filter: true },
+                 { field: 'MessageInfo', title: '内容', minWidth: 150, sort: true, filter: true },
                  {
-                     field: 'F_CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
+                     field: 'CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                  },
-                 { field: 'F_CreatorUserId', title: '创建用户主键', width: 120, sort: true, hide: true, filter: true },
-                 { field: 'F_CreatorUserName', title: '创建用户', width: 120, sort: true, filter: true },
+                 { field: 'CreatorUserId', title: '创建用户主键', width: 120, sort: true, hide: true, filter: true },
+                 { field: 'CreatorUserName', title: '创建用户', width: 120, sort: true, filter: true },
                  { title: '操作', width: 90, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
              ]]
          });
@@ -102,7 +102,7 @@
                  }
                  var ids = [];
                  for (var i = 0; i < data.length; i++) {
-                     ids.push(data[i].F_Id);
+                     ids.push(data[i].Id);
                  }
                  common.deleteForm({
                      url: "/InfoManage/Message/DeleteForm",
@@ -128,7 +128,7 @@
              if (obj.event === 'delete') {
                  common.deleteForm({
                      url: "/InfoManage/Message/DeleteForm",
-                     param: { keyValue: obj.data.F_Id },
+                     param: { keyValue: obj.data.Id },
                      success: function () {
                          obj.del();
                      }

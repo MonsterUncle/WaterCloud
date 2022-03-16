@@ -23,8 +23,8 @@ namespace WaterCloud.Web.Controllers
                 return View();
             }
             var systemset = _setService.GetForm(_setService.currentuser.CompanyId).GetAwaiter().GetResult();
-            ViewBag.ProjectName = systemset.F_ProjectName;
-            ViewBag.LogoIcon = ".." + systemset.F_Logo;
+            ViewBag.ProjectName = systemset.ProjectName;
+            ViewBag.LogoIcon = ".." + systemset.Logo;
             return View();
         }
         [HttpGet]

@@ -29,8 +29,8 @@
                     async: false,
                     success: function (data) {
                         common.val('adminform', data);
-                        if (!!data.F_Icon) {
-                            iconPickerFa.checkIcon('iconPicker', data.F_Icon);
+                        if (!!data.Icon) {
+                            iconPickerFa.checkIcon('iconPicker', data.Icon);
                         }
                     }
                 });
@@ -44,16 +44,16 @@
                     async: false,
                     success: function (data) {
                         common.val('adminform', data);
-                        if (!!data.F_Icon) {
-                            iconPickerFa.checkIcon('iconPicker', data.F_Icon);
+                        if (!!data.Icon) {
+                            iconPickerFa.checkIcon('iconPicker', data.Icon);
                         }
-                        ParentIdChange(data.F_ParentId);
+                        ParentIdChange(data.ParentId);
                     }
                 });
             }
             else {
                 if (!!keyValue) {
-                    $('#F_ParentId').val(keyValue);
+                    $('#ParentId').val(keyValue);
                     ParentIdChange(keyValue);
                 }
                 else {
@@ -63,34 +63,34 @@
             form.render();
         });
         wcLoading.close();
-        form.on('select(F_ParentId)', function (data) {
+        form.on('select(ParentId)', function (data) {
             ParentIdChange(data.value);
         });
         function ParentIdChange(value) {
             common.ajax({
                 url: '/SystemManage/Module/GetMaxSortCodeText',
                 dataType: 'text',
-                data: { F_ParentId: value },
+                data: { ParentId: value },
                 async: false,
                 success: function (data) {
-                    $('#F_SortCode').val(data);
+                    $('#SortCode').val(data);
                 }
             });
             return false;
         }
         function initControl() {
-            $("#F_ParentId").bindSelect({
+            $("#ParentId").bindSelect({
                 url: "/SystemManage/Module/GetTreeSelectJson",
             });
         }
         //监听提交
         form.on('submit(saveBtn)', function (data) {
             var postData = data.field;
-            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-            if (!postData["F_IsMenu"]) postData["F_IsMenu"] = false;
-            if (!postData["F_IsFields"]) postData["F_IsFields"] = false;
-            if (!postData["F_IsPublic"]) postData["F_IsPublic"] = false;
-            if (!postData["F_IsExpand"]) postData["F_IsExpand"] = false;
+            if (!postData["EnabledMark"]) postData["EnabledMark"] = false;
+            if (!postData["IsMenu"]) postData["IsMenu"] = false;
+            if (!postData["IsFields"]) postData["IsFields"] = false;
+            if (!postData["IsPublic"]) postData["IsPublic"] = false;
+            if (!postData["IsExpand"]) postData["IsExpand"] = false;
             common.submitForm({
                 url: event == "edit" ? "/SystemManage/Module/SubmitForm?keyValue=" + keyValue : "/SystemManage/Module/SubmitForm",
                 param: postData,
@@ -131,7 +131,7 @@
             // 点击回调
             click: function (data) {
                 //console.log(data);
-                $("#F_Icon").val("fa " + data.icon);
+                $("#Icon").val("fa " + data.icon);
             },
             // 渲染成功后的回调
             success: function (d) {
@@ -142,7 +142,7 @@
     function clearIcon() {
         layui.use(['iconPickerFa'], function () {
             layui.iconPickerFa.checkIcon('iconPicker', "");
-            $("#F_Icon").val("");
+            $("#Icon").val("");
         });
     }
 </script>
@@ -153,7 +153,7 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">上级</label>
                     <div class="layui-input-block">
-                        <select id="F_ParentId" name="F_ParentId" lay-verify="required" lay-filter="F_ParentId" lay-search>
+                        <select id="ParentId" name="ParentId" lay-verify="required" lay-filter="ParentId" lay-search>
                             <option value="0" selected>父节点</option>
                         </select>
                     </div>
@@ -161,31 +161,31 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">编号</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_EnCode" name="F_EnCode" maxlength="50" lay-verify="required" class="layui-input">
+                        <input type="text" id="EnCode" name="EnCode" maxlength="50" lay-verify="required" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">名称</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_FullName" name="F_FullName" maxlength="50" lay-verify="required" class="layui-input">
+                        <input type="text" id="FullName" name="FullName" maxlength="50" lay-verify="required" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">连接</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_UrlAddress" name="F_UrlAddress" maxlength="50" class="layui-input ">
+                        <input type="text" id="UrlAddress" name="UrlAddress" maxlength="50" class="layui-input ">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">权限</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_Authorize" name="F_Authorize" maxlength="100" class="layui-input ">
+                        <input type="text" id="Authorize" name="Authorize" maxlength="100" class="layui-input ">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">目标</label>
                     <div class="layui-input-block">
-                        <select id="F_Target" name="F_Target" lay-verify="required">
+                        <select id="Target" name="Target" lay-verify="required">
                             <option value="">==请选择==</option>
                             <option value="expand" title="expand">无页面</option>
                             <option value="iframe" title="iframe">框架页</option>
@@ -197,7 +197,7 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">图标</label>
                     <div class="layui-input-block" style="padding-right: 70px;">
-                        <input type="text" id="F_Icon" name="F_Icon" class="layui-input layui-hide">
+                        <input type="text" id="Icon" name="Icon" class="layui-input layui-hide">
                         <input type="text" id="iconPicker" @*value="fa fa-file-image-o"*@ lay-filter="iconPicker" class="hide">
                         <button class="layui-btn layui-btn-warm" onclick="clearIcon()" style="position: absolute;top: 0;right: 6px;cursor: pointer;">清除图标</button>
                     </div>
@@ -205,23 +205,23 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">显示顺序</label>
                     <div class="layui-input-block">
-                        <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
+                        <input type="number" pattern="[0-9]*" id="SortCode" name="SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">选项</label>
                     <div class="layui-input-block">
-                        <input id="F_IsMenu" name="F_IsMenu" type="checkbox" value="true" title="菜单">
-                        <input id="F_IsExpand" name="F_IsExpand" type="checkbox" value="true" title="展开">
-                        <input id="F_IsPublic" name="F_IsPublic" type="checkbox" value="true" title="公共">
-                        <input id="F_IsFields" name="F_IsFields" type="checkbox" value="true" title="字段">
-                        <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效">
+                        <input id="IsMenu" name="IsMenu" type="checkbox" value="true" title="菜单">
+                        <input id="IsExpand" name="IsExpand" type="checkbox" value="true" title="展开">
+                        <input id="IsPublic" name="IsPublic" type="checkbox" value="true" title="公共">
+                        <input id="IsFields" name="IsFields" type="checkbox" value="true" title="字段">
+                        <input type="checkbox" name="EnabledMark" id="EnabledMark" checked="" value="true" title="有效">
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text layui-hide">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-block">
-                        <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入介绍"></textarea>
+                        <textarea id="Description" name="Description" class="layui-textarea" placeholder="请输入介绍"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">

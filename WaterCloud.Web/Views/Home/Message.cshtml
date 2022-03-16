@@ -198,40 +198,40 @@
                         var html2 = '';
                         var html3 = '';
                         for (var i = 0; i < data.length; i++) {
-                            if (data[i].F_MessageType == 0) {
+                            if (data[i].MessageType == 0) {
                                 num1++;
-                                html1 += '<a class="message-list-item" id="' + data[i].F_Id + '" href="javascript:;">'
+                                html1 += '<a class="message-list-item" id="' + data[i].Id + '" href="javascript:;">'
                                     + '<div class="watercolor">'
                                     + '<i class="layui-icon layui-icon-tips message-item-icon"></i>'
                                     + '<div class="message-item-right">'
-                                    + '<div class="message-item-title">' + '通知--' + new Date(data[i].F_CreatorTime).Format("yyyy-MM-dd hh:mm") + '</div>'
-                                    + '<div class="message-item-text layui-hide">' + data[i].F_MessageInfo + '</div>'
-                                    + '<div class="message-item-extra">' + data[i].F_CreatorUserName + '</div>'
+                                    + '<div class="message-item-title">' + '通知--' + new Date(data[i].CreatorTime).Format("yyyy-MM-dd hh:mm") + '</div>'
+                                    + '<div class="message-item-text layui-hide">' + data[i].MessageInfo + '</div>'
+                                    + '<div class="message-item-extra">' + data[i].CreatorUserName + '</div>'
                                     + '</div>'
                                     + '</div >'
                                     + '</a >';
                             }
-                            else if (data[i].F_MessageType == 1) {
+                            else if (data[i].MessageType == 1) {
                                 num2++;
-                                html2 += '<a class="message-list-item" id="' + data[i].F_Id + '" href="javascript:;">'
+                                html2 += '<a class="message-list-item" id="' + data[i].Id + '" href="javascript:;">'
                                     + '<div class="watercolor">'
                                     + '<div class="message-item-right">'
-                                    + '<div class="message-item-title">' + '私信--' + data[i].F_CreatorUserName + '</div>'
-                                    + '<div class="message-item-text layui-hide">' + data[i].F_MessageInfo + '</div>'
-                                    + '<div class="message-item-extra">' + new Date(data[i].F_CreatorTime).Format("yyyy-MM-dd hh:mm") + '</div>'
+                                    + '<div class="message-item-title">' + '私信--' + data[i].CreatorUserName + '</div>'
+                                    + '<div class="message-item-text layui-hide">' + data[i].MessageInfo + '</div>'
+                                    + '<div class="message-item-extra">' + new Date(data[i].CreatorTime).Format("yyyy-MM-dd hh:mm") + '</div>'
                                     + '</div>'
                                     + '</div>'
                                     + '</a>';
                             }
                             else {
                                 num3++;
-                                html3 += '<a class="message-list-item" id="' + data[i].F_Id + '" href="javascript:;">'
+                                html3 += '<a class="message-list-item" id="' + data[i].Id + '" href="javascript:;">'
                                     + '<div class="watercolor">'
                                     + '<span class="layui-badge ' + 'layui-badge-yellow' + '">' + '待处理' + '</span>'
                                     + '<div class="message-item-right">'
-                                    + '<h2 class="message-item-title">' + data[i].F_MessageInfo + '</h2>'
-                                    + '<div class="message-item-text layui-hide">' + data[i].F_Href + '</div>'
-                                    + '<div class="message-item-extra">' + new Date(data[i].F_CreatorTime).Format("yyyy-MM-dd hh:mm") + '</div>'
+                                    + '<h2 class="message-item-title">' + data[i].MessageInfo + '</h2>'
+                                    + '<div class="message-item-text layui-hide">' + data[i].Href + '</div>'
+                                    + '<div class="message-item-extra">' + new Date(data[i].CreatorTime).Format("yyyy-MM-dd hh:mm") + '</div>'
                                     + '</div>'
                                     + '</div>'
                                     + '</a>';

@@ -32,7 +32,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
         {
             if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.field = "F_Id";
+                pagination.field = "Id";
                 pagination.order = "desc";
             }
             var data = await _service.GetLookList(pagination,keyword);
@@ -76,7 +76,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
                     var temp = await _setService.GetForm(_service.currentuser.CompanyId);
                     if (temp != null)
                     {
-                        stemp = temp.F_CompanyName;
+                        stemp = temp.CompanyName;
                     }
                     else
                     {
@@ -125,22 +125,22 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
                     UploadfileEntity entity = new UploadfileEntity();
                     if (!string.IsNullOrEmpty(stemp))
                     {
-                        entity.F_FilePath = $@"/" + fileValue + $@"/"+ stemp + $@"/" + DateTime.Now.ToString("yyyyMMdd") + $@"/" + fileName;
+                        entity.FilePath = $@"/" + fileValue + $@"/"+ stemp + $@"/" + DateTime.Now.ToString("yyyyMMdd") + $@"/" + fileName;
                         filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + fileValue + $@"/" + stemp + $@"/" + DateTime.Now.ToString("yyyyMMdd") + $@"/";
                     }
                     string fileFullName = filePath + fileName;
                     entity.Create();
-                    entity.F_EnabledMark = true;
-                    entity.F_FileBy = fileby;
-                    entity.F_FileType = filetype;
-                    entity.F_CreatorUserName = _service.currentuser.UserName;
-                    entity.F_FileSize = size.ToIntOrNull();
+                    entity.EnabledMark = true;
+                    entity.FileBy = fileby;
+                    entity.FileType = filetype;
+                    entity.CreatorUserName = _service.currentuser.UserName;
+                    entity.FileSize = size.ToIntOrNull();
 
-                    entity.F_FileName = fileName;
-                    entity.F_OrganizeId = _service.currentuser.DepartmentId;
+                    entity.FileName = fileName;
+                    entity.OrganizeId = _service.currentuser.DepartmentId;
                     if (fileName.LastIndexOf(".") >= 0)
                     {
-                        entity.F_FileExtension = fileName.Substring(fileName.LastIndexOf("."));
+                        entity.FileExtension = fileName.Substring(fileName.LastIndexOf("."));
                     }
                     if (!await SubmitForm(entity, ""))
                     {
@@ -155,7 +155,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
                         file.CopyTo(fs);
                         fs.Flush();
                     }
-                    list.Add(new { src = entity.F_FilePath, title = fileName });
+                    list.Add(new { src = entity.FilePath, title = fileName });
                 }   
                 await _logService.WriteLog("操作成功。","","",DbLogType.Visit);
                 return Content(new { code = 0, msg = "操作成功", data = list }.ToJson());
@@ -172,7 +172,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
         public async Task<ActionResult> Download(string keyValue)
         {
             var data = await _service.GetForm(keyValue);
-            string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + data.F_FilePath;
+            string filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + data.FilePath;
             if (!FileHelper.IsExistFile(filePath))
             {
                 return Error("文件不存在");
@@ -186,7 +186,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
             f.Read(ms.GetBuffer(), 0, (int)f.Length);
             ms.Flush();
             f.Close();
-            string filename = DateTime.Now.ToString("yyyyMMdd_HHmmss") + data.F_FileExtension;
+            string filename = DateTime.Now.ToString("yyyyMMdd_HHmmss") + data.FileExtension;
             var contentType = MimeMapping.GetMimeMapping(filename);
             return File(ms, contentType, filename);
         }

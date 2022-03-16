@@ -39,12 +39,12 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> GetSelectJson(string keyword,string ids)
         {
             var data = await _service.GetList(keyword);
-            data = data.Where(a => a.F_EnabledMark == true).ToList();
+            data = data.Where(a => a.EnabledMark == true).ToList();
             if (!string.IsNullOrEmpty(ids))
             {
                 foreach (var item in ids.Split(','))
                 {
-                    var temp = data.Find(a => a.F_Id == item);
+                    var temp = data.Find(a => a.Id == item);
                     if (temp != null)
                     {
                         temp.LAY_CHECKED = true;
@@ -59,7 +59,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.field = "F_Id";
+                pagination.field = "Id";
                 pagination.order = "desc";
             }
             var data = await _service.GetLookList(pagination, keyword);

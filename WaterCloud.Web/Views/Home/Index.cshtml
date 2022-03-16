@@ -163,13 +163,13 @@
                 miniTongji = layui.miniTongji;
             function loadUser() {
                 var code = document.getElementById("usercode");
-                if (top.currentUser.F_IsAdmin) {
+                if (top.currentUser.IsAdmin) {
                     $('[data-clear]').removeClass('layui-hide');
                 }
                 else {
                     $('[data-clear]').parent().remove();
                 }
-                code.innerHTML = top.currentUser.F_Account + '<i class="layui-icon layui-icon-down layui-nav-more"></i>';                
+                code.innerHTML = top.currentUser.Account + '<i class="layui-icon layui-icon-down layui-nav-more"></i>';                
                 if (top.currentUser.MsgCout > 0) {
                     $('#noticeMarker').html('<span class="layui-badge-dot"></span>');
                     notice.options = {

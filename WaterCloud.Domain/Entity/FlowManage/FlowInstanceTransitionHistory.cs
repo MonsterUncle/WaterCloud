@@ -22,68 +22,68 @@ namespace WaterCloud.Domain.FlowManage
         /// 主键Id
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true, ColumnDescription = "主键Id")]
-        public string F_Id { get; set; }
+        [SugarColumn(ColumnName ="Id", IsPrimaryKey = true, ColumnDescription = "主键Id")]
+        public string Id { get; set; }
         /// <summary>
         /// 实例Id
         /// </summary>
-        [SugarColumn(IsNullable = false, ColumnName = "F_InstanceId", ColumnDataType = "nvarchar(50)", ColumnDescription = "实例Id")]
-        public string F_InstanceId { get; set; }
+        [SugarColumn(IsNullable = false, ColumnName = "InstanceId", ColumnDataType = "nvarchar(50)", ColumnDescription = "实例Id")]
+        public string InstanceId { get; set; }
         /// <summary>
 	    /// 开始节点Id
 	    /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_FromNodeId",ColumnDataType = "nvarchar(50)", ColumnDescription = "开始节点Id")]
-        public string F_FromNodeId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "FromNodeId",ColumnDataType = "nvarchar(50)", ColumnDescription = "开始节点Id")]
+        public string FromNodeId { get; set; }
         /// <summary>
 	    /// 开始节点类型
 	    /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "开始节点类型")]
-        public int? F_FromNodeType { get; set; }
+        public int? FromNodeType { get; set; }
         /// <summary>
 	    /// 开始节点名称
 	    /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_FromNodeName", ColumnDataType = "nvarchar(200)", ColumnDescription = "开始节点名称")]
-        public string F_FromNodeName { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "FromNodeName", ColumnDataType = "nvarchar(200)", ColumnDescription = "开始节点名称")]
+        public string FromNodeName { get; set; }
         /// <summary>
 	    /// 结束节点Id
 	    /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ToNodeId",ColumnDataType = "nvarchar(50)", ColumnDescription = "结束节点Id")]
-        public string F_ToNodeId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "ToNodeId",ColumnDataType = "nvarchar(50)", ColumnDescription = "结束节点Id")]
+        public string ToNodeId { get; set; }
         /// <summary>
 	    /// 结束节点类型
 	    /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "结束节点类型")]
-        public int? F_ToNodeType { get; set; }
+        public int? ToNodeType { get; set; }
         /// <summary>
 	    /// 结束节点名称
 	    /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ToNodeName", ColumnDataType = "nvarchar(200)", ColumnDescription = "结束节点名称")]
-        public string F_ToNodeName { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "ToNodeName", ColumnDataType = "nvarchar(200)", ColumnDescription = "结束节点名称")]
+        public string ToNodeName { get; set; }
         /// <summary>
 	    /// 转化状态
 	    /// </summary>
         [SugarColumn(IsNullable = false, ColumnDescription = "转化状态")]
-        public bool F_TransitionSate { get; set; }
+        public bool TransitionSate { get; set; }
         /// <summary>
 	    /// 是否结束
 	    /// </summary>
         [SugarColumn(IsNullable = false,ColumnDescription = "是否结束")]
-        public bool F_IsFinish { get; set; }
+        public bool IsFinish { get; set; }
         /// <summary>
 	    /// 转化时间
 	    /// </summary>
         [SugarColumn(IsNullable = false, ColumnDescription = "转化时间")]
-        public DateTime F_CreatorTime { get; set; }
+        public DateTime CreatorTime { get; set; }
         /// <summary>
         /// 创建用户主键
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_CreatorUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建用户主键")]
-        public string F_CreatorUserId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "CreatorUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建用户主键")]
+        public string CreatorUserId { get; set; }
         /// <summary>
         /// 创建用户
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_CreatorUserName", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建用户")]
-        public string F_CreatorUserName { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "CreatorUserName", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建用户")]
+        public string CreatorUserName { get; set; }
 
     }
 }

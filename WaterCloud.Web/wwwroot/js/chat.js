@@ -31,18 +31,18 @@ connection.on("ReceiveMessage", function (msg) {
     layui.use(['notice','common'], function () {
         var notice = layui.notice;
         var common = layui.common;
-        if (data.F_MessageType == 0)  {
+        if (data.MessageType == 0)  {
             notice.options = {
                 positionClass: "toast-bottom-right",//弹出的位置,
                 onclick: function () {
                     common.ajax({
                         url: "/InfoManage/Message/ReadMsgForm",
-                        data: { keyValue: data.F_Id },
+                        data: { keyValue: data.Id },
                         type: 'POST',
                         success: function () {
-                            var title = '通知---' + data.F_CreatorUserName,
-                                noticeTime = data.F_CreatorTime,
-                                content = data.F_MessageInfo;
+                            var title = '通知---' + data.CreatorUserName,
+                                noticeTime = data.CreatorTime,
+                                content = data.MessageInfo;
                             var html = '<div style="padding:15px 20px; text-align:justify; line-height: 22px;border-bottom:1px solid #e2e2e2;background-color: #2f4056;color: #ffffff">\n' +
                                 '<div style="text-align: center;margin-bottom: 20px;font-weight: bold;border-bottom:1px solid #718fb5;padding-bottom: 5px"><h4 class="text-danger">' + title + '</h4></div>\n' +
                                 '<div style="font-size: 12px">' + content + '</div>\n' +
@@ -62,20 +62,20 @@ connection.on("ReceiveMessage", function (msg) {
                     });
                 }
             };
-            notice.success(data.F_MessageInfo);
+            notice.success(data.MessageInfo);
         }
-        else if (data.F_MessageType == 1) {
+        else if (data.MessageType == 1) {
             notice.options = {
                 positionClass: "toast-bottom-right",//弹出的位置,
                 onclick: function () {
                     common.ajax({
                         url: "/InfoManage/Message/ReadMsgForm",
-                        data: { keyValue: data.F_Id },
+                        data: { keyValue: data.Id },
                         type: 'POST',
                         success: function () {
-                            var title = '私信---' + data.F_CreatorUserName,
-                                noticeTime = data.F_CreatorTime,
-                                content = data.F_MessageInfo;
+                            var title = '私信---' + data.CreatorUserName,
+                                noticeTime = data.CreatorTime,
+                                content = data.MessageInfo;
                             var html = '<div style="padding:15px 20px; text-align:justify; line-height: 22px;border-bottom:1px solid #e2e2e2;background-color: #2f4056;color: #ffffff">\n' +
                                 '<div style="text-align: center;margin-bottom: 20px;font-weight: bold;border-bottom:1px solid #718fb5;padding-bottom: 5px"><h4 class="text-danger">' + title + '</h4></div>\n' +
                                 '<div style="font-size: 12px">' + content + '</div>\n' +
@@ -95,7 +95,7 @@ connection.on("ReceiveMessage", function (msg) {
                     });
                 },
             };
-            notice.warning(data.F_MessageInfo);
+            notice.warning(data.MessageInfo);
         }
         else {
             notice.options = {
@@ -103,15 +103,15 @@ connection.on("ReceiveMessage", function (msg) {
                 onclick: function () {
                     common.ajax({
                         url: "/InfoManage/Message/ReadMsgForm",
-                        data: { keyValue: data.F_Id },
+                        data: { keyValue: data.Id },
                         type: 'POST',
                         success: function () {
-                            $("[layuimini-href='" + data.F_Href + "']", ".layuimini-menu-left").click();
+                            $("[layuimini-href='" + data.Href + "']", ".layuimini-menu-left").click();
                         }
                     });
                 }
             };
-            notice.error(data.F_MessageInfo);
+            notice.error(data.MessageInfo);
         }
         $("#noticeMarker").html("<span class='layui-badge-dot'></span>");
     })

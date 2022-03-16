@@ -8,12 +8,12 @@ namespace WaterCloud.Domain
     {
         public static string[] BaseFieldList = new string[]
         {
-            "F_Id",
-            "F_DeleteMark",
-            "F_LastModifyTime",
-            "F_LastModifyUserId",
-            "F_DeleteTime",
-            "F_DeleteUserId",
+            "Id",
+            "DeleteMark",
+            "LastModifyTime",
+            "LastModifyUserId",
+            "DeleteTime",
+            "DeleteUserId",
         };
     }
 }

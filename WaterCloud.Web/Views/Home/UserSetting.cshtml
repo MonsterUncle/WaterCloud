@@ -26,19 +26,19 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label required">账号</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_Account" name="F_Account" lay-verify="required" class="layui-input">
+                        <input type="text" id="Account" name="Account" lay-verify="required" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label required">姓名</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_RealName" name="F_RealName" autocomplete="off" lay-verify="required" class="layui-input">
+                        <input type="text" id="RealName" name="RealName" autocomplete="off" lay-verify="required" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label ">性别</label>
                     <div class="layui-input-block">
-                        <select id="F_Gender" name="F_Gender">
+                        <select id="Gender" name="Gender">
                             <option value="true">男</option>
                             <option value="false">女</option>
                         </select>
@@ -47,25 +47,25 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">生日</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_Birthday" name="F_Birthday" autocomplete="off" value="" class="layui-input ">
+                        <input type="text" id="Birthday" name="Birthday" autocomplete="off" value="" class="layui-input ">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">手机</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_MobilePhone" name="F_MobilePhone" autocomplete="off" placeholder="请输入手机号" value="" class="layui-input">
+                        <input type="text" id="MobilePhone" name="MobilePhone" autocomplete="off" placeholder="请输入手机号" value="" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">邮箱</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_Email" name="F_Email" autocomplete="off" placeholder="请输入邮箱" value="" class="layui-input">
+                        <input type="text" id="Email" name="Email" autocomplete="off" placeholder="请输入邮箱" value="" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-block">
-                        <textarea id="F_Description" name="F_Description" autocomplete="off" class="layui-textarea" placeholder="请输入备注信"></textarea>
+                        <textarea id="Description" name="Description" autocomplete="off" class="layui-textarea" placeholder="请输入备注信"></textarea>
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@
                     async: false,
                     success: function (data) {
                         common.val('adminform', data);
-                        //$('#F_Birthday').val(new Date(data.F_Birthday).Format("yyyy-MM-dd"));
+                        //$('#Birthday').val(new Date(data.Birthday).Format("yyyy-MM-dd"));
                     }
                 });
                 form.render();
@@ -99,7 +99,7 @@
             wcLoading.close();
             //执行一个laydate实例
             laydate.render({
-                elem: '#F_Birthday'
+                elem: '#Birthday'
                 , btns: ['clear', 'now']
                 , trigger: 'click',
                 format: 'yyyy-MM-dd',

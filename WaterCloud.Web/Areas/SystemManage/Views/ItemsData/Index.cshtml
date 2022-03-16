@@ -72,13 +72,13 @@
             height: 'full-110',
             cols: [[
                 { type: "radio", width: 50, fixed: 'left' },
-                { field: 'F_ItemName', title: '名称', width: 120 },
-                { field: 'F_ItemCode', title: '编号', width: 120 },
-                { field: 'F_SortCode', title: '排序', width: 60 },
+                { field: 'ItemName', title: '名称', width: 120 },
+                { field: 'ItemCode', title: '编号', width: 120 },
+                { field: 'SortCode', title: '排序', width: 60 },
                 {
-                    field: 'F_IsDefault', title: '默认', width: 80,
+                    field: 'IsDefault', title: '默认', width: 80,
                     templet: function (d) {
-                        if (d.F_IsDefault == true) {
+                        if (d.IsDefault == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
@@ -86,9 +86,9 @@
                     }
                 }, 
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80,
+                    field: 'EnabledMark', title: '状态', width: 80,
                     templet: function (d) {
-                        if (d.F_EnabledMark == true) {
+                        if (d.EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
@@ -96,16 +96,16 @@
                     }
                 }, 
                 {
-                    field: 'F_CreatorTime', title: '创建时间', width: 120,
+                    field: 'CreatorTime', title: '创建时间', width: 120,
                     templet: function (d) {
-                        if (d.F_CreatorTime) {
-                            var time = new Date(d.F_CreatorTime);
+                        if (d.CreatorTime) {
+                            var time = new Date(d.CreatorTime);
                             return time.Format("yyyy-MM-dd");
                         }
                         return '';
                     }
                 },
-                { field: 'F_Description', title: '介绍', minWidth: 100 },
+                { field: 'Description', title: '介绍', minWidth: 100 },
             ]]
         });
         // 监听搜索操作
@@ -161,7 +161,7 @@
                 }
                 common.deleteForm({
                     url: "/SystemManage/ItemsData/DeleteForm",
-                    param: { keyValue: data[0].F_Id },
+                    param: { keyValue: data[0].Id },
                     success: function () {
                         common.reload('data-search-btn');
                     }
@@ -174,7 +174,7 @@
                 }
                 common.modalOpen({
                     title: "编辑字典",
-                    url: "/SystemManage/ItemsData/Form?itemId=" + treeid + "&keyValue=" + data[0].F_Id,
+                    url: "/SystemManage/ItemsData/Form?itemId=" + treeid + "&keyValue=" + data[0].Id,
                     width: "450px",
                     height: "350px",
                 });
@@ -186,7 +186,7 @@
                 }
                 common.modalOpen({
                     title: "查看字典",
-                    url: "/SystemManage/ItemsData/Details?keyValue=" + data[0].F_Id,
+                    url: "/SystemManage/ItemsData/Details?keyValue=" + data[0].Id,
                     width: "450px",
                     height: "350px",
                     btn: []

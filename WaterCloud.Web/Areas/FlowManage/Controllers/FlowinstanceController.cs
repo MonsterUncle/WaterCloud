@@ -58,7 +58,7 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
         {
             if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.field = "F_Id";
+                pagination.field = "Id";
                 pagination.order = "desc";
             }
             var data = await _service.GetLookList(pagination, type, keyword);
@@ -95,7 +95,7 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
                 }
                 else
                 {
-                    entity.F_Id = keyValue;
+                    entity.Id = keyValue;
                     await _service.UpdateInstance(entity);
                 }
                 return await Success("操作成功。", "", keyValue);
@@ -112,11 +112,11 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
             try
             {
                 await _service.Verification(entity);
-                return await Success("操作成功。", "", entity.F_FlowInstanceId,DbLogType.Submit);
+                return await Success("操作成功。", "", entity.FlowInstanceId,DbLogType.Submit);
             }
             catch (Exception ex)
             {
-                return await Error(ex.Message, "",entity.F_FlowInstanceId, DbLogType.Submit);
+                return await Error(ex.Message, "",entity.FlowInstanceId, DbLogType.Submit);
             }
         }
 

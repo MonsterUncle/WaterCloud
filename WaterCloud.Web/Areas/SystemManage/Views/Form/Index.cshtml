@@ -71,15 +71,15 @@
              search: false,
              treeColIndex: 0,
              height: 'full-130',
-             treeIdName: 'F_Id',  // id字段名称
-             treePidName: 'F_ParentId',     // pid字段名称
+             treeIdName: 'Id',  // id字段名称
+             treePidName: 'ParentId',     // pid字段名称
              cols: [[
-                 { field: 'F_FullName', title: '部门名称', width: 250, filter: true },
-                 { field: 'F_EnCode', title: '部门编号', width: 180, filter: true},
+                 { field: 'FullName', title: '部门名称', width: 250, filter: true },
+                 { field: 'EnCode', title: '部门编号', width: 180, filter: true},
                  {
-                     field: 'F_CategoryId', title: '部门分类', width: 120, filter: true,
+                     field: 'CategoryId', title: '部门分类', width: 120, filter: true,
                      templet: function (d) {
-                         return top.clients.dataItems["OrganizeCategory"][d.F_CategoryId] == null ? "" : top.clients.dataItems["OrganizeCategory"][d.F_CategoryId];
+                         return top.clients.dataItems["OrganizeCategory"][d.CategoryId] == null ? "" : top.clients.dataItems["OrganizeCategory"][d.CategoryId];
                      }
                  }
              ]],
@@ -101,18 +101,18 @@
              autoSort: true,
              cols: [[                 
                  { type: "radio", width: 50 },
-                 { field: 'F_Name', title: '表单名称', width: 150, sort: true },
-                 { field: 'F_Description', title: '备注', minWidth: 250 },
-                 { field: 'F_Fields', title: '字段数', width: 100, sort: true, hide: true },
-                 { field: 'F_ContentData', title: '表单中的字段数据', minWidth: 200, sort: true },
-                 { field: 'F_DbName', title: '关联数据表', width: 120, hide: true },
+                 { field: 'Name', title: '表单名称', width: 150, sort: true },
+                 { field: 'Description', title: '备注', minWidth: 250 },
+                 { field: 'Fields', title: '字段数', width: 100, sort: true, hide: true },
+                 { field: 'ContentData', title: '表单中的字段数据', minWidth: 200, sort: true },
+                 { field: 'DbName', title: '关联数据表', width: 120, hide: true },
                  {
-                     field: 'F_OrganizeName', title: '所属部门', width: 120, hide: true
+                     field: 'OrganizeName', title: '所属部门', width: 120, hide: true
                  },
                  {
-                     field: 'F_EnabledMark', title: '状态', width: 80,
+                     field: 'EnabledMark', title: '状态', width: 80,
                      templet: function (d) {
-                         if (d.F_EnabledMark == true) {
+                         if (d.EnabledMark == true) {
                              return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                          } else {
                              return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
@@ -120,10 +120,10 @@
                      }
                  }, 
                  {
-                     field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true,
+                     field: 'CreatorTime', title: '创建时间', width: 120, sort: true,
                      templet: function (d) {
-                         if (d.F_CreatorTime) {
-                             var time = new Date(d.F_CreatorTime);
+                         if (d.CreatorTime) {
+                             var time = new Date(d.CreatorTime);
                              return time.Format("yyyy-MM-dd");
                          }
                          return '';
@@ -157,7 +157,7 @@
          wcLoading.close();
          table.on('row(currentTable)', function (obj) {
              obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
-             ItemId = obj.data.F_Id;
+             ItemId = obj.data.Id;
              $('button[lay-filter="data-search-btn"]').click();//按钮刷新
          })
          //行点击事件监听，控制按钮显示
@@ -179,7 +179,7 @@
                  }
                  common.deleteForm({
                      url: "/SystemManage/Form/DeleteForm",
-                     param: { keyValue: data[0].F_Id },
+                     param: { keyValue: data[0].Id },
                      success: function () {
                          common.reload('data-search-btn');
                          entity = null;
@@ -193,7 +193,7 @@
                  }
                  common.openNewTabByIframe({
                      title: "编辑表单",
-                     href: "/SystemManage/Form/Form?keyValue=" + data[0].F_Id,
+                     href: "/SystemManage/Form/Form?keyValue=" + data[0].Id,
                  });
              }
              else if (obj.event === 'details') {
@@ -203,7 +203,7 @@
                  }
                  common.modalOpen({
                      title: "预览表单",
-                     url: "/SystemManage/Form/Details?keyValue=" + data[0].F_Id,
+                     url: "/SystemManage/Form/Details?keyValue=" + data[0].Id,
                      width: "600px",
                      height: "600px",
                      btn: []

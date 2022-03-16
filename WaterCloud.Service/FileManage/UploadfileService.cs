@@ -26,9 +26,9 @@ namespace WaterCloud.Service.FileManage
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_FileName.Contains(keyword) || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.FileName.Contains(keyword) || a.Description.Contains(keyword));
             }
-            return await query.OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
+            return await query.OrderBy(a => a.Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<UploadfileEntity>> GetLookList(string keyword = "")
@@ -36,14 +36,14 @@ namespace WaterCloud.Service.FileManage
             var query = GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_FileName.Contains(keyword) || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.FileName.Contains(keyword) || a.Description.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
-            var data = await query.OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
+            var data = await query.OrderBy(a => a.Id,OrderByType.Desc).ToListAsync();
             foreach (var item in data)
             {
-                string[] departments = item.F_OrganizeId.Split(',');
-                item.F_OrganizeName = string.Join(',', repository.Db.Queryable<OrganizeEntity>().Where(a => departments.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
+                string[] departments = item.OrganizeId.Split(',');
+                item.OrganizeName = string.Join(',', repository.Db.Queryable<OrganizeEntity>().Where(a => departments.Contains(a.Id)).Select(a => a.FullName).ToList());
             }
             return data;
         }
@@ -55,17 +55,17 @@ namespace WaterCloud.Service.FileManage
             Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
             enabledTemp.Add("1", "有效");
             enabledTemp.Add("0", "无效");
-            dic.Add("F_EnabledMark", enabledTemp);
+            dic.Add("EnabledMark", enabledTemp);
             Dictionary<string, string> fileTypeTemp = new Dictionary<string, string>();
             fileTypeTemp.Add("1", "图片");
             fileTypeTemp.Add("0", "文件");
-            dic.Add("F_FileType", fileTypeTemp);
+            dic.Add("FileType", fileTypeTemp);
             pagination = ChangeSoulData(dic, pagination);
             var query = GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(a => a.F_FileName.Contains(keyword) || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.FileName.Contains(keyword) || a.Description.Contains(keyword));
             }
             //权限过滤
             query = GetDataPrivilege("a", "", query);
@@ -73,30 +73,30 @@ namespace WaterCloud.Service.FileManage
             var orgs = repository.Db.Queryable<OrganizeEntity>().ToList();
             foreach (var item in data)
             {
-                string[] departments = item.F_OrganizeId.Split(',');
-                item.F_OrganizeName = string.Join(',', orgs.Where(a => departments.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
+                string[] departments = item.OrganizeId.Split(',');
+                item.OrganizeName = string.Join(',', orgs.Where(a => departments.Contains(a.Id)).Select(a => a.FullName).ToList());
             }
             return data;
         }
         private ISugarQueryable<UploadfileEntity> GetQuery()
         {
             var query = repository.Db.Queryable<UploadfileEntity, UserEntity>((a,b)=>new JoinQueryInfos(
-                    JoinType.Left, a.F_CreatorUserId == b.F_Id))
+                    JoinType.Left, a.CreatorUserId == b.Id))
                 .Select((a, b) => new UploadfileEntity
                 {
-                    F_Id = a.F_Id,
-                    F_CreatorUserName = b.F_RealName,
-                    F_CreatorTime = a.F_CreatorTime,
-                    F_CreatorUserId = a.F_CreatorUserId,
-                    F_Description = a.F_Description,
-                    F_EnabledMark = a.F_EnabledMark,
-                    F_FileExtension = a.F_FileExtension,
-                    F_FileBy = a.F_FileBy,
-                    F_FileName = a.F_FileName,
-                    F_FilePath = a.F_FilePath,
-                    F_FileSize = a.F_FileSize,
-                    F_FileType = a.F_FileType,
-                    F_OrganizeId = a.F_OrganizeId,
+                    Id = a.Id,
+                    CreatorUserName = b.RealName,
+                    CreatorTime = a.CreatorTime,
+                    CreatorUserId = a.CreatorUserId,
+                    Description = a.Description,
+                    EnabledMark = a.EnabledMark,
+                    FileExtension = a.FileExtension,
+                    FileBy = a.FileBy,
+                    FileName = a.FileName,
+                    FilePath = a.FilePath,
+                    FileSize = a.FileSize,
+                    FileType = a.FileType,
+                    OrganizeId = a.OrganizeId,
                 }).MergeTable();
             return query;
         }
@@ -132,7 +132,7 @@ namespace WaterCloud.Service.FileManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Delete(a => ids.Contains(a.F_Id));
+            await repository.Delete(a => ids.Contains(a.Id));
         }
         #endregion
 

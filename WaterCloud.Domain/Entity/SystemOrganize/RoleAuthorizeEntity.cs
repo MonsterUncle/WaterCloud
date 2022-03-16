@@ -18,42 +18,42 @@ namespace WaterCloud.Domain.SystemOrganize
         /// <summary>
         /// 主键Id
         /// </summary>
-        [SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]
-        public string F_Id { get; set; }
+        [SugarColumn(ColumnName ="Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]
+        public string Id { get; set; }
         /// <summary>
         /// 项目类型
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "项目类型")]
-        public int? F_ItemType { get; set; }
+        public int? ItemType { get; set; }
         /// <summary>
         /// /项目Id
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ItemId", ColumnDataType = "nvarchar(50)", ColumnDescription = "项目Id")]
-        public string F_ItemId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "ItemId", ColumnDataType = "nvarchar(50)", ColumnDescription = "项目Id")]
+        public string ItemId { get; set; }
         /// <summary>
         /// 
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "目标类型")]
-        public int? F_ObjectType { get; set; }
+        public int? ObjectType { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ObjectId",ColumnDataType = "nvarchar(50)", ColumnDescription = "目标Id")]
-        public string F_ObjectId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "ObjectId",ColumnDataType = "nvarchar(50)", ColumnDescription = "目标Id")]
+        public string ObjectId { get; set; }
         /// <summary>
         /// 排序码
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "排序码")]
-        public int? F_SortCode { get; set; }
+        public int? SortCode { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "创建时间")]
-        public DateTime? F_CreatorTime { get; set; }
+        public DateTime? CreatorTime { get; set; }
         /// <summary>
         /// 创建人Id
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_CreatorUserId",ColumnDataType = "nvarchar(50)", ColumnDescription = "创建人Id")]
-        public string F_CreatorUserId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "CreatorUserId",ColumnDataType = "nvarchar(50)", ColumnDescription = "创建人Id")]
+        public string CreatorUserId { get; set; }
     }
 }

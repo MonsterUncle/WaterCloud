@@ -59,12 +59,12 @@
             request: { roleId: keyValue }
         });
         function initControl() {
-            $("#F_OrganizeId").bindSelect({
+            $("#OrganizeId").bindSelect({
                 url: "/SystemOrganize/SystemSet/GetListJson",
-                id: "F_Id",
-                text: "F_CompanyName"
+                id: "Id",
+                text: "CompanyName"
             });
-            $("#F_Type").bindSelect({
+            $("#Type").bindSelect({
                 data: top.clients.dataItems['RoleType'],
                 id: "",
             });
@@ -131,45 +131,45 @@
                                     <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">归属公司</label>
                                         <div class="layui-input-block">
-                                            <select id="F_OrganizeId" name="F_OrganizeId" lay-verify="required">
+                                            <select id="OrganizeId" name="OrganizeId" lay-verify="required">
                                             </select>
                                         </div>
                                     </div>
                                     <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">角色名称</label>
                                         <div class="layui-input-block">
-                                            <input type="text" id="F_FullName" name="F_FullName" lay-verify="required" class="layui-input" placeholder="请填写角色名称">
+                                            <input type="text" id="FullName" name="FullName" lay-verify="required" class="layui-input" placeholder="请填写角色名称">
                                         </div>
                                     </div>
                                     <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">角色编号</label>
                                         <div class="layui-input-block">
-                                            <input id="F_EnCode" name="F_EnCode" type="text" lay-verify="required" class="layui-input" placeholder="请输入角色编号" />
+                                            <input id="EnCode" name="EnCode" type="text" lay-verify="required" class="layui-input" placeholder="请输入角色编号" />
                                         </div>
                                     </div>
                                     <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">角色类型</label>
                                         <div class="layui-input-block">
-                                            <select id="F_Type" name="F_Type" lay-verify="required">
+                                            <select id="Type" name="Type" lay-verify="required">
                                             </select>
                                         </div>
                                     </div>
                                     <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">显示顺序</label>
                                         <div class="layui-input-block">
-                                            <input id="F_SortCode" name="F_SortCode" type="number" pattern="[0-9]*" class="layui-input" lay-verify="required" />
+                                            <input id="SortCode" name="SortCode" type="number" pattern="[0-9]*" class="layui-input" lay-verify="required" />
                                         </div>
                                     </div>
                                     <div class="layui-form-item layui-hide">
                                         <label class="layui-form-label">选项</label>
                                         <div class="layui-input-block">
-                                            <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
+                                            <input type="checkbox" name="EnabledMark" id="EnabledMark" checked="" value="true" title="有效标识">
                                         </div>
                                     </div>
                                     <div class="layui-form-item layui-form-text layui-hide">
                                         <label class="layui-form-label">备注</label>
                                         <div class="layui-input-block">
-                                            <textarea id="F_Description" name="F_Description" class="layui-textarea"></textarea>
+                                            <textarea id="Description" name="Description" class="layui-textarea"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group-bottom text-right">

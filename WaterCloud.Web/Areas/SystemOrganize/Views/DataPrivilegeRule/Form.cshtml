@@ -11,7 +11,7 @@
                 commonTable = layui.commonTable;
             var keyValue = $.request("keyValue");
             if (!!keyValue) {
-                $('#F_ModuleId').prop('disabled', true);
+                $('#ModuleId').prop('disabled', true);
             }
             //权限字段
             common.authorizeFields('adminform');
@@ -25,9 +25,9 @@
                         async: false,
                         success: function (data) {
                             common.val('adminform', data);
-                            var datas = JSON.parse(data.F_PrivilegeRules);
+                            var datas = JSON.parse(data.PrivilegeRules);
                             for (var i = 0; i < datas.length; i++) {
-                                datas[i]["F_Id"] = uuid();
+                                datas[i]["Id"] = uuid();
                             }
                             table.reload('currentTableId', {
                                 data: datas
@@ -36,7 +36,7 @@
                     });
                 }
                 else {
-                    if (!$('#F_ModuleId').val()) {
+                    if (!$('#ModuleId').val()) {
                         $('#toolbar').addClass('layui-hide');
                     }
                 }
@@ -69,8 +69,8 @@
             //toolbar监听事件
             table.on('toolbar(currentTableFilter)', function (obj) {
                 var data = table.checkStatus('currentTableId').data;
-                var id = data.length > 0 ? data[0].F_Id : null;
-                var module = $('#F_ModuleId').val();
+                var id = data.length > 0 ? data[0].Id : null;
+                var module = $('#ModuleId').val();
                 if (obj.event === 'add') {  // 监听删除操作
                     if (!module) {
                         common.modalMsg("未选中模块", "warning");
@@ -96,7 +96,7 @@
                             try {
                                 var cachedata = table.cache.currentTableId;
                                 for (var i = 0; i < cachedata.length; i++) {
-                                    if (id == cachedata[i].F_Id) {
+                                    if (id == cachedata[i].Id) {
                                         cachedata.splice(i, 1);
                                         break;
                                     }
@@ -136,8 +136,8 @@
             });
             //toolrow监听事件
             table.on('tool(currentTableFilter)', function (obj) {
-                var id = obj.data.F_Id;
-                var module = $('#F_ModuleId').val();
+                var id = obj.data.Id;
+                var module = $('#ModuleId').val();
                 if (obj.event === 'delete') {
                     common.modalConfirm("注：您确定要删除该项数据吗？", function (r) {
                         if (r) {
@@ -147,7 +147,7 @@
                             try {
                                 var cachedata = table.cache.currentTableId;
                                 for (var i = 0; i < cachedata.length; i++) {
-                                    if (id == cachedata[i].F_Id) {
+                                    if (id == cachedata[i].Id) {
                                         cachedata.splice(i, 1);
                                         break;
                                     }
@@ -185,12 +185,12 @@
                 //绑定数据源
                 //类型为下拉框时
                 if (!!keyValue) {
-                    $("#F_ModuleId").bindSelect({
+                    $("#ModuleId").bindSelect({
                         url: "/SystemManage/Module/GetSelectMunuJson",
                     });
                 }
                 else {
-                    $("#F_ModuleId").bindSelect({
+                    $("#ModuleId").bindSelect({
                         url: "/SystemManage/Module/GetSelectMunuBesidesJson",
                     });
                 }
@@ -214,7 +214,7 @@
                 }
             });
             //监听select
-            form.on('select(F_ModuleId)', function (data) {
+            form.on('select(ModuleId)', function (data) {
                 if (!!data.value) {
                     $('#toolbar').removeClass('layui-hide');
                 }
@@ -231,7 +231,7 @@
                     return false;
                 }
                 var postData = data.field;
-                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+                if (!postData["EnabledMark"]) postData["EnabledMark"] = false;
                 postData.listData = JSON.stringify(cachedata);
                 common.submitForm({
                     url: '/SystemOrganize/DataPrivilegeRule/SubmitForm?keyValue=' + keyValue,
@@ -254,7 +254,7 @@
                         <div class="layui-col-md4 layui-hide">
                             <label class="layui-form-label required">模块编号</label>
                             <div class="layui-input-block">
-                                <select id="F_ModuleId" name="F_ModuleId" lay-filter="F_ModuleId" lay-verify="required" lay-search>
+                                <select id="ModuleId" name="ModuleId" lay-filter="ModuleId" lay-verify="required" lay-search>
                                     <option value="">请选择</option>
                                 </select>
                             </div>
@@ -262,13 +262,13 @@
                         <div class="layui-col-md4 layui-hide">
                             <label class="layui-form-label required">排序</label>
                             <div class="layui-input-block">
-                                <input type="number" pattern="[0-9]*" id="F_SortCode" name="F_SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
+                                <input type="number" pattern="[0-9]*" id="SortCode" name="SortCode" lay-verify="required|number" oninput="if(value.length>8)value=value.slice(0,8)" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-col-md4 layui-hide">
                             <label class="layui-form-label">选项</label>
                             <div class="layui-input-block">
-                                <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效标识">
+                                <input type="checkbox" name="EnabledMark" id="EnabledMark" checked="" value="true" title="有效标识">
                             </div>
                         </div>
                     </div>

@@ -17,17 +17,17 @@
         var options = {
             elem: '#currentTableId',
             url: '/SystemManage/ItemsType/GetGridJson',
-            treeIdName: 'F_Id',  // id字段名称
-            treePidName: 'F_ParentId',     // pid字段名称
+            treeIdName: 'Id',  // id字段名称
+            treePidName: 'ParentId',     // pid字段名称
             cols: [[
                 { type: "radio", width: 50, fixed: 'left'  },
-                { field: 'F_FullName', title: '名称', width: 200 },
-                { field: 'F_EnCode', title: '编号', width: 120 },
-                { field: 'F_SortCode', title: '排序', width: 60 },
+                { field: 'FullName', title: '名称', width: 200 },
+                { field: 'EnCode', title: '编号', width: 120 },
+                { field: 'SortCode', title: '排序', width: 60 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80,
+                    field: 'EnabledMark', title: '状态', width: 80,
                     templet: function (d) {
-                        if (d.F_EnabledMark == true) {
+                        if (d.EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
@@ -35,16 +35,16 @@
                     }
                 },
                 {
-                    field: 'F_CreatorTime', title: '创建时间', width: 120,
+                    field: 'CreatorTime', title: '创建时间', width: 120,
                     templet: function (d) {
-                        if (d.F_CreatorTime) {
-                            var time = new Date(d.F_CreatorTime);
+                        if (d.CreatorTime) {
+                            var time = new Date(d.CreatorTime);
                             return time.Format("yyyy-MM-dd");
                         }
                         return '';
                     }
                 },
-                { field: 'F_Description', title: '备注', minWidth: 150 },
+                { field: 'Description', title: '备注', minWidth: 150 },
                 { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right'  }
             ]],
         };
@@ -66,7 +66,7 @@
         table.on('toolbar(currentTableFilter)', function (obj) {
             var data = table.checkStatus('currentTableId').data;
             if (obj.event === 'add') {  // 监听操作
-                keyValue = data.length > 0 ? data[0].F_Id : null;
+                keyValue = data.length > 0 ? data[0].Id : null;
                 common.modalOpen({
                     title: "添加分类",
                     url: "/SystemManage/ItemsType/Form?event=add&keyValue=" + (!!keyValue ? keyValue : ""),
@@ -81,7 +81,7 @@
                 }
                 common.deleteForm({
                     url: "/SystemManage/ItemsType/DeleteForm",
-                    param: { keyValue: data[0].F_Id },
+                    param: { keyValue: data[0].Id },
                     success: function () {
                         common.reload('data-search-btn');
                     }
@@ -94,7 +94,7 @@
                 }
                 common.modalOpen({
                     title: "编辑分类",
-                    url: "/SystemManage/ItemsType/Form?event=edit&keyValue=" + data[0].F_Id,
+                    url: "/SystemManage/ItemsType/Form?event=edit&keyValue=" + data[0].Id,
                     width: "450px",
                     height: "380px",
                 });
@@ -106,7 +106,7 @@
                 }
                 common.modalOpen({
                     title: "查看分类",
-                    url: "/SystemManage/ItemsType/Details?keyValue=" + data[0].F_Id,
+                    url: "/SystemManage/ItemsType/Details?keyValue=" + data[0].Id,
                     width: "450px",
                     height: "380px",
                     btn: []
@@ -127,7 +127,7 @@
             if (obj.event === 'delete') {
                 common.deleteForm({
                     url: "/SystemManage/ItemsType/DeleteForm",
-                    param: { keyValue: obj.data.F_Id },
+                    param: { keyValue: obj.data.Id },
                     success: function () {
                         obj.del();
                     }
@@ -136,7 +136,7 @@
             else if (obj.event === 'edit') {
                 common.modalOpen({
                     title: "编辑界面",
-                    url: "/SystemManage/ItemsType/Form?event=edit&keyValue=" + obj.data.F_Id,
+                    url: "/SystemManage/ItemsType/Form?event=edit&keyValue=" + obj.data.Id,
                     width: "500px",
                     height: "500px",
                 });
@@ -144,7 +144,7 @@
             else if (obj.event === 'details') {
                 common.modalOpen({
                     title: "查看界面",
-                    url: "/SystemManage/ItemsType/Details?keyValue=" + obj.data.F_Id,
+                    url: "/SystemManage/ItemsType/Details?keyValue=" + obj.data.Id,
                     width: "500px",
                     height: "500px",
                     btn: []

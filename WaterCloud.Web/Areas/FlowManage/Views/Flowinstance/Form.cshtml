@@ -114,8 +114,8 @@
                 data: { keyValue: id },
                 async: false,
                 success: function (data) {
-                    if (data.F_FrmType == 0) {
-                        var dataJson = JSON.parse(data.F_FrmContent);
+                    if (data.FrmType == 0) {
+                        var dataJson = JSON.parse(data.FrmContent);
                         //表单设计器
                         renderForm = formPreview.render({
                             data: dataJson,
@@ -124,7 +124,7 @@
                         });
                     }
                     else {
-                        $("#frmPreview").load(document.location.origin + '/form/' + data.F_WebId + '.html');
+                        $("#frmPreview").load(document.location.origin + '/form/' + data.WebId + '.html');
                     }
                     NextNodeDesignateType = data.NextNodeDesignateType;
                     $('#NextMakerName').parent().parent().removeClass('layui-hide');
@@ -163,8 +163,8 @@
                         }
                     }
                     //预览流程
-                    flowDesignPanel.loadData(JSON.parse(data.F_SchemeContent));
-                    postData.F_CustomName = data.F_SchemeName + " " + new Date().Format("yyyy-MM-dd hh:mm:ss");
+                    flowDesignPanel.loadData(JSON.parse(data.SchemeContent));
+                    postData.CustomName = data.SchemeName + " " + new Date().Format("yyyy-MM-dd hh:mm:ss");
                 }
             });
             form.render();
@@ -173,10 +173,10 @@
         form.on('select(schemeChangeFilter)', function (obj) {
             if (!!obj.value) {
                 change = true;
-                $('#F_SchemeId').val(obj.value);
+                $('#SchemeId').val(obj.value);
             }
             else {
-                $('#F_SchemeId').val('');
+                $('#SchemeId').val('');
             }
             $("#frmPreview").html('');
             $("#valueList").val('');
@@ -186,7 +186,7 @@
             form.render();
         });
         $(function () {
-            $('#F_Code').val(new Date().getTime());
+            $('#Code').val(new Date().getTime());
             initControl();
             if (!!keyValue) {
                 common.ajax({
@@ -196,11 +196,11 @@
                     async: false,
                     success: function (data) {
                         common.val('adminform', data);
-                        flowDesignPanel.loadData(JSON.parse(data.F_SchemeContent));
-                        changeScheme(data.F_SchemeId);
-                        formtext = data.F_FrmData;
-                        if (data.F_FrmType == 0) {
-                            var dataJson = JSON.parse(data.F_FrmContent);
+                        flowDesignPanel.loadData(JSON.parse(data.SchemeContent));
+                        changeScheme(data.SchemeId);
+                        formtext = data.FrmData;
+                        if (data.FrmType == 0) {
+                            var dataJson = JSON.parse(data.FrmContent);
                             //表单设计器
                             renderForm= formPreview.render({
                                 data: dataJson,
@@ -210,7 +210,7 @@
                             renderForm.setFormData(JSON.parse(formtext));
                         }
                         else {
-                            $("#frmPreview").load(document.location.origin + '/form/' + data.F_DbName + '.html');
+                            $("#frmPreview").load(document.location.origin + '/form/' + data.DbName + '.html');
                             form.render();
                         }
                     }
@@ -219,10 +219,10 @@
             form.render();
         });
         function initControl() {
-            $("#F_SchemeId").bindSelect({
+            $("#SchemeId").bindSelect({
                 url: "/SystemManage/Flowscheme/GetListJson",
-                id: 'F_Id',
-                text: 'F_SchemeName'
+                id: 'Id',
+                text: 'SchemeName'
             });
             form.render();
         }
@@ -248,10 +248,10 @@
             if (content == -1) {
                 return false; //阻止表单跳转。
             }
-            delete data.field.F_SchemeId;
+            delete data.field.SchemeId;
             delete data.field.valueList;
-            delete data.field.F_Code;
-            delete data.field.F_Description;
+            delete data.field.Code;
+            delete data.field.Description;
             delete data.field.file;
             if (postData.NextMakerName == "无人审核") {
                 common.modalMsg("无人审核，请检查流程", "warning");
@@ -260,10 +260,10 @@
             if(!!renderForm)
             {
                 var tempdata = renderForm.getFormData();
-                postData.F_FrmData = JSON.stringify(tempdata);
+                postData.FrmData = JSON.stringify(tempdata);
             }
             else{
-                postData.F_FrmData = JSON.stringify(data.field);
+                postData.FrmData = JSON.stringify(data.field);
             }
             step.next('#stepForm');
             return false;
@@ -271,7 +271,7 @@
         form.on('submit(saveBtn)', function (data) {
             postData.NextNodeDesignateType = NextNodeDesignateType;
             postData.NextNodeDesignates = postData.NextNodeDesignates ? postData.NextNodeDesignates.split(',') : [];
-            postData.F_Code = data.field.F_Code;
+            postData.Code = data.field.Code;
             common.submitForm({
                 url: '/FlowManage/Flowinstance/SubmitForm?keyValue=' + keyValue,
                 param: postData,
@@ -321,7 +321,7 @@
                                 <div class="layui-form-item layui-hide">
                                     <label class="layui-form-label required">选择流程模板</label>
                                     <div class="layui-input-block">
-                                        <select id="F_SchemeId" name="F_SchemeId" lay-filter='schemeChangeFilter' lay-verify="required" lay-search>
+                                        <select id="SchemeId" name="SchemeId" lay-filter='schemeChangeFilter' lay-verify="required" lay-search>
                                             <option value="" selected>请选择</option>
                                         </select>
                                     </div>
@@ -357,7 +357,7 @@
                                             <label class="layui-form-label">流程编号</label>
                                             <input type="text" name="valueList" id="valueList" class="layui-hide" hidden>
                                             <div class="layui-input-block">
-                                                <input type="text" name="F_Code" id="F_Code" disabled="disabled" lay-verify="required"
+                                                <input type="text" name="Code" id="Code" disabled="disabled" lay-verify="required"
                                                        class="layui-input">
                                             </div>
                                         </div>

@@ -31,25 +31,25 @@
             height: 'full-110',
             cols: [[
                 { type: "radio", width: 50, fixed: 'left' },
-                { field: 'F_EnCode', title: '编号', width: 150 },
-                { field: 'F_FullName', title: '名称', width: 150 },
+                { field: 'EnCode', title: '编号', width: 150 },
+                { field: 'FullName', title: '名称', width: 150 },
                 {
-                    field: 'F_Location', title: '位置', width: 60,
+                    field: 'Location', title: '位置', width: 60,
                     templet: function (d) {
-                        if (d.F_Location == 1) {
+                        if (d.Location == 1) {
                             return "初始";
                         } else {
                             return "选中";
                         }
                     }
                 },
-                { field: 'F_JsEvent', title: '事件', width: 80 },
-                { field: 'F_UrlAddress', title: '连接', width: 220 },
-                { field: 'F_Authorize', title: '权限', width: 150 },
+                { field: 'JsEvent', title: '事件', width: 80 },
+                { field: 'UrlAddress', title: '连接', width: 220 },
+                { field: 'Authorize', title: '权限', width: 150 },
                 //{
-                //    field: 'F_Split', title: '分开', width: 60,
+                //    field: 'Split', title: '分开', width: 60,
                 //    templet: function (d) {
-                //        if (d.F_IsMenu == true) {
+                //        if (d.IsMenu == true) {
                 //            return "<input type='checkbox' checked='' lay-skin='primary' name='true' valuer='true'>";
                 //        } else {
                 //            return "<input type='checkbox' name='false'  lay-skin='primary' valuer='false'>";
@@ -57,9 +57,9 @@
                 //    }
                 //},
                 {
-                    field: 'F_IsPublic', title: '公共', width: 80,
+                    field: 'IsPublic', title: '公共', width: 80,
                     templet: function (d) {
-                        if (d.F_IsPublic == true) {
+                        if (d.IsPublic == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
@@ -67,17 +67,17 @@
                     }
                 },
                 {
-                    field: 'F_EnabledMark', title: '状态', width: 80,
+                    field: 'EnabledMark', title: '状态', width: 80,
                     templet: function (d) {
-                        if (d.F_EnabledMark == true) {
+                        if (d.EnabledMark == true) {
                             return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                         } else {
                             return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                         }
                     }
                 },
-                { field: 'F_SortCode', title: '排序', width: 60 },
-                { field: 'F_Description', title: '备注', minWidth: 100 },
+                { field: 'SortCode', title: '排序', width: 60 },
+                { field: 'Description', title: '备注', minWidth: 100 },
                 { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]]
         });
@@ -115,7 +115,7 @@
                 }
                 common.deleteForm({
                     url: "/SystemManage/ModuleButton/DeleteForm",
-                    param: { keyValue: data[0].F_Id },
+                    param: { keyValue: data[0].Id },
                     success: function () {
                         common.reload('data-search-btn');
                     }
@@ -128,7 +128,7 @@
                 }
                 common.modalOpen({
                     title: "编辑按钮",
-                    url: "/SystemManage/ModuleButton/Form?moduleId=" + moduleId + "&keyValue=" + data[0].F_Id,
+                    url: "/SystemManage/ModuleButton/Form?moduleId=" + moduleId + "&keyValue=" + data[0].Id,
                     width: "500px",
                     height: "600px",
                 });
@@ -140,7 +140,7 @@
                 }
                 common.modalOpen({
                     title: "查看按钮",
-                    url: "/SystemManage/ModuleButton/Details?keyValue=" + data[0].F_Id,
+                    url: "/SystemManage/ModuleButton/Details?keyValue=" + data[0].Id,
                     width: "500px",
                     height: "600px",
                     btn: []
@@ -168,7 +168,7 @@
             if (obj.event === 'delete') {
                 common.deleteForm({
                     url: "/SystemManage/ModuleButton/DeleteForm",
-                    param: { keyValue: obj.data.F_Id },
+                    param: { keyValue: obj.data.Id },
                     success: function () {
                         common.reload('data-search-btn');
                     }
@@ -177,7 +177,7 @@
             else if (obj.event === 'edit') {
                 common.modalOpen({
                     title: "编辑按钮",
-                    url: "/SystemManage/ModuleButton/Form?moduleId=" + moduleId + "&keyValue=" + obj.data.F_Id,
+                    url: "/SystemManage/ModuleButton/Form?moduleId=" + moduleId + "&keyValue=" + obj.data.Id,
                     width: "500px",
                     height: "600px",
                 });
@@ -185,7 +185,7 @@
             else if (obj.event === 'details') {
                 common.modalOpen({
                     title: "查看按钮",
-                    url: "/SystemManage/ModuleButton/Details?keyValue=" + obj.data.F_Id,
+                    url: "/SystemManage/ModuleButton/Details?keyValue=" + obj.data.Id,
                     width: "500px",
                     height: "600px",
                     btn: []

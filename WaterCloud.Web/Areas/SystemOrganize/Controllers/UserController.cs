@@ -32,7 +32,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.field = "F_DepartmentId";
+                pagination.field = "DepartmentId";
                 pagination.order = "asc";
             }
             var data = await _service.GetLookList(pagination, keyword);
@@ -48,12 +48,12 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> GetListJson(string keyword,string ids)
         {
             var data = await _service.GetList(keyword);
-            data = data.Where(a => a.F_EnabledMark == true).ToList();
+            data = data.Where(a => a.EnabledMark == true).ToList();
             if (!string.IsNullOrEmpty(ids))
             {
                 foreach (var item in ids.Split(','))
                 {
-                    var temp = data.Find(a => a.F_Id == item);
+                    var temp = data.Find(a => a.Id == item);
                     if (temp != null)
                     {
                         temp.LAY_CHECKED = true;
@@ -67,31 +67,31 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> GetFormJson(string keyValue)
         {
             var data =await _service.GetLookForm(keyValue);
-            if (!string.IsNullOrEmpty(data.F_DepartmentId))
+            if (!string.IsNullOrEmpty(data.DepartmentId))
             {
                 List<string> str = new List<string>();
-                foreach (var item in data.F_DepartmentId.Split(','))
+                foreach (var item in data.DepartmentId.Split(','))
                 {
                     var temp = await _orgService.GetForm(item);
                     if (temp != null)
                     {
-                        str.Add(temp.F_FullName);
+                        str.Add(temp.FullName);
                     }
                 }
-                data.F_DepartmentName = string.Join("  ", str.ToArray());
+                data.DepartmentName = string.Join("  ", str.ToArray());
             }
-            if (!string.IsNullOrEmpty(data.F_RoleId))
+            if (!string.IsNullOrEmpty(data.RoleId))
             {
                 List<string> str = new List<string>();
-                foreach (var item in data.F_RoleId.Split(','))
+                foreach (var item in data.RoleId.Split(','))
                 {
                     var temp = await _roleService.GetForm(item);
                     if (temp != null)
                     {
-                        str.Add(temp.F_FullName);
+                        str.Add(temp.FullName);
                     }
                 }
-                data.F_RoleName = string.Join("  ", str.ToArray());
+                data.RoleName = string.Join("  ", str.ToArray());
             }
             return Content(data.ToJson());
         }
@@ -100,52 +100,52 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         public async Task<ActionResult> GetUserFormJson()
         {
             var data =await _service.GetFormExtend(_service.currentuser.UserId);
-            if (!string.IsNullOrEmpty(data.F_DepartmentId))
+            if (!string.IsNullOrEmpty(data.DepartmentId))
             {
                 List<string> str = new List<string>();
-                foreach (var item in data.F_DepartmentId.Split(','))
+                foreach (var item in data.DepartmentId.Split(','))
                 {
                     var temp = await _orgService.GetForm(item);
                     if (temp != null)
                     {
-                        str.Add(temp.F_FullName);
+                        str.Add(temp.FullName);
                     }
                 }
-                data.F_DepartmentName = string.Join("  ", str.ToArray());
+                data.DepartmentName = string.Join("  ", str.ToArray());
             }
-            if (!string.IsNullOrEmpty(data.F_RoleId))
+            if (!string.IsNullOrEmpty(data.RoleId))
             {
                 List<string> str = new List<string>();
-                foreach (var item in data.F_RoleId.Split(','))
+                foreach (var item in data.RoleId.Split(','))
                 {
                     var temp = await _roleService.GetForm(item);
                     if (temp != null)
                     {
-                        str.Add(temp.F_FullName);
+                        str.Add(temp.FullName);
                     }
                 }
-                data.F_RoleName = string.Join("  ", str.ToArray());
+                data.RoleName = string.Join("  ", str.ToArray());
             }
             return Content(data.ToJson("yyyy-MM-dd"));
         }
         [HttpPost]
         [HandlerAjaxOnly]
         [ServiceFilter(typeof(HandlerLockAttribute))]
-        public async Task<ActionResult> SubmitUserForm(string F_Account,string F_RealName, bool F_Gender,DateTime F_Birthday,string F_MobilePhone,string F_Email,string F_Description)
+        public async Task<ActionResult> SubmitUserForm(string Account,string RealName, bool Gender,DateTime Birthday,string MobilePhone,string Email,string Description)
         {
             try
             {
                 var userEntity = new UserEntity();
-                userEntity.F_Account = F_Account;
-                userEntity.F_RealName = F_RealName;
-                userEntity.F_Gender = F_Gender;
-                userEntity.F_Birthday = F_Birthday;
-                userEntity.F_MobilePhone = F_MobilePhone;
-                userEntity.F_Email = F_Email;
-                userEntity.F_Description = F_Description;
-                userEntity.F_Id = _service.currentuser.UserId;
+                userEntity.Account = Account;
+                userEntity.RealName = RealName;
+                userEntity.Gender = Gender;
+                userEntity.Birthday = Birthday;
+                userEntity.MobilePhone = MobilePhone;
+                userEntity.Email = Email;
+                userEntity.Description = Description;
+                userEntity.Id = _service.currentuser.UserId;
                 await _service.SubmitUserForm(userEntity);
-                return await Success("操作成功。", "", userEntity.F_Id);
+                return await Success("操作成功。", "", userEntity.Id);
             }
             catch (Exception ex)
             {
@@ -158,10 +158,10 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         {
             if (string.IsNullOrEmpty(keyValue))
             {
-                userEntity.F_IsAdmin = false;
-                userEntity.F_DeleteMark = false;
-                userEntity.F_IsBoss = false;
-                userEntity.F_OrganizeId = _service.currentuser.CompanyId;
+                userEntity.IsAdmin = false;
+                userEntity.DeleteMark = false;
+                userEntity.IsBoss = false;
+                userEntity.OrganizeId = _service.currentuser.CompanyId;
             }
             else
             {
@@ -206,11 +206,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> SubmitRevisePassword(string F_UserPassword, string keyValue)
+        public async Task<ActionResult> SubmitRevisePassword(string UserPassword, string keyValue)
         {
             try
             {
-                await _userLogOnService.RevisePassword(F_UserPassword, keyValue);
+                await _userLogOnService.RevisePassword(UserPassword, keyValue);
                 return await Success("重置密码成功。", "", keyValue);
             }
             catch (Exception ex)
@@ -225,11 +225,11 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        public async Task<ActionResult> SubmitReviseSelfPassword(string F_UserPassword)
+        public async Task<ActionResult> SubmitReviseSelfPassword(string UserPassword)
         {
             try
             {
-                await _userLogOnService.ReviseSelfPassword(F_UserPassword, _service.currentuser.UserId);
+                await _userLogOnService.ReviseSelfPassword(UserPassword, _service.currentuser.UserId);
                 return await Success("重置密码成功。", "", _service.currentuser.UserId);
             }
             catch (Exception ex)
@@ -245,8 +245,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             try
             {
                 UserEntity userEntity = new UserEntity();
-                userEntity.F_Id = keyValue;
-                userEntity.F_EnabledMark = false;
+                userEntity.Id = keyValue;
+                userEntity.EnabledMark = false;
                 if (_service.currentuser.UserId == keyValue)
                 {
                     return Error("操作失败，不能修改用户自身");
@@ -267,8 +267,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             try
             {
                 UserEntity userEntity = new UserEntity();
-                userEntity.F_Id = keyValue;
-                userEntity.F_EnabledMark = true;
+                userEntity.Id = keyValue;
+                userEntity.EnabledMark = true;
                 if (_service.currentuser.UserId == keyValue)
                 {
                     return Error("操作失败，不能修改用户自身");

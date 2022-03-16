@@ -55,10 +55,10 @@ namespace WaterCloud.Service.SystemSecurity
                 var list = repository.IQueryable();
                 if (!string.IsNullOrEmpty(keyword))
                 {
-                    list = list.Where(a => a.F_Account.Contains(keyword) || a.F_Description.Contains(keyword) || a.F_ModuleName.Contains(keyword));
+                    list = list.Where(a => a.Account.Contains(keyword) || a.Description.Contains(keyword) || a.ModuleName.Contains(keyword));
                 }
 
-                list = list.Where(a => a.F_Date >= startTime && a.F_Date <= endTime);
+                list = list.Where(a => a.Date >= startTime && a.Date <= endTime);
                 result = await repository.OrderList(list, pagination);
             }
             else
@@ -66,14 +66,14 @@ namespace WaterCloud.Service.SystemSecurity
                 result = HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList();
                 if (!string.IsNullOrEmpty(keyword))
                 {
-                    result = result.Where(a => a.F_Account.Contains(keyword) || a.F_Description.Contains(keyword) || a.F_ModuleName.Contains(keyword)).Where(a => a.F_Date >= startTime && a.F_Date <= endTime).ToList();
+                    result = result.Where(a => a.Account.Contains(keyword) || a.Description.Contains(keyword) || a.ModuleName.Contains(keyword)).Where(a => a.Date >= startTime && a.Date <= endTime).ToList();
                 }
                 else
                 {
-                    result = result.Where(a => a.F_Date >= startTime && a.F_Date <= endTime).ToList();
+                    result = result.Where(a => a.Date >= startTime && a.Date <= endTime).ToList();
                 }
                 pagination.records = result.Count();
-                result = result.OrderByDescending(a => a.F_CreatorTime).Skip((pagination.page - 1) * pagination.rows).Take(pagination.rows).ToList();
+                result = result.OrderByDescending(a => a.CreatorTime).Skip((pagination.page - 1) * pagination.rows).Take(pagination.rows).ToList();
 
             }
             return GetFieldsFilterData(result);
@@ -109,28 +109,28 @@ namespace WaterCloud.Service.SystemSecurity
             if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
                 var expression = ExtLinq.True<LogEntity>();
-                expression = expression.AndAlso(a => a.F_Date <= operateTime);
+                expression = expression.AndAlso(a => a.Date <= operateTime);
                 await repository.Delete(expression);
             }
             else
             {
                 var list = HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList();
-                var strList = list.Where(a => a.F_Date <= operateTime).Select(a => a.F_Id).ToList();
+                var strList = list.Where(a => a.Date <= operateTime).Select(a => a.Id).ToList();
                 await HandleLogHelper.HDelAsync(currentuser.CompanyId, strList.ToArray());
             }
         }
         public async Task WriteDbLog(bool result, string resultLog)
         {
             LogEntity logEntity = new LogEntity();
-            logEntity.F_Id = Utils.GuId();
-            logEntity.F_Date = DateTime.Now;
-            logEntity.F_Account = currentuser.UserCode;
-            logEntity.F_NickName = currentuser.UserName;
-            logEntity.F_IPAddress = currentuser.LoginIPAddress;
-            logEntity.F_IPAddressName = currentuser.LoginIPAddressName;
-            logEntity.F_CompanyId = currentuser.CompanyId;
-            logEntity.F_Result = result;
-            logEntity.F_Description = resultLog;
+            logEntity.Id = Utils.GuId();
+            logEntity.Date = DateTime.Now;
+            logEntity.Account = currentuser.UserCode;
+            logEntity.NickName = currentuser.UserName;
+            logEntity.IPAddress = currentuser.LoginIPAddress;
+            logEntity.IPAddressName = currentuser.LoginIPAddressName;
+            logEntity.CompanyId = currentuser.CompanyId;
+            logEntity.Result = result;
+            logEntity.Description = resultLog;
             logEntity.Create();
             if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
@@ -138,55 +138,55 @@ namespace WaterCloud.Service.SystemSecurity
             }
             else
             {
-                await HandleLogHelper.HSetAsync(currentuser.CompanyId, logEntity.F_Id, logEntity);
+                await HandleLogHelper.HSetAsync(currentuser.CompanyId, logEntity.Id, logEntity);
             }
         }
         public async Task WriteDbLog(LogEntity logEntity)
         {
-            logEntity.F_Id = Utils.GuId();
-            logEntity.F_Date = DateTime.Now;
+            logEntity.Id = Utils.GuId();
+            logEntity.Date = DateTime.Now;
             var dbNumber = unitofwork.GetDbClient().CurrentConnectionConfig.ConfigId;
             unitOfWork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
-            var systemSet = await unitOfWork.GetDbClient().Queryable<SystemSetEntity>().Where(a => a.F_DbNumber == "0").FirstAsync();
+            var systemSet = await unitOfWork.GetDbClient().Queryable<SystemSetEntity>().Where(a => a.DbNumber == "0").FirstAsync();
             unitOfWork.GetDbClient().ChangeDatabase(dbNumber);
             try
             {
                 if (currentuser == null || string.IsNullOrEmpty(currentuser.UserId))
                 {
-                    logEntity.F_IPAddress = WebHelper.Ip;
+                    logEntity.IPAddress = WebHelper.Ip;
 					if (GlobalContext.SystemConfig.LocalLAN != false)
 					{
-                        logEntity.F_IPAddressName = "本地局域网";
+                        logEntity.IPAddressName = "本地局域网";
                     }
 					else
 					{
-                        logEntity.F_IPAddressName = WebHelper.GetIpLocation(logEntity.F_IPAddress);
+                        logEntity.IPAddressName = WebHelper.GetIpLocation(logEntity.IPAddress);
                     }
-                    logEntity.F_CompanyId = systemSet.F_Id;
+                    logEntity.CompanyId = systemSet.Id;
                 }
                 else
                 {
-                    logEntity.F_IPAddress = currentuser.LoginIPAddress;
-                    logEntity.F_IPAddressName = currentuser.LoginIPAddressName;
-                    logEntity.F_CompanyId = currentuser.CompanyId;
+                    logEntity.IPAddress = currentuser.LoginIPAddress;
+                    logEntity.IPAddressName = currentuser.LoginIPAddressName;
+                    logEntity.CompanyId = currentuser.CompanyId;
                 }
                 logEntity.Create();
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
                     unitofwork.Rollback();
                     unitofwork.CurrentRollback();
-                    if (!string.IsNullOrEmpty(logEntity.F_KeyValue))
+                    if (!string.IsNullOrEmpty(logEntity.KeyValue))
                     {
-                        //批量删除时，循环拆分F_KeyValue，以免截断二进制错误
-                        //方便以后根据F_KeyValue查询；
-                        var keylist = logEntity.F_KeyValue.Split(",").ToList();
+                        //批量删除时，循环拆分KeyValue，以免截断二进制错误
+                        //方便以后根据KeyValue查询；
+                        var keylist = logEntity.KeyValue.Split(",").ToList();
                         var loglist = new List<LogEntity>();
                         foreach (var key in keylist)
                         {
                             var log = new LogEntity();
                             log = logEntity.ToJson().ToObject<LogEntity>();
-                            log.F_KeyValue = key;
-                            log.F_Id = Utils.GuId();
+                            log.KeyValue = key;
+                            log.Id = Utils.GuId();
                             loglist.Add(log);
                         }
                         await repository.Insert(loglist);
@@ -198,21 +198,21 @@ namespace WaterCloud.Service.SystemSecurity
                 }
                 else
                 {
-                    await HandleLogHelper.HSetAsync(logEntity.F_CompanyId, logEntity.F_Id, logEntity);
+                    await HandleLogHelper.HSetAsync(logEntity.CompanyId, logEntity.Id, logEntity);
                 }
             }
             catch (Exception)
             {
-                logEntity.F_IPAddress = WebHelper.Ip;
+                logEntity.IPAddress = WebHelper.Ip;
                 if (GlobalContext.SystemConfig.LocalLAN != false)
                 {
-                    logEntity.F_IPAddressName = "本地局域网";
+                    logEntity.IPAddressName = "本地局域网";
                 }
                 else
                 {
-                    logEntity.F_IPAddressName = WebHelper.GetIpLocation(logEntity.F_IPAddress);
+                    logEntity.IPAddressName = WebHelper.GetIpLocation(logEntity.IPAddress);
                 }
-                logEntity.F_CompanyId = systemSet.F_Id;
+                logEntity.CompanyId = systemSet.Id;
                 logEntity.Create();
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
@@ -220,7 +220,7 @@ namespace WaterCloud.Service.SystemSecurity
                 }
                 else
                 {
-                    await HandleLogHelper.HSetAsync(logEntity.F_CompanyId, logEntity.F_Id, logEntity);
+                    await HandleLogHelper.HSetAsync(logEntity.CompanyId, logEntity.Id, logEntity);
                 }
             }
         }
@@ -229,13 +229,13 @@ namespace WaterCloud.Service.SystemSecurity
         {
             try
             {
-                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+                var moduleitem = (await moduleservice.GetList()).Where(a => a.IsExpand == false && a.EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
                 if (moduleitem==null)
                 {
                     throw new Exception();
                 }
-                var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).First();
-                return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type.ToString());
+                var module = (await moduleservice.GetList()).Where(a => a.Id == moduleitem.ParentId).First();
+                return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.FullName, type.ToString());
             }
             catch (Exception)
             {
@@ -246,13 +246,13 @@ namespace WaterCloud.Service.SystemSecurity
         {
             try
             {
-                var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
+                var moduleitem = (await moduleservice.GetList()).Where(a => a.IsExpand == false && a.EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
                 if (moduleitem == null)
                 {
                     throw new Exception();
                 }
-                var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).First();
-                return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type);
+                var module = (await moduleservice.GetList()).Where(a => a.Id == moduleitem.ParentId).First();
+                return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.FullName, type);
 
             }
             catch (Exception)
@@ -266,14 +266,14 @@ namespace WaterCloud.Service.SystemSecurity
             {
                 return str;
             }
-            str = module.F_FullName + "-" + str;
-            if (module.F_ParentId=="0")
+            str = module.FullName + "-" + str;
+            if (module.ParentId=="0")
             {
                 return str;
             }
             else
             {
-                var temp= (await moduleservice.GetList()).Where(a =>a.F_Id==module.F_ParentId).First();
+                var temp= (await moduleservice.GetList()).Where(a =>a.Id==module.ParentId).First();
                 return await CreateModule(temp ,str);
             }
         }
@@ -283,35 +283,35 @@ namespace WaterCloud.Service.SystemSecurity
             if (logType != null)
             {
                 logEntity = await CreateLog(className, (DbLogType)logType);
-                logEntity.F_Description += logType.ToDescription();
+                logEntity.Description += logType.ToDescription();
             }
             else
             {
                 if (string.IsNullOrEmpty(keyValue))
                 {
                     logEntity = await CreateLog(className, DbLogType.Create);
-                    logEntity.F_Description += DbLogType.Create.ToDescription();
+                    logEntity.Description += DbLogType.Create.ToDescription();
                 }
                 else
                 {
                     logEntity = await CreateLog(className, DbLogType.Update);
-                    logEntity.F_Description += DbLogType.Update.ToDescription();
+                    logEntity.Description += DbLogType.Update.ToDescription();
                 }
             }
-            logEntity.F_KeyValue = keyValue;
+            logEntity.KeyValue = keyValue;
             if (isError)
             {
-                logEntity.F_Result = false;
-                logEntity.F_Description += "操作失败，" + message;
+                logEntity.Result = false;
+                logEntity.Description += "操作失败，" + message;
             }
             else
             {
-                logEntity.F_Description += message;
+                logEntity.Description += message;
             }
             if (currentuser != null && currentuser.UserId != null)
             {
-                logEntity.F_Account = currentuser.UserCode;
-                logEntity.F_NickName = currentuser.UserName;
+                logEntity.Account = currentuser.UserCode;
+                logEntity.NickName = currentuser.UserName;
             }
             await WriteDbLog(logEntity);
         }

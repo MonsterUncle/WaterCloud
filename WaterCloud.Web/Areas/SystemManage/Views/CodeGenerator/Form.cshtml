@@ -102,7 +102,7 @@
                         for (var i = 0; i < data.PageIndex.ColumnList.length; i++) {
                             let o = {};
                             o = data.PageIndex.ColumnList[i];
-                            o["F_Id"] = uuid();
+                            o["Id"] = uuid();
                             datas.push(o);
                         }
                         table.reload('currentTableId', {
@@ -273,7 +273,7 @@
                         try {
                             var cachedata = table.cache.currentTableId;
                             for (var i = 0; i < cachedata.length; i++) {
-                                if (entity.data.F_Id == cachedata[i].F_Id) {
+                                if (entity.data.Id == cachedata[i].Id) {
                                     cachedata.splice(i, 1);
                                     break;
                                 }

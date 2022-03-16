@@ -43,14 +43,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             var data = await _service.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
-                data = data.TreeWhere(t => t.F_SchemeCode.Contains(keyword)|| t.F_SchemeName.Contains(keyword));
+                data = data.TreeWhere(t => t.SchemeCode.Contains(keyword)|| t.SchemeName.Contains(keyword));
             }
             var treeList = new List<TreeGridModel>();
             foreach (var item in data)
             {
                 TreeGridModel treeModel = new TreeGridModel();
-                treeModel.id = item.F_Id;
-                treeModel.title = item.F_SchemeName;
+                treeModel.id = item.Id;
+                treeModel.title = item.SchemeName;
                 treeModel.parentId = "0";
                 treeModel.self = item;
                 treeList.Add(treeModel);
@@ -89,9 +89,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         {
             if (string.IsNullOrEmpty(keyValue))
             {
-                entity.F_DeleteMark = false;
-                entity.F_OrganizeId = (await _formService.GetForm(entity.F_FrmId)).F_OrganizeId;
-                entity.F_CreatorUserName = _service.currentuser.UserName;
+                entity.DeleteMark = false;
+                entity.OrganizeId = (await _formService.GetForm(entity.FrmId)).OrganizeId;
+                entity.CreatorUserName = _service.currentuser.UserName;
             }
             try
             {

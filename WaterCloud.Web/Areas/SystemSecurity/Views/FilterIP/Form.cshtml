@@ -12,7 +12,7 @@
                     <div class="layui-form-item layui-hide">
                         <label class="layui-form-label required">策略类型</label>
                         <div class="layui-input-block">
-                            <select id="F_Type" name="F_Type" lay-verify="required">
+                            <select id="Type" name="Type" lay-verify="required">
                                 <option value="false" selected>拒绝访问</option>
                             </select>
                         </div>
@@ -20,31 +20,31 @@
                     <div class="layui-form-item layui-hide">
                         <label class="layui-form-label required">起始IP</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_StartIP" name="F_StartIP" maxlength="50" lay-verify="required" class="layui-input">
+                            <input type="text" id="StartIP" name="StartIP" maxlength="50" lay-verify="required" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item layui-hide">
                         <label class="layui-form-label">结束IP</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_EndIP" name="F_EndIP" maxlength="50" value="" class="layui-input ">
+                            <input type="text" id="EndIP" name="EndIP" maxlength="50" value="" class="layui-input ">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label required">到期时间</label>
                         <div class="layui-input-block">
-                            <input type="text" id="F_EndTime" name="F_EndTime" lay-verify="required" autocomplete="off" class="layui-input">
+                            <input type="text" id="EndTime" name="EndTime" lay-verify="required" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item layui-hide">
                         <label class="layui-form-label">有效</label>
                         <div class="layui-input-block">
-                            <input type="checkbox" checked="" id="F_EnabledMark" name="F_EnabledMark" lay-skin="switch" lay-filter="switchTest" value="true" lay-text="ON|OFF">
+                            <input type="checkbox" checked="" id="EnabledMark" name="EnabledMark" lay-skin="switch" lay-filter="switchTest" value="true" lay-text="ON|OFF">
                         </div>
                     </div>
                     <div class="layui-form-item layui-form-text layui-hide">
                         <label class="layui-form-label">备注</label>
                         <div class="layui-input-block">
-                            <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入备注"></textarea>
+                            <textarea id="Description" name="Description" class="layui-textarea" placeholder="请输入备注"></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item layui-hide">
@@ -63,7 +63,7 @@
         var keyValue = $.request("keyValue");
         //执行一个laydate实例
         laydate.render({
-            elem: '#F_EndTime'
+            elem: '#EndTime'
             , trigger: 'click'
             , type: 'datetime'
             , format: 'yyyy/MM/dd HH:mm:ss',
@@ -118,9 +118,9 @@
         //监听提交
         form.on('submit(saveBtn)', function (data) {
                 var postData = data.field;
-                var StartIP = data.field.F_StartIP;
-                var EndIP = data.field.F_EndIP;
-                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
+                var StartIP = data.field.StartIP;
+                var EndIP = data.field.EndIP;
+                if (!postData["EnabledMark"]) postData["EnabledMark"] = false;
                 if (!!EndIP) {
 
                     if (compareIP(StartIP, EndIP) == -1) {

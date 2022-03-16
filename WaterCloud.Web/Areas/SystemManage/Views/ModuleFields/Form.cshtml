@@ -30,9 +30,9 @@
             //监听提交
             form.on('submit(saveBtn)', function (data) {
                 var postData = data.field;
-                if (!postData["F_IsPublic"]) postData["F_IsPublic"] = false;
-                if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
-                postData["F_ModuleId"] = moduleId;
+                if (!postData["IsPublic"]) postData["IsPublic"] = false;
+                if (!postData["EnabledMark"]) postData["EnabledMark"] = false;
+                postData["ModuleId"] = moduleId;
                 common.submitForm({
                     url: '/SystemManage/ModuleFields/SubmitForm?keyValue=' + keyValue,
                     param: postData,
@@ -52,26 +52,26 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">编号</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_EnCode" name="F_EnCode" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
+                        <input type="text" id="EnCode" name="EnCode" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">名称</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_FullName" name="F_FullName" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
+                        <input type="text" id="FullName" name="FullName" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">选项</label>
                     <div class="layui-input-block">
-                        <input id="F_IsPublic" name="F_IsPublic" type="checkbox" value="true" title="公共">
-                        <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效">
+                        <input id="IsPublic" name="IsPublic" type="checkbox" value="true" title="公共">
+                        <input type="checkbox" name="EnabledMark" id="EnabledMark" checked="" value="true" title="有效">
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text layui-hide">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-block">
-                        <textarea id="F_Description" name="F_Description" class="layui-textarea" placeholder="请输入备注"></textarea>
+                        <textarea id="Description" name="Description" class="layui-textarea" placeholder="请输入备注"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">

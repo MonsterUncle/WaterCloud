@@ -48,27 +48,27 @@ namespace WaterCloud.Service
             {
                 return GetFieldsFilterDataNew(parametername,query, moduleName);
             }
-            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().WithCache().First(u => u.F_ModuleCode == moduleName && u.F_EnabledMark == true && u.F_DeleteMark == false);
-            if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
-                                             rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
-                                             rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
+            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().WithCache().First(u => u.ModuleCode == moduleName && u.EnabledMark == true && u.DeleteMark == false);
+            if (rule.PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
+                                             rule.PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
+                                             rule.PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
             {
 
                 //即把{loginUser} =='xxxxxxx'换为 loginUser.User.Id =='xxxxxxx'，从而把当前登录的用户名与当时设计规则时选定的用户id对比
-                rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINUSER, currentuser.UserId);
+                rule.PrivilegeRules = rule.PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINUSER, currentuser.UserId);
                 var roles = currentuser.RoleId;
                 //var roles = loginUser.Roles.Select(u => u.Id).ToList();//多角色
                 //roles.Sort();
-                rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINROLE,
+                rule.PrivilegeRules = rule.PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINROLE,
                     roles);
                 var orgs = currentuser.DepartmentId;
                 //var orgs = loginUser.Orgs.Select(u => u.Id).ToList();//多部门
                 //orgs.Sort();
-                rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
+                rule.PrivilegeRules = rule.PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
                     orgs);
             }
             query = query.GenerateFilter(parametername,
-                JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
+                JsonHelper.ToObject<List<FilterList>>(rule.PrivilegeRules));
             return GetFieldsFilterDataNew(parametername,query, moduleName);
         }
         /// <summary>
@@ -85,23 +85,23 @@ namespace WaterCloud.Service
             {
                 return GetFieldsFilterDataNew(parametername,query, moduleName);
             }
-            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().WithCache().First(u => u.F_ModuleCode == moduleName && u.F_EnabledMark == true && u.F_DeleteMark == false);
-            if (rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
-                                             rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
-                                             rule.F_PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
+            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().WithCache().First(u => u.ModuleCode == moduleName && u.EnabledMark == true && u.DeleteMark == false);
+            if (rule.PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINUSER) ||
+                                             rule.PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINROLE) ||
+                                             rule.PrivilegeRules.Contains(Define.DATAPRIVILEGE_LOGINORG))
             {
 
                 //即把{loginUser} =='xxxxxxx'换为 loginUser.User.Id =='xxxxxxx'，从而把当前登录的用户名与当时设计规则时选定的用户id对比
-                rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINUSER, currentuser.UserId);
+                rule.PrivilegeRules = rule.PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINUSER, currentuser.UserId);
                 var roles = currentuser.RoleId;
-                rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINROLE,
+                rule.PrivilegeRules = rule.PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINROLE,
                     roles);
                 var orgs = currentuser.DepartmentId;
-                rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
+                rule.PrivilegeRules = rule.PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
                     orgs);
             }
             query = query.GenerateFilter(parametername,
-                JsonHelper.ToObject<List<FilterList>>(rule.F_PrivilegeRules));
+                JsonHelper.ToObject<List<FilterList>>(rule.PrivilegeRules));
             return GetFieldsFilterDataNew(parametername,query, moduleName);
         }
         /// <summary>
@@ -113,14 +113,14 @@ namespace WaterCloud.Service
         {
             moduleName = string.IsNullOrEmpty(moduleName) ? ReflectionHelper.GetModuleName() : moduleName;
             if (currentuser.IsAdmin) return false;  //超级管理员特权
-            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().WithCache().First(u => u.F_ModuleCode == moduleName && u.F_EnabledMark == true && u.F_DeleteMark == false);
+            var rule = repository.Db.Queryable<DataPrivilegeRuleEntity>().WithCache().First(u => u.ModuleCode == moduleName && u.EnabledMark == true && u.DeleteMark == false);
             ////系统菜单也不需要数据权限 跟字段重合取消这样处理
-            //var module = UnitWork.FindEntity<ModuleEntity>(u => u.F_EnCode == moduleName).GetAwaiter().GetResult();
+            //var module = UnitWork.FindEntity<ModuleEntity>(u => u.EnCode == moduleName).GetAwaiter().GetResult();
             if (rule == null)
             {
                 return false; //没有设置数据规则，那么视为该资源允许被任何主体查看
             }
-            //if (rule == null|| module.F_IsPublic==true)
+            //if (rule == null|| module.IsPublic==true)
             //{
             //    return false; //没有设置数据规则，那么视为该资源允许被任何主体查看
             //}
@@ -169,9 +169,9 @@ namespace WaterCloud.Service
                 return list;
             }
             //系统菜单跳过
-            var module = repository.Db.Queryable<ModuleEntity>().First(u => u.F_EnCode == moduleName);
+            var module = repository.Db.Queryable<ModuleEntity>().First(u => u.EnCode == moduleName);
             //判断是否需要字段权限
-            if (module == null || module.F_IsFields == false)
+            if (module == null || module.IsFields == false)
             {
                 return list;
             }
@@ -181,11 +181,11 @@ namespace WaterCloud.Service
                 return list;
             }
             var rolelist = currentuser.RoleId.Split(',');
-            var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
-            var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
+            var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.ObjectId) && u.ItemType == 3).Select(a => a.ItemId).Distinct().ToList();
+            var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.Id) || u.IsPublic == true) && u.ModuleId == module.Id).Select(u => u.EnCode).ToList();
             //反射获取主键
             PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(SugarColumn), false).Length > 0).First();
-            var idName = "F_Id";
+            var idName = "Id";
             if (pkProp != null)
             {
                 idName = pkProp.Name;
@@ -209,9 +209,9 @@ namespace WaterCloud.Service
                 return entity;
             }
             //系统菜单跳过
-            var module = repository.Db.Queryable<ModuleEntity>().First(u => u.F_EnCode == moduleName);
+            var module = repository.Db.Queryable<ModuleEntity>().First(u => u.EnCode == moduleName);
             //判断是否需要字段权限
-            if (module == null || module.F_IsFields == false)
+            if (module == null || module.IsFields == false)
             {
                 return entity;
             }
@@ -221,11 +221,11 @@ namespace WaterCloud.Service
                 return entity;
             }
             var rolelist = currentuser.RoleId.Split(',');
-            var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
-            var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
+            var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.ObjectId) && u.ItemType == 3).Select(a => a.ItemId).Distinct().ToList();
+            var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.Id) || u.IsPublic == true) && u.ModuleId == module.Id).Select(u => u.EnCode).ToList();
             //反射获取主键
             PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(SugarColumn), false).Length > 0).First();
-            var idName = "F_Id";
+            var idName = "Id";
             if (pkProp != null)
             {
                 idName = pkProp.Name;
@@ -251,18 +251,18 @@ namespace WaterCloud.Service
                 return query;
             }
             //系统菜单跳过
-            var module = repository.Db.Queryable<ModuleEntity>().First(u => u.F_EnCode == moduleName);
+            var module = repository.Db.Queryable<ModuleEntity>().First(u => u.EnCode == moduleName);
             //判断是否需要字段权限
-            if (module == null || module.F_IsFields == false)
+            if (module == null || module.IsFields == false)
             {
                 return query;
             }
             var rolelist = currentuser.RoleId.Split(',');
-            var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
-            var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
+            var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.ObjectId) && u.ItemType == 3).Select(a => a.ItemId).Distinct().ToList();
+            var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.Id) || u.IsPublic == true) && u.ModuleId == module.Id).Select(u => u.EnCode).ToList();
             //反射获取主键
             PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(SugarColumn), false).Length > 0).First();
-            var idName = "F_Id";
+            var idName = "Id";
             if (pkProp != null)
             {
                 idName = pkProp.Name;

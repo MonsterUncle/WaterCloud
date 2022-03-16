@@ -37,7 +37,7 @@ namespace WaterCloud.Service.SystemOrganize
             var query = GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.FullName.Contains(keyword) || a.EnCode.Contains(keyword));
             }
             return await query.ToListAsync();
         }
@@ -48,20 +48,20 @@ namespace WaterCloud.Service.SystemOrganize
             Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
             enabledTemp.Add("1", "有效");
             enabledTemp.Add("0", "无效");
-            dic.Add("F_EnabledMark", enabledTemp);
+            dic.Add("EnabledMark", enabledTemp);
             var setList = await itemsApp.GetItemList("RoleType");
             Dictionary<string, string> messageTypeTemp = new Dictionary<string, string>();
             foreach (var item in setList)
             {
-                messageTypeTemp.Add(item.F_ItemCode,item.F_ItemName);
+                messageTypeTemp.Add(item.ItemCode,item.ItemName);
             }
-            dic.Add("F_Type", messageTypeTemp);
+            dic.Add("Type", messageTypeTemp);
             pagination = ChangeSoulData(dic, pagination);
             //获取数据权限
             var query =  GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.FullName.Contains(keyword) || a.EnCode.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
             return await repository.OrderList(query, pagination);
@@ -79,37 +79,37 @@ namespace WaterCloud.Service.SystemOrganize
         private ISugarQueryable<RoleExtend> GetQuery()
         {
             var query = repository.Db.Queryable<RoleEntity, SystemSetEntity>((a,b)=>new JoinQueryInfos(
-                JoinType.Left, a.F_OrganizeId == b.F_Id
-                )).Where(a => a.F_DeleteMark == false && a.F_Category == 1)
+                JoinType.Left, a.OrganizeId == b.Id
+                )).Where(a => a.DeleteMark == false && a.Category == 1)
                 .Select((a, b) => new RoleExtend
                 {
-                    F_Id = a.F_Id,
-                    F_AllowDelete = a.F_AllowDelete,
-                    F_AllowEdit = a.F_AllowEdit,
-                    F_Category = a.F_Category,
-                    F_CreatorTime = a.F_CreatorTime,
-                    F_CreatorUserId = a.F_CreatorUserId,
-                    F_Description = a.F_Description,
-                    F_DeleteMark = a.F_DeleteMark,
-                    F_EnabledMark = a.F_EnabledMark,
-                    F_EnCode = a.F_EnCode,
-                    F_FullName = a.F_FullName,
-                    F_OrganizeId=a.F_OrganizeId,
-                    F_SortCode=a.F_SortCode,
-                    F_Type=a.F_Type,
-                    F_CompanyName = b.F_CompanyName,
+                    Id = a.Id,
+                    AllowDelete = a.AllowDelete,
+                    AllowEdit = a.AllowEdit,
+                    Category = a.Category,
+                    CreatorTime = a.CreatorTime,
+                    CreatorUserId = a.CreatorUserId,
+                    Description = a.Description,
+                    DeleteMark = a.DeleteMark,
+                    EnabledMark = a.EnabledMark,
+                    EnCode = a.EnCode,
+                    FullName = a.FullName,
+                    OrganizeId=a.OrganizeId,
+                    SortCode=a.SortCode,
+                    Type=a.Type,
+                    CompanyName = b.CompanyName,
                 }).MergeTable();
             return query;
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (await repository.Db.Queryable<UserEntity>().Where(a => a.F_RoleId.Contains(keyValue)).AnyAsync())
+            if (await repository.Db.Queryable<UserEntity>().Where(a => a.RoleId.Contains(keyValue)).AnyAsync())
             {
                 throw new Exception("角色使用中，无法删除");
             }
             unitofwork.CurrentBeginTrans();
-            await repository.Delete(a => a.F_Id == keyValue);
-            await repository.Db.Deleteable<RoleAuthorizeEntity>(a => a.F_ObjectId == keyValue).ExecuteCommandAsync();
+            await repository.Delete(a => a.Id == keyValue);
+            await repository.Db.Deleteable<RoleAuthorizeEntity>(a => a.ObjectId == keyValue).ExecuteCommandAsync();
             unitofwork.CurrentCommit();
             await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
@@ -117,14 +117,14 @@ namespace WaterCloud.Service.SystemOrganize
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
-                roleEntity.F_Id = keyValue;
+                roleEntity.Id = keyValue;
 
             }
             else
             {
-                roleEntity.F_DeleteMark = false;
-                roleEntity.F_AllowEdit = false;
-                roleEntity.F_AllowDelete = false;
+                roleEntity.DeleteMark = false;
+                roleEntity.AllowEdit = false;
+                roleEntity.AllowDelete = false;
                 roleEntity.Create();
 
             }
@@ -135,31 +135,31 @@ namespace WaterCloud.Service.SystemOrganize
             foreach (var itemId in permissionIds)
             {
                 RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
-                roleAuthorizeEntity.F_Id = Utils.GuId();
-                roleAuthorizeEntity.F_ObjectType = 1;
-                roleAuthorizeEntity.F_ObjectId = roleEntity.F_Id;
-                roleAuthorizeEntity.F_ItemId = itemId;
-                if (moduledata.Find(a => a.F_Id == itemId) != null)
+                roleAuthorizeEntity.Id = Utils.GuId();
+                roleAuthorizeEntity.ObjectType = 1;
+                roleAuthorizeEntity.ObjectId = roleEntity.Id;
+                roleAuthorizeEntity.ItemId = itemId;
+                if (moduledata.Find(a => a.Id == itemId) != null)
                 {
-                    roleAuthorizeEntity.F_ItemType = 1;
+                    roleAuthorizeEntity.ItemType = 1;
                     roleAuthorizeEntitys.Add(roleAuthorizeEntity);
                 }
-                if (buttondata.Find(a => a.F_Id == itemId) != null)
+                if (buttondata.Find(a => a.Id == itemId) != null)
                 {
-                    roleAuthorizeEntity.F_ItemType = 2;
+                    roleAuthorizeEntity.ItemType = 2;
                     roleAuthorizeEntitys.Add(roleAuthorizeEntity);
                 }
             }
             foreach (var itemId in permissionfieldsIds)
             {
                 RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
-                roleAuthorizeEntity.F_Id = Utils.GuId();
-                roleAuthorizeEntity.F_ObjectType = 1;
-                roleAuthorizeEntity.F_ObjectId = roleEntity.F_Id;
-                roleAuthorizeEntity.F_ItemId = itemId;
-                if (fieldsdata.Find(a => a.F_Id == itemId) != null)
+                roleAuthorizeEntity.Id = Utils.GuId();
+                roleAuthorizeEntity.ObjectType = 1;
+                roleAuthorizeEntity.ObjectId = roleEntity.Id;
+                roleAuthorizeEntity.ItemId = itemId;
+                if (fieldsdata.Find(a => a.Id == itemId) != null)
                 {
-                    roleAuthorizeEntity.F_ItemType = 3;
+                    roleAuthorizeEntity.ItemType = 3;
                     roleAuthorizeEntitys.Add(roleAuthorizeEntity);
                 }
             }
@@ -170,10 +170,10 @@ namespace WaterCloud.Service.SystemOrganize
             }
             else
             {
-                roleEntity.F_Category = 1;
+                roleEntity.Category = 1;
                 await repository.Insert(roleEntity);
             }
-            await repository.Db.Deleteable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleEntity.F_Id).ExecuteCommandAsync();
+            await repository.Db.Deleteable<RoleAuthorizeEntity>(a => a.ObjectId == roleEntity.Id).ExecuteCommandAsync();
             await repository.Db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
             unitofwork.CurrentCommit();
             await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");

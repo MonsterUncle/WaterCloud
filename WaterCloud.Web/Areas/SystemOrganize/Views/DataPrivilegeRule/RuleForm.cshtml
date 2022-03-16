@@ -17,7 +17,7 @@
                 var tempdata = common.parentWindow().layui.table.cache.currentTableId;
                 var Filters = [];
                 for (var i = 0; i < tempdata.length; i++) {
-                    if (keyValue == tempdata[i].F_Id) {
+                    if (keyValue == tempdata[i].Id) {
                         Filters = JSON.parse(tempdata[i].Filters);
                         $('#Description').val(tempdata[i].Description);
                         break;
@@ -90,10 +90,10 @@
                 postData.Operation = data.field.Operation;
                 postData.Description = data.field.Description;
                 if (!!keyValue) {
-                    postData.F_Id = keyValue;
+                    postData.Id = keyValue;
                 }
                 else {
-                    postData.F_Id = uuid();
+                    postData.Id = uuid();
                 }
                 var Filters = [];
                 for (var i = 0; i < cout; i++) {
@@ -117,7 +117,7 @@
                 var tempdata = common.parentWindow().layui.table.cache.currentTableId;
                 if (!!keyValue) {
                     for (var i = 0; i < tempdata.length; i++) {
-                        if (keyValue == tempdata[i].F_Id) {
+                        if (keyValue == tempdata[i].Id) {
                             tempdata[i].Filters = postData.Filters;
                             tempdata[i].Description = postData.Description;
                             break;

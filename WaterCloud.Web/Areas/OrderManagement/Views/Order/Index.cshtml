@@ -56,11 +56,11 @@
              cols: [[
                  //此处需修改
                  { type: "checkbox", width: 50, fixed: 'left' },
-                 { field: 'F_OrderCode', title: '订单编号', width: 180,sort: true,filter: true },
+                 { field: 'OrderCode', title: '订单编号', width: 180,sort: true,filter: true },
                  {
-                     field: 'F_OrderState', title: '订单状态', width: 120, sort: true, filter: true,
+                     field: 'OrderState', title: '订单状态', width: 120, sort: true, filter: true,
                      templet: function (d) {
-                         if (d.F_OrderState == 1) {
+                         if (d.OrderState == 1) {
                              return "<span class='layui-btn layui-btn-normal layui-btn-xs'>已完成</span>";
                          } else {
                              return "<span class='layui-btn layui-btn-warm layui-btn-xs'>未完成</span>";
@@ -68,17 +68,17 @@
                      }
                  },
                  {
-                     field: 'F_NeedTime', title: '需求时间', minWidth: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
+                     field: 'NeedTime', title: '需求时间', minWidth: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                  },
                  {
-                     field: 'F_ActualTime', title: '实际时间', minWidth: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
+                     field: 'ActualTime', title: '实际时间', minWidth: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                  },
-                 { field: 'F_NeedNum', title: '需求数量', width: 120, sort: true, filter: true },
-                 { field: 'F_ActualNum', title: '实际数量', width: 120, sort: true, filter: true },
+                 { field: 'NeedNum', title: '需求数量', width: 120, sort: true, filter: true },
+                 { field: 'ActualNum', title: '实际数量', width: 120, sort: true, filter: true },
                  {
-                     field: 'F_EnabledMark', title: '状态', width: 80, sort: true, filter: true,
+                     field: 'EnabledMark', title: '状态', width: 80, sort: true, filter: true,
                      templet: function (d) {
-                         if (d.F_EnabledMark == true) {
+                         if (d.EnabledMark == true) {
                              return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                          } else {
                              return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
@@ -86,10 +86,10 @@
                      }
                  },
                  {
-                     field: 'F_CreatorUserName', title: '创建人', Width: 100, sort: true, filter: true,
+                     field: 'CreatorUserName', title: '创建人', Width: 100, sort: true, filter: true,
                  },
                  {
-                     field: 'F_CreatorTime', title: '创建时间', minWidth: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
+                     field: 'CreatorTime', title: '创建时间', minWidth: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                  },
                 { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
              ]]
@@ -112,7 +112,7 @@
          //toolbar监听事件
          table.on('toolbar(currentTableFilter)', function (obj) { 
              var data = table.checkStatus('currentTableId').data;
-             var id = data.length > 0 ? data[0].F_Id : null;
+             var id = data.length > 0 ? data[0].Id : null;
              if (obj.event === 'add') {  // 监听添加操作
                  common.modalOpen({
                      title: "添加订单",
@@ -128,7 +128,7 @@
                  }
                 var ids = [];
                 for (var i = 0; i < data.length; i++) {
-                    ids.push(data[i].F_Id);
+                    ids.push(data[i].Id);
                 }
                  common.deleteForm({
                      url: "/OrderManagement/Order/DeleteForm",
@@ -175,11 +175,11 @@
        });
         //toolrow监听事件
         table.on('tool(currentTableFilter)', function (obj) {
-             var id = obj.data.F_Id;
+             var id = obj.data.Id;
             if (obj.event === 'delete') {
                 common.deleteForm({
                      url: "/OrderManagement/Order/DeleteForm",
-                     param: { keyValue: obj.data.F_Id },
+                     param: { keyValue: obj.data.Id },
                      success: function () {
                         obj.del();
                    }

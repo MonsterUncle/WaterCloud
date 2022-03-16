@@ -27,11 +27,11 @@
                     async: false,
                     success: function (data) {
                         common.val('adminform', data);
-                        if (data.F_FileType!=1) {
+                        if (data.FileType!=1) {
                             common.modalMsg("文件不是图片,无法查看", "warning");
                         }
                         else {
-                            $('#demo1').attr('src', data.F_FilePath); //图片链接
+                            $('#demo1').attr('src', data.FilePath); //图片链接
                         }
                         common.setReadOnly('adminform');
                     }

@@ -32,18 +32,18 @@
                 cols: [[
                     { type: 'checkbox' },
                     
-                    { field: 'F_Account', title: '账户', width: 150, sort: true },
-                    { field: 'F_RealName', title: '姓名', width: 120, sort: true },
+                    { field: 'Account', title: '账户', width: 150, sort: true },
+                    { field: 'RealName', title: '姓名', width: 120, sort: true },
                     {
-                        field: 'F_CompanyName', title: '公司名称', width: 150, sort: true
+                        field: 'CompanyName', title: '公司名称', width: 150, sort: true
                     },
                     {
-                        field: 'F_DepartmentName', title: '部门名称', width: 200, sort: true
+                        field: 'DepartmentName', title: '部门名称', width: 200, sort: true
                     },
                     {
-                        field: 'F_EnabledMark', title: '状态', width: 80, sort: true,
+                        field: 'EnabledMark', title: '状态', width: 80, sort: true,
                         templet: function (d) {
-                            if (d.F_EnabledMark == true) {
+                            if (d.EnabledMark == true) {
                                 return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                             } else {
                                 return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
@@ -55,9 +55,9 @@
             commonTable.tableRowClick("checkbox", "currentTableFilter", "currentTableId");
             // 监听双击事件
             table.on('rowDouble(currentTableFilter)', function (obj) {
-                var pvalue = obj.data.F_Id;
-                var pname = obj.data.F_RealName;
-                var pcode = obj.data.F_Account;
+                var pvalue = obj.data.Id;
+                var pname = obj.data.RealName;
+                var pcode = obj.data.Account;
                 common.modalConfirm("注：您确定要选择{账号：" + pcode + ",姓名：" + pname + "}的数据吗？", function (r) {
                     if (r) {
                         if (!!pvalue) {
@@ -99,9 +99,9 @@
                 var pname = [];
                 var pcode = [];
                 for (var i = 0; i < checkStatus.length; i++) {
-                    pvalue.push(checkStatus[i].F_Id);
-                    pname.push(checkStatus[i].F_RealName);
-                    pcode.push(checkStatus[i].F_Account);
+                    pvalue.push(checkStatus[i].Id);
+                    pname.push(checkStatus[i].RealName);
+                    pcode.push(checkStatus[i].Account);
                 }
                 if (pvalue.length == 0) {
                     common.modalConfirm("注：您确定要清除选择的数据吗？", function (r) {

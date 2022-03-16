@@ -27,12 +27,12 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<List<RoleEntity>> GetList(string keyword = "")
         {
             var query = repository.IQueryable();
-            query = query.Where(a => a.F_Category == 2 && a.F_DeleteMark == false);
+            query = query.Where(a => a.Category == 2 && a.DeleteMark == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.FullName.Contains(keyword) || a.EnCode.Contains(keyword));
             }
-            return await query.OrderBy(a => a.F_SortCode).ToListAsync();
+            return await query.OrderBy(a => a.SortCode).ToListAsync();
         }
         public async Task<List<RoleExtend>> GetLookList(SoulPage<RoleExtend> pagination, string keyword = "")
         {
@@ -41,21 +41,21 @@ namespace WaterCloud.Service.SystemOrganize
             Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
             enabledTemp.Add("1", "有效");
             enabledTemp.Add("0", "无效");
-            dic.Add("F_EnabledMark", enabledTemp);
+            dic.Add("EnabledMark", enabledTemp);
             var setList =await setApp.GetList();
             Dictionary<string, string> orgizeTemp = new Dictionary<string, string>();
             foreach (var item in setList)
             {
-                orgizeTemp.Add(item.F_Id, item.F_CompanyName);
+                orgizeTemp.Add(item.Id, item.CompanyName);
             }
-            dic.Add("F_OrganizeId", orgizeTemp);
+            dic.Add("OrganizeId", orgizeTemp);
             pagination = ChangeSoulData(dic, pagination);
             var query= GetQuery();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_FullName.Contains(keyword) || a.F_EnCode.Contains(keyword));
+                query = query.Where(a => a.FullName.Contains(keyword) || a.EnCode.Contains(keyword));
             }
-            query = query.Where(a => a.F_DeleteMark == false&& a.F_Category == 2);
+            query = query.Where(a => a.DeleteMark == false&& a.Category == 2);
             query = GetDataPrivilege("a", "", query);
             return await repository.OrderList(query, pagination);
         }
@@ -72,23 +72,23 @@ namespace WaterCloud.Service.SystemOrganize
         private ISugarQueryable<RoleExtend> GetQuery()
         {
             var query = repository.Db.Queryable<RoleEntity,SystemSetEntity>((a,b)=>new JoinQueryInfos(
-                JoinType.Left, a.F_OrganizeId == b.F_Id
+                JoinType.Left, a.OrganizeId == b.Id
 
-                )).Where(a => a.F_DeleteMark == false && a.F_Category == 2)
+                )).Where(a => a.DeleteMark == false && a.Category == 2)
                 .Select((a,b)=>new RoleExtend
                 {
-                    F_Id = a.F_Id.SelectAll(),
-                    F_CompanyName = b.F_CompanyName,
+                    Id = a.Id.SelectAll(),
+                    CompanyName = b.CompanyName,
                 }).MergeTable();
             return query;
         }
         public async Task DeleteForm(string keyValue)
         {
-            if (await repository.Db.Queryable<UserEntity>().Where(a => a.F_DutyId == keyValue).AnyAsync())
+            if (await repository.Db.Queryable<UserEntity>().Where(a => a.DutyId == keyValue).AnyAsync())
             {
                 throw new Exception("岗位使用中，无法删除");
             }
-            await repository.Delete(a => a.F_Id == keyValue);
+            await repository.Delete(a => a.Id == keyValue);
         }
         public async Task SubmitForm(RoleEntity roleEntity, string keyValue)
         {
@@ -99,11 +99,11 @@ namespace WaterCloud.Service.SystemOrganize
             }
             else
             {
-                roleEntity.F_DeleteMark = false;
-                roleEntity.F_AllowEdit = false;
-                roleEntity.F_AllowDelete = false;
+                roleEntity.DeleteMark = false;
+                roleEntity.AllowEdit = false;
+                roleEntity.AllowDelete = false;
                 roleEntity.Create();
-                roleEntity.F_Category = 2;
+                roleEntity.Category = 2;
                 await repository.Insert(roleEntity);
             }
         }
@@ -120,32 +120,32 @@ namespace WaterCloud.Service.SystemOrganize
             File.Delete(fileFullName);
             foreach (var item in list)
             {
-                item.F_Id = Utils.GuId();
-                item.F_EnabledMark = true;
-                item.F_DeleteMark = false;
-                item.F_OrganizeId = currentuser.CompanyId;
-                item.F_SortCode = 1;
-                item.F_Category = 2;
-                item.F_AllowEdit = false;
-                item.F_AllowDelete = false;
+                item.Id = Utils.GuId();
+                item.EnabledMark = true;
+                item.DeleteMark = false;
+                item.OrganizeId = currentuser.CompanyId;
+                item.SortCode = 1;
+                item.Category = 2;
+                item.AllowEdit = false;
+                item.AllowDelete = false;
                 List<string> str = new List<string>();
-                if (string.IsNullOrEmpty(item.F_EnCode))
+                if (string.IsNullOrEmpty(item.EnCode))
                 {
-                    item.F_EnabledMark = false;
+                    item.EnabledMark = false;
                     item.ErrorMsg = "编号不存在";
                     continue;
                 }
-                else if (await repository.IQueryable(a => a.F_EnCode == item.F_EnCode).AnyAsync() || list.Where(a => a.F_EnCode == item.F_EnCode).Count() > 1)
+                else if (await repository.IQueryable(a => a.EnCode == item.EnCode).AnyAsync() || list.Where(a => a.EnCode == item.EnCode).Count() > 1)
                 {
                     str.Add("编号重复");
-                    item.F_EnabledMark = false;
+                    item.EnabledMark = false;
                 }
-                if (string.IsNullOrEmpty(item.F_FullName))
+                if (string.IsNullOrEmpty(item.FullName))
                 {
                     str.Add("名称不存在");
-                    item.F_EnabledMark = false;
+                    item.EnabledMark = false;
                 }
-                if (item.F_EnabledMark == false)
+                if (item.EnabledMark == false)
                 {
                     item.ErrorMsg = string.Join(',', str.ToArray());
                 }

@@ -21,37 +21,37 @@ namespace WaterCloud.Domain.SystemSecurity
 		/// <summary>
 		/// 主键Id
 		/// </summary>
-		[SugarColumn(ColumnName ="F_Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]
-		public  string  F_Id { get; set; }
+		[SugarColumn(ColumnName ="Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]
+		public  string  Id { get; set; }
 		/// <summary>
 		/// 网站站点
 		/// </summary>					
-		[SugarColumn(IsNullable = true, ColumnName = "F_WebSite",ColumnDataType = "nvarchar(200)", ColumnDescription = "网站站点")]
-		public  string  F_WebSite { get; set; }
+		[SugarColumn(IsNullable = true, ColumnName = "WebSite",ColumnDataType = "nvarchar(200)", ColumnDescription = "网站站点")]
+		public  string  WebSite { get; set; }
 		/// <summary>
 		/// ARM
 		/// </summary>
-		[SugarColumn(IsNullable = true, ColumnName = "F_ARM",ColumnDataType = "nvarchar(50)", ColumnDescription = "ARM")]
-		public  string  F_ARM { get; set; }
+		[SugarColumn(IsNullable = true, ColumnName = "ARM",ColumnDataType = "nvarchar(50)", ColumnDescription = "ARM")]
+		public  string  ARM { get; set; }
 		/// <summary>
 		/// CPU
 		/// </summary>
-		[SugarColumn(IsNullable = true, ColumnName = "F_CPU",ColumnDataType = "nvarchar(50)", ColumnDescription = "CPU")]
-		public  string  F_CPU { get; set; }
+		[SugarColumn(IsNullable = true, ColumnName = "CPU",ColumnDataType = "nvarchar(50)", ColumnDescription = "CPU")]
+		public  string  CPU { get; set; }
 		/// <summary>
 		/// IIS
 		/// </summary>
-		[SugarColumn(IsNullable = true, ColumnName = "F_IIS", ColumnDataType = "nvarchar(50)", ColumnDescription = "IIS")]
-		public  string  F_IIS { get; set; }
+		[SugarColumn(IsNullable = true, ColumnName = "IIS", ColumnDataType = "nvarchar(50)", ColumnDescription = "IIS")]
+		public  string  IIS { get; set; }
 		/// <summary>
 		/// 日期
 		/// </summary>
 		[SugarColumn(IsNullable = true, ColumnDescription = "日期")]
-		public  DateTime  F_Date { get; set; }
+		public  DateTime  Date { get; set; }
 		/// <summary>
 		/// 次数
 		/// </summary>
 		[SugarColumn(IsNullable = true,ColumnDescription = "次数")]
-		public int F_Cout { get; set; }
+		public int Cout { get; set; }
 	}
 }

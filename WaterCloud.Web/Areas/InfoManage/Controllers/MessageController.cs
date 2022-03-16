@@ -32,7 +32,7 @@ namespace WaterCloud.Web.Areas.InfoManage.Controllers
         {
             if (string.IsNullOrEmpty(pagination.field))
             {
-                pagination.field = "F_Id";
+                pagination.field = "Id";
                 pagination.order = "desc";
             }
             var data = await _service.GetLookList(pagination, keyword);
@@ -69,9 +69,9 @@ namespace WaterCloud.Web.Areas.InfoManage.Controllers
         {
             try
             {
-                entity.F_EnabledMark = true;
-                entity.F_ClickRead = true;
-                entity.F_CreatorUserName = _service.currentuser.UserName;
+                entity.EnabledMark = true;
+                entity.ClickRead = true;
+                entity.CreatorUserName = _service.currentuser.UserName;
                 await _service.SubmitForm(entity);
                 return await Success("操作成功。", "","");
             }

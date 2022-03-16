@@ -26,14 +26,14 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetTreeSelectJson()
         {
             var data =await _service.GetList();
-            data = data.Where(a => a.F_Layers == 1).ToList();
+            data = data.Where(a => a.Layers == 1).ToList();
             var treeList = new List<TreeSelectModel>();
             foreach (ItemsEntity item in data)
             {
                 TreeSelectModel treeModel = new TreeSelectModel();
-                treeModel.id = item.F_Id;
-                treeModel.text = item.F_FullName;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.id = item.Id;
+                treeModel.text = item.FullName;
+                treeModel.parentId = item.ParentId;
                 treeList.Add(treeModel);
             }
             return Content(treeList.TreeSelectJson());
@@ -47,11 +47,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             foreach (ItemsEntity item in data)
             {
                 TreeViewModel tree = new TreeViewModel();
-                bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
-                tree.id = item.F_Id;
-                tree.text = item.F_FullName;
-                tree.value = item.F_EnCode;
-                tree.parentId = item.F_ParentId;
+                bool hasChildren = data.Count(t => t.ParentId == item.Id) == 0 ? false : true;
+                tree.id = item.Id;
+                tree.text = item.FullName;
+                tree.value = item.EnCode;
+                tree.parentId = item.ParentId;
                 tree.isexpand = true;
                 tree.complete = true;
                 tree.hasChildren = hasChildren;
@@ -66,15 +66,15 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             var data =await _service.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
-                data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
+                data = data.TreeWhere(t => t.FullName.Contains(keyword));
             }
             var treeList = new List<TreeGridModel>();
             foreach (ItemsEntity item in data)
             {
                 TreeGridModel treeModel = new TreeGridModel();
-                treeModel.id = item.F_Id;
-                treeModel.title = item.F_FullName;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.id = item.Id;
+                treeModel.title = item.FullName;
+                treeModel.parentId = item.ParentId;
                 //treeModel.self = item;
                 treeList.Add(treeModel);
             }
@@ -87,7 +87,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             var data =await _service.GetLookList();
             if (!string.IsNullOrEmpty(keyword))
             {
-                data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
+                data = data.TreeWhere(t => t.FullName.Contains(keyword));
             }
             return Success(data.Count, data);
         }
@@ -104,13 +104,13 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         {
             try
             {
-                if (itemsEntity.F_ParentId == "0")
+                if (itemsEntity.ParentId == "0")
                 {
-                    itemsEntity.F_Layers = 1;
+                    itemsEntity.Layers = 1;
                 }
                 else
                 {
-                    itemsEntity.F_Layers =(await _service.GetForm(itemsEntity.F_ParentId)).F_Layers + 1;
+                    itemsEntity.Layers =(await _service.GetForm(itemsEntity.ParentId)).Layers + 1;
                 }
                 await _service.SubmitForm(itemsEntity, keyValue);
                 return await Success("操作成功。", "", keyValue);

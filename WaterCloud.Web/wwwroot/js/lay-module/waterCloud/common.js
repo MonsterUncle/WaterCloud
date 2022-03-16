@@ -25,8 +25,8 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 tree: {
                     iconIndex: 0,           // 折叠图标显示在第几列  多选等记得修改
                     isPidData: true,        // 是否是id、pid形式数据
-                    idName: 'F_Id',  // id字段名称
-                    pidName: 'F_ParentId',     // pid字段名称
+                    idName: 'Id',  // id字段名称
+                    pidName: 'ParentId',     // pid字段名称
                     arrowType: 'arrow2',
                     getIcon: 'ew-tree-icon-style2',
                 },
@@ -577,7 +577,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                         }
                         else if (dataJson != undefined) {
                             $.each(dataJson, function (i) {
-                                if (itemList[1].indexOf('id="' + dataJson[i].F_EnCode + '"') > -1) {
+                                if (itemList[1].indexOf('id="' + dataJson[i].EnCode + '"') > -1) {
                                     returnhtml = returnhtml + '<button ' + itemList[1] + '</button>';
                                     return false;
                                 }
@@ -606,7 +606,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                         }
                         else if (dataJson != undefined) {
                             $.each(dataJson, function (i) {
-                                if (itemList[1].indexOf('id="' + dataJson[i].F_EnCode + '"') > -1) {
+                                if (itemList[1].indexOf('id="' + dataJson[i].EnCode + '"') > -1) {
                                     returnhtml = returnhtml + '<a ' + itemList[1] + '</a>';
                                     return false;
                                 }
@@ -645,10 +645,10 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             if (dataJson != undefined) {
                 var buttonHumanized = sessionStorage.getItem('watercloudButtonHumanized');
                 $.each(dataJson, function (i) {
-                    $element.find("#" + dataJson[i].F_EnCode).attr('authorize', 'yes');
+                    $element.find("#" + dataJson[i].EnCode).attr('authorize', 'yes');
                     //去除隐藏
                     if (!!buttonHumanized) {
-                       $element.find("#" + dataJson[i].F_EnCode).removeClass('layui-hide');
+                       $element.find("#" + dataJson[i].EnCode).removeClass('layui-hide');
                     }
                 });
             }
@@ -670,7 +670,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 var dataJson = top.clients.authorizeButton[moduleId.split("?")[0]];
 
                 for (var i = 0; i < dataJson.length; i++) {
-                    if (dataJson[i].F_EnCode == id) {
+                    if (dataJson[i].EnCode == id) {
                         isOk = true;
                     }
                 }
@@ -707,7 +707,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     $this.attr('authorize', 'no');
                     if (dataJson != undefined) {
                         for (var i = 0; i < dataJson.length; i++) {
-                            if (id == dataJson[i].F_EnCode) {
+                            if (id == dataJson[i].EnCode) {
                                 $this.parent().parent().removeClass('layui-hide');
                                 $this.removeClass('layui-hide');
                                 $this.attr('authorize', 'yes');
@@ -715,7 +715,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                             }
                         }
                         //dataJson.find(item => {
-                        //    if (id == item.F_EnCode) {
+                        //    if (id == item.EnCode) {
                         //        $this.parent().parent().removeClass('layui-hide');
                         //        $this.removeClass('layui-hide');
                         //    }
@@ -880,7 +880,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     }
                     if (!!dataJson) {
                         for (var j = 0; j < dataJson.length; j++) {
-                            if (cols[0][i].field == dataJson[j].F_EnCode) {
+                            if (cols[0][i].field == dataJson[j].EnCode) {
                                 array.push(cols[0][i]);
                                 break;
                             }

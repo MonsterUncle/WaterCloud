@@ -28,7 +28,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetGridJson(Pagination pagination, string moduleId, string keyword)
         {
             pagination.order = "desc";
-            pagination.field = "F_Id";
+            pagination.field = "Id";
             var data = await _service.GetLookList(pagination, moduleId, keyword);
             return Success(pagination.records, data);
         }
@@ -44,11 +44,11 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         [HandlerAjaxOnly]
         public async Task<ActionResult> GetSelectJson(string moduleId)
         {
-            var data = (await _service.GetList()).Where(a => a.F_ModuleId == moduleId).ToList();
+            var data = (await _service.GetList()).Where(a => a.ModuleId == moduleId).ToList();
             List<object> list = new List<object>();
             foreach (var item in data)
             {
-                list.Add(new { id = item.F_EnCode, text = item.F_FullName });
+                list.Add(new { id = item.EnCode, text = item.FullName });
             }
             return Content(list.ToJson());
         }
@@ -102,15 +102,15 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         public async Task<ActionResult> GetCloneFieldsTreeJson()
         {
             var moduledata = await _moduleService.GetList();
-            //moduledata = moduledata.Where(a => a.F_Target == "iframe" || a.F_Layers>1).ToList();
+            //moduledata = moduledata.Where(a => a.Target == "iframe" || a.Layers>1).ToList();
             var fieldsdata = await _service.GetList();
             var treeList = new List<TreeGridModel>();
             foreach (ModuleEntity item in moduledata)
             {
                 TreeGridModel treeModel = new TreeGridModel();
-                treeModel.id = item.F_Id;
-                treeModel.title = item.F_FullName;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.id = item.Id;
+                treeModel.title = item.FullName;
+                treeModel.parentId = item.ParentId;
                 treeModel.checkArr = "0";
                 treeModel.disabled = true;
                 //treeModel.self = item;
@@ -119,9 +119,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             foreach (ModuleFieldsEntity item in fieldsdata)
             {
                 TreeGridModel treeModel = new TreeGridModel();
-                treeModel.id = item.F_Id;
-                treeModel.title = item.F_EnCode;
-                treeModel.parentId = item.F_ModuleId;
+                treeModel.id = item.Id;
+                treeModel.title = item.EnCode;
+                treeModel.parentId = item.ModuleId;
                 treeModel.checkArr = "0";
                 //treeModel.self = item;
                 treeList.Add(treeModel);

@@ -37,7 +37,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             if (string.IsNullOrEmpty(pagination.field))
             {
                 pagination.order = "desc";
-                pagination.field = "F_Id";
+                pagination.field = "Id";
             }
             //导出全部页使用
             if (pagination.rows == 0 && pagination.page == 0)
@@ -60,16 +60,16 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
             else
             {
-                data = data.Where(a => a.F_Id == _service.currentuser.CompanyId).ToList();
+                data = data.Where(a => a.Id == _service.currentuser.CompanyId).ToList();
 				foreach (var item in data)
 				{
-                    item.F_AdminAccount = null;
-                    item.F_AdminPassword = null;
-                    item.F_DBProvider = null;
-                    item.F_DbString = null;
-                    item.F_HostUrl = null;
-                    item.F_PrincipalMan = null;
-                    item.F_MobilePhone = null;
+                    item.AdminAccount = null;
+                    item.AdminPassword = null;
+                    item.DBProvider = null;
+                    item.DbString = null;
+                    item.HostUrl = null;
+                    item.PrincipalMan = null;
+                    item.MobilePhone = null;
                 }
                 return Content(data.ToJson());
             }
@@ -124,9 +124,9 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             var keyValue = _service.currentuser.CompanyId;
             try
             {
-                entity.F_DeleteMark = false;
-                entity.F_EnabledMark = null;
-                entity.F_EndTime = null;
+                entity.DeleteMark = false;
+                entity.EnabledMark = null;
+                entity.EndTime = null;
                 await _service.SubmitForm(entity, keyValue);
                 return await Success("操作成功。", "", keyValue);
             }

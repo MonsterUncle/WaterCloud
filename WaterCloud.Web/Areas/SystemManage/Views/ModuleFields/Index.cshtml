@@ -73,12 +73,12 @@
              height: 'full-110',
              cols: [[
                  { type: "radio", width: 50, fixed: 'left' },
-                 { field: 'F_EnCode', title: '编号', width: 150 },
-                 { field: 'F_FullName', title: '名称', width: 150 },
+                 { field: 'EnCode', title: '编号', width: 150 },
+                 { field: 'FullName', title: '名称', width: 150 },
                  {
-                     field: 'F_IsPublic', title: '公共', width: 80,
+                     field: 'IsPublic', title: '公共', width: 80,
                      templet: function (d) {
-                         if (d.F_IsPublic == true) {
+                         if (d.IsPublic == true) {
                              return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
                          } else {
                              return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
@@ -86,16 +86,16 @@
                      }
                  },
                  {
-                     field: 'F_EnabledMark', title: '状态', width: 80,
+                     field: 'EnabledMark', title: '状态', width: 80,
                      templet: function (d) {
-                         if (d.F_EnabledMark == true) {
+                         if (d.EnabledMark == true) {
                              return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                          } else {
                              return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
                          }
                      }
                  },
-                 { field: 'F_Description', title: '备注', minWidth: 120 },
+                 { field: 'Description', title: '备注', minWidth: 120 },
                  { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
              ]]
          });
@@ -130,7 +130,7 @@
                  }
                  common.deleteForm({
                      url: "/SystemManage/ModuleFields/DeleteForm",
-                     param: { keyValue: data[0].F_Id },
+                     param: { keyValue: data[0].Id },
                      success: function () {
                          common.reload('data-search-btn');
                      }
@@ -143,7 +143,7 @@
                  }
                  common.modalOpen({
                      title: "编辑界面",
-                     url: "/SystemManage/ModuleFields/Form?moduleId=" + moduleId + "&keyValue=" + data[0].F_Id,
+                     url: "/SystemManage/ModuleFields/Form?moduleId=" + moduleId + "&keyValue=" + data[0].Id,
                      width: "500px",
                      height: "400px",
                  });
@@ -155,7 +155,7 @@
                  }
                  common.modalOpen({
                      title: "查看界面",
-                     url: "/SystemManage/ModuleFields/Details?keyValue=" + data[0].F_Id,
+                     url: "/SystemManage/ModuleFields/Details?keyValue=" + data[0].Id,
                      width: "500px",
                      height: "400px",
                      btn: []
@@ -183,7 +183,7 @@
              if (obj.event === 'delete') {
                  common.deleteForm({
                      url: "/SystemManage/ModuleFields/DeleteForm",
-                     param: { keyValue: obj.data.F_Id },
+                     param: { keyValue: obj.data.Id },
                      success: function () {
                          common.reload('data-search-btn');
                      }
@@ -192,7 +192,7 @@
              else if (obj.event === 'edit') {
                  common.modalOpen({
                      title: "编辑按钮",
-                     url: "/SystemManage/ModuleFields/Form?moduleId=" + moduleId + "&keyValue=" + obj.data.F_Id,
+                     url: "/SystemManage/ModuleFields/Form?moduleId=" + moduleId + "&keyValue=" + obj.data.Id,
                      width: "500px",
                      height: "400px",
                  });
@@ -200,7 +200,7 @@
              else if (obj.event === 'details') {
                  common.modalOpen({
                      title: "查看按钮",
-                     url: "/SystemManage/ModuleFields/Details?keyValue=" + obj.data.F_Id,
+                     url: "/SystemManage/ModuleFields/Details?keyValue=" + obj.data.Id,
                      width: "500px",
                      height: "400px",
                      btn: []

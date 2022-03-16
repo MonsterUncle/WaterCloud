@@ -54,28 +54,28 @@
              },
              cols: [[                 
                  { type: "radio", width: 50, fixed: 'left' },
-                 { field: 'F_FilePath', title: '文件路径', width: 120, sort: true, hide: true, filter: true },
-                 { field: 'F_FileName', title: '文件名称', width: 180, sort: true, filter: true },
+                 { field: 'FilePath', title: '文件路径', width: 120, sort: true, hide: true, filter: true },
+                 { field: 'FileName', title: '文件名称', width: 180, sort: true, filter: true },
                  {
-                     field: 'F_FileType', title: '文件类型', width: 120, sort: true, filter: true,
+                     field: 'FileType', title: '文件类型', width: 120, sort: true, filter: true,
                      templet: function (d) {
-                         if (d.F_FileType == 0) {
+                         if (d.FileType == 0) {
                              return "文件";
-                         } else if (d.F_FileType == 1) {
+                         } else if (d.FileType == 1) {
                              return "图片";
                          }
                      }
                  },
-                 { field: 'F_FileSize', title: '文件大小', width: 100, sort: true, hide: true, filter: true },
-                 { field: 'F_FileExtension', title: '文件扩展名', width: 120, sort: true, hide: true, filter: true },
-                 { field: 'F_FileBy', title: '文件所属', width: 120, sort: true, filter: true },
+                 { field: 'FileSize', title: '文件大小', width: 100, sort: true, hide: true, filter: true },
+                 { field: 'FileExtension', title: '文件扩展名', width: 120, sort: true, hide: true, filter: true },
+                 { field: 'FileBy', title: '文件所属', width: 120, sort: true, filter: true },
                  {
-                     field: 'F_OrganizeName', title: '所属部门', width: 120
+                     field: 'OrganizeName', title: '所属部门', width: 120
                  },
                  {
-                     field: 'F_EnabledMark', title: '状态', width: 80, filter: true,
+                     field: 'EnabledMark', title: '状态', width: 80, filter: true,
                      templet: function (d) {
-                         if (d.F_EnabledMark == true) {
+                         if (d.EnabledMark == true) {
                              return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
                          } else {
                              return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
@@ -83,10 +83,10 @@
                      }
                  }, 
                  {
-                     field: 'F_CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
+                     field: 'CreatorTime', title: '创建时间', width: 160, sort: true, filter: { type: 'date[yyyy/MM/dd HH:mm:ss]' }
                  },
-                 { field: 'F_CreatorUserName', title: '创建用户', width: 120, sort: true, filter: true },
-                 { field: 'F_Description', title: '文件备注', minWidth: 150, sort: true, filter: true },
+                 { field: 'CreatorUserName', title: '创建用户', width: 120, sort: true, filter: true },
+                 { field: 'Description', title: '文件备注', minWidth: 150, sort: true, filter: true },
                  { title: '操作', width: 130, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
              ]]
          });
@@ -112,7 +112,7 @@
                      common.modalMsg("未选中数据", "warning");
                      return false;
                  }
-                 window.open('/FileManage/Uploadfile/Download?keyValue=' + data[0].F_Id);
+                 window.open('/FileManage/Uploadfile/Download?keyValue=' + data[0].Id);
              }
              else if (obj.event === 'details') {
                  if (data.length == 0) {
@@ -121,7 +121,7 @@
                }
                common.modalOpen({
                   title: "查看文件",
-                   url: "/FileManage/Uploadfile/Details?keyValue=" + data[0].F_Id,
+                   url: "/FileManage/Uploadfile/Details?keyValue=" + data[0].Id,
                    width: "500px",
                    height: "500px",
                   btn: []
@@ -140,12 +140,12 @@
          //toolrow监听事件
          table.on('tool(currentTableFilter)', function (obj) {
              if (obj.event === 'download') {
-                 window.open('/FileManage/Uploadfile/Download?keyValue=' + obj.data.F_Id);
+                 window.open('/FileManage/Uploadfile/Download?keyValue=' + obj.data.Id);
              }
              else if (obj.event === 'details') {
                  common.modalOpen({
                      title: "查看文件",
-                     url: "/FileManage/Uploadfile/Details?keyValue=" + obj.data.F_Id,
+                     url: "/FileManage/Uploadfile/Details?keyValue=" + obj.data.Id,
                      width: "500px",
                      height: "500px",
                      btn: []

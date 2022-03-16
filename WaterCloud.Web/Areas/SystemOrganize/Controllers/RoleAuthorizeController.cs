@@ -37,8 +37,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             {
                 moduledata = await _moduleService.GetList();
                 buttondata = await _moduleButtonService.GetList();
-                moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
-                buttondata = buttondata.Where(a => a.F_EnabledMark == true).ToList();
+                moduledata = moduledata.Where(a => a.EnabledMark == true).ToList();
+                buttondata = buttondata.Where(a => a.EnabledMark == true).ToList();
             }
             else
             {
@@ -48,8 +48,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                     moduledata.AddRange(await _moduleService.GetListByRole(item));
                     buttondata.AddRange(await _moduleButtonService.GetListByRole(item));
                 }
-                moduledata = moduledata.GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
-                buttondata = buttondata.GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
+                moduledata = moduledata.GroupBy(p => p.Id).Select(q => q.First()).ToList();
+                buttondata = buttondata.GroupBy(p => p.Id).Select(q => q.First()).ToList();
             }
             if (!string.IsNullOrEmpty(roleId))
             {
@@ -59,34 +59,34 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             foreach (ModuleEntity item in moduledata)
             {
                 TreeGridModel tree = new TreeGridModel();
-                tree.id = item.F_Id;
-                tree.title = item.F_FullName;
-                tree.parentId = item.F_ParentId;
-                if (item.F_IsPublic == true)
+                tree.id = item.Id;
+                tree.title = item.FullName;
+                tree.parentId = item.ParentId;
+                if (item.IsPublic == true)
                 {
                     tree.checkArr = "1";
                     tree.disabled = true;
                 }
                 else
                 {
-                    tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
+                    tree.checkArr = authorizedata.Count(t => t.ItemId == item.Id) > 0 ? "1" : "0";
                 }
                 treeList.Add(tree);
             }
             foreach (ModuleButtonEntity item in buttondata)
             {
                 TreeGridModel tree = new TreeGridModel();
-                tree.id = item.F_Id;
-                tree.title = item.F_FullName;
-                tree.parentId = item.F_ParentId == "0" ? item.F_ModuleId : item.F_ParentId;
-                if (item.F_IsPublic==true)
+                tree.id = item.Id;
+                tree.title = item.FullName;
+                tree.parentId = item.ParentId == "0" ? item.ModuleId : item.ParentId;
+                if (item.IsPublic==true)
                 {
                     tree.checkArr = "1";
                     tree.disabled = true;
                 }
                 else
                 {
-                    tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
+                    tree.checkArr = authorizedata.Count(t => t.ItemId == item.Id) > 0 ? "1" : "0";
                 }
                 treeList.Add(tree);
             }
@@ -106,8 +106,8 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             {
                 moduledata = await _moduleService.GetList();
                 fieldsdata = await _moduleFieldsService.GetList();
-                moduledata = moduledata.Where(a => a.F_EnabledMark == true).ToList();
-                fieldsdata = fieldsdata.Where(a => a.F_EnabledMark == true).ToList();
+                moduledata = moduledata.Where(a => a.EnabledMark == true).ToList();
+                fieldsdata = fieldsdata.Where(a => a.EnabledMark == true).ToList();
             }
             else
             {
@@ -117,18 +117,18 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
                     moduledata.AddRange(await _moduleService.GetListByRole(item));
                     fieldsdata.AddRange(await _moduleFieldsService.GetListByRole(item));
                 }
-                moduledata = moduledata.GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
-                fieldsdata = fieldsdata.GroupBy(p => p.F_Id).Select(q => q.First()).ToList();
+                moduledata = moduledata.GroupBy(p => p.Id).Select(q => q.First()).ToList();
+                fieldsdata = fieldsdata.GroupBy(p => p.Id).Select(q => q.First()).ToList();
             }
-            moduledata = moduledata.Where(a => a.F_IsFields==true||(a.F_Layers<3&&a.F_IsExpand==true)).ToList();
+            moduledata = moduledata.Where(a => a.IsFields==true||(a.Layers<3&&a.IsExpand==true)).ToList();
             if (!string.IsNullOrEmpty(moduleids))
             {
                 var list=moduleids.Split(',');
-                moduledata= moduledata.Where(a=> list.Contains(a.F_Id)||a.F_IsPublic==true).ToList();
+                moduledata= moduledata.Where(a=> list.Contains(a.Id)||a.IsPublic==true).ToList();
             }
             else
             {
-                moduledata = moduledata.Where(a =>a.F_IsPublic == true).ToList();
+                moduledata = moduledata.Where(a =>a.IsPublic == true).ToList();
             }
             if (!string.IsNullOrEmpty(roleId))
             {
@@ -138,34 +138,34 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             foreach (ModuleEntity item in moduledata)
             {
                 TreeGridModel tree = new TreeGridModel();
-                tree.id = item.F_Id;
-                tree.title = item.F_FullName;
-                tree.parentId = item.F_ParentId;
-                if (item.F_IsPublic == true)
+                tree.id = item.Id;
+                tree.title = item.FullName;
+                tree.parentId = item.ParentId;
+                if (item.IsPublic == true)
                 {
                     tree.checkArr = "1";
                     tree.disabled = true;
                 }
                 else
                 {
-                    tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
+                    tree.checkArr = authorizedata.Count(t => t.ItemId == item.Id) > 0 ? "1" : "0";
                 }
                 treeList.Add(tree);
             }
             foreach (ModuleFieldsEntity item in fieldsdata)
             {
                 TreeGridModel tree = new TreeGridModel();
-                tree.id = item.F_Id;
-                tree.title = item.F_FullName;
-                tree.parentId = item.F_ModuleId;
-                if (item.F_IsPublic == true)
+                tree.id = item.Id;
+                tree.title = item.FullName;
+                tree.parentId = item.ModuleId;
+                if (item.IsPublic == true)
                 {
                     tree.checkArr = "1";
                     tree.disabled = true;
                 }
                 else
                 {
-                    tree.checkArr = authorizedata.Count(t => t.F_ItemId == item.F_Id) > 0 ? "1" : "0";
+                    tree.checkArr = authorizedata.Count(t => t.ItemId == item.Id) > 0 ? "1" : "0";
                 }
                 treeList.Add(tree);
             }

@@ -31,9 +31,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             foreach (ModuleButtonEntity item in data)
             {
                 TreeSelectModel treeModel = new TreeSelectModel();
-                treeModel.id = item.F_Id;
-                treeModel.text = item.F_FullName;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.id = item.Id;
+                treeModel.text = item.FullName;
+                treeModel.parentId = item.ParentId;
                 treeList.Add(treeModel);
             }
             return Content(treeList.TreeSelectJson());
@@ -59,13 +59,13 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
         {
             try
             {
-                if (moduleButtonEntity.F_ParentId == "0")
+                if (moduleButtonEntity.ParentId == "0")
                 {
-                    moduleButtonEntity.F_Layers = 1;
+                    moduleButtonEntity.Layers = 1;
                 }
                 else
                 {
-                    moduleButtonEntity.F_Layers =(await _service.GetForm(moduleButtonEntity.F_ParentId)).F_Layers + 1;
+                    moduleButtonEntity.Layers =(await _service.GetForm(moduleButtonEntity.ParentId)).Layers + 1;
                 }
                 await _service.SubmitForm(moduleButtonEntity, keyValue);
                 return await Success("操作成功。", "", keyValue);
@@ -105,9 +105,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             foreach (ModuleEntity item in moduledata)
             {
                 TreeGridModel treeModel = new TreeGridModel();
-                treeModel.id = item.F_Id;
-                treeModel.title = item.F_FullName;
-                treeModel.parentId = item.F_ParentId;
+                treeModel.id = item.Id;
+                treeModel.title = item.FullName;
+                treeModel.parentId = item.ParentId;
                 treeModel.checkArr = "0";
                 treeModel.disabled = true;
                 //treeModel.self = item;
@@ -116,9 +116,9 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             foreach (ModuleButtonEntity item in buttondata)
             {
                 TreeGridModel treeModel = new TreeGridModel();
-                treeModel.id = item.F_Id;
-                treeModel.title = item.F_FullName;
-                treeModel.parentId = item.F_ParentId == "0" ? item.F_ModuleId : item.F_ParentId;
+                treeModel.id = item.Id;
+                treeModel.title = item.FullName;
+                treeModel.parentId = item.ParentId == "0" ? item.ModuleId : item.ParentId;
                 treeModel.checkArr = "0";
                 //treeModel.self = item;
                 treeList.Add(treeModel);

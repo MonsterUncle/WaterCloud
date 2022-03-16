@@ -27,9 +27,9 @@ namespace WaterCloud.Service.ContentManage
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_Title.Contains(keyword) || a.F_Tags.Contains(keyword));
+                query = query.Where(a => a.Title.Contains(keyword) || a.Tags.Contains(keyword));
             }
-            return await query.Where(a => a.F_DeleteMark == false).OrderBy(a => a.F_Id,OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.DeleteMark == false).OrderBy(a => a.Id,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<ArticleNewsEntity>> GetLookList(SoulPage<ArticleNewsEntity> pagination, string keyword = "", string CategoryId="")
@@ -39,31 +39,31 @@ namespace WaterCloud.Service.ContentManage
             Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
             enabledTemp.Add("1", "有效");
             enabledTemp.Add("0", "无效");
-            dic.Add("F_EnabledMark", enabledTemp);
+            dic.Add("EnabledMark", enabledTemp);
             Dictionary<string, string> isTrue = new Dictionary<string, string>();
             isTrue.Add("1", "是");
             isTrue.Add("0", "否");
-            dic.Add("F_IsTop", isTrue);
-            dic.Add("F_IsHot", isTrue);
+            dic.Add("IsTop", isTrue);
+            dic.Add("IsHot", isTrue);
             pagination = ChangeSoulData(dic, pagination);
             //获取新闻列表
             var query = repository.Db.Queryable<ArticleNewsEntity, ArticleCategoryEntity>((a,b) => new JoinQueryInfos(
-                JoinType.Left,a.F_CategoryId==b.F_Id && b.F_EnabledMark == true
+                JoinType.Left,a.CategoryId==b.Id && b.EnabledMark == true
                 ))
             .Select((a, b) => new ArticleNewsEntity
             {
-                F_Id = a.F_Id.SelectAll(),
-                F_CategoryName = b.F_FullName,
+                Id = a.Id.SelectAll(),
+                CategoryName = b.FullName,
             }).MergeTable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_Title.Contains(keyword));
+                query = query.Where(a => a.Title.Contains(keyword));
             }
             if (!string.IsNullOrEmpty(CategoryId))
             {
-                query = query.Where(a => a.F_CategoryId.Contains(CategoryId));
+                query = query.Where(a => a.CategoryId.Contains(CategoryId));
             }
-            query = query.Where(a => a.F_DeleteMark == false);
+            query = query.Where(a => a.DeleteMark == false);
             //权限过滤
             query = GetDataPrivilege<ArticleNewsEntity>("a", "",query);           
             return await repository.OrderList(query, pagination);
@@ -76,16 +76,16 @@ namespace WaterCloud.Service.ContentManage
         public async Task<ArticleNewsEntity> GetForm(string keyValue)
         {
             var query = repository.Db.Queryable<ArticleNewsEntity, ArticleCategoryEntity>((a, b) => new JoinQueryInfos(
-                JoinType.Left, a.F_CategoryId == b.F_Id && b.F_EnabledMark == true
+                JoinType.Left, a.CategoryId == b.Id && b.EnabledMark == true
                 ))
             .Select((a, b) => new ArticleNewsEntity
             {
-                F_Id = a.F_Id.SelectAll(),
-                F_CategoryName = b.F_FullName,
+                Id = a.Id.SelectAll(),
+                CategoryName = b.FullName,
             }).MergeTable();
             if (!string.IsNullOrEmpty(keyValue))
             {
-                query = query.Where(a => a.F_Id == keyValue);
+                query = query.Where(a => a.Id == keyValue);
             }
             //字段权限处理
             return GetFieldsFilterData(await query.FirstAsync());
@@ -95,26 +95,26 @@ namespace WaterCloud.Service.ContentManage
         #region 提交数据
         public async Task SubmitForm(ArticleNewsEntity entity, string keyValue)
         {
-            if (string.IsNullOrEmpty(entity.F_Zhaiyao))
+            if (string.IsNullOrEmpty(entity.Zhaiyao))
             {
-                entity.F_Zhaiyao = TextHelper.GetSubString(WebHelper.NoHtml(entity.F_Description),255);
+                entity.Zhaiyao = TextHelper.GetSubString(WebHelper.NoHtml(entity.Description),255);
             }
-            if (string.IsNullOrEmpty(entity.F_SeoTitle))
+            if (string.IsNullOrEmpty(entity.SeoTitle))
             {
-                entity.F_SeoTitle = entity.F_Title;
+                entity.SeoTitle = entity.Title;
             }
-            if (string.IsNullOrEmpty(entity.F_SeoKeywords))
+            if (string.IsNullOrEmpty(entity.SeoKeywords))
             {
-                entity.F_SeoKeywords = entity.F_Zhaiyao;
+                entity.SeoKeywords = entity.Zhaiyao;
             }
-            if (string.IsNullOrEmpty(entity.F_SeoDescription))
+            if (string.IsNullOrEmpty(entity.SeoDescription))
             {
-                entity.F_SeoDescription = entity.F_Zhaiyao;
+                entity.SeoDescription = entity.Zhaiyao;
             }
 
             if (string.IsNullOrEmpty(keyValue))
             {
-                entity.F_DeleteMark = false;
+                entity.DeleteMark = false;
                 //此处需修改
                 entity.Create();
                 await repository.Insert(entity);
@@ -130,7 +130,7 @@ namespace WaterCloud.Service.ContentManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Delete(a => ids.Contains(a.F_Id));
+            await repository.Delete(a => ids.Contains(a.Id));
         }
         #endregion
 

@@ -27,7 +27,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             if (string.IsNullOrEmpty(pagination.field))
             {
                 pagination.order = "desc";
-                pagination.field = "F_CreatorTime";
+                pagination.field = "CreatorTime";
             }
             //导出全部页使用
             if (pagination.rows == 0 && pagination.page == 0)

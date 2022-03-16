@@ -16,82 +16,82 @@ namespace WaterCloud.Domain.OrderManagement
         /// <summary>
         /// 主键
         /// </summary>
-        [SugarColumn(ColumnName="F_Id", IsPrimaryKey = true)]
-        public string F_Id { get; set; }
+        [SugarColumn(ColumnName="Id", IsPrimaryKey = true)]
+        public string Id { get; set; }
         /// <summary>
         /// 订单编号
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_OrderCode", ColumnDataType = "nvarchar(50)", ColumnDescription = "订单编号", UniqueGroupNameList = new string[] { "crm_order" })]
-        public string F_OrderCode { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "OrderCode", ColumnDataType = "nvarchar(50)", ColumnDescription = "订单编号", UniqueGroupNameList = new string[] { "crm_order" })]
+        public string OrderCode { get; set; }
         /// <summary>
         /// 订单状态(0待确认，待采购，1已完成)
         /// </summary>
         [SugarColumn(IsNullable = false, ColumnDescription = "订单状态")]
-        public int? F_OrderState { get; set; }
+        public int? OrderState { get; set; }
         /// <summary>
         /// 需求时间
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "需求时间")]
-        public DateTime? F_NeedTime { get; set; }
+        public DateTime? NeedTime { get; set; }
         /// <summary>
         /// 实际时间
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "实际时间")]
-        public DateTime? F_ActualTime { get; set; }
+        public DateTime? ActualTime { get; set; }
         /// <summary>
         /// 删除标记
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "删除标记")]
-        public bool? F_DeleteMark { get; set; }
+        public bool? DeleteMark { get; set; }
         /// <summary>
         /// 有效标记
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "有效标记")]
-        public bool? F_EnabledMark { get; set; }
+        public bool? EnabledMark { get; set; }
         /// <summary>
         /// 备注
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext", ColumnDescription = "备注")]
-        public string F_Description { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "Description", ColumnDataType = "longtext", ColumnDescription = "备注")]
+        public string Description { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "创建时间")]
-        public DateTime? F_CreatorTime { get; set; }
+        public DateTime? CreatorTime { get; set; }
         /// <summary>
         /// 创建人Id
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_CreatorUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建人Id")]
-        public string F_CreatorUserId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "CreatorUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建人Id")]
+        public string CreatorUserId { get; set; }
         /// <summary>
         /// 创建人
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_CreatorUserName", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建人")]
-        public string F_CreatorUserName { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "CreatorUserName", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建人")]
+        public string CreatorUserName { get; set; }
         /// <summary>
         /// 修改时间
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "修改时间")]
-        public DateTime? F_LastModifyTime { get; set; }
+        public DateTime? LastModifyTime { get; set; }
         /// <summary>
         /// 修改人Id
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_LastModifyUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "修改人Id")]
-        public string F_LastModifyUserId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "LastModifyUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "修改人Id")]
+        public string LastModifyUserId { get; set; }
         /// <summary>
         /// 删除时间
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "删除时间")]
-        public DateTime? F_DeleteTime { get; set; }
+        public DateTime? DeleteTime { get; set; }
         /// <summary>
         /// 删除人Id
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_DeleteUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "删除人Id")]
-        public string F_DeleteUserId { get; set; }
+        [SugarColumn(IsNullable = true, ColumnName = "DeleteUserId", ColumnDataType = "nvarchar(50)", ColumnDescription = "删除人Id")]
+        public string DeleteUserId { get; set; }
         [SugarColumn(IsIgnore = true)]
-        public int? F_NeedNum { get; set; }
+        public int? NeedNum { get; set; }
         [SugarColumn(IsIgnore = true)]
-        public int? F_ActualNum { get; set; }
+        public int? ActualNum { get; set; }
         [SugarColumn(IsIgnore = true)]
         public List<OrderDetailEntity> list { get; set; }
     }

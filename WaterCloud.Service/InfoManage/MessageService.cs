@@ -36,31 +36,31 @@ namespace WaterCloud.Service.InfoManage
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_MessageInfo.Contains(keyword) || a.F_CreatorUserName.Contains(keyword));
+                query = query.Where(a => a.MessageInfo.Contains(keyword) || a.CreatorUserName.Contains(keyword));
             }
-            return await query.Where(a => a.F_EnabledMark == true).OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToListAsync();
+            return await query.Where(a => a.EnabledMark == true).OrderBy(a => a.CreatorTime,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetLookList(string keyword = "")
         {
-            var query = repository.IQueryable().Where(a => a.F_EnabledMark == true);
+            var query = repository.IQueryable().Where(a => a.EnabledMark == true);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_MessageInfo.Contains(keyword) || a.F_CreatorUserName.Contains(keyword));
+                query = query.Where(a => a.MessageInfo.Contains(keyword) || a.CreatorUserName.Contains(keyword));
             }
             query = GetDataPrivilege("a","", query);
-            return await query.OrderBy(a => a.F_CreatorTime,OrderByType.Desc).ToListAsync();
+            return await query.OrderBy(a => a.CreatorTime,OrderByType.Desc).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetUnReadListJson()
         {
-            var hisquery = repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_CreatorUserId == currentuser.UserId).Select(a => a.F_MessageId).ToList();
+            var hisquery = repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.CreatorUserId == currentuser.UserId).Select(a => a.MessageId).ToList();
             var tempList= repository.Db.Queryable<MessageEntity, MessageHistoryEntity>((a,b) => new JoinQueryInfos(
-                JoinType.Inner,a.F_Id==b.F_MessageId&&a.F_MessageType==2
-                )).Select(a => a.F_Id).ToList();
+                JoinType.Inner,a.Id==b.MessageId&&a.MessageType==2
+                )).Select(a => a.Id).ToList();
             hisquery.AddRange(tempList);
-            var query = repository.IQueryable(a => (a.F_ToUserId.Contains(currentuser.UserId) || a.F_ToUserId == "") && a.F_EnabledMark == true).Where(a => !hisquery.Contains(a.F_Id));
-            return await GetFieldsFilterDataNew("a", query.OrderBy(a => a.F_CreatorTime,OrderByType.Desc)).ToListAsync();
+            var query = repository.IQueryable(a => (a.ToUserId.Contains(currentuser.UserId) || a.ToUserId == "") && a.EnabledMark == true).Where(a => !hisquery.Contains(a.Id));
+            return await GetFieldsFilterDataNew("a", query.OrderBy(a => a.CreatorTime,OrderByType.Desc)).ToListAsync();
         }
 
         public async Task<List<MessageEntity>> GetLookList(SoulPage<MessageEntity> pagination, string keyword = "")
@@ -71,16 +71,16 @@ namespace WaterCloud.Service.InfoManage
             Dictionary<string, string> messageTypeTemp = new Dictionary<string, string>();
             foreach (var item in setList)
             {
-                messageTypeTemp.Add(item.F_ItemCode,item.F_ItemName);
+                messageTypeTemp.Add(item.ItemCode,item.ItemName);
             }
-            dic.Add("F_MessageType", messageTypeTemp);
+            dic.Add("MessageType", messageTypeTemp);
             pagination = ChangeSoulData(dic, pagination);
             //获取数据权限
-            var query = repository.IQueryable().Where(a => a.F_EnabledMark == true);
+            var query = repository.IQueryable().Where(a => a.EnabledMark == true);
             if (!string.IsNullOrEmpty(keyword))
             {
                 //此处需修改
-                query = query.Where(a => a.F_MessageInfo.Contains(keyword) || a.F_CreatorUserName.Contains(keyword));
+                query = query.Where(a => a.MessageInfo.Contains(keyword) || a.CreatorUserName.Contains(keyword));
             }
             query = GetDataPrivilege("a","",query);
             return await repository.OrderList(query, pagination);
@@ -103,27 +103,27 @@ namespace WaterCloud.Service.InfoManage
         public async Task SubmitForm(MessageEntity entity)
         {
             entity.Create();
-            entity.F_EnabledMark = true;
-            entity.F_CreatorUserName = currentuser.UserName;
+            entity.EnabledMark = true;
+            entity.CreatorUserName = currentuser.UserName;
             MessageEntity messageEntity = new MessageEntity();
-            if (string.IsNullOrEmpty(entity.F_ToUserId))
+            if (string.IsNullOrEmpty(entity.ToUserId))
             {
                 string msg = entity.ToJson();
-                entity.F_ToUserName = "所有人";
-                entity.F_ToUserId = "";
+                entity.ToUserName = "所有人";
+                entity.ToUserId = "";
                 messageEntity = await repository.Insert(entity);
             }
             else
             {
-                var users = entity.F_ToUserId.Split(",");
-                entity.F_ToUserName = string.Join(",", repository.Db.Queryable<UserEntity>().Where(a => users.Contains(a.F_Id)).Select(a => a.F_RealName).ToList());
+                var users = entity.ToUserId.Split(",");
+                entity.ToUserName = string.Join(",", repository.Db.Queryable<UserEntity>().Where(a => users.Contains(a.Id)).Select(a => a.RealName).ToList());
                 messageEntity= await repository.Insert(entity);
             }
             //通过http发送消息
             messageEntity.companyId = currentuser.CompanyId;
             var mouduleName = ReflectionHelper.GetModuleName(1);
-            var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == mouduleName);
-            var url = module.F_UrlAddress.Substring(0, module.F_UrlAddress.Length - 5) + "SendWebSocketMsg";
+            var module = repository.Db.Queryable<ModuleEntity>().First(a => a.EnCode == mouduleName);
+            var url = module.UrlAddress.Substring(0, module.UrlAddress.Length - 5) + "SendWebSocketMsg";
             HttpContent httpContent = new StringContent(messageEntity.ToJson(), Encoding.UTF8);
             httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             var result = _httpClientFactory.CreateClient().PostAsync(GlobalContext.SystemConfig.MainProgram + url, httpContent).GetAwaiter().GetResult();
@@ -131,13 +131,13 @@ namespace WaterCloud.Service.InfoManage
         }
         public async Task SendWebSocketMsg(MessageEntity messageEntity)
         {
-            if (!string.IsNullOrEmpty(messageEntity.companyId) && messageEntity.F_ToUserId.Length == 0)
+            if (!string.IsNullOrEmpty(messageEntity.companyId) && messageEntity.ToUserId.Length == 0)
             {
                 await _messageHub.Clients.Group(messageEntity.companyId).SendAsync("ReceiveMessage", messageEntity.ToJson());
             }
             else
             {
-                var users = messageEntity.F_ToUserId.Split(',');
+                var users = messageEntity.ToUserId.Split(',');
                 foreach (var item in users)
                 {
                     //存在就私信
@@ -156,7 +156,7 @@ namespace WaterCloud.Service.InfoManage
         public async Task ReadAllMsgForm(int type)
         {
             var unList=await GetUnReadListJson();
-            var strList = unList.Where(a => a.F_MessageType == type&&a.F_ClickRead==true).Select(a=>a.F_Id).ToList();
+            var strList = unList.Where(a => a.MessageType == type&&a.ClickRead==true).Select(a=>a.Id).ToList();
             unitofwork.CurrentBeginTrans();
             foreach (var item in strList)
             {
@@ -169,8 +169,8 @@ namespace WaterCloud.Service.InfoManage
         {            
             MessageHistoryEntity msghis = new MessageHistoryEntity();
             msghis.Create();
-            msghis.F_CreatorUserName = currentuser.UserName;
-            msghis.F_MessageId = keyValue;
+            msghis.CreatorUserName = currentuser.UserName;
+            msghis.MessageId = keyValue;
             await repository.Db.Insertable(msghis).ExecuteCommandAsync();
         }
 
@@ -181,11 +181,11 @@ namespace WaterCloud.Service.InfoManage
             {
                 return true;
             }
-            if (msg.F_ClickRead==false)
+            if (msg.ClickRead==false)
             {
                 return true;
             }
-            if (await repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.F_MessageId == keyValue && a.F_CreatorUserId == currentuser.UserId).AnyAsync())
+            if (await repository.Db.Queryable<MessageHistoryEntity>().Where(a => a.MessageId == keyValue && a.CreatorUserId == currentuser.UserId).AnyAsync())
             {
                 return true;
             }
@@ -198,8 +198,8 @@ namespace WaterCloud.Service.InfoManage
         public async Task DeleteForm(string keyValue)
         {
             var ids = keyValue.Split(',');
-            await repository.Update(a => ids.Contains(a.F_Id), a=>new MessageEntity { 
-                F_EnabledMark=false         
+            await repository.Update(a => ids.Contains(a.Id), a=>new MessageEntity { 
+                EnabledMark=false         
             });
         }
         #endregion

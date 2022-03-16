@@ -56,7 +56,7 @@ namespace WaterCloud.Service.AutoJob
                 await _scheduler.Clear();
             }
             List<OpenJobEntity> obj = await _service.GetAllList(null);
-            obj = obj.Where(a => a.F_EnabledMark == true).ToList();
+            obj = obj.Where(a => a.EnabledMark == true).ToList();
             if (obj.Count > 0)
             {
                 await AddScheduleJob(obj, cancellationToken);
@@ -87,24 +87,24 @@ namespace WaterCloud.Service.AutoJob
             {
                 foreach (OpenJobEntity entity in entityList)
                 {
-                    entity.F_StarRunTime = DateTime.Now;
-                    entity.F_EndRunTime = DateTime.Now.AddSeconds(-1);
-                    DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(entity.F_StarRunTime, 1);
+                    entity.StarRunTime = DateTime.Now;
+                    entity.EndRunTime = DateTime.Now.AddSeconds(-1);
+                    DateTimeOffset starRunTime = DateBuilder.NextGivenSecondDate(entity.StarRunTime, 1);
                     DateTimeOffset endRunTime = DateBuilder.NextGivenSecondDate(DateTime.MaxValue.AddDays(-1), 1);
-                    await _service.SubmitForm(entity, entity.F_Id);
+                    await _service.SubmitForm(entity, entity.Id);
 
                     ICronTrigger trigger = (ICronTrigger)TriggerBuilder.Create()
                                                  .StartAt(starRunTime)
                                                  .EndAt(endRunTime)
-                                                 .WithIdentity(entity.F_JobName, entity.F_JobGroup)
-                                                 .WithCronSchedule(entity.F_CronExpress)
+                                                 .WithIdentity(entity.JobName, entity.JobGroup)
+                                                 .WithCronSchedule(entity.CronExpress)
                                                  .Build();
                     ((CronTriggerImpl)trigger).MisfireInstruction = MisfireInstruction.CronTrigger.DoNothing;
                     // 判断数据库中有没有记录过，有的话，quartz会自动从数据库中提取信息创建 schedule
-                    if (!await _scheduler.CheckExists(new JobKey(entity.F_JobName, entity.F_JobGroup)))
+                    if (!await _scheduler.CheckExists(new JobKey(entity.JobName, entity.JobGroup)))
                     {
-                        IJobDetail job = JobBuilder.Create<JobExecute>().WithIdentity(entity.F_JobName, entity.F_JobGroup).Build();
-                        job.JobDataMap.Add("F_Id", entity.F_Id);
+                        IJobDetail job = JobBuilder.Create<JobExecute>().WithIdentity(entity.JobName, entity.JobGroup).Build();
+                        job.JobDataMap.Add("Id", entity.Id);
                         await _scheduler.ScheduleJob(job, trigger, cancellationToken);
                         //存在相同名字的Job或Trigger,更新调度任务
                         //IList<ICronTrigger> triggers = new List<ICronTrigger> { trigger };

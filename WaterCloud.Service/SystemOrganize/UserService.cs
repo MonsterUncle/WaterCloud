@@ -38,17 +38,17 @@ namespace WaterCloud.Service.SystemOrganize
             Dictionary<string, string> enabledTemp = new Dictionary<string, string>();
             enabledTemp.Add("1", "有效");
             enabledTemp.Add("0", "无效");
-            dic.Add("F_EnabledMark", enabledTemp);
+            dic.Add("EnabledMark", enabledTemp);
             Dictionary<string, string> sexTemp = new Dictionary<string, string>();
             sexTemp.Add("1", "男");
             sexTemp.Add("0", "女");
-            dic.Add("F_Gender", sexTemp);
+            dic.Add("Gender", sexTemp);
             pagination = ChangeSoulData(dic, pagination);
             //获取数据权限
-            var query = GetQuery().Where(a => a.F_IsAdmin == false);
+            var query = GetQuery().Where(a => a.IsAdmin == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_Account.Contains(keyword) || a.F_RealName.Contains(keyword)||a.F_MobilePhone.Contains(keyword));
+                query = query.Where(a => a.Account.Contains(keyword) || a.RealName.Contains(keyword)||a.MobilePhone.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
             var data = await repository.OrderList(query, pagination);
@@ -56,77 +56,77 @@ namespace WaterCloud.Service.SystemOrganize
             var orgs = repository.Db.Queryable<OrganizeEntity>().ToList();
             foreach (var item in data)
             {
-                string[] roleIds = item.F_RoleId.Split(',');
-                string[] departmentIds = item.F_DepartmentId.Split(',');
-                item.F_DepartmentName = string.Join(',', orgs.Where(a => departmentIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
-                item.F_RoleName = string.Join(',', roles.Where(a => roleIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
+                string[] roleIds = item.RoleId.Split(',');
+                string[] departmentIds = item.DepartmentId.Split(',');
+                item.DepartmentName = string.Join(',', orgs.Where(a => departmentIds.Contains(a.Id)).Select(a => a.FullName).ToList());
+                item.RoleName = string.Join(',', roles.Where(a => roleIds.Contains(a.Id)).Select(a => a.FullName).ToList());
             }
             return data;
         }
         public async Task<List<UserExtend>> GetList(string keyword)
         {
-            var cachedata = GetQuery().Where(a => a.F_IsAdmin == false);
+            var cachedata = GetQuery().Where(a => a.IsAdmin == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                cachedata = cachedata.Where(a => a.F_Account.Contains(keyword) || a.F_RealName.Contains(keyword) || a.F_MobilePhone.Contains(keyword));
+                cachedata = cachedata.Where(a => a.Account.Contains(keyword) || a.RealName.Contains(keyword) || a.MobilePhone.Contains(keyword));
             }
-            var data = await cachedata.OrderBy(a => a.F_Account).ToListAsync();
+            var data = await cachedata.OrderBy(a => a.Account).ToListAsync();
             var roles = await repository.Db.Queryable<RoleEntity>().ToListAsync();
             var orgs = await repository.Db.Queryable<OrganizeEntity>().ToListAsync();
             foreach (var item in data)
             {
-                string[] roleIds = item.F_RoleId.Split(',');
-                string[] departmentIds = item.F_DepartmentId.Split(',');
-                item.F_DepartmentName = string.Join(',', orgs.Where(a => departmentIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
-                item.F_RoleName = string.Join(',', roles.Where(a => roleIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
+                string[] roleIds = item.RoleId.Split(',');
+                string[] departmentIds = item.DepartmentId.Split(',');
+                item.DepartmentName = string.Join(',', orgs.Where(a => departmentIds.Contains(a.Id)).Select(a => a.FullName).ToList());
+                item.RoleName = string.Join(',', roles.Where(a => roleIds.Contains(a.Id)).Select(a => a.FullName).ToList());
             }
             return data;
         }
         private ISugarQueryable<UserExtend> GetQuery()
         {
             var query = repository.Db.Queryable<UserEntity, RoleEntity, SystemSetEntity>((a,b,c)=>new JoinQueryInfos(
-                JoinType.Left, a.F_DutyId == b.F_Id,
-                JoinType.Left, a.F_OrganizeId == c.F_Id
-                )).Where(a => a.F_DeleteMark == false)
+                JoinType.Left, a.DutyId == b.Id,
+                JoinType.Left, a.OrganizeId == c.Id
+                )).Where(a => a.DeleteMark == false)
                 .Select((a, b,c) => new UserExtend
                 {
-                    F_Id = a.F_Id,
-                    F_IsSenior=a.F_IsSenior,
-                    F_SecurityLevel=a.F_SecurityLevel,
-                    F_Account=a.F_Account,
-                    F_DingTalkAvatar=a.F_DingTalkAvatar,
-                    F_IsAdmin=a.F_IsAdmin,
-                    F_Birthday=a.F_Birthday,
-                    F_CompanyName=c.F_CompanyName,
-                    F_CreatorTime=a.F_CreatorTime,
-                    F_CreatorUserId=a.F_CreatorUserId,  
-                    F_DepartmentId=a.F_DepartmentId,
-                    F_Description=a.F_Description,
-                    F_DingTalkUserId=a.F_DingTalkUserId,
-                    F_DingTalkUserName=a.F_DingTalkUserName,
-                    F_DutyId=a.F_DutyId,
-                    F_DutyName=b.F_FullName,
-                    F_Email=a.F_Email,
-                    F_EnabledMark=a.F_EnabledMark,
-                    F_Gender=a.F_Gender,
-                    F_HeadIcon=a.F_HeadIcon,
-                    F_HeadImgUrl=a.F_HeadImgUrl,
-                    F_IsBoss=a.F_IsBoss,
-                    F_IsLeaderInDepts=a.F_IsLeaderInDepts,
-                    F_ManagerId=a.F_ManagerId,
-                    F_MobilePhone=a.F_MobilePhone,
-                    F_NickName=a.F_NickName,
-                    F_OrganizeId=a.F_OrganizeId,
-                    F_RealName=a.F_RealName,
-                    F_Remark=a.F_RealName,
-                    F_RoleId=a.F_RoleId,
-                    F_Signature=a.F_Signature,
-                    F_SortCode=a.F_SortCode,
-                    F_WeChat=a.F_WeChat,
-                    F_WxNickName=a.F_WxNickName,
-                    F_WxOpenId=a.F_WxOpenId,
-                    F_DepartmentName="",
-                    F_RoleName=""
+                    Id = a.Id,
+                    IsSenior=a.IsSenior,
+                    SecurityLevel=a.SecurityLevel,
+                    Account=a.Account,
+                    DingTalkAvatar=a.DingTalkAvatar,
+                    IsAdmin=a.IsAdmin,
+                    Birthday=a.Birthday,
+                    CompanyName=c.CompanyName,
+                    CreatorTime=a.CreatorTime,
+                    CreatorUserId=a.CreatorUserId,  
+                    DepartmentId=a.DepartmentId,
+                    Description=a.Description,
+                    DingTalkUserId=a.DingTalkUserId,
+                    DingTalkUserName=a.DingTalkUserName,
+                    DutyId=a.DutyId,
+                    DutyName=b.FullName,
+                    Email=a.Email,
+                    EnabledMark=a.EnabledMark,
+                    Gender=a.Gender,
+                    HeadIcon=a.HeadIcon,
+                    HeadImgUrl=a.HeadImgUrl,
+                    IsBoss=a.IsBoss,
+                    IsLeaderInDepts=a.IsLeaderInDepts,
+                    ManagerId=a.ManagerId,
+                    MobilePhone=a.MobilePhone,
+                    NickName=a.NickName,
+                    OrganizeId=a.OrganizeId,
+                    RealName=a.RealName,
+                    Remark=a.RealName,
+                    RoleId=a.RoleId,
+                    Signature=a.Signature,
+                    SortCode=a.SortCode,
+                    WeChat=a.WeChat,
+                    WxNickName=a.WxNickName,
+                    WxOpenId=a.WxOpenId,
+                    DepartmentName="",
+                    RoleName=""
                 }).MergeTable();
             return query;
         }
@@ -140,9 +140,9 @@ namespace WaterCloud.Service.SystemOrganize
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.F_Account.Contains(keyword) || a.F_RealName.Contains(keyword) || a.F_MobilePhone.Contains(keyword));
+                query = query.Where(a => a.Account.Contains(keyword) || a.RealName.Contains(keyword) || a.MobilePhone.Contains(keyword));
             }
-            return await query.Where(a => a.F_EnabledMark ==true && a.F_DeleteMark == false).OrderBy(a => a.F_Account).ToListAsync();
+            return await query.Where(a => a.EnabledMark ==true && a.DeleteMark == false).OrderBy(a => a.Account).ToListAsync();
         }
 
         public async Task<UserEntity> GetForm(string keyValue)
@@ -154,15 +154,15 @@ namespace WaterCloud.Service.SystemOrganize
         {
             var data = await repository.FindEntity(keyValue);
             string[] temp;
-            if (data.F_RoleId != null)
+            if (data.RoleId != null)
             {
-                temp = data.F_RoleId.Split(',');
-                data.F_RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                temp = data.RoleId.Split(',');
+                data.RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.Id)).Select(a => a.FullName).ToList().ToArray());
             }
-            if (data.F_DepartmentId != null)
+            if (data.DepartmentId != null)
             {
-                temp = data.F_DepartmentId.Split(',');
-                data.F_DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                temp = data.DepartmentId.Split(',');
+                data.DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.Id)).Select(a => a.FullName).ToList().ToArray());
             }
             return data;
         }
@@ -170,23 +170,23 @@ namespace WaterCloud.Service.SystemOrganize
         {
             var data = await repository.FindEntity(keyValue);
             string[] temp;
-            if (data.F_RoleId != null)
+            if (data.RoleId != null)
             {
-                temp = data.F_RoleId.Split(',');
-                data.F_RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                temp = data.RoleId.Split(',');
+                data.RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.Id)).Select(a => a.FullName).ToList().ToArray());
             }
-            if (data.F_DepartmentId != null)
+            if (data.DepartmentId != null)
             {
-                temp = data.F_DepartmentId.Split(',');
-                data.F_DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+                temp = data.DepartmentId.Split(',');
+                data.DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.Id)).Select(a => a.FullName).ToList().ToArray());
             }
             return GetFieldsFilterData(data);
         }
         public async Task DeleteForm(string keyValue)
         {
             unitofwork.CurrentBeginTrans();
-            await repository.Delete(a => a.F_Id == keyValue);
-            await repository.Db.Deleteable<UserLogOnEntity>(a => a.F_UserId == keyValue).ExecuteCommandAsync();
+            await repository.Delete(a => a.Id == keyValue);
+            await repository.Db.Deleteable<UserLogOnEntity>(a => a.UserId == keyValue).ExecuteCommandAsync();
             unitofwork.CurrentCommit();
         }
         public async Task SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
@@ -198,11 +198,11 @@ namespace WaterCloud.Service.SystemOrganize
             else
             {
                 userEntity.Create();
-                userLogOnEntity.F_Id= Utils.GuId();
-                userLogOnEntity.F_UserId = userEntity.F_Id;
-                 userLogOnEntity.F_ErrorNum = 0;
-                userLogOnEntity.F_UserOnLine = false;
-                userLogOnEntity.F_LogOnCount = 0;
+                userLogOnEntity.Id= Utils.GuId();
+                userLogOnEntity.UserId = userEntity.Id;
+                 userLogOnEntity.ErrorNum = 0;
+                userLogOnEntity.UserOnLine = false;
+                userLogOnEntity.LogOnCount = 0;
             }
             unitofwork.CurrentBeginTrans();
             if (!string.IsNullOrEmpty(keyValue))
@@ -211,10 +211,10 @@ namespace WaterCloud.Service.SystemOrganize
             }
             else
             {
-                userLogOnEntity.F_Id = userEntity.F_Id;
-                userLogOnEntity.F_UserId = userEntity.F_Id;
-                userLogOnEntity.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                userLogOnEntity.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userLogOnEntity.F_UserPassword, 32).ToLower(), userLogOnEntity.F_UserSecretkey).ToLower(), 32).ToLower();
+                userLogOnEntity.Id = userEntity.Id;
+                userLogOnEntity.UserId = userEntity.Id;
+                userLogOnEntity.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                userLogOnEntity.UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userLogOnEntity.UserPassword, 32).ToLower(), userLogOnEntity.UserSecretkey).ToLower(), 32).ToLower();
                 await repository.Insert(userEntity);
                 await repository.Db.Insertable(userLogOnEntity).ExecuteCommandAsync();
             }
@@ -236,14 +236,14 @@ namespace WaterCloud.Service.SystemOrganize
             if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
             {
                 unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
-                var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).FirstOrDefault();
+                var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.HostUrl)).FirstOrDefault();
                 if (setTemp!=null)
                 {
-					if (setTemp.F_EndTime<DateTime.Now.Date)
+					if (setTemp.EndTime<DateTime.Now.Date)
 					{
                         throw new Exception("租户已到期，请联系供应商");
                     }
-                    unitofwork.GetDbClient().ChangeDatabase(setTemp.F_DbNumber);
+                    unitofwork.GetDbClient().ChangeDatabase(setTemp.DbNumber);
                     repository = new RepositoryBase<UserEntity>(unitofwork);
                 }
             }
@@ -251,60 +251,60 @@ namespace WaterCloud.Service.SystemOrganize
 			{
                 throw new Exception("IP受限");
 			}
-            UserEntity userEntity =await repository.FindEntity(a => a.F_Account == username);
+            UserEntity userEntity =await repository.FindEntity(a => a.Account == username);
             if (userEntity != null)
             {
-                if (userEntity.F_EnabledMark == true)
+                if (userEntity.EnabledMark == true)
                 {
                     //缓存用户账户信息
-                    var userLogOnEntity=await CacheHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + userEntity.F_Id);
+                    var userLogOnEntity=await CacheHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + userEntity.Id);
                     if (userLogOnEntity==null)
                     {
                         userLogOnEntity = new OperatorUserInfo();
-                        UserLogOnEntity entity =await repository.Db.Queryable<UserLogOnEntity>().InSingleAsync(userEntity.F_Id);
-                        userLogOnEntity.F_UserPassword = entity.F_UserPassword;
-                        userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
-                        userLogOnEntity.F_AllowEndTime = entity.F_AllowEndTime;
-                        userLogOnEntity.F_AllowStartTime = entity.F_AllowStartTime;
-                        userLogOnEntity.F_AnswerQuestion = entity.F_AnswerQuestion;
-                        userLogOnEntity.F_ChangePasswordDate = entity.F_ChangePasswordDate;
-                        userLogOnEntity.F_FirstVisitTime = entity.F_FirstVisitTime;
-                        userLogOnEntity.F_LastVisitTime = entity.F_LastVisitTime;
-                        userLogOnEntity.F_LockEndDate = entity.F_LockEndDate;
-                        userLogOnEntity.F_LockStartDate = entity.F_LockStartDate;
-                        userLogOnEntity.F_LogOnCount = entity.F_LogOnCount;
-                        userLogOnEntity.F_PreviousVisitTime = entity.F_PreviousVisitTime;
-                        userLogOnEntity.F_Question = entity.F_Question;
-                        userLogOnEntity.F_Theme = entity.F_Theme;
-                        await CacheHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
+                        UserLogOnEntity entity =await repository.Db.Queryable<UserLogOnEntity>().InSingleAsync(userEntity.Id);
+                        userLogOnEntity.UserPassword = entity.UserPassword;
+                        userLogOnEntity.UserSecretkey = entity.UserSecretkey;
+                        userLogOnEntity.AllowEndTime = entity.AllowEndTime;
+                        userLogOnEntity.AllowStartTime = entity.AllowStartTime;
+                        userLogOnEntity.AnswerQuestion = entity.AnswerQuestion;
+                        userLogOnEntity.ChangePasswordDate = entity.ChangePasswordDate;
+                        userLogOnEntity.FirstVisitTime = entity.FirstVisitTime;
+                        userLogOnEntity.LastVisitTime = entity.LastVisitTime;
+                        userLogOnEntity.LockEndDate = entity.LockEndDate;
+                        userLogOnEntity.LockStartDate = entity.LockStartDate;
+                        userLogOnEntity.LogOnCount = entity.LogOnCount;
+                        userLogOnEntity.PreviousVisitTime = entity.PreviousVisitTime;
+                        userLogOnEntity.Question = entity.Question;
+                        userLogOnEntity.Theme = entity.Theme;
+                        await CacheHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.Id, userLogOnEntity);
                     }
                     if (userLogOnEntity == null)
                     {
                         throw new Exception("账户未初始化设置密码,请联系管理员");
                     }
-                    string dbPassword = Md5.md5(DESEncrypt.Encrypt(password.ToLower(), userLogOnEntity.F_UserSecretkey).ToLower(), 32).ToLower();
-                    if (dbPassword == userLogOnEntity.F_UserPassword)
+                    string dbPassword = Md5.md5(DESEncrypt.Encrypt(password.ToLower(), userLogOnEntity.UserSecretkey).ToLower(), 32).ToLower();
+                    if (dbPassword == userLogOnEntity.UserPassword)
                     {
-                        if (userEntity.F_IsAdmin != true)
+                        if (userEntity.IsAdmin != true)
                         {
-                            var list = userEntity.F_RoleId.Split(',');
-                            var rolelist =repository.Db.Queryable<RoleEntity>().Where(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
+                            var list = userEntity.RoleId.Split(',');
+                            var rolelist =repository.Db.Queryable<RoleEntity>().Where(a=>list.Contains(a.Id)&&a.EnabledMark==true).ToList();
                             if (!rolelist.Any())
                             {
                                 throw new Exception("账户未设置权限,请联系管理员");
                             }
                         }
                         DateTime lastVisitTime = DateTime.Now;
-                        int LogOnCount = (userLogOnEntity.F_LogOnCount).ToInt() + 1;
-                        if (userLogOnEntity.F_LastVisitTime != null)
+                        int LogOnCount = (userLogOnEntity.LogOnCount).ToInt() + 1;
+                        if (userLogOnEntity.LastVisitTime != null)
                         {
-                            userLogOnEntity.F_PreviousVisitTime = userLogOnEntity.F_LastVisitTime.ToDate();
+                            userLogOnEntity.PreviousVisitTime = userLogOnEntity.LastVisitTime.ToDate();
                         }
-                        userLogOnEntity.F_LastVisitTime = lastVisitTime;
-                        userLogOnEntity.F_LogOnCount = LogOnCount;
-                        userLogOnEntity.F_UserOnLine = true;
-                        await CacheHelper.RemoveAsync(cacheKeyOperator + "info_" + userEntity.F_Id);
-                        await CacheHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.F_Id, userLogOnEntity);
+                        userLogOnEntity.LastVisitTime = lastVisitTime;
+                        userLogOnEntity.LogOnCount = LogOnCount;
+                        userLogOnEntity.UserOnLine = true;
+                        await CacheHelper.RemoveAsync(cacheKeyOperator + "info_" + userEntity.Id);
+                        await CacheHelper.SetAsync(cacheKeyOperator + "info_" + userEntity.Id, userLogOnEntity);
                         await OperatorProvider.Provider.ClearCurrentErrorNum();
                         return userEntity;
                     }
@@ -317,14 +317,14 @@ namespace WaterCloud.Service.SystemOrganize
                         if (num == errorcount)
                         {
                             FilterIPEntity ipentity = new FilterIPEntity();
-                            ipentity.F_Id = Utils.GuId();
-                            ipentity.F_StartIP = WebHelper.Ip;
-                            ipentity.F_CreatorTime = DateTime.Now;
-                            ipentity.F_DeleteMark = false;
-                            ipentity.F_EnabledMark = true;
-                            ipentity.F_Type = false;
+                            ipentity.Id = Utils.GuId();
+                            ipentity.StartIP = WebHelper.Ip;
+                            ipentity.CreatorTime = DateTime.Now;
+                            ipentity.DeleteMark = false;
+                            ipentity.EnabledMark = true;
+                            ipentity.Type = false;
                             //默认封禁12小时
-                            ipentity.F_EndTime = DateTime.Now.AddHours(12);
+                            ipentity.EndTime = DateTime.Now.AddHours(12);
                             await ipApp.SubmitForm(ipentity,null);
                             await OperatorProvider.Provider.ClearCurrentErrorNum();
                             throw new Exception("密码不正确，IP被锁定");
