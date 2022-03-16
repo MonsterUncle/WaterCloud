@@ -34,7 +34,7 @@ namespace WaterCloud.Domain.SystemOrganize
 		/// 内容
 		/// </summary>
 		[Required(ErrorMessage = "内容不能为空")]
-		[SugarColumn(IsNullable = true, ColumnName = "F_Content", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "内容")]
+		[SugarColumn(IsNullable = true, ColumnName = "F_Content", ColumnDataType = "longtext", ColumnDescription = "内容")]
 		public string F_Content { get; set; }
 		/// <summary>
 		/// 删除标记
@@ -49,7 +49,7 @@ namespace WaterCloud.Domain.SystemOrganize
 		/// <summary>
 		/// 备注
 		/// </summary>
-		[SugarColumn(IsNullable = true, ColumnName = "F_Description",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "删除人Id")]
+		[SugarColumn(IsNullable = true, ColumnName = "F_Description",ColumnDataType = "longtext", ColumnDescription = "删除人Id")]
 		public string F_Description { get; set; }
 		/// <summary>
 		/// 创建时间

@@ -66,7 +66,7 @@ namespace WaterCloud.Domain.SystemManage
         /// <summary>
         /// Url地址
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_UrlAddress", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "Url地址")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_UrlAddress", ColumnDataType = "longtext", ColumnDescription = "Url地址")]
         public string F_UrlAddress { get; set; }
         /// <summary>
         /// 
@@ -108,7 +108,7 @@ namespace WaterCloud.Domain.SystemManage
         /// <summary>
         /// 备注
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "备注")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext", ColumnDescription = "备注")]
         public string F_Description { get; set; }
         /// <summary>
         /// 创建时间

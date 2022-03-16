@@ -76,7 +76,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 备注
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "备注")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext", ColumnDescription = "备注")]
         public string F_Description { get; set; }
         /// <summary>
         /// 创建时间
@@ -112,7 +112,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 删除人Id
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_DeleteUserId",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "删除人Id")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_DeleteUserId",ColumnDataType = "longtext", ColumnDescription = "删除人Id")]
         public string F_DeleteUserId { get; set; }
         /// <summary>
         /// 联系电话
@@ -139,7 +139,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 数据库连接串
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_DbString", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "数据库连接串")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_DbString", ColumnDataType = "longtext", ColumnDescription = "数据库连接串")]
         public string F_DbString { get; set; }
         /// <summary>
         /// 
@@ -151,7 +151,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 域名
         /// </summary>
         [Required(ErrorMessage = "域名不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_HostUrl",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "域名")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_HostUrl",ColumnDataType = "longtext", ColumnDescription = "域名")]
         public string F_HostUrl { get; set; }
         /// <summary>
         /// 数据库序号

@@ -95,7 +95,16 @@ namespace WaterCloud.Web
                     db.GetConnection(temp).Ado.CommandTimeOut = GlobalContext.SystemConfig.CommandTimeout;
                     db.GetConnection(temp).CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
                     {
-                        DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
+                        DataInfoCacheService = new SqlSugarCache(), //配置我们创建的缓存类
+                        EntityService = (property, column) =>
+                        {
+                            var attributes = property.GetCustomAttributes(true);//get all attributes 
+
+                            if (attributes.Any(it => it is SugarColumn) && column.DataType == "longtext" && config.DbType == DbType.SqlServer)
+                            {
+                                column.DataType = "nvarchar(4000)";
+                            }
+                        }
                     };
                     db.GetConnection(temp).Aop.OnLogExecuted = (sql, pars) => //SQL执行完
                     {

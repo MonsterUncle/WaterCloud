@@ -35,7 +35,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 权限规则
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_PrivilegeRules",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "权限规则")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_PrivilegeRules",ColumnDataType = "longtext", ColumnDescription = "权限规则")]
         public string F_PrivilegeRules { get; set; }
         /// <summary>
         /// 排序
@@ -61,7 +61,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 备注
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Description",ColumnDataType = "longtext,nvarchar(500)", ColumnDescription = "备注")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Description",ColumnDataType = "longtextnvarchar(500)", ColumnDescription = "备注")]
         public string F_Description { get; set; }
         /// <summary>
         /// 创建时间

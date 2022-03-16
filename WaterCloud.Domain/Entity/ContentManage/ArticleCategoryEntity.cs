@@ -44,37 +44,37 @@ namespace WaterCloud.Domain.ContentManage
         /// 描述
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Description",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "描述")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Description",ColumnDataType = "longtext", ColumnDescription = "描述")]
         public string F_Description { get; set; }
         /// <summary>
         /// 链接地址
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_LinkUrl", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "链接地址")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_LinkUrl", ColumnDataType = "longtext", ColumnDescription = "链接地址")]
         public string F_LinkUrl { get; set; }
         /// <summary>
         /// 图片地址
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ImgUrl",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "图片地址")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ImgUrl",ColumnDataType = "longtext", ColumnDescription = "图片地址")]
         public string F_ImgUrl { get; set; }
         /// <summary>
         /// SEO标题
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_SeoTitle", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "SEO标题")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_SeoTitle", ColumnDataType = "longtext", ColumnDescription = "SEO标题")]
         public string F_SeoTitle { get; set; }
         /// <summary>
         /// SEO关键字
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_SeoKeywords",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "SEO关键字")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_SeoKeywords",ColumnDataType = "longtext", ColumnDescription = "SEO关键字")]
         public string F_SeoKeywords { get; set; }
         /// <summary>
         /// SEO描述
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_SeoDescription", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "SEO描述")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_SeoDescription", ColumnDataType = "longtext", ColumnDescription = "SEO描述")]
         public string F_SeoDescription { get; set; }
         /// <summary>
         /// 是否热门

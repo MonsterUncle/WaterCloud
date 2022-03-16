@@ -49,13 +49,13 @@ namespace WaterCloud.Domain.SystemManage
         /// 流程模板使用者
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_SchemeCanUser",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "流程模板使用者")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_SchemeCanUser",ColumnDataType = "longtext", ColumnDescription = "流程模板使用者")]
         public string F_SchemeCanUser { get; set; }
         /// <summary>
         /// 流程内容
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_SchemeContent", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "流程内容")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_SchemeContent", ColumnDataType = "longtext", ColumnDescription = "流程内容")]
         public string F_SchemeContent { get; set; }
         /// <summary>
         /// 表单ID
