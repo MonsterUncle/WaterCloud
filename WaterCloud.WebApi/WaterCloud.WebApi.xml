@@ -47,11 +47,6 @@
             域名
             </summary>
         </member>
-        <member name="P:WaterCloud.WebApi.AuthorizeAttribute._authorize">
-            <summary>
-            权限名称
-            </summary>
-        </member>
         <member name="T:WaterCloud.WebApi.AuthorizeFilterAttribute">
             <summary>
             权限验证

@@ -135,7 +135,7 @@ namespace WaterCloud.Web
             services.AddSingleton<JobExecute>();
             //注册ISchedulerFactory的实例。
             services.AddSingleton<IJobFactory, IOCJobFactory>();
-            if (Configuration.GetSection("SystemConfig:IsCluster").Value != "True")
+            if (GlobalContext.SystemConfig.IsCluster == true)
             {
                 services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             }
@@ -176,7 +176,7 @@ namespace WaterCloud.Web
 				});
 			}
             //是否开启后台任务
-            if (Configuration.GetSection("SystemConfig:OpenQuarz").Value == "True")
+            if (GlobalContext.SystemConfig.OpenQuarz == true)
             {
                 services.AddHostedService<JobCenter>();
             }
@@ -204,7 +204,7 @@ namespace WaterCloud.Web
             builder =>
             {
                 builder.AllowAnyMethod().AllowAnyHeader()
-                       .WithOrigins(Configuration.GetSection("SystemConfig:AllowCorsSite").Value.Split(","))
+                       .WithOrigins(GlobalContext.SystemConfig.AllowCorsSite.Split(","))
                        .AllowCredentials();
             }));
             services.AddHttpClient();

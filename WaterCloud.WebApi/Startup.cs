@@ -37,7 +37,7 @@ namespace WaterCloud.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             services.AddSwaggerGen(config =>
             {
                 config.SwaggerDoc("v1", new OpenApiInfo { Title = "WaterCloud Api", Version = "v1" });
@@ -46,14 +46,14 @@ namespace WaterCloud.WebApi
                 config.IncludeXmlComments(xmlPath, true); //添加控制器层注释（true表示显示控制器注释）                
             });
             //缓存选择
-            if (Configuration.GetSection("SystemConfig:CacheProvider").Value != Define.CACHEPROVIDER_REDIS)
+            if (GlobalContext.SystemConfig.CacheProvider != Define.CACHEPROVIDER_REDIS)
             {
                 services.AddMemoryCache();
             }
             else
             {
                 //redis 注入服务
-                string redisConnectiong = Configuration.GetSection("SystemConfig:RedisConnectionString").Value;
+                string redisConnectiong = GlobalContext.SystemConfig.RedisConnectionString;
                 // 多客户端 1、基础 2、操作日志
                 var redisDB1 = new CSRedisClient(redisConnectiong + ",defaultDatabase=" + 0);
                 BaseHelper.Initialization(redisDB1);
@@ -131,7 +131,6 @@ namespace WaterCloud.WebApi
             });
             services.AddControllers().AddControllersAsServices();
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(GlobalContext.HostingEnvironment.ContentRootPath + Path.DirectorySeparatorChar + "DataProtection"));
-            GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
             GlobalContext.Services = services;
             GlobalContext.Configuration = Configuration;
         }

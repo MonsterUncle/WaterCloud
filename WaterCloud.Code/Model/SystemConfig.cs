@@ -86,6 +86,10 @@ namespace WaterCloud.Code.Model
         /// 主程序数据库编号
         /// </summary>
         public string MainDbNumber { get; set; }
+        /// <summary>
+        /// 是否开启定时任务
+        /// </summary>
+        public bool? OpenQuarz { get; set; }
     }
     public class DBConfig
     {
