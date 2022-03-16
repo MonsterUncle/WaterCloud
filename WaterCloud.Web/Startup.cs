@@ -144,7 +144,7 @@ namespace WaterCloud.Web
             services.AddSingleton<JobExecute>();
             //注册ISchedulerFactory的实例。
             services.AddSingleton<IJobFactory, IOCJobFactory>();
-            if (GlobalContext.SystemConfig.IsCluster == true)
+            if (GlobalContext.SystemConfig.IsCluster != true)
             {
                 services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             }
