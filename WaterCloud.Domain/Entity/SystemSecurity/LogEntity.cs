@@ -68,7 +68,7 @@ namespace WaterCloud.Domain.SystemSecurity
         /// <summary>
         /// 备注
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "备注")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "备注")]
         public string F_Description { get; set; }
         /// <summary>
         /// 创建时间
@@ -83,7 +83,7 @@ namespace WaterCloud.Domain.SystemSecurity
         /// <summary>
         /// 
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_KeyValue",ColumnDataType = "longtext,nvarchar(max)")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_KeyValue",ColumnDataType = "longtext,nvarchar(4000)")]
         public string F_KeyValue { get; set; }
         /// <summary>
         /// 公司Id

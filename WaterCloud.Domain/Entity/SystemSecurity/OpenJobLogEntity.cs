@@ -39,7 +39,7 @@ namespace WaterCloud.Domain.SystemSecurity
         /// 文件名称
         /// </summary>
         [Description("任务信息")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "任务信息")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "任务信息")]
         public string F_Description { get; set; }
         /// <summary>
         /// 开始时间

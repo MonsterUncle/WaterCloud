@@ -83,7 +83,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// <summary>
         /// 个性签名
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Signature",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "个性签名")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Signature",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "个性签名")]
         public string F_Signature { get; set; }
         /// <summary>
         /// 公司Id
@@ -95,19 +95,19 @@ namespace WaterCloud.Domain.SystemOrganize
         /// 部门Id
         /// </summary>
         [Required(ErrorMessage = "部门不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_DepartmentId",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "部门Id")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_DepartmentId",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "部门Id")]
         public string F_DepartmentId { get; set; }
         /// <summary>
         /// 角色Id
         /// </summary>
         [Required(ErrorMessage = "角色不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_RoleId",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "角色Id")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_RoleId",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "角色Id")]
         public string F_RoleId { get; set; }
         /// <summary>
         /// 岗位Id
         /// </summary>
         [Required(ErrorMessage = "职位不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_DutyId",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "岗位Id")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_DutyId",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "岗位Id")]
         public string F_DutyId { get; set; }
         /// <summary>
         /// 是否管理员
@@ -147,7 +147,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// <summary>
         /// 备注
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "备注")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "备注")]
         public string F_Description { get; set; }
         /// <summary>
         /// 创建时间

@@ -49,13 +49,13 @@ namespace WaterCloud.Domain.SystemManage
         /// 表单中的字段
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ContentData", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "表单中的字段")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ContentData", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "表单中的字段")]
         public string F_ContentData { get; set; }
         /// <summary>
         /// 表单参数（冗余）
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ContentParse", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "表单参数")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ContentParse", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "表单参数")]
         public string F_ContentParse { get; set; }
         /// <summary>
         /// 表单参数Json
@@ -123,7 +123,7 @@ namespace WaterCloud.Domain.SystemManage
         /// 内容
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Description",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "内容")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Description",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "内容")]
         public string F_Description { get; set; }
         /// <summary>
         /// 所属组织

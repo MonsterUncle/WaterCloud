@@ -30,20 +30,20 @@ namespace WaterCloud.Domain.InfoManage
         /// 收件人主键
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ToUserId",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "收件人主键")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ToUserId",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "收件人主键")]
         public string F_ToUserId { get; set; }
         /// <summary>
         /// 收件人
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ToUserName", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "收件人")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ToUserName", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "收件人")]
         public string F_ToUserName { get; set; }
         /// <summary>
         /// 内容
         /// </summary>
         /// <returns></returns>
         [Required(ErrorMessage = "内容不能为空")]
-        [SugarColumn(IsNullable = true, ColumnName = "F_MessageInfo",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "内容")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_MessageInfo",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "内容")]
         public string F_MessageInfo { get; set; }
         /// <summary>
         /// 有效

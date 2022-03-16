@@ -42,49 +42,49 @@ namespace WaterCloud.Domain.ContentManage
         /// 链接地址
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_LinkUrl", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "链接地址")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_LinkUrl", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "链接地址")]
         public string F_LinkUrl { get; set; }
         /// <summary>
         /// 图片地址
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_ImgUrl",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "图片地址")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_ImgUrl",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "图片地址")]
         public string F_ImgUrl { get; set; }
         /// <summary>
         /// SEO标题
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_SeoTitle", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "SEO标题")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_SeoTitle", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "SEO标题")]
         public string F_SeoTitle { get; set; }
         /// <summary>
         /// SEO关键字
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_SeoKeywords", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "SEO关键字")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_SeoKeywords", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "SEO关键字")]
         public string F_SeoKeywords { get; set; }
         /// <summary>
         /// SEO描述
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_SeoDescription",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "SEO描述")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_SeoDescription",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "SEO描述")]
         public string F_SeoDescription { get; set; }
         /// <summary>
         /// 标签
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Tags", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "标签")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Tags", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "标签")]
         public string F_Tags { get; set; }
         /// <summary>
         /// 摘要
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Zhaiyao", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "摘要")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Zhaiyao", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "摘要")]
         public string F_Zhaiyao { get; set; }
         /// <summary>
         /// 内容
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_Description",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "内容")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Description",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "内容")]
         public string F_Description { get; set; }
         /// <summary>
         /// 排序

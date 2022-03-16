@@ -97,7 +97,7 @@ namespace WaterCloud.Domain.SystemOrganize
         /// <summary>
         /// 密保答案
         /// </summary>
-        [SugarColumn(IsNullable = true, ColumnName = "F_AnswerQuestion",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "密保答案")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_AnswerQuestion",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "密保答案")]
         public string F_AnswerQuestion { get; set; }
         /// <summary>
         /// 是否校验登录IP

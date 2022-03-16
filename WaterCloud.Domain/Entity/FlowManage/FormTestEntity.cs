@@ -22,9 +22,9 @@ namespace WaterCloud.Domain.FlowManage
         public DateTime? F_StartTime { get; set; }
         [SugarColumn(IsNullable = true)]
         public DateTime? F_EndTime { get; set; }
-        [SugarColumn(IsNullable = false, ColumnName = "F_RequestComment",ColumnDataType = "longtext,nvarchar(max)")]
+        [SugarColumn(IsNullable = false, ColumnName = "F_RequestComment",ColumnDataType = "longtext,nvarchar(4000)")]
         public string F_RequestComment { get; set; }
-        [SugarColumn(IsNullable = true, ColumnName = "F_Attachment", ColumnDataType = "longtext,nvarchar(max)")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_Attachment", ColumnDataType = "longtext,nvarchar(4000)")]
         public string F_Attachment { get; set; }
         [SugarColumn(IsNullable = true, ColumnName = "F_FlowInstanceId", ColumnDataType = "nvarchar(50)")]
         public string F_FlowInstanceId { get; set; }

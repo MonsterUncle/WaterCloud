@@ -66,7 +66,7 @@ namespace WaterCloud.Domain.FlowManage
         /// 流程模板内容
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_SchemeContent", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "流程模板内容")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_SchemeContent", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "流程模板内容")]
         public string F_SchemeContent { get; set; }
         /// <summary>
         /// 流程模板ID
@@ -85,7 +85,7 @@ namespace WaterCloud.Domain.FlowManage
         /// 表单数据
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_FrmData", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "表单数据")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_FrmData", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "表单数据")]
         public string F_FrmData { get; set; }
         /// <summary>
         /// 表单类型
@@ -97,19 +97,19 @@ namespace WaterCloud.Domain.FlowManage
         /// 表单中的字段
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_FrmContentData", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "表单中的字段")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_FrmContentData", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "表单中的字段")]
         public string F_FrmContentData { get; set; }
         /// <summary>
         /// 表单字段（冗余)
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_FrmContentParse",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "表单字段")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_FrmContentParse",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "表单字段")]
         public string F_FrmContentParse { get; set; }
         /// <summary>
         /// 表单参数
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_FrmContent",ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "表单参数")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_FrmContent",ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "表单参数")]
         public string F_FrmContent { get; set; }
         /// <summary>
         /// 表单ID
@@ -145,7 +145,7 @@ namespace WaterCloud.Domain.FlowManage
         /// 执行人
         /// </summary>
         /// <returns></returns>
-        [SugarColumn(IsNullable = true, ColumnName = "F_MakerList", ColumnDataType = "longtext,nvarchar(max)", ColumnDescription = "执行人")]
+        [SugarColumn(IsNullable = true, ColumnName = "F_MakerList", ColumnDataType = "longtext,nvarchar(4000)", ColumnDescription = "执行人")]
         public string F_MakerList { get; set; }
         /// <summary>
         /// 所属部门
