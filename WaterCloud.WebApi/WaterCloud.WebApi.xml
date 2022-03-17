@@ -86,10 +86,5 @@
             <param name="next"></param>
             <returns></returns>
         </member>
-        <member name="T:WaterCloud.WebApi.ModelActionFilter">
-            <summary>
-            模型验证过滤器
-            </summary>
-        </member>
     </members>
 </doc>
