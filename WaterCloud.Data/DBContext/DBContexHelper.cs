@@ -30,7 +30,16 @@ namespace WaterCloud.DataBase
                     },
                     ConfigureExternalServices = new ConfigureExternalServices()
                     {
-                        DataInfoCacheService = new SqlSugarCache() //配置我们创建的缓存类
+                        DataInfoCacheService = new SqlSugarCache(), //配置我们创建的缓存类
+                        EntityService = (property, column) =>
+                        {
+                            var attributes = property.GetCustomAttributes(true);//get all attributes 
+
+                            if (attributes.Any(it => it is SugarColumn) && column.DataType == "longtext")
+                            {
+                                column.DataType = "nvarchar(4000)";
+                            }
+                        }
                     }
                 };
             }
@@ -49,6 +58,7 @@ namespace WaterCloud.DataBase
                     MoreSettings = new ConnMoreSettings()
                     {
                         IsAutoRemoveDataCache = true//自动清理缓存
+
                     }
                 };
             }
