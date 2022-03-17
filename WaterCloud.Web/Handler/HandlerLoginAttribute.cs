@@ -15,11 +15,9 @@ namespace WaterCloud.Web
 	public class HandlerLoginAttribute : ActionFilterAttribute
     {
         private readonly RoleAuthorizeService _service;
-        private readonly ICompositeViewEngine _compositeViewEngine;
-        public HandlerLoginAttribute(RoleAuthorizeService service, ICompositeViewEngine compositeViewEngine)
+        public HandlerLoginAttribute(RoleAuthorizeService service)
         {
             _service = service;
-            _compositeViewEngine = compositeViewEngine;
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -45,8 +43,6 @@ namespace WaterCloud.Web
                 if (filterContext.HttpContext.Request.Path != "/Home/Index")
                 {
                     var url = filterContext.HttpContext.Request.Path;
-                    //使用MVC的方式获取视图是否存在
-                    //var view = _compositeViewEngine.FindView(filterContext, url, false)?.View;
                     //检查菜单url查看是否存在
                     if (_service.CheckReturnUrl("", url, true).GetAwaiter().GetResult())
                     {
