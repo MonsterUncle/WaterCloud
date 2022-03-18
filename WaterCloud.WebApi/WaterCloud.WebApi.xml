@@ -60,19 +60,6 @@
             <param name="next"></param>
             <returns></returns>
         </member>
-        <member name="T:WaterCloud.WebApi.LockAttribute">
-            <summary>
-            防重复提交
-            </summary>
-        </member>
-        <member name="M:WaterCloud.WebApi.LockAttribute.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
-            <summary>
-            拦截
-            </summary>
-            <param name="context"></param>
-            <param name="next"></param>
-            <returns></returns>
-        </member>
         <member name="T:WaterCloud.WebApi.LoginFilterAttribute">
             <summary>
             验证token

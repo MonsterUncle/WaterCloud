@@ -7,7 +7,7 @@ using WaterCloud.Code;
 namespace WaterCloud.WebApi
 {
 	/// <summary>
-	/// 防重复提交
+	/// 防重复提交,api使用
 	/// </summary>
 	public class LockAttribute : ActionFilterAttribute
     {
@@ -45,7 +45,7 @@ namespace WaterCloud.WebApi
                     }
                 }
             }
-            var resultContext = await next();
+            await next();
 
             sw.Stop();
 

@@ -1,6 +1,4 @@
-﻿using Autofac;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
 using Quartz;
 using Quartz.Impl;
@@ -8,20 +6,24 @@ using Quartz.Impl.AdoJobStore.Common;
 using Quartz.Spi;
 using SqlSugar;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Reflection;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
+using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Service.AutoJob;
 
 namespace WaterCloud.Service
 {
+	/// <summary>
+	/// 服务设置
+	/// </summary>
 	public static class ServiceSetup
     {
+        /// <summary>
+        /// SqlSugar设置
+        /// </summary>
+        /// <param name="services"></param>
 		public static void AddSqlSugar(this IServiceCollection services)
 		{
             //注入数据库连接
@@ -81,6 +83,10 @@ namespace WaterCloud.Service
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
+        /// <summary>
+        /// Quartz设置
+        /// </summary>
+        /// <param name="services"></param>
         public static void AddQuartz(this IServiceCollection services)
         {
             services.AddSingleton<JobExecute>();
@@ -132,28 +138,41 @@ namespace WaterCloud.Service
                 services.AddHostedService<JobCenter>();
             }
         }
-        public static void AddAutofac(this ContainerBuilder builder,List<string> projects,Type controller,Type program)
-		{
-			if (projects == null)
-			{
-                projects = new List<string>();
-                projects.Add("WaterCloud.Service");
+        /// <summary>
+        /// 重置超管密码
+        /// </summary>
+        public static void ReviseSuperSysem(this IServiceCollection services)
+        {
+            var data = GlobalContext.SystemConfig;
+            try
+            {
+                if (data.ReviseSysem == true)
+                {
+                    using (var context = new UnitOfWork(new SqlSugarClient(DBContexHelper.Contex())))
+                    {
+                        context.CurrentBeginTrans();
+                        var systemSet = context.GetDbClient().Queryable<SystemSetEntity>().First(a => a.F_DbNumber == data.MainDbNumber);
+                        var user = context.GetDbClient().Queryable<UserEntity>().First(a => a.F_OrganizeId == systemSet.F_Id && a.F_IsAdmin == true);
+                        var userinfo = context.GetDbClient().Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
+                        userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                        userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(systemSet.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
+                        context.GetDbClient().Updateable<UserEntity>(a => new UserEntity
+                        {
+                            F_Account = systemSet.F_AdminAccount
+                        }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommand();
+                        context.GetDbClient().Updateable<UserLogOnEntity>(a => new UserLogOnEntity
+                        {
+                            F_UserPassword = userinfo.F_UserPassword,
+                            F_UserSecretkey = userinfo.F_UserSecretkey
+                        }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommand();
+                        context.Commit();
+                    }
+                }
             }
-			foreach (var item in projects)
-			{
-                var assemblys = Assembly.Load(item);//Service是继承接口的实现方法类库名称
-                var baseType = typeof(IDenpendency);//IDenpendency 是一个接口（所有要实现依赖注入的借口都要继承该接口）
-                builder.RegisterAssemblyTypes(assemblys).Where(m => baseType.IsAssignableFrom(m) && m != baseType)
-                  .InstancePerLifetimeScope()//生命周期，这里没有使用接口方式
-                  .PropertiesAutowired();//属性注入
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex);
             }
-            //Controller中使用属性注入
-            var controllerBaseType = controller;
-            builder.RegisterAssemblyTypes(program.Assembly)
-            .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
-            .PropertiesAutowired();
-            //注册html解析
-            builder.RegisterInstance(HtmlEncoder.Create(UnicodeRanges.All)).SingleInstance();
         }
     }
 }

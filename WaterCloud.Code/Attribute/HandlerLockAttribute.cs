@@ -1,12 +1,13 @@
 ﻿using WaterCloud.Code;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
-/// <summary>
-/// 防重复锁
-/// </summary>
-namespace WaterCloud.Web
+
+namespace WaterCloud.Code
 {
-	public class HandlerLockAttribute : ActionFilterAttribute
+    /// <summary>
+    /// 防重复锁，MVC使用
+    /// </summary>
+    public class HandlerLockAttribute : ActionFilterAttribute
     {
         public HandlerLockAttribute()
         {

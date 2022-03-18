@@ -1,16 +1,23 @@
-﻿using CSRedis;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Autofac;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.Hosting;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using WaterCloud.Code.Model;
+using CSRedis;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.Linq;
+using System.IO.Compression;
+using System.IO;
+using Microsoft.AspNetCore.DataProtection;
+using System.Reflection;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace WaterCloud.Code
 {
@@ -89,6 +96,37 @@ namespace WaterCloud.Code
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(GlobalContext.HostingEnvironment.ContentRootPath + Path.DirectorySeparatorChar + "DataProtection"));
 
         }
+        /// <summary>
+        /// Autofac配置
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="projects">扫描程序</param>
+        /// <param name="controller">控制器</param>
+        /// <param name="IService">服务接口</param>
+        /// <param name="program">程序</param>
+        public void AutofacConfigureContainer(ContainerBuilder builder,List<string> projects,Type controller,Type IService,Type program)
+		{
+            if (projects == null)
+            {
+                projects = new List<string>();
+                projects.Add("WaterCloud.Service");
+            }
+            foreach (var item in projects)
+            {
+                var assemblys = Assembly.Load(item);//Service是继承接口的实现方法类库名称
+                var baseType = IService;//IDenpendency 是一个接口（所有要实现依赖注入的借口都要继承该接口）
+                builder.RegisterAssemblyTypes(assemblys).Where(m => baseType.IsAssignableFrom(m) && m != baseType)
+                  .InstancePerLifetimeScope()//生命周期，这里没有使用接口方式
+                  .PropertiesAutowired();//属性注入
+            }
+            //Controller中使用属性注入
+            var controllerBaseType = controller;
+            builder.RegisterAssemblyTypes(program.Assembly)
+            .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
+            .PropertiesAutowired();
+            //注册html解析
+            builder.RegisterInstance(HtmlEncoder.Create(UnicodeRanges.All)).SingleInstance();
+        }
         public virtual void Configure(IApplicationBuilder app)
         {
             //实时通讯跨域
@@ -118,5 +156,42 @@ namespace WaterCloud.Code
             GlobalContext.ServiceProvider = app.ApplicationServices;
         }
     }
-
+    /// <summary>
+    /// StartUp扩展
+    /// </summary>
+    public static class StartUpExtends
+	{
+        /// <summary>
+        /// 默认MVC配置
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IMvcBuilder AddDefaultMVC(this IServiceCollection services)
+        {
+            return services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<GlobalExceptionFilter>();
+                options.Filters.Add<ModelActionFilter>();
+                options.ModelMetadataDetailsProviders.Add(new ModelBindingMetadataProvider());
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+        }
+        /// <summary>
+        /// 默认API配置
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IMvcBuilder AddDefaultAPI(this IServiceCollection services)
+        {
+            services.AddDirectoryBrowser();
+            return services.AddControllers(options =>
+            {
+                options.Filters.Add<ModelActionFilter>();
+                options.ModelMetadataDetailsProviders.Add(new ModelBindingMetadataProvider());
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+        }
+    }
 }
