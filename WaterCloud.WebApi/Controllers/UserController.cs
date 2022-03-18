@@ -16,6 +16,7 @@ namespace WaterCloud.WebApi.Controllers
     /// 用户接口
     /// </summary>
     [Route("api/[controller]/[action]")]
+    [ApiExplorerSettings(GroupName = "Default")]
     [ApiController]
     public class UserController : ControllerBase
     {
