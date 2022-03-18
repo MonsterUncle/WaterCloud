@@ -43,7 +43,7 @@ namespace WaterCloud.DataBase
                 config.DBConnectionString = ConnectStr;
                 config.DBProvider = providerName;
                 list.Add(config);
-                GlobalContext.SystemConfig.SqlConfig = list.ToArray();
+                GlobalContext.SystemConfig.SqlConfig = list;
                 if (!context.IsAnyConnection(config.DBNumber))
                 {
                     var connect = DBContexHelper.Contex(ConnectStr, providerName);
