@@ -90,6 +90,19 @@ namespace WaterCloud.Code.Model
         /// 是否开启定时任务
         /// </summary>
         public bool? OpenQuarz { get; set; }
+        public DocumentSettings DocumentSettings { get; set; }
+    }
+    public class DocumentSettings
+    {
+        public string DocumentTitle { get; set; }
+        public List<GroupOpenApiInfo> GroupOpenApiInfos { get; set; }
+    }
+    public class GroupOpenApiInfo
+    {
+        public string Group { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Version { get; set; }
     }
     public class DBConfig
     {

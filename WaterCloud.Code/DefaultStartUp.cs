@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.DataProtection;
 using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Microsoft.OpenApi.Models;
 
 namespace WaterCloud.Code
 {
@@ -149,6 +150,11 @@ namespace WaterCloud.Code
             });
             //启用 Gzip 和 Brotil 压缩功能
             app.UseResponseCompression();
+            app.Use(next => context =>
+            {
+                context.Request.EnableBuffering();
+                return next(context);
+            });
             //session
             app.UseSession();
             //路径
@@ -191,6 +197,64 @@ namespace WaterCloud.Code
             }).ConfigureApiBehaviorOptions(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
+            });
+        }
+        /// <summary>
+        /// 默认API配置
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static void AddDefaultSwaggerGen(this IServiceCollection services,string name)
+        {
+            services.AddSwaggerGen(config =>
+            {
+				foreach (var item in GlobalContext.SystemConfig.DocumentSettings.GroupOpenApiInfos)
+				{
+                    config.SwaggerDoc($"{item.Group}", new OpenApiInfo { Title = item.Title,Version=item.Version,Description=item.Description });
+                }
+                var xmlFile = $"{name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                config.IncludeXmlComments(xmlPath, true); //添加控制器层注释（true表示显示控制器注释）
+                config.AddSecurityDefinition(GlobalContext.SystemConfig.TokenName, new OpenApiSecurityScheme
+                {
+                    Description = "header token",
+                    Name = GlobalContext.SystemConfig.TokenName,
+                    In = ParameterLocation.Header,
+                    Scheme = "",
+                    Type = SecuritySchemeType.ApiKey,//设置类型
+                    BearerFormat = ""
+                });
+				config.AddSecurityRequirement(new OpenApiSecurityRequirement
+				{
+					{
+						new OpenApiSecurityScheme
+						{
+							Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = GlobalContext.SystemConfig.TokenName }
+						},
+						new List<string>()
+					}
+				});
+            });
+        }
+        /// <summary>
+        /// 默认API配置
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static void AddDefaultSwaggerGen(this IApplicationBuilder app)
+        {
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "api-doc/{documentName}/swagger.json";
+            });
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "api-doc";
+                foreach (var item in GlobalContext.SystemConfig.DocumentSettings.GroupOpenApiInfos)
+                {
+                    c.SwaggerEndpoint($"{item.Group}/swagger.json", $"{item.Title}"); 
+                }
+                
             });
         }
     }

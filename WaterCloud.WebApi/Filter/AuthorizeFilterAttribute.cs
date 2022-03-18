@@ -30,37 +30,33 @@ namespace WaterCloud.WebApi
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            if (!GlobalContext.SystemConfig.Debug)
+            OperatorModel user = OperatorProvider.Provider.GetCurrent();
+            var description =
+            (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)context.ActionDescriptor;
+            var methodanonymous = description.MethodInfo.GetCustomAttribute<Authorize>(false)!;
+            if (user == null || methodanonymous == null)
             {
-                string token = context.HttpContext.Request.Headers[GlobalContext.SystemConfig.TokenName].ParseToString();
-                OperatorModel user = OperatorProvider.Provider.GetCurrent();
-                var description =
-                (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)context.ActionDescriptor;
-                var methodanonymous = description.MethodInfo.GetCustomAttribute<Authorize>(false)!;
-                if (user == null || methodanonymous == null)
-                {
-                    AlwaysResult obj = new AlwaysResult();
-                    obj.message = "抱歉，没有操作权限";
-                    obj.state = ResultType.error.ToString();
-                    context.Result = new JsonResult(obj);
-                    return;
-                }
-                _authorize = methodanonymous._authorize;
-                if (!AuthorizeCheck(user.RoleId))
-                {
-                    AlwaysResult obj = new AlwaysResult();
-                    obj.message = "抱歉，没有操作权限";
-                    obj.state = ResultType.error.ToString();
-                    context.Result = new JsonResult(obj);
-                    return;
-                }
+                AlwaysResult obj = new AlwaysResult();
+                obj.message = "抱歉，没有操作权限";
+                obj.state = ResultType.error.ToString();
+                context.Result = new JsonResult(obj);
+                return;
+            }
+            _authorize = methodanonymous._authorize;
+            if (!AuthorizeCheck())
+            {
+                AlwaysResult obj = new AlwaysResult();
+                obj.message = "抱歉，没有操作权限";
+                obj.state = ResultType.error.ToString();
+                context.Result = new JsonResult(obj);
+                return;
             }
             var resultContext = await next();
 
             sw.Stop();
 
         }
-        private bool AuthorizeCheck(string roleId)
+        private bool AuthorizeCheck()
         {
             try
             {
