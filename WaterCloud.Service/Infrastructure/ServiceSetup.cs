@@ -151,20 +151,20 @@ namespace WaterCloud.Service
                     using (var context = new UnitOfWork(new SqlSugarClient(DBContexHelper.Contex())))
                     {
                         context.CurrentBeginTrans();
-                        var systemSet = context.GetDbClient().Queryable<SystemSetEntity>().First(a => a.F_DbNumber == data.MainDbNumber);
-                        var user = context.GetDbClient().Queryable<UserEntity>().First(a => a.F_OrganizeId == systemSet.F_Id && a.F_IsAdmin == true);
-                        var userinfo = context.GetDbClient().Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
-                        userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                        userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(systemSet.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
+                        var systemSet = context.GetDbClient().Queryable<SystemSetEntity>().First(a => a.DbNumber == data.MainDbNumber);
+                        var user = context.GetDbClient().Queryable<UserEntity>().First(a => a.OrganizeId == systemSet.Id && a.IsAdmin == true);
+                        var userinfo = context.GetDbClient().Queryable<UserLogOnEntity>().Where(a => a.UserId == user.Id).First();
+                        userinfo.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+                        userinfo.UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(systemSet.AdminPassword, 32).ToLower(), userinfo.UserSecretkey).ToLower(), 32).ToLower();
                         context.GetDbClient().Updateable<UserEntity>(a => new UserEntity
                         {
-                            F_Account = systemSet.F_AdminAccount
-                        }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommand();
+                            Account = systemSet.AdminAccount
+                        }).Where(a => a.Id == userinfo.Id).ExecuteCommand();
                         context.GetDbClient().Updateable<UserLogOnEntity>(a => new UserLogOnEntity
                         {
-                            F_UserPassword = userinfo.F_UserPassword,
-                            F_UserSecretkey = userinfo.F_UserSecretkey
-                        }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommand();
+                            UserPassword = userinfo.UserPassword,
+                            UserSecretkey = userinfo.UserSecretkey
+                        }).Where(a => a.Id == userinfo.Id).ExecuteCommand();
                         context.Commit();
                     }
                 }
