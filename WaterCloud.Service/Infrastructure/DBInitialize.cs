@@ -46,6 +46,9 @@ namespace WaterCloud.Service
                             }
                         }
                     }
+                    if (data.SqlConfig == null)
+                        data.SqlConfig = new List<DBConfig>();
+
                     //扩展数据库
                     foreach (var item in data.SqlConfig)
                     {
