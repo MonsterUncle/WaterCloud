@@ -14,6 +14,7 @@ namespace WaterCloud.WebApi.Controllers
     /// 测试文件
     /// </summary>
     [Route("api/[controller]/[action]")]
+    [ApiExplorerSettings(GroupName ="V2")]
     [ApiController]
     [ServiceFilter(typeof(LoginFilterAttribute))]
     public class TestController : ControllerBase

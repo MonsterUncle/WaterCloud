@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemOrganize;
@@ -23,6 +24,7 @@ namespace WaterCloud.WebApi.Controllers
         public UserService _userService { get; set; }
         public LogService _logService { get; set; }
         public SystemSetService _setService { get; set; }
+        public IHttpContextAccessor _httpContextAccessor { get; set; }
 
         #region 提交数据
         /// <summary>
@@ -88,6 +90,8 @@ namespace WaterCloud.WebApi.Controllers
                 logEntity.Result = true;
                 logEntity.Description = "登录成功";
                 await _logService.WriteDbLog(logEntity);
+                // 设置刷新Token令牌
+                _httpContextAccessor.HttpContext.Response.Headers[GlobalContext.SystemConfig.TokenName] = apitoken;
                 return new AlwaysResult<string> { state = ResultType.success.ToString(), message = "登录成功。",data= apitoken };
             }
             catch (Exception ex)
