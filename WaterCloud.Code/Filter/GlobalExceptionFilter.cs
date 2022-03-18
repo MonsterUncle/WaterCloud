@@ -1,15 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WaterCloud.Code;
-using Microsoft.AspNetCore.Http;
 
-namespace WaterCloud.Web
+namespace WaterCloud.Code
 {
-    /// <summary>
-    /// 全局异常过滤器
-    /// </summary>
-    public class GlobalExceptionFilter : IExceptionFilter, IAsyncExceptionFilter
+	/// <summary>
+	/// 全局异常过滤器,MVC使用
+	/// </summary>
+	public class GlobalExceptionFilter : IExceptionFilter, IAsyncExceptionFilter
     {
         public void OnException(ExceptionContext context)
         {

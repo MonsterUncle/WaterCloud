@@ -66,41 +66,5 @@ namespace WaterCloud.Service
             }
             return list;
         }
-        /// <summary>
-        /// 重置超管密码
-        /// </summary>
-        public static void ReviseSuperSysem()
-        {
-            var data = GlobalContext.SystemConfig;
-            try
-            {
-                if (data.ReviseSysem == true)
-                {
-                    using (var context = new UnitOfWork(new SqlSugarClient(DBContexHelper.Contex())))
-                    {
-                        context.CurrentBeginTrans();
-                        var systemSet = context.GetDbClient().Queryable<SystemSetEntity>().First(a => a.DbNumber == data.MainDbNumber);
-                        var user = context.GetDbClient().Queryable<UserEntity>().First(a => a.OrganizeId == systemSet.Id && a.IsAdmin == true);
-                        var userinfo = context.GetDbClient().Queryable<UserLogOnEntity>().Where(a => a.UserId == user.Id).First();
-                        userinfo.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                        userinfo.UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(systemSet.AdminPassword, 32).ToLower(), userinfo.UserSecretkey).ToLower(), 32).ToLower();
-                        context.GetDbClient().Updateable<UserEntity>(a => new UserEntity
-                        {
-                            Account = systemSet.AdminAccount
-                        }).Where(a => a.Id == userinfo.Id).ExecuteCommand();
-                        context.GetDbClient().Updateable<UserLogOnEntity>(a => new UserLogOnEntity
-                        {
-                            UserPassword = userinfo.UserPassword,
-                            UserSecretkey = userinfo.UserSecretkey
-                        }).Where(a => a.Id == userinfo.Id).ExecuteCommand();
-                        context.Commit();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex);
-            }
-        }
     }
 }

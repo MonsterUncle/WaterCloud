@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Autofac;
@@ -16,7 +15,7 @@ using WaterCloud.Service;
 
 namespace WaterCloud.WebApi
 {
-    public class Startup:DefaultStartUp
+	public class Startup:DefaultStartUp
     {
         public Startup(IConfiguration configuration, IWebHostEnvironment env):base(configuration, env)
         {
@@ -32,22 +31,14 @@ namespace WaterCloud.WebApi
                 config.IncludeXmlComments(xmlPath, true); //添加控制器层注释（true表示显示控制器注释）                
             });
             services.AddSqlSugar();
-            services.AddDirectoryBrowser();
-            services.AddControllers(options =>
-            {
-                options.Filters.Add<ModelActionFilter>();
-                options.ModelMetadataDetailsProviders.Add(new ModelBindingMetadataProvider());
-            }).AddNewtonsoftJson(options =>
+            services.AddDefaultAPI().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-            }).ConfigureApiBehaviorOptions(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
             });
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.AddAutofac(default, typeof(ControllerBase), typeof(Program));
+            AutofacConfigureContainer(builder, default, typeof(ControllerBase), typeof(IDenpendency), typeof(Program));
             //注册特性
             builder.RegisterType(typeof(AuthorizeFilterAttribute)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(LoginFilterAttribute)).InstancePerLifetimeScope();
@@ -55,6 +46,7 @@ namespace WaterCloud.WebApi
         public override void Configure(IApplicationBuilder app)
         {
             base.Configure(app);
+            //api全局异常
             app.UseMiddleware(typeof(GlobalExceptionMiddleware));
             app.Use(next => context =>
             {
