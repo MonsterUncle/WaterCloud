@@ -130,7 +130,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerLockAttribute))]
+        [HandlerLock]
         public async Task<ActionResult> SubmitUserForm(string Account,string RealName, bool Gender,DateTime Birthday,string MobilePhone,string Email,string Description)
         {
             try
