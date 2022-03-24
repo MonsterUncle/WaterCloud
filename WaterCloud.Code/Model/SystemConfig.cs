@@ -68,7 +68,7 @@ namespace WaterCloud.Code.Model
         /// <summary>
         /// 是否重置密码
         /// </summary>
-		public bool? ReviseSysem { get; set; }
+		public bool? ReviseSystem { get; set; }
 		public int? LoginErrorCount { get; set; }
         /// <summary>
         /// 多数据库组
@@ -89,7 +89,7 @@ namespace WaterCloud.Code.Model
         /// <summary>
         /// 是否开启定时任务
         /// </summary>
-        public bool? OpenQuarz { get; set; }
+        public bool? OpenQuartz { get; set; }
         public DocumentSettings DocumentSettings { get; set; }
     }
     public class DocumentSettings

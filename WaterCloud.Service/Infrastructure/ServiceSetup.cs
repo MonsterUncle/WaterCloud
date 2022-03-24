@@ -133,7 +133,7 @@ namespace WaterCloud.Service
                 });
             }
             //是否开启后台任务
-            if (GlobalContext.SystemConfig.OpenQuarz == true)
+            if (GlobalContext.SystemConfig.OpenQuartz == true)
             {
                 services.AddHostedService<JobCenter>();
             }
@@ -146,7 +146,7 @@ namespace WaterCloud.Service
             var data = GlobalContext.SystemConfig;
             try
             {
-                if (data.ReviseSysem == true)
+                if (data.ReviseSystem == true)
                 {
                     using (var context = new UnitOfWork(new SqlSugarClient(DBContexHelper.Contex())))
                     {
