@@ -7,10 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Hosting;
 using WaterCloud.Code.Model;
-using Microsoft.AspNetCore.Http;
 namespace WaterCloud.Code
 {
-    public class GlobalContext
+	public class GlobalContext
     {
         /// <summary>
         /// All registered service and class instance container. Which are used for dependency injection.

@@ -21,7 +21,8 @@ namespace WaterCloud.WebApi
         {
             base.ConfigureServices(services);
             services.AddDefaultSwaggerGen(Assembly.GetExecutingAssembly().GetName().Name);
-            services.AddSqlSugar();
+            services.AddSqlSugar()
+                    .AddRabbitMq();
             services.AddDefaultAPI().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();

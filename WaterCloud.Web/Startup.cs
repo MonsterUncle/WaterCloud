@@ -19,9 +19,10 @@ namespace WaterCloud.Web
         public override void ConfigureServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-            services.AddSqlSugar();
-            services.AddQuartz();
-            services.ReviseSuperSysem();
+            services.AddSqlSugar()
+                .AddQuartz()
+                .ReviseSuperSysem()
+                .AddRabbitMq();
             //SignalR
             services.AddSignalR(options =>
             {

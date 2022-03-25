@@ -91,6 +91,7 @@ namespace WaterCloud.Code.Model
         /// </summary>
         public bool? OpenQuartz { get; set; }
         public DocumentSettings DocumentSettings { get; set; }
+        public MqConfig RabbitMq { get; set; }
     }
     public class DocumentSettings
     {

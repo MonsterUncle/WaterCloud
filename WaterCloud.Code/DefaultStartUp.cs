@@ -266,22 +266,21 @@ namespace WaterCloud.Code
         /// <returns></returns>
         public static IServiceCollection AddRabbitMq(
             this IServiceCollection @this,
-            IConfiguration configuration,
             ServiceLifetime lifeTime = ServiceLifetime.Singleton)
         {
-            if (configuration.GetValue<bool?>("RabbitMq:Enabled") == false)
+            if (GlobalContext.SystemConfig.RabbitMq.Enabled == false)
                 return @this;
 
             switch (lifeTime)
             {
                 case ServiceLifetime.Singleton:
-                    @this.AddSingleton(x => new RabbitMqHelper(configuration.GetSection("RabbitMq").Get<MqConfig>()));
+                    @this.AddSingleton(x => new RabbitMqHelper(GlobalContext.SystemConfig.RabbitMq));
                     break;
                 case ServiceLifetime.Scoped:
-                    @this.AddScoped(x => new RabbitMqHelper(configuration.GetSection("RabbitMq").Get<MqConfig>()));
+                    @this.AddScoped(x => new RabbitMqHelper(GlobalContext.SystemConfig.RabbitMq));
                     break;
                 case ServiceLifetime.Transient:
-                    @this.AddTransient(x => new RabbitMqHelper(configuration.GetSection("RabbitMq").Get<MqConfig>()));
+                    @this.AddTransient(x => new RabbitMqHelper(GlobalContext.SystemConfig.RabbitMq));
                     break;
                 default:
                     break;

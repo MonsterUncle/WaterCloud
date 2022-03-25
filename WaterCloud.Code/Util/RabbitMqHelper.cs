@@ -1775,6 +1775,10 @@ namespace WaterCloud.Code
     public class MqConfig
     {
         /// <summary>
+        /// 是否启用
+        /// </summary>
+        public bool Enabled { get; set; }
+        /// <summary>
         /// 主机名
         /// </summary>
         public string HostName { get; set; } = "localhost";
