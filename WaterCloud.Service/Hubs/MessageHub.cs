@@ -36,17 +36,9 @@ namespace WaterCloud.Service
                 //一个公司一个分组
                 await Groups.AddToGroupAsync(Context.ConnectionId, user.CompanyId);
                 //将用户信息存进缓存
-                var list = await CacheHelper.GetAsync<List<string>>(cacheKey + user.UserId);
+                var list = await CacheHelper.GetAsync<List<string>>(cacheKey + user.UserId) ?? new List<string>();
                 //登录计数
-                var onlinelist = await CacheHelper.GetAsync<List<string>>(cacheKey+"list_" + user.CompanyId);
-				if (onlinelist==null||onlinelist.Count==0)
-				{
-                    onlinelist = new List<string>();
-                }
-                if (list == null)
-                {
-                    list = new List<string>();
-                }
+                var onlinelist = await CacheHelper.GetAsync<List<string>>(cacheKey+"list_" + user.CompanyId) ?? new List<string>();
                 list.Add(Context.ConnectionId);
                 onlinelist.Add(Context.ConnectionId);
                 await CacheHelper.SetAsync(cacheKey + Context.ConnectionId, user.UserId);

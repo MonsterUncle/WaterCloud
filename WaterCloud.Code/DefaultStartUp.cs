@@ -257,5 +257,36 @@ namespace WaterCloud.Code
                 
             });
         }
+        /// <summary>
+        /// 注入RabbitMq
+        /// </summary>
+        /// <param name="this"></param>
+        /// <param name="configuration">json配置</param>
+        /// <param name="lifeTime">生命周期，默认：单例模式</param>
+        /// <returns></returns>
+        public static IServiceCollection AddRabbitMq(
+            this IServiceCollection @this,
+            IConfiguration configuration,
+            ServiceLifetime lifeTime = ServiceLifetime.Singleton)
+        {
+            if (configuration.GetValue<bool?>("RabbitMq:Enabled") == false)
+                return @this;
+
+            switch (lifeTime)
+            {
+                case ServiceLifetime.Singleton:
+                    @this.AddSingleton(x => new RabbitMqHelper(configuration.GetSection("RabbitMq").Get<MqConfig>()));
+                    break;
+                case ServiceLifetime.Scoped:
+                    @this.AddScoped(x => new RabbitMqHelper(configuration.GetSection("RabbitMq").Get<MqConfig>()));
+                    break;
+                case ServiceLifetime.Transient:
+                    @this.AddTransient(x => new RabbitMqHelper(configuration.GetSection("RabbitMq").Get<MqConfig>()));
+                    break;
+                default:
+                    break;
+            }
+            return @this;
+        }
     }
 }
