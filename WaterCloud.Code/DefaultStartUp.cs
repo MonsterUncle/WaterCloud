@@ -204,7 +204,7 @@ namespace WaterCloud.Code
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static void AddDefaultSwaggerGen(this IServiceCollection services,string name)
+        public static IServiceCollection AddDefaultSwaggerGen(this IServiceCollection services,string name)
         {
             services.AddSwaggerGen(config =>
             {
@@ -235,13 +235,14 @@ namespace WaterCloud.Code
 					}
 				});
             });
+            return services;
         }
         /// <summary>
         /// 默认API配置
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static void AddDefaultSwaggerGen(this IApplicationBuilder app)
+        public static IApplicationBuilder AddDefaultSwaggerGen(this IApplicationBuilder app)
         {
             app.UseSwagger(c =>
             {
@@ -256,6 +257,7 @@ namespace WaterCloud.Code
                 }
                 
             });
+            return app;
         }
         /// <summary>
         /// 注入RabbitMq
