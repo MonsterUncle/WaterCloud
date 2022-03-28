@@ -20,12 +20,14 @@ namespace WaterCloud.WebApi
         public override void ConfigureServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-            services.AddDefaultSwaggerGen(Assembly.GetExecutingAssembly().GetName().Name);
-            services.AddSqlSugar();
-            services.AddDefaultAPI().AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-            });
+            services.AddDefaultSwaggerGen(Assembly.GetExecutingAssembly().GetName().Name)
+                    .AddSqlSugar()
+                    .AddRabbitMq()
+                    .AddDefaultAPI()
+                    .AddNewtonsoftJson(options =>
+                    {
+                        options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    });
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {
@@ -38,12 +40,12 @@ namespace WaterCloud.WebApi
         {
             base.Configure(app);
             //api全局异常
-            app.UseMiddleware(typeof(GlobalExceptionMiddleware));
-            app.AddDefaultSwaggerGen();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute("default", "api/{controller=ApiHome}/{action=Index}/{id?}");
-            });
+            app.UseMiddleware(typeof(GlobalExceptionMiddleware))
+               .AddDefaultSwaggerGen()
+               .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute("default", "api/{controller=ApiHome}/{action=Index}/{id?}");
+                });
         }
     }
 }
