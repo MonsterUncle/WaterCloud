@@ -24,7 +24,7 @@ namespace WaterCloud.Service
         /// SqlSugar设置
         /// </summary>
         /// <param name="services"></param>
-		public static void AddSqlSugar(this IServiceCollection services)
+		public static IServiceCollection AddSqlSugar(this IServiceCollection services)
 		{
             //注入数据库连接
             // 注册 SqlSugar
@@ -82,12 +82,13 @@ namespace WaterCloud.Service
                 return db;
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            return services;
         }
         /// <summary>
         /// Quartz设置
         /// </summary>
         /// <param name="services"></param>
-        public static void AddQuartz(this IServiceCollection services)
+        public static IServiceCollection AddQuartz(this IServiceCollection services)
         {
             services.AddSingleton<JobExecute>();
             //注册ISchedulerFactory的实例。
@@ -137,11 +138,12 @@ namespace WaterCloud.Service
             {
                 services.AddHostedService<JobCenter>();
             }
+            return services;
         }
         /// <summary>
         /// 重置超管密码
         /// </summary>
-        public static void ReviseSuperSysem(this IServiceCollection services)
+        public static IServiceCollection ReviseSuperSysem(this IServiceCollection services)
         {
             var data = GlobalContext.SystemConfig;
             try
@@ -173,6 +175,7 @@ namespace WaterCloud.Service
             {
                 LogHelper.Write(ex);
             }
+            return services;
         }
     }
 }
