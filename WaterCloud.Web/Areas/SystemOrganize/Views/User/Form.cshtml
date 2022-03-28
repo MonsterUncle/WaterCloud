@@ -86,7 +86,7 @@
             if (fileds == '角色') {
                 common.modalOpen({
                     title: "选择角色",
-                    url: "/SystemOrganize/Role/AddForm?parentform=" + parentform +"&name=" + "F_RoleName" + "&value=" + "F_RoleId" + "&ids=" + $('#F_RoleId').val(),
+                    url: "/SystemOrganize/Role/AddForm?name=" + "F_RoleName" + "&value=" + "F_RoleId" + "&ids=" + $('#F_RoleId').val(),
                     width: "650px",
                     height: "600px",
                 });
@@ -94,7 +94,7 @@
             else if (fileds == '部门') {
                 common.modalOpen({
                     title: "选择组织",
-                    url: "/SystemOrganize/Organize/AddForm?parentform=" + parentform+"&name=" + "F_DepartmentName" + "&value=" + "F_DepartmentId" + "&ids=" + $('#F_DepartmentId').val(),
+                    url: "/SystemOrganize/Organize/AddForm?name=" + "F_DepartmentName" + "&value=" + "F_DepartmentId" + "&ids=" + $('#F_DepartmentId').val(),
                     width: "650px",
                     height: "600px",
                 });
