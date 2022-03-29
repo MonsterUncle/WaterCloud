@@ -29,10 +29,11 @@ namespace WaterCloud.Service.FlowManage
         private MessageService messageApp;
         private string flowCreator;
         private string className = System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3];
-        public FlowinstanceService(IUnitOfWork unitOfWork, IHttpClientFactory httpClientFactory) : base(unitOfWork)
+        public FlowinstanceService(IUnitOfWork unitOfWork, IHttpClientFactory httpClientFactory,IServiceProvider serviceProvider) : base(unitOfWork)
         {
             _httpClientFactory = httpClientFactory;
-            messageApp = new MessageService(unitOfWork, httpClientFactory);
+			_serviceProvider = serviceProvider;
+			messageApp = new MessageService(unitOfWork, httpClientFactory);
         }
         #region 获取数据
         public async Task<List<FlowinstanceEntity>> GetList(string keyword = "")
