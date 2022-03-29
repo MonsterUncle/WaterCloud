@@ -2060,35 +2060,39 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                 conditionHtml.push('<div class="layui-col-sm4"><input type="radio" name="datetime' + tableId + field + '" lay-filter="datetime' + tableId + '" value="' + key + '" title="' + dateTimeItems[key] + '"></div>');
             }
             conditionHtml.push('</div>');
-            conditionHtml.push('<div><input type="radio" name="datetime' + tableId + field + '" lay-filter="datetime' + tableId + '"  value="specific" title="过滤具体日期"> <input type="hidden" class="specific_value"><div class="staticDate"></div></div></div>');
+            conditionHtml.push('<div><input type="radio" name="datetime' + tableId + field + '" lay-filter="datetime' + tableId + '"  value="specific" title="过滤具体日期"> <input type="hidden" class="specific_value"><input type="text" name="staticDate" class="layui-input layui-hide" placeholder="请选择时间范围"></div></div>');
             $('#soul-condition' + tableId).html(conditionHtml.join(''));
             var filterDate = util.toDateString(new Date(), 'yyyy-MM-dd');
             if (filterSo) {
                 $('#soul-condition' + tableId).data({ 'id': filterSo.id, 'head': true });
                 $('#soul-condition' + tableId + '>.' + field + 'Condition' + ' [name^=datetime][value="' + filterSo.type + '"]').prop('checked', true);
                 if (filterSo.type === 'specific') {
-                    filterDate = filterSo.value
+                    filterDate = filterSo.value;
+                    $('#soul-condition' + tableId + ' [name^=staticDate]').val(filterDate.replace('~', ' - '));
+                    $('#soul-condition' + tableId + ' [name^=staticDate]').removeClass("layui-hide");
+                }
+                else {
+                    $('#soul-condition' + tableId + ' [name^=staticDate]').addClass("layui-hide");
                 }
             } else {
                 $('#soul-condition' + tableId).data({ 'id': '', 'head': true });
                 $('#soul-condition' + tableId + '>.' + field + 'Condition' + ' [name^=datetime][value="all"]').prop('checked', true);
             }
-
             $('#soul-condition' + tableId + ' .specific_value').val(filterDate);
 
             //时间范围改造=
             laydate.render({
-                elem: '#soul-condition' + tableId + ' .staticDate'
-                , position: 'static'
+                elem: '#soul-condition' + tableId + ' [name^=staticDate]'
                 , range: true
                 , btns: ['confirm']
+                , type: 'date'
                 , done: function (value, date, endDate) {
                     var StartTime = date.year + "-" + date.month + "-" + date.date;
                     var EndTime = endDate.year + "-" + endDate.month + "-" + endDate.date;
                     var timeSE = StartTime + "~" + EndTime;
                     var id = $('#soul-condition' + tableId).data('id'),
                         head = $('#soul-condition' + tableId).data('head')
-                    $('#soul-condition' + tableId + ' .specific_value').val(timeSE);
+                    $('#soul-condition' + tableId + ' [name^=staticDate]').val(timeSE);
                     $('#soul-condition' + tableId + ' [name^=datetime]:checked').prop('checked', false);
                     $('#soul-condition' + tableId + ' [name^=datetime][value=specific]').prop('checked', true);
                     var filterSo = {
@@ -2125,6 +2129,10 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
                     field: field,
                     type: data.value,
                     value: $('#soul-condition' + tableId + ' .specific_value').val()
+                }
+                if (data.value == "specific") {
+                    $('#soul-condition' + tableId + ' [name^=staticDate]').removeClass("layui-hide");
+                    return;
                 }
                 _this.updateWhere(myTable, filterSo);
                 if (!id) {
