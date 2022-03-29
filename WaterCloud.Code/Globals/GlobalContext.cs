@@ -12,19 +12,19 @@ namespace WaterCloud.Code
 	public class GlobalContext
     {
         /// <summary>
-        /// All registered service and class instance container. Which are used for dependency injection.
+        /// 服务集合
         /// </summary>
         public static IServiceCollection Services { get; set; }
 
         /// <summary>
-        /// Configured service provider.root service
+        /// Rootservice
         /// </summary>
         public static IServiceProvider ServiceProvider { get; set; }
-		/// <summary>
-		/// ScopeService
-		/// </summary>
-		public static IServiceProvider ScopeServiceProvider()
-		{
+        /// <summary>
+        /// ScopeService
+        /// </summary>
+        public static IServiceProvider ScopeServiceProvider()
+        {
             return ServiceProvider.CreateScope().ServiceProvider;
         }
 
