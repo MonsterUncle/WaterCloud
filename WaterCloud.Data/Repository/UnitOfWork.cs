@@ -9,6 +9,7 @@ using System;
 using SqlSugar;
 using WaterCloud.Code.Model;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WaterCloud.DataBase
 {
@@ -34,7 +35,7 @@ namespace WaterCloud.DataBase
         {
             var list = GlobalContext.SystemConfig.SqlConfig.MapToList<DBConfig>();
             DBConfig config = list.FirstOrDefault(a => a.DBProvider == providerName && a.DBConnectionString == ConnectStr);
-            var context = (SqlSugarClient)GlobalContext.ServiceProvider.GetService(typeof(ISqlSugarClient));
+            var context = (SqlSugarClient)GlobalContext.ScopeServiceProvider().GetRequiredService<ISqlSugarClient>();
             _context = context;
             if (config == null)
 			{

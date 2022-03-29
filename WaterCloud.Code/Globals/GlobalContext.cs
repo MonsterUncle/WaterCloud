@@ -17,9 +17,16 @@ namespace WaterCloud.Code
         public static IServiceCollection Services { get; set; }
 
         /// <summary>
-        /// Configured service provider.
+        /// Configured service provider.root service
         /// </summary>
         public static IServiceProvider ServiceProvider { get; set; }
+		/// <summary>
+		/// ScopeService
+		/// </summary>
+		public static IServiceProvider ScopeServiceProvider()
+		{
+            return ServiceProvider.CreateScope().ServiceProvider;
+        }
 
         public static IConfiguration Configuration { get; set; }
 
