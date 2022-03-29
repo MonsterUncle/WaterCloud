@@ -770,7 +770,7 @@ namespace WaterCloud.Service.FlowManage
                 var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
                 var t = referencedAssemblies
                     .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + entity.DbName + "Service"))).First();
-                ICustomerForm icf = (ICustomerForm)GlobalContext.ScopeServiceProvider().GetRequiredService(t);
+                ICustomerForm icf = (ICustomerForm)GlobalContext.ScopeServiceProvider.GetRequiredService(t);
                 await icf.Add(entity.Id, entity.FrmData);
             }
 
@@ -903,7 +903,7 @@ namespace WaterCloud.Service.FlowManage
                 var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
                 var t = referencedAssemblies
                     .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + entity.DbName + "Service"))).First();
-                ICustomerForm icf = (ICustomerForm)GlobalContext.ScopeServiceProvider().GetRequiredService(t);
+                ICustomerForm icf = (ICustomerForm)GlobalContext.ScopeServiceProvider.GetRequiredService(t);
                 await icf.Edit(entity.Id, entity.FrmData);
             }
             #endregion
