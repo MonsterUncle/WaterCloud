@@ -75,7 +75,7 @@ namespace WaterCloud.Web
         }
         protected virtual async Task<ActionResult> Success(string message, string className = "", object keyValue = null, DbLogType? logType = null)
         {
-            className = string.IsNullOrEmpty(className) ? ReflectionHelper.GetClassName() : className;
+            className = string.IsNullOrEmpty(className) ? ReflectionHelper.GetModuleName(isReplace:false, prefix: "Controller") : className;
             await _logService.WriteLog(message, className, keyValue != null && keyValue.ToString() != "0" ? keyValue .ToString():"", logType);
             return Content(new AlwaysResult { state = ResultType.success.ToString(), message = message }.ToJson());
         }
@@ -97,7 +97,7 @@ namespace WaterCloud.Web
         }
         protected virtual async Task<ActionResult> Error(string message, string className, object keyValue = null, DbLogType? logType = null)
         {
-            className = string.IsNullOrEmpty(className) ? ReflectionHelper.GetClassName() : className;
+            className = string.IsNullOrEmpty(className) ? ReflectionHelper.GetModuleName(isReplace:false, prefix: "Controller") : className;
             await _logService.WriteLog(message, className, keyValue != null&&keyValue.ToString()!="0" ? keyValue.ToString() : "", logType, true);
             return Content(new AlwaysResult { state = ResultType.error.ToString(), message = LogHelper.ExMsgFormat(message) }.ToJson());
         }

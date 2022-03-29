@@ -121,7 +121,7 @@ namespace WaterCloud.Service.InfoManage
             }
             //通过http发送消息
             messageEntity.companyId = currentuser.CompanyId;
-            var mouduleName = ReflectionHelper.GetModuleName(1);
+            var mouduleName = ReflectionHelper.GetModuleName();
             var module = repository.Db.Queryable<ModuleEntity>().First(a => a.F_EnCode == mouduleName);
             var url = module.F_UrlAddress.Substring(0, module.F_UrlAddress.Length - 5) + "SendWebSocketMsg";
             HttpContent httpContent = new StringContent(messageEntity.ToJson(), Encoding.UTF8);
