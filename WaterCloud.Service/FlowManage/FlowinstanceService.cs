@@ -25,6 +25,7 @@ namespace WaterCloud.Service.FlowManage
 	public class FlowinstanceService : DataFilterService<FlowinstanceEntity>, IDenpendency
     {
         public IHttpClientFactory _httpClientFactory { get; set; }
+        public IServiceProvider _serviceProvider { get; set; }
         public MessageService messageApp { get; set; }
         private string flowCreator;
         private string className { get; set; }  
@@ -769,7 +770,7 @@ namespace WaterCloud.Service.FlowManage
                 var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
                 var t = referencedAssemblies
                     .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + entity.DbName + "Service"))).First();
-                ICustomerForm icf = (ICustomerForm)GlobalContext.ServiceProvider.GetService(t);
+                ICustomerForm icf = (ICustomerForm)_serviceProvider.GetService(t);
                 await icf.Add(entity.Id, entity.FrmData);
             }
 
@@ -902,7 +903,7 @@ namespace WaterCloud.Service.FlowManage
                 var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
                 var t = referencedAssemblies
                     .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + entity.DbName + "Service"))).First();
-                ICustomerForm icf = (ICustomerForm)GlobalContext.ServiceProvider.GetService(t);
+                ICustomerForm icf = (ICustomerForm)_serviceProvider.GetService(t);
                 await icf.Edit(entity.Id, entity.FrmData);
             }
             #endregion
