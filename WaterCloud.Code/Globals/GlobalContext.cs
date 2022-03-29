@@ -24,10 +24,7 @@ namespace WaterCloud.Code
         /// <summary>
         /// ScopeService
         /// </summary>
-        public static IServiceProvider ScopeServiceProvider()
-        {
-            return ServiceProvider.CreateScope().ServiceProvider;
-        }
+        public static IServiceProvider ScopeServiceProvider => ServiceProvider.CreateScope().ServiceProvider;
 
 
         public static IConfiguration Configuration { get; set; }
