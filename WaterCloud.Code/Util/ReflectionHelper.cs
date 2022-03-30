@@ -10,6 +10,7 @@ namespace WaterCloud.Code
     public class ReflectionHelper
     {
         private static ConcurrentDictionary<string, object> dictCache = new ConcurrentDictionary<string, object>();
+        private static List<string> exceptionList=new List<string> { "DataFilterService", "ControllerBase" };
 
         #region 得到类里面的属性集合
         /// <summary>
@@ -64,41 +65,45 @@ namespace WaterCloud.Code
         #endregion
 
         /// <summary>
-        /// StackTrace获取模块名(此方法为上上层调用)
+        /// StackTrace获取名称
         /// </summary>
+        /// <param name="count">搜索层级</param>
+        /// <param name="prefix">前缀</param>
         /// <returns></returns>
-        public static string GetModuleName(int count = 2)
+        public static string GetModuleName(int count = 5,bool isReplace = true, string prefix="Service")
         {
             try
             {
-                string className = new StackFrame(count, true).GetMethod().DeclaringType.FullName;
-                className = className.Split('+')[0];
-                className = className.Split('.').LastOrDefault();
-                string moduleName = className.Substring(0, className.Length - 7);
-                return moduleName;
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteWithTime(ex);
-                return "";
-            }
-        }
-        /// <summary>
-        /// StackTrace获取方法名(此方法为上上上上层调用)
-        /// </summary>
-        /// <returns></returns>
-        public static string GetClassName(int count = 4)
-        {
-            try
-            {
-                if (GlobalContext.SystemConfig.Debug == true && count == 4)
-                {
-                    count++;
+                string moduleName = "";
+
+                for (int i = 0; i < count; i++)
+				{
+                    string className = new StackFrame(i, true).GetMethod().DeclaringType.FullName;
+                    className = className.Split('+')[0];
+                    className = className.Split('.').LastOrDefault();
+                    bool skip = false;
+					foreach (var item in exceptionList)
+					{
+						if (className.Contains(item))
+						{
+                            skip = true;
+                            break;
+						}
+					}
+					if (skip)
+					{
+                        continue;
+                    }
+					if (className.IndexOf(prefix)>-1)
+					{
+                        moduleName = className;
+                        if (isReplace)
+						{
+                            moduleName = moduleName.Replace(prefix, "");
+                        }
+                    }
                 }
-                string className = new StackFrame(count, true).GetMethod().DeclaringType.FullName;
-                className = className.Split('+')[0];
-                className = className.Split('.').LastOrDefault();
-                return className;
+                return moduleName;
             }
             catch (Exception ex)
             {
