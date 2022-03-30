@@ -58,7 +58,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
 
         #region 提交数据
         [HttpPost]
-        [ServiceFilter(typeof(HandlerLoginAttribute))]
+        [HandlerLogin]
         [IgnoreAntiforgeryToken]
         public async Task<ActionResult> Upload(string fileby,int filetype =0)
         {
@@ -167,8 +167,8 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
             }
         }
         [HttpGet]
-        [ServiceFilter(typeof(HandlerLoginAttribute))]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerLogin]
+        [HandlerAuthorize]
         public async Task<ActionResult> Download(string keyValue)
         {
             var data = await _service.GetForm(keyValue);
@@ -209,7 +209,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
 
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
             try

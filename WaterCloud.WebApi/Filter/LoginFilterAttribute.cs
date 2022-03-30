@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using WaterCloud.Code;
 using Microsoft.AspNetCore.Authorization;
 using WaterCloud.Service.SystemOrganize;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WaterCloud.WebApi
 {
@@ -16,10 +17,16 @@ namespace WaterCloud.WebApi
     public class LoginFilterAttribute : ActionFilterAttribute
     {
         private readonly RoleAuthorizeService _service;
-        public LoginFilterAttribute(RoleAuthorizeService service)
+		private readonly bool _needLogin;
+        /// <summary>
+        /// 登录特性
+        /// </summary>
+        /// <param name="needLogin">是否验证</param>
+		public LoginFilterAttribute(bool needLogin = true)
         {
-            _service = service;
-        }
+            _service = GlobalContext.ScopeServiceProvider.GetRequiredService<RoleAuthorizeService>();
+			_needLogin = needLogin;
+		}
         /// <summary>
         /// 验证
         /// </summary>
@@ -69,7 +76,7 @@ namespace WaterCloud.WebApi
                     }
                 }
             }
-            else if (anonymous == null && methodanonymous == null)
+            else if (anonymous == null && methodanonymous == null && _needLogin)
             {
                 AlwaysResult obj = new AlwaysResult();
                 obj.message = "抱歉，没有操作权限";

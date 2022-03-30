@@ -537,7 +537,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine();
             sb.AppendLine("        [HttpPost]");
             sb.AppendLine("        [HandlerAjaxOnly]");
-            sb.AppendLine("        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]");
+            sb.AppendLine("        [HandlerAuthorize]");
             sb.AppendLine("        public async Task<ActionResult> DeleteForm(string keyValue)");
             sb.AppendLine("        {");
             sb.AppendLine("            try");

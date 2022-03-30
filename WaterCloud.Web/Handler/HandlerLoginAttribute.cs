@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 登录验证
 /// </summary>
@@ -15,10 +16,16 @@ namespace WaterCloud.Web
 	public class HandlerLoginAttribute : ActionFilterAttribute
     {
         private readonly RoleAuthorizeService _service;
-        public HandlerLoginAttribute(RoleAuthorizeService service)
+		private readonly bool _needLogin;
+        /// <summary>
+        /// 登录特性
+        /// </summary>
+        /// <param name="needLogin">是否验证</param>
+        public HandlerLoginAttribute(bool needLogin = true)
         {
-            _service = service;
-        }
+            _service = GlobalContext.ScopeServiceProvider.GetRequiredService<RoleAuthorizeService>();
+			_needLogin = needLogin;
+		}
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var description =
@@ -30,6 +37,10 @@ namespace WaterCloud.Web
             var methodanonymous = description.MethodInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
             if (anonymous != null|| methodanonymous!=null)
             {
+                return;
+            }
+			if (!_needLogin)
+			{
                 return;
             }
             if (OperatorProvider.Provider.GetCurrent() == null)

@@ -13,26 +13,31 @@ namespace WaterCloud.Web
 	public class HandlerAuthorizeAttribute : ActionFilterAttribute
     {
         private readonly RoleAuthorizeService _service;
-        private string _authorize { get; set; }
-        public HandlerAuthorizeAttribute(RoleAuthorizeService service)
+		private readonly bool _needAuth;
+
+		private string _authorize { get; set; }
+        /// <summary>
+        /// 权限特性
+        /// </summary>
+        /// <param name="authorize">权限参数</param>
+        /// <param name="needAuth">是否鉴权</param>
+        public HandlerAuthorizeAttribute(string authorize = "", bool needAuth = true)
         {
-            _service = service;
-            _authorize = string.Empty;
-        }
+            _service = GlobalContext.ScopeServiceProvider.GetRequiredService<RoleAuthorizeService>();
+            _authorize = authorize.ToLower();
+			_needAuth = needAuth;
+		}
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            //反射获取Authorize中的参数 控制器方法前加[Authorize("SystemManage:Area:Delete")]
-            var description = (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)filterContext.ActionDescriptor;
-            var methodanonymous = description.MethodInfo.GetCustomAttribute<Authorize>(false)!;
-			if (methodanonymous!=null)
-			{
-                _authorize = methodanonymous._authorize;
-            }
-            if (OperatorProvider.Provider.GetCurrent() != null&& OperatorProvider.Provider.GetCurrent().IsSuperAdmin)
+            if (OperatorProvider.Provider.GetCurrent() != null && OperatorProvider.Provider.GetCurrent().IsSuperAdmin)
             {
                 return;
             }
-			if (!string.IsNullOrEmpty(_authorize)&&AuthorizeCheck(filterContext))
+            if (!_needAuth)
+            {
+                return;
+            }
+            if (!string.IsNullOrEmpty(_authorize)&&AuthorizeCheck(filterContext))
 			{
                 return;
             }

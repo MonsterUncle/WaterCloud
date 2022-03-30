@@ -122,7 +122,7 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
 
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
             try
@@ -137,7 +137,7 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public async Task<ActionResult> CancleForm(string keyValue)
         {
             try
