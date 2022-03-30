@@ -52,6 +52,13 @@
             权限验证
             </summary>
         </member>
+        <member name="M:WaterCloud.WebApi.AuthorizeFilterAttribute.#ctor(System.String,System.Boolean)">
+            <summary>
+            权限特性
+            </summary>
+            <param name="authorize">权限参数</param>
+            <param name="needAuth">是否鉴权</param>
+        </member>
         <member name="M:WaterCloud.WebApi.AuthorizeFilterAttribute.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
             <summary>
             验证
@@ -64,6 +71,12 @@
             <summary>
             验证token
             </summary>
+        </member>
+        <member name="M:WaterCloud.WebApi.LoginFilterAttribute.#ctor(System.Boolean)">
+            <summary>
+            登录特性
+            </summary>
+            <param name="needLogin">是否验证</param>
         </member>
         <member name="M:WaterCloud.WebApi.LoginFilterAttribute.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
             <summary>
