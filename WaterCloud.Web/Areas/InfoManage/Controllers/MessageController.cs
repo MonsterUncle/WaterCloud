@@ -20,7 +20,7 @@ namespace WaterCloud.Web.Areas.InfoManage.Controllers
 
         public MessageService _service {get;set;}
         [HttpGet]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public ActionResult OwnerMessage()
         {
             return View();
@@ -124,7 +124,7 @@ namespace WaterCloud.Web.Areas.InfoManage.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
             try

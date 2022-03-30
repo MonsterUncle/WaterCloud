@@ -32,9 +32,6 @@ namespace WaterCloud.WebApi
         public void ConfigureContainer(ContainerBuilder builder)
         {
             AutofacConfigureContainer(builder, default, typeof(ControllerBase), typeof(IDenpendency), typeof(Program));
-            //注册特性
-            builder.RegisterType(typeof(AuthorizeFilterAttribute)).InstancePerLifetimeScope();
-            builder.RegisterType(typeof(LoginFilterAttribute)).InstancePerLifetimeScope();
         }
         public override void Configure(IApplicationBuilder app)
         {

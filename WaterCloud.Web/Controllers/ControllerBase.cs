@@ -10,7 +10,7 @@ using WaterCloud.Service.SystemSecurity;
 
 namespace WaterCloud.Web
 {
-    [ServiceFilter(typeof(HandlerLoginAttribute))]
+    [HandlerLogin]
     public abstract class ControllerBase : Controller
     {
         public LogService _logService { get; set; }
@@ -56,19 +56,19 @@ namespace WaterCloud.Web
             base.OnActionExecuted(context);
         }
         [HttpGet]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public virtual ActionResult Index()
         {
             return View();
         }
         [HttpGet]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public virtual ActionResult Form()
         {
             return View();
         }
         [HttpGet]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public virtual ActionResult Details()
         {
             return View();
