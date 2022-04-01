@@ -31,7 +31,7 @@ namespace WaterCloud.Service.SystemManage
             {
                 query = query.Where(a => a.SchemeCode.Contains(keyword) || a.SchemeName.Contains(keyword));
             }
-            var list = currentuser.DepartmentId.Split(',');
+            var list = currentuser.DepartmentId?.Split(',');
             if (list.Any())
             {
                 return await query.Where(a => a.DeleteMark == false && (a.OrganizeId == "" || a.OrganizeId == null || list.Contains(a.OrganizeId))).OrderBy(a => a.Id,OrderByType.Desc).ToListAsync();
