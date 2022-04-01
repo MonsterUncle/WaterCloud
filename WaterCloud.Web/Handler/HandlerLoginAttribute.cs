@@ -7,25 +7,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
-using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 登录验证
 /// </summary>
 namespace WaterCloud.Web
 {
-	public class HandlerLoginAttribute : ActionFilterAttribute
+    public class HandlerLoginAttribute : ActionFilterAttribute
     {
         private readonly RoleAuthorizeService _service;
-		private readonly bool _needLogin;
-        /// <summary>
-        /// 登录特性
-        /// </summary>
-        /// <param name="needLogin">是否验证</param>
-        public HandlerLoginAttribute(bool needLogin = true)
+        public HandlerLoginAttribute(RoleAuthorizeService service)
         {
-            _service = GlobalContext.ScopeServiceProvider.GetRequiredService<RoleAuthorizeService>();
-			_needLogin = needLogin;
-		}
+            _service = service;
+        }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var description =
@@ -35,12 +28,8 @@ namespace WaterCloud.Web
             //控制器整体忽略或者单独方法忽略
             var anonymous = description.ControllerTypeInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
             var methodanonymous = description.MethodInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
-            if (anonymous != null|| methodanonymous!=null)
+            if (anonymous != null || methodanonymous != null)
             {
-                return;
-            }
-			if (!_needLogin)
-			{
                 return;
             }
             if (OperatorProvider.Provider.GetCurrent() == null)

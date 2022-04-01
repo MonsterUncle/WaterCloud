@@ -116,7 +116,7 @@ namespace WaterCloud.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [LoginFilter]
+        [ServiceFilter(typeof(LoginFilterAttribute))]
         public async Task<AlwaysResult> LoginOff()
         {
             await _logService.WriteDbLog(new LogEntity
