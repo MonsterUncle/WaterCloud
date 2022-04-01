@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WaterCloud.Web.Controllers
 {
-    [HandlerLogin]
+    [ServiceFilter(typeof(HandlerLoginAttribute))]
     public class ClientsDataController : Controller
     {
         /// <summary>
