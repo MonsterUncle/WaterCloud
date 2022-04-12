@@ -97,7 +97,7 @@ namespace WaterCloud.Service.FlowManage
             }
             //权限过滤
             query = GetDataPrivilege("a","",query);
-            return await query.Where(a => a.F_EnabledMark == true).ToPageListAsync(pagination);
+            return await query.Where(a => a.EnabledMark == true).ToPageListAsync(pagination);
         }
 
         public async Task<FlowinstanceEntity> GetForm(string keyValue)
