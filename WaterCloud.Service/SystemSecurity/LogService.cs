@@ -52,14 +52,14 @@ namespace WaterCloud.Service.SystemSecurity
             }
             if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
             {
-                var list = repository.IQueryable();
+                var query = repository.IQueryable();
                 if (!string.IsNullOrEmpty(keyword))
                 {
-                    list = list.Where(a => a.F_Account.Contains(keyword) || a.F_Description.Contains(keyword) || a.F_ModuleName.Contains(keyword));
+                    query = query.Where(a => a.F_Account.Contains(keyword) || a.F_Description.Contains(keyword) || a.F_ModuleName.Contains(keyword));
                 }
 
-                list = list.Where(a => a.F_Date >= startTime && a.F_Date <= endTime);
-                result = await repository.OrderList(list, pagination);
+                query = query.Where(a => a.F_Date >= startTime && a.F_Date <= endTime);
+                result = await query.ToPageListAsync(pagination);
             }
             else
             {

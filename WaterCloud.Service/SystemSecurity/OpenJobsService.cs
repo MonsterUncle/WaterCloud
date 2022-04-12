@@ -43,13 +43,13 @@ namespace WaterCloud.Service.SystemSecurity
         public async Task<List<OpenJobEntity>> GetLookList(Pagination pagination, string keyword = "")
         {
             var DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
-            var list = repository.IQueryable().Where(a => a.F_DbNumber == DbNumber);
+            var query = repository.IQueryable().Where(a => a.F_DbNumber == DbNumber);
             if (!string.IsNullOrEmpty(keyword))
             {
-                list = list.Where(a => a.F_JobName.Contains(keyword) || a.F_Description.Contains(keyword));
+                query = query.Where(a => a.F_JobName.Contains(keyword) || a.F_Description.Contains(keyword));
             }
-            list = list.Where(a => a.F_DeleteMark == false);
-            return await repository.OrderList(list, pagination);
+            query = query.Where(a => a.F_DeleteMark == false);
+            return await query.ToPageListAsync(pagination);
         }
 
         public async Task<List<OpenJobLogEntity>> GetLogList(string keyValue)

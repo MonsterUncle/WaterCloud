@@ -62,7 +62,7 @@ namespace WaterCloud.Service.SystemManage
                 query = query.Where(a => a.F_SchemeCode.Contains(keyword) || a.F_SchemeName.Contains(keyword));
             }
             query = GetDataPrivilege("a","", query);
-            return await repository.OrderList(query, pagination);
+            return await query.ToPageListAsync(pagination);
         }
 
         public async Task<FlowschemeEntity> GetForm(string keyValue)

@@ -65,8 +65,8 @@ namespace WaterCloud.Service.ContentManage
             }
             query = query.Where(a => a.F_DeleteMark == false);
             //权限过滤
-            query = GetDataPrivilege<ArticleNewsEntity>("a", "",query);           
-            return await repository.OrderList(query, pagination);
+            query = GetDataPrivilege<ArticleNewsEntity>("a", "",query);
+            return await query.ToPageListAsync(pagination);
         }
         /// <summary>
         /// 获取新闻详情

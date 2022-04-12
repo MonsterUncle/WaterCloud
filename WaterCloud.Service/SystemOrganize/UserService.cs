@@ -51,7 +51,7 @@ namespace WaterCloud.Service.SystemOrganize
                 query = query.Where(a => a.F_Account.Contains(keyword) || a.F_RealName.Contains(keyword)||a.F_MobilePhone.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
-            var data = await repository.OrderList(query, pagination);
+            var data = await query.ToPageListAsync(pagination);
             var roles = repository.Db.Queryable<RoleEntity>().ToList();
             var orgs = repository.Db.Queryable<OrganizeEntity>().ToList();
             foreach (var item in data)

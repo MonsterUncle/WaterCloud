@@ -69,7 +69,7 @@ namespace WaterCloud.Service.FileManage
             }
             //权限过滤
             query = GetDataPrivilege("a", "", query);
-            var data = await repository.OrderList(query, pagination);
+            var data = await query.ToPageListAsync(pagination); ;
             var orgs = repository.Db.Queryable<OrganizeEntity>().ToList();
             foreach (var item in data)
             {

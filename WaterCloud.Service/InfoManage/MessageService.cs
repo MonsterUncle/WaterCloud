@@ -83,7 +83,7 @@ namespace WaterCloud.Service.InfoManage
                 query = query.Where(a => a.F_MessageInfo.Contains(keyword) || a.F_CreatorUserName.Contains(keyword));
             }
             query = GetDataPrivilege("a","",query);
-            return await repository.OrderList(query, pagination);
+            return await query.ToPageListAsync(pagination);
         }
 
         public async Task<MessageEntity> GetForm(string keyValue)
