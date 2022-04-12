@@ -59,7 +59,7 @@ namespace WaterCloud.Service.OrderManagement
             }
             //权限过滤
             query = GetDataPrivilege("a", "", query);
-            return await repository.OrderList(query, pagination);
+            return await query.ToPageListAsync(pagination);
         }
 
         private ISugarQueryable<OrderEntity> IQuery()

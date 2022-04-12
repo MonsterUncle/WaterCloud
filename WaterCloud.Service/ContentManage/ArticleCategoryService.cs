@@ -51,7 +51,7 @@ namespace WaterCloud.Service.ContentManage
             }
             //权限过滤
             query = GetDataPrivilege("a","", query);
-            return await repository.OrderList(query, pagination);
+            return await query.ToPageListAsync(pagination);
         }
 
         public async Task<ArticleCategoryEntity> GetForm(string keyValue)

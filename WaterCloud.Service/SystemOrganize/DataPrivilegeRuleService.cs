@@ -47,7 +47,7 @@ namespace WaterCloud.Service.SystemOrganize
                 query = query.Where(a => a.ModuleCode.Contains(keyword) || a.Description.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
-            return await repository.OrderList(query, pagination);
+            return await query.ToPageListAsync(pagination);
         }
 
         public async Task<DataPrivilegeRuleEntity> GetLookForm(string keyValue)

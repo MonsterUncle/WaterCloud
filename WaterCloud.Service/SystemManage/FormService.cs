@@ -55,7 +55,7 @@ namespace WaterCloud.Service.SystemManage
                 query = query.Where(a => a.Name.Contains(keyword) || a.Description.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
-            return await repository.OrderList(query, pagination);
+            return await query.ToPageListAsync(pagination);
         }
         private ISugarQueryable<FormEntity> GetQuery()
         {

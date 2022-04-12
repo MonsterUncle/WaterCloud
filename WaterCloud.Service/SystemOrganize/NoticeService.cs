@@ -47,7 +47,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             //权限过滤（保证分页参数存在）
             query = GetDataPrivilege("a", "", query);
-            return await repository.OrderList(query, pagination);
+            return await query.ToPageListAsync(pagination);
         }
         public async Task<NoticeEntity> GetLookForm(string keyValue)
         {

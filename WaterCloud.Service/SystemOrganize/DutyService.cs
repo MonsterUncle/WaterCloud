@@ -57,7 +57,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             query = query.Where(a => a.DeleteMark == false&& a.Category == 2);
             query = GetDataPrivilege("a", "", query);
-            return await repository.OrderList(query, pagination);
+            return await query.ToPageListAsync(pagination);
         }
         public async Task<RoleEntity> GetLookForm(string keyValue)
         {
