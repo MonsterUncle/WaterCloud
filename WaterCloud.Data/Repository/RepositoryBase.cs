@@ -100,11 +100,11 @@ namespace WaterCloud.DataBase
         }
         public async Task<TEntity> FindEntity(object keyValue)
         {
-            return await _db.Queryable<TEntity>().InSingleAsync(keyValue);
+            return await IQueryable().InSingleAsync(keyValue);
         }
         public async Task<TEntity> FindEntity(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _db.Queryable<TEntity>().FirstAsync(predicate);
+            return await IQueryable().FirstAsync(predicate);
         }
         public ISugarQueryable<TEntity> IQueryable()
         {
@@ -112,7 +112,7 @@ namespace WaterCloud.DataBase
         }
         public ISugarQueryable<TEntity> IQueryable(Expression<Func<TEntity, bool>> predicate)
         {
-            return _db.Queryable<TEntity>().Where(predicate);
+            return IQueryable().Where(predicate);
         }
         public ISugarQueryable<TEntity> IQueryable(string strSql)
         {
@@ -154,29 +154,6 @@ namespace WaterCloud.DataBase
             var data = await tempData.ToPageListAsync(pagination.page, pagination.rows, totalCount);
             pagination.count = totalCount;
             return data;
-        }
-        public async Task<List<TEntity>> CheckCacheList(string cacheKey)
-        {
-            var cachedata =await CacheHelper.GetAsync<List<TEntity>>(cacheKey);
-            if (cachedata == null || !cachedata.Any())
-            {
-                cachedata = _db.Queryable<TEntity>().ToList();
-                await CacheHelper.SetAsync(cacheKey, cachedata);
-            }
-            return cachedata;
-        }
-        public async Task<TEntity> CheckCache(string cacheKey, object keyValue)
-        {
-            var cachedata = await CacheHelper.GetAsync<TEntity>(cacheKey + keyValue);
-            if (cachedata == null)
-            {
-                cachedata = await _db.Queryable<TEntity>().InSingleAsync(keyValue);
-                if (cachedata != null)
-                {
-                    await CacheHelper.SetAsync(cacheKey + keyValue, cachedata);
-                }
-            }
-            return cachedata;
         }
     }
 }
