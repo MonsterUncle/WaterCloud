@@ -38,7 +38,5 @@ namespace WaterCloud.DataBase
         ISugarQueryable<TEntity> IQueryable(string strSql);
         Task<List<T>> OrderList<T>(ISugarQueryable<T> query, Pagination pagination);
         Task<List<T>> OrderList<T>(ISugarQueryable<T> query, SoulPage<T> pagination);
-        Task<List<TEntity>> CheckCacheList(string cacheKey);
-        Task<TEntity> CheckCache(string cacheKey, object keyValue);
     }
 }
