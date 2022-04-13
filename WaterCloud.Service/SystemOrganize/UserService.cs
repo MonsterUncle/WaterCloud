@@ -25,8 +25,8 @@ namespace WaterCloud.Service.SystemOrganize
         /// 缓存操作类
         /// </summary>
         private string cacheKeyOperator = GlobalContext.SystemConfig.ProjectPrefix + "_operator_";// +登录者token
-        //获取类名
-        
+                                                                                                  //获取类名
+
         public UserService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
@@ -48,7 +48,7 @@ namespace WaterCloud.Service.SystemOrganize
             var query = GetQuery().Where(a => a.IsAdmin == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(a => a.Account.Contains(keyword) || a.RealName.Contains(keyword)||a.MobilePhone.Contains(keyword));
+                query = query.Where(a => a.Account.Contains(keyword) || a.RealName.Contains(keyword) || a.MobilePhone.Contains(keyword));
             }
             query = GetDataPrivilege("a", "", query);
             var data = await query.ToPageListAsync(pagination);
@@ -84,49 +84,49 @@ namespace WaterCloud.Service.SystemOrganize
         }
         private ISugarQueryable<UserExtend> GetQuery()
         {
-            var query = repository.Db.Queryable<UserEntity, RoleEntity, SystemSetEntity>((a,b,c)=>new JoinQueryInfos(
+            var query = repository.Db.Queryable<UserEntity, RoleEntity, SystemSetEntity>((a, b, c) => new JoinQueryInfos(
                 JoinType.Left, a.DutyId == b.Id,
                 JoinType.Left, a.OrganizeId == c.Id
                 )).Where(a => a.DeleteMark == false)
-                .Select((a, b,c) => new UserExtend
+                .Select((a, b, c) => new UserExtend
                 {
                     Id = a.Id,
-                    IsSenior=a.IsSenior,
-                    SecurityLevel=a.SecurityLevel,
-                    Account=a.Account,
-                    DingTalkAvatar=a.DingTalkAvatar,
-                    IsAdmin=a.IsAdmin,
-                    Birthday=a.Birthday,
-                    CompanyName=c.CompanyName,
-                    CreatorTime=a.CreatorTime,
-                    CreatorUserId=a.CreatorUserId,  
-                    DepartmentId=a.DepartmentId,
-                    Description=a.Description,
-                    DingTalkUserId=a.DingTalkUserId,
-                    DingTalkUserName=a.DingTalkUserName,
-                    DutyId=a.DutyId,
-                    DutyName=b.FullName,
-                    Email=a.Email,
-                    EnabledMark=a.EnabledMark,
-                    Gender=a.Gender,
-                    HeadIcon=a.HeadIcon,
-                    HeadImgUrl=a.HeadImgUrl,
-                    IsBoss=a.IsBoss,
-                    IsLeaderInDepts=a.IsLeaderInDepts,
-                    ManagerId=a.ManagerId,
-                    MobilePhone=a.MobilePhone,
-                    NickName=a.NickName,
-                    OrganizeId=a.OrganizeId,
-                    RealName=a.RealName,
-                    Remark=a.RealName,
-                    RoleId=a.RoleId,
-                    Signature=a.Signature,
-                    SortCode=a.SortCode,
-                    WeChat=a.WeChat,
-                    WxNickName=a.WxNickName,
-                    WxOpenId=a.WxOpenId,
-                    DepartmentName="",
-                    RoleName=""
+                    IsSenior = a.IsSenior,
+                    SecurityLevel = a.SecurityLevel,
+                    Account = a.Account,
+                    DingTalkAvatar = a.DingTalkAvatar,
+                    IsAdmin = a.IsAdmin,
+                    Birthday = a.Birthday,
+                    CompanyName = c.CompanyName,
+                    CreatorTime = a.CreatorTime,
+                    CreatorUserId = a.CreatorUserId,
+                    DepartmentId = a.DepartmentId,
+                    Description = a.Description,
+                    DingTalkUserId = a.DingTalkUserId,
+                    DingTalkUserName = a.DingTalkUserName,
+                    DutyId = a.DutyId,
+                    DutyName = b.FullName,
+                    Email = a.Email,
+                    EnabledMark = a.EnabledMark,
+                    Gender = a.Gender,
+                    HeadIcon = a.HeadIcon,
+                    HeadImgUrl = a.HeadImgUrl,
+                    IsBoss = a.IsBoss,
+                    IsLeaderInDepts = a.IsLeaderInDepts,
+                    ManagerId = a.ManagerId,
+                    MobilePhone = a.MobilePhone,
+                    NickName = a.NickName,
+                    OrganizeId = a.OrganizeId,
+                    RealName = a.RealName,
+                    Remark = a.RealName,
+                    RoleId = a.RoleId,
+                    Signature = a.Signature,
+                    SortCode = a.SortCode,
+                    WeChat = a.WeChat,
+                    WxNickName = a.WxNickName,
+                    WxOpenId = a.WxOpenId,
+                    DepartmentName = "",
+                    RoleName = ""
                 }).MergeTable();
             return query;
         }
@@ -142,7 +142,7 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 query = query.Where(a => a.Account.Contains(keyword) || a.RealName.Contains(keyword) || a.MobilePhone.Contains(keyword));
             }
-            return await query.Where(a => a.EnabledMark ==true && a.DeleteMark == false).OrderBy(a => a.Account).ToListAsync();
+            return await query.Where(a => a.EnabledMark == true && a.DeleteMark == false).OrderBy(a => a.Account).ToListAsync();
         }
 
         public async Task<UserEntity> GetForm(string keyValue)
@@ -198,9 +198,9 @@ namespace WaterCloud.Service.SystemOrganize
             else
             {
                 userEntity.Create();
-                userLogOnEntity.Id= Utils.GuId();
+                userLogOnEntity.Id = Utils.GuId();
                 userLogOnEntity.UserId = userEntity.Id;
-                 userLogOnEntity.ErrorNum = 0;
+                userLogOnEntity.ErrorNum = 0;
                 userLogOnEntity.UserOnLine = false;
                 userLogOnEntity.LogOnCount = 0;
             }
@@ -230,38 +230,37 @@ namespace WaterCloud.Service.SystemOrganize
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<UserEntity> CheckLogin(string username, string password,string localurl)
+        public async Task<UserEntity> CheckLogin(string username, string password, string localurl)
         {
             //根据登录公司查找公司
             if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
             {
                 unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
-                var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.HostUrl)).FirstOrDefault();
-                if (setTemp!=null)
+                var setTemp = (await syssetApp.GetList()).Where(a => localurl.Contains(a.HostUrl)).FirstOrDefault();
+                if (setTemp != null)
                 {
-					if (setTemp.EndTime<DateTime.Now.Date)
-					{
+                    if (setTemp.EndTime < DateTime.Now.Date)
+                    {
                         throw new Exception("租户已到期，请联系供应商");
                     }
                     unitofwork.GetDbClient().ChangeDatabase(setTemp.DbNumber);
-                    repository = new RepositoryBase<UserEntity>(unitofwork);
                 }
             }
-			if (!(await CheckIP()))
-			{
+            if (!(await CheckIP()))
+            {
                 throw new Exception("IP受限");
-			}
-            UserEntity userEntity =await repository.FindEntity(a => a.Account == username);
+            }
+            UserEntity userEntity = await unitofwork.GetDbClient().Queryable<UserEntity>().SingleAsync(a => a.Account == username);
             if (userEntity != null)
             {
                 if (userEntity.EnabledMark == true)
                 {
                     //缓存用户账户信息
-                    var userLogOnEntity=await CacheHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + userEntity.Id);
-                    if (userLogOnEntity==null)
+                    var userLogOnEntity = await CacheHelper.GetAsync<OperatorUserInfo>(cacheKeyOperator + "info_" + userEntity.Id);
+                    if (userLogOnEntity == null)
                     {
                         userLogOnEntity = new OperatorUserInfo();
-                        UserLogOnEntity entity =await repository.Db.Queryable<UserLogOnEntity>().InSingleAsync(userEntity.Id);
+                        UserLogOnEntity entity = await unitofwork.GetDbClient().Queryable<UserLogOnEntity>().InSingleAsync(userEntity.Id);
                         userLogOnEntity.UserPassword = entity.UserPassword;
                         userLogOnEntity.UserSecretkey = entity.UserSecretkey;
                         userLogOnEntity.AllowEndTime = entity.AllowEndTime;
@@ -288,7 +287,7 @@ namespace WaterCloud.Service.SystemOrganize
                         if (userEntity.IsAdmin != true)
                         {
                             var list = userEntity.RoleId.Split(',');
-                            var rolelist =repository.Db.Queryable<RoleEntity>().Where(a=>list.Contains(a.Id)&&a.EnabledMark==true).ToList();
+                            var rolelist = unitofwork.GetDbClient().Queryable<RoleEntity>().Where(a => list.Contains(a.Id) && a.EnabledMark == true).ToList();
                             if (!rolelist.Any())
                             {
                                 throw new Exception("账户未设置权限,请联系管理员");
@@ -325,7 +324,7 @@ namespace WaterCloud.Service.SystemOrganize
                             ipentity.Type = false;
                             //默认封禁12小时
                             ipentity.EndTime = DateTime.Now.AddHours(12);
-                            await ipApp.SubmitForm(ipentity,null);
+                            await ipApp.SubmitForm(ipentity, null);
                             await OperatorProvider.Provider.ClearCurrentErrorNum();
                             throw new Exception("密码不正确，IP被锁定");
                         }

@@ -26,6 +26,7 @@ namespace WaterCloud.Service
         /// <param name="services"></param>
 		public static IServiceCollection AddSqlSugar(this IServiceCollection services)
 		{
+            DBInitialize.GetConnectionConfigs(true);
             //注入数据库连接
             // 注册 SqlSugar
             services.AddScoped<ISqlSugarClient>(u =>
@@ -34,55 +35,63 @@ namespace WaterCloud.Service
                 var db = new SqlSugarClient(configList);
                 configList.ForEach(config => {
                     string temp = config.ConfigId;
-                    db.GetConnection(temp).Ado.CommandTimeOut = GlobalContext.SystemConfig.CommandTimeout;
-                    db.GetConnection(temp).CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
-                    {
-                        DataInfoCacheService = new SqlSugarCache(), //配置我们创建的缓存类
-                        EntityService = (property, column) =>
-                        {
-                            var attributes = property.GetCustomAttributes(true);//get all attributes 
-
-                            if (attributes.Any(it => it is SugarColumn) && column.DataType == "longtext" && config.DbType == DbType.SqlServer)
-                            {
-                                column.DataType = "nvarchar(4000)";
-                            }
-                        }
-                    };
-                    db.GetConnection(temp).Aop.OnLogExecuted = (sql, pars) => //SQL执行完
-                    {
-                        if (sql.StartsWith("SELECT"))
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("[SELECT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                        }
-                        if (sql.StartsWith("INSERT"))
-                        {
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.WriteLine("[INSERT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                        }
-                        if (sql.StartsWith("UPDATE"))
-                        {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine("[UPDATE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-
-                        }
-                        if (sql.StartsWith("DELETE"))
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("[DELETE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
-                        }
-                        Console.WriteLine($"执行库{config.ConfigId}");
-                        Console.WriteLine("NeedTime-" + db.Ado.SqlExecutionTime.ToString());
-                        //App.PrintToMiniProfiler("SqlSugar", "Info", sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
-                        Console.WriteLine("Content:" + SqlProfiler.ParameterFormat(sql, pars));
-                        Console.WriteLine("---------------------------------");
-                        Console.WriteLine("");
-                    };
+                    db.GetConnection(temp).DefaultConfig();
                 });
                 return db;
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
+        }
+        /// <summary>
+        /// sqlsugar配置
+        /// </summary>
+        /// <param name="db"></param>
+        public static void DefaultConfig(this SqlSugarProvider db)
+        {
+            db.Ado.CommandTimeOut = GlobalContext.SystemConfig.CommandTimeout;
+            db.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
+            {
+                DataInfoCacheService = new SqlSugarCache(), //配置我们创建的缓存类
+                EntityService = (property, column) =>
+                {
+                    var attributes = property.GetCustomAttributes(true);//get all attributes 
+
+                    if (attributes.Any(it => it is SugarColumn) && column.DataType == "longtext" && db.CurrentConnectionConfig.DbType == DbType.SqlServer)
+                    {
+                        column.DataType = "nvarchar(4000)";
+                    }
+                }
+            };
+            db.Aop.OnLogExecuted = (sql, pars) => //SQL执行完
+            {
+                if (sql.StartsWith("SELECT"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("[SELECT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                }
+                if (sql.StartsWith("INSERT"))
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("[INSERT]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                }
+                if (sql.StartsWith("UPDATE"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("[UPDATE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+
+                }
+                if (sql.StartsWith("DELETE"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[DELETE]-" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
+                }
+                Console.WriteLine($"执行库{db.CurrentConnectionConfig.ConfigId}");
+                Console.WriteLine("NeedTime-" + db.Ado.SqlExecutionTime.ToString());
+                //App.PrintToMiniProfiler("SqlSugar", "Info", sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
+                Console.WriteLine("Content:" + SqlProfiler.ParameterFormat(sql, pars));
+                Console.WriteLine("---------------------------------");
+                Console.WriteLine("");
+            };
         }
         /// <summary>
         /// Quartz设置
