@@ -244,14 +244,13 @@ namespace WaterCloud.Service.SystemOrganize
                         throw new Exception("租户已到期，请联系供应商");
                     }
                     unitofwork.GetDbClient().ChangeDatabase(setTemp.F_DbNumber);
-                    repository = new RepositoryBase<UserEntity>(unitofwork);
                 }
             }
             if (!(await CheckIP()))
             {
                 throw new Exception("IP受限");
 			}
-            UserEntity userEntity =await repository.FindEntity(a => a.F_Account == username);
+            UserEntity userEntity =await unitofwork.GetDbClient().Queryable<UserEntity>().SingleAsync(a => a.F_Account == username);
             if (userEntity != null)
             {
                 if (userEntity.F_EnabledMark == true)
@@ -261,7 +260,7 @@ namespace WaterCloud.Service.SystemOrganize
                     if (userLogOnEntity==null)
                     {
                         userLogOnEntity = new OperatorUserInfo();
-                        UserLogOnEntity entity =await repository.Db.Queryable<UserLogOnEntity>().InSingleAsync(userEntity.F_Id);
+                        UserLogOnEntity entity =await unitofwork.GetDbClient().Queryable<UserLogOnEntity>().InSingleAsync(userEntity.F_Id);
                         userLogOnEntity.F_UserPassword = entity.F_UserPassword;
                         userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
                         userLogOnEntity.F_AllowEndTime = entity.F_AllowEndTime;
@@ -288,7 +287,7 @@ namespace WaterCloud.Service.SystemOrganize
                         if (userEntity.F_IsAdmin != true)
                         {
                             var list = userEntity.F_RoleId.Split(',');
-                            var rolelist =repository.Db.Queryable<RoleEntity>().Where(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
+                            var rolelist = unitofwork.GetDbClient().Queryable<RoleEntity>().Where(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
                             if (!rolelist.Any())
                             {
                                 throw new Exception("账户未设置权限,请联系管理员");
