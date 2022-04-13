@@ -25,8 +25,8 @@ namespace WaterCloud.Service.SystemOrganize
         /// 缓存操作类
         /// </summary>
         private string cacheKeyOperator = GlobalContext.SystemConfig.ProjectPrefix + "_operator_";// +登录者token
-        //获取类名
-        
+                                                                                                  //获取类名
+
         public UserService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
@@ -230,7 +230,7 @@ namespace WaterCloud.Service.SystemOrganize
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<UserEntity> CheckLogin(string username, string password,string localurl)
+        public async Task<UserEntity> CheckLogin(string username, string password, string localurl)
         {
             //根据登录公司查找公司
             if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
@@ -247,8 +247,8 @@ namespace WaterCloud.Service.SystemOrganize
                     repository = new RepositoryBase<UserEntity>(unitofwork);
                 }
             }
-			if (!(await CheckIP()))
-			{
+            if (!(await CheckIP()))
+            {
                 throw new Exception("IP受限");
 			}
             UserEntity userEntity =await repository.FindEntity(a => a.F_Account == username);
