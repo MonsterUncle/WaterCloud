@@ -15,6 +15,7 @@ layui.define(["jquery", "layer", 'table', 'soulTable', 'common', 'tabletree'], f
     var obj = {
         //table渲染封装里面有字段权限
         rendertable: function (options) {
+            var serchHeight = 60 + ($(".layuimini-main").height() || 0);
             var defaults = {
                 elem: '#currentTableId',//主键
                 toolbar: '#toolbarDemo',//工具栏
@@ -25,7 +26,7 @@ layui.define(["jquery", "layer", 'table', 'soulTable', 'common', 'tabletree'], f
                 limit: 10,//每页数据 默认
                 limits: [10, 20, 30, 40, 50],
                 id:'currentTableId',
-                height: 'full-60',
+                height: 'full-' + serchHeight,
                 loading: false,
                 autoSort: false,
                 page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -187,6 +188,7 @@ layui.define(["jquery", "layer", 'table', 'soulTable', 'common', 'tabletree'], f
         //tabletree渲染封装里面有字段权限
         rendertreetable: function (options) {
             //样式不协调，先不加
+            var serchHeight = 60 + ($(".layuimini-main").height() || 0);
             var defaults = {
                 elem: '#currentTableId',//主键
                 toolbar: '#toolbarDemo',//工具栏
@@ -204,7 +206,7 @@ layui.define(["jquery", "layer", 'table', 'soulTable', 'common', 'tabletree'], f
                     , first: false //不显示首页
                     , last: false //不显示尾页
                 },
-                height: 'full-60',
+                height: 'full-' + serchHeight,
                 method: 'get',//请求方法
                 cellMinWidth: 60,//最小宽度
                 authorizeFields: true, // 字段权限开关

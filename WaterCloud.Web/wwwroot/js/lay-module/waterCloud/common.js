@@ -15,6 +15,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         //tabletree渲染封装里面有字段权限
         rendertreetable: function (options) {
             //样式不协调，先不加
+            var serchHeight = 60 + ($(".layuimini-main").height() || 0);
             var defaults = {
                 elem: '#currentTableId',//主键
                 toolbar: '#toolbarDemo',//工具栏
@@ -30,7 +31,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     arrowType: 'arrow2',
                     getIcon: 'ew-tree-icon-style2',
                 },
-                height: 'full-60',
+                height: 'full-' + serchHeight,
                 method: 'get',//请求方法
                 cellMinWidth: 60,//最小宽度
                 authorizeFields: true, // 字段权限开关
