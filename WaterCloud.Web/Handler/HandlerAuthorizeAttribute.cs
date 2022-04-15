@@ -54,7 +54,7 @@ namespace WaterCloud.Web
 
                     return false;
                 }
-                var action = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext.Request.Path;
+                var action = GlobalContext.HttpContext.Request.Path;
                 return _service.ActionValidate(action).GetAwaiter().GetResult();
             }
             catch (System.Exception ex)

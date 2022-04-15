@@ -159,7 +159,7 @@ namespace WaterCloud.Code
             app.UseSession();
             //路径
             app.UseRouting();
-            GlobalContext.ServiceProvider = app.ApplicationServices;
+            GlobalContext.RootServices = app.ApplicationServices;
         }
     }
     /// <summary>

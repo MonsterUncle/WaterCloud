@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Hosting;
 using WaterCloud.Code.Model;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+
 namespace WaterCloud.Code
 {
 	public class GlobalContext
@@ -17,19 +20,78 @@ namespace WaterCloud.Code
         public static IServiceCollection Services { get; set; }
 
         /// <summary>
-        /// Rootservice
+        /// 根服务
         /// </summary>
-        public static IServiceProvider ServiceProvider { get; set; }
-        /// <summary>
-        /// ScopeService
-        /// </summary>
-        public static IServiceProvider ScopeServiceProvider => ServiceProvider.CreateScope().ServiceProvider;
+        public static IServiceProvider RootServices { get; set; }
 
         public static IConfiguration Configuration { get; set; }
 
         public static IWebHostEnvironment HostingEnvironment { get; set; }
+        public static HttpContext HttpContext => RootServices?.GetService<IHttpContextAccessor>()?.HttpContext;
+
 
         public static SystemConfig SystemConfig { get; set; }
+        /// <summary>
+        /// 获取请求的服务(单例使用)
+        /// </summary>
+        /// <typeparam name="TService"></typeparam>
+        /// <param name="serviceProvider"></param>
+        /// <returns></returns>
+        public static TService GetService<TService>(IServiceProvider serviceProvider = null) where TService : class
+        {
+            return GetService(typeof(TService), serviceProvider) as TService;
+        }
+        /// <summary>
+        /// 获取服务
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="serviceProvider"></param>
+        /// <returns></returns>
+        public static object GetService(Type type, IServiceProvider serviceProvider = null)
+        {
+            return (serviceProvider ?? GetServiceProvider(type)).GetService(type);
+        }
+        /// <summary>
+        /// 获取请求生存周期的服务
+        /// </summary>
+        /// <typeparam name="TService"></typeparam>
+        /// <param name="serviceProvider"></param>
+        /// <returns></returns>
+        public static TService GetRequiredService<TService>(IServiceProvider serviceProvider = null) where TService : class
+        {
+            return GetRequiredService(typeof(TService), serviceProvider) as TService;
+        }
+        /// <summary>
+        /// 获取请求生存周期的服务
+        /// </summary>
+        /// <typeparam name="type"></typeparam>
+        /// <param name="serviceProvider"></param>
+        /// <returns></returns>
+        public static object GetRequiredService(Type type, IServiceProvider serviceProvider = null)
+        {
+            return (serviceProvider ?? GetServiceProvider(type)).GetRequiredService(type);
+        }
+        /// <summary>
+        /// 获取服务注册器
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        public static IServiceProvider GetServiceProvider(Type serviceType)
+		{
+            if (HostingEnvironment == null)
+            {
+                return RootServices;
+            }
+            if (RootServices != null && Services.Where((ServiceDescriptor u) => u.ServiceType == (serviceType.IsGenericType ? serviceType.GetGenericTypeDefinition() : serviceType)).Any((ServiceDescriptor u) => u.Lifetime == ServiceLifetime.Singleton))
+            {
+                return RootServices;
+            }
+            if (HttpContext?.RequestServices != null)
+            {
+                return HttpContext.RequestServices;
+            }
+            return RootServices;
+        }
 
         public static string GetVersion()
         {

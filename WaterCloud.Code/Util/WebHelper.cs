@@ -142,8 +142,7 @@ namespace WaterCloud.Code
         {
             if (key.IsEmpty())
                 return;
-            IHttpContextAccessor hca = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>();
-            hca?.HttpContext?.Session.SetString(key, value);
+            GlobalContext.HttpContext?.Session.SetString(key, value);
         }
 
         /// <summary>
@@ -156,8 +155,7 @@ namespace WaterCloud.Code
             {
                 return string.Empty;
             }
-            IHttpContextAccessor hca = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>();
-            return hca?.HttpContext?.Session.GetString(key) ?? "";
+            return GlobalContext.HttpContext?.Session.GetString(key) ?? "";
         }
         /// <summary>
         /// 删除指定Session
@@ -169,8 +167,7 @@ namespace WaterCloud.Code
             {
                 return;
             }
-            IHttpContextAccessor hca = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>();
-            hca?.HttpContext?.Session.Remove(key);
+            GlobalContext.HttpContext?.Session.Remove(key);
         }
 
         #endregion
@@ -183,13 +180,12 @@ namespace WaterCloud.Code
         /// <param name="strValue">值</param>
         public static void WriteCookie(string strName, string strValue, CookieOptions option = null)
         {
-            IHttpContextAccessor hca = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>();
             if (option == null)
             {
                 option = new CookieOptions();
                 option.Expires = DateTime.Now.AddDays(30);
             }
-            hca?.HttpContext?.Response.Cookies.Append(strName, strValue, option);
+            GlobalContext.HttpContext?.Response.Cookies.Append(strName, strValue, option);
         }
         /// <summary>
         /// 写cookie值
@@ -199,10 +195,9 @@ namespace WaterCloud.Code
         /// <param name="strValue">过期时间(分钟)</param>
         public static void WriteCookie(string strName, string strValue, int expires)
         {
-            IHttpContextAccessor hca = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>();
             CookieOptions option = new CookieOptions();
             option.Expires = DateTime.Now.AddMinutes(expires);
-            hca?.HttpContext?.Response.Cookies.Append(strName, strValue, option);
+            GlobalContext.HttpContext?.Response.Cookies.Append(strName, strValue, option);
         }
         /// <summary>
         /// 读cookie值
@@ -211,8 +206,7 @@ namespace WaterCloud.Code
         /// <returns>cookie值</returns>
         public static string GetCookie(string strName)
         {
-            IHttpContextAccessor hca = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>();
-            return hca?.HttpContext?.Request.Cookies[strName]??"";
+            return GlobalContext.HttpContext?.Request.Cookies[strName]??"";
         }
         /// <summary>
         /// 删除Cookie对象
@@ -220,8 +214,7 @@ namespace WaterCloud.Code
         /// <param name="CookiesName">Cookie对象名称</param>
         public static void RemoveCookie(string CookiesName)
         {
-            IHttpContextAccessor hca = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>();
-            hca?.HttpContext?.Response.Cookies.Delete(CookiesName);
+            GlobalContext.HttpContext?.Response.Cookies.Delete(CookiesName);
         }
         #endregion
 
@@ -257,7 +250,6 @@ namespace WaterCloud.Code
             Htmlstring = Regex.Replace(Htmlstring, @"&rdquo;", "", RegexOptions.IgnoreCase);
             Htmlstring.Replace(">", "");
             Htmlstring.Replace("\r\n", "");
-            IHttpContextAccessor hca = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>();
             
             Htmlstring = HtmlEncoder.Default.Encode(Htmlstring).Trim();
             return Htmlstring;
@@ -297,7 +289,7 @@ namespace WaterCloud.Code
         #region 当前连接
         public static HttpContext HttpContext
         {
-            get { return GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>().HttpContext; }
+            get { return GlobalContext.HttpContext; }
         }
         #endregion
 

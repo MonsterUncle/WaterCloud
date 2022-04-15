@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Quartz.Impl.Triggers;
 using Quartz.Spi;
@@ -39,8 +40,9 @@ namespace WaterCloud.Service.AutoJob
                 JobDataMap jobData = null;
                 OpenJobEntity dbJobEntity = null;
                 DateTime now = DateTime.Now;
-                using (UnitOfWork unitwork = GlobalContext.ServiceProvider.GetService(typeof(IUnitOfWork)) as UnitOfWork)
-                {
+				using (var scope = GlobalContext.RootServices.CreateScope())
+				{
+                    var unitwork = scope.ServiceProvider.GetRequiredService(typeof(IUnitOfWork)) as UnitOfWork;
                     try
                     {
                         jobData = context.JobDetail.JobDataMap;
