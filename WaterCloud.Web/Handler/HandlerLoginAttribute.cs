@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.Extensions.DependencyInjection;
 /// <summary>
 /// 登录验证
 /// </summary>
@@ -14,10 +15,14 @@ namespace WaterCloud.Web
 {
     public class HandlerLoginAttribute : ActionFilterAttribute
     {
-        private readonly RoleAuthorizeService _service;
-        public HandlerLoginAttribute(RoleAuthorizeService service)
+        private readonly bool _needLogin;
+        /// <summary>
+        /// 登录特性
+        /// </summary>
+        /// <param name="needLogin">是否验证</param>
+        public HandlerLoginAttribute(bool needLogin = true)
         {
-            _service = service;
+            _needLogin = needLogin;
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -29,6 +34,10 @@ namespace WaterCloud.Web
             var anonymous = description.ControllerTypeInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
             var methodanonymous = description.MethodInfo.GetCustomAttribute(typeof(AllowAnonymousAttribute));
             if (anonymous != null || methodanonymous != null)
+            {
+                return;
+            }
+            if (!_needLogin)
             {
                 return;
             }
@@ -44,7 +53,7 @@ namespace WaterCloud.Web
                 {
                     var url = filterContext.HttpContext.Request.Path;
                     //检查菜单url查看是否存在
-                    if (_service.CheckReturnUrl("", url, true).GetAwaiter().GetResult())
+                    if (GlobalContext.GetRequiredService<RoleAuthorizeService>().CheckReturnUrl("", url, true).GetAwaiter().GetResult())
                     {
                         WebHelper.WriteCookie("wc_realreturnurl", filterContext.HttpContext.Request.PathBase + url, options);
                     }
@@ -112,7 +121,7 @@ namespace WaterCloud.Web
         {
             try
             {
-                return _service.RoleValidate().GetAwaiter().GetResult();
+                return GlobalContext.GetRequiredService<RoleAuthorizeService>().RoleValidate().GetAwaiter().GetResult();
             }
             catch (System.Exception ex)
             {

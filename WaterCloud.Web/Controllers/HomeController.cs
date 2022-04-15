@@ -14,7 +14,7 @@ namespace WaterCloud.Web.Controllers
     {
         public SystemSetService _setService { get; set; }
         [HttpGet]
-        [ServiceFilter(typeof(HandlerLoginAttribute))]
+        [HandlerLogin]
         public ActionResult Index()
         {
             //主页信息获取
@@ -28,13 +28,13 @@ namespace WaterCloud.Web.Controllers
             return View();
         }
         [HttpGet]
-        [ServiceFilter(typeof(HandlerLoginAttribute))]
+        [HandlerLogin]
         public ActionResult Default()
         {
             return View();
         }
         [HttpGet]
-        [ServiceFilter(typeof(HandlerLoginAttribute))]
+        [HandlerLogin]
         public ActionResult UserSetting()
         {
             return View();
@@ -45,7 +45,7 @@ namespace WaterCloud.Web.Controllers
             return View();
         }
         [HttpGet]
-        [ServiceFilter(typeof(HandlerLoginAttribute))]
+        [HandlerLogin]
         public ActionResult Message()
         {
             return View();
