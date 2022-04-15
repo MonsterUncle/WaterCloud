@@ -5,6 +5,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Filters;
 using WaterCloud.Code;
 using WaterCloud.Service.SystemOrganize;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WaterCloud.WebApi
 {
@@ -13,12 +14,17 @@ namespace WaterCloud.WebApi
     /// </summary>
     public class AuthorizeFilterAttribute : ActionFilterAttribute
     {
-        private readonly RoleAuthorizeService _service;
-        private string _authorize { get; set; }
-        public AuthorizeFilterAttribute(RoleAuthorizeService service)
+        private readonly string _authorize;
+        private readonly bool _needAuth;
+        /// <summary>
+        /// 权限特性
+        /// </summary>
+        /// <param name="authorize">权限参数</param>
+        /// <param name="needAuth">是否鉴权</param>
+        public AuthorizeFilterAttribute(string authorize = "", bool needAuth = true)
         {
-            _service = service;
-            _authorize = string.Empty;
+            _authorize = authorize.ToLower();
+            _needAuth = needAuth;
         }
         /// <summary>
         /// 验证
@@ -31,25 +37,24 @@ namespace WaterCloud.WebApi
             Stopwatch sw = new Stopwatch();
             sw.Start();
             OperatorModel user = OperatorProvider.Provider.GetCurrent();
-            var description =
-            (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)context.ActionDescriptor;
-            var methodanonymous = description.MethodInfo.GetCustomAttribute<Authorize>(false)!;
-            if (user == null || methodanonymous == null)
+            if (_needAuth)
             {
-                AlwaysResult obj = new AlwaysResult();
-                obj.message = "抱歉，没有操作权限";
-                obj.state = ResultType.error.ToString();
-                context.Result = new JsonResult(obj);
-                return;
-            }
-            _authorize = methodanonymous._authorize;
-            if (!AuthorizeCheck())
-            {
-                AlwaysResult obj = new AlwaysResult();
-                obj.message = "抱歉，没有操作权限";
-                obj.state = ResultType.error.ToString();
-                context.Result = new JsonResult(obj);
-                return;
+                if (user == null || string.IsNullOrEmpty(_authorize))
+                {
+                    AlwaysResult obj = new AlwaysResult();
+                    obj.message = "抱歉，没有操作权限";
+                    obj.state = ResultType.error.ToString();
+                    context.Result = new JsonResult(obj);
+                    return;
+                }
+                if (!AuthorizeCheck())
+                {
+                    AlwaysResult obj = new AlwaysResult();
+                    obj.message = "抱歉，没有操作权限";
+                    obj.state = ResultType.error.ToString();
+                    context.Result = new JsonResult(obj);
+                    return;
+                }
             }
             var resultContext = await next();
 
@@ -60,7 +65,7 @@ namespace WaterCloud.WebApi
         {
             try
             {
-                return _service.ActionValidate(_authorize, true).GetAwaiter().GetResult();
+                return GlobalContext.GetRequiredService<RoleAuthorizeService>().ActionValidate(_authorize, true).GetAwaiter().GetResult();
             }
             catch (System.Exception)
             {

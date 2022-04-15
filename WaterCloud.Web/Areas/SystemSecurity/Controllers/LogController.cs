@@ -15,7 +15,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     {
 
         [HttpGet]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public ActionResult RemoveLog()
         {
             return View();

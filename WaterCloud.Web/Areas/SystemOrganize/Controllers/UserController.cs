@@ -181,7 +181,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
             }
         }
         [HttpPost]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         [HandlerAjaxOnly]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
@@ -239,7 +239,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public async Task<ActionResult> DisabledAccount(string keyValue)
         {
             try
@@ -261,7 +261,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public async Task<ActionResult> EnabledAccount(string keyValue)
         {
             try

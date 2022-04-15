@@ -50,7 +50,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         }
         [HttpPost]
         [HandlerAjaxOnly]
-        [ServiceFilter(typeof(HandlerAuthorizeAttribute))]
+        [HandlerAuthorize]
         public async Task<ActionResult> DeleteForm(string keyValue)
         {
             try

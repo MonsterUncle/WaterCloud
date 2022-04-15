@@ -12,23 +12,26 @@ namespace WaterCloud.Web
 {
     public class HandlerAuthorizeAttribute : ActionFilterAttribute
     {
-        private readonly RoleAuthorizeService _service;
+        private readonly bool _needAuth;
+
         private string _authorize { get; set; }
-        public HandlerAuthorizeAttribute(RoleAuthorizeService service)
+        /// <summary>
+        /// 权限特性
+        /// </summary>
+        /// <param name="authorize">权限参数</param>
+        /// <param name="needAuth">是否鉴权</param>
+        public HandlerAuthorizeAttribute(string authorize = "", bool needAuth = true)
         {
-            _service = service;
-            _authorize = string.Empty;
+            _authorize = authorize.ToLower();
+            _needAuth = needAuth;
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            //反射获取Authorize中的参数 控制器方法前加[Authorize("SystemManage:Area:Delete")]
-            var description = (Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)filterContext.ActionDescriptor;
-            var methodanonymous = description.MethodInfo.GetCustomAttribute<Authorize>(false)!;
-            if (methodanonymous != null)
-            {
-                _authorize = methodanonymous._authorize;
-            }
             if (OperatorProvider.Provider.GetCurrent() != null && OperatorProvider.Provider.GetCurrent().IsSuperAdmin)
+            {
+                return;
+            }
+            if (!_needAuth)
             {
                 return;
             }
@@ -55,7 +58,7 @@ namespace WaterCloud.Web
                     return false;
                 }
                 var action = GlobalContext.HttpContext.Request.Path;
-                return _service.ActionValidate(action).GetAwaiter().GetResult();
+                return GlobalContext.GetRequiredService<RoleAuthorizeService>().ActionValidate(action).GetAwaiter().GetResult();
             }
             catch (System.Exception ex)
             {
@@ -74,7 +77,7 @@ namespace WaterCloud.Web
 
                     return false;
                 }
-                return _service.ActionValidate(_authorize, true).GetAwaiter().GetResult();
+                return GlobalContext.GetRequiredService<RoleAuthorizeService>().ActionValidate(_authorize, true).GetAwaiter().GetResult();
             }
             catch (System.Exception ex)
             {
