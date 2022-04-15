@@ -35,7 +35,7 @@ namespace WaterCloud.DataBase
         {
             var list = GlobalContext.SystemConfig.SqlConfig.MapToList<DBConfig>();
             DBConfig config = list.FirstOrDefault(a => a.DBProvider == providerName && a.DBConnectionString == ConnectStr);
-            var context = (SqlSugarClient)GlobalContext.ScopeServiceProvider.GetRequiredService<ISqlSugarClient>();
+            var context = (SqlSugarClient)GlobalContext.GetRequiredService<ISqlSugarClient>();
             _context = context;
             if (config == null)
 			{

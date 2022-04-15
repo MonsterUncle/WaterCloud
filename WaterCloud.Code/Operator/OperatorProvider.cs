@@ -76,24 +76,20 @@ namespace WaterCloud.Code
         {
 			try
 			{
-				if (GlobalContext.ServiceProvider==null)
+                if (GlobalContext.HttpContext == null)
 				{
                     return null;
 				}
-				if (GlobalContext.ServiceProvider.GetService<IHttpContextAccessor>()==null)
-				{
-                    return null;
-                }
                 //查请求头
-                string token = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Headers[GlobalContext.SystemConfig.TokenName].ParseToString();
+                string token =GlobalContext.HttpContext.Request.Headers[GlobalContext.SystemConfig.TokenName].ParseToString();
                 if (!String.IsNullOrEmpty(token)) return token;
 
                 //查参数
-                token = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Query[GlobalContext.SystemConfig.TokenName];
+                token =GlobalContext.HttpContext.Request.Query[GlobalContext.SystemConfig.TokenName];
                 if (!String.IsNullOrEmpty(token)) return token;
 
                 //查cookies
-                string cookie = GlobalContext.ServiceProvider?.GetService<IHttpContextAccessor>()?.HttpContext.Request.Cookies[GlobalContext.SystemConfig.TokenName];
+                string cookie =GlobalContext.HttpContext.Request.Cookies[GlobalContext.SystemConfig.TokenName];
                 return cookie == null ? string.Empty : cookie;
 
             }

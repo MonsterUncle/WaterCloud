@@ -27,7 +27,7 @@ namespace WaterCloud.Code
         /// <returns></returns>
         public static object NextID(object idGeneratorOptions)
         {
-            return ((IDistributedIDGenerator)GlobalContext.ServiceProvider.GetService(typeof(IDistributedIDGenerator))).Create(idGeneratorOptions);
+            return ((IDistributedIDGenerator)GlobalContext.RootServices.GetService(typeof(IDistributedIDGenerator))).Create(idGeneratorOptions);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace WaterCloud.Code
         /// <returns></returns>
         public static Guid NextID(SequentialGuidType guidType = SequentialGuidType.SequentialAsString)
         {
-            var sequentialGuid = GlobalContext.ServiceProvider.GetService(typeof(IDistributedIDGenerator)) as IDistributedIDGenerator;
+            var sequentialGuid = GlobalContext.RootServices.GetService(typeof(IDistributedIDGenerator)) as IDistributedIDGenerator;
             return (Guid)sequentialGuid.Create();
         }
     }
