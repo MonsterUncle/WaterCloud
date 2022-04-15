@@ -15,7 +15,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         //tabletree渲染封装里面有字段权限
         rendertreetable: function (options) {
             //样式不协调，先不加
-            var serchHeight = 60 + ($(".layuimini-main").height() || 0);
+            var serchHeight = 60 + ($(".table-search-fieldset").height() || 0);
             var defaults = {
                 elem: '#currentTableId',//主键
                 toolbar: '#toolbarDemo',//工具栏
