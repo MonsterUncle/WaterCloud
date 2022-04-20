@@ -65,13 +65,13 @@ namespace WaterCloud.Service.BackgroundService
             _rabbitMqHelper.Subscribe<MessageEntity>(
                 async (input, y) =>
                 {
-                    if (!string.IsNullOrEmpty(input.companyId) && input.ToUserId.Length == 0)
+                    if (!string.IsNullOrEmpty(input.companyId) && input.F_ToUserId.Length == 0)
                     {
                         await _messageHub.Clients.Group(input.companyId).SendAsync("ReceiveMessage", input.ToJson());
                     }
                     else
                     {
-                        var users = input.ToUserId.Split(',');
+                        var users = input.F_ToUserId.Split(',');
                         foreach (var item in users)
                         {
                             //存在就私信
