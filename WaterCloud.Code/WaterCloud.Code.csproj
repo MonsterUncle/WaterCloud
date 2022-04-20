@@ -24,6 +24,7 @@
     <Compile Include="Extend\Ext.Enum.cs" />
     <Compile Include="Extend\Ext.Exception.cs" />
     <Compile Include="Extend\Ext.Format.cs" />
+    <Compile Include="Extend\Ext.String.cs" />
     <Compile Include="Extend\Ext.Validate.cs" />
     <Compile Include="Extend\ExtLinq.cs" />
     <Compile Include="Extend\ExtLinq.SortBy.cs" />

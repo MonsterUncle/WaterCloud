@@ -81,14 +81,6 @@ namespace WaterCloud.Web.Areas.InfoManage.Controllers
             }
         }
         [HttpPost]
-        [AllowAnonymous]
-        [IgnoreAntiforgeryToken]
-        public async Task<ActionResult> SendWebSocketMsg([FromBody] MessageEntity messageEntity)
-        {
-            await _service.SendWebSocketMsg(messageEntity);
-            return Success("发送成功！");
-        }
-        [HttpPost]
         [HandlerAjaxOnly]
         [IgnoreAntiforgeryToken]
         public async Task<ActionResult> ReadMsgForm(string keyValue)

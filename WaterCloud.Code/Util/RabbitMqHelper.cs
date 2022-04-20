@@ -1831,7 +1831,7 @@ namespace WaterCloud.Code
         public string Exchange { get; set; }
 
         /// <summary>
-        /// 交换机类型
+        /// 交换机类型(广播fanout，订阅direct)
         /// </summary>
         public string ExchangeType { get; set; }
 

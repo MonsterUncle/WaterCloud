@@ -22,11 +22,8 @@ namespace WaterCloud.Service.InfoManage
     /// </summary>
     public class MessageService : DataFilterService<MessageEntity>, IDenpendency
     {
-        private string cacheHubKey = GlobalContext.SystemConfig.ProjectPrefix + "_hubuserinfo_";
-
-        public IHubContext<MessageHub> _messageHub { get; set; }
         public ItemsDataService itemsApp { get; set; }
-        public IHttpClientFactory _httpClientFactory { get; set; }
+        public RabbitMqHelper rabbitMqHelper { get; set; }
         public MessageService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
@@ -121,37 +118,7 @@ namespace WaterCloud.Service.InfoManage
             }
             //通过http发送消息
             messageEntity.companyId = currentuser.CompanyId;
-            var mouduleName = ReflectionHelper.GetModuleName();
-            var module = repository.Db.Queryable<ModuleEntity>().First(a => a.EnCode == mouduleName);
-            var url = module.UrlAddress.Substring(0, module.UrlAddress.Length - 5) + "SendWebSocketMsg";
-            HttpContent httpContent = new StringContent(messageEntity.ToJson(), Encoding.UTF8);
-            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var result = _httpClientFactory.CreateClient().PostAsync(GlobalContext.SystemConfig.MainProgram + url, httpContent).GetAwaiter().GetResult();
-
-        }
-        public async Task SendWebSocketMsg(MessageEntity messageEntity)
-        {
-            if (!string.IsNullOrEmpty(messageEntity.companyId) && messageEntity.ToUserId.Length == 0)
-            {
-                await _messageHub.Clients.Group(messageEntity.companyId).SendAsync("ReceiveMessage", messageEntity.ToJson());
-            }
-            else
-            {
-                var users = messageEntity.ToUserId.Split(',');
-                foreach (var item in users)
-                {
-                    //存在就私信
-                    var connectionIDs = await CacheHelper.GetAsync<List<string>>(cacheHubKey + item);
-                    if (connectionIDs == null)
-                    {
-                        continue;
-                    }
-					foreach (var connectionID in connectionIDs)
-					{
-                        await _messageHub.Clients.Client(connectionID).SendAsync("ReceiveMessage", messageEntity.ToJson());
-                    }
-                }
-            }
+            rabbitMqHelper.Publish(messageEntity);
         }
         public async Task ReadAllMsgForm(int type)
         {

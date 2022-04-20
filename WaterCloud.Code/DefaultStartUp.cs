@@ -289,5 +289,32 @@ namespace WaterCloud.Code
             }
             return @this;
         }
+
+        #region AddWorkerService
+        /// <summary>
+        /// 自动注入 继承 BackgroundService 的后台服务
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddWorkerService(
+            this IServiceCollection @this)
+        {
+            var ret = new List<Type>();
+            var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "*.dll")
+                .Select(x => x.Substring(@"\").Substring(@"/").Replace(".dll", ""))
+                .Select(x => Assembly.Load(x)).ToArray();
+            foreach (var item in assemblies)
+            {
+                ret.AddRange(item.GetTypes() //获取当前类库下所有类型
+                 .Where(t => typeof(BackgroundService).IsAssignableFrom(t)) //获取间接或直接继承t的所有类型
+                 .Where(t => !t.IsAbstract && t.IsClass));//获取非抽象类 排除接口继承
+            }
+            foreach (var item in ret)
+            {
+                @this.AddTransient(typeof(IHostedService), item);
+            }
+            return @this;
+        }
+        #endregion
     }
 }
