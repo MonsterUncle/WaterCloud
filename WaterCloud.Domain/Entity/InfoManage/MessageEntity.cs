@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Serenity.Data.Mapping;
 using SqlSugar;
+using WaterCloud.Code;
 
 namespace WaterCloud.Domain.InfoManage
 {
@@ -11,6 +11,18 @@ namespace WaterCloud.Domain.InfoManage
     /// 描 述：通知管理实体类
     /// </summary>
     [SugarTable("oms_message")]
+    [RabbitMq(
+    Queue = "MessageEntityAdd",
+    Exchange = "MessageEntityAddexchange",
+    ExchangeType = "fanout",
+    RoutingKey = "MessageEntityAdd",
+    MaximumPriority = 10,
+    RetryCount = 2,
+    LazyMode = "lazy",
+    DeadLetter = true,
+    DeadLetterExchange = "MessageEntityAdd.dle",
+    DeadLetterRoutingKey = "MessageEntityAdd.dle.key"
+    )]
     public class MessageEntity : IEntity<MessageEntity>,ICreationAudited
     {
         /// <summary>
