@@ -32,7 +32,7 @@ namespace WaterCloud.Code
 
         public static SystemConfig SystemConfig { get; set; }
         /// <summary>
-        /// 获取请求的服务(单例使用)
+        /// 获取请求的服务
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <param name="serviceProvider"></param>
@@ -52,7 +52,7 @@ namespace WaterCloud.Code
             return (serviceProvider ?? GetServiceProvider(type)).GetService(type);
         }
         /// <summary>
-        /// 获取请求生存周期的服务
+        /// 获取请求生存周期的服务(未注册返回null)
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <param name="serviceProvider"></param>
@@ -62,7 +62,7 @@ namespace WaterCloud.Code
             return GetRequiredService(typeof(TService), serviceProvider) as TService;
         }
         /// <summary>
-        /// 获取请求生存周期的服务
+        /// 获取请求生存周期的服务(未注册异常)
         /// </summary>
         /// <typeparam name="type"></typeparam>
         /// <param name="serviceProvider"></param>
