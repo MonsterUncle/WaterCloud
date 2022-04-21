@@ -73,6 +73,7 @@
 - 安全支持：过滤器、Sql注入、请求伪造
 - 服务端验证：实体模型验证
 - 缓存框架：Redis/Memory（单点登录控制）
+- 消息队列: RabbitMq
 - 日志管理：Log、登录日志、操作日志
 - 工具类：NPOI、Newtonsoft.Json、验证码、丰富公共类
 - 其他：AutoFac、Swagger
@@ -83,7 +84,8 @@
 1. VS2022及以上版本；
 2. Asp.net 6.0；
 3. Mysql或者SQLSERVER2005及以上版本，database文件夹下有sql文件可执行；
-4. 请使用VS2019及以上版本打开解决方案。
+4. 请使用VS2022及以上版本打开解决方案。
+5. Redis和RabbitMq在项目文件夹里有
 
 #### 友情链接
 
