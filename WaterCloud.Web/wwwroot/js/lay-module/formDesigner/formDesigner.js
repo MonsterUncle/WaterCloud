@@ -122,7 +122,6 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                 isInput:"显示输入框",
                 dateRange:"日期范围",
                 dateRangeDefaultValue:"默认范围",
-                menu:"头部菜单",
                 numberInput:"排序文本框",
                 iconPicker:"图标选择器",
                 iconPickerSearch:"是否搜索",
@@ -170,15 +169,6 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                 , {text: '小型', value: 'layui-btn-sm'}
                 , {text: '迷你', value: 'layui-btn-xs'}]
             , dateformats = ["yyyy年MM月", "yyyy-MM-dd", "dd/MM/yyyy", "yyyyMMdd", "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH时mm分ss秒"]
-            , iceEditMenus = [
-                {value:'backColor',text:'字体背景颜色'},{value:'fontSize',text:'字体大小'},{value:'foreColor',text:'字体颜色'},{value:'bold',text:'粗体'},
-                {value:'italic',text:'斜体'},{value:'underline',text:'下划线'},{value:'strikeThrough',text:'删除线'},{value:'justifyLeft',text:'左对齐'},
-                {value:'justifyCenter',text:'居中对齐'},{value:'justifyRight',text:'右对齐'},{value:'indent',text:'增加缩进'},{value:'outdent',text:'减少缩进'},
-                {value:'insertOrderedList',text:'有序列表'},{value:'insertUnorderedList',text:'无序列表'},{value:'superscript',text:'上标'},{value:'subscript',text:'下标'},
-                {value:'createLink',text:'创建连接'},{value:'unlink',text:'取消连接'},{value:'hr',text:'水平线'},{value:'face',text:'表情'},{value:'table',text:'表格'},
-                {value:'files',text:'附件'},{value:'music',text:'音乐'},{value:'video',text:'视频'},{value:'insertImage',text:'图片'},
-                {value:'removeFormat',text:'格式化样式'},{value:'code',text:'源码'},{value:'line',text:'菜单分割线'}
-            ]
             , renderCommonProperty = function (json) {
                 var _html = '';
                 for (var key in json) {
@@ -294,15 +284,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                             .format(key + "-value", '', lang[key]);
                         _html += '  </div>';
                         _html += '</div>';
-                    } else if (key === 'menu') {
-                        _html += '<div class="layui-form-item" >';
-                        _html += '  <label class="layui-form-label">{0}</label>'.format(lang[key]);
-                        _html += '  <div class="layui-input-block">';
-                        _html += '    <input type="text" id="{0}" name="{0}" value="{1}" readonly="readonly" style="background:#eeeeee!important;width: 100%;" placeholder="请选择{2}" autocomplete="off" class="layui-input">'
-                            .format(key, '', lang[key]);
-                        _html += '  </div>';
-                        _html += '</div>';
-                    }else if (key === 'switchValue') {
+                    } else if (key === 'switchValue') {
                         _html += '<div class="layui-form-item" >';
                         _html += '  <label class="layui-form-label">{0}</label>'.format(lang[key]);
                         _html += '  <div class="layui-input-block">';
@@ -2338,7 +2320,6 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     e.urlPrefix = json.urlPrefix;
                     e.uploadData = json.uploadData;
                     e.disabled=json.disabled;
-                    e.menu = json.menu;
                     e.create();
                 },
                 /* 获取对象 */
@@ -2683,34 +2664,6 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     }
                 });
             }
-            $('#menu').click(function () {
-                layer.open({
-                    type: 2,
-                    title: '头部菜单',
-                    btn: ['保存','关闭'], //可以无限个按钮
-                    yes: function(index, layero){
-                        //do something
-                        var iframe = window['layui-layer-iframe' + index];
-                        var checkData = iframe.getCheckData();
-                        _json.menu = checkData;
-                        that.components[_json.tag].update(_json);
-                        layer.close(index); //如果设定了yes回调，需进行手工关闭
-                    },
-                    btn2: function (index, layero) {
-                        layer.close(index);
-                    },
-                    closeBtn: 1, //不显示关闭按钮
-                    shade: [0],
-                    area: ['80%', '80%'],
-                    offset: 'auto', //右下角弹出
-                    anim: 2,
-                    content: ['./editorMenu.html', 'yes'], //iframe的url，no代表不显示滚动条
-                    success:function (layero,index) {
-                        var iframe = window['layui-layer-iframe' + index];
-                        iframe.child(iceEditMenus)
-                    }
-                });
-            });
             form.on('checkbox', function (data) {
                 //data.elem.closest('.layui-form-item')
                 if (_json.tag === 'checkbox') {
@@ -3888,10 +3841,9 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     e.width=item.width;   //宽度
                     e.height=item.height;  //高度
                     e.uploadUrl = item.uploadUrl; //上传文件路径
-                    e.urlPrefix = json.urlPrefix;
-                    e.uploadData = json.uploadData;
+                    e.urlPrefix = item.urlPrefix;
+                    e.uploadData = item.uploadData;
                     e.disabled=item.disabled;
-                    e.menu = item.menu;
                     e.create();
                     iceEditorObjects[item.id] = e;
                 } else if (item.tag === 'carousel') {
@@ -4061,7 +4013,6 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     ,'e.height=' + item.height + ';  //高度'
                     ,'e.uploadUrl=' + item.uploadUrl + '; //上传文件路径'
                     ,'e.disabled=' + item.disabled + ';'
-                    ,'e.menu = ' + item.menu + ';'
                     ,'e.create();'].join('');
                 } else if (item.tag === 'carousel') {
                     options.htmlCode.script += ['carousel.render({'
