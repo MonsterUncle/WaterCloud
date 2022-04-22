@@ -1612,7 +1612,6 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                     e.uploadUrl = item.uploadUrl; //上传文件路径
                     e.uploadData = !!item.uploadData ? JSON.parse(item.uploadData) : null;//上传文件参数
                     e.disabled=item.disabled;
-                    e.menu = item.menu;
                     e.create();
                     iceEditorObjects[item.id] = e;
                 } else if (item.tag === 'carousel') {

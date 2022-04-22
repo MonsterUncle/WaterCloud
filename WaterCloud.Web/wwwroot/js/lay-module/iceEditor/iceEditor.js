@@ -4,9 +4,9 @@
  + iceEditor(富文本编辑器)
  +------------------------------------------------------------------------------------+
  + iceEditor v1.1.9
- * MIT License By www.iceui.cn
+ * MIT License By iceui.cn
  + 作者：ice
- + 官方：www.iceui.cn
+ + 官方：iceui.cn
  + 时间：2021-06-23
  +------------------------------------------------------------------------------------+
  + 版权声明：该版权完全归iceUI官方所有，可转载使用和学习，但请务必保留版权信息
@@ -17,7 +17,7 @@
  +------------------------------------------------------------------------------------+
  */
 var ice = ice || {};
-ice.editor = function (id,callback) {
+ice.editor = function (id, callback) {
 	class iceEditor {
 		constructor(id) {
 			//------------------------参数配置 开始------------------------
@@ -51,8 +51,12 @@ ice.editor = function (id,callback) {
 			this.maxWindow = 1;
 			//编辑器禁用
 			this.disabled = 0;
-			//编辑器样式
+			//编辑器局部样式
 			this.css = '';
+			//编辑器全局样式
+			this.globalCss = false;
+			//编辑器全局图标
+			this.globalIcon = false;
 			//图片和附件提交地址
 			this.uploadUrl = 0;
 			//纯文本粘贴
@@ -67,140 +71,79 @@ ice.editor = function (id,callback) {
 			this.imgDomain = 0;
 			//上传监听
 			this.ajax.uploadTimeout = 15000; //ajax超时时间
-			this.ajax.xhr = function () {}; //ajax的xhr设置
-			this.ajax.formData = function (e) {return e}; //ajax的formData设置
-			this.ajax.timeout = function () {}; //ajax超时回调
-			this.ajax.progress = function () {}; //ajax进度回调
-			this.ajax.success = function (e) {return e}; //ajax成功回调
-			this.ajax.error = function () {}; //ajax失败回调
-			this.ajax.complete = function () {}; //ajax成功或失败都回调
+			this.ajax.xhr = function () { }; //ajax的xhr设置
+			this.ajax.formData = function (e) { return e }; //ajax的formData设置
+			this.ajax.timeout = function () { }; //ajax超时回调
+			this.ajax.progress = function () { }; //ajax进度回调
+			this.ajax.success = function (e) { return e }; //ajax成功回调
+			this.ajax.error = function () { }; //ajax失败回调
+			this.ajax.complete = function () { }; //ajax成功或失败都回调
 			//上传附件
 			this.filesUpload = {};
 			this.filesUpload.name = 'file[]';
-			this.filesUpload.formData = function (e) {return e};
-			this.filesUpload.success = function (e) {return e};
-			this.filesUpload.error = function () {};
-			this.filesUpload.complete = function () {};
+			this.filesUpload.formData = function (e) { return e };
+			this.filesUpload.success = function (e) { return e };
+			this.filesUpload.error = function () { };
+			this.filesUpload.complete = function () { };
 			//上传图片
 			this.imgUpload = {};
 			this.imgUpload.name = 'file[]';
-			this.imgUpload.formData = function (e) {return e};
-			this.imgUpload.success = function (e) {return e};
-			this.imgUpload.error = function () {};
-			this.imgUpload.complete = function () {};
+			this.imgUpload.formData = function (e) { return e };
+			this.imgUpload.success = function (e) { return e };
+			this.imgUpload.error = function () { };
+			this.imgUpload.complete = function () { };
 			//表情
 			this.face = [{
-				title: '表情',
-				type: 'img',
-				list: [
-					{title:'嘻嘻',content:'./ayq/images/tootha_thumb.gif'},
-					{title:'哈哈',content:'./ayq/images/laugh.gif'},
-					{title:'可爱',content:'./ayq/images/tza_thumb.gif'},
-					{title:'可怜',content:'./ayq/images/kl_thumb.gif'},
-					{title:'挖鼻屎',content:'./ayq/images/kbsa_thumb.gif'},
-					{title:'吃惊',content:'./ayq/images/cj_thumb.gif'},
-					{title:'害羞',content:'./ayq/images/shamea_thumb.gif'},
-					{title:'挤眼',content:'./ayq/images/zy_thumb.gif'},
-					{title:'闭嘴',content:'./ayq/images/bz_thumb.gif'},
-					{title:'鄙视',content:'./ayq/images/bs2_thumb.gif'},
-					{title:'爱你',content:'./ayq/images/lovea_thumb.gif'},
-					{title:'泪',content:'./ayq/images/sada_thumb.gif'},
-					{title:'偷笑',content:'./ayq/images/heia_thumb.gif'},
-					{title:'亲亲',content:'./ayq/images/qq_thumb.gif'},
-					{title:'生病',content:'./ayq/images/sb_thumb.gif'},
-					{title:'太开心',content:'./ayq/images/mb_thumb.gif'},
-					{title:'懒得理你',content:'./ayq/images/ldln_thumb.gif'},
-					{title:'右哼哼',content:'./ayq/images/yhh_thumb.gif'},
-					{title:'左哼哼',content:'./ayq/images/zhh_thumb.gif'},
-					{title:'嘘',content:'./ayq/images/x_thumb.gif'},
-					{title:'衰',content:'./ayq/images/cry.gif'},
-					{title:'委屈',content:'./ayq/images/wq_thumb.gif'},
-					{title:'吐',content:'./ayq/images/t_thumb.gif'},
-					{title:'打哈欠',content:'./ayq/images/k_thumb.gif'},
-					{title:'抱抱',content:'./ayq/images/bba_thumb.gif'},
-					{title:'怒',content:'./ayq/images/angrya_thumb.gif'},
-					{title:'疑问',content:'./ayq/images/yw_thumb.gif'},
-					{title:'馋嘴',content:'./ayq/images/cza_thumb.gif'},
-					{title:'拜拜',content:'./ayq/images/88_thumb.gif'},
-					{title:'思考',content:'./ayq/images/sk_thumb.gif'},
-					{title:'汗',content:'./ayq/images/sweata_thumb.gif'},
-					{title:'困',content:'./ayq/images/sleepya_thumb.gif'},
-					{title:'睡觉',content:'./ayq/images/sleepa_thumb.gif'},
-					{title:'钱',content:'./ayq/images/money_thumb.gif'},
-					{title:'失望',content:'./ayq/images/sw_thumb.gif'},
-					{title:'酷',content:'./ayq/images/cool_thumb.gif'},
-					{title:'花心',content:'./ayq/images/hsa_thumb.gif'},
-					{title:'哼',content:'./ayq/images/hatea_thumb.gif'},
-					{title:'鼓掌',content:'./ayq/images/gza_thumb.gif'},
-					{title:'晕',content:'./ayq/images/dizzya_thumb.gif'},
-					{title:'悲伤',content:'./ayq/images/bs_thumb.gif'},
-					{title:'抓狂',content:'./ayq/images/crazya_thumb.gif'},
-					{title:'黑线',content:'./ayq/images/h_thumb.gif'},
-					{title:'阴险',content:'./ayq/images/yx_thumb.gif'},
-					{title:'怒骂',content:'./ayq/images/nm_thumb.gif'},
-					{title:'心',content:'./ayq/images/hearta_thumb.gif'},
-					{title:'伤心',content:'./ayq/images/unheart.gif'},
-					{title:'ok',content:'./ayq/images/ok_thumb.gif'},
-					{title:'耶',content:'./ayq/images/ye_thumb.gif'},
-					{title:'good',content:'./ayq/images/good_thumb.gif'},
-					{title:'不要',content:'./ayq/images/no_thumb.gif'},
-					{title:'赞',content:'./ayq/images/z2_thumb.gif'},
-					{title:'来',content:'./ayq/images/come_thumb.gif'},
-					{title:'弱',content:'./ayq/images/sad_thumb.gif'},
-					{title:'蜡烛',content:'./ayq/images/lazu_thumb.gif'},
-					{title:'蛋糕',content:'./ayq/images/cake.gif'}
-				]
-			},{
 				title: '文字',
 				type: 'text',
 				list: [{
-						title: '开心',
-						content: '(^_^)'
-					},
-					{
-						title: '受不了',
-						content: '(>_<)'
-					},
-					{
-						title: '鄙视',
-						content: '(¬､¬)'
-					},
-					{
-						title: '难过',
-						content: '(*>﹏<*)'
-					},
-					{
-						title: '可爱',
-						content: '(｡◕‿◕｡)'
-					},
-					{
-						title: '无奈',
-						content: '╮(╯_╰)╭'
-					},
-					{
-						title: '惊喜',
-						content: '╰(*°▽°*)╯'
-					},
-					{
-						title: '听音乐',
-						content: '♪(^∇^*)'
-					},
-					{
-						title: '害羞',
-						content: '(✿◡‿◡)'
-					},
-					{
-						title: '睡啦',
-						content: '(∪｡∪)..zzZ'
-					},
-					{
-						title: '臭美',
-						content: '(o≖◡≖)'
-					},
-					{
-						title: '流汗',
-						content: '(ーー゛)'
-					}
+					title: '开心',
+					content: '(^_^)'
+				},
+				{
+					title: '受不了',
+					content: '(>_<)'
+				},
+				{
+					title: '鄙视',
+					content: '(¬､¬)'
+				},
+				{
+					title: '难过',
+					content: '(*>﹏<*)'
+				},
+				{
+					title: '可爱',
+					content: '(｡◕‿◕｡)'
+				},
+				{
+					title: '无奈',
+					content: '╮(╯_╰)╭'
+				},
+				{
+					title: '惊喜',
+					content: '╰(*°▽°*)╯'
+				},
+				{
+					title: '听音乐',
+					content: '♪(^∇^*)'
+				},
+				{
+					title: '害羞',
+					content: '(✿◡‿◡)'
+				},
+				{
+					title: '睡啦',
+					content: '(∪｡∪)..zzZ'
+				},
+				{
+					title: '臭美',
+					content: '(o≖◡≖)'
+				},
+				{
+					title: '流汗',
+					content: '(ーー゛)'
+				}
 				]
 			}];
 			//HTML标签过滤黑名单-忽略粘贴过来的HTML标签
@@ -353,8 +296,7 @@ ice.editor = function (id,callback) {
 			this.init(); //初始化参数
 			this.create(); //创建编辑器
 			this.paste(); //监听粘贴
-			this.styleInit(); //渲染样式
-			callback && callback.call(this);
+			callback && callback.call(this, this);
 		}
 		id(a) {
 			return document.getElementById(a)
@@ -563,7 +505,7 @@ ice.editor = function (id,callback) {
 			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 			if (json.data instanceof FormData == false) {
 				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-			}else{
+			} else {
 				json.data = _z.ajax.formData(json.data);
 			}
 			_z.ajax.xhr(xhr);
@@ -583,7 +525,7 @@ ice.editor = function (id,callback) {
 						var res = '';
 						if (xhr.responseText.length > 0) res = JSON.parse(xhr.responseText);
 						let newRes = _z.ajax.success(res, xhr);
-						res = newRes?newRes:res;
+						res = newRes ? newRes : res;
 						_z.ajax.complete(res, xhr);
 						json.success && json.success(res);
 					} else {
@@ -1058,13 +1000,14 @@ ice.editor = function (id,callback) {
 											alert(obj.error);
 										} else {
 											obj = z.filesUpload.success(obj, res);
-											var a = z.c("a");
+											var a = z.c('a');
 											a.href = obj.url;
 											a.className = 'download';
 											a.download = obj.name;
 											a.innerText = obj.name;
 											a.target = '_blank';
 											z.setHTML(a, true);
+											z.setHTML(z.c('br'), true);
 											z.filesUpload.complete(obj, res);
 										}
 									}
@@ -1136,6 +1079,8 @@ ice.editor = function (id,callback) {
 											obj = z.imgUpload.success(obj, res);
 											var a = z.c('img');
 											a.src = obj.url;
+											if (width.value.trim()) a.width = width.value.trim();
+											if (height.value.trim()) a.height = height.value.trim();
 											z.setHTML(a, true);
 											z.imgUpload.success(obj, res);
 											z.imgUpload.complete(obj, res);
@@ -1161,7 +1106,7 @@ ice.editor = function (id,callback) {
 					width: 320,
 					height: 170,
 					title: '添加视频',
-					content: '<div class="iceEditor-video"><div><label>默认支持bilibili、优酷</label></div><div>URL：<input type="text" class="iceEditor-videoUrl" placeholder="网络图片地址" value=""/></div><div><label>宽：</label><input type="text" class="iceEditor-inputWidth" placeholder="px" value=""/><label>高：</label><input type="text" class="iceEditor-inputHeight" placeholder="px" value=""/><a href="javascript:;" class="iceEditor-btn">确定</a></div></div>'
+					content: '<div class="iceEditor-video"><div><label>默认支持bilibili、优酷</label></div><div>URL：<input type="text" class="iceEditor-videoUrl" placeholder="网络视频地址" value=""/></div><div><label>宽：</label><input type="text" class="iceEditor-inputWidth" placeholder="px" value=""/><label>高：</label><input type="text" class="iceEditor-inputHeight" placeholder="px" value=""/><a href="javascript:;" class="iceEditor-btn">确定</a></div></div>'
 				},
 				success: function (e, z) {
 					z.video = z.id(z.videoId);
@@ -1303,7 +1248,7 @@ ice.editor = function (id,callback) {
 									_z.setHTML(a);
 								}
 								break;
-								//查看源代码
+							//查看源代码
 							case 'code':
 								var d = _z.tool.getElementsByClassName('iceEditor-disabledMask')[0];
 								_z.code = _z.code ? 0 : 1;
@@ -1331,7 +1276,7 @@ ice.editor = function (id,callback) {
 									for (var s = 0; s < pre.length; s++) pre[s].innerHTML = pre[s].innerHTML.replace(/\n/g, "<br>");
 								}
 								break;
-								//最大化
+							//最大化
 							case 'max':
 								var webHeight = window.innerHeight; //页面视口高度
 								if (typeof webHeight != 'number') {
@@ -1351,14 +1296,14 @@ ice.editor = function (id,callback) {
 								this.parentNode.style.display = 'none';
 								_z.tool.getElementsByClassName('iceEditor-minWindow')[0].style.display = 'block';
 								break;
-								//最小化
+							//最小化
 							case 'min':
 								_z.editor.removeAttribute('style');
 								_z.iframe.height = _z.height;
 								this.parentNode.style.display = 'none';
 								_z.tool.getElementsByClassName('iceEditor-maxWindow')[0].style.display = 'block';
 								break;
-								//默认执行execCommand
+							//默认执行execCommand
 							default:
 								var b = this.attr.split('|');
 								if (!_z.w.document._useStyleWithCSS) {
@@ -1370,7 +1315,7 @@ ice.editor = function (id,callback) {
 								} else {
 									_z.w.document.execCommand(b[0], false, null);
 								}
-								//_z.range.getRangeAt(0).collapse(); //取消选中状态
+							//_z.range.getRangeAt(0).collapse(); //取消选中状态
 						}
 						return false;
 					}
@@ -1387,8 +1332,8 @@ ice.editor = function (id,callback) {
 			function unitToPx(v) {
 				if (!/(pt|cm)/.test(v)) return v;
 				var unit;
-				v.replace(/([\d.]+)(\w+)/, function (str, v, u) {
-					v = v, unit = u;
+				v.replace(/([\d.]+)(\w+)/, function (str, s, u) {
+					v = s, unit = u;
 				});
 				v = unit == 'cm' ? parseFloat(v) * 25 : Math.round(parseFloat(v) * 96 / 72);
 				return v + (v ? 'px' : '');
@@ -1558,7 +1503,7 @@ ice.editor = function (id,callback) {
 			// 干掉IE http之类地址自动加链接
 			try {
 				this.w.document.execCommand("AutoUrlDetect", false, false);
-			} catch (e) {}
+			} catch (e) { }
 			var _z = this;
 			var _w = this.w;
 
@@ -1642,7 +1587,6 @@ ice.editor = function (id,callback) {
 			};
 
 			this.d.body.addEventListener('paste', function (e) {
-
 				// console.log(_z.range.getRangeAt(0).endContainer);
 				// console.log(_z.range.getRangeAt(0).startOffset);
 				if (!_z.isIE()) e.preventDefault();
@@ -1661,7 +1605,7 @@ ice.editor = function (id,callback) {
 				if (_z.screenshot && !_z.inNodeParent(_z.range.getRangeAt(0).endContainer, 'pre')) {
 					if (clip) {
 						//ie11没有items
-						var blob = clip.items ? (clip.items[0].type.indexOf("image") !== -1 ? clip.items[0].getAsFile() : 0) : 0;
+						var blob = clip.items ? (clip.items[0] && clip.items[0].type.indexOf("image") !== -1 ? clip.items[0].getAsFile() : 0) : 0;
 						if (blob) {
 							var reader = new FileReader();
 							reader.onload = function (e) {
@@ -1835,6 +1779,7 @@ ice.editor = function (id,callback) {
 			this.menuFormat();
 			this.menuAction();
 			this.disableds.style.display = this.disabled ? 'block' : 'none';
+			this.styleInit(); //渲染样式
 		}
 
 		//获取编辑器的HTML内容
@@ -1882,10 +1827,14 @@ ice.editor = function (id,callback) {
 		//加载样式
 		styleInit() {
 			//编辑器图标
-			ice.editor.css = '.iceEditor{color:#353535!important;font-family:"Microsoft YaHei";font-size:14px!important;background:#fff;position:relative;border:solid 1px #ccc}.iceEditor *{margin:0;padding:0;box-sizing:border-box}.iceEditor a{color:#606060;text-decoration:none;-webkit-tap-highlight-color:transparent}.iceEditor a:hover{color:#000}.iceEditor-line{height:20px;width:1px;background:#cecece;margin:8px 8px 0 8px;}.iceEditor-row{margin-bottom:10px;}.iceEditor-group{text-align:left;margin-bottom:10px;}.iceEditor-group label {min-width:50px!important;display:inline-block!important;text-align:right!important;font-weight:normal!important;}.iceEditor input{height:27px!important;line-height:27px!important;padding:3px!important;border:1px solid #B7B7B7!important;font-family:inherit;font-size:inherit;vertical-align:middle;outline:none;display:inline-block!important;}.iceEditor-exec{cursor:pointer}.iceEditor-icon{width:22px;height:16px;fill:currentColor;overflow:hidden;vertical-align:middle;font-size:16px}.iceEditor-noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.iceEditor-menuDropdown{min-width:35px;min-height:35px;transition:all .4s ease;margin-top:60px;opacity:0;visibility:hidden;position:absolute;background:#fff;z-index:999;box-shadow:0 2px 9px 0 rgba(0,0,0,.2);border-bottom:2px solid #676767;border-top:1px solid #676767}.iceEditor-menuDropdown::before{content:"";display:block;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #676767;position:absolute;top:-8px;left:9px}.iceEditor-menuTitle{width:100%!important;text-align:center;height:30px;line-height:30px;border-top:1px solid #efefef}.iceEditor-tool{width:100%;background:#eee;border-bottom:solid 1px #ccc;position:relative}.iceEditor-tool:after,.iceEditor-tool:before{display:table;content:" "}.iceEditor-tool:after{clear:both}.iceEditor-menu{width:100%;padding:0 10px;display:inline-block;float:left}.iceEditor-menu a{list-style:none;float:left;min-width:35px;height:35px;padding:0 5px;text-align:center;line-height:35px;cursor:pointer}.iceEditor-menu a:hover{background:#cdcdcd}.iceEditor-menu>li>div.iceEditor-exec{list-style:none;float:left;min-width:35px;height:35px;padding:0 5px;text-align:center;line-height:35px;cursor:pointer}.iceEditor-menu>li>div.iceEditor-exec:hover{background:#cdcdcd}.iceEditor-menu svg{fill:currentColor;overflow:hidden;vertical-align:middle;font-size:16px}.iceEditor-menu .iceEditor-active{background:#e0e0e0;position:relative;z-index:999}.iceEditor-menu .iceEditor-actives,.iceEditor-menu .iceEditor-active-s{background:#d8d8d8;}.iceEditor-menu .iceEditor-disabledMask{background:rgba(238,238,238,0.7);width:100%;height:100%;position:absolute;left:0;top:0;display:none}.iceEditor-menu li{display:inline-block;float:left;line-height:initial;}.iceEditor-menu li .iceEditor-menuDropdown.iceEditor-menuActive{margin-top:44px;opacity:1;visibility:visible}.iceEditor-menu li.iceEditor-minWindow{display:none}.iceEditor-menu li.iceEditor-maxWindow,.iceEditor-menu li.iceEditor-minWindow{float:right}.iceEditor-menu li.iceEditor-maxWindow>div,.iceEditor-menu li.iceEditor-minWindow>div{position:relative;z-index:9}.iceEditor-menu li.iceEditor-maxWindow .iceEditor-icon,.iceEditor-menu li.iceEditor-minWindow .iceEditor-icon{color:#606060}.iceEditor-codeLanguages select{padding:5px 5px;width:120px;outline:none;font-size:15px;margin-top:10px;}.iceEditor input.iceEditor-uploadInput{display:none!important}.iceEditor-uploadBtn{float:none;width:auto;font-size:15px;background:#00b7ee;height:40px;line-height:40px;padding:0 30px;color:#fff;display:inline-block;margin:0 auto 15px auto;cursor:pointer;box-shadow:0 1px 1px rgba(0,0,0,.1)}.iceEditor-uploadBtn:hover{background:#009ccb}.iceEditor-uploadIcon{width:45px;height:45px;color:#bababa;margin:20px 20px 10px}.iceEditor-backColor{width:230px;padding:5px}.iceEditor-backColor span{width:20px;height:20px;padding:0;margin:1px;display:inline-block}.iceEditor-fontSize{width:280px}.iceEditor-fontSize li{width:40px;text-align:center}.iceEditor-fontSize span{width:40px;display:inline-block;padding:10px 0}.iceEditor-fontSize span:hover{background:#eee;color:#4CAF50}.iceEditor-createLink label{display:inline-block;}.iceEditor .iceEditor-link{width:175px!important;}.iceEditor-popup .iceEditor-insertImage{text-align:center}.iceEditor-popup .iceEditor-insertImageUrl{width:220px!important;height:27px;outline:0;margin-right:15px}.iceEditor-popup .iceEditor-inputWidth{width:50px!important;height:27px;outline:0;margin-right:15px}.iceEditor-popup .iceEditor-inputHeight{width:50px!important;height:27px;outline:0}.iceEditor-popup .iceEditor-btn{width:auto;display:inline-block;float:none;color:#fff!important;height:27px;line-height:25px;padding:0 10px;background:#939393;vertical-align:middle;margin-left:5px;border:1px solid #7b7b7b}.iceEditor-popup .iceEditor-btn:hover{background:#7b7b7b!important;color:#fff}.iceEditor-tableBox{position:relative;width:190px;height:214px;padding:5px;overflow:hidden}.iceEditor-tableBgOn{position:absolute!important;top:5px;left:5px;z-index:4;width:18px;height:18px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASAgMAAAAroGbEAAAACVBMVEUAAIjd6vvD2f9LKLW+AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfYAR0BKwNDEVT0AAAAG0lEQVQI12NgAAOtVatWMTCohoaGUY+EmIkEAEruEzK2J7tvAAAAAElFTkSuQmCC) repeat}.iceEditor-tableBgOff{width:180px;height:180px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASAgMAAAAroGbEAAAACVBMVEUAAIj4+Pjp6ekKlAqjAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfYAR0BKhmnaJzPAAAAG0lEQVQI12NgAAOtVatWMTCohoaGUY+EmIkEAEruEzK2J7tvAAAAAElFTkSuQmCC) repeat}.iceEditor-tableNum{height:30px;line-height:30px;text-align:center;color:#757575}.iceEditor-video{text-align:left}.iceEditor-video label{margin-right:20px;display:inline-block}.iceEditor-video input{margin-right:5px}.iceEditor-video div{height:27px;margin-bottom:10px}.iceEditor-popup .iceEditor-videoUrl{width:255px!important;height:27px;outline:0;margin-right:0}.iceEditor-content{width:100%;height:100%;padding:20px;position:relative}.iceEditor-content:focus{outline:0}.iceEditor-dragBg{position:absolute;width:100%;height:100%;top:0;left:0;z-index:1;display:none;}.iceEditor-drag{color:#757575;background:#eee;text-align:center;height:12px;line-height:0;cursor:n-resize}.iceEditor-disabled{position:absolute;width:100%;height:100%;top:0;left:0;background:rgba(191,191,191,.79);z-index:99999;display:none}.iceEditor-popup{display:none}.iceEditor-popupMain{width:400px;height:200px;position:fixed;margin:auto;top:0;bottom:0;left:0;right:0;background:#fff;box-shadow:0 1px 1px rgba(0,0,0,.12);z-index:9999;animation-name:iceEditorPopup;animation-duration:.5s}.iceEditor-popupBox{width:100%;height:100%;position:fixed;top:0;left:0;background:rgba(0,0,0,.33);opacity:.5;filter:alpha(opacity=50);z-index:1}.iceEditor-popupTitle{width:100%;height:30px;line-height:30px;background:#2f2f2f;padding:0 10px;color:#fff}.iceEditor-popupTitle span{display:inline-block;vertical-align:middle}.iceEditor-popupTitle::before{content:"";display:inline-block;width:10px;height:10px;border-radius:10px;background:#c7f98c;vertical-align:middle;margin-right:8px}.iceEditor-popupClose{float:right;padding:0 10px;color:#fff;font-size:18px;cursor:pointer}.iceEditor-popupClose:hover{color:#8fe5ff}.iceEditor-popupContent{width:100%;padding:10px;color:#000;overflow:auto;float:left}.iceEditor-popupBtn{width:100%;border:0;color:#fff;background:#03A9F4;border-top:1px solid #efefef;padding:0 20px;margin:0;height:35px;text-align:center;line-height:35px;cursor:pointer;margin-top:20px;outline:0}.iceEditor-popupBtn:hover{color:#151515;background:#efefef}@keyframes iceEditorPopup{0%{top:-100px;opacity:0}to{top:0;opacity:1}}';
+			ice.editor.css = this.globalCss ? this.globalCss : '.iceEditor{color:#353535!important;font-family:"Microsoft YaHei";font-size:14px!important;background:#fff;position:relative;border:solid 1px #ccc}.iceEditor *{margin:0;padding:0;box-sizing:border-box;font-size:14px;}.iceEditor a{color:#606060;text-decoration:none;-webkit-tap-highlight-color:transparent}.iceEditor a:hover{color:#000}.iceEditor ul{margin:initial;padding:initial}.iceEditor-line{height:20px;width:1px;background:#cecece;margin:8px 8px 0 8px !important}.iceEditor-row{margin-bottom:10px;}.iceEditor-group{text-align:left;margin-bottom:10px;}.iceEditor-group label {min-width:50px!important;display:inline-block!important;text-align:right!important;font-weight:normal!important;}.iceEditor input{height:27px!important;line-height:27px!important;padding:3px!important;border:1px solid #B7B7B7!important;font-family:inherit;font-size:inherit;vertical-align:middle;outline:none;display:inline-block!important;}.iceEditor-exec{cursor:pointer}.iceEditor-icon{width:22px;height:16px;fill:currentColor;overflow:hidden;vertical-align:middle;font-size:16px}.iceEditor-noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.iceEditor-menuDropdown{min-width:35px;min-height:35px;transition:all .4s ease;margin-top:60px;opacity:0;visibility:hidden;position:absolute;background:#fff;z-index:999;box-shadow:0 2px 9px 0 rgba(0,0,0,.2);border-bottom:2px solid #676767;border-top:1px solid #676767}.iceEditor-menuDropdown::before{content:"";display:block;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #676767;position:absolute;top:-8px;left:9px}.iceEditor-menuTitle{width:100%!important;text-align:center;height:30px;line-height:30px;border-top:1px solid #efefef}.iceEditor-tool{width:100%;background:#eee;border-bottom:solid 1px #ccc;position:relative}.iceEditor-tool:after,.iceEditor-tool:before{display:table;content:" "}.iceEditor-tool:after{clear:both}.iceEditor-menu{margin:0!important;width:100%;padding:0 10px;display:inline-block;float:left}.iceEditor-menu a{list-style:none;float:left;min-width:35px;height:35px;padding:0 5px;text-align:center;line-height:35px;cursor:pointer}.iceEditor-menu a:hover{background:#cdcdcd}.iceEditor-menu>li>div.iceEditor-exec{list-style:none;float:left;min-width:35px;height:35px;padding:0 5px;text-align:center;line-height:35px;cursor:pointer}.iceEditor-menu>li>div.iceEditor-exec:hover{background:#cdcdcd}.iceEditor-menu svg{fill:currentColor;overflow:hidden;vertical-align:middle;font-size:16px}.iceEditor-menu .iceEditor-active{background:#e0e0e0;position:relative;z-index:999}.iceEditor-menu .iceEditor-actives,.iceEditor-menu .iceEditor-active-s{background:#d8d8d8;}.iceEditor-menu .iceEditor-disabledMask{background:rgba(238,238,238,0.7);width:100%;height:100%;position:absolute;left:0;top:0;display:none}.iceEditor-menu li{margin:0;display:inline-block;float:left;line-height:initial;}.iceEditor-menu li .iceEditor-menuDropdown.iceEditor-menuActive{margin-top:44px;opacity:1;visibility:visible}.iceEditor-menu li.iceEditor-minWindow{display:none}.iceEditor-menu li.iceEditor-maxWindow,.iceEditor-menu li.iceEditor-minWindow{float:right}.iceEditor-menu li.iceEditor-maxWindow>div,.iceEditor-menu li.iceEditor-minWindow>div{position:relative;z-index:9}.iceEditor-menu li.iceEditor-maxWindow .iceEditor-icon,.iceEditor-menu li.iceEditor-minWindow .iceEditor-icon{color:#606060}.iceEditor-codeLanguages select{padding:5px 5px;width:120px;outline:none;font-size:15px;margin-top:10px;}.iceEditor input.iceEditor-uploadInput{display:none!important}.iceEditor-uploadBtn{float:none;width:auto;font-size:15px;background:#00b7ee;height:40px;line-height:40px;padding:0 30px;color:#fff;display:inline-block;margin:0 auto 15px auto;cursor:pointer;box-shadow:0 1px 1px rgba(0,0,0,.1)}.iceEditor-uploadBtn:hover{background:#009ccb}.iceEditor-uploadIcon{width:45px;height:45px;color:#bababa;margin:20px 20px 10px}.iceEditor-backColor{width:230px;padding:5px!important}.iceEditor-backColor span{width:20px;height:20px;padding:0;margin:1px;display:inline-block}.iceEditor-fontSize{width:280px}.iceEditor-fontSize li{width:40px;text-align:center}.iceEditor-fontSize span{width:40px;display:inline-block;padding:10px 0}.iceEditor-fontSize span:hover{background:#eee;color:#4CAF50}.iceEditor-createLink label{display:inline-block;}.iceEditor .iceEditor-link{width:175px!important;}.iceEditor-popup .iceEditor-insertImage{text-align:center}.iceEditor-popup .iceEditor-insertImageUrl{width:220px!important;height:27px;outline:0;margin-right:15px}.iceEditor-popup .iceEditor-inputWidth{width:50px!important;height:27px;outline:0;margin-right:15px}.iceEditor-popup .iceEditor-inputHeight{width:50px!important;height:27px;outline:0}.iceEditor-popup .iceEditor-btn{width:auto;display:inline-block;float:none;color:#fff!important;height:27px;line-height:25px;padding:0 10px;background:#939393;vertical-align:middle;margin-left:5px;border:1px solid #7b7b7b}.iceEditor-popup .iceEditor-btn:hover{background:#7b7b7b!important;color:#fff}.iceEditor-tableBox{position:relative;width:190px;height:214px;padding:5px;overflow:hidden}.iceEditor-tableBgOn{position:absolute!important;top:5px;left:5px;z-index:4;width:18px;height:18px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASAgMAAAAroGbEAAAACVBMVEUAAIjd6vvD2f9LKLW+AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfYAR0BKwNDEVT0AAAAG0lEQVQI12NgAAOtVatWMTCohoaGUY+EmIkEAEruEzK2J7tvAAAAAElFTkSuQmCC) repeat}.iceEditor-tableBgOff{width:180px;height:180px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASAgMAAAAroGbEAAAACVBMVEUAAIj4+Pjp6ekKlAqjAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfYAR0BKhmnaJzPAAAAG0lEQVQI12NgAAOtVatWMTCohoaGUY+EmIkEAEruEzK2J7tvAAAAAElFTkSuQmCC) repeat}.iceEditor-tableNum{height:30px;line-height:30px;text-align:center;color:#757575}.iceEditor-video{text-align:left}.iceEditor-video label{margin-right:20px;display:inline-block}.iceEditor-video input{margin-right:5px}.iceEditor-video div{height:27px;margin-bottom:10px}.iceEditor-popup .iceEditor-videoUrl{width:255px!important;height:27px;outline:0;margin-right:0}.iceEditor-content{width:100%;height:100%;padding:20px;position:relative}.iceEditor-content:focus{outline:0}.iceEditor-dragBg{position:absolute;width:100%;height:100%;top:0;left:0;z-index:1;display:none;}.iceEditor-drag{color:#757575;background:#eee;text-align:center;height:12px;line-height:0;cursor:n-resize}.iceEditor-disabled{position:absolute;width:100%;height:100%;top:0;left:0;background:rgba(191,191,191,.79);z-index:99999;display:none}.iceEditor-popup{display:none}.iceEditor-popupMain{width:400px;height:200px;position:fixed;margin:auto;top:0;bottom:0;left:0;right:0;background:#fff;box-shadow:0 1px 1px rgba(0,0,0,.12);z-index:9999;animation-name:iceEditorPopup;animation-duration:.5s}.iceEditor-popupBox{width:100%;height:100%;position:fixed;top:0;left:0;background:rgba(0,0,0,.33);opacity:.5;filter:alpha(opacity=50);z-index:1}.iceEditor-popupTitle{width:100%;height:30px;line-height:30px;background:#2f2f2f;padding:0 10px;color:#fff}.iceEditor-popupTitle span{display:inline-block;vertical-align:middle}.iceEditor-popupTitle::before{content:"";display:inline-block;width:10px;height:10px;border-radius:10px;background:#c7f98c;vertical-align:middle;margin-right:8px}.iceEditor-popupClose{float:right;padding:0 10px;color:#fff;font-size:18px;cursor:pointer}.iceEditor-popupClose:hover{color:#8fe5ff}.iceEditor-popupContent{width:100%;padding:10px;color:#000;overflow:auto;float:left}.iceEditor-popupBtn{width:100%;border:0;color:#fff;background:#03A9F4;border-top:1px solid #efefef;padding:0 20px;margin:0;height:35px;text-align:center;line-height:35px;cursor:pointer;margin-top:20px;outline:0}.iceEditor-popupBtn:hover{color:#151515;background:#efefef}@keyframes iceEditorPopup{0%{top:-100px;opacity:0}to{top:0;opacity:1}}';
 			//编辑器图标
-			ice.editor.svg = '<svg><symbol id="icon-word" viewBox="0 0 1024 1024"><path d="M1037.95259216 964.34753729a30.93838823 30.93838823 0 0 1 5.56890921 61.38176213L1037.95259216 1026.22431218h-1051.90518432a30.93838823 30.93838823 0 0 1-5.56890921-61.38176058L-13.95259216 964.34753729h1051.90518432z m0-185.63032631a30.93838823 30.93838823 0 0 1 5.56890921 61.38176061L1037.95259216 840.59398588h-1051.90518432a30.93838823 30.93838823 0 0 1-5.56890921-61.38176055L-13.95259216 778.71721098h1051.90518432z m0-185.63032626a30.93838823 30.93838823 0 0 1 5.56890921 61.38176057L1037.95259216 654.96365961h-371.26065412a30.93838823 30.93838823 0 0 1-5.56890919-61.38176057L666.69193804 593.08688472h371.26065412z m-495.01420393-587.82936709a30.93838823 30.93838823 0 0 1 30.44337235 25.36947747L573.87677489 36.19590432v123.75355138a30.93838823 30.93838823 0 0 1-61.38176056 5.56890917L512 159.9494557V67.13429254h-185.63032627V593.08688472h92.81516312a30.93838823 30.93838823 0 0 1 5.5689092 61.38176057L419.18483685 654.96365961h-247.50710275a30.93838823 30.93838823 0 0 1-5.56890917-61.38176057L171.6777341 593.08688472H264.49289725V67.13429254H78.86257098v92.32014881a30.93838823 30.93838823 0 0 1-25.36947748 30.38149654l-5.56890921 0.55689171a30.93838823 30.93838823 0 0 1-30.44337391-25.36947748L16.98579605 159.39256555V36.19590432a30.93838823 30.93838823 0 0 1 25.36947749-30.44337235L47.92418429 5.25751763h495.01420394z"></path></symbol><symbol id="icon-face" viewBox="0 0 1024 1024"><path d="M512 2.27555555a509.72444445 509.72444445 0 1 1 0 1019.4488889A509.72444445 509.72444445 0 0 1 512 2.27555555z m0 72.81777778a436.90666667 436.90666667 0 1 0 0 873.81333334A436.90666667 436.90666667 0 0 0 512 75.09333333zM251.02108445 624.86755555H329.22737778c40.41386667 68.73998222 93.42520889 109.37230222 182.77262222 109.37230223 84.10453333 0 134.13034667-30.80192 176.36465778-96.62919111l7.79150222-12.74311112h76.82275555a280.12999111 280.12999111 0 0 1-516.27804444 13.4712889l-5.67978666-13.4712889H329.22737778z m440.54755555-285.88259555a54.61333333 54.61333333 0 1 1 0 109.22666667 54.61333333 54.61333333 0 0 1 0-109.22666667z m-358.62755555 0a54.61333333 54.61333333 0 1 1 0 109.22666667 54.61333333 54.61333333 0 0 1 0-109.22666667z"></path></symbol><symbol id="icon-music" viewBox="0 0 1024 1024"><path d="M899.904 454.976c-5.44-0.704-10.304-4.48-14.592-11.2-4.288-6.72-7.552-19.008-9.92-36.992-3.904-29.12-13.824-50.624-29.76-64.448-15.936-13.824-40.64-23.744-74.112-29.696-35.008-6.784-65.92-20.352-92.736-40.96-26.816-20.48-49.216-39.808-67.072-57.664C594.56 198.272 581.376 192.704 572.032 197.184S558.016 209.92 558.016 221.888L558.016 270.08l0 105.408c0 41.856-0.192 87.04-0.576 135.616s-0.576 94.464-0.576 137.792l0 114.368 0 63.872c0.768 17.92-2.112 37.952-8.768 59.904-6.592 22.08-19.072 42.816-37.312 62.272-18.304 19.456-42.56 36.032-72.896 49.92-30.336 13.824-68.096 21.824-113.216 24.128-45.888 2.24-87.296-5.632-124.288-23.552-36.928-17.92-65.536-40.576-85.76-67.776-20.224-27.328-30.144-57.216-29.76-89.664 0.384-32.512 14.976-62.976 43.776-91.328 28.8-28.416 59.904-48.192 93.376-59.392 33.408-11.2 65.728-17.408 96.832-18.496 31.104-1.152 58.944 0.896 83.456 6.144s42.56 10.112 54.272 14.592L456.576 376.512c0-88.192 0.384-187.584 1.152-298.176 0-21.696 5.824-39.424 17.536-53.248C486.848 11.328 502.4 3.264 521.856 1.024 538.176-1.216 551.616 1.92 562.112 10.56c10.496 8.576 21.184 20.544 32.064 35.84 10.88 15.36 24.32 32.704 40.256 52.096 15.936 19.456 37.504 38.528 64.768 57.152 23.36 17.216 43.776 29.504 61.248 36.992s33.856 14.4 49.024 20.736c15.168 6.336 30.144 14.016 44.928 22.976 14.784 8.96 31.104 23.552 49.024 43.712 17.856 19.392 28.8 39.616 32.704 60.544s4.096 40 0.576 57.152-9.152 31.168-16.896 42.048C911.936 450.688 905.344 455.744 899.904 454.976L899.904 454.976z"></path></symbol><symbol id="icon-dir" viewBox="0 0 1024 1024"><path d="M1024 325.008l0-72c0-35.344-28.656-64-64-64L448 189.008 448 131.008c0-35.344-28.656-64-64-64L64 67.008c-35.344 0-64 28.656-64 64l0 194L1024 325.008z"></path><path d="M0 373.008l0 520c0 35.344 28.656 64 64 64l896 0c35.344 0 64-28.656 64-64l0-520L0 373.008z"></path></symbol><symbol id="icon-aligncenter" viewBox="0 0 1024 1024"><path d="M0 64l1024 0 0 128-1024 0zM192 256l640 0 0 128-640 0zM192 640l640 0 0 128-640 0zM0 448l1024 0 0 128-1024 0zM0 832l1024 0 0 128-1024 0z"></path></symbol><symbol id="icon-alignleft" viewBox="0 0 1024 1024"><path d="M0 64l1024 0 0 128-1024 0zM0 256l640 0 0 128-640 0zM0 640l640 0 0 128-640 0zM0 448l1024 0 0 128-1024 0zM0 832l1024 0 0 128-1024 0z"></path></symbol><symbol id="icon-alignright" viewBox="0 0 1024 1024"><path d="M0 64l1024 0 0 128-1024 0zM384 256l640 0 0 128-640 0zM384 640l640 0 0 128-640 0zM0 448l1024 0 0 128-1024 0zM0 832l1024 0 0 128-1024 0z"></path></symbol><symbol id="icon-corner" viewBox="0 0 1024 1024"><path d="M768 256l64 0 0 64-64 0zM640 384l64 0 0 64-64 0zM640 512l64 0 0 64-64 0zM640 640l64 0 0 64-64 0zM512 512l64 0 0 64-64 0zM512 640l64 0 0 64-64 0zM384 640l64 0 0 64-64 0zM768 384l64 0 0 64-64 0zM768 512l64 0 0 64-64 0zM768 640l64 0 0 64-64 0zM768 768l64 0 0 64-64 0zM640 768l64 0 0 64-64 0zM512 768l64 0 0 64-64 0zM384 768l64 0 0 64-64 0zM256 768l64 0 0 64-64 0z"></path></symbol><symbol id="icon-help" viewBox="0 0 1024 1024"><path d="M448 704l128 0 0 128-128 0zM704 256c35.36 0 64 28.64 64 64l0 192-192 128-128 0 0-64 192-128 0-64-320 0 0-128 384 0zM512 96c-111.104 0-215.584 43.264-294.144 121.856s-121.856 183.04-121.856 294.144c0 111.104 43.264 215.584 121.856 294.144s183.04 121.856 294.144 121.856c111.104 0 215.584-43.264 294.144-121.856s121.856-183.04 121.856-294.144c0-111.104-43.264-215.584-121.856-294.144s-183.04-121.856-294.144-121.856zM512 0l0 0c282.784 0 512 229.216 512 512s-229.216 512-512 512c-282.784 0-512-229.216-512-512s229.216-512 512-512z"></path></symbol><symbol id="icon-indent" viewBox="0 0 1024 1024"><path d="M0 64l1024 0 0 128-1024 0zM384 256l640 0 0 128-640 0zM384 448l640 0 0 128-640 0zM384 640l640 0 0 128-640 0zM0 832l1024 0 0 128-1024 0zM0 704l0-384 256 192z"></path></symbol><symbol id="icon-link" viewBox="0 0 1025 1024"><path d="M320.032 704c17.6 17.6 47.264 16.736 65.952-1.952l316.128-316.128c18.656-18.656 19.552-48.352 1.952-65.952s-47.264-16.736-65.952 1.952l-316.128 316.128c-18.656 18.656-19.552 48.352-1.952 65.952zM476.928 675.104c4.576 9.056 6.976 19.168 6.976 29.696 0 17.6-6.752 34.048-19.008 46.304l-163.392 163.392c-12.256 12.256-28.704 18.976-46.304 18.976s-34.048-6.752-46.304-18.976l-99.392-99.392c-12.256-12.256-19.008-28.704-19.008-46.304s6.752-34.048 19.008-46.304l163.392-163.392c12.256-12.256 28.704-19.008 46.304-19.008 10.528 0 20.64 2.432 29.696 6.976l65.344-65.344c-27.872-21.408-61.44-32.16-95.04-32.16-40 0-79.968 15.168-110.304 45.504l-163.392 163.392c-60.672 60.672-60.672 159.936 0 220.608l99.392 99.392c30.336 30.336 70.304 45.504 110.304 45.504s79.968-15.168 110.304-45.504l163.392-163.392c55.808-55.808 60.224-144.288 13.344-205.344l-65.344 65.344zM978.528 144.896l-99.392-99.392c-30.336-30.336-70.304-45.504-110.304-45.504s-79.968 15.168-110.304 45.504l-163.392 163.392c-55.808 55.808-60.224 144.288-13.344 205.344l65.344-65.344c-4.544-9.056-6.976-19.168-6.976-29.696 0-17.6 6.752-34.048 18.976-46.304l163.392-163.392c12.256-12.256 28.704-19.008 46.304-19.008s34.048 6.752 46.304 19.008l99.392 99.392c12.256 12.256 18.976 28.704 18.976 46.304s-6.752 34.048-18.976 46.304l-163.392 163.392c-12.256 12.256-28.704 19.008-46.304 19.008-10.528 0-20.64-2.432-29.696-6.976l-65.344 65.344c27.872 21.408 61.44 32.16 95.04 32.16 40 0 79.968-15.168 110.304-45.504l163.392-163.392c60.672-60.672 60.672-159.936 0-220.608z"></path></symbol><symbol id="icon-orderedlist" viewBox="0 0 1024 1024"><path d="M384 832l640 0 0 128-640 0zM384 448l640 0 0 128-640 0zM384 64l640 0 0 128-640 0zM192 0l0 256-64 0 0-192-64 0 0-64zM128 526.016l0 50.016 128 0 0 64-192 0 0-146.016 128-60 0-50.016-128 0 0-64 192 0 0 146.016zM256 704l0 320-192 0 0-64 128 0 0-64-128 0 0-64 128 0 0-64-128 0 0-64z"></path></symbol><symbol id="icon-outdent" viewBox="0 0 1024 1024"><path d="M0 64l1024 0 0 128-1024 0zM384 256l640 0 0 128-640 0zM384 448l640 0 0 128-640 0zM384 640l640 0 0 128-640 0zM0 832l1024 0 0 128-1024 0zM256 320l0 384-256-192z"></path></symbol><symbol id="icon-symbol" viewBox="0 0 1024 1024"><path d="M704 896l256 0 64-128 0 256-384 0 0-214.208c131.104-56.48 224-197.152 224-361.792 0-214.432-157.6-382.272-352-382.272s-352 167.84-352 382.272c0 164.608 92.896 305.312 224 361.792l0 214.208-384 0 0-256 64 128 256 0 0-32.576c-187.616-66.464-320-227.392-320-415.424 0-247.424 229.216-448 512-448s512 200.576 512 448c0 188-132.384 348.96-320 415.424l0 32.576z"></path></symbol><symbol id="icon-strike" viewBox="0 0 1024 1024"><path d="M731.424 517.024c63.904 47.936 100.576 116.096 100.576 186.976s-36.672 139.04-100.576 186.976c-59.36 44.512-137.28 69.024-219.424 69.024s-160.064-24.512-219.424-69.024c-63.936-47.936-100.576-116.096-100.576-186.976l128 0c0 69.376 87.936 128 192 128s192-58.624 192-128c0-69.376-87.936-128-192-128-82.144 0-160.064-24.512-219.424-69.024-63.936-47.936-100.576-116.096-100.576-186.976s36.672-139.04 100.576-186.976c59.36-44.512 137.28-69.024 219.424-69.024s160.064 24.512 219.424 69.024c63.904 47.936 100.576 116.096 100.576 186.976l-128 0c0-69.376-87.936-128-192-128s-192 58.624-192 128c0 69.376 87.936 128 192 128 82.144 0 160.064 24.512 219.424 69.024zM0 512l1024 0 0 64-1024 0z"></path></symbol><symbol id="icon-table" viewBox="0 0 1024 1024"><path d="M0 64l0 896 1024 0 0-896-1024 0zM384 640l0-192 256 0 0 192-256 0zM640 704l0 192-256 0 0-192 256 0zM640 192l0 192-256 0 0-192 256 0zM320 192l0 192-256 0 0-192 256 0zM64 448l256 0 0 192-256 0 0-192zM704 448l256 0 0 192-256 0 0-192zM704 384l0-192 256 0 0 192-256 0zM64 704l256 0 0 192-256 0 0-192zM704 896l0-192 256 0 0 192-256 0z"></path></symbol><symbol id="icon-underline" viewBox="0 0 1024 1024"><path d="M704 64l128 0 0 416c0 159.072-143.264 288-320 288s-320-128.928-320-288l0-416 128 0 0 416c0 40.16 18.24 78.688 51.36 108.512 36.896 33.216 86.848 51.488 140.64 51.488s103.744-18.304 140.64-51.488c33.12-29.792 51.36-68.352 51.36-108.512l0-416zM192 832l640 0 0 128-640 0z"></path></symbol><symbol id="icon-unlink" viewBox="0 0 1025 1024"><path d="M476.928 675.104c4.576 9.056 6.976 19.168 6.976 29.696 0 17.6-6.752 34.048-19.008 46.304l-163.392 163.392c-12.256 12.256-28.704 18.976-46.304 18.976s-34.048-6.752-46.304-18.976l-99.392-99.392c-12.256-12.256-19.008-28.704-19.008-46.304s6.752-34.048 19.008-46.304l163.392-163.392c12.256-12.256 28.704-18.976 46.304-18.976 10.528 0 20.64 2.432 29.696 6.976l65.344-65.344c-27.872-21.408-61.44-32.16-95.04-32.16-40 0-79.968 15.168-110.304 45.504l-163.392 163.392c-60.672 60.672-60.672 159.936 0 220.608l99.392 99.392c30.336 30.336 70.304 45.504 110.304 45.504s79.968-15.168 110.304-45.504l163.392-163.392c55.808-55.808 60.224-144.288 13.344-205.344l-65.344 65.344zM978.528 144.896l-99.392-99.392c-30.336-30.336-70.304-45.504-110.304-45.504s-79.968 15.168-110.304 45.504l-163.392 163.392c-55.808 55.808-60.224 144.288-13.344 205.344l65.344-65.344c-4.544-9.056-6.976-19.168-6.976-29.696 0-17.6 6.752-34.048 18.976-46.304l163.392-163.392c12.256-12.256 28.704-19.008 46.304-19.008s34.048 6.752 46.304 19.008l99.392 99.392c12.256 12.256 18.976 28.704 18.976 46.304s-6.752 34.048-18.976 46.304l-163.392 163.392c-12.256 12.256-28.704 19.008-46.304 19.008-10.528 0-20.64-2.432-29.696-6.976l-65.344 65.344c27.872 21.408 61.44 32.16 95.04 32.16 40 0 79.968-15.168 110.304-45.504l163.392-163.392c60.672-60.672 60.672-159.936 0-220.608zM233.408 278.624l-192-192 45.248-45.248 192 192zM384.032 0l64 0 0 192-64 0zM0.032 384l192 0 0 64-192 0zM790.656 745.376l192 192-45.248 45.248-192-192zM576.032 832l64 0 0 192-64 0zM832.032 576l192 0 0 64-192 0z"></path></symbol><symbol id="icon-backColor" viewBox="0 0 1024 1024"><path d="M360.021333 512 677.1712 512 518.570667 87.893333Z"></path><path d="M168.618667 1024 868.573867 1024 709.034667 597.333333 328.106667 597.333333Z"></path><path d="M602.368 0 981.538133 1024 1024 1024 1024 0Z"></path><path d="M434.773333 0 0 0 0 1024 55.6544 1024Z"></path></symbol><symbol id="icon-code" viewBox="0 0 1024 1024"><path d="M0 64.003413 0 959.996587l1024 0L1024 64.003413 0 64.003413zM960.006827 896.003413l-896 0 0-640 896 0L960.006827 896.003413zM361.376427 726.621013c6.2464 6.253227 14.4384 9.3824 22.6176 9.3824 8.197973 0 16.384-3.129173 22.6304-9.3824 12.498773-12.499627 12.498773-32.7424 0-45.248l-105.3696-105.376427 105.3696-105.375573c12.498773-12.4928 12.498773-32.749227 0-45.248-12.499627-12.498773-32.7552-12.498773-45.248 0l-128 128c-12.498773 12.498773-12.498773 32.748373 0 45.253973L361.376427 726.621013zM617.3824 726.621013c6.240427 6.253227 14.431573 9.3824 22.624427 9.3824 8.1792 0 16.378027-3.129173 22.6304-9.3824l128-127.994027c12.4928-12.5056 12.4928-32.7552 0-45.253973l-128-128c-12.5184-12.498773-32.7552-12.498773-45.254827 0s-12.499627 32.7552 0 45.248l105.3696 105.375573-105.3696 105.376427C604.883627 693.878613 604.883627 714.12224 617.3824 726.621013z"></path></symbol><symbol id="icon-files" viewBox="0 0 1024 1024"><path d="M0 992a32 32 0 0 0 32 32h1216a32 32 0 0 0 32-32V224a32 32 0 0 0-32-32H576l-192-192H32a32 32 0 0 0-32 32z"></path></symbol><symbol id="icon-list" viewBox="0 0 1024 1024"><path d="M700.352 704l0 256 256 0 0-256L700.352 704zM700.352 384l0 255.936 256 0L956.352 384 700.352 384zM700.352 64l0 256 256 0L956.352 64 700.352 64zM380.352 704l0 256 256 0 0-256L380.352 704zM380.352 384l0 255.936 256 0L636.352 384 380.352 384zM380.352 64l0 256 256 0L636.352 64 380.352 64zM60.352 704l0 256 256 0 0-256L60.352 704zM60.352 384l0 255.936 256 0L316.352 384 60.352 384zM60.352 64l0 256 256 0L316.352 64 60.352 64z"></path></symbol><symbol id="icon-save" viewBox="0 0 1029 1024"><path d="M512 638.976 319.488 638.976l0 258.048 192.512 0L512 638.976zM958.464 0 65.536 0C28.672 0 0 28.672 0 65.536l0 770.048L192.512 1024l770.048 0c36.864 0 65.536-28.672 65.536-65.536L1028.096 65.536C1024 28.672 995.328 0 958.464 0zM831.488 958.464 192.512 958.464l0-385.024 638.976 0L831.488 958.464zM897.024 512 126.976 512 126.976 65.536l770.048 0L897.024 512z"></path></symbol><symbol id="icon-min" viewBox="0 0 1024 1024"><path d="M64 448l896 0 0 128-896 0 0-128Z"></path></symbol><symbol id="icon-product" viewBox="0 0 1024 1024"><path d="M398.222222 455.111111 56.888889 455.111111C25.486222 455.111111 0 429.624889 0 398.222222L0 56.888889c0-31.402667 25.486222-56.888889 56.888889-56.888889l341.333333 0c31.402667 0 56.888889 25.486222 56.888889 56.888889l0 341.333333C455.111111 429.624889 429.624889 455.111111 398.222222 455.111111"></path><path d="M967.111111 398.222222l-341.333333 0L625.777778 56.888889l341.333333 0L967.111111 398.222222zM967.111111 0l-341.333333 0c-31.402667 0-56.888889 25.486222-56.888889 56.888889l0 341.333333c0 31.402667 25.486222 56.888889 56.888889 56.888889l341.333333 0c31.402667 0 56.888889-25.486222 56.888889-56.888889L1024 56.888889C1024 25.486222 998.513778 0 967.111111 0"></path><path d="M398.222222 1024 56.888889 1024c-31.402667 0-56.888889-25.486222-56.888889-56.888889l0-341.333333c0-31.402667 25.486222-56.888889 56.888889-56.888889l341.333333 0c31.402667 0 56.888889 25.486222 56.888889 56.888889l0 341.333333C455.111111 998.513778 429.624889 1024 398.222222 1024"></path><path d="M967.111111 1024l-341.333333 0c-31.402667 0-56.888889-25.486222-56.888889-56.888889l0-341.333333c0-31.402667 25.486222-56.888889 56.888889-56.888889l341.333333 0c31.402667 0 56.888889 25.486222 56.888889 56.888889l0 341.333333C1024 998.513778 998.513778 1024 967.111111 1024"></path></symbol><symbol id="icon-empty" viewBox="0 0 1024 1024"><path d="M704 64 960 320 704 320Z"></path><path d="M64 64 64 1024 960 1024 960 384 896 384 896 960 128 960 128 128 640 128 640 64Z"></path></symbol><symbol id="icon-video" viewBox="0 0 1110 1024"><path d="M1024 1024 85.333333 1024C38.186667 1024 0 985.813333 0 938.666667L0 85.333333C0 38.186667 38.186667 0 85.333333 0L1024 0C1071.146667 0 1109.333333 38.186667 1109.333333 85.333333L1109.333333 938.666667C1109.333333 985.813333 1071.146667 1024 1024 1024ZM426.666667 256 426.666667 768 810.666667 512 426.666667 256Z"></path></symbol><symbol id="icon-pic" viewBox="0 0 1024 1024"><path d="M972.797568 0 51.201152 0C22.92289 0 0.00128 22.92161 0.00128 51.199872l0 921.601536c0 28.275702 22.92161 51.199872 51.199872 51.199872l921.596416 0c28.278262 0 51.199872-22.92417 51.199872-51.199872L1023.99744 51.199872C1023.99744 22.92161 1001.07583 0 972.797568 0zM972.797568 460.798848c-245.08382-148.251923-486.398144 127.99392-486.398144 127.99392-226.657447-100.066368-377.973606 91.667239-435.198272 184.311091L51.201152 76.794048c0-14.138491 11.460805-25.599296 25.599296-25.599296l870.396544 0c14.138491 0 25.599296 11.460805 25.599296 25.599296L972.796288 460.798848zM281.599936 179.204032c-56.552685 0-102.399744 45.844499-102.399744 102.397184 0 56.552685 45.847059 102.397184 102.399744 102.397184 56.552685 0 102.399744-45.844499 102.399744-102.397184C383.99968 225.048531 338.152621 179.204032 281.599936 179.204032z"></path></symbol><symbol id="icon-bold" viewBox="0 0 1024 1024"><path d="M437.61370098 62C511.9653834 62 567.40408437 64.9750625 603.94711661 70.90862715 640.4890625 76.85875214 673.17788339 89.24432187 702.0298083 108.08085518 730.86442403 126.91739375 754.89939688 151.9958709 774.13365107 183.31421768 793.36791143 214.6491125 802.98557598 249.75173955 802.98557598 288.65416045 802.98557598 330.83897715 791.17091563 369.53030411 767.57620098 404.74675215 743.9814916 439.96320723 711.96875 466.38278545 671.57259893 483.989975 728.73557597 499.93216455 772.68088848 527.09577295 803.40853643 565.48078965 834.13617911 603.8658125 849.5 648.9925833 849.5 700.86213125 849.5 741.70481152 839.54483018 781.43093545 819.66803222 820.02602393 799.79122812 858.63766661 772.64627188 889.4706875 738.2342542 912.54371152 703.82115722 935.63329589 661.38053222 949.8132125 610.94483018 955.11658643 579.30420518 958.38242714 502.99134893 960.43651455 382.00733018 961.2446917L62 961.2446917 62 62 437.61370098 62ZM230.75 399.5L364.28739893 399.5C443.66832705 399.5 493.01498955 398.3985125 512.2878875 396.1765083 547.16913125 392.20600625 574.5923334 380.59226035 594.55516661 361.33526357 614.51916348 342.09506357 624.5 316.75190732 624.5 285.33825723 624.5 255.25445205 615.87928848 230.82024482 598.67503438 211.9998166 581.46961661 193.19729786 555.88043955 181.81078438 521.92491875 177.8234917 501.7251333 175.61939785 443.66832705 174.5 347.77191465 174.5L230.75 174.5 230.75 399.5ZM230.75 793.25L427.71935411 793.25C504.38265839 793.25 553.03467911 791.52986972 573.6366916 788.09058652 605.25887187 783.49415732 631.02137187 772.30843965 650.90483545 754.51688545 670.78830518 736.72532597 680.75 712.9074667 680.75 683.04772812 680.75 657.79902705 673.07580722 636.3704542 657.74677607 618.76201661 642.39838438 601.16818027 620.24677403 588.33928847 591.25201455 580.3035708 562.25726035 572.2678584 499.35403232 568.25 402.56169277 568.25L230.75 568.25 230.75 793.25Z"></path></symbol><symbol id="icon-max" viewBox="0 0 1024 1024"><path d="M64 128l0 128 0 576 64 0 768 0 64 0 0-64L960 256 960 128 64 128zM896 768 128 768 128 256l768 0L896 768z"></path></symbol><symbol id="icon-del" viewBox="0 0 1024 1024"><path d="M960 192l-192 0L768 64c0-35.328-28.672-64-64-64L320 0C284.672 0 256 28.672 256 64l0 128L64 192C28.672 192 0 220.672 0 256l128 0 0 704c0 35.328 28.672 64 64 64l640 0c35.328 0 64-28.672 64-64L896 256l128 0C1024 220.672 995.328 192 960 192zM320 64l384 0 0 128L320 192 320 64zM832 960 192 960 192 256l640 0L832 960z"></path><path d="M416 832C433.664 832 448 817.6 448 800l0-384C448 398.4 433.664 384 416 384S384 398.4 384 416l0 384C384 817.6 398.336 832 416 832z"></path><path d="M608 832c17.6 0 32-14.4 32-32l0-384C640 398.4 625.6 384 608 384S576 398.4 576 416l0 384C576 817.6 590.4 832 608 832z"></path></symbol><symbol id="icon-unorderedlist" viewBox="0 0 1024 1024"><path d="M0 0l256 0 0 256-256 0zM384 64l640 0 0 128-640 0zM0 384l256 0 0 256-256 0zM384 448l640 0 0 128-640 0zM0 768l256 0 0 256-256 0zM384 832l640 0 0 128-640 0z"></path></symbol><symbol id="icon-remove" viewBox="0 0 1024 1024"><path d="M921.6 512 880.64 512 972.8 972.8C972.8 1001.088 949.888 1024 921.6 1024L102.4 1024C74.112 1024 51.2 1001.088 51.2 972.8L143.36 512 102.4 512C74.112 512 51.2 489.088 51.2 460.8L51.2 409.6C51.2 381.312 74.112 358.4 102.4 358.4L409.6 358.4 409.6 102.4C409.6 45.8496 455.4496 0 512 0 568.5504 0 614.4 45.8496 614.4 102.4L614.4 358.4 921.6 358.4C949.888 358.4 972.8 381.312 972.8 409.6L972.8 460.8C972.8 489.088 949.888 512 921.6 512ZM102.4 972.8 257.6384 972.8C254.1056 967.5008 252.4416 960.9472 253.6192 954.1888L284.7488 726.5024C287.2064 712.6016 300.4672 703.2832 314.3936 705.7408 328.32 708.1984 337.6128 721.4848 335.1808 735.4112L304.0512 963.072C303.4112 966.6816 302.0032 969.9328 300.1088 972.8L921.6 972.8 819.2 512 204.8 512 102.4 972.8ZM563.2 102.4C563.2 74.112 540.288 51.2 512 51.2 483.712 51.2 460.8 74.112 460.8 102.4L460.8 358.4 563.2 358.4 563.2 102.4ZM921.6 409.6 102.4 409.6 102.4 460.8 921.6 460.8 921.6 409.6Z"></path></symbol><symbol id="icon-fontSize" viewBox="0 0 1024 1024"><path d="M321.536 515.008H512V387.968H4.032v126.976H194.56V896h126.976V515.008z m63.552-380.992h634.944v127.04H385.088V134.016z m253.888 127.04h126.976V896H638.976V261.056z"></path></symbol><symbol id="icon-quote" viewBox="0 0 1024 1024"><path d="M448 896v-256H204.8c-6.4-166.4 32-256 179.2-332.8V192C166.4 268.8 57.6 409.6 64 627.2V896h384z m512 0v-256h-243.2c-6.4-166.4 32-256 179.2-332.8V192c-217.6 76.8-326.4 217.6-320 435.2V896h384z"></path></symbol><symbol id="icon-font" viewBox="0 0 1024 1024"><path d="M22.755556 0v278.755556H56.888889c11.377778-73.955556 39.822222-136.533333 91.022222-176.355556C176.355556 73.955556 227.555556 56.888889 301.511111 56.888889h79.644445v790.755555c0 51.2-5.688889 85.333333-11.377778 96.711112-5.688889 17.066667-17.066667 28.444444-34.133334 34.133333-17.066667 11.377778-45.511111 17.066667-73.955555 17.066667H227.555556v28.444444h568.888888v-28.444444h-34.133333c-34.133333 0-56.888889-5.688889-73.955555-17.066667-17.066667-11.377778-28.444444-22.755556-34.133334-34.133333-5.688889-11.377778-11.377778-45.511111-11.377778-96.711112V56.888889h79.644445c51.2 0 85.333333 5.688889 108.088889 11.377778 34.133333 17.066667 62.577778 39.822222 85.333333 68.266666 22.755556 28.444444 39.822222 73.955556 56.888889 136.533334h28.444444V0H22.755556z"></path></symbol><symbol id="icon-lookup" viewBox="0 0 1024 1024"><path d="M960 448V128c0-38.4-25.6-64-64-64H192c-32 0-64 25.6-64 64v768c0 38.4 25.6 64 64 64h704c38.4 0 64-25.6 64-64v-192l-275.2-236.8c6.4-12.8 12.8-32 12.8-44.8 25.6-134.4-89.6-249.6-224-224-76.8 12.8-134.4 70.4-147.2 147.2-25.6 134.4 89.6 249.6 224 224 38.4-6.4 76.8-25.6 102.4-57.6l243.2 217.6v128c0 19.2-12.8 32-32 32h-640c-19.2 0-32-6.4-32-25.6v-704c0-19.2 12.8-32 32-32h640c19.2 0 32 12.8 32 32V448h64z m-416 57.6C448 531.2 364.8 448 390.4 352c12.8-44.8 44.8-83.2 89.6-89.6 96-25.6 179.2 57.6 153.6 153.6-6.4 44.8-44.8 83.2-89.6 89.6z" fill=""></path><path d="M320 640h256v64H320zM320 768h448v64H320z" fill=""></path></symbol><symbol id="icon-italic" viewBox="0 0 1024 1024"><path d="M670 195.6h205.4V64.7H350.5v130.9h191.9L347.2 828.4H148.6v130.9h524.9V828.4H474.9z"></path></symbol><symbol id="icon-format" viewBox="0 0 1024 1024"><path d="M64 64c0-35.328 29.184-64 64.128-64h639.68A64 64 0 0 1 832 64v192c0 35.328-29.184 64-64.128 64H128.192A64 64 0 0 1 64 256V64z m768 64h128v64h-128V128zM448 448h448v64H448V448z m448-256h64v320h-64V192zM448 512h64v64H448V512zM384 576h192v351.872a96 96 0 0 1-192 0V576z" fill=""></path></symbol><symbol id="icon-subscript" viewBox="0 0 1157 1024"><path d="M986.70404 871.981313v66.663206h170.666667v85.355481h-255.977853v-194.67428l170.666667-79.995847v-66.663206h-170.666667v-85.355481h255.977853v194.67428l-170.666667 79.995847zM864.0526 0h-181.297344L432.092742 250.662514 181.341639 0H0l341.333333 341.333333L0 682.666667h181.341639l250.751103-250.662514 250.662514 250.662514h181.297344l-341.333334-341.333334L864.0526 0z"></path></symbol><symbol id="icon-superscript" viewBox="0 0 1157 1024"><path d="M986.810657 274.676626v66.656707h170.648454v85.34244h-255.990893V231.987195l170.684878-79.988049V85.342439h-170.684878V0h255.990893v194.688578l-170.648454 79.988048z m-122.67748 66.656707h-181.357237l-250.672927 250.672927-250.745776-250.672927H0l341.333333 341.333334L0 1024h181.357237l250.745776-250.636503 250.672927 250.636503h181.357237l-341.369758-341.333333 341.369758-341.333334z"></path></symbol><symbol id="icon-drag" viewBox="0 0 1024 1024"><path d="M192 256h640v64H192z m0 192h640v64H192z m0 192h640v64H192z"></path></symbol><symbol id="icon-foreColor" viewBox="0 0 1024 1024"><path d="M896.1024 869.4784L544.09216 0h-69.40672L170.68032 777.9328C131.54304 892.416 74.6496 955.392 0 966.8608V1024h373.43232v-57.1392h-69.40672c-49.84832 0-76.45184-22.9376-80.09728-68.83328 3.64544-42.00448 10.69056-72.4992 21.38112-91.5456l42.78272-114.23744h298.57792l69.40672 165.74464c3.3792 10.99776 5.50912 17.5104 6.47168 19.72224-0.4096-2.74432-0.77824-5.24288-1.26976-8.25344 1.90464 8.00768 2.29376 10.67008 1.26976 8.25344 2.7648 18.16576 4.23936 30.84288 4.23936 37.62176 3.39968 38.0928-23.22432 55.17312-80.09728 51.5072h-53.26848V1024H1024v-57.1392c-63.95904 0-106.72128-32.4608-127.8976-97.3824zM314.71616 614.4l117.18656-308.77696 122.88 308.77696H314.71616z"></path></symbol><symbol id="icon-tab" viewBox="0 0 1024 1024"><path d="M320 128H128v128h192V128z m384 0v128h192V128h-192zM128 320v576h768V320H128zM64 64h896v896H64V64z m320 64v128h256V128H384z"></path></symbol></svg>';
+			ice.editor.svg = this.globalIcon ? this.globalIcon : '<svg><symbol id="icon-word" viewBox="0 0 1024 1024"><path d="M1037.95259216 964.34753729a30.93838823 30.93838823 0 0 1 5.56890921 61.38176213L1037.95259216 1026.22431218h-1051.90518432a30.93838823 30.93838823 0 0 1-5.56890921-61.38176058L-13.95259216 964.34753729h1051.90518432z m0-185.63032631a30.93838823 30.93838823 0 0 1 5.56890921 61.38176061L1037.95259216 840.59398588h-1051.90518432a30.93838823 30.93838823 0 0 1-5.56890921-61.38176055L-13.95259216 778.71721098h1051.90518432z m0-185.63032626a30.93838823 30.93838823 0 0 1 5.56890921 61.38176057L1037.95259216 654.96365961h-371.26065412a30.93838823 30.93838823 0 0 1-5.56890919-61.38176057L666.69193804 593.08688472h371.26065412z m-495.01420393-587.82936709a30.93838823 30.93838823 0 0 1 30.44337235 25.36947747L573.87677489 36.19590432v123.75355138a30.93838823 30.93838823 0 0 1-61.38176056 5.56890917L512 159.9494557V67.13429254h-185.63032627V593.08688472h92.81516312a30.93838823 30.93838823 0 0 1 5.5689092 61.38176057L419.18483685 654.96365961h-247.50710275a30.93838823 30.93838823 0 0 1-5.56890917-61.38176057L171.6777341 593.08688472H264.49289725V67.13429254H78.86257098v92.32014881a30.93838823 30.93838823 0 0 1-25.36947748 30.38149654l-5.56890921 0.55689171a30.93838823 30.93838823 0 0 1-30.44337391-25.36947748L16.98579605 159.39256555V36.19590432a30.93838823 30.93838823 0 0 1 25.36947749-30.44337235L47.92418429 5.25751763h495.01420394z"></path></symbol><symbol id="icon-face" viewBox="0 0 1024 1024"><path d="M512 2.27555555a509.72444445 509.72444445 0 1 1 0 1019.4488889A509.72444445 509.72444445 0 0 1 512 2.27555555z m0 72.81777778a436.90666667 436.90666667 0 1 0 0 873.81333334A436.90666667 436.90666667 0 0 0 512 75.09333333zM251.02108445 624.86755555H329.22737778c40.41386667 68.73998222 93.42520889 109.37230222 182.77262222 109.37230223 84.10453333 0 134.13034667-30.80192 176.36465778-96.62919111l7.79150222-12.74311112h76.82275555a280.12999111 280.12999111 0 0 1-516.27804444 13.4712889l-5.67978666-13.4712889H329.22737778z m440.54755555-285.88259555a54.61333333 54.61333333 0 1 1 0 109.22666667 54.61333333 54.61333333 0 0 1 0-109.22666667z m-358.62755555 0a54.61333333 54.61333333 0 1 1 0 109.22666667 54.61333333 54.61333333 0 0 1 0-109.22666667z"></path></symbol><symbol id="icon-music" viewBox="0 0 1024 1024"><path d="M899.904 454.976c-5.44-0.704-10.304-4.48-14.592-11.2-4.288-6.72-7.552-19.008-9.92-36.992-3.904-29.12-13.824-50.624-29.76-64.448-15.936-13.824-40.64-23.744-74.112-29.696-35.008-6.784-65.92-20.352-92.736-40.96-26.816-20.48-49.216-39.808-67.072-57.664C594.56 198.272 581.376 192.704 572.032 197.184S558.016 209.92 558.016 221.888L558.016 270.08l0 105.408c0 41.856-0.192 87.04-0.576 135.616s-0.576 94.464-0.576 137.792l0 114.368 0 63.872c0.768 17.92-2.112 37.952-8.768 59.904-6.592 22.08-19.072 42.816-37.312 62.272-18.304 19.456-42.56 36.032-72.896 49.92-30.336 13.824-68.096 21.824-113.216 24.128-45.888 2.24-87.296-5.632-124.288-23.552-36.928-17.92-65.536-40.576-85.76-67.776-20.224-27.328-30.144-57.216-29.76-89.664 0.384-32.512 14.976-62.976 43.776-91.328 28.8-28.416 59.904-48.192 93.376-59.392 33.408-11.2 65.728-17.408 96.832-18.496 31.104-1.152 58.944 0.896 83.456 6.144s42.56 10.112 54.272 14.592L456.576 376.512c0-88.192 0.384-187.584 1.152-298.176 0-21.696 5.824-39.424 17.536-53.248C486.848 11.328 502.4 3.264 521.856 1.024 538.176-1.216 551.616 1.92 562.112 10.56c10.496 8.576 21.184 20.544 32.064 35.84 10.88 15.36 24.32 32.704 40.256 52.096 15.936 19.456 37.504 38.528 64.768 57.152 23.36 17.216 43.776 29.504 61.248 36.992s33.856 14.4 49.024 20.736c15.168 6.336 30.144 14.016 44.928 22.976 14.784 8.96 31.104 23.552 49.024 43.712 17.856 19.392 28.8 39.616 32.704 60.544s4.096 40 0.576 57.152-9.152 31.168-16.896 42.048C911.936 450.688 905.344 455.744 899.904 454.976L899.904 454.976z"></path></symbol><symbol id="icon-dir" viewBox="0 0 1024 1024"><path d="M1024 325.008l0-72c0-35.344-28.656-64-64-64L448 189.008 448 131.008c0-35.344-28.656-64-64-64L64 67.008c-35.344 0-64 28.656-64 64l0 194L1024 325.008z"></path><path d="M0 373.008l0 520c0 35.344 28.656 64 64 64l896 0c35.344 0 64-28.656 64-64l0-520L0 373.008z"></path></symbol><symbol id="icon-aligncenter" viewBox="0 0 1024 1024"><path d="M0 64l1024 0 0 128-1024 0zM192 256l640 0 0 128-640 0zM192 640l640 0 0 128-640 0zM0 448l1024 0 0 128-1024 0zM0 832l1024 0 0 128-1024 0z"></path></symbol><symbol id="icon-alignleft" viewBox="0 0 1024 1024"><path d="M0 64l1024 0 0 128-1024 0zM0 256l640 0 0 128-640 0zM0 640l640 0 0 128-640 0zM0 448l1024 0 0 128-1024 0zM0 832l1024 0 0 128-1024 0z"></path></symbol><symbol id="icon-alignright" viewBox="0 0 1024 1024"><path d="M0 64l1024 0 0 128-1024 0zM384 256l640 0 0 128-640 0zM384 640l640 0 0 128-640 0zM0 448l1024 0 0 128-1024 0zM0 832l1024 0 0 128-1024 0z"></path></symbol><symbol id="icon-corner" viewBox="0 0 1024 1024"><path d="M768 256l64 0 0 64-64 0zM640 384l64 0 0 64-64 0zM640 512l64 0 0 64-64 0zM640 640l64 0 0 64-64 0zM512 512l64 0 0 64-64 0zM512 640l64 0 0 64-64 0zM384 640l64 0 0 64-64 0zM768 384l64 0 0 64-64 0zM768 512l64 0 0 64-64 0zM768 640l64 0 0 64-64 0zM768 768l64 0 0 64-64 0zM640 768l64 0 0 64-64 0zM512 768l64 0 0 64-64 0zM384 768l64 0 0 64-64 0zM256 768l64 0 0 64-64 0z"></path></symbol><symbol id="icon-help" viewBox="0 0 1024 1024"><path d="M448 704l128 0 0 128-128 0zM704 256c35.36 0 64 28.64 64 64l0 192-192 128-128 0 0-64 192-128 0-64-320 0 0-128 384 0zM512 96c-111.104 0-215.584 43.264-294.144 121.856s-121.856 183.04-121.856 294.144c0 111.104 43.264 215.584 121.856 294.144s183.04 121.856 294.144 121.856c111.104 0 215.584-43.264 294.144-121.856s121.856-183.04 121.856-294.144c0-111.104-43.264-215.584-121.856-294.144s-183.04-121.856-294.144-121.856zM512 0l0 0c282.784 0 512 229.216 512 512s-229.216 512-512 512c-282.784 0-512-229.216-512-512s229.216-512 512-512z"></path></symbol><symbol id="icon-indent" viewBox="0 0 1024 1024"><path d="M0 64l1024 0 0 128-1024 0zM384 256l640 0 0 128-640 0zM384 448l640 0 0 128-640 0zM384 640l640 0 0 128-640 0zM0 832l1024 0 0 128-1024 0zM0 704l0-384 256 192z"></path></symbol><symbol id="icon-link" viewBox="0 0 1025 1024"><path d="M320.032 704c17.6 17.6 47.264 16.736 65.952-1.952l316.128-316.128c18.656-18.656 19.552-48.352 1.952-65.952s-47.264-16.736-65.952 1.952l-316.128 316.128c-18.656 18.656-19.552 48.352-1.952 65.952zM476.928 675.104c4.576 9.056 6.976 19.168 6.976 29.696 0 17.6-6.752 34.048-19.008 46.304l-163.392 163.392c-12.256 12.256-28.704 18.976-46.304 18.976s-34.048-6.752-46.304-18.976l-99.392-99.392c-12.256-12.256-19.008-28.704-19.008-46.304s6.752-34.048 19.008-46.304l163.392-163.392c12.256-12.256 28.704-19.008 46.304-19.008 10.528 0 20.64 2.432 29.696 6.976l65.344-65.344c-27.872-21.408-61.44-32.16-95.04-32.16-40 0-79.968 15.168-110.304 45.504l-163.392 163.392c-60.672 60.672-60.672 159.936 0 220.608l99.392 99.392c30.336 30.336 70.304 45.504 110.304 45.504s79.968-15.168 110.304-45.504l163.392-163.392c55.808-55.808 60.224-144.288 13.344-205.344l-65.344 65.344zM978.528 144.896l-99.392-99.392c-30.336-30.336-70.304-45.504-110.304-45.504s-79.968 15.168-110.304 45.504l-163.392 163.392c-55.808 55.808-60.224 144.288-13.344 205.344l65.344-65.344c-4.544-9.056-6.976-19.168-6.976-29.696 0-17.6 6.752-34.048 18.976-46.304l163.392-163.392c12.256-12.256 28.704-19.008 46.304-19.008s34.048 6.752 46.304 19.008l99.392 99.392c12.256 12.256 18.976 28.704 18.976 46.304s-6.752 34.048-18.976 46.304l-163.392 163.392c-12.256 12.256-28.704 19.008-46.304 19.008-10.528 0-20.64-2.432-29.696-6.976l-65.344 65.344c27.872 21.408 61.44 32.16 95.04 32.16 40 0 79.968-15.168 110.304-45.504l163.392-163.392c60.672-60.672 60.672-159.936 0-220.608z"></path></symbol><symbol id="icon-orderedlist" viewBox="0 0 1024 1024"><path d="M384 832l640 0 0 128-640 0zM384 448l640 0 0 128-640 0zM384 64l640 0 0 128-640 0zM192 0l0 256-64 0 0-192-64 0 0-64zM128 526.016l0 50.016 128 0 0 64-192 0 0-146.016 128-60 0-50.016-128 0 0-64 192 0 0 146.016zM256 704l0 320-192 0 0-64 128 0 0-64-128 0 0-64 128 0 0-64-128 0 0-64z"></path></symbol><symbol id="icon-outdent" viewBox="0 0 1024 1024"><path d="M0 64l1024 0 0 128-1024 0zM384 256l640 0 0 128-640 0zM384 448l640 0 0 128-640 0zM384 640l640 0 0 128-640 0zM0 832l1024 0 0 128-1024 0zM256 320l0 384-256-192z"></path></symbol><symbol id="icon-symbol" viewBox="0 0 1024 1024"><path d="M704 896l256 0 64-128 0 256-384 0 0-214.208c131.104-56.48 224-197.152 224-361.792 0-214.432-157.6-382.272-352-382.272s-352 167.84-352 382.272c0 164.608 92.896 305.312 224 361.792l0 214.208-384 0 0-256 64 128 256 0 0-32.576c-187.616-66.464-320-227.392-320-415.424 0-247.424 229.216-448 512-448s512 200.576 512 448c0 188-132.384 348.96-320 415.424l0 32.576z"></path></symbol><symbol id="icon-strike" viewBox="0 0 1024 1024"><path d="M731.424 517.024c63.904 47.936 100.576 116.096 100.576 186.976s-36.672 139.04-100.576 186.976c-59.36 44.512-137.28 69.024-219.424 69.024s-160.064-24.512-219.424-69.024c-63.936-47.936-100.576-116.096-100.576-186.976l128 0c0 69.376 87.936 128 192 128s192-58.624 192-128c0-69.376-87.936-128-192-128-82.144 0-160.064-24.512-219.424-69.024-63.936-47.936-100.576-116.096-100.576-186.976s36.672-139.04 100.576-186.976c59.36-44.512 137.28-69.024 219.424-69.024s160.064 24.512 219.424 69.024c63.904 47.936 100.576 116.096 100.576 186.976l-128 0c0-69.376-87.936-128-192-128s-192 58.624-192 128c0 69.376 87.936 128 192 128 82.144 0 160.064 24.512 219.424 69.024zM0 512l1024 0 0 64-1024 0z"></path></symbol><symbol id="icon-table" viewBox="0 0 1024 1024"><path d="M0 64l0 896 1024 0 0-896-1024 0zM384 640l0-192 256 0 0 192-256 0zM640 704l0 192-256 0 0-192 256 0zM640 192l0 192-256 0 0-192 256 0zM320 192l0 192-256 0 0-192 256 0zM64 448l256 0 0 192-256 0 0-192zM704 448l256 0 0 192-256 0 0-192zM704 384l0-192 256 0 0 192-256 0zM64 704l256 0 0 192-256 0 0-192zM704 896l0-192 256 0 0 192-256 0z"></path></symbol><symbol id="icon-underline" viewBox="0 0 1024 1024"><path d="M704 64l128 0 0 416c0 159.072-143.264 288-320 288s-320-128.928-320-288l0-416 128 0 0 416c0 40.16 18.24 78.688 51.36 108.512 36.896 33.216 86.848 51.488 140.64 51.488s103.744-18.304 140.64-51.488c33.12-29.792 51.36-68.352 51.36-108.512l0-416zM192 832l640 0 0 128-640 0z"></path></symbol><symbol id="icon-unlink" viewBox="0 0 1025 1024"><path d="M476.928 675.104c4.576 9.056 6.976 19.168 6.976 29.696 0 17.6-6.752 34.048-19.008 46.304l-163.392 163.392c-12.256 12.256-28.704 18.976-46.304 18.976s-34.048-6.752-46.304-18.976l-99.392-99.392c-12.256-12.256-19.008-28.704-19.008-46.304s6.752-34.048 19.008-46.304l163.392-163.392c12.256-12.256 28.704-18.976 46.304-18.976 10.528 0 20.64 2.432 29.696 6.976l65.344-65.344c-27.872-21.408-61.44-32.16-95.04-32.16-40 0-79.968 15.168-110.304 45.504l-163.392 163.392c-60.672 60.672-60.672 159.936 0 220.608l99.392 99.392c30.336 30.336 70.304 45.504 110.304 45.504s79.968-15.168 110.304-45.504l163.392-163.392c55.808-55.808 60.224-144.288 13.344-205.344l-65.344 65.344zM978.528 144.896l-99.392-99.392c-30.336-30.336-70.304-45.504-110.304-45.504s-79.968 15.168-110.304 45.504l-163.392 163.392c-55.808 55.808-60.224 144.288-13.344 205.344l65.344-65.344c-4.544-9.056-6.976-19.168-6.976-29.696 0-17.6 6.752-34.048 18.976-46.304l163.392-163.392c12.256-12.256 28.704-19.008 46.304-19.008s34.048 6.752 46.304 19.008l99.392 99.392c12.256 12.256 18.976 28.704 18.976 46.304s-6.752 34.048-18.976 46.304l-163.392 163.392c-12.256 12.256-28.704 19.008-46.304 19.008-10.528 0-20.64-2.432-29.696-6.976l-65.344 65.344c27.872 21.408 61.44 32.16 95.04 32.16 40 0 79.968-15.168 110.304-45.504l163.392-163.392c60.672-60.672 60.672-159.936 0-220.608zM233.408 278.624l-192-192 45.248-45.248 192 192zM384.032 0l64 0 0 192-64 0zM0.032 384l192 0 0 64-192 0zM790.656 745.376l192 192-45.248 45.248-192-192zM576.032 832l64 0 0 192-64 0zM832.032 576l192 0 0 64-192 0z"></path></symbol><symbol id="icon-backColor" viewBox="0 0 1024 1024"><path d="M360.021333 512 677.1712 512 518.570667 87.893333Z"></path><path d="M168.618667 1024 868.573867 1024 709.034667 597.333333 328.106667 597.333333Z"></path><path d="M602.368 0 981.538133 1024 1024 1024 1024 0Z"></path><path d="M434.773333 0 0 0 0 1024 55.6544 1024Z"></path></symbol><symbol id="icon-code" viewBox="0 0 1024 1024"><path d="M0 64.003413 0 959.996587l1024 0L1024 64.003413 0 64.003413zM960.006827 896.003413l-896 0 0-640 896 0L960.006827 896.003413zM361.376427 726.621013c6.2464 6.253227 14.4384 9.3824 22.6176 9.3824 8.197973 0 16.384-3.129173 22.6304-9.3824 12.498773-12.499627 12.498773-32.7424 0-45.248l-105.3696-105.376427 105.3696-105.375573c12.498773-12.4928 12.498773-32.749227 0-45.248-12.499627-12.498773-32.7552-12.498773-45.248 0l-128 128c-12.498773 12.498773-12.498773 32.748373 0 45.253973L361.376427 726.621013zM617.3824 726.621013c6.240427 6.253227 14.431573 9.3824 22.624427 9.3824 8.1792 0 16.378027-3.129173 22.6304-9.3824l128-127.994027c12.4928-12.5056 12.4928-32.7552 0-45.253973l-128-128c-12.5184-12.498773-32.7552-12.498773-45.254827 0s-12.499627 32.7552 0 45.248l105.3696 105.375573-105.3696 105.376427C604.883627 693.878613 604.883627 714.12224 617.3824 726.621013z"></path></symbol><symbol id="icon-files" viewBox="0 0 1024 1024"><path d="M0 992a32 32 0 0 0 32 32h1216a32 32 0 0 0 32-32V224a32 32 0 0 0-32-32H576l-192-192H32a32 32 0 0 0-32 32z"></path></symbol><symbol id="icon-list" viewBox="0 0 1024 1024"><path d="M700.352 704l0 256 256 0 0-256L700.352 704zM700.352 384l0 255.936 256 0L956.352 384 700.352 384zM700.352 64l0 256 256 0L956.352 64 700.352 64zM380.352 704l0 256 256 0 0-256L380.352 704zM380.352 384l0 255.936 256 0L636.352 384 380.352 384zM380.352 64l0 256 256 0L636.352 64 380.352 64zM60.352 704l0 256 256 0 0-256L60.352 704zM60.352 384l0 255.936 256 0L316.352 384 60.352 384zM60.352 64l0 256 256 0L316.352 64 60.352 64z"></path></symbol><symbol id="icon-save" viewBox="0 0 1029 1024"><path d="M512 638.976 319.488 638.976l0 258.048 192.512 0L512 638.976zM958.464 0 65.536 0C28.672 0 0 28.672 0 65.536l0 770.048L192.512 1024l770.048 0c36.864 0 65.536-28.672 65.536-65.536L1028.096 65.536C1024 28.672 995.328 0 958.464 0zM831.488 958.464 192.512 958.464l0-385.024 638.976 0L831.488 958.464zM897.024 512 126.976 512 126.976 65.536l770.048 0L897.024 512z"></path></symbol><symbol id="icon-min" viewBox="0 0 1024 1024"><path d="M64 448l896 0 0 128-896 0 0-128Z"></path></symbol><symbol id="icon-product" viewBox="0 0 1024 1024"><path d="M398.222222 455.111111 56.888889 455.111111C25.486222 455.111111 0 429.624889 0 398.222222L0 56.888889c0-31.402667 25.486222-56.888889 56.888889-56.888889l341.333333 0c31.402667 0 56.888889 25.486222 56.888889 56.888889l0 341.333333C455.111111 429.624889 429.624889 455.111111 398.222222 455.111111"></path><path d="M967.111111 398.222222l-341.333333 0L625.777778 56.888889l341.333333 0L967.111111 398.222222zM967.111111 0l-341.333333 0c-31.402667 0-56.888889 25.486222-56.888889 56.888889l0 341.333333c0 31.402667 25.486222 56.888889 56.888889 56.888889l341.333333 0c31.402667 0 56.888889-25.486222 56.888889-56.888889L1024 56.888889C1024 25.486222 998.513778 0 967.111111 0"></path><path d="M398.222222 1024 56.888889 1024c-31.402667 0-56.888889-25.486222-56.888889-56.888889l0-341.333333c0-31.402667 25.486222-56.888889 56.888889-56.888889l341.333333 0c31.402667 0 56.888889 25.486222 56.888889 56.888889l0 341.333333C455.111111 998.513778 429.624889 1024 398.222222 1024"></path><path d="M967.111111 1024l-341.333333 0c-31.402667 0-56.888889-25.486222-56.888889-56.888889l0-341.333333c0-31.402667 25.486222-56.888889 56.888889-56.888889l341.333333 0c31.402667 0 56.888889 25.486222 56.888889 56.888889l0 341.333333C1024 998.513778 998.513778 1024 967.111111 1024"></path></symbol><symbol id="icon-empty" viewBox="0 0 1024 1024"><path d="M704 64 960 320 704 320Z"></path><path d="M64 64 64 1024 960 1024 960 384 896 384 896 960 128 960 128 128 640 128 640 64Z"></path></symbol><symbol id="icon-video" viewBox="0 0 1110 1024"><path d="M1024 1024 85.333333 1024C38.186667 1024 0 985.813333 0 938.666667L0 85.333333C0 38.186667 38.186667 0 85.333333 0L1024 0C1071.146667 0 1109.333333 38.186667 1109.333333 85.333333L1109.333333 938.666667C1109.333333 985.813333 1071.146667 1024 1024 1024ZM426.666667 256 426.666667 768 810.666667 512 426.666667 256Z"></path></symbol><symbol id="icon-pic" viewBox="0 0 1024 1024"><path d="M972.797568 0 51.201152 0C22.92289 0 0.00128 22.92161 0.00128 51.199872l0 921.601536c0 28.275702 22.92161 51.199872 51.199872 51.199872l921.596416 0c28.278262 0 51.199872-22.92417 51.199872-51.199872L1023.99744 51.199872C1023.99744 22.92161 1001.07583 0 972.797568 0zM972.797568 460.798848c-245.08382-148.251923-486.398144 127.99392-486.398144 127.99392-226.657447-100.066368-377.973606 91.667239-435.198272 184.311091L51.201152 76.794048c0-14.138491 11.460805-25.599296 25.599296-25.599296l870.396544 0c14.138491 0 25.599296 11.460805 25.599296 25.599296L972.796288 460.798848zM281.599936 179.204032c-56.552685 0-102.399744 45.844499-102.399744 102.397184 0 56.552685 45.847059 102.397184 102.399744 102.397184 56.552685 0 102.399744-45.844499 102.399744-102.397184C383.99968 225.048531 338.152621 179.204032 281.599936 179.204032z"></path></symbol><symbol id="icon-bold" viewBox="0 0 1024 1024"><path d="M437.61370098 62C511.9653834 62 567.40408437 64.9750625 603.94711661 70.90862715 640.4890625 76.85875214 673.17788339 89.24432187 702.0298083 108.08085518 730.86442403 126.91739375 754.89939688 151.9958709 774.13365107 183.31421768 793.36791143 214.6491125 802.98557598 249.75173955 802.98557598 288.65416045 802.98557598 330.83897715 791.17091563 369.53030411 767.57620098 404.74675215 743.9814916 439.96320723 711.96875 466.38278545 671.57259893 483.989975 728.73557597 499.93216455 772.68088848 527.09577295 803.40853643 565.48078965 834.13617911 603.8658125 849.5 648.9925833 849.5 700.86213125 849.5 741.70481152 839.54483018 781.43093545 819.66803222 820.02602393 799.79122812 858.63766661 772.64627188 889.4706875 738.2342542 912.54371152 703.82115722 935.63329589 661.38053222 949.8132125 610.94483018 955.11658643 579.30420518 958.38242714 502.99134893 960.43651455 382.00733018 961.2446917L62 961.2446917 62 62 437.61370098 62ZM230.75 399.5L364.28739893 399.5C443.66832705 399.5 493.01498955 398.3985125 512.2878875 396.1765083 547.16913125 392.20600625 574.5923334 380.59226035 594.55516661 361.33526357 614.51916348 342.09506357 624.5 316.75190732 624.5 285.33825723 624.5 255.25445205 615.87928848 230.82024482 598.67503438 211.9998166 581.46961661 193.19729786 555.88043955 181.81078438 521.92491875 177.8234917 501.7251333 175.61939785 443.66832705 174.5 347.77191465 174.5L230.75 174.5 230.75 399.5ZM230.75 793.25L427.71935411 793.25C504.38265839 793.25 553.03467911 791.52986972 573.6366916 788.09058652 605.25887187 783.49415732 631.02137187 772.30843965 650.90483545 754.51688545 670.78830518 736.72532597 680.75 712.9074667 680.75 683.04772812 680.75 657.79902705 673.07580722 636.3704542 657.74677607 618.76201661 642.39838438 601.16818027 620.24677403 588.33928847 591.25201455 580.3035708 562.25726035 572.2678584 499.35403232 568.25 402.56169277 568.25L230.75 568.25 230.75 793.25Z"></path></symbol><symbol id="icon-max" viewBox="0 0 1024 1024"><path d="M64 128l0 128 0 576 64 0 768 0 64 0 0-64L960 256 960 128 64 128zM896 768 128 768 128 256l768 0L896 768z"></path></symbol><symbol id="icon-del" viewBox="0 0 1024 1024"><path d="M960 192l-192 0L768 64c0-35.328-28.672-64-64-64L320 0C284.672 0 256 28.672 256 64l0 128L64 192C28.672 192 0 220.672 0 256l128 0 0 704c0 35.328 28.672 64 64 64l640 0c35.328 0 64-28.672 64-64L896 256l128 0C1024 220.672 995.328 192 960 192zM320 64l384 0 0 128L320 192 320 64zM832 960 192 960 192 256l640 0L832 960z"></path><path d="M416 832C433.664 832 448 817.6 448 800l0-384C448 398.4 433.664 384 416 384S384 398.4 384 416l0 384C384 817.6 398.336 832 416 832z"></path><path d="M608 832c17.6 0 32-14.4 32-32l0-384C640 398.4 625.6 384 608 384S576 398.4 576 416l0 384C576 817.6 590.4 832 608 832z"></path></symbol><symbol id="icon-unorderedlist" viewBox="0 0 1024 1024"><path d="M0 0l256 0 0 256-256 0zM384 64l640 0 0 128-640 0zM0 384l256 0 0 256-256 0zM384 448l640 0 0 128-640 0zM0 768l256 0 0 256-256 0zM384 832l640 0 0 128-640 0z"></path></symbol><symbol id="icon-remove" viewBox="0 0 1024 1024"><path d="M921.6 512 880.64 512 972.8 972.8C972.8 1001.088 949.888 1024 921.6 1024L102.4 1024C74.112 1024 51.2 1001.088 51.2 972.8L143.36 512 102.4 512C74.112 512 51.2 489.088 51.2 460.8L51.2 409.6C51.2 381.312 74.112 358.4 102.4 358.4L409.6 358.4 409.6 102.4C409.6 45.8496 455.4496 0 512 0 568.5504 0 614.4 45.8496 614.4 102.4L614.4 358.4 921.6 358.4C949.888 358.4 972.8 381.312 972.8 409.6L972.8 460.8C972.8 489.088 949.888 512 921.6 512ZM102.4 972.8 257.6384 972.8C254.1056 967.5008 252.4416 960.9472 253.6192 954.1888L284.7488 726.5024C287.2064 712.6016 300.4672 703.2832 314.3936 705.7408 328.32 708.1984 337.6128 721.4848 335.1808 735.4112L304.0512 963.072C303.4112 966.6816 302.0032 969.9328 300.1088 972.8L921.6 972.8 819.2 512 204.8 512 102.4 972.8ZM563.2 102.4C563.2 74.112 540.288 51.2 512 51.2 483.712 51.2 460.8 74.112 460.8 102.4L460.8 358.4 563.2 358.4 563.2 102.4ZM921.6 409.6 102.4 409.6 102.4 460.8 921.6 460.8 921.6 409.6Z"></path></symbol><symbol id="icon-fontSize" viewBox="0 0 1024 1024"><path d="M321.536 515.008H512V387.968H4.032v126.976H194.56V896h126.976V515.008z m63.552-380.992h634.944v127.04H385.088V134.016z m253.888 127.04h126.976V896H638.976V261.056z"></path></symbol><symbol id="icon-quote" viewBox="0 0 1024 1024"><path d="M448 896v-256H204.8c-6.4-166.4 32-256 179.2-332.8V192C166.4 268.8 57.6 409.6 64 627.2V896h384z m512 0v-256h-243.2c-6.4-166.4 32-256 179.2-332.8V192c-217.6 76.8-326.4 217.6-320 435.2V896h384z"></path></symbol><symbol id="icon-font" viewBox="0 0 1024 1024"><path d="M22.755556 0v278.755556H56.888889c11.377778-73.955556 39.822222-136.533333 91.022222-176.355556C176.355556 73.955556 227.555556 56.888889 301.511111 56.888889h79.644445v790.755555c0 51.2-5.688889 85.333333-11.377778 96.711112-5.688889 17.066667-17.066667 28.444444-34.133334 34.133333-17.066667 11.377778-45.511111 17.066667-73.955555 17.066667H227.555556v28.444444h568.888888v-28.444444h-34.133333c-34.133333 0-56.888889-5.688889-73.955555-17.066667-17.066667-11.377778-28.444444-22.755556-34.133334-34.133333-5.688889-11.377778-11.377778-45.511111-11.377778-96.711112V56.888889h79.644445c51.2 0 85.333333 5.688889 108.088889 11.377778 34.133333 17.066667 62.577778 39.822222 85.333333 68.266666 22.755556 28.444444 39.822222 73.955556 56.888889 136.533334h28.444444V0H22.755556z"></path></symbol><symbol id="icon-lookup" viewBox="0 0 1024 1024"><path d="M960 448V128c0-38.4-25.6-64-64-64H192c-32 0-64 25.6-64 64v768c0 38.4 25.6 64 64 64h704c38.4 0 64-25.6 64-64v-192l-275.2-236.8c6.4-12.8 12.8-32 12.8-44.8 25.6-134.4-89.6-249.6-224-224-76.8 12.8-134.4 70.4-147.2 147.2-25.6 134.4 89.6 249.6 224 224 38.4-6.4 76.8-25.6 102.4-57.6l243.2 217.6v128c0 19.2-12.8 32-32 32h-640c-19.2 0-32-6.4-32-25.6v-704c0-19.2 12.8-32 32-32h640c19.2 0 32 12.8 32 32V448h64z m-416 57.6C448 531.2 364.8 448 390.4 352c12.8-44.8 44.8-83.2 89.6-89.6 96-25.6 179.2 57.6 153.6 153.6-6.4 44.8-44.8 83.2-89.6 89.6z" fill=""></path><path d="M320 640h256v64H320zM320 768h448v64H320z" fill=""></path></symbol><symbol id="icon-italic" viewBox="0 0 1024 1024"><path d="M670 195.6h205.4V64.7H350.5v130.9h191.9L347.2 828.4H148.6v130.9h524.9V828.4H474.9z"></path></symbol><symbol id="icon-format" viewBox="0 0 1024 1024"><path d="M64 64c0-35.328 29.184-64 64.128-64h639.68A64 64 0 0 1 832 64v192c0 35.328-29.184 64-64.128 64H128.192A64 64 0 0 1 64 256V64z m768 64h128v64h-128V128zM448 448h448v64H448V448z m448-256h64v320h-64V192zM448 512h64v64H448V512zM384 576h192v351.872a96 96 0 0 1-192 0V576z" fill=""></path></symbol><symbol id="icon-subscript" viewBox="0 0 1157 1024"><path d="M986.70404 871.981313v66.663206h170.666667v85.355481h-255.977853v-194.67428l170.666667-79.995847v-66.663206h-170.666667v-85.355481h255.977853v194.67428l-170.666667 79.995847zM864.0526 0h-181.297344L432.092742 250.662514 181.341639 0H0l341.333333 341.333333L0 682.666667h181.341639l250.751103-250.662514 250.662514 250.662514h181.297344l-341.333334-341.333334L864.0526 0z"></path></symbol><symbol id="icon-superscript" viewBox="0 0 1157 1024"><path d="M986.810657 274.676626v66.656707h170.648454v85.34244h-255.990893V231.987195l170.684878-79.988049V85.342439h-170.684878V0h255.990893v194.688578l-170.648454 79.988048z m-122.67748 66.656707h-181.357237l-250.672927 250.672927-250.745776-250.672927H0l341.333333 341.333334L0 1024h181.357237l250.745776-250.636503 250.672927 250.636503h181.357237l-341.369758-341.333333 341.369758-341.333334z"></path></symbol><symbol id="icon-drag" viewBox="0 0 1024 1024"><path d="M192 256h640v64H192z m0 192h640v64H192z m0 192h640v64H192z"></path></symbol><symbol id="icon-foreColor" viewBox="0 0 1024 1024"><path d="M896.1024 869.4784L544.09216 0h-69.40672L170.68032 777.9328C131.54304 892.416 74.6496 955.392 0 966.8608V1024h373.43232v-57.1392h-69.40672c-49.84832 0-76.45184-22.9376-80.09728-68.83328 3.64544-42.00448 10.69056-72.4992 21.38112-91.5456l42.78272-114.23744h298.57792l69.40672 165.74464c3.3792 10.99776 5.50912 17.5104 6.47168 19.72224-0.4096-2.74432-0.77824-5.24288-1.26976-8.25344 1.90464 8.00768 2.29376 10.67008 1.26976 8.25344 2.7648 18.16576 4.23936 30.84288 4.23936 37.62176 3.39968 38.0928-23.22432 55.17312-80.09728 51.5072h-53.26848V1024H1024v-57.1392c-63.95904 0-106.72128-32.4608-127.8976-97.3824zM314.71616 614.4l117.18656-308.77696 122.88 308.77696H314.71616z"></path></symbol><symbol id="icon-tab" viewBox="0 0 1024 1024"><path d="M320 128H128v128h192V128z m384 0v128h192V128h-192zM128 320v576h768V320H128zM64 64h896v896H64V64z m320 64v128h256V128H384z"></path></symbol></svg>';
 			(function svg() {
+				var a = document.getElementById('iceEditor-css');
+				if (a) a.parentNode.removeChild(a);
+				a = document.getElementById('iceEditor-icon');
+				if (a) a.parentNode.removeChild(a);
 				var c = document.createElement('style'),
 					d, s, b = document.body;
 				if (c.styleSheet) {
@@ -1893,12 +1842,14 @@ ice.editor = function (id,callback) {
 				} else {
 					c.innerHTML = ice.editor.css;
 				}
+				c.id = 'iceEditor-css';
 				document.getElementsByTagName('head')[0].appendChild(c);
 				d = document.createElement("div");
 				d.innerHTML = ice.editor.css + ice.editor.svg;
 				ice.editor.svg = null;
 				s = d.getElementsByTagName("svg")[0];
 				if (s) {
+					s.id = 'iceEditor-icon';
 					s.setAttribute("aria-hidden", "true");
 					s.style.position = "absolute";
 					s.style.width = 0;
@@ -1913,6 +1864,5 @@ ice.editor = function (id,callback) {
 			})();
 		}
 	}
-	//只返回color色值属性和setColor方法
-	return new iceEditor(id,callback);
+	return new iceEditor(id, callback);
 }

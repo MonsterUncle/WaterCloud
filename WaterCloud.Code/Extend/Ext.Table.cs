@@ -8,7 +8,7 @@ using System.Data;
 
 namespace WaterCloud.Code
 {
-    public static class ExtTable
+    public static partial class Extensions
     {
         /// <summary>
         /// 获取表里某页的数据

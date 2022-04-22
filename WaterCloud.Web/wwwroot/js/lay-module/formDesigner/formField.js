@@ -430,7 +430,6 @@ layui.define(['layer'], function (exports) {
             clearable: true,
             maxlength: null,
             showWordLimit: false,
-            menu: ['backColor', 'fontSize', 'foreColor', 'bold', 'italic', 'underline', 'strikeThrough', 'justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent', 'insertOrderedList', 'insertUnorderedList', 'superscript', 'subscript', 'createLink', 'unlink', 'hr', 'face','table', 'files', 'music', 'video', 'insertImage', 'removeFormat', 'code', 'line'],
             height: "200px",
             uploadUrl: '/upload/',
             disabled:false,

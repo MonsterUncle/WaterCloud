@@ -55,7 +55,7 @@ namespace WaterCloud.Code
                 {
                     string output = ShellHelper.Bash("uptime -s");
                     output = output.Trim();
-                    runTime = Ext.FormatTime((DateTime.Now - output.ToDate()).TotalMilliseconds.ToString().Split('.')[0].ToLong());
+                    runTime = Extensions.FormatTime((DateTime.Now - output.ToDate()).TotalMilliseconds.ToString().Split('.')[0].ToLong());
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace WaterCloud.Code
                     string[] outputArr = output.Split("=", StringSplitOptions.RemoveEmptyEntries);
                     if (outputArr.Length == 2)
                     {
-                        runTime = Ext.FormatTime((DateTime.Now - outputArr[1].Split('.')[0].ToDate()).TotalMilliseconds.ToString().Split('.')[0].ToLong());
+                        runTime = Extensions.FormatTime((DateTime.Now - outputArr[1].Split('.')[0].ToDate()).TotalMilliseconds.ToString().Split('.')[0].ToLong());
                     }
                 }
             }

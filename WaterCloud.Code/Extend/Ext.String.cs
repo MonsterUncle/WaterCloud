@@ -6,7 +6,7 @@ namespace WaterCloud.Code
 	/// <summary>
 	/// string扩展类
 	/// </summary>
-	public static class StringExtensions
+	public static partial class Extensions
     {
 
         /// <summary>
