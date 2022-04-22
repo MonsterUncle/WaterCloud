@@ -9,7 +9,7 @@ using System.Text;
 
 namespace WaterCloud.Code
 {
-    public static partial class Ext
+    public static partial class Extensions
     {
         /// <summary>
         /// 获取格式化字符串，带时分秒，格式："yyyy-MM-dd HH:mm:ss"

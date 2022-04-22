@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Extend\AutoMapperExt.cs" />
+    <Compile Include="Extend\Ext.Mapper.cs" />
     <Compile Include="Extend\Ext.Convert.cs" />
     <Compile Include="Extend\Ext.DateTime.cs" />
     <Compile Include="Extend\Ext.Enum.cs" />
@@ -26,11 +26,9 @@
     <Compile Include="Extend\Ext.Format.cs" />
     <Compile Include="Extend\Ext.String.cs" />
     <Compile Include="Extend\Ext.Validate.cs" />
-    <Compile Include="Extend\ExtLinq.cs" />
-    <Compile Include="Extend\ExtLinq.SortBy.cs" />
-    <Compile Include="Extend\ExtList.Comparint.cs" />
-    <Compile Include="Extend\ExtList.cs" />
-    <Compile Include="Extend\ExtTable.cs" />
+    <Compile Include="Extend\Ext.Linq.cs" />
+    <Compile Include="Extend\Ext.List.cs" />
+    <Compile Include="Extend\Ext.Table.cs" />
   </ItemGroup>
 
   <ItemGroup>

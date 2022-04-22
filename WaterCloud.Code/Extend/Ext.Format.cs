@@ -6,7 +6,7 @@
 *********************************************************************************/
 namespace WaterCloud.Code
 {
-    public static partial class Ext
+    public static partial class Extensions
     {
         /// <summary>
         /// 获取描述
