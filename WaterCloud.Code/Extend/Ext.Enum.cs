@@ -83,6 +83,24 @@ namespace WaterCloud.Code
             var description = tEnum.GetDescription();
             return description;
         }
+        /// <summary>
+        /// 枚举
+        /// </summary>
+        /// <param name="enumType"></param>
+        /// <returns></returns>
+        public static string ToDescription(this Enum enumType)
+        {
+            if (enumType == null)
+                return "";
+
+            System.Reflection.FieldInfo fieldInfo = enumType.GetType().GetField(enumType.ToString());
+
+            object[] attribArray = fieldInfo.GetCustomAttributes(false);
+            if (attribArray.Length == 0)
+                return enumType.ToString();
+            else
+                return (attribArray[0] as DescriptionAttribute).Description;
+        }
         #endregion
     }
 }

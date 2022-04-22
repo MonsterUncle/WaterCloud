@@ -10,11 +10,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using WaterCloud.Code;
-using WaterCloud.Domain.FlowManage;
 
-namespace WaterCloud.Service.CommonService
+namespace WaterCloud.Domain.FlowManage
 {
-    public class FlowRuntime
+	public class FlowRuntime
     {
         /// <summary>
         /// 构造函数

@@ -6,7 +6,6 @@ using WaterCloud.Code;
 using SqlSugar;
 using WaterCloud.Domain.FlowManage;
 using WaterCloud.Domain.SystemManage;
-using WaterCloud.Service.CommonService;
 using WaterCloud.Domain.SystemOrganize;
 using System.Net.Http;
 using System.IO;
@@ -14,7 +13,6 @@ using System.Reflection;
 using WaterCloud.Domain.InfoManage;
 using WaterCloud.Service.InfoManage;
 using WaterCloud.DataBase;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace WaterCloud.Service.FlowManage
 {

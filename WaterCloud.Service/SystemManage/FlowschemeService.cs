@@ -5,19 +5,18 @@ using System.Collections.Generic;
 using WaterCloud.Code;
 using SqlSugar;
 using WaterCloud.Domain.SystemManage;
-using WaterCloud.Service.CommonService;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Domain.FlowManage;
 using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
-    /// <summary>
-    /// 创 建：超级管理员
-    /// 日 期：2020-07-10 08:49
-    /// 描 述：流程设计服务类
-    /// </summary>
-    public class FlowschemeService : DataFilterService<FlowschemeEntity>, IDenpendency
+	/// <summary>
+	/// 创 建：超级管理员
+	/// 日 期：2020-07-10 08:49
+	/// 描 述：流程设计服务类
+	/// </summary>
+	public class FlowschemeService : DataFilterService<FlowschemeEntity>, IDenpendency
     {
         public FlowschemeService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
