@@ -16,7 +16,6 @@ using WaterCloud.Service.SystemSecurity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WaterCloud.Service.SystemOrganize;
-using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Service.InfoManage;
 using Microsoft.AspNetCore.Authorization;
 

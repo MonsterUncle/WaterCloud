@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace WaterCloud.Code
 {
-    public static partial class Ext
+    public static partial class Extensions
     {
         #region 数值转换
         /// <summary>

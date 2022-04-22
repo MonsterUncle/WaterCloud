@@ -8,7 +8,6 @@ using WaterCloud.CodeGenerator;
 using System.Linq;
 using WaterCloud.Service;
 using System.Threading.Tasks;
-using WaterCloud.Code.Extend;
 using WaterCloud.DataBase;
 using SqlSugar;
 using System;
@@ -147,7 +146,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 SingleTableTemplate template = new SingleTableTemplate(_unitOfWork.GetDbClient());
                 string idcolumn = list.FirstOrDefault(a => a.IsPrimarykey == true)?.DbColumnName;
                 Dictionary<string, string> dic = new Dictionary<string, string>();
-                baseConfig.PageIndex.ButtonList = ExtList.removeNull(baseConfig.PageIndex.ButtonList);
+                baseConfig.PageIndex.ButtonList = Extensions.removeNull(baseConfig.PageIndex.ButtonList);
                 baseConfig.PageIndex.ColumnList = baseConfig.PageIndex.ColumnList.Where(a => a.field != "").ToList();
                 baseConfig.PageForm.FieldList.Remove("");
                 string idType = "string";

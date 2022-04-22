@@ -156,7 +156,7 @@ namespace WaterCloud.Service.SystemSecurity
 			{
                 list.Add(new KeyValue { 
                     Key=item.FullName,
-                    Description = item.GetCustomAttribute<ServiceDescription>(false)!.ClassDescription
+                    Description = item.GetCustomAttribute<ServiceDescriptionAttribute>(false)!.ClassDescription
                 });
 			}
             return list;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WaterCloud.Code
 {
 	[AttributeUsage(AttributeTargets.Class, Inherited = true)]
-	public class ServiceDescription : Attribute
+	public class ServiceDescriptionAttribute : Attribute
 	{
 
 		public string ClassDescription
@@ -16,11 +16,11 @@ namespace WaterCloud.Code
 			set;
 		}
 
-		private ServiceDescription()
+		private ServiceDescriptionAttribute()
 		{
 		}
 
-		public ServiceDescription(string classDescription)
+		public ServiceDescriptionAttribute(string classDescription)
 		{
 			ClassDescription = classDescription;
 		}
