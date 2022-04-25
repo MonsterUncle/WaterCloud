@@ -22,7 +22,7 @@ namespace WaterCloud.WebApi
             base.ConfigureServices(services);
             services.AddDefaultSwaggerGen(Assembly.GetExecutingAssembly().GetName().Name)
                     .AddSqlSugar()
-                    .AddRabbitMq()
+                    .AddIf(GlobalContext.SystemConfig.RabbitMq.Enabled, x => x.AddWorkerService())
                     .AddDefaultAPI()
                     .AddNewtonsoftJson(options =>
                     {

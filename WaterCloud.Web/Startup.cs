@@ -23,7 +23,7 @@ namespace WaterCloud.Web
                 .AddQuartz()
                 .ReviseSuperSysem()
                 .AddRabbitMq()
-                .AddWorkerService()
+                .AddIf(GlobalContext.SystemConfig.RabbitMq.Enabled,x => x.AddWorkerService())
                 .AddSignalR(options =>
                 {
                     //客户端发保持连接请求到服务端最长间隔，默认30秒，改成4分钟，网页需跟着设置connection.keepAliveIntervalInMilliseconds = 12e4;即2分钟

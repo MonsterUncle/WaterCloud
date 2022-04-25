@@ -118,7 +118,8 @@ namespace WaterCloud.Service.InfoManage
             }
             //通过http发送消息
             messageEntity.companyId = currentuser.CompanyId;
-            rabbitMqHelper.Publish(messageEntity);
+            if (GlobalContext.SystemConfig.RabbitMq.Enabled)
+                rabbitMqHelper.Publish(messageEntity);
         }
         public async Task ReadAllMsgForm(int type)
         {
