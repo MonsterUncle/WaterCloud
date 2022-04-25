@@ -316,5 +316,25 @@ namespace WaterCloud.Code
             return @this;
         }
         #endregion
+
+        #region AddIf
+        /// <summary>
+        /// 根据条件注入服务
+        /// </summary>
+        /// <param name="this"></param>
+        /// <param name="condition"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddIf(
+            this IServiceCollection @this,
+            bool condition,
+            Action<IServiceCollection> action)
+        {
+            if (condition && action != null)
+                action(@this);
+
+            return @this;
+        }
+        #endregion
     }
 }
