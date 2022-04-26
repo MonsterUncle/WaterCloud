@@ -12,7 +12,7 @@
 
 ![](https://img.shields.io/badge/.net-6.0.0-blue)
 ![](https://img.shields.io/badge/SqlSugar-5.0.5.1-blue)
-![](https://img.shields.io/badge/layui-2.6.7-blue)
+![](https://img.shields.io/badge/layui-2.6.8-blue)
 
 ![](https://img.shields.io/badge/Quartz-3.3.3-brightgreen)
 ![](https://img.shields.io/badge/Autofac-6.3.0-brightgreen)
