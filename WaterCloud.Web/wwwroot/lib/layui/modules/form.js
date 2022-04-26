@@ -19,16 +19,24 @@ layui.define('layer', function(exports){
     this.config = {
       verify: {
         //修改增加可空
-        required: [/[\S]+/, "必填项不能为空"],
-        phone: [/(^$)|^1\d{10}$/, "请输入正确的手机号"],
-        email: [/(^$)|^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/, "邮箱格式不正确"],
-        url: [/(^$)|(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/, "链接格式不正确"],
+        required: [
+          /[\S]+/
+        , "必填项不能为空"],
+        phone: [/(^$)|^1\d{10}$/
+        , "请输入正确的手机号"],
+        email: [/(^$)|^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+        , "邮箱格式不正确"],
+        url: [/(^$)|(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/
+        , "链接格式不正确"],
         number: function (value) {
             if (!!value && isNaN(value)) return "只能填写数字"
         },
-        integer: [/^\d*$/, "只能填写整数"],
-        date: [/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/, "日期格式不正确"],
-        identity: [/(^$)|(^\d{15}$)|(^\d{17}(x|X|\d)$)/, "请输入正确的身份证号"],
+        integer: [/^\d*$/
+        , "只能填写整数"],
+        date: [/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/
+        , "日期格式不正确"],
+        identity: [/(^$)|(^\d{15}$)|(^\d{17}(x|X|\d)$)/
+        , "请输入正确的身份证号"],
         pass: [
             /^[\S]{6,12}$/
             , '密码必须6到12位，且不能出现空格'
@@ -38,6 +46,7 @@ layui.define('layer', function(exports){
             , 'IP地址不符合规则'
         ]
       }
+      ,autocomplete: null //全局 autocomplete 状态。null 表示不干预
     };
   };
   
@@ -131,13 +140,20 @@ layui.define('layer', function(exports){
   //表单控件渲染
   Form.prototype.render = function(type, filter){
     var that = this
+    ,options = that.config
     ,elemForm = $(ELEM + function(){
       return filter ? ('[lay-filter="' + filter +'"]') : '';
     }())
     ,items = {
-      
+      //输入框
+      input: function(){
+        var inputs = elemForm.find('input,textarea');
+        
+        //初始化全局的 autocomplete
+        options.autocomplete && inputs.attr('autocomplete', options.autocomplete);
+      }
       //下拉选择框
-      select: function(){
+      ,select: function(){
         var TIPS = '请选择', CLASS = 'layui-form-select', TITLE = 'layui-select-title'
         ,NONE = 'layui-select-none', initValue = '', thatInput
         ,selects = elemForm.find('select')
@@ -433,8 +449,8 @@ layui.define('layer', function(exports){
           var reElem = $(['<div class="'+ (isSearch ? '' : 'layui-unselect ') + CLASS 
           ,(disabled ? ' layui-select-disabled' : '') +'">'
             ,'<div class="'+ TITLE +'">'
-              ,('<input type="text" placeholder="'+ placeholder +'" '
-                +('value="'+ (value ? selected.html() : '') +'"') //默认值
+              ,('<input type="text" placeholder="'+ $.trim(placeholder) +'" '
+                +('value="'+ $.trim(value ? selected.html() : '') +'"') //默认值
                 +((!disabled && isSearch) ? '' : ' readonly') //是否开启搜索
                 +' class="layui-input'
                 +(isSearch ? '' : ' layui-unselect') 
@@ -445,11 +461,11 @@ layui.define('layer', function(exports){
               var arr = [];
               layui.each(options, function(index, item){
                 if(index === 0 && !item.value){
-                  arr.push('<dd lay-value="" class="layui-select-tips">'+ (item.innerHTML || TIPS) +'</dd>');
+                  arr.push('<dd lay-value="" class="layui-select-tips">'+ $.trim(item.innerHTML || TIPS) +'</dd>');
                 } else if(item.tagName.toLowerCase() === 'optgroup'){
                   arr.push('<dt>'+ item.label +'</dt>'); 
                 } else {
-                  arr.push('<dd lay-value="'+ item.value +'" class="'+ (value === item.value ?  THIS : '') + (item.disabled ? (' '+DISABLED) : '') +'">'+ item.innerHTML +'</dd>');
+                  arr.push('<dd lay-value="'+ item.value +'" class="'+ (value === item.value ?  THIS : '') + (item.disabled ? (' '+DISABLED) : '') +'">'+ $.trim(item.innerHTML) +'</dd>');
                 }
               });
               arr.length === 0 && arr.push('<dd lay-value="" class="'+ DISABLED +'">没有选项</dd>');
@@ -578,7 +594,7 @@ layui.define('layer', function(exports){
           //替代元素
           var reElem = $(['<div class="layui-unselect '+ CLASS 
             ,(radio.checked ? (' '+CLASS+'ed') : '') //选中状态
-          ,(disabled ? ' layui-radio-disbaled '+DISABLED : '') +'">' //禁用状态
+          ,(disabled ? ' layui-radio-disabled '+DISABLED : '') +'">' //禁用状态
           ,'<i class="layui-anim layui-icon">'+ ICON[radio.checked ? 0 : 1] +'</i>'
           ,'<div>'+ function(){
             var title = radio.title || '';
@@ -596,7 +612,7 @@ layui.define('layer', function(exports){
       }
     };
     type ? (
-      items[type] ? items[type]() : hint.error('不支持的'+ type + '表单渲染')
+      items[type] ? items[type]() : hint.error('不支持的 "'+ type + '" 表单渲染')
     ) : layui.each(items, function(index, item){
       item();
     });
@@ -633,7 +649,9 @@ layui.define('layer', function(exports){
         
         //匹配验证规则
         if(verify[thisVer]){
-          var isTrue = isFn ? errorText = verify[thisVer](value, item) : !verify[thisVer][0].test(value);
+          var isTrue = isFn ? errorText = verify[thisVer](value, item) : !verify[thisVer][0].test(value)
+          //是否属于美化替换后的表单元素
+          ,isForm2Elem = item.tagName.toLowerCase() === 'select' || /^checkbox|radio$/.test(item.type);
           errorText = errorText || verify[thisVer][1];
           
           if(thisVer === 'required'){
@@ -646,7 +664,7 @@ layui.define('layer', function(exports){
             if(verType === 'tips'){
               layer.tips(errorText, function(){
                 if(typeof othis.attr('lay-ignore') !== 'string'){
-                  if(item.tagName.toLowerCase() === 'select' || /^checkbox|radio$/.test(item.type)){
+                  if(isForm2Elem){
                     return othis.next();
                   }
                 }
@@ -661,11 +679,19 @@ layui.define('layer', function(exports){
             }
             
             //非移动设备自动定位焦点
-            if(!device.android && !device.ios){
+            if(!device.mobile){
               setTimeout(function(){
-                item.focus(); 
+                (isForm2Elem ? othis.next().find('input') : item).focus();
               }, 7);
-            }
+            } else { //移动设备定位
+              $dom.scrollTop(function(){
+                try {
+                  return (isForm2Elem ? othis.next() : othis).offset().top - 15
+                } catch(e){
+                  return 0;
+                }
+              }());
+            } 
             
             othis.addClass(DANGER);
             return stop = true;
