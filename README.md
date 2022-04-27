@@ -43,6 +43,7 @@
 - 定时任务，基于quartz的定时任务功能(可以集群)。
 - 项目演示地址：http://106.75.169.226:5000/  （账号：admin 密码：0000，数据库2个小时还原一次）
 - 文档地址：https://gitee.com/qian_wei_hong/WaterCloud/wikis/pages
+- 在线项目地址：https://replit.com/@MonsterUncle/WaterCloud
 
 #### 前端以及后端使用技术介绍
 
