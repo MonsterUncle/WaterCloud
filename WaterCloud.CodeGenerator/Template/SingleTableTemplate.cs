@@ -288,7 +288,7 @@ namespace WaterCloud.CodeGenerator
             sb.AppendLine("            }");
             sb.AppendLine("            //权限过滤");
             sb.AppendLine("            query = GetDataPrivilege(\"a\",\"\",query);");
-            sb.AppendLine("            return await repository.OrderList(query, pagination);");
+            sb.AppendLine("            return  await query.ToPageListAsync(pagination);");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public async Task<" + baseConfigModel.FileConfig.EntityName + $"> GetForm({idType} keyValue)");
