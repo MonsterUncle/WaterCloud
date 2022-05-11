@@ -149,17 +149,22 @@ layui.define(['table', 'laypage','jquery', 'element','laytpl'], function(exports
 		var option = that.option;
 		var filter = $(option.elem).attr('lay-filter');
 		var elem = option.elem.substring(1);
-
+		let timer = null;
 		//行事件
 		$(option.elem).on('click', 'div[type=card]', function () { //单击行
-			getCheckedData(this, elem);
-			var reElem = this;
-			layui.event.call(this, MOD_NAME, 'row(' + filter + ')', {
-				elem: this
-				, value: _instances[elem].option.checkedItem
-				, othis: reElem
-			});
+			clearTimeout(timer);
+			var that = this;
+			timer = setTimeout(function () {
+				getCheckedData(that, elem);
+				var reElem = that;
+				layui.event.call(that, MOD_NAME, 'row(' + filter + ')', {
+					elem: that
+					, value: _instances[elem].option.checkedItem
+					, othis: reElem
+				});
+			}, 300)
 		}).on('dblclick', 'div[type=card]', function () { //双击行
+			clearTimeout(timer);
 			getCheckedData(this, elem);
 			var reElem = this;
 			layui.event.call(this, MOD_NAME, 'rowDouble(' + filter + ')', {
