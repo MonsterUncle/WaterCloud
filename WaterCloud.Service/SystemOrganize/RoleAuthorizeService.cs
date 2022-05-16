@@ -130,7 +130,7 @@ namespace WaterCloud.Service.SystemOrganize
         {
             var user = await userApp.GetForm(currentuser.UserId);
             var temps = isAuthorize ? action.Split(',') : null;
-            if (user == null || user.F_EnabledMark == false)
+            if (user == null || user.EnabledMark == false)
             {
                 return false;
             }
@@ -142,7 +142,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             if (user.IsAdmin == true)
             {
-                if (await unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_UrlAddress == action || temps.Contains(a.F_UrlAddress)).AnyAsync())
+                if (await unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.UrlAddress == action || temps.Contains(a.UrlAddress)).AnyAsync())
                 {
                     return true;
                 }
@@ -205,7 +205,7 @@ namespace WaterCloud.Service.SystemOrganize
                     }
                 }
             }
-            var module = authorizeurldata.Find(a => a.F_UrlAddress == action || temps.Contains(a.F_Authorize));
+            var module = authorizeurldata.Find(a => a.UrlAddress == action || temps.Contains(a.Authorize));
             if (module!=null)
             {
                 return true;
