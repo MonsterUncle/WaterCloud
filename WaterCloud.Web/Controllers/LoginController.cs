@@ -179,7 +179,7 @@ namespace WaterCloud.Web.Controllers
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
                 SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
                 operatorModel.DbNumber = setEntity.F_DbNumber;
-                if (operatorModel.DbNumber == GlobalContext.SystemConfig.MainDbNumber)
+                if (operatorModel.IsAdmin && operatorModel.DbNumber == GlobalContext.SystemConfig.MainDbNumber)
                 {
                     operatorModel.IsSuperAdmin = true;
                 }
