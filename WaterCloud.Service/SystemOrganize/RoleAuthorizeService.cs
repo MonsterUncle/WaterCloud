@@ -135,6 +135,7 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<bool> ActionValidate(string action,bool isAuthorize=false)
         {
             var user = await userApp.GetForm(currentuser.UserId);
+            var temps = isAuthorize? action.Split(','):new string[0];
             if (user == null || user.F_EnabledMark == false)
             {
                 return false;
@@ -199,12 +200,7 @@ namespace WaterCloud.Service.SystemOrganize
                     authorizeurldata.AddRange(data[roles]);
                 }
             }
-            var module = authorizeurldata.Find(t => t.F_UrlAddress == action);
-            if (isAuthorize)
-			{
-                var temps = action.Split(',');
-                module = authorizeurldata.Where(t => temps.Contains(t.F_Authorize)).FirstOrDefault();
-            }
+            var module = authorizeurldata.Find(t => t.F_UrlAddress == action || temps.Contains(t.F_Authorize));
             if (module!=null)
             {
                 return true;
