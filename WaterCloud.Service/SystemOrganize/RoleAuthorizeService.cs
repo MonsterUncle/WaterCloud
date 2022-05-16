@@ -126,22 +126,23 @@ namespace WaterCloud.Service.SystemOrganize
             }
             return data.OrderByDescending(a => a.CreatorTime).ToList();
         }
-        public async Task<bool> ActionValidate(string action,bool isAuthorize=false)
+        public async Task<bool> ActionValidate(string action, bool isAuthorize = false)
         {
             var user = await userApp.GetForm(currentuser.UserId);
-            if (user == null || user.EnabledMark == false)
+            var temps = isAuthorize ? action.Split(',') : null;
+            if (user == null || user.F_EnabledMark == false)
             {
                 return false;
             }
             var authorizeurldata = new List<AuthorizeActionModel>();
-            var cachedata =await CacheHelper.GetAsync<Dictionary<string,List<AuthorizeActionModel>>>(cacheKey +repository.Db.CurrentConnectionConfig.ConfigId+ "_list");
+            var cachedata = await CacheHelper.GetAsync<Dictionary<string, List<AuthorizeActionModel>>>(cacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
             if (cachedata == null)
             {
                 cachedata = new Dictionary<string, List<AuthorizeActionModel>>();
             }
             if (user.IsAdmin == true)
             {
-                if (await unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.UrlAddress == action).AnyAsync() || await unitofwork.GetDbClient().Queryable<ModuleButtonEntity>().Where(a => a.UrlAddress == action).AnyAsync())
+                if (await unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_UrlAddress == action || temps.Contains(a.F_UrlAddress)).AnyAsync())
                 {
                     return true;
                 }
@@ -204,12 +205,7 @@ namespace WaterCloud.Service.SystemOrganize
                     }
                 }
             }
-            var module = authorizeurldata.Find(a => a.UrlAddress == action);
-            if (isAuthorize)
-			{
-                var temps = action.Split(',');
-                module = authorizeurldata.Where(a => temps.Contains(a.Authorize)).FirstOrDefault();
-            }
+            var module = authorizeurldata.Find(a => a.F_UrlAddress == action || temps.Contains(a.F_Authorize));
             if (module!=null)
             {
                 return true;
