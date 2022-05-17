@@ -142,12 +142,12 @@ namespace WaterCloud.Service.SystemOrganize
             }
             if (user.IsAdmin == true)
             {
+                //测试
                 if (await unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.UrlAddress == action || temps.Contains(a.UrlAddress)).AnyAsync()
                     || await unitofwork.GetDbClient().Queryable<ModuleButtonEntity>().Where(a => a.UrlAddress == action || temps.Contains(a.UrlAddress)).AnyAsync())
                 {
                     return true;
                 }
-
                 return false;
             }
             else
