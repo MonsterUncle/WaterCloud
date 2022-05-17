@@ -142,7 +142,8 @@ namespace WaterCloud.Service.SystemOrganize
             }
             if (user.F_IsAdmin == true)
             {
-                if (await unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_UrlAddress == action || temps.Contains(a.F_Authorize)).AnyAsync())
+                if (await unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_UrlAddress == action || temps.Contains(a.F_Authorize)).AnyAsync()
+                    || await unitofwork.GetDbClient().Queryable<ModuleButtonEntity>().Where(a => a.F_UrlAddress == action || temps.Contains(a.F_Authorize)).AnyAsync())
                 {
                     return true;
                 }
