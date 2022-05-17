@@ -147,6 +147,7 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     return true;
                 }
+
                 return false;
             }
             else
