@@ -106,12 +106,8 @@
                 if (pvalue.length == 0) {
                     common.modalConfirm("注：您确定要清除选择的数据吗？", function (r) {
                         if (r) {
-                            if (!!pvalue) {
-                                currentWindow.$('#' + value).val(null);
-                            }
-                            if (!!pname) {
-                                currentWindow.$('#' + name).val(null);
-                            }
+                            currentWindow.$('#' + name).val(null);
+                            currentWindow.$('#' + value).val(null);
                             common.modalClose();
                         }
                     });
