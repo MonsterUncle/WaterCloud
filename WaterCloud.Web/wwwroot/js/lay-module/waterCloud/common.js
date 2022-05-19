@@ -1,3 +1,5 @@
+const { debug } = require("util");
+
 /**
  * date:2020/02/27
  * author:Mr.Q
@@ -865,7 +867,6 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             if (!moduleId) {
                 moduleId = location.pathname;
             }
-            var isPhone = obj.checkPhone();
             //没有权限就返回无
             if (!top.clients||!top.clients.moduleFields) {
                 return [];
@@ -876,29 +877,14 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 $.each(cols[0], function (i) {
                     //添加非常规列
                     if (!!cols[0][i].type && cols[0][i].type != 'normal') {
-                        if (isPhone) {
-                           delete array[array.length - 1].fixed;
-                        }
-                        else {
-                            array.push(cols[0][i]);
-                        }
+                        array.push(cols[0][i]);
                     } else if (!cols[0][i].field && cols[0][i].title == "操作") {
-                        if (isPhone) {
-                            delete array[array.length - 1].fixed;
-                        }
-                        else {
-                            array.push(cols[0][i]);
-                        }
+                        array.push(cols[0][i]);
                     }
                     if (!!dataJson) {
                         for (var j = 0; j < dataJson.length; j++) {
                             if (cols[0][i].field == dataJson[j].EnCode) {
-                                if (isPhone) {
-                                    delete array[array.length - 1].fixed;
-                                }
-                                else {
-                                    array.push(cols[0][i]);
-                                }
+                                array.push(cols[0][i]);
                                 break;
                             }
                         }
@@ -906,7 +892,8 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 });
                 cols[0] = array;
             };
-            return cols;
+            //手机端去除固定列
+            return obj.checkPhone(cols);
         },
         //treetable行点击事件及按钮显示控制
         treeTableRowClick: function (type, rendertree, tableId, oneList, moreList, clickfunction) {
@@ -1012,7 +999,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 return false;
             }
         },
-        checkPhone:function () {
+        checkPhone:function (cols) {
             var sUserAgent = navigator.userAgent.toLowerCase();
             var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
             var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
@@ -1024,11 +1011,13 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
             if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
                 //跳转移动端页面
-                return true;
-
+                $.each(cols[0], function (i) {
+                    delete cols[0][i].fixed;
+                });
+                return cols;
             } else {
                 //跳转pc端页面
-                return false;
+                return cols;
             }
         }   
         //表格单元格自动列宽
