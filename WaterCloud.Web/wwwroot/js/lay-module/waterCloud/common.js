@@ -865,6 +865,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             if (!moduleId) {
                 moduleId = location.pathname;
             }
+            var isPhone = obj.checkPhone();
             //没有权限就返回无
             if (!top.clients||!top.clients.moduleFields) {
                 return [];
@@ -875,14 +876,29 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 $.each(cols[0], function (i) {
                     //添加非常规列
                     if (!!cols[0][i].type && cols[0][i].type != 'normal') {
-                        array.push(cols[0][i]);
+                        if (isPhone) {
+                           delete array[array.length - 1].fixed;
+                        }
+                        else {
+                            array.push(cols[0][i]);
+                        }
                     } else if (!cols[0][i].field && cols[0][i].title == "操作") {
-                        array.push(cols[0][i]);
+                        if (isPhone) {
+                            delete array[array.length - 1].fixed;
+                        }
+                        else {
+                            array.push(cols[0][i]);
+                        }
                     }
                     if (!!dataJson) {
                         for (var j = 0; j < dataJson.length; j++) {
                             if (cols[0][i].field == dataJson[j].EnCode) {
-                                array.push(cols[0][i]);
+                                if (isPhone) {
+                                    delete array[array.length - 1].fixed;
+                                }
+                                else {
+                                    array.push(cols[0][i]);
+                                }
                                 break;
                             }
                         }
@@ -996,6 +1012,25 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 return false;
             }
         },
+        checkPhone:function () {
+            var sUserAgent = navigator.userAgent.toLowerCase();
+            var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+            var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+            var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+            var bIsAndroid = sUserAgent.match(/android/i) == "android";
+            var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+            var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+            if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+                //跳转移动端页面
+                return true;
+
+            } else {
+                //跳转pc端页面
+                return false;
+            }
+        }   
         //表格单元格自动列宽
         //tableResize: function (id) {
         //    //动态监听表头高度变化，冻结行跟着改变高度
