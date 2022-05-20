@@ -88,7 +88,7 @@ namespace WaterCloud.Service
                 Console.WriteLine($"执行库{db.CurrentConnectionConfig.ConfigId}");
                 Console.WriteLine("NeedTime-" + db.Ado.SqlExecutionTime.ToString());
                 //App.PrintToMiniProfiler("SqlSugar", "Info", sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
-                Console.WriteLine("Content:" + SqlProfiler.ParameterFormat(sql, pars));
+                Console.WriteLine("Content:" + UtilMethods.GetSqlString(db.CurrentConnectionConfig.DbType, sql, pars));
                 Console.WriteLine("---------------------------------");
                 Console.WriteLine("");
             };
