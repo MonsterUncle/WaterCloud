@@ -881,7 +881,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     }
                     if (!!dataJson) {
                         for (var j = 0; j < dataJson.length; j++) {
-                            if (cols[0][i].field == dataJson[j].F_EnCode) {
+                            if (cols[0][i].field == dataJson[j].EnCode) {
                                 array.push(cols[0][i]);
                                 break;
                             }
