@@ -1,4 +1,3 @@
-
 /*!
  * colorpicker 
  * 颜色选择组件
