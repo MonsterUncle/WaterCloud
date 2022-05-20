@@ -1,4 +1,3 @@
-
 /*!
  * carousel 轮播模块
  * MIT Licensed  
