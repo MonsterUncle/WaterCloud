@@ -7,6 +7,7 @@ using Quartz.Spi;
 using SqlSugar;
 using System;
 using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
@@ -52,10 +53,21 @@ namespace WaterCloud.Service
             db.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
             {
                 DataInfoCacheService = new SqlSugarCache(), //配置我们创建的缓存类
+                EntityNameService = (type, entity) =>
+                {
+                    var attributes = type.GetCustomAttributes(true);
+                    if (attributes.Any(it => it is TableAttribute))
+                    {
+                        entity.DbTableName = (attributes.First(it => it is TableAttribute) as TableAttribute).Name;
+                    }
+                },
                 EntityService = (property, column) =>
                 {
                     var attributes = property.GetCustomAttributes(true);//get all attributes 
-
+                    if (attributes.Any(it => it is ColumnAttribute))
+                    {
+                        column.DbColumnName = (attributes.First(it => it is ColumnAttribute) as ColumnAttribute).Name;
+                    }
                     if (attributes.Any(it => it is SugarColumn) && column.DataType == "longtext" && db.CurrentConnectionConfig.DbType == DbType.SqlServer)
                     {
                         column.DataType = "nvarchar(4000)";
