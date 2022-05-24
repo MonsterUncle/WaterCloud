@@ -7,6 +7,7 @@ using Quartz.Spi;
 using SqlSugar;
 using System;
 using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using WaterCloud.Code;
@@ -64,6 +65,10 @@ namespace WaterCloud.Service
                 EntityService = (property, column) =>
                 {
                     var attributes = property.GetCustomAttributes(true);//get all attributes 
+                    if (attributes.Any(it => it is KeyAttribute))// by attribute set primarykey
+                    {
+                        column.IsPrimarykey = true; //有哪些特性可以看 1.2 特性明细
+                    }
                     if (attributes.Any(it => it is ColumnAttribute))
                     {
                         column.DbColumnName = (attributes.First(it => it is ColumnAttribute) as ColumnAttribute).Name;
