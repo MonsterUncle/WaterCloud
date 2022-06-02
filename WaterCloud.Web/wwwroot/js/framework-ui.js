@@ -153,7 +153,7 @@ $.fn.bindRadio = function (options) {
                 if (options.data[i][options.id] == options.checked) {
                     temp.prop("checked", "true");
                 }
-                $element.append();
+                $element.append(temp);
             }
         });
     }
