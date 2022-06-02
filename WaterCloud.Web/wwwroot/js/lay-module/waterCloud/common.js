@@ -469,6 +469,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     if ($id.hasClass("select2-hidden-accessible")) {
                         type = "select";
                     }
+                    if ($id.find("input[type=radio]").length>0) {
+                        type = "radio";
+                    }
                     switch (type) {
                         case "checkbox":
                             if (value == "true") {
@@ -479,6 +482,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                             break;
                         case "select":
                             $id.val(value).trigger("change");
+                            break;
+                        case "radio":
+                            $("input[name=" + key + "][value=" + value + "]").prop("checked", "true");
                             break;
                         default:
                             $id.val(value);
