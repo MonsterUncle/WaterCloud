@@ -129,7 +129,7 @@ namespace WaterCloud.Service.SystemOrganize
         public async Task<bool> ActionValidate(string action, bool isAuthorize = false)
         {
             var user = await userApp.GetForm(currentuser.UserId);
-            var temps = isAuthorize ? action.Split(',') : null;
+            var temps = isAuthorize ? action.Split(',') : new string[0];
             if (user == null || user.EnabledMark == false)
             {
                 return false;
