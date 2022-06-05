@@ -212,7 +212,7 @@ namespace WaterCloud.CodeGenerator
                     }
                 }
                 sb.AppendLine("            }");
-                sb.AppendLine("            return await data"+(string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum)? "." : $".Where(a => a.{baseConfigModel.PageIndex.DeleteColum} == false)") + $".OrderBy(a => a.{baseConfigModel.PageIndex.SortColumn}"+ (baseConfigModel.PageIndex.IsAsc == true ? "" : " , OrderByType.Desc") + ").ToListAsync();");
+                sb.AppendLine("            return await data"+(string.IsNullOrEmpty(baseConfigModel.PageIndex.DeleteColum)? "" : $".Where(a => a.{baseConfigModel.PageIndex.DeleteColum} == false)") + $".OrderBy(a => a.{baseConfigModel.PageIndex.SortColumn}"+ (baseConfigModel.PageIndex.IsAsc == true ? "" : " , OrderByType.Desc") + ").ToListAsync();");
             }
             else
             {
