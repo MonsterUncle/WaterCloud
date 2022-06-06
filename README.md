@@ -86,7 +86,7 @@
 
 #### 友情链接
 
-1. 前端框架Layui 文档地址：https://layui.itze.cn/
+1. 前端框架Layui 文档地址：https://layui.gitee.io/v2/
 2. Layui前端框架Layuimini 码云地址：https://gitee.com/zhongshaofa/layuimini
 3. SqlSugar.ORM 文档地址：https://www.donet5.com/home/doc
 4. WaterCloud讨论交流QQ群（1065447456）[![](https://pub.idqqimg.com/wpa/images/group.png)](https://jq.qq.com/?_wv=1027&k=51RHQVG)
