@@ -123,7 +123,7 @@ namespace WaterCloud.Service.SystemOrganize
                     {
                         RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
                         roleAuthorizeEntity.F_Id = Utils.GuId();
-                        roleAuthorizeEntity.F_ObjectType = 1;
+                        roleAuthorizeEntity.F_ObjectType = 2;
                         roleAuthorizeEntity.F_ObjectId = entity.F_Id;
                         roleAuthorizeEntity.F_ItemId = itemId;
                         if (moduledata.Find(a => a.F_Id == itemId) != null)
@@ -150,7 +150,7 @@ namespace WaterCloud.Service.SystemOrganize
                     {
                         RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
                         roleAuthorizeEntity.F_Id = Utils.GuId();
-                        roleAuthorizeEntity.F_ObjectType = 1;
+                        roleAuthorizeEntity.F_ObjectType = 2;
                         roleAuthorizeEntity.F_ObjectId = entity.F_Id;
                         roleAuthorizeEntity.F_ItemId = itemId;
                         if (fieldsdata.Find(a => a.F_Id == itemId) != null)
@@ -240,7 +240,7 @@ namespace WaterCloud.Service.SystemOrganize
                     {
                         RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
                         roleAuthorizeEntity.F_Id = Utils.GuId();
-                        roleAuthorizeEntity.F_ObjectType = 1;
+                        roleAuthorizeEntity.F_ObjectType = 2;
                         roleAuthorizeEntity.F_ObjectId = entity.F_Id;
                         roleAuthorizeEntity.F_ItemId = itemId;
                         if (moduledata.Find(a => a.F_Id == itemId) != null)
@@ -264,7 +264,7 @@ namespace WaterCloud.Service.SystemOrganize
                     {
                         RoleAuthorizeEntity roleAuthorizeEntity = new RoleAuthorizeEntity();
                         roleAuthorizeEntity.F_Id = Utils.GuId();
-                        roleAuthorizeEntity.F_ObjectType = 1;
+                        roleAuthorizeEntity.F_ObjectType = 2;
                         roleAuthorizeEntity.F_ObjectId = entity.F_Id;
                         roleAuthorizeEntity.F_ItemId = itemId;
                         if (fieldsdata.Find(a => a.F_Id == itemId) != null)
