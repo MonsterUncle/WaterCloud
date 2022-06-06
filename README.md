@@ -12,7 +12,7 @@
 
 ![](https://img.shields.io/badge/.net-6.0.0-blue)
 ![](https://img.shields.io/badge/SqlSugar-5.0.8.6-blue)
-![](https://img.shields.io/badge/layui-2.6.9-blue)
+![](https://img.shields.io/badge/layui-2.6.12-blue)
 </div>
 
 ----
