@@ -21,7 +21,7 @@ namespace WaterCloud.Domain.SystemOrganize
         [SugarColumn(ColumnName ="Id", IsPrimaryKey = true,ColumnDescription ="主键Id")]
         public string Id { get; set; }
         /// <summary>
-        /// 项目类型
+        /// 项目类型(1菜单，2按钮，3字段)
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "项目类型")]
         public int? ItemType { get; set; }
@@ -31,12 +31,12 @@ namespace WaterCloud.Domain.SystemOrganize
         [SugarColumn(IsNullable = true, ColumnName = "ItemId", ColumnDataType = "nvarchar(50)", ColumnDescription = "项目Id")]
         public string ItemId { get; set; }
         /// <summary>
-        /// 
+        /// 目标类型(1角色，2租户)
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnDescription = "目标类型")]
         public int? ObjectType { get; set; }
         /// <summary>
-        /// 
+        /// 目标Id
         /// </summary>
         [SugarColumn(IsNullable = true, ColumnName = "ObjectId",ColumnDataType = "nvarchar(50)", ColumnDescription = "目标Id")]
         public string ObjectId { get; set; }
