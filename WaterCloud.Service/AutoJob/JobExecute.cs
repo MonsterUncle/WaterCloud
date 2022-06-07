@@ -142,7 +142,7 @@ namespace WaterCloud.Service.AutoJob
                                         {
                                             var temp = await new HttpWebClient(_httpClient).ExecuteAsync(dbJobEntity.RequestUrl, method, dbJobEntity.RequestString, dic);
                                             log.EnabledMark = true;
-                                            log.Description = "执行成功。";
+                                            log.Description = $"执行成功。{temp}";
                                             await unitwork.GetDbClient().Updateable<OpenJobEntity>(a => new OpenJobEntity
                                             {
                                                 LastRunMark = true,

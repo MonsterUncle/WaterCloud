@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace WaterCloud.Code
@@ -171,10 +173,11 @@ namespace WaterCloud.Code
         /// <param name="dicHeaders"></param>
         /// <param name="timeoutSecond"></param>
         /// <returns></returns>
-        public async Task<string> ExecuteAsync(string url, HttpMethod method, string requestString, Dictionary<string, string> dicHeaders, int timeoutSecond = 120)
+        public async Task<string> ExecuteAsync(string url, HttpMethod method, string requestString, Dictionary<string, string> dicHeaders, int timeoutSecond = 120,
+            string accept = "application/json")
         {
-            var client = _httpClientFactory.CreateClient();
-			if (url.IndexOf('?')>-1)
+            var client = _httpClientFactory.CreateClient(); 
+            if (url.IndexOf('?')>-1)
 			{
                 url += "&v=" + DateTime.Now.ToString("yyyyMMddhhmmss");
             }
@@ -186,6 +189,7 @@ namespace WaterCloud.Code
             {
                 Content = new StringContent(requestString),
             };
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             if (dicHeaders != null)
             {
                 foreach (var header in dicHeaders)
@@ -193,6 +197,7 @@ namespace WaterCloud.Code
                     request.Headers.Add(header.Key, header.Value);
                 }
             }
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(accept) { CharSet = "utf-8" });
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {

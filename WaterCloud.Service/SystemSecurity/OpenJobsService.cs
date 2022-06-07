@@ -291,7 +291,7 @@ namespace WaterCloud.Service.SystemSecurity
                     {
                         var temp = await _httpClient.ExecuteAsync(dbJobEntity.RequestUrl, method, dbJobEntity.RequestString, dic);
                         log.EnabledMark = true;
-                        log.Description = "执行成功。";
+                        log.Description = $"执行成功。{temp}";
                         await repository.Update(a => a.Id == keyValue, a => new OpenJobEntity
                         {
                             LastRunMark = true,
