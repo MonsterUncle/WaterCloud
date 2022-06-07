@@ -574,7 +574,7 @@ a cite{font-style: normal; *cursor:pointer;}
 .layui-text ul li{margin-top: 5px; list-style-type: disc;}
 .layui-text em,
 .layui-word-aux{color: #999 !important; padding-left: 5px !important; padding-right: 5px !important;}
-.layui-text p{margin: 10px 0;}
+.layui-text p{margin: 15px 0;}
 .layui-text p:first-child{margin-top: 0;}
 
 /* 字体大小及颜色 */
