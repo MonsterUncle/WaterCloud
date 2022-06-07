@@ -429,15 +429,18 @@ layui.define(["element", "layer", "jquery"], function (exports) {
                     }
                     //切换tab刷新table表单的样式
                     // 获取到对应的iframe中table对象集合
-                    var tableDoms = window.frames[data.index].document.getElementsByTagName('table');
-                    for (var i = 0; i < tableDoms.length; i++) {
-                        var tableDom = tableDoms[i];
-                        // 判断是否存在对应对象以及是否存在table的id属性
-                        if (tableDom !== undefined && tableDom.id !== undefined && tableDom.id !== '') {
-                            // 存在则获取iframe元素的Window对象
-                            var iframe = $('iframe[src^="' + tabId + '"]')[0].contentWindow;
-                            // 调用resize
-                            iframe.layui.table.resize(tableDom.id);
+                    var frames = window.frames[data.index];
+                    if (frames) {
+                        var tableDoms = frames.document.getElementsByTagName('table');
+                        for (var i = 0; i < tableDoms.length; i++) {
+                            var tableDom = tableDoms[i];
+                            // 判断是否存在对应对象以及是否存在table的id属性
+                            if (tableDom !== undefined && tableDom.id !== undefined && tableDom.id !== '') {
+                                // 存在则获取iframe元素的Window对象
+                                var iframe = $('iframe[src^="' + tabId + '"]')[0].contentWindow;
+                                // 调用resize
+                                iframe.layui.table.resize(tableDom.id);
+                            }
                         }
                     }
                 }
