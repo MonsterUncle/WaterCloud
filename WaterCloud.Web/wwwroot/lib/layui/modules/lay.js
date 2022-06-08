@@ -37,7 +37,7 @@
     , length
     , args = arguments
     ,clone = function(target, obj){
-      target = target || (layui.typeof(obj) === 'array' ? [] : {}); //目标对象
+      target = target || (layui.type(obj) === 'array' ? [] : {}); //目标对象
       for(var i in obj){
         //如果值为普通对象，则进入递归，继续深度合并
         target[i] = (obj[i] && obj[i].constructor === Object)

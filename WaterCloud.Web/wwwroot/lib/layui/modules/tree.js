@@ -98,7 +98,7 @@ layui.define('form', function(exports){
     var that = this;
     
     layui.each(options, function(key, item){
-      if(layui.typeof(item) === 'array') delete that.config[key];
+      if(layui.type(item) === 'array') delete that.config[key];
     });
     
     that.config = $.extend(true, {}, that.config, options);

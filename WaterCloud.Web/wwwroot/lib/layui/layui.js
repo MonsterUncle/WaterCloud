@@ -542,7 +542,7 @@
 
 
     //typeof 类型细分 -> string/number/boolean/undefined/null、object/array/function/…
-    Layui.prototype._typeof = Layui.prototype.typeof = function (operand) {
+    Layui.prototype._typeof = Layui.prototype.type = function (operand) {
         if (operand === null) return String(operand);
 
         //细分引用类型
@@ -563,7 +563,7 @@
     Layui.prototype._isArray = Layui.prototype.isArray = function (obj) {
         var that = this
             , len
-            , type = that.typeof(obj);
+            , type = that.type(obj);
 
         if (!obj || (typeof obj !== 'object') || obj === win) return false;
 

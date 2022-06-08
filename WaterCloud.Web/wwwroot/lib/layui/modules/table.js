@@ -673,7 +673,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     
     //防止数组深度合并
     layui.each(options, function(key, item){
-      if(layui.typeof(item) === 'array') delete that.config[key];
+      if(layui.type(item) === 'array') delete that.config[key];
     });
     
     //对参数进行深度或浅扩展
@@ -813,7 +813,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
         ,numbers = i1 + options.limit*(curr - 1) + 1; //序号
         
         //若数据项为空数组，则不往下执行（因为删除数据时，会将原有数据设置为 []）
-        if(layui.typeof(item1) === 'array' && item1.length === 0) return;
+        if(layui.type(item1) === 'array' && item1.length === 0) return;
         
         //记录下标索引，用于恢复排序
         if(!sort){
@@ -984,7 +984,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     
     layui.each(data, function(i1, item1){
       //若数据项为空数组，则不往下执行（因为删除数据时，会将原有数据设置为 []）
-      if(layui.typeof(item1) === 'array' && item1.length === 0) return;
+      if(layui.type(item1) === 'array' && item1.length === 0) return;
       
       that.eachCols(function(i3, item3){
         var field = item3.field || i3
@@ -1176,7 +1176,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     ,options = that.config
     ,thisData = table.cache[that.key];
     if(!thisData[index]) return;
-    if(layui.typeof(thisData[index]) === 'array') return;
+    if(layui.type(thisData[index]) === 'array') return;
     thisData[index][options.checkName] = checked;
   };
   
@@ -1955,7 +1955,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     ,data = table.cache[id] || [];
     //计算全选个数
     layui.each(data, function(i, item){
-      if (layui.typeof(item) === 'array') {
+      if (layui.type(item) === 'array') {
         invalidNum++; //无效数据，或已删除的
         return;
       }
@@ -1975,7 +1975,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     var arr = []
     ,data = table.cache[id] || [];
     layui.each(data, function(i, item){
-      if(layui.typeof(item) === 'array'){
+      if(layui.type(item) === 'array'){
         return;
       };
       arr.push(table.clearCacheKey(item));
