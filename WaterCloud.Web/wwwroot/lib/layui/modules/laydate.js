@@ -193,7 +193,7 @@
     ) : '';
   
     //若 range 参数为数组，则表示为开始日期和结束日期的 input 对象
-    if(layui.typeof(options.range) === 'array'){
+    if(layui.type(options.range) === 'array'){
       that.rangeElem = [
         lay(options.range[0]),
         lay(options.range[1])
@@ -312,7 +312,7 @@
     
     //默认赋值
     if(options.value && options.isInitValue){
-      if(layui.typeof(options.value) === 'date'){
+      if(layui.type(options.value) === 'date'){
         that.setValue(that.parse(0, that.systemDate(options.value))); 
       } else {
         that.setValue(options.value); 
