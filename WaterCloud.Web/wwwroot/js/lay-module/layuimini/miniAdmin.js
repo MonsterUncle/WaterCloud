@@ -30,6 +30,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme"], function
          * @param options.loadingTime 初始化加载时间
          * @param options.pageAnim iframe窗口动画
          * @param options.maxTabNum 最大的tab打开数量
+         * @param options.menuOpen 是否缩放
          */
         render: function (options) {
             options.iniUrl = options.iniUrl || null;
@@ -38,6 +39,7 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme"], function
             options.bgColorDefault = options.bgColorDefault || 0;
             options.multiModule = options.multiModule || false;
             options.menuChildOpen = options.menuChildOpen || false;
+            options.menuOpen = options.menuOpen || false;
             options.loadingTime = options.loadingTime || 1;
             options.pageAnim = options.pageAnim || false;
             options.maxTabNum = options.maxTabNum || 20;
@@ -53,7 +55,8 @@ layui.define(["jquery", "miniMenu", "element", "miniTab", "miniTheme"], function
                     miniMenu.render({
                         menuList: data.menuInfo,
                         multiModule: options.multiModule,
-                        menuChildOpen: options.menuChildOpen
+                        menuChildOpen: options.menuChildOpen,
+                        menuOpen: options.menuOpen
                     });
                     miniTab.render({
                         filter: 'layuiminiTab',
