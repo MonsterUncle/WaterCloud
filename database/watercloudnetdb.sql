@@ -6016,9 +6016,14 @@ CREATE TABLE `sys_openjob`  (
   `RequestString` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `RequestUrl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `JobSql` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '执行sql',
+  `JobSqlParm` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '执行sql参数',
+  `JobDBProvider` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '执行数据库',
   PRIMARY KEY (`Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 INSERT INTO `sys_modulebutton` (`Id`, `ModuleId`, `ParentId`, `Layers`, `EnCode`, `FullName`, `Icon`, `Location`, `JsEvent`, `UrlAddress`, `Split`, `IsPublic`, `AllowEdit`, `AllowDelete`, `SortCode`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`, `Authorize`) VALUES ('08d9bde2-f14d-4b33-8f9b-2af0bf40812b', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, 'NF-cancle', '撤回', NULL, 1, 'cancle', '/FlowManage/Flowinstance/CancleForm', NULL, 0, 0, 0, 4, 0, 1, '', '2021-12-13 10:47:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+INSERT INTO  `sys_itemsdetail` (`Id`, `ItemId`, `ParentId`, `ItemCode`, `ItemName`, `SimpleSpelling`, `IsDefault`, `Layers`, `SortCode`, `DeleteMark`, `EnabledMark`, `Description`, `CreatorTime`, `CreatorUserId`, `LastModifyTime`, `LastModifyUserId`, `DeleteTime`, `DeleteUserId`) VALUES ('08da49be-1e80-41cc-81c4-727f377a94db', '39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, '5', 'Sql', NULL, 0, NULL, 5, 0, 1, '', '2022-06-09 10:16:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2022-06-09 10:17:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);

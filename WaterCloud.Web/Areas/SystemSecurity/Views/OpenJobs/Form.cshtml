@@ -9,13 +9,13 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">任务组名</label>
                     <div class="layui-input-block">
-                        <input type="text" id="JobGroup" name="JobGroup" maxlength="50" lay-verify="required" class="layui-input">
+                        <input type="text" id="JobGroup" name="JobGroup" maxlength="50" autocomplete="off" lay-verify="required" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">任务名称</label>
                     <div class="layui-input-block">
-                        <input type="text" id="JobName" name="JobName" maxlength="50" value="" lay-verify="required" class="layui-input ">
+                        <input type="text" id="JobName" name="JobName" maxlength="50" value="" autocomplete="off" lay-verify="required" class="layui-input ">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
-                    <label class="layui-form-label required">文件名称</label>
+                    <label class="layui-form-label required">Job名称</label>
                     <div class="layui-input-block">
                         <select id="FileName" name="FileName" lay-verify="required">
                             <option value="">==请选择==</option>
@@ -34,25 +34,45 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label required">请求地址</label>
                     <div class="layui-input-block">
-                        <input type="text" id="RequestUrl" name="RequestUrl" value="" lay-verify="required" class="layui-input ">
+                        <input type="text" id="RequestUrl" name="RequestUrl" value="" autocomplete="off" lay-verify="required" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">请求头</label>
                     <div class="layui-input-block">
-                        <input type="text" id="RequestHeaders" name="RequestHeaders" class="layui-input ">
+                        <textarea id="RequestHeaders" name="RequestHeaders" class="layui-textarea" autocomplete="off" placeholder="JSON格式"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">请求参数</label>
                     <div class="layui-input-block">
-                        <input type="text" id="RequestString" name="RequestString" class="layui-input ">
+                        <textarea id="RequestString" name="RequestString" class="layui-textarea" autocomplete="off" placeholder="JSON格式"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">执行数据库</label>
+                    <div class="layui-input-block">
+                        <select id="JobDBProvider" name="JobDBProvider">
+                            <option value="">==请选择==</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">执行SQL</label>
+                    <div class="layui-input-block">
+                        <textarea id="JobSql" name="JobSql" value="" lay-verify="required" autocomplete="off" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">Sql参数</label>
+                    <div class="layui-input-block">
+                        <textarea id="JobSqlParm" name="JobSqlParm" class="layui-textarea" autocomplete="off" placeholder="JSON格式"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label required">Cron表达式</label>
                     <div class="layui-input-block">
-                        <input type="text" id="CronExpress" name="CronExpress" maxlength="50" lay-verify="required" value="" class="layui-input ">
+                        <input type="text" id="CronExpress" name="CronExpress" maxlength="50" autocomplete="off" lay-verify="required" value="" class="layui-input ">
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
@@ -70,7 +90,7 @@
                 <div class="layui-form-item layui-form-text layui-hide">
                     <label class="layui-form-label">备注</label>
                     <div class="layui-input-block">
-                        <textarea id="Description" name="Description" class="layui-textarea" placeholder="请输入备注"></textarea>
+                        <textarea id="Description" name="Description" class="layui-textarea" autocomplete="off" placeholder="请输入备注"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
@@ -134,6 +154,10 @@
                 id: "Key",
                 text:"Description"
             });
+            $("#JobDBProvider").bindSelect({
+                url: "/SystemSecurity/OpenJobs/GetDBListJson",
+                id:""
+            });
             $("#JobType").bindRadio({
                 data: top.clients.dataItems["JobType"],
                 id: ""
@@ -153,6 +177,31 @@
                 $('#RequestUrl').val("");
                 $('#RequestHeaders').val("");
                 $('#RequestString').val("");
+                $('#JobDBProvider').parent().parent().addClass('layui-hide');
+                $('#JobDBProvider').removeAttr('lay-verify', 'required');
+                $('#JobSql').parent().parent().addClass('layui-hide');
+                $('#JobSql').removeAttr('lay-verify', 'required');
+                $('#JobSqlParm').parent().parent().addClass('layui-hide');
+                $('#JobDBProvider').val("");
+                $('#JobSql').val("");
+                $('#JobSqlParm').val("");
+            }
+            else if(value == "5")
+            {
+                $('#RequestUrl').parent().parent().addClass('layui-hide');
+                $('#RequestUrl').removeAttr('lay-verify', 'required');
+                $('#RequestHeaders').parent().parent().addClass('layui-hide');
+                $('#RequestString').parent().parent().addClass('layui-hide');
+                $('#RequestUrl').val("");
+                $('#RequestHeaders').val("");
+                $('#RequestString').val("");
+                $('#FileName').parent().parent().addClass('layui-hide');
+                $('#FileName').removeAttr('lay-verify');
+                $('#JobDBProvider').parent().parent().removeClass('layui-hide');
+                $('#JobDBProvider').attr('lay-verify', 'required');
+                $('#JobSql').parent().parent().removeClass('layui-hide');
+                $('#JobSql').attr('lay-verify', 'required');
+                $('#JobSqlParm').parent().parent().removeClass('layui-hide');
             }
             else {
                 $('#FileName').parent().parent().addClass('layui-hide');
@@ -162,6 +211,14 @@
                 $('#RequestHeaders').parent().parent().removeClass('layui-hide');
                 $('#RequestString').parent().parent().removeClass('layui-hide');
                 $('#FileName').val("");
+                $('#JobDBProvider').parent().parent().addClass('layui-hide');
+                $('#JobDBProvider').removeAttr('lay-verify', 'required');
+                $('#JobSql').parent().parent().addClass('layui-hide');
+                $('#JobSql').removeAttr('lay-verify', 'required');
+                $('#JobSqlParm').parent().parent().addClass('layui-hide');
+                $('#JobDBProvider').val("");
+                $('#JobSql').val("");
+                $('#JobSqlParm').val("");
             }
             form.render();
         }

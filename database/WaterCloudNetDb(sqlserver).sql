@@ -1,10 +1,10 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 昆山mssql
+ Source Server         : mssql
  Source Server Type    : SQL Server
  Source Server Version : 10501600
- Source Host           : 112.25.179.163:1433
+ Source Host           : localhost:1433
  Source Catalog        : WaterCloudNetDb
  Source Schema         : dbo
 
@@ -17909,7 +17909,10 @@ CREATE TABLE [dbo].[sys_openjob] (
   [RequestHeaders] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [RequestString] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [RequestUrl] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
-  [DbNumber] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
+  [DbNumber] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [JobSql] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [JobSqlParm] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [JobDBProvider] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -19330,4 +19333,7 @@ ON [PRIMARY]
 GO
 
 INSERT INTO [dbo].[sys_modulebutton] ([Id], [ModuleId], [ParentId], [Layers], [EnCode], [FullName], [Icon], [Location], [JsEvent], [UrlAddress], [Split], [IsPublic], [AllowEdit], [AllowDelete], [SortCode], [DeleteMark], [EnabledMark], [Description], [CreatorTime], [CreatorUserId], [LastModifyTime], [LastModifyUserId], [DeleteTime], [DeleteUserId], [Authorize]) VALUES (N'08d9bde2-f14d-4b33-8f9b-2af0bf40812b', N'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, N'NF-cancle', '撤回', NULL, 1, 'cancle', N'/FlowManage/Flowinstance/CancleForm', NULL, 0, 0, 0, 4, 0, 1, '', '2021-12-13 10:47:46', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '')
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([Id], [ItemId], [ParentId], [ItemCode], [ItemName], [SimpleSpelling], [IsDefault], [Layers], [SortCode], [DeleteMark], [EnabledMark], [Description], [CreatorTime], [CreatorUserId], [LastModifyTime], [LastModifyUserId], [DeleteTime], [DeleteUserId]) VALUES (N'39fc87c1-15a9-292d-a4ad-27b3bdc43f99', N'39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, N'5', N'Sql', NULL, N'0', NULL, N'1', N'0', N'5', N'', N'2022-06-09 09:28:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
 GO

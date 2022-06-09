@@ -113,6 +113,13 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             }
             return Success(data.Count, data);
         }
+        [HttpGet]
+        [HandlerAjaxOnly]
+        public ActionResult GetDBListJson()
+        {
+            var data = DBInitialize.GetConnectionConfigs();
+            return Content(data.Select(a => a.ConfigId).ToJson());
+        }
         /// <summary>
         /// 改变任务状态，启动/停止
         /// </summary>

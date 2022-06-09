@@ -108,12 +108,17 @@ namespace WaterCloud.Service.SystemSecurity
                 entity.DbNumber = OperatorProvider.Provider.GetCurrent().DbNumber;
                 await repository.Insert(entity);
             }
+            //启动任务
             if (entity.DoItNow == true)
             {
                 await ChangeJobStatus(entity.Id, 1);
-                await DoNow(entity.Id, false);
             }
             repository.unitOfWork.CurrentCommit();
+            //执行任务
+            if (entity.DoItNow == true)
+            {
+                await DoNow(entity.Id, false);
+            }
         }
         /// <summary>
         /// 清除任务计划
@@ -243,23 +248,44 @@ namespace WaterCloud.Service.SystemSecurity
                     {
                         log.EnabledMark = true;
                         log.Description = "执行成功，" + result.message.ToString();
-                        await repository.Update(a => a.Id == keyValue, a => new OpenJobEntity
-                        {
-                            LastRunMark = true,
-                            LastRunTime = now
-                        });
                     }
                     else
                     {
                         log.EnabledMark = false;
                         log.Description = "执行失败，" + result.message.ToString();
-                        await repository.Update(a => a.Id == keyValue, a => new OpenJobEntity
+                    }
+                }
+                else if (dbJobEntity.JobType == 5)
+                {
+                    try
+                    {
+                        repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber);
+                        repository.unitOfWork.CurrentBeginTrans();
+                        if (!string.IsNullOrEmpty(dbJobEntity.JobSqlParm))
                         {
-                            LastRunMark = false,
-                            LastRunTime = now,
-                            LastRunErrTime = now,
-                            LastRunErrMsg = log.Description
-                        });
+                            var dic = dbJobEntity.JobSqlParm.ToObject<Dictionary<string, object>>();
+                            List<SugarParameter> list = new List<SugarParameter>();
+                            foreach (var item in dic)
+                            {
+                                list.Add(new SugarParameter(item.Key, item.Value));
+                            }
+                            var dbResult = await repository.Db.Ado.SqlQueryAsync<dynamic>(dbJobEntity.JobSql, list);
+                            log.EnabledMark = true;
+                            log.Description = "执行成功，" + dbResult.ToJson();
+                        }
+                        else
+                        {
+                            var dbResult = await repository.Db.Ado.SqlQueryAsync<dynamic>(dbJobEntity.JobSql);
+                            log.EnabledMark = true;
+                            log.Description = "执行成功，" + dbResult.ToJson();
+                        }
+                        repository.unitOfWork.CurrentCommit();
+                    }
+                    catch (Exception ex)
+                    {
+                        log.EnabledMark = false;
+                        log.Description = "执行失败，" + ex.Message;
+                        repository.unitOfWork.CurrentRollback();
                     }
                 }
                 else
@@ -291,28 +317,37 @@ namespace WaterCloud.Service.SystemSecurity
                     {
                         var temp = await _httpClient.ExecuteAsync(dbJobEntity.RequestUrl, method, dbJobEntity.RequestString, dic);
                         log.EnabledMark = true;
-                        log.Description = $"执行成功。{temp}";
-                        await repository.Update(a => a.Id == keyValue, a => new OpenJobEntity
-                        {
-                            LastRunMark = true,
-                            LastRunTime = now
-                        });
+                        log.Description = $"执行成功，{temp}";
                     }
                     catch (Exception ex)
                     {
                         log.EnabledMark = false;
                         log.Description = "执行失败，" + ex.Message.ToString();
-                        await repository.Update(a => a.Id == keyValue, a => new OpenJobEntity
-                        {
-                            LastRunMark = false,
-                            LastRunTime = now,
-                            LastRunErrTime = now,
-                            LastRunErrMsg = log.Description
-                        });
                     }
                 }
-				#endregion
-				if (dbJobEntity.IsLog=="是")
+                #endregion
+                repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber);
+                repository.unitOfWork.CurrentBeginTrans();
+                //记录执行日志
+                if (log.EnabledMark == true)
+                {
+                    await repository.Update(a => a.Id == keyValue, a => new OpenJobEntity
+                    {
+                        LastRunMark = true,
+                        LastRunTime = now
+                    });
+                }
+                else
+                {
+                    await repository.Update(a => a.Id == keyValue, a => new OpenJobEntity
+                    {
+                        LastRunMark = false,
+                        LastRunTime = now,
+                        LastRunErrTime = now,
+                        LastRunErrMsg = log.Description
+                    });
+                }
+                if (dbJobEntity.IsLog=="是")
 				{
                     string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
                     if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
