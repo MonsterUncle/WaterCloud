@@ -70,7 +70,6 @@ namespace WaterCloud.Service.AutoJob
                                     log.F_JobId = jobId;
                                     log.F_JobName = dbJobEntity.F_JobName;
                                     log.F_CreatorTime = now;
-                                    unitwork.BeginTrans();
                                     AlwaysResult result = new AlwaysResult();
                                     if (dbJobEntity.F_JobType == 0)
                                     {
@@ -88,28 +87,48 @@ namespace WaterCloud.Service.AutoJob
                                         MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
                                         object[] parameters = null;
                                         result = ((Task<AlwaysResult>)method.Invoke(obj, parameters)).GetAwaiter().GetResult();     // 调用方法，参数为空
-                                        unitwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
                                         if (result.state.ToString() == ResultType.success.ToString())
                                         {
                                             log.F_EnabledMark = true;
                                             log.F_Description = "执行成功，" + result.message.ToString();
-                                            await unitwork.GetDbClient().Updateable<OpenJobEntity>(a => new OpenJobEntity
-                                            {
-                                                F_LastRunMark = true,
-                                                F_LastRunTime = now,
-                                            }).Where(a => a.F_Id == jobId).ExecuteCommandAsync();
                                         }
                                         else
                                         {
                                             log.F_EnabledMark = false;
                                             log.F_Description = "执行失败，" + result.message.ToString();
-                                            await unitwork.GetDbClient().Updateable<OpenJobEntity>(a => new OpenJobEntity
+                                        }
+                                    }
+                                    else if (dbJobEntity.F_JobType == 5)
+                                    {
+                                        try
+                                        {
+                                            unitwork.GetDbClient().ChangeDatabase(dbJobEntity.F_JobDBProvider);
+                                            unitwork.CurrentBeginTrans();
+                                            if (!string.IsNullOrEmpty(dbJobEntity.F_JobSqlParm))
                                             {
-                                                F_LastRunMark = false,
-                                                F_LastRunTime = now,
-                                                F_LastRunErrTime = now,
-                                                F_LastRunErrMsg = log.F_Description
-                                            }).Where(a => a.F_Id == jobId).ExecuteCommandAsync();
+                                                var dic = dbJobEntity.F_JobSqlParm.ToObject<Dictionary<string, object>>();
+                                                List<SugarParameter> list = new List<SugarParameter>();
+                                                foreach (var item in dic)
+                                                {
+                                                    list.Add(new SugarParameter(item.Key, item.Value));
+                                                }
+                                                var dbResult = await unitwork.GetDbClient().Ado.SqlQueryAsync<dynamic>(dbJobEntity.F_JobSql, list);
+                                                log.F_EnabledMark = true;
+                                                log.F_Description = "执行成功，" + dbResult.ToJson();
+                                            }
+                                            else
+                                            {
+                                                var dbResult = await unitwork.GetDbClient().Ado.SqlQueryAsync<dynamic>(dbJobEntity.F_JobSql);
+                                                log.F_EnabledMark = true;
+                                                log.F_Description = "执行成功，" + dbResult.ToJson();
+                                            }
+                                            unitwork.CurrentCommit();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            log.F_EnabledMark = false;
+                                            log.F_Description = "执行失败，" + ex.Message;
+                                            unitwork.CurrentRollback();
                                         }
                                     }
                                     else
@@ -137,33 +156,40 @@ namespace WaterCloud.Service.AutoJob
                                         }
                                         //请求头添加租户号
                                         dic.Add("dbNumber", dbJobEntity.F_DbNumber);
-                                        unitwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
                                         try
                                         {
                                             var temp = await new HttpWebClient(_httpClient).ExecuteAsync(dbJobEntity.F_RequestUrl, method, dbJobEntity.F_RequestString, dic);
                                             log.F_EnabledMark = true;
                                             log.F_Description = $"执行成功。{temp}";
-                                            await unitwork.GetDbClient().Updateable<OpenJobEntity>(a => new OpenJobEntity
-                                            {
-                                                F_LastRunMark = true,
-                                                F_LastRunTime = now,
-                                            }).Where(a => a.F_Id == jobId).ExecuteCommandAsync();
                                         }
                                         catch (Exception ex)
                                         {
                                             log.F_EnabledMark = false;
                                             log.F_Description = "执行失败，" + ex.Message.ToString();
-                                            await unitwork.GetDbClient().Updateable<OpenJobEntity>(a => new OpenJobEntity
-                                            {
-                                                F_LastRunMark = false,
-                                                F_LastRunTime = now,
-                                                F_LastRunErrTime = now,
-                                                F_LastRunErrMsg = log.F_Description
-                                            }).Where(a => a.F_Id == jobId).ExecuteCommandAsync();
                                         }
                                     }
-
                                     #endregion
+
+                                    unitwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
+                                    unitwork.CurrentBeginTrans();
+                                    if (log.F_EnabledMark == true)
+                                    {
+                                        await unitwork.GetDbClient().Updateable<OpenJobEntity>(a => new OpenJobEntity
+                                        {
+                                            F_LastRunMark = true,
+                                            F_LastRunTime = now,
+                                        }).Where(a => a.F_Id == jobId).ExecuteCommandAsync();
+                                    }
+                                    else
+                                    {
+                                        await unitwork.GetDbClient().Updateable<OpenJobEntity>(a => new OpenJobEntity
+                                        {
+                                            F_LastRunMark = false,
+                                            F_LastRunTime = now,
+                                            F_LastRunErrTime = now,
+                                            F_LastRunErrMsg = log.F_Description
+                                        }).Where(a => a.F_Id == jobId).ExecuteCommandAsync();
+                                    }
                                     if (dbJobEntity.F_IsLog == "是")
                                     {
                                         string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
@@ -176,7 +202,7 @@ namespace WaterCloud.Service.AutoJob
                                             await HandleLogHelper.HSetAsync(log.F_JobId, log.F_Id, log);
                                         }
                                     }
-                                    unitwork.Commit();
+                                    unitwork.CurrentCommit();
                                 }
                             }
                         }

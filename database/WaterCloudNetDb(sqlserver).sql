@@ -17909,7 +17909,10 @@ CREATE TABLE [dbo].[sys_openjob] (
   [F_RequestHeaders] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_RequestString] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_RequestUrl] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
-  [F_DbNumber] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
+  [F_DbNumber] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobSqlParm] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobSql] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobDBProvider] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -19330,4 +19333,7 @@ ON [PRIMARY]
 GO
 
 INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08d9bde2-f14d-4b33-8f9b-2af0bf40812b', N'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, N'NF-cancle', '撤回', NULL, 1, 'cancle', N'/FlowManage/Flowinstance/CancleForm', NULL, 0, 0, 0, 4, 0, 1, '', '2021-12-13 10:47:46', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '')
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'39fc87c1-679d-0818-ab56-79c34e999999', N'39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, N'5', N'Sql', NULL, N'0', NULL, N'5', N'0', N'1', N'', N'2022-06-09 09:29:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
 GO

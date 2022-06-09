@@ -40,13 +40,33 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">请求头</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_RequestHeaders" name="F_RequestHeaders" class="layui-input ">
+                        <textarea id="F_RequestHeaders" name="F_RequestHeaders" autocomplete="off" class="layui-textarea" placeholder="JSON格式"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">请求参数</label>
                     <div class="layui-input-block">
-                        <input type="text" id="F_RequestString" name="F_RequestString" class="layui-input ">
+                        <textarea id="F_RequestString" name="F_RequestString" autocomplete="off" class="layui-textarea" placeholder="JSON格式"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">执行数据库</label>
+                    <div class="layui-input-block">
+                        <select id="F_JobDBProvider" name="F_JobDBProvider">
+                            <option value="">==请选择==</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">执行SQL</label>
+                    <div class="layui-input-block">
+                        <textarea id="F_JobSql" name="F_JobSql" value="" lay-verify="required" autocomplete="off" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">Sql参数</label>
+                    <div class="layui-input-block">
+                        <textarea id="F_JobSqlParm" name="F_JobSqlParm" class="layui-textarea" autocomplete="off" placeholder="JSON格式"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
@@ -134,6 +154,10 @@
                 id: "Key",
                 text:"Description"
             });
+            $("#F_JobDBProvider").bindSelect({
+                url: "/SystemSecurity/OpenJobs/GetDBListJson",
+                id:""
+            });
             $("#F_JobType").bindRadio({
                 data: top.clients.dataItems["JobType"],
                 id: ""
@@ -153,6 +177,31 @@
                 $('#F_RequestUrl').val("");
                 $('#F_RequestHeaders').val("");
                 $('#F_RequestString').val("");
+                $('#F_JobDBProvider').parent().parent().addClass('layui-hide');
+                $('#F_JobDBProvider').removeAttr('lay-verify', 'required');
+                $('#F_JobSql').parent().parent().addClass('layui-hide');
+                $('#F_JobSql').removeAttr('lay-verify', 'required');
+                $('#F_JobSqlParm').parent().parent().addClass('layui-hide');
+                $('#F_JobDBProvider').val("");
+                $('#F_JobSql').val("");
+                $('#F_JobSqlParm').val("");
+            }
+            else if(value == "5")
+            {
+                $('#F_RequestUrl').parent().parent().addClass('layui-hide');
+                $('#F_RequestUrl').removeAttr('lay-verify', 'required');
+                $('#F_RequestHeaders').parent().parent().addClass('layui-hide');
+                $('#F_RequestString').parent().parent().addClass('layui-hide');
+                $('#F_RequestUrl').val("");
+                $('#F_RequestHeaders').val("");
+                $('#F_RequestString').val("");
+                $('#F_FileName').parent().parent().addClass('layui-hide');
+                $('#F_FileName').removeAttr('lay-verify');
+                $('#F_JobDBProvider').parent().parent().removeClass('layui-hide');
+                $('#F_JobDBProvider').attr('lay-verify', 'required');
+                $('#F_JobSql').parent().parent().removeClass('layui-hide');
+                $('#F_JobSql').attr('lay-verify', 'required');
+                $('#F_JobSqlParm').parent().parent().removeClass('layui-hide');
             }
             else {
                 $('#F_FileName').parent().parent().addClass('layui-hide');
@@ -162,6 +211,14 @@
                 $('#F_RequestHeaders').parent().parent().removeClass('layui-hide');
                 $('#F_RequestString').parent().parent().removeClass('layui-hide');
                 $('#F_FileName').val("");
+                $('#F_JobDBProvider').parent().parent().addClass('layui-hide');
+                $('#F_JobDBProvider').removeAttr('lay-verify', 'required');
+                $('#F_JobSql').parent().parent().addClass('layui-hide');
+                $('#F_JobSql').removeAttr('lay-verify', 'required');
+                $('#F_JobSqlParm').parent().parent().addClass('layui-hide');
+                $('#F_JobDBProvider').val("");
+                $('#F_JobSql').val("");
+                $('#F_JobSqlParm').val("");
             }
             form.render();
         }

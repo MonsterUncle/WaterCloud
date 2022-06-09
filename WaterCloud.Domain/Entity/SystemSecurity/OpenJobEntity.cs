@@ -171,6 +171,22 @@ namespace WaterCloud.Domain.SystemSecurity
         /// <summary>
         /// 是否记录日志
         /// </summary>
+        [SugarColumn(IsNullable = true, ColumnName = "F_IsLog", ColumnDataType = "nvarchar(50)", ColumnDescription = "是否记录日志")]
         public string F_IsLog { get; set; }
+        /// <summary>
+        /// 执行数据库
+        /// </summary>
+        [SugarColumn(IsNullable = true, ColumnName = "F_JobDBProvider", ColumnDataType = "longtext", ColumnDescription = "执行数据库")]
+        public string F_JobDBProvider { get; set; }
+        /// <summary>
+        /// 执行sql
+        /// </summary>
+        [SugarColumn(IsNullable = true, ColumnName = "F_JobSql", ColumnDataType = "longtext", ColumnDescription = "执行sql")]
+        public string F_JobSql { get; set; }
+        /// <summary>
+        /// 执行sql参数
+        /// </summary>
+        [SugarColumn(IsNullable = true, ColumnName = "F_JobSqlParm", ColumnDataType = "longtext", ColumnDescription = "执行sql参数")]
+        public string F_JobSqlParm { get; set; }
     }
 }
