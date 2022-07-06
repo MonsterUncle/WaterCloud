@@ -217,11 +217,11 @@ namespace WaterCloud.Web.Controllers
         {
             var realurl = WebHelper.GetCookie("wc_realreturnurl");
             var url = WebHelper.GetCookie("wc_returnurl");
-            if (!string.IsNullOrEmpty(realurl) && await _roleAuthServuce.CheckReturnUrl(userId, realurl))
+            if (!string.IsNullOrEmpty(realurl) && !await _roleAuthServuce.CheckReturnUrl(userId, realurl))
             {
                 WebHelper.RemoveCookie("wc_realreturnurl");
             }
-            if (!string.IsNullOrEmpty(url)&& !await _roleAuthServuce.CheckReturnUrl(userId,url))
+            if (!string.IsNullOrEmpty(url) && !await _roleAuthServuce.CheckReturnUrl(userId,url))
             {
                 WebHelper.RemoveCookie("wc_returnurl");
             }
