@@ -194,7 +194,7 @@ namespace WaterCloud.Service
                             UserSecretkey = userinfo.UserSecretkey
                         }).Where(a => a.Id == userinfo.Id).ExecuteCommand();
                         context.Commit();
-                        CacheHelper.Remove(GlobalContext.SystemConfig.ProjectPrefix + "_operator_" + "info_" + user.F_Id);
+                        CacheHelper.Remove(GlobalContext.SystemConfig.ProjectPrefix + "_operator_" + "info_" + user.Id);
                     }
                 }
             }
