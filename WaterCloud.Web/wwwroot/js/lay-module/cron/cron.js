@@ -521,7 +521,7 @@ layui.define(['form', 'element'], function (exports) {
       '<div><input type="radio" name="type[3]" value="all" title="每天" ',
       radio[0],
     "></div>",
-    '<div><input type="radio" name="type[6]" value="none" title="不指定" ',
+    '<div><input type="radio" name="type[3]" value="none" title="不指定" ',
       radio[1],
       "></div>",
       '<div><input type="radio" name="type[3]" value="range" title="周期" ',
@@ -611,7 +611,7 @@ layui.define(['form', 'element'], function (exports) {
       '<div><input type="radio" name="type[4]" value="all" title="每个月" ',
       radio[0],
     "></div>",
-    '<div><input type="radio" name="type[6]" value="none" title="不指定" ',
+    '<div><input type="radio" name="type[4]" value="none" title="不指定" ',
       radio[1],
       "></div>",
       '<div><input type="radio" name="type[4]" value="range" title="周期" ',
@@ -694,7 +694,7 @@ layui.define(['form', 'element'], function (exports) {
       '<div><input type="radio" name="type[5]" value="all" title="每个周" ',
       radio[0],
     "></div>",
-    '<div><input type="radio" name="type[6]" value="none" title="不指定" ',
+    '<div><input type="radio" name="type[5]" value="none" title="不指定" ',
       radio[1],
       "></div>",
       '<div><input type="radio" name="type[5]" value="range" title="周期" ',
@@ -935,7 +935,7 @@ layui.define(['form', 'element'], function (exports) {
           }
         },
         calMonths: function () {
-          var data = form.val("cronMonthFrom"),
+          var data = form.val("cronMonthForm"),
             dataType = data["type[4]"];
           if (
             "range" == dataType &&
