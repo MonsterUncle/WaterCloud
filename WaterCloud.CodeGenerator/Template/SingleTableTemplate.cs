@@ -842,6 +842,7 @@ namespace WaterCloud.CodeGenerator
                 sb.AppendLine("                } else {");
                 sb.AppendLine("                   _that.addClass('layui-hide');");
                 sb.AppendLine("                }");
+                sb.AppendLine("                table.resize();");
                 sb.AppendLine("           }");
             }
             sb.AppendLine("           return false;");

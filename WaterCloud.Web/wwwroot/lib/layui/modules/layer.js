@@ -1,4 +1,4 @@
-﻿/*!
+﻿/**
  * layer - 通用 Web 弹出层组件
  * MIT Licensed 
  */
@@ -850,7 +850,7 @@ layer.style = function(index, options, limit){
   }
   
   layero.css(options);
-  btnHeight = layero.find('.'+doms[6]).outerHeight();
+  btnHeight = layero.find('.'+doms[6]).outerHeight() || 0;
   
   if(type === ready.type[2]){
     layero.find('iframe').css({
