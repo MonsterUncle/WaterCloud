@@ -1,5 +1,5 @@
 
-/*! lay 基础 DOM 操作 | MIT Licensed */
+/** lay 基础 DOM 操作 | MIT Licensed */
 
 ;!function(window){ //gulp build: lay-header
   "use strict";
@@ -34,8 +34,8 @@
   //普通对象深度扩展
   lay.extend = function(){
     var ai = 1
-    , length
-    , args = arguments
+    ,length
+    ,args = arguments
     ,clone = function(target, obj){
       target = target || (layui.type(obj) === 'array' ? [] : {}); //目标对象
       for(var i in obj){
@@ -50,7 +50,7 @@
     args[0] = typeof args[0] === 'object' ? args[0] : {};
     length = args.length
 
-    for (; ai < length; ai++) {
+    for(; ai < length; ai++){
       if(typeof args[ai] === 'object'){
         clone(args[0], args[ai]);
       }
@@ -59,7 +59,7 @@
   };
   
   //lay 模块版本
-  lay.v = '1.0.7';
+  lay.v = '1.0.8';
   
   //ie版本
   lay.ie = function(){
@@ -91,8 +91,8 @@
   
   
   //数字前置补零
-  lay.digit = function (num, length) {
-    if (!(typeof num === 'string' || typeof num === 'number')) return '';
+  lay.digit = function(num, length){
+    if(!(typeof num === 'string' || typeof num === 'number')) return '';
 
     var str = '';
     num = String(num);
@@ -150,7 +150,7 @@
     ,winArea = function(type){
       return document.documentElement[type ? 'clientWidth' : 'clientHeight']
     }, margin = 5, left = rect.left, top = rect.bottom;
-         
+    
     //相对元素居中
     if(obj.align === 'center'){
       left = left - (elemWidth - elem.offsetWidth)/2;
@@ -175,6 +175,8 @@
         if(obj.clickType === 'right'){
           top = winArea() - elemHeight - margin*2;
           if(top < 0) top = 0; //不能溢出窗口顶部
+        } else {
+          top = margin; // 位置计算逻辑完备性处理
         }
       }
     }
@@ -420,4 +422,3 @@
   }
   
 }(window, window.document);
-

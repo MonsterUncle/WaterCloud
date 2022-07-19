@@ -1,4 +1,4 @@
-/*!
+/**
  * form 表单组件
  * MIT Licensed
  */
@@ -17,34 +17,33 @@ layui.define('layer', function(exports){
   ,Form = function(){
     this.config = {
       verify: {
-        //修改增加可空
-        required: [
-          /[\S]+/
-        , "必填项不能为空"],
-        phone: [/(^$)|^1\d{10}$/
-        , "请输入正确的手机号"],
-        email: [/(^$)|^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
-        , "邮箱格式不正确"],
-        url: [/(^$)|(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/
-        , "链接格式不正确"],
-        number: function (value) {
-            if (!!value && isNaN(value)) return "只能填写数字"
-        },
-        integer: [/^\d*$/
-        , "只能填写整数"],
-        date: [/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/
-        , "日期格式不正确"],
-        identity: [/(^$)|(^\d{15}$)|(^\d{17}(x|X|\d)$)/
-        , "请输入正确的身份证号"],
-        pass: [
-            /^[\S]{6,12}$/
-            , '密码必须6到12位，且不能出现空格'
-        ],
-        ip: [
-            /(^$)|^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
-            , 'IP地址不符合规则'
-        ]
-      }
+            required: [
+                /[\S]+/
+                , "必填项不能为空"],
+            phone: [/(^$)|^1\d{10}$/
+                , "请输入正确的手机号"],
+            email: [/(^$)|^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+                , "邮箱格式不正确"],
+            url: [/(^$)|(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/
+                , "链接格式不正确"],
+            number: function (value) {
+                if (!!value && isNaN(value)) return "只能填写数字"
+            },
+            integer: [/^\d*$/
+                , "只能填写整数"],
+            date: [/(^$)|^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/
+                , "日期格式不正确"],
+            identity: [/(^$)|(^\d{15}$)|(^\d{17}(x|X|\d)$)/
+                , "请输入正确的身份证号"],
+            pass: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ],
+            ip: [
+                /(^$)|^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+                , 'IP地址不符合规则'
+            ]
+        }
       ,autocomplete: null //全局 autocomplete 状态。null 表示不干预
     };
   };
@@ -62,6 +61,13 @@ layui.define('layer', function(exports){
     $.extend(true, that.config.verify, settings);
     return that;
   };
+
+  //获取指定表单对象
+  Form.prototype.getFormElem = function(filter){
+    return $(ELEM + function(){
+      return filter ? ('[lay-filter="' + filter +'"]') : '';
+    }());
+  };
   
   //表单事件
   Form.prototype.on = function(events, callback){
@@ -71,7 +77,7 @@ layui.define('layer', function(exports){
   //赋值/取值
   Form.prototype.val = function(filter, object){
     var that = this
-    ,formElem = $(ELEM + '[lay-filter="' + filter +'"]');
+    ,formElem = that.getFormElem(filter);
     
     //遍历
     formElem.each(function(index, item){
@@ -109,7 +115,7 @@ layui.define('layer', function(exports){
   
   //取值
   Form.prototype.getValue = function(filter, itemForm){
-    itemForm = itemForm || $(ELEM + '[lay-filter="' + filter +'"]').eq(0);
+    itemForm = itemForm || this.getFormElem(filter);
         
     var nameIndex = {} //数组 name 索引
     ,field = {}
@@ -145,18 +151,19 @@ layui.define('layer', function(exports){
     }())
     ,items = {
       //输入框
-      input: function(){
-        var inputs = elemForm.find('input,textarea');
-        
+      input: function(elem){
+        var inputs = elem || elemForm.find('input,textarea');
+
         //初始化全局的 autocomplete
         options.autocomplete && inputs.attr('autocomplete', options.autocomplete);
       }
+      
       //下拉选择框
-      ,select: function(){
+      ,select: function(elem){
         var TIPS = '请选择', CLASS = 'layui-form-select', TITLE = 'layui-select-title'
         ,NONE = 'layui-select-none', initValue = '', thatInput
-        ,selects = elemForm.find('select')
-        
+        ,selects = elem || elemForm.find('select')
+
         //隐藏 select
         ,hide = function(e, clear){
           if(!$(e.target).parent().hasClass(TITLE) || clear){
@@ -173,10 +180,14 @@ layui.define('layer', function(exports){
           ,input = title.find('input')
           ,dl = reElem.find('dl')
           ,dds = dl.children('dd')
+          ,dts = dl.children('dt') // select分组dt元素
           ,index =  this.selectedIndex //当前选中的索引
           ,nearElem; //select 组件当前选中的附近元素，用于辅助快捷键功能
           
           if(disabled) return;
+
+          // 搜索项
+          var laySearch = select.attr('lay-search');
           
           //展开下拉
           var showDown = function(){
@@ -186,6 +197,7 @@ layui.define('layer', function(exports){
             index = select[0].selectedIndex; //获取最新的 selectedIndex
             reElem.addClass(CLASS+'ed');
             dds.removeClass(HIDE);
+            dts.removeClass(HIDE);
             nearElem = null;
 
             //初始选中样式
@@ -336,15 +348,31 @@ layui.define('layer', function(exports){
             }
           });
           
-          //检测值是否不属于 select 项
+          // 检测值是否不属于 select 项
           var notOption = function(value, callback, origin){
             var num = 0;
             layui.each(dds, function(){
-              var othis = $(this)
-              ,text = othis.text()
-              ,not = text.indexOf(value) === -1;
+              var othis = $(this);
+              var text = othis.text();
+
+              // 是否区分大小写
+              if(laySearch !== 'exact'){
+                text = text.toLowerCase();
+                value = value.toLowerCase();
+              }
+              
+              // 匹配
+              var not = text.indexOf(value) === -1;
+              
               if(value === '' || (origin === 'blur') ? value !== text : not) num++;
               origin === 'keyup' && othis[not ? 'addClass' : 'removeClass'](HIDE);
+            });
+            // 处理select分组元素
+            origin === 'keyup' && layui.each(dts, function(){
+              var othis = $(this)
+              ,thisDds = othis.nextUntil('dt').filter('dd') // 当前分组下的dd元素
+              ,allHide = thisDds.length == thisDds.filter('.' + HIDE).length; // 当前分组下所有dd元素都隐藏了
+              othis[allHide ? 'addClass' : 'removeClass'](HIDE);
             });
             var none = num === dds.length;
             return callback(none), none;
@@ -479,13 +507,13 @@ layui.define('layer', function(exports){
       }
       
       //复选框/开关
-      ,checkbox: function(){
+      ,checkbox: function(elem){
         var CLASS = {
           checkbox: ['layui-form-checkbox', 'layui-form-checked', 'checkbox']
           ,_switch: ['layui-form-switch', 'layui-form-onswitch', 'switch']
         }
-        ,checks = elemForm.find('input[type=checkbox]')
-        
+        ,checks = elem || elemForm.find('input[type=checkbox]')
+
         ,events = function(reElem, RE_CLASS){
           var check = $(this);
           
@@ -524,7 +552,7 @@ layui.define('layer', function(exports){
           var hasRender = othis.next('.' + RE_CLASS[0])
           ,reElem = $(['<div class="layui-unselect '+ RE_CLASS[0]
             ,(check.checked ? (' '+ RE_CLASS[1]) : '') //选中状态
-            ,(disabled ? ' layui-checkbox-disbaled '+ DISABLED : '') //禁用状态
+            ,(disabled ? ' layui-checkbox-disabled '+ DISABLED : '') //禁用状态
             ,'"'
             ,(skin ? ' lay-skin="'+ skin +'"' : '') //风格
           ,'>'
@@ -551,10 +579,10 @@ layui.define('layer', function(exports){
       }
       
       //单选框
-      ,radio: function(){
+      ,radio: function(elem){
         var CLASS = 'layui-form-radio', ICON = ['&#xe643;', '&#xe63f;']
-        ,radios = elemForm.find('input[type=radio]')
-        
+        ,radios = elem || elemForm.find('input[type=radio]')
+
         ,events = function(reElem){
           var radio = $(this), ANIM = 'layui-anim-scaleSpring';
           
@@ -610,56 +638,91 @@ layui.define('layer', function(exports){
         });
       }
     };
-    type ? (
-      items[type] ? items[type]() : hint.error('不支持的 "'+ type + '" 表单渲染')
-    ) : layui.each(items, function(index, item){
-      item();
-    });
+    if (layui.type(type) === 'object') {
+      // jquery 对象
+      type.each(function (index, item) {
+        var elem = $(item);
+        if (!elem.closest(ELEM).length) {
+          // 如果不是存在layui-form中的直接跳过
+          return;
+        }
+        if (item.tagName === 'SELECT') {
+          items['select'](elem);
+        } else if (item.tagName === 'INPUT') {
+          var itemType = item.type;
+          if (itemType === 'checkbox' || itemType === 'radio') {
+            items[itemType](elem);
+          } else {
+            items['input'](elem);
+          }
+        }
+      });
+    } else {
+      type ? (
+        items[type] ? items[type]() : hint.error('不支持的 "'+ type + '" 表单渲染')
+      ) : layui.each(items, function(index, item){
+        item();
+      });
+    }
     return that;
   };
-  
-  //表单提交校验
-  var submit = function(){
-    var stop = null //验证不通过状态
-    ,verify = form.config.verify //验证规则
-    ,DANGER = 'layui-form-danger' //警示样式
-    ,field = {}  //字段集合
-    ,button = $(this) //当前触发的按钮
-    ,elem = button.parents(ELEM).eq(0) //当前所在表单域
-    ,verifyElem = elem.find('*[lay-verify]') //获取需要校验的元素
-    ,formElem = button.parents('form')[0] //获取当前所在的 form 元素，如果存在的话
-    ,filter = button.attr('lay-filter'); //获取过滤器
-   
-    
-    //开始校验
-    layui.each(verifyElem, function(_, item){
-      var othis = $(this)
-      ,vers = othis.attr('lay-verify').split('|')
-      ,verType = othis.attr('lay-verType') //提示方式
-      ,value = othis.val();
+
+  // elem 即要验证的区域表单选择器 -  return true or false
+  Form.prototype.validate = function(elem){
+    var that = this;
+    var stop = null; // 验证不通过状态
+    var verify = form.config.verify; // 验证规则
+    var DANGER = 'layui-form-danger'; // 警示样式
+
+    elem = $(elem);
+
+    // 节点不存在可视为 true
+    if(!elem[0]) return !0;
+
+    // 若节点不存在特定属性，则查找容器内有待验证的子节点
+    if(elem.attr('lay-verify') === undefined){
+      // 若校验的是一个不带验证规则的容器，校验内部的 lay-verify 节点
+      if (that.validate(elem.find('*[lay-verify]')) === false) {
+        return false;
+      }
+    }
+
+    // 开始校验
+    layui.each(elem, function(_, item){
+      var othis = $(this);
+      var verifyStr = othis.attr('lay-verify') || '';
+      var vers = verifyStr.split('|');
+      var verType = othis.attr('lay-verType'); // 提示方式
+      var value = othis.val();
+
+      othis.removeClass(DANGER); // 移除警示样式
       
-      othis.removeClass(DANGER); //移除警示样式
-      
-      //遍历元素绑定的验证规则
+      // 遍历元素绑定的验证规则
       layui.each(vers, function(_, thisVer){
-        var isTrue //是否命中校验
-        ,errorText = '' //错误提示文本
-        ,isFn = typeof verify[thisVer] === 'function';
+        var isTrue; // 是否命中校验
+        var errorText = ''; // 错误提示文本
+        var rule = verify[thisVer]; // 获取校验规则
         
-        //匹配验证规则
-        if(verify[thisVer]){
-          var isTrue = isFn ? errorText = verify[thisVer](value, item) : !verify[thisVer][0].test(value)
-          //是否属于美化替换后的表单元素
-          ,isForm2Elem = item.tagName.toLowerCase() === 'select' || /^checkbox|radio$/.test(item.type);
-          errorText = errorText || verify[thisVer][1];
+        // 匹配验证规则
+        if(rule){
+          var isTrue = typeof rule === 'function' 
+            ? errorText = rule(value, item) 
+          : !rule[0].test(value);
+          
+          // 是否属于美化替换后的表单元素
+          var isForm2Elem = item.tagName.toLowerCase() === 'select' || (
+            /^checkbox|radio$/.test(item.type)
+          );
+          
+          errorText = errorText || rule[1];
           
           if(thisVer === 'required'){
             errorText = othis.attr('lay-reqText') || errorText;
           }
           
-          //如果是必填项或者非空命中校验，则阻止提交，弹出提示
+          // 若为必填项或者非空命中校验，则阻止提交，弹出提示
           if(isTrue){
-            //提示层风格
+            // 提示层风格
             if(verType === 'tips'){
               layer.tips(errorText, function(){
                 if(typeof othis.attr('lay-ignore') !== 'string'){
@@ -672,45 +735,63 @@ layui.define('layer', function(exports){
             } else if(verType === 'alert') {
               layer.alert(errorText, {title: '提示', shadeClose: true});
             } 
-            //如果返回的为字符或数字，则自动弹出默认提示框；否则由 verify 方法中处理提示
+            // 若返回的为字符或数字，则自动弹出默认提示框；否则由 verify 方法中处理提示
             else if(/\bstring|number\b/.test(typeof errorText)){ 
               layer.msg(errorText, {icon: 5, shift: 6});
             }
-            
-            //非移动设备自动定位焦点
-            if(!device.mobile){
-              setTimeout(function(){
-                (isForm2Elem ? othis.next().find('input') : item).focus();
-              }, 7);
-            } else { //移动设备定位
-              $dom.scrollTop(function(){
-                try {
-                  return (isForm2Elem ? othis.next() : othis).offset().top - 15
-                } catch(e){
-                  return 0;
-                }
-              }());
-            } 
+
+            setTimeout(function(){
+              (isForm2Elem ? othis.next().find('input') : item).focus();
+            }, 7);
             
             othis.addClass(DANGER);
             return stop = true;
           }
         }
       });
+
       if(stop) return stop;
     });
-    
-    if(stop) return false;
-    
+
+    return !stop;
+  };
+
+  // 提交表单并校验
+  var submit = Form.prototype.submit = function(filter, callback){
+    var field = {};  //字段集合
+    var button = $(this); //当前触发的按钮
+
+    // 表单域 lay-filter 属性值
+    var layFilter = typeof filter === 'string' 
+      ? filter 
+    : button.attr('lay-filter');
+
+    // 当前所在表单域
+    var elem = this.getFormElem 
+      ? this.getFormElem(layFilter) 
+    : button.parents(ELEM).eq(0);
+
+    // 获取需要校验的元素
+    var verifyElem = elem.find('*[lay-verify]');
+
+    //开始校验
+    if(!form.validate(verifyElem)) return false;
+
     //获取当前表单值
     field = form.getValue(null, elem);
+
+    //返回的参数
+    var params = {
+      elem: this.getFormElem ? (window.event && window.event.target) : this //触发事件的对象
+      ,form: this.getFormElem ? elem[0] : button.parents('form')[0] //当前所在的 form 元素，如果存在的话
+      ,field: field //当前表单数据
+    };
+    
+    //回调
+    typeof callback === 'function' && callback(params);
  
-    //返回字段
-    return layui.event.call(this, MOD_NAME, 'submit('+ filter +')', {
-      elem: this
-      ,form: formElem
-      ,field: field
-    });
+    //事件
+    return layui.event.call(this, MOD_NAME, 'submit('+ layFilter +')', params);
   };
 
   //自动完成渲染

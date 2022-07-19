@@ -23,15 +23,15 @@ layui.define(function(exports){
       return exp((_||'') + config.open + types + config.close + (__||''));
     },   
     escape: function(html){
-        var exp = /[<"'>]|&(?=#[a-zA-Z0-9]+)/g;
-        if (html === undefined || html === null) return '';
+      var exp = /[<"'>]|&(?=#[a-zA-Z0-9]+)/g;
+      if(html === undefined || html === null) return '';
+      
+      html += '';
+      if(!exp.test(html)) return html;
 
-        html += '';
-        if (!exp.test(html)) return html;
-
-        return html.replace(/&(?!#?[a-zA-Z0-9]+;)/g, '&amp;')
-            .replace(/</g, '&lt;').replace(/>/g, '&gt;')
-            .replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+      return html.replace(/&(?!#?[a-zA-Z0-9]+;)/g, '&amp;')
+      .replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/'/g, '&#39;').replace(/"/g, '&quot;');
     },
     error: function(e, tplog){
       var error = 'Laytpl Error: ';
@@ -82,9 +82,9 @@ layui.define(function(exports){
       str = str.replace(exp(config.open+'|'+config.close), '');
       if(/^=/.test(str)){
         str = str.replace(/^=/, '');
-      } else if (/^-/.test(str)) {
-          str = str.replace(/^-/, '');
-          start = '"+(';
+      } else if(/^-/.test(str)){
+        str = str.replace(/^-/, '');
+        start = '"+(';
       }
       return start + str.replace(/\\(.)/g, '$1') + ')+"';
     });
@@ -92,8 +92,8 @@ layui.define(function(exports){
     tpl = '"use strict";var view = "' + tpl + '";return view;';
 
     try{
-        that.cache = tpl = new Function('d, laytpl', tpl);
-        return tpl(data, tool);
+      that.cache = tpl = new Function('d, laytpl', tpl);
+      return tpl(data, tool);
     } catch(e){
       delete that.cache;
       return tool.error(e, tplog);
