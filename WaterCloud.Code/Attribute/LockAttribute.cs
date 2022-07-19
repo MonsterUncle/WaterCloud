@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using WaterCloud.Code;
 
-namespace WaterCloud.WebApi
+namespace WaterCloud.Code
 {
 	/// <summary>
 	/// 防重复提交,api使用

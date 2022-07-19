@@ -179,11 +179,13 @@ namespace WaterCloud.Service.SystemOrganize
                     var referencedAssemblies = Directory.GetFiles(path, "WaterCloud.Domain.dll").Select(Assembly.LoadFrom).ToArray();
                     var types = referencedAssemblies.SelectMany(a => a.GetTypes().ToArray());
                     var implementType = types.Where(x => x.IsClass);
+                    //忽视类列表
+                    var ignoreTables = new List<string> { "RoleExtend", "UserExtend" };
                     foreach (var item in implementType)
                     {
                         try
                         {
-                            if (item.GetCustomAttributes(typeof(SugarTable), true).FirstOrDefault((x => x.GetType() == typeof(SugarTable))) is SugarTable sugarTable)
+                            if (item.GetCustomAttributes(typeof(SugarTable), true).FirstOrDefault((x => x.GetType() == typeof(SugarTable))) is SugarTable sugarTable && !ignoreTables.Any(a => a == item.Name))
                             {
                                 db.CodeFirst.SetStringDefaultLength(50).InitTables(item);
                             }
