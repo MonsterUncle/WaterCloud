@@ -145,7 +145,6 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
             try
             {
                 await _service.DoNow(keyValue);
-                var data = await _service.GetForm(keyValue);
                 return await Success("操作成功。", "", keyValue);
             }
             catch (Exception ex)
