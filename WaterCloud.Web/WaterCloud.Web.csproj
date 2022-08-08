@@ -49,9 +49,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.5" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
     <PackageReference Include="Quartz" Version="3.4.0" />
-    <PackageReference Include="SqlSugarCore" Version="5.0.8.6" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.1" />
     <PackageReference Include="Quartz.Serialization.Json" Version="3.4.0" />
     <PackageReference Include="System.DirectoryServices.Protocols" Version="6.0.1" />
   </ItemGroup>
