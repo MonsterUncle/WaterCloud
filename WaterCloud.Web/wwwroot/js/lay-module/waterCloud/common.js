@@ -147,7 +147,9 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 IsClose = true;
             }
             if (IsClose) {
-                delete top.iframesList[index];
+                if (top.iframesList) {
+                    delete top.iframesList[index];
+                }
                 parent.layer.close(index);
             } else {
                 location.reload();
@@ -222,11 +224,15 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                         options.btn2(index, layero);
                     }
                     else {
-                        delete top.iframesList[index];
+                        if (top.iframesList) {
+                            delete top.iframesList[index];
+                        }
                         return true;
                     }
                 }, cancel: function (index, layero) {
-                    delete top.iframesList[index];
+                    if (top.iframesList) {
+                        delete top.iframesList[index];
+                    }
                     if (!!options.cancel) {
                         options.cancel(index, layero);
                     }
@@ -524,7 +530,12 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         //父窗体
         parentWindow: function () {
             var index = parent.layer.getFrameIndex(window.name);
-            return top.iframesList[index];
+            if (top.iframesList) {
+                return top.iframesList[index];
+            }
+            else {
+                return null;
+            }
         },
         //当前tab窗体
         currentWindow: function () {
