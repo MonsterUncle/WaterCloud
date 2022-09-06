@@ -179,7 +179,7 @@ namespace WaterCloud.Code
                 options.Filters.Add<GlobalExceptionFilter>();
                 options.Filters.Add<ModelActionFilter>();
                 options.ModelMetadataDetailsProviders.Add(new ModelBindingMetadataProvider());
-                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
         }
         /// <summary>
