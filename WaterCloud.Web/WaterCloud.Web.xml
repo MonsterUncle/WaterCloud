@@ -1,0 +1,359 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WaterCloud.Web</name>
+    </assembly>
+    <members>
+        <member name="T:WaterCloud.Web.Areas.ContentManage.Controllers.ArticleCategoryController">
+            <summary>
+            创 建：超级管理员
+            日 期：2020-06-09 19:42
+            描 述：新闻类别控制器类
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.ContentManage.Controllers.ArticleNewsController">
+            <summary>
+            创 建：超级管理员
+            日 期：2020-06-09 19:42
+            描 述：新闻管理控制器类
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.FileManage.Controllers.UploadfileController">
+            <summary>
+            创 建：超级管理员
+            日 期：2020-07-22 12:04
+            描 述：文件管理控制器类
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.FlowManage.Controllers.FlowinstanceController">
+            <summary>
+            创 建：超级管理员
+            日 期：2020-07-14 09:18
+            描 述：我的流程控制器类
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.Areas.FlowManage.Controllers.FlowinstanceController.ToDoFlow">
+            <summary>
+            待处理的流程
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.Areas.FlowManage.Controllers.FlowinstanceController.DoneFlow">
+            <summary>
+            已完成的流程
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.Areas.FlowManage.Controllers.FlowinstanceController.Verification">
+            <summary>
+            处理界面
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Areas.FlowManage.Controllers.FlowinstanceController.QueryHistories(System.String)">
+            <summary>
+            获取一个流程实例的操作历史记录
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.InfoManage.Controllers.MessageController">
+            <summary>
+            创 建：超级管理员
+            日 期：2020-07-29 16:41
+            描 述：通知管理控制器类
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.OrderManagement.Controllers.OrderController">
+            <summary>
+            创 建：超级管理员
+            日 期：2021-07-12 20:41
+            描 述：订单管理控制器类
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.SystemManage.Controllers.FlowschemeController">
+            <summary>
+            创 建：超级管理员
+            日 期：2020-07-10 08:49
+            描 述：流程设计控制器类
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.SystemManage.Controllers.FormController">
+            <summary>
+            创 建：超级管理员
+            日 期：2020-07-08 14:33
+            描 述：表单设计控制器类
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.SystemManage.Controllers.ModuleFieldsController">
+            <summary>
+            创 建：超级管理员
+            日 期：2020-05-21 14:38
+            描 述：字段管理控制器类
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.SystemOrganize.Controllers.DataPrivilegeRuleController">
+            <summary>
+            创 建：超级管理员
+            日 期：2020-06-01 09:44
+            描 述：数据权限控制器类
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.SystemOrganize.Controllers.SystemSetController">
+            <summary>
+            创 建：超级管理员
+            日 期：2020-06-12 13:50
+            描 述：系统设置控制器类
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.Areas.SystemSecurity.Controllers.AppLogController.getDirectory(System.Collections.Generic.List{WaterCloud.Code.Model.AppLogEntity},System.String)">
+            <summary>
+            获得指定路径下所有文件名
+            </summary>
+            <param name="sw">列表</param>
+            <param name="path">文件夹路径</param>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.SystemSecurity.Controllers.OpenJobsController">
+            <summary>
+            定时任务
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.Areas.SystemSecurity.Controllers.OpenJobsController.QueryLocalHandlers">
+            <summary>
+            获取本地可执行的任务列表
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.Areas.SystemSecurity.Controllers.OpenJobsController.ChangeStatus(System.String,System.Int32)">
+            <summary>
+            改变任务状态，启动/停止
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.Areas.SystemSecurity.Controllers.OpenJobsController.DoNow(System.String)">
+            <summary>
+            立即执行任务
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.Areas.SystemSecurity.Controllers.OpenJobsController.ClearScheduleJob">
+            <summary>
+            清除任务计划
+            </summary>
+        </member>
+        <member name="F:WaterCloud.Web.Controllers.ClientsDataController.cacheKeyOperator">
+            <summary>
+            缓存操作类
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetClientsDataJson">
+            <summary>
+            初始数据加载请求方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.ClearCache">
+            <summary>
+            清空缓存请求方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetMenuFields">
+            <summary>
+            模块字段权限
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetQuickModuleList">
+            <summary>
+            快捷菜单列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetNoticeList">
+            <summary>
+            获取公告信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetInitDataJson">
+            <summary>
+            初始菜单列表请求方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetNoticeInfo">
+            <summary>
+            获取公告信息请求方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetUserCode">
+            <summary>
+            获取当前用户信息请求方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetQuickModule">
+            <summary>
+            获取快捷菜单请求方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetCoutData">
+            <summary>
+            获取数据信息接口
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetMenuListNew">
+            <summary>
+            菜单按钮信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.ToMenuJsonNew(System.Collections.Generic.List{WaterCloud.Domain.SystemManage.ModuleEntity},System.String)">
+            <summary>
+            菜单信息
+            </summary>
+            <param name="data"></param>
+            <param name="parentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetDataItemList">
+            <summary>
+            字段信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetMenuButtonListNew">
+            <summary>
+            菜单按钮信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.ClientsDataController.GetMenuFieldsListNew">
+            <summary>
+            菜单字段信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.LoginController.GetAuthCode">
+            <summary>
+            验证码获取（此接口已弃用）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.LoginController.CheckLoginState">
+            <summary>
+            验证登录状态请求接口
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.LoginController.CheckLogin(System.String,System.String,System.String)">
+            <summary>
+            登录验证
+            </summary>
+            <param name="username">用户</param>
+            <param name="password">密码</param>
+            <param name="localurl">域名</param>
+            <returns></returns>
+        </member>
+        <member name="T:WaterCloud.Web.Controllers.TestController">
+            <summary>
+            测试文件
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Controllers.UserController">
+            <summary>
+            用户接口
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.UserController.Login(WaterCloud.Web.Controllers.UserController.LoginRequest)">
+            <summary>
+            用户登录
+            </summary>
+            <param name="request">请求对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.Controllers.UserController.LoginOff">
+            <summary>
+            用户退出登录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WaterCloud.Web.Controllers.UserController.LoginRequest">
+            <summary>
+            登录请求对象
+            </summary>
+        </member>
+        <member name="P:WaterCloud.Web.Controllers.UserController.LoginRequest.userName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:WaterCloud.Web.Controllers.UserController.LoginRequest.password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:WaterCloud.Web.Controllers.UserController.LoginRequest.localurl">
+            <summary>
+            域名
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.ControllerBase.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
+            <summary>
+            演示模式过滤
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WaterCloud.Web.AuthorizeFilterAttribute">
+            <summary>
+            权限验证
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.AuthorizeFilterAttribute.#ctor(System.String,System.Boolean)">
+            <summary>
+            权限特性
+            </summary>
+            <param name="authorize">权限参数</param>
+            <param name="needAuth">是否鉴权</param>
+        </member>
+        <member name="M:WaterCloud.Web.AuthorizeFilterAttribute.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
+            <summary>
+            验证
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WaterCloud.Web.LoginFilterAttribute">
+            <summary>
+            验证token
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.LoginFilterAttribute.#ctor(System.Boolean)">
+            <summary>
+            登录特性
+            </summary>
+            <param name="needLogin">是否验证</param>
+        </member>
+        <member name="M:WaterCloud.Web.LoginFilterAttribute.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
+            <summary>
+            验证
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.HandlerAuthorizeAttribute.#ctor(System.String,System.Boolean)">
+            <summary>
+            权限特性
+            </summary>
+            <param name="authorize">权限参数</param>
+            <param name="needAuth">是否鉴权</param>
+        </member>
+        <member name="M:WaterCloud.Web.HandlerLoginAttribute.#ctor(System.Boolean)">
+            <summary>
+            登录特性
+            </summary>
+            <param name="needLogin">是否验证</param>
+        </member>
+    </members>
+</doc>

@@ -8,6 +8,7 @@ using Autofac;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Newtonsoft.Json.Serialization;
+using System.Reflection;
 
 namespace WaterCloud.Web
 {
@@ -19,8 +20,9 @@ namespace WaterCloud.Web
         public override void ConfigureServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-            services.AddSqlSugar()
-                .AddQuartz()
+			services.AddDefaultSwaggerGen(Assembly.GetExecutingAssembly().GetName().Name)
+				.AddSqlSugar()
+				.AddQuartz()
                 .ReviseSuperSysem()
                 .AddRabbitMq()
                 .AddIf(GlobalContext.SystemConfig.RabbitMq.Enabled,x => x.AddWorkerService())
@@ -31,7 +33,8 @@ namespace WaterCloud.Web
                     //服务端发保持连接请求到客户端间隔，默认15秒，改成2分钟，网页需跟着设置connection.serverTimeoutInMilliseconds = 24e4;即4分钟
                     options.KeepAliveInterval = TimeSpan.FromMinutes(2);
                 });
-            services.AddDefaultMVC().AddNewtonsoftJson(options =>
+            services.AddDefaultAPI();
+			services.AddDefaultMVC().AddNewtonsoftJson(options =>
             {
                 // 返回数据首字母不小写，CamelCasePropertyNamesContractResolver是小写
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
@@ -45,17 +48,21 @@ namespace WaterCloud.Web
         public void ConfigureContainer(ContainerBuilder builder)
         {
             AutofacConfigureContainer(builder, default, typeof(Controller), typeof(IDenpendency), typeof(Program));
-        }
-        public override void Configure(IApplicationBuilder app)
+			AutofacConfigureContainer(builder, default, typeof(Microsoft.AspNetCore.Mvc.ControllerBase), typeof(IDenpendency), typeof(Program));
+		}
+		public override void Configure(IApplicationBuilder app)
         {
             base.Configure(app);
             //MVC路由
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapHub<MessageHub>("/chatHub");
-                endpoints.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapControllerRoute("default", "{controller=Login}/{action=Index}/{id?}");
-            });
+            app.UseMiddleware(typeof(GlobalExceptionMiddleware))
+			   .AddDefaultSwaggerGen()
+               .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapHub<MessageHub>("/chatHub");
+                    endpoints.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapControllerRoute("default", "{controller=Login}/{action=Index}/{id?}");
+					endpoints.MapControllerRoute("api", "api/{controller=ApiHome}/{action=Index}/{id?}");
+				});
         }
     }
 }

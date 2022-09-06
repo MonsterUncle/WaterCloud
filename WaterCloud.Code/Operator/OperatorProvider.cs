@@ -4,18 +4,13 @@
  * Description: WaterCloud快速开发平台
  * Website：
 *********************************************************************************/
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using System.Web;
 namespace WaterCloud.Code
 {
     public class OperatorProvider
     {
-        //登录信息保存方式
-        private static string LoginProvider = GlobalContext.SystemConfig.LoginProvider;
         //是否允许一个账户在多处登录
         private static bool LoginMultiple = GlobalContext.SystemConfig.LoginMultiple;
         //缓存过期时间
@@ -44,33 +39,18 @@ namespace WaterCloud.Code
         private string LoginUserMarkKey = projectPrefix+"_Mark";
         public string GetProvider(string key)
         {
-            switch (LoginProvider)
-            {
-                case Define.PROVIDER_COOKIE:
-                    return WebHelper.GetCookie(key).ToString();
-                case Define.PROVIDER_SESSION:
-                    return WebHelper.GetSession(key).ToString();
-                case Define.PROVIDER_WEBAPI:
-                    return GetToken();
-                default:
-                    return GetToken();
-            }
+            var token = GetToken();
+			if (!string.IsNullOrEmpty(token))
+				return token;
+			token = WebHelper.GetCookie(key).ToString();
+            if (!string.IsNullOrEmpty(token))
+				return token;
+			return WebHelper.GetSession(key).ToString();
         }
         public void SetProvider(string key, string value)
         {
-            switch (LoginProvider)
-            {
-                case Define.PROVIDER_COOKIE:
-                    WebHelper.WriteCookie(key, value);
-                    break;
-                case Define.PROVIDER_SESSION:
-                    WebHelper.WriteSession(key, value);
-                    break;
-                case Define.PROVIDER_WEBAPI:
-                    break;
-                default:
-                    break;
-            }
+			WebHelper.WriteCookie(key, value);
+			WebHelper.WriteSession(key, value);
         }
         public string GetToken()
         {
@@ -100,19 +80,8 @@ namespace WaterCloud.Code
         }
         public void RemoveProvider(string key)
         {
-            switch (LoginProvider)
-            {
-                case Define.PROVIDER_COOKIE:
-                    WebHelper.RemoveCookie(key);
-                    break;
-                case Define.PROVIDER_SESSION:
-                    WebHelper.RemoveSession(key);
-                    break;
-                case Define.PROVIDER_WEBAPI:
-                    break;
-                default:
-                    break;
-            }
+			WebHelper.RemoveCookie(key);
+			WebHelper.RemoveSession(key);
         }
         public OperatorModel GetCurrent()
         {
@@ -150,15 +119,15 @@ namespace WaterCloud.Code
         /// <param name="facilityMark">设备类型</param>
         /// <param name="cookie">是否保存cookie，默认是</param>
         /// <returns></returns>
-        public async Task<string> AddLoginUser(OperatorModel operatorModel, string loginMark, string facilityMark, bool cookie = true)
+        public async Task<string> AddLoginUser(OperatorModel operatorModel, string loginMark, string facilityMark)
         {
             string token = Guid.NewGuid().ToString();
             try
             {
                 // 填写登录信息
                 operatorModel.LoginToken = token;
-                //cookid登录信息更新
-                if (cookie)
+                //登录信息更新
+                if (string.IsNullOrEmpty(loginMark))
                 {
                     string cookieMark = GetProvider(LoginUserMarkKey);
                     if (string.IsNullOrEmpty(cookieMark))
@@ -175,6 +144,7 @@ namespace WaterCloud.Code
                 else
                 {
                     operatorModel.loginMark = loginMark;
+                    RemoveProvider(LoginUserMarkKey);
                 }
                 //redis 登录token列表更新
                 Dictionary<string, string> tokenMarkList = await CacheHelper.GetAsync<Dictionary<string, string>>(cacheKeyToken + operatorModel.UserId);
@@ -241,7 +211,7 @@ namespace WaterCloud.Code
                     Dictionary<string, string> tokenMarkList = await CacheHelper.GetAsync<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);
                     tokenMarkList.Remove(loginMark);
                     await CacheHelper.RemoveAsync(cacheKeyOperator + loginMark);
-                    if (operatorInfo.LoginToken == token || LoginProvider == Define.PROVIDER_WEBAPI)
+                    if (operatorInfo.LoginToken == token || facilityMark == "api_")
                     {
                         await CacheHelper.RemoveAsync(cacheKeyOperator + facilityMark + operatorInfo.UserId);
                     }
@@ -293,7 +263,7 @@ namespace WaterCloud.Code
                 if (operatorInfo != null)
                 {
                     Dictionary<string, string> tokenMarkList = await CacheHelper.GetAsync<Dictionary<string, string>>(cacheKeyToken + operatorInfo.UserId);
-                    if ((token == operatorInfo.LoginToken || LoginProvider == Define.PROVIDER_WEBAPI) && tokenMarkList.ContainsKey(operatorInfo.loginMark) && tokenMarkList[operatorInfo.loginMark] == operatorInfo.LoginToken)
+                    if ((token == operatorInfo.LoginToken || facilityMark == "api_") && tokenMarkList.ContainsKey(operatorInfo.loginMark) && tokenMarkList[operatorInfo.loginMark] == operatorInfo.LoginToken)
                     {
                         ////账号被顶(排除admin)
                         if (!LoginMultiple && !operatorInfo.IsSuperAdmin && operatorInfo.LoginToken != await CacheHelper.GetAsync<string>(cacheKeyOperator + facilityMark + operatorInfo.UserId))
