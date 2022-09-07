@@ -134,6 +134,14 @@
             清除任务计划
             </summary>
         </member>
+        <member name="M:WaterCloud.Web.BaseController.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
+            <summary>
+            演示模式过滤
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
         <member name="F:WaterCloud.Web.Controllers.ClientsDataController.cacheKeyOperator">
             <summary>
             缓存操作类
@@ -294,14 +302,6 @@
             <summary>
             域名
             </summary>
-        </member>
-        <member name="M:WaterCloud.Web.ControllerBase.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
-            <summary>
-            演示模式过滤
-            </summary>
-            <param name="context"></param>
-            <param name="next"></param>
-            <returns></returns>
         </member>
         <member name="T:WaterCloud.Web.AuthorizeFilterAttribute">
             <summary>
