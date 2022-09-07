@@ -42,8 +42,8 @@ namespace WaterCloud.Web.Controllers
             }
 
             LogEntity logEntity = new LogEntity();
-            logEntity.ModuleName = "用户Api";
-            logEntity.Type = DbLogType.Login.ToString();
+            logEntity.F_ModuleName = "用户Api";
+            logEntity.F_Type = DbLogType.Login.ToString();
             try
             {
                 if (!await CheckIP())
@@ -52,12 +52,12 @@ namespace WaterCloud.Web.Controllers
                 }
                 UserEntity userEntity = await _userService.CheckLogin(request.userName, Md5.md5(request.password, 32), request.localurl);
                 OperatorModel operatorModel = new OperatorModel();
-                operatorModel.UserId = userEntity.Id;
-                operatorModel.UserCode = userEntity.Account;
-                operatorModel.UserName = userEntity.RealName;
-                operatorModel.CompanyId = userEntity.OrganizeId;
-                operatorModel.DepartmentId = userEntity.DepartmentId;
-                operatorModel.RoleId = userEntity.RoleId;
+                operatorModel.UserId = userEntity.F_Id;
+                operatorModel.UserCode = userEntity.F_Account;
+                operatorModel.UserName = userEntity.F_RealName;
+                operatorModel.CompanyId = userEntity.F_OrganizeId;
+                operatorModel.DepartmentId = userEntity.F_DepartmentId;
+                operatorModel.RoleId = userEntity.F_RoleId;
                 operatorModel.LoginIPAddress = WebHelper.Ip;
                 if (GlobalContext.SystemConfig.LocalLAN != false)
                 {
@@ -68,14 +68,14 @@ namespace WaterCloud.Web.Controllers
                     operatorModel.LoginIPAddressName = WebHelper.GetIpLocation(operatorModel.LoginIPAddress);
                 }
                 operatorModel.LoginTime = DateTime.Now;
-                operatorModel.DdUserId = userEntity.DingTalkUserId;
-                operatorModel.WxOpenId = userEntity.WxOpenId;
-                operatorModel.IsAdmin = userEntity.IsAdmin.Value;
-                operatorModel.IsBoss = userEntity.IsBoss.Value;
-                operatorModel.IsLeaderInDepts = userEntity.IsLeaderInDepts.Value;
-                operatorModel.IsSenior = userEntity.IsSenior.Value;
-                SystemSetEntity setEntity = await _setService.GetForm(userEntity.OrganizeId);
-                operatorModel.DbNumber = setEntity.DbNumber;
+                operatorModel.DdUserId = userEntity.F_DingTalkUserId;
+                operatorModel.WxOpenId = userEntity.F_WxOpenId;
+                operatorModel.IsAdmin = userEntity.F_IsAdmin.Value;
+                operatorModel.IsBoss = userEntity.F_IsBoss.Value;
+                operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
+                operatorModel.IsSenior = userEntity.F_IsSenior.Value;
+                SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
+                operatorModel.DbNumber = setEntity.F_DbNumber;
                 if (operatorModel.IsAdmin && operatorModel.DbNumber == GlobalContext.SystemConfig.MainDbNumber)
                 {
                     operatorModel.IsSuperAdmin = true;
@@ -85,10 +85,10 @@ namespace WaterCloud.Web.Controllers
                     operatorModel.IsSuperAdmin = false;
                 }
                 await OperatorProvider.Provider.AddLoginUser(operatorModel, apitoken, "api_");
-                logEntity.Account = userEntity.Account;
-                logEntity.NickName = userEntity.RealName;
-                logEntity.Result = true;
-                logEntity.Description = "登录成功";
+                logEntity.F_Account = userEntity.F_Account;
+                logEntity.F_NickName = userEntity.F_RealName;
+                logEntity.F_Result = true;
+                logEntity.F_Description = "登录成功";
                 await _logService.WriteDbLog(logEntity);
                 // 设置刷新Token令牌
                 _httpContextAccessor.HttpContext.Response.Headers[GlobalContext.SystemConfig.TokenName] = apitoken;
@@ -96,10 +96,10 @@ namespace WaterCloud.Web.Controllers
             }
             catch (Exception ex)
             {
-                logEntity.Account = request.userName;
-                logEntity.NickName = request.userName;
-                logEntity.Result = false;
-                logEntity.Description = "登录失败，" + ex.Message;
+                logEntity.F_Account = request.userName;
+                logEntity.F_NickName = request.userName;
+                logEntity.F_Result = false;
+                logEntity.F_Description = "登录失败，" + ex.Message;
                 await _logService.WriteDbLog(logEntity);
                 return new AlwaysResult<string> { state = ResultType.error.ToString(), message = ex.Message, data = apitoken };
             }
@@ -120,12 +120,12 @@ namespace WaterCloud.Web.Controllers
         {
             await _logService.WriteDbLog(new LogEntity
             {
-                ModuleName = "用户Api",
-                Type = DbLogType.Exit.ToString(),
-                Account = _userService.currentuser.UserCode,
-                NickName = _userService.currentuser.UserName,
-                Result = true,
-                Description = "安全退出系统",
+				F_ModuleName = "用户Api",
+				F_Type = DbLogType.Exit.ToString(),
+				F_Account = _userService.currentuser.UserCode,
+				F_NickName = _userService.currentuser.UserName,
+				F_Result = true,
+				F_Description = "安全退出系统",
             });
             await OperatorProvider.Provider.EmptyCurrent("api_");
             return new AlwaysResult { state = ResultType.success.ToString() };

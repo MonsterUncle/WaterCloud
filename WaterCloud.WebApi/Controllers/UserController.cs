@@ -85,7 +85,7 @@ namespace WaterCloud.WebApi.Controllers
                 {
                     operatorModel.IsSuperAdmin = false;
                 }
-                await OperatorProvider.Provider.AddLoginUser(operatorModel, apitoken, "api_",false);
+                await OperatorProvider.Provider.AddLoginUser(operatorModel, apitoken, "api_");
                 logEntity.F_Account = userEntity.F_Account;
                 logEntity.F_NickName = userEntity.F_RealName;
                 logEntity.F_Result = true;
