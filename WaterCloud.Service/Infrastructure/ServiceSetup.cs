@@ -50,7 +50,7 @@ namespace WaterCloud.Service
         /// <param name="db"></param>
         public static void DefaultConfig(this SqlSugarProvider db)
         {
-            db.Ado.CommandTimeOut = GlobalContext.SystemConfig.CommandTimeout;
+            db.Ado.CommandTimeOut = GlobalContext.SystemConfig.DBCommandTimeout;
             db.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
             {
                 DataInfoCacheService = new SqlSugarCache(), //配置我们创建的缓存类
