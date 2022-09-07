@@ -24,7 +24,7 @@ using iTextSharp.text.pdf;
 namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 {
     [Area("SystemOrganize")]
-    public class DutyController : ControllerBase
+    public class DutyController : BaseController
     {
 
         public DutyService _service { get; set; }

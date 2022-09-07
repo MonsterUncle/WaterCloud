@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 {
     [Area("SystemOrganize")]
-    public class NoticeController : ControllerBase
+    public class NoticeController : BaseController
     {
 
         public NoticeService _service { get; set; }

@@ -19,7 +19,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
     /// 描 述：文件管理控制器类
     /// </summary>
     [Area("FileManage")]
-    public class UploadfileController :  ControllerBase
+    public class UploadfileController :  BaseController
     {
 
         public UploadfileService _service {get;set;}

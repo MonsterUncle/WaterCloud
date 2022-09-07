@@ -11,7 +11,7 @@ using WaterCloud.Service.SystemSecurity;
 namespace WaterCloud.Web
 {
     [HandlerLogin]
-    public abstract class ControllerBase : Controller
+    public abstract class BaseController : Controller
     {
         public LogService _logService { get; set; }
         /// <summary>

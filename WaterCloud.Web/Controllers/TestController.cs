@@ -13,7 +13,7 @@ namespace WaterCloud.Web.Controllers
     [ApiExplorerSettings(GroupName ="V2")]
     [ApiController]
     [LoginFilter]
-    public class TestController : Microsoft.AspNetCore.Mvc.ControllerBase
+    public class TestController : ControllerBase
 	{
         // GET: api/<controller>
         [HttpGet]

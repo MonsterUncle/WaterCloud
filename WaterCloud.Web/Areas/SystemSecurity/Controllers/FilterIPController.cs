@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
 {
     [Area("SystemSecurity")]
-    public class FilterIPController : ControllerBase
+    public class FilterIPController : BaseController
     {
 
         public FilterIPService _service { get; set; }

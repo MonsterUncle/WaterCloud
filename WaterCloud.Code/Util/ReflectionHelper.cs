@@ -10,7 +10,7 @@ namespace WaterCloud.Code
     public class ReflectionHelper
     {
         private static ConcurrentDictionary<string, object> dictCache = new ConcurrentDictionary<string, object>();
-        private static List<string> exceptionList=new List<string> { "DataFilterService", "ControllerBase" };
+        private static List<string> exceptionList=new List<string> { "DataFilterService", "BaseController" };
 
         #region 得到类里面的属性集合
         /// <summary>

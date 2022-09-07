@@ -448,7 +448,7 @@ namespace WaterCloud.CodeGenerator
             SetClassDescription("控制器类", baseConfigModel, sb);
 
             sb.AppendLine("    [Area(\"" + baseConfigModel.OutputConfig.OutputModule + "\")]");
-            sb.AppendLine("    public class " + baseConfigModel.FileConfig.ControllerName + " :  ControllerBase");
+            sb.AppendLine("    public class " + baseConfigModel.FileConfig.ControllerName + " :  BaseController");
             sb.AppendLine("    {");
             sb.AppendLine("        public " + baseConfigModel.FileConfig.ServiceName + " _service {get;set;}");
             sb.AppendLine();

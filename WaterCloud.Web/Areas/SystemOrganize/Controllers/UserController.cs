@@ -18,7 +18,7 @@ using WaterCloud.Service.SystemManage;
 namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 {
     [Area("SystemOrganize")]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
 
         public UserService _service { get; set; }

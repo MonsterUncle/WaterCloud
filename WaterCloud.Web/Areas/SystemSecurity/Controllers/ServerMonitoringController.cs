@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
 {
     [Area("SystemSecurity")]
-    public class ServerMonitoringController : ControllerBase
+    public class ServerMonitoringController : BaseController
     {
         public ServerStateService _serverStateService { get; set; }
 
