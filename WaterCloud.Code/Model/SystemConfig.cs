@@ -19,17 +19,13 @@ namespace WaterCloud.Code.Model
         /// </summary>
         public bool LoginMultiple { get; set; }
         /// <summary>
-        ///  数据库超时间（秒）
-        /// </summary>
-        public int CommandTimeout { get; set; }
-        /// <summary>
         /// 允许跨域的站点
         /// </summary>
         public string AllowCorsSite { get; set; }
 
         public string DBProvider { get; set; }
         public string DBConnectionString { get; set; }
-        public string DBCommandTimeout { get; set; }
+        public int DBCommandTimeout { get; set; }
         
         public string CacheProvider { get; set; }
         public string HandleLogProvider { get; set; }
