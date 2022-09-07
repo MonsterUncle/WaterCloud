@@ -17,7 +17,7 @@ namespace WaterCloud.Web.Controllers
     [Route("api/[controller]/[action]")]
     [ApiExplorerSettings(GroupName = "Default")]
     [ApiController]
-    public class UserController : Microsoft.AspNetCore.Mvc.ControllerBase
+    public class UserController : ControllerBase
     {
         //自动注入服务
         public FilterIPService _filterIPService { get; set; }

@@ -16,7 +16,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     /// 描 述：系统设置控制器类
     /// </summary>
     [Area("SystemOrganize")]
-    public class SystemSetController :  ControllerBase
+    public class SystemSetController :  BaseController
     {
 
         public SystemSetService _service { get; set; }

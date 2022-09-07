@@ -15,7 +15,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     /// 描 述：流程设计控制器类
     /// </summary>
     [Area("SystemManage")]
-    public class FlowschemeController :  ControllerBase
+    public class FlowschemeController :  BaseController
     {
 
         public FlowschemeService _service {get;set;}

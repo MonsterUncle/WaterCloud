@@ -14,7 +14,7 @@ namespace WaterCloud.Web.Areas.FlowManage.Controllers
     /// 描 述：我的流程控制器类
     /// </summary>
     [Area("FlowManage")]
-    public class FlowinstanceController :  ControllerBase
+    public class FlowinstanceController :  BaseController
     {
 
         public FlowinstanceService _service {get;set;}

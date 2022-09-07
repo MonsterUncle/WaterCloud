@@ -15,7 +15,7 @@ namespace WaterCloud.Web.Areas.InfoManage.Controllers
     /// 描 述：通知管理控制器类
     /// </summary>
     [Area("InfoManage")]
-    public class MessageController :  ControllerBase
+    public class MessageController :  BaseController
     {
 
         public MessageService _service {get;set;}

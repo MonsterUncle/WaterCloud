@@ -16,7 +16,7 @@ namespace WaterCloud.Web.Areas.ContentManage.Controllers
     /// </summary>
     [Area("ContentManage")]
     [AllowAnonymous]
-    public class ArticleCategoryController :  ControllerBase
+    public class ArticleCategoryController :  BaseController
     {
 
         //属性注入示例

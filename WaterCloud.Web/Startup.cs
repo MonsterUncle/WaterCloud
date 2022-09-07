@@ -48,7 +48,7 @@ namespace WaterCloud.Web
         public void ConfigureContainer(ContainerBuilder builder)
         {
             AutofacConfigureContainer(builder, default, typeof(Controller), typeof(IDenpendency), typeof(Program));
-			AutofacConfigureContainer(builder, default, typeof(Microsoft.AspNetCore.Mvc.ControllerBase), typeof(IDenpendency), typeof(Program));
+			AutofacConfigureContainer(builder, default, typeof(ControllerBase), typeof(IDenpendency), typeof(Program));
 		}
 		public override void Configure(IApplicationBuilder app)
         {

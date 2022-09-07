@@ -17,7 +17,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     /// 描 述：表单设计控制器类
     /// </summary>
     [Area("SystemManage")]
-    public class FormController :  ControllerBase
+    public class FormController :  BaseController
     {
 
         public FormService _service {get;set;}

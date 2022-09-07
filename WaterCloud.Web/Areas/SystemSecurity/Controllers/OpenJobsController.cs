@@ -14,7 +14,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
     /// 定时任务
     /// </summary>
     [Area("SystemSecurity")]
-    public class OpenJobsController : ControllerBase
+    public class OpenJobsController : BaseController
     {
         public OpenJobsService _service { get; set; }
 

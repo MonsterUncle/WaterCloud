@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
     [Area("SystemManage")]
-    public class ModuleButtonController : ControllerBase
+    public class ModuleButtonController : BaseController
     {
 
         public ModuleService _moduleService { get; set; }

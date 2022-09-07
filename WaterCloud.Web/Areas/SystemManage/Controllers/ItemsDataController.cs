@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
     [Area("SystemManage")]
-    public class ItemsDataController : ControllerBase
+    public class ItemsDataController : BaseController
     {
 
         public ItemsDataService _service { get; set; }

@@ -17,7 +17,7 @@ using WaterCloud.Domain.SystemManage;
 namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 {
     [Area("SystemOrganize")]
-    public class RoleAuthorizeController : ControllerBase
+    public class RoleAuthorizeController : BaseController
     {
         public RoleAuthorizeService _roleAuthorizeService { get; set; }
         public ModuleService _moduleService { get; set; }

@@ -16,7 +16,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     /// 描 述：字段管理控制器类
     /// </summary>
     [Area("SystemManage")]
-    public class ModuleFieldsController :  ControllerBase
+    public class ModuleFieldsController :  BaseController
     {
 
         public ModuleFieldsService _service { get; set; }

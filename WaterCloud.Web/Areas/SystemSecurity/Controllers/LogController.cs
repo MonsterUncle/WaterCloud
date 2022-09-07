@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
 {
     [Area("SystemSecurity")]
-    public class LogController : ControllerBase
+    public class LogController : BaseController
     {
 
         [HttpGet]

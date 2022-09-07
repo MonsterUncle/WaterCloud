@@ -16,7 +16,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
     /// 描 述：数据权限控制器类
     /// </summary>
     [Area("SystemOrganize")]
-    public class DataPrivilegeRuleController :  ControllerBase
+    public class DataPrivilegeRuleController :  BaseController
     {
 
         public DataPrivilegeRuleService _service { get; set; }

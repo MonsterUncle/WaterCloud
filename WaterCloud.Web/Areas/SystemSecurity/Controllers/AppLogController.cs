@@ -17,7 +17,7 @@ using WaterCloud.Code.Model;
 namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
 {
     [Area("SystemSecurity")]
-    public class AppLogController : ControllerBase
+    public class AppLogController : BaseController
     {
 
         [HttpGet]
