@@ -16,8 +16,9 @@ namespace WaterCloud.Service.ContentManage
 	/// </summary>
 	public class ArticleNewsService : DataFilterService<ArticleNewsEntity>, IDenpendency
     {
-        public ArticleNewsService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public ArticleNewsService(ISqlSugarClient context) : base(context)
+
+		{
 
         }
         

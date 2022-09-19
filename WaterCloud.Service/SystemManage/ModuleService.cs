@@ -24,8 +24,8 @@ namespace WaterCloud.Service.SystemManage
         private string authorizecacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_authorizeurldata_";// +权限
         //获取类名
 
-        public ModuleService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public ModuleService(ISqlSugarClient context) : base(context)
+		{
         }
 
         public async Task<List<ModuleEntity>> GetList()
@@ -76,12 +76,12 @@ namespace WaterCloud.Service.SystemManage
             }
             else
             {
-                unitofwork.CurrentBeginTrans();
-                await repository.Delete(a => a.F_Id == keyValue);
+				repository.Db.Ado.BeginTran();
+				await repository.Delete(a => a.F_Id == keyValue);
                 await repository.Db.Deleteable<ModuleButtonEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
                 await repository.Db.Deleteable<ModuleFieldsEntity>().Where(a => a.F_ModuleId == keyValue).ExecuteCommandAsync();
-                unitofwork.CurrentCommit();
-                await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+				repository.Db.Ado.CommitTran();
+				await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
             }
         }
 

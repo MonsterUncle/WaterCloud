@@ -20,8 +20,8 @@ namespace WaterCloud.Service.SystemManage
         /// <summary>
         /// 缓存操作类
         /// </summary>
-        public ItemsDataService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public ItemsDataService(ISqlSugarClient context) : base(context)
+		{
         }
         //获取类名
         

@@ -17,8 +17,8 @@ namespace WaterCloud.Service.SystemSecurity
 {
     public class FilterIPService : DataFilterService<FilterIPEntity>, IDenpendency
     {
-        public FilterIPService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public FilterIPService(ISqlSugarClient context) : base(context)
+		{
         }
         public async Task<List<FilterIPEntity>> GetList(string keyword)
         {

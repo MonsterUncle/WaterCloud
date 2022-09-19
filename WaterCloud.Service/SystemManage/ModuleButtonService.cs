@@ -19,8 +19,8 @@ namespace WaterCloud.Service.SystemManage
     public class ModuleButtonService : DataFilterService<ModuleButtonEntity>, IDenpendency
     {
         private string authorizecacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_authorizeurldata_";// +权限
-        public ModuleButtonService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public ModuleButtonService(ISqlSugarClient context) : base(context)
+		{
         }
         public async Task<List<ModuleButtonEntity>> GetList(string moduleId = "")
         {

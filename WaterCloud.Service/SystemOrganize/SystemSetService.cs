@@ -10,6 +10,7 @@ using System;
 using System.Reflection;
 using WaterCloud.Service.SystemManage;
 using WaterCloud.Domain.SystemManage;
+using CSRedis;
 
 namespace WaterCloud.Service.SystemOrganize
 {
@@ -26,8 +27,8 @@ namespace WaterCloud.Service.SystemOrganize
         public ModuleButtonService moduleButtonApp { get; set; }
         public ModuleFieldsService moduleFieldsApp { get; set; }
 
-        public SystemSetService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public SystemSetService(ISqlSugarClient context) : base(context)
+		{
         }
         #region 获取数据
         public async Task<List<SystemSetEntity>> GetList(string keyword = "")
@@ -53,7 +54,7 @@ namespace WaterCloud.Service.SystemOrganize
 
         public async Task<SystemSetEntity> GetFormByHost(string host)
         {
-            unitOfWork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
+            repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber);
             var query = repository.IQueryable();
             if (!string.IsNullOrEmpty(host))
             {
@@ -101,15 +102,15 @@ namespace WaterCloud.Service.SystemOrganize
         #region 提交数据
         public async Task SubmitForm(SystemSetEntity entity, string keyValue, string[] permissionIds = null, string[] permissionfieldsIds = null)
         {
-            unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
+			repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber);
             List<RoleAuthorizeEntity> roleAuthorizeEntitys = new List<RoleAuthorizeEntity>();
             List<ModuleEntity> modules = new List<ModuleEntity>();
             List<ModuleButtonEntity> modulebtns = new List<ModuleButtonEntity>();
             List<ModuleFieldsEntity> modulefileds = new List<ModuleFieldsEntity>();
             //字典数据
-            var itemsTypes = await unitofwork.GetDbClient().Queryable<ItemsEntity>().ToListAsync();
-            var itemsDetails = await unitofwork.GetDbClient().Queryable<ItemsDetailEntity>().ToListAsync();
-            unitofwork.BeginTrans();
+            var itemsTypes = await repository.Db.Queryable<ItemsEntity>().ToListAsync();
+            var itemsDetails = await repository.Db.Queryable<ItemsDetailEntity>().ToListAsync();
+            repository.Dbs.BeginTran();
             if (string.IsNullOrEmpty(keyValue))
             {
                 entity.F_DeleteMark = false;
@@ -296,37 +297,37 @@ namespace WaterCloud.Service.SystemOrganize
                 //更新租户库
                 if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
 				{
-                    var tenant = await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
-                    unitofwork.GetDbClient().ChangeDatabase(tenant.F_DbNumber);
-                    var user = unitofwork.GetDbClient().Queryable<UserEntity>().First(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true);
-                    var userinfo = unitofwork.GetDbClient().Queryable<UserLogOnEntity>().First(a => a.F_UserId == user.F_Id);
+                    var tenant = await repository.Db.Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
+					repository.ChangeEntityDb(tenant.F_DbNumber);
+                    var user = repository.Db.Queryable<UserEntity>().First(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true);
+                    var userinfo = repository.Db.Queryable<UserLogOnEntity>().First(a => a.F_UserId == user.F_Id);
                     userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                     userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
-                    await unitofwork.GetDbClient().Updateable<UserEntity>(a => new UserEntity
+                    await repository.Db.Updateable<UserEntity>(a => new UserEntity
                     {
                         F_Account = entity.F_AdminAccount
                     }).Where(a => a.F_Id == user.F_Id).ExecuteCommandAsync();
-                    await unitofwork.GetDbClient().Updateable<UserLogOnEntity>(a => new UserLogOnEntity
+                    await repository.Db.Updateable<UserLogOnEntity>(a => new UserLogOnEntity
                     {
                         F_UserPassword = userinfo.F_UserPassword,
                         F_UserSecretkey = userinfo.F_UserSecretkey
                     }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
-                    await unitofwork.GetDbClient().Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
+                    await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
                     //更新菜单
                     if (roleAuthorizeEntitys.Count > 0)
                     {
-                        await unitofwork.GetDbClient().Deleteable<ModuleEntity>().ExecuteCommandAsync();
-                        await unitofwork.GetDbClient().Deleteable<ModuleButtonEntity>().ExecuteCommandAsync();
-                        await unitofwork.GetDbClient().Deleteable<ModuleFieldsEntity>().ExecuteCommandAsync();
-                        await unitofwork.GetDbClient().Insertable(modules).ExecuteCommandAsync();
-                        await unitofwork.GetDbClient().Insertable(modulebtns).ExecuteCommandAsync();
-                        await unitofwork.GetDbClient().Insertable(modulefileds).ExecuteCommandAsync();
+                        await repository.Db.Deleteable<ModuleEntity>().ExecuteCommandAsync();
+                        await repository.Db.Deleteable<ModuleButtonEntity>().ExecuteCommandAsync();
+                        await repository.Db.Deleteable<ModuleFieldsEntity>().ExecuteCommandAsync();
+                        await repository.Db.Insertable(modules).ExecuteCommandAsync();
+                        await repository.Db.Insertable(modulebtns).ExecuteCommandAsync();
+                        await repository.Db.Insertable(modulefileds).ExecuteCommandAsync();
                     }
                     //同步字典
-                    await unitofwork.GetDbClient().Deleteable<ItemsEntity>().ExecuteCommandAsync();
-                    await unitofwork.GetDbClient().Deleteable<ItemsDetailEntity>().ExecuteCommandAsync();
-                    await unitofwork.GetDbClient().Insertable(itemsTypes).ExecuteCommandAsync();
-                    await unitofwork.GetDbClient().Insertable(itemsDetails).ExecuteCommandAsync();
+                    await repository.Db.Deleteable<ItemsEntity>().ExecuteCommandAsync();
+                    await repository.Db.Deleteable<ItemsDetailEntity>().ExecuteCommandAsync();
+                    await repository.Db.Insertable(itemsTypes).ExecuteCommandAsync();
+                    await repository.Db.Insertable(itemsDetails).ExecuteCommandAsync();
                 }
 				else
 				{
@@ -344,13 +345,11 @@ namespace WaterCloud.Service.SystemOrganize
                         F_UserSecretkey = userinfo.F_UserSecretkey
                     }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
                 }
-                var set = await unitofwork.GetDbClient().Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
-                unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT ? set.F_DbNumber : "0");
-                var tempkey = unitofwork.GetDbClient().Queryable<UserEntity>().First(a => a.F_IsAdmin == true).F_Id;
+                var set = await repository.Db.Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
+                var tempkey = repository.ChangeEntityDb(isMaster:true).Queryable<UserEntity>().First(a => a.F_IsAdmin == true).F_Id;
                 await CacheHelper.RemoveAsync(cacheKeyOperator + "info_" + tempkey);
             }
-            unitofwork.Commit();
-            unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
+            repository.Dbs.CommitTran();
             //清空缓存，重新拉数据
             DBInitialize.GetConnectionConfigs(true);
         }

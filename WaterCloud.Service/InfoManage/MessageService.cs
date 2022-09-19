@@ -24,8 +24,8 @@ namespace WaterCloud.Service.InfoManage
     {
         public ItemsDataService itemsApp { get; set; }
         public RabbitMqHelper rabbitMqHelper { get; set; }
-        public MessageService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public MessageService(ISqlSugarClient context) : base(context)
+		{
         }
         #region 获取数据
         public async Task<List<MessageEntity>> GetList(string keyword = "")
@@ -125,13 +125,13 @@ namespace WaterCloud.Service.InfoManage
         {
             var unList=await GetUnReadListJson();
             var strList = unList.Where(a => a.F_MessageType == type&&a.F_ClickRead==true).Select(a=>a.F_Id).ToList();
-            unitofwork.CurrentBeginTrans();
-            foreach (var item in strList)
+			repository.Db.Ado.BeginTran();
+			foreach (var item in strList)
             {
                await ReadMsgForm(item);
             }
-            unitofwork.CurrentCommit();
-        }
+			repository.Db.Ado.CommitTran();
+		}
 
         public async Task ReadMsgForm(string keyValue)
         {            

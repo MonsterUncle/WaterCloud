@@ -25,7 +25,7 @@ namespace WaterCloud.Service.SystemSecurity
         public ModuleService moduleservice { get; set; }
         //获取类名
 
-        public LogService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public LogService(ISqlSugarClient context) : base(context)
         {
         }
         public async Task<List<LogEntity>> GetList(Pagination pagination, int timetype, string keyword="")
@@ -145,10 +145,10 @@ namespace WaterCloud.Service.SystemSecurity
         {
             logEntity.F_Id = Utils.GuId();
             logEntity.F_Date = DateTime.Now;
-            var dbNumber = unitofwork.GetDbClient().CurrentConnectionConfig.ConfigId;
-            unitOfWork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
-            var systemSet = await unitOfWork.GetDbClient().Queryable<SystemSetEntity>().Where(a => a.F_DbNumber == "0").FirstAsync();
-            unitOfWork.GetDbClient().ChangeDatabase(dbNumber);
+            var dbNumber = _context.CurrentConnectionConfig.ConfigId;
+            repository.ChangeEntityDb(isMaster:true);
+            var systemSet = await repository.Db.Queryable<SystemSetEntity>().Where(a => a.F_DbNumber == "0").FirstAsync();
+			repository.ChangeEntityDb(dbNumber);
             try
             {
                 if (currentuser == null || string.IsNullOrEmpty(currentuser.UserId))
@@ -173,8 +173,7 @@ namespace WaterCloud.Service.SystemSecurity
                 logEntity.Create();
                 if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
                 {
-                    unitofwork.Rollback();
-                    unitofwork.CurrentRollback();
+                    repository.Dbs.RollbackTran();
                     if (!string.IsNullOrEmpty(logEntity.F_KeyValue))
                     {
                         //批量删除时，循环拆分F_KeyValue，以免截断二进制错误

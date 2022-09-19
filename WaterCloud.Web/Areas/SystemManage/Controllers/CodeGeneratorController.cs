@@ -19,10 +19,10 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
     {
 
         public DatabaseTableService _service { get; set; }
-        private readonly IUnitOfWork _unitOfWork;
-        public CodeGeneratorController(IUnitOfWork unitOfWork)
+        private readonly ISqlSugarClient _context;
+        public CodeGeneratorController(ISqlSugarClient context)
         {
-            _unitOfWork = unitOfWork;
+			_context = context;
         }
         #region 视图功能
         [HttpGet]
@@ -129,7 +129,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 dic.Add(field);
             }
             string serverPath = GlobalContext.HostingEnvironment.ContentRootPath;
-            data = new SingleTableTemplate(_unitOfWork.GetDbClient()).GetBaseConfig(serverPath, _logService.currentuser.UserName, keyValue, tableDescription, dic);
+            data = new SingleTableTemplate(_context).GetBaseConfig(serverPath, _logService.currentuser.UserName, keyValue, tableDescription, dic);
             return Content(data.ToJson());
         }
         #endregion
@@ -143,7 +143,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
             try
             {
                 List<DbColumnInfo> list = _service.GetTableFieldList(baseConfig.TableName, dbNumber);
-                SingleTableTemplate template = new SingleTableTemplate(_unitOfWork.GetDbClient());
+                SingleTableTemplate template = new SingleTableTemplate(_context);
                 string idcolumn = list.FirstOrDefault(a => a.IsPrimarykey == true)?.DbColumnName;
                 Dictionary<string, string> dic = new Dictionary<string, string>();
                 baseConfig.PageIndex.ButtonList = Extensions.removeNull(baseConfig.PageIndex.ButtonList);
@@ -165,7 +165,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                     }
                 }
                 DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
-                var tableinfo = _unitOfWork.GetDbClient().DbMaintenance.GetColumnInfosByTableName(baseConfig.TableName, false);
+                var tableinfo = _context.DbMaintenance.GetColumnInfosByTableName(baseConfig.TableName, false);
                 string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
                 string codeService = template.BuildService(baseConfig, dt, idcolumn, idType);
                 string codeController = template.BuildController(baseConfig, idcolumn, idType);
@@ -203,7 +203,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 }
                 else
                 {
-                    SingleTableTemplate template = new SingleTableTemplate(_unitOfWork.GetDbClient());
+                    SingleTableTemplate template = new SingleTableTemplate(_context);
                     await template.CreateCode(baseConfig, HttpUtility.UrlDecode(Code));
                 }
                 return await Success("操作成功。", "", "");
@@ -226,7 +226,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 else
                 {
                     List<DbColumnInfo> list = _service.GetTableFieldList(baseConfig.TableName, dbNumber);
-                    SingleTableTemplate template = new SingleTableTemplate(_unitOfWork.GetDbClient());
+                    SingleTableTemplate template = new SingleTableTemplate(_context);
                     DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
                     string idcolumn = list.FirstOrDefault(a => a.IsPrimarykey == true)?.DbColumnName;
                     string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn,true);

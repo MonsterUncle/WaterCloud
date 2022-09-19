@@ -20,8 +20,8 @@ namespace WaterCloud.Service.SystemManage
 {
     public class QuickModuleService:DataFilterService<QuickModuleEntity> ,IDenpendency
     {
-        public QuickModuleService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public QuickModuleService(ISqlSugarClient context) : base(context)
+		{
         }
         public async Task<object> GetTransferList(string userId)
         {
@@ -66,8 +66,8 @@ namespace WaterCloud.Service.SystemManage
             var quicklist = repository.IQueryable(a => a.F_CreatorUserId == userId && a.F_EnabledMark == true);
             List<QuickModuleExtend> list = new List<QuickModuleExtend>();
             List<QuickModuleEntity> quicks = new List<QuickModuleEntity>();
-            unitofwork.CurrentBeginTrans();
-            if (!await quicklist.AnyAsync())
+			repository.Db.Ado.BeginTran();
+			if (!await quicklist.AnyAsync())
             {
                 var user = await repository.Db.Queryable<UserEntity>().InSingleAsync(userId);
                 var roleId = user.F_RoleId;
@@ -133,8 +133,8 @@ namespace WaterCloud.Service.SystemManage
             {
                 await repository.Db.Insertable(quicks).ExecuteCommandAsync();
             }
-            unitofwork.CurrentCommit();
-            return list;
+			repository.Db.Ado.CommitTran();
+			return list;
         }
 
         public async Task SubmitForm(string[] permissionIds)
@@ -152,11 +152,11 @@ namespace WaterCloud.Service.SystemManage
                     list.Add(entity);
                 }
             }
-            unitofwork.CurrentBeginTrans();
-            await repository.Delete(a => a.F_CreatorUserId == currentuser.UserId);
+			repository.Db.Ado.BeginTran();
+			await repository.Delete(a => a.F_CreatorUserId == currentuser.UserId);
             await repository.Insert(list);
-            unitofwork.CurrentCommit();
-        }
+			repository.Db.Ado.CommitTran();
+		}
 
     }
 }

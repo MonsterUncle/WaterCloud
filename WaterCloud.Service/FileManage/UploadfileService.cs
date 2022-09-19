@@ -17,8 +17,8 @@ namespace WaterCloud.Service.FileManage
     /// </summary>
     public class UploadfileService : DataFilterService<UploadfileEntity>, IDenpendency
     {       
-        public UploadfileService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public UploadfileService(ISqlSugarClient context) : base(context)
+		{
         }
         #region 获取数据
         public async Task<List<UploadfileEntity>> GetList(string keyword = "")

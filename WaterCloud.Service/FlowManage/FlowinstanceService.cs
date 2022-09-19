@@ -27,8 +27,8 @@ namespace WaterCloud.Service.FlowManage
         public MessageService messageApp { get; set; }
         private string flowCreator;
         private string className { get; set; }  
-        public FlowinstanceService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public FlowinstanceService(ISqlSugarClient context) : base(context)
+		{
             className= System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3].Substring(0, System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName.Split('.')[3].Length - 7);
         }
         #region 获取数据
@@ -139,8 +139,8 @@ namespace WaterCloud.Service.FlowManage
 
             wfruntime.MakeTagNode(wfruntime.currentNodeId, tag);
             flowInstance.F_IsFinish = 4;//4表示驳回（需要申请者重新提交表单）
-            unitofwork.CurrentBeginTrans();
-            if (resnode != "")
+			repository.Db.Ado.BeginTran();
+			if (resnode != "")
             {
                 wfruntime.RemoveNode(resnode);
                 flowInstance.F_SchemeContent = wfruntime.ToSchemeObj().ToJson();
@@ -208,9 +208,9 @@ namespace WaterCloud.Service.FlowManage
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
             await messageApp.SubmitForm(msg);
-            unitofwork.CurrentCommit();
+			repository.Db.Ado.CommitTran();
 
-            wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
+			wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
 
             return true;
         }
@@ -242,9 +242,9 @@ namespace WaterCloud.Service.FlowManage
                 F_CreatorTime = DateTime.Now
             };//操作记录
             FlowRuntime wfruntime = new FlowRuntime(flowInstance);
-            unitofwork.CurrentBeginTrans();
-            #region 会签
-            if (flowInstance.F_ActivityType == 0)//当前节点是会签节点
+			repository.Db.Ado.BeginTran();
+			#region 会签
+			if (flowInstance.F_ActivityType == 0)//当前节点是会签节点
             {
                 //会签时的【当前节点】一直是会签开始节点
                 //TODO: 标记会签节点的状态，这个地方感觉怪怪的
@@ -364,9 +364,9 @@ namespace WaterCloud.Service.FlowManage
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
             await messageApp.SubmitForm(msg);
-            unitofwork.CurrentCommit();
+			repository.Db.Ado.CommitTran();
 
-            wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
+			wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
             return true;
         }
         //会签时，获取一条会签分支上面是否有用户可审核的节点
@@ -757,8 +757,8 @@ namespace WaterCloud.Service.FlowManage
             entity.F_CreatorUserName = user.UserName;
             entity.F_MakerList = (wfruntime.GetNextNodeType() != 4 ? GetNextMakers(wfruntime, nodeDesignate) : "");
             entity.F_IsFinish = (wfruntime.GetNextNodeType() == 4 ? 1 : 0);
-            unitofwork.CurrentBeginTrans();
-            await repository.Db.Insertable(entity).ExecuteCommandAsync();
+			repository.Db.Ado.BeginTran();
+			await repository.Db.Insertable(entity).ExecuteCommandAsync();
 
             wfruntime.flowInstanceId = entity.F_Id;
             //复杂表单提交
@@ -835,8 +835,8 @@ namespace WaterCloud.Service.FlowManage
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
             await messageApp.SubmitForm(msg);
-            unitofwork.CurrentCommit();
-        }
+			repository.Db.Ado.CommitTran();
+		}
         public async Task UpdateInstance(FlowinstanceEntity entity)
         {
             var nodeDesignate = new NodeDesignateEntity();
@@ -891,8 +891,8 @@ namespace WaterCloud.Service.FlowManage
             entity.F_CreatorUserName = user.UserName;
             entity.F_MakerList = (wfruntime.GetNextNodeType() != 4 ? GetNextMakers(wfruntime, nodeDesignate) : "");
             entity.F_IsFinish = (wfruntime.GetNextNodeType() == 4 ? 1 : 0);
-            unitofwork.CurrentBeginTrans();
-            await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
+			repository.Db.Ado.BeginTran();
+			await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
             wfruntime.flowInstanceId = entity.F_Id;
             //复杂表单提交
             if (entity.F_FrmType == 1)
@@ -965,8 +965,8 @@ namespace WaterCloud.Service.FlowManage
                 await messageApp.ReadMsgForm(lastmsg.F_Id);
             }
             await messageApp.SubmitForm(msg);
-            unitofwork.CurrentCommit();
-            msg.F_ClickRead = false;
+			repository.Db.Ado.CommitTran();
+			msg.F_ClickRead = false;
             msg.F_KeyValue = entity.F_Id;
         }
 
@@ -1000,8 +1000,8 @@ namespace WaterCloud.Service.FlowManage
 
             wfruntime.MakeTagNode(wfruntime.currentNodeId, tag);
             flowInstance.F_IsFinish = 2;//2表示撤回（需要申请者重新提交表单）
-            unitofwork.CurrentBeginTrans();
-            if (resnode != "")
+			repository.Db.Ado.BeginTran();
+			if (resnode != "")
             {
                 wfruntime.RemoveNode(resnode);
                 flowInstance.F_SchemeContent = wfruntime.ToSchemeObj().ToJson();
@@ -1037,8 +1037,8 @@ namespace WaterCloud.Service.FlowManage
                           + wfruntime.currentNode.name
                           + "】【" + DateTime.Now.ToString("yyyy-MM-dd HH:mm") + "】撤回,备注：流程撤回"
             }).ExecuteCommandAsync();
-            unitofwork.CurrentCommit();
-            wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
+			repository.Db.Ado.CommitTran();
+			wfruntime.NotifyThirdParty(_httpClientFactory.CreateClient(), tag);
         }
         #endregion
 

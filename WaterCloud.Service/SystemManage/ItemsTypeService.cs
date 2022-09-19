@@ -17,8 +17,8 @@ namespace WaterCloud.Service.SystemManage
 {
     public class ItemsTypeService : DataFilterService<ItemsEntity>,IDenpendency
     {
-        public ItemsTypeService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public ItemsTypeService(ISqlSugarClient context) : base(context)
+		{
         }
         public async Task<List<ItemsEntity>> GetList()
         {

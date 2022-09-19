@@ -27,8 +27,8 @@ namespace WaterCloud.Service.SystemOrganize
         private string cacheKeyOperator = GlobalContext.SystemConfig.ProjectPrefix + "_operator_";// +登录者token
                                                                                                   //获取类名
 
-        public UserService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public UserService(ISqlSugarClient context) : base(context)
+		{
         }
 
         public async Task<List<UserExtend>> GetLookList(SoulPage<UserExtend> pagination, string keyword)
@@ -184,11 +184,11 @@ namespace WaterCloud.Service.SystemOrganize
         }
         public async Task DeleteForm(string keyValue)
         {
-            unitofwork.CurrentBeginTrans();
-            await repository.Delete(a => a.F_Id == keyValue);
+			repository.Db.Ado.BeginTran();
+			await repository.Delete(a => a.F_Id == keyValue);
             await repository.Db.Deleteable<UserLogOnEntity>(a => a.F_UserId == keyValue).ExecuteCommandAsync();
-            unitofwork.CurrentCommit();
-        }
+			repository.Db.Ado.CommitTran();
+		}
         public async Task SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
@@ -204,8 +204,8 @@ namespace WaterCloud.Service.SystemOrganize
                 userLogOnEntity.F_UserOnLine = false;
                 userLogOnEntity.F_LogOnCount = 0;
             }
-            unitofwork.CurrentBeginTrans();
-            if (!string.IsNullOrEmpty(keyValue))
+			repository.Db.Ado.BeginTran();
+			if (!string.IsNullOrEmpty(keyValue))
             {
                 await repository.Update(userEntity);
             }
@@ -218,8 +218,8 @@ namespace WaterCloud.Service.SystemOrganize
                 await repository.Insert(userEntity);
                 await repository.Db.Insertable(userLogOnEntity).ExecuteCommandAsync();
             }
-            unitofwork.CurrentCommit();
-        }
+			repository.Db.Ado.CommitTran();
+		}
         public async Task UpdateForm(UserEntity userEntity)
         {
             await repository.Update(userEntity);
@@ -235,7 +235,7 @@ namespace WaterCloud.Service.SystemOrganize
             //根据登录公司查找公司
             if (GlobalContext.SystemConfig.SqlMode == Define.SQL_TENANT)
             {
-                unitofwork.GetDbClient().ChangeDatabase(GlobalContext.SystemConfig.MainDbNumber);
+                repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber);
                 var setTemp=(await syssetApp.GetList()).Where(a=> localurl.Contains(a.F_HostUrl)).FirstOrDefault();
                 if (setTemp!=null)
                 {
@@ -243,14 +243,14 @@ namespace WaterCloud.Service.SystemOrganize
 					{
                         throw new Exception("租户已到期，请联系供应商");
                     }
-                    unitofwork.GetDbClient().ChangeDatabase(setTemp.F_DbNumber);
+					repository.ChangeEntityDb(setTemp.F_DbNumber);
                 }
             }
             if (!(await CheckIP()))
             {
                 throw new Exception("IP受限");
 			}
-            UserEntity userEntity =await unitofwork.GetDbClient().Queryable<UserEntity>().SingleAsync(a => a.F_Account == username);
+            UserEntity userEntity =await repository.IQueryable().SingleAsync(a => a.F_Account == username);
             if (userEntity != null)
             {
                 if (userEntity.F_EnabledMark == true)
@@ -260,7 +260,7 @@ namespace WaterCloud.Service.SystemOrganize
                     if (userLogOnEntity==null)
                     {
                         userLogOnEntity = new OperatorUserInfo();
-                        UserLogOnEntity entity =await unitofwork.GetDbClient().Queryable<UserLogOnEntity>().InSingleAsync(userEntity.F_Id);
+                        UserLogOnEntity entity =await repository.Db.Queryable<UserLogOnEntity>().InSingleAsync(userEntity.F_Id);
                         userLogOnEntity.F_UserPassword = entity.F_UserPassword;
                         userLogOnEntity.F_UserSecretkey = entity.F_UserSecretkey;
                         userLogOnEntity.F_AllowEndTime = entity.F_AllowEndTime;
@@ -287,7 +287,7 @@ namespace WaterCloud.Service.SystemOrganize
                         if (userEntity.F_IsAdmin != true)
                         {
                             var list = userEntity.F_RoleId.Split(',');
-                            var rolelist = unitofwork.GetDbClient().Queryable<RoleEntity>().Where(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
+                            var rolelist = repository.Db.Queryable<RoleEntity>().Where(a=>list.Contains(a.F_Id)&&a.F_EnabledMark==true).ToList();
                             if (!rolelist.Any())
                             {
                                 throw new Exception("账户未设置权限,请联系管理员");

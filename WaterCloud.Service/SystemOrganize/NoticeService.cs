@@ -19,8 +19,8 @@ namespace WaterCloud.Service.SystemOrganize
 {
     public class NoticeService: DataFilterService<NoticeEntity>,IDenpendency
     {
-        public NoticeService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public NoticeService(ISqlSugarClient context) : base(context)
+		{
         }
         public async Task<List<NoticeEntity>> GetList(string keyword)
         {

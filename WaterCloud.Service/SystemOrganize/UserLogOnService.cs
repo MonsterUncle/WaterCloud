@@ -19,8 +19,8 @@ namespace WaterCloud.Service.SystemOrganize
         /// 缓存操作类
         /// </summary>
         private string cacheKeyOperator = GlobalContext.SystemConfig.ProjectPrefix + "_operator_";// +登录者token
-        public UserLogOnService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public UserLogOnService(ISqlSugarClient context) : base(context)
+		{
         }
 
         public async Task<UserLogOnEntity> GetForm(string keyValue)

@@ -7,11 +7,9 @@
 using WaterCloud.Code;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using SqlSugar;
-using System.Reflection;
 
 namespace WaterCloud.DataBase
 {
@@ -19,59 +17,54 @@ namespace WaterCloud.DataBase
 	/// 泛型仓储实现
 	/// </summary>
 	/// <typeparam name="TEntity"></typeparam>
-	public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class, new()
+	public class RepositoryBase<TEntity> where TEntity : class, new()
     {
-        private SqlSugarClient _dbBase;
-        // 用于其他表操作
-        private readonly IUnitOfWork _unitOfWork;
-        private ISqlSugarClient _db
+        private SqlSugarProvider _dbBase;
+		// 用于其他表操作
+		public SqlSugarScope Dbs
+		{
+			get { return _dbs; }
+		}
+        private SqlSugarScope _dbs;
+		private ISqlSugarClient _db
         {
             get
             {
-                var entityType = typeof(TEntity);
-                if (entityType.IsDefined(typeof(TenantAttribute), false))
-                {
-                    var tenantAttribute = entityType.GetCustomAttribute<TenantAttribute>(false)!;
-                    _dbBase.ChangeDatabase(tenantAttribute.configId);
-                }
                 return _dbBase;
             }
         }
         public ISqlSugarClient Db
         {
-            get { return _db; }
-        }
-        public IUnitOfWork unitOfWork
-        {
-            get { return _unitOfWork; }
+            get { return _dbBase; }
         }
         /// <summary>
         /// 切换上下文，不传参切换到实体租户
         /// </summary>
         /// <param name="configId"></param>
         /// <returns></returns>
-        public ISqlSugarClient ChangeEntityDb(object configId = null)
+        public ISqlSugarClient ChangeEntityDb(object configId = null,bool isMaster = false)
 		{
-			if (!configId.IsEmpty())
-			{
-                _dbBase.ChangeDatabase(configId);
-            }
-			else
-			{
-                var entityType = typeof(TEntity);
-                if (entityType.IsDefined(typeof(TenantAttribute), false))
-                {
-                    var tenantAttribute = entityType.GetCustomAttribute<TenantAttribute>(false)!;
-                    configId = tenantAttribute.configId;
-                    _dbBase.ChangeDatabase(configId);
-                }
-            }
-            return _dbBase;
-        }
-        public RepositoryBase(IUnitOfWork unitOfWork)
+            if (isMaster)
+            {
+				_dbBase = _dbs.GetConnection(GlobalContext.SystemConfig.MainDbNumber);
+			}
+            else
+            {
+				if (!configId.IsEmpty())
+				{
+					_dbBase = _dbs.GetConnection(configId);
+				}
+				else
+				{
+					_dbBase = _dbs.GetConnectionWithAttr<TEntity>();
+				}
+			}
+			return _dbBase;
+		}
+        public RepositoryBase(ISqlSugarClient scope)
         {
-            _unitOfWork = unitOfWork;
-            _dbBase = unitOfWork.GetDbClient();
+			_dbs = (SqlSugarScope)scope;
+            _dbBase = Dbs.GetConnectionWithAttr<TEntity>();
         }
 
         public async Task<TEntity> Insert(TEntity entity)

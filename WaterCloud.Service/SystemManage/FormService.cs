@@ -17,8 +17,8 @@ namespace WaterCloud.Service.SystemManage
     /// </summary>
     public class FormService : DataFilterService<FormEntity>, IDenpendency
     {
-        public FormService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public FormService(ISqlSugarClient context) : base(context)
+		{
         }
         #region 获取数据
         public async Task<List<FormEntity>> GetList(string keyword = "")

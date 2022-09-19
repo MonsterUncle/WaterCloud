@@ -19,7 +19,7 @@ namespace WaterCloud.Service.SystemSecurity
 {
     public class ServerStateService : DataFilterService<ServerStateEntity>, IDenpendency
     {
-        public ServerStateService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public ServerStateService(ISqlSugarClient context) : base(context)
         {
         }
         public async Task<List<ServerStateEntity>> GetList(int timetype)

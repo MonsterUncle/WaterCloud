@@ -16,8 +16,8 @@ namespace WaterCloud.Service.OrderManagement
     /// </summary>
     public class OrderService : DataFilterService<OrderEntity>, IDenpendency
     {
-        public OrderService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public OrderService(ISqlSugarClient context) : base(context)
+		{
         }
         #region 获取数据
         public async Task<List<OrderEntity>> GetList(string keyword = "")
@@ -150,8 +150,8 @@ namespace WaterCloud.Service.OrderManagement
             }
             entity.F_OrderState = isdone ? 1 : 0;
             entity.F_ActualTime = isdone ?dataList.Max(a=>a.F_ActualTime):null;
-            unitOfWork.CurrentBeginTrans();
-            if (string.IsNullOrEmpty(keyValue))
+			repository.Db.Ado.BeginTran();
+			if (string.IsNullOrEmpty(keyValue))
             {
                 await repository.Insert(entity);
             }
@@ -161,8 +161,8 @@ namespace WaterCloud.Service.OrderManagement
             }
             await repository.Db.Deleteable<OrderDetailEntity>().Where(a => a.F_OrderId == entity.F_Id).ExecuteCommandAsync();
             await repository.Db.Insertable(dataList).ExecuteCommandAsync();
-            unitOfWork.CurrentCommit();
-        }
+			repository.Db.Ado.CommitTran();
+		}
 
         public async Task DeleteForm(string keyValue)
         {

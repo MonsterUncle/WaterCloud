@@ -16,8 +16,8 @@ namespace WaterCloud.Service.SystemOrganize
     /// </summary>
     public class DataPrivilegeRuleService : DataFilterService<DataPrivilegeRuleEntity>,IDenpendency
     {
-        public DataPrivilegeRuleService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public DataPrivilegeRuleService(ISqlSugarClient context) : base(context)
+		{
         }
         //获取类名
         

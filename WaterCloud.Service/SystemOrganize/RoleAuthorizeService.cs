@@ -29,8 +29,8 @@ namespace WaterCloud.Service.SystemOrganize
         /// 缓存操作类
         /// </summary>
         private string cacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_authorizeurldata_";// +权限
-        public RoleAuthorizeService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public RoleAuthorizeService(ISqlSugarClient context) : base(context)
+		{
         }
 
         public async Task<List<RoleAuthorizeEntity>> GetList(string ObjectId)
@@ -142,8 +142,8 @@ namespace WaterCloud.Service.SystemOrganize
             }
             if (user.F_IsAdmin == true)
             {
-                if (await unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a => a.F_UrlAddress == action || temps.Contains(a.F_Authorize)).AnyAsync()
-                    || await unitofwork.GetDbClient().Queryable<ModuleButtonEntity>().Where(a => a.F_UrlAddress == action || temps.Contains(a.F_Authorize)).AnyAsync())
+                if (await repository.Db.Queryable<ModuleEntity>().Where(a => a.F_UrlAddress == action || temps.Contains(a.F_Authorize)).AnyAsync()
+                    || await repository.Db.Queryable<ModuleButtonEntity>().Where(a => a.F_UrlAddress == action || temps.Contains(a.F_Authorize)).AnyAsync())
                 {
                     return true;
                 }
@@ -223,7 +223,7 @@ namespace WaterCloud.Service.SystemOrganize
             }
             if (isAll == true || user.F_IsAdmin == true)
             {
-                if (unitofwork.GetDbClient().Queryable<ModuleEntity>().Where(a=>a.F_UrlAddress==url).Any()|| unitofwork.GetDbClient().Queryable<ModuleButtonEntity>().Where(a => a.F_UrlAddress == url).Any())
+                if (repository.Db.Queryable<ModuleEntity>().Where(a=>a.F_UrlAddress==url).Any()|| repository.Db.Queryable<ModuleButtonEntity>().Where(a => a.F_UrlAddress == url).Any())
                 {
                     return true;
                 }

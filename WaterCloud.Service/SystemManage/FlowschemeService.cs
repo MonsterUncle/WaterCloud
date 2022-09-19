@@ -18,8 +18,8 @@ namespace WaterCloud.Service.SystemManage
 	/// </summary>
 	public class FlowschemeService : DataFilterService<FlowschemeEntity>, IDenpendency
     {
-        public FlowschemeService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public FlowschemeService(ISqlSugarClient context) : base(context)
+		{
         }
         #region 获取数据
         public async Task<List<FlowschemeEntity>> GetList(string keyword = "")

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Google.Protobuf.WellKnownTypes;
+using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
 using Quartz;
 using Quartz.Impl;
@@ -29,19 +30,20 @@ namespace WaterCloud.Service
 		public static IServiceCollection AddSqlSugar(this IServiceCollection services)
 		{
             DBInitialize.GetConnectionConfigs(true);
-            //注入数据库连接
-            // 注册 SqlSugar
-            services.AddScoped<ISqlSugarClient>(u =>
-            {
-                var configList = DBInitialize.GetConnectionConfigs();
-                var db = new SqlSugarClient(configList);
-                configList.ForEach(config => {
-                    string temp = config.ConfigId;
-                    db.GetConnection(temp).DefaultConfig();
-                });
-                return db;
-            });
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+			var configList = DBInitialize.GetConnectionConfigs();
+			SqlSugarScope sqlSugarScope = new SqlSugarScope(configList,
+				//全局上下文生效
+				db =>
+				{
+                    foreach (var item in configList)
+                    {
+						string temp = item.ConfigId;
+						db.GetConnection(temp).DefaultConfig();
+					}
+				});
+			//注入数据库连接
+			// 注册 SqlSugar
+			services.AddSingleton<ISqlSugarClient>(sqlSugarScope);
             return services;
         }
         /// <summary>
@@ -110,11 +112,11 @@ namespace WaterCloud.Service
                 Console.WriteLine("");
             };
         }
-        /// <summary>
-        /// Quartz设置
-        /// </summary>
-        /// <param name="services"></param>
-        public static IServiceCollection AddQuartz(this IServiceCollection services)
+		/// <summary>
+		/// Quartz设置
+		/// </summary>
+		/// <param name="services"></param>
+		public static IServiceCollection AddQuartz(this IServiceCollection services)
         {
             services.AddSingleton<JobExecute>();
             //注册ISchedulerFactory的实例。
@@ -176,24 +178,24 @@ namespace WaterCloud.Service
             {
                 if (data.ReviseSystem == true)
                 {
-                    using (var context = new UnitOfWork(new SqlSugarClient(DBContexHelper.Contex())))
+                    using (var context = new SqlSugarClient(DBContexHelper.Contex()))
                     {
-                        context.CurrentBeginTrans();
-                        var systemSet = context.GetDbClient().Queryable<SystemSetEntity>().First(a => a.F_DbNumber == data.MainDbNumber);
-                        var user = context.GetDbClient().Queryable<UserEntity>().First(a => a.F_OrganizeId == systemSet.F_Id && a.F_IsAdmin == true);
-                        var userinfo = context.GetDbClient().Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
+                        context.Ado.BeginTran();
+                        var systemSet = context.Queryable<SystemSetEntity>().First(a => a.F_DbNumber == data.MainDbNumber);
+                        var user = context.Queryable<UserEntity>().First(a => a.F_OrganizeId == systemSet.F_Id && a.F_IsAdmin == true);
+                        var userinfo = context.Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
                         userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                         userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(systemSet.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
-                        context.GetDbClient().Updateable<UserEntity>(a => new UserEntity
+                        context.Updateable<UserEntity>(a => new UserEntity
                         {
                             F_Account = systemSet.F_AdminAccount
                         }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommand();
-                        context.GetDbClient().Updateable<UserLogOnEntity>(a => new UserLogOnEntity
+                        context.Updateable<UserLogOnEntity>(a => new UserLogOnEntity
                         {
                             F_UserPassword = userinfo.F_UserPassword,
                             F_UserSecretkey = userinfo.F_UserSecretkey
                         }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommand();
-                        context.Commit();
+                        context.Ado.CommitTran();
                         CacheHelper.Remove(GlobalContext.SystemConfig.ProjectPrefix + "_operator_" + "info_" + user.F_Id);
                     }
                 }

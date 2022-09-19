@@ -28,8 +28,8 @@ namespace WaterCloud.Service.SystemOrganize
         private string authorizecacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_authorizeurldata_";// +权限
         //获取类名
         
-        public RoleService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public RoleService(ISqlSugarClient context) : base(context)
+		{
         }
 
         public async Task<List<RoleExtend>> GetList( string keyword = "")
@@ -107,11 +107,11 @@ namespace WaterCloud.Service.SystemOrganize
             {
                 throw new Exception("角色使用中，无法删除");
             }
-            unitofwork.CurrentBeginTrans();
-            await repository.Delete(a => a.F_Id == keyValue);
+			repository.Db.Ado.BeginTran();
+			await repository.Delete(a => a.F_Id == keyValue);
             await repository.Db.Deleteable<RoleAuthorizeEntity>(a => a.F_ObjectId == keyValue).ExecuteCommandAsync();
-            unitofwork.CurrentCommit();
-            await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+			repository.Db.Ado.CommitTran();
+			await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
         public async Task SubmitForm(RoleEntity roleEntity, string[] permissionIds,string[] permissionfieldsIds, string keyValue)
         {
@@ -163,8 +163,8 @@ namespace WaterCloud.Service.SystemOrganize
                     roleAuthorizeEntitys.Add(roleAuthorizeEntity);
                 }
             }
-            unitofwork.CurrentBeginTrans();
-            if (!string.IsNullOrEmpty(keyValue))
+			repository.Db.Ado.BeginTran();
+			if (!string.IsNullOrEmpty(keyValue))
             {
                 await repository.Update(roleEntity);
             }
@@ -175,8 +175,8 @@ namespace WaterCloud.Service.SystemOrganize
             }
             await repository.Db.Deleteable<RoleAuthorizeEntity>(a => a.F_ObjectId == roleEntity.F_Id).ExecuteCommandAsync();
             await repository.Db.Insertable(roleAuthorizeEntitys).ExecuteCommandAsync();
-            unitofwork.CurrentCommit();
-            await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
+			repository.Db.Ado.CommitTran();
+			await CacheHelper.RemoveAsync(authorizecacheKey + repository.Db.CurrentConnectionConfig.ConfigId + "_list");
         }
     }
 }

@@ -17,8 +17,8 @@ namespace WaterCloud.Service.SystemManage
 {
     public class AreaService : DataFilterService<AreaEntity>, IDenpendency
     {
-        public AreaService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public AreaService(ISqlSugarClient context) : base(context)
+		{
         }
         public async Task<List<AreaEntity>> GetList(int layers = 0)
         {

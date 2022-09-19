@@ -14,10 +14,10 @@ namespace WaterCloud.Service.AutoJob
     {
         private IWebHostEnvironment _hostingEnvironment;
         private ServerStateService _server;
-        public SaveServerStateJob(IUnitOfWork unitOfWork)
+        public SaveServerStateJob(ISqlSugarClient context)
         {
             _hostingEnvironment = GlobalContext.HostingEnvironment;
-            _server = new ServerStateService(unitOfWork);
+            _server = new ServerStateService(context);
          }
         public async Task<AlwaysResult> Start()
         {

@@ -16,8 +16,8 @@ namespace WaterCloud.Service.ContentManage
     /// </summary>
     public class ArticleCategoryService : DataFilterService<ArticleCategoryEntity>, IDenpendency
     {
-        public ArticleCategoryService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public ArticleCategoryService(ISqlSugarClient context) : base(context)
+		{
         }   
         #region 获取数据
         public async Task<List<ArticleCategoryEntity>> GetList(string keyword = "")

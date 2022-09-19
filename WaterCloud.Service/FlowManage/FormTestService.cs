@@ -14,8 +14,8 @@ namespace WaterCloud.Service.FlowManage
 {
     public class FormTestService : DataFilterService<FormTestEntity>, IDenpendency,ICustomerForm
     {
-        public FormTestService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public FormTestService(ISqlSugarClient context) : base(context)
+		{
         }
         public async Task Add(string flowInstanceId, string frmData)
         {

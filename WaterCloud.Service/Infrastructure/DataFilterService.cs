@@ -1,6 +1,7 @@
 ﻿using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Configuration.Provider;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
@@ -17,18 +18,37 @@ namespace WaterCloud.Service
         // 用户信息
         public OperatorModel currentuser;
         // 用于当前表操作
-        protected IRepositoryBase<T> repository;
+        protected RepositoryBase<T> repository;
         // 用于其他表操作
-        protected IUnitOfWork unitofwork;
-        public DataFilterService(IUnitOfWork unitOfWork):base(unitOfWork)
+        protected ISqlSugarClient _context;
+        public DataFilterService(ISqlSugarClient context):base(context)
         {
             currentuser = OperatorProvider.Provider.GetCurrent();
-            unitofwork = unitOfWork;
+            _context = context;
             repository = this;
             if (currentuser == null)
             {
                 currentuser = new OperatorModel();
             }
+            else
+            {
+				var entityType = typeof(T);
+				if (entityType.IsDefined(typeof(TenantAttribute), false))
+				{
+					var tenantAttribute = entityType.GetCustomAttribute<TenantAttribute>(false)!;
+					repository.ChangeEntityDb(tenantAttribute.configId);
+				}
+                else if (_context.AsTenant().IsAnyConnection(currentuser.DbNumber))
+                {
+                    repository.ChangeEntityDb(currentuser.DbNumber);
+				}
+                else
+                {
+                    var dblist = DBInitialize.GetConnectionConfigs(false);
+					_context.AsTenant().AddConnection(dblist.FirstOrDefault(a => a.ConfigId == currentuser.DbNumber));
+					(repository.Db as SqlSugarProvider).DefaultConfig();
+				}
+			}
         }
         /// <summary>
         ///  获取当前登录用户的数据访问权限(单表)

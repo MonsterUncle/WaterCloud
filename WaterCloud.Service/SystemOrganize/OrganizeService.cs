@@ -17,8 +17,8 @@ namespace WaterCloud.Service.SystemOrganize
 {
     public class OrganizeService : DataFilterService<OrganizeEntity>, IDenpendency
     {
-        public OrganizeService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public OrganizeService(ISqlSugarClient context) : base(context)
+		{
         }
         public async Task<List<OrganizeEntity>> GetList()
         {

@@ -17,8 +17,8 @@ namespace WaterCloud.Service.SystemManage
     /// </summary>
     public class ModuleFieldsService : DataFilterService<ModuleFieldsEntity>, IDenpendency
     {
-        public ModuleFieldsService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
+        public ModuleFieldsService(ISqlSugarClient context) : base(context)
+		{
         }
         #region 获取数据
         public async Task<List<ModuleFieldsEntity>> GetList(string keyword = "")
