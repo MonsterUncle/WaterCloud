@@ -1,4 +1,19 @@
-﻿
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 80027
+ Source Host           : localhost:3306
+ Source Schema         : watercloud
+
+ Target Server Type    : MySQL
+ Target Server Version : 80027
+ File Encoding         : 65001
+
+ Date: 20/09/2022 13:05:14
+*/
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -76,6 +91,63 @@ CREATE TABLE `cms_articlenews`  (
 -- ----------------------------
 INSERT INTO `cms_articlenews` VALUES ('59966d73-fb8d-448e-9576-12e6a2efd7ed', 'c71f577a-8c9b-409b-b21c-bb7081060338', '44444', '', '', '44444', '', '', '', '', '', 2, 0, 0, 0, 0, '本站', '超级管理员', 1, 0, '2020-07-07 14:00:09', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-23 10:39:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `cms_articlenews` VALUES ('7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', 'c71f577a-8c9b-409b-b21c-bb7081060338', '3333', '', '/file/local/20210606/202106062145091936.jpg', '3333', 'xxx', 'xxx', '', 'xxx', 'xxx', 1, 0, 0, 0, 0, '本站', '超级管理员', 1, 0, '2020-07-23 10:24:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-06-06 21:45:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for crm_order
+-- ----------------------------
+DROP TABLE IF EXISTS `crm_order`;
+CREATE TABLE `crm_order`  (
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `F_OrderCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单编号',
+  `F_OrderState` int NOT NULL COMMENT '订单状态(0未完成，1已完成)',
+  `F_NeedTime` datetime NULL DEFAULT NULL COMMENT '需求时间',
+  `F_ActualTime` datetime NULL DEFAULT NULL COMMENT '实际完成时间',
+  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`F_Id`) USING BTREE,
+  UNIQUE INDEX `crm_order_key1`(`F_OrderCode`) USING BTREE COMMENT '编号唯一'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of crm_order
+-- ----------------------------
+INSERT INTO `crm_order` VALUES ('08d9459c-5cd7-453f-8240-d566f1fe058c', 'OR-20210713091957', 1, '2021-07-13 00:00:00', '2021-07-13 00:00:00', 0, 1, '', '2021-07-13 09:20:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-07-13 09:29:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for crm_orderdetail
+-- ----------------------------
+DROP TABLE IF EXISTS `crm_orderdetail`;
+CREATE TABLE `crm_orderdetail`  (
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `F_OrderId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `F_OrderState` int NOT NULL COMMENT '订单状态',
+  `F_ProductName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品名称',
+  `F_ProductDescription` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品规格',
+  `F_ProductUnit` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品单位',
+  `F_NeedNum` int NULL DEFAULT NULL COMMENT '需求数量',
+  `F_ActualNum` int NULL DEFAULT NULL COMMENT '实际数量',
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_NeedTime` datetime NULL DEFAULT NULL COMMENT '需求时间',
+  `F_ActualTime` datetime NULL DEFAULT NULL COMMENT '实际时间',
+  PRIMARY KEY (`F_Id`) USING BTREE,
+  UNIQUE INDEX `crm_orderdetail_key1`(`F_OrderId`, `F_ProductName`) USING BTREE COMMENT '唯一键'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of crm_orderdetail
+-- ----------------------------
+INSERT INTO `crm_orderdetail` VALUES ('08d9459d-b222-4ad5-8e4e-c5153e69a752', '08d9459c-5cd7-453f-8240-d566f1fe058c', 1, '222', '', '', 3, 2, '', NULL, '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-07-13 00:00:00', '2021-07-13 00:00:00');
 
 -- ----------------------------
 -- Table structure for oms_flowinstance
@@ -295,6 +367,10 @@ CREATE TABLE `oms_uploadfile`  (
 -- ----------------------------
 INSERT INTO `oms_uploadfile` VALUES ('08d92c82-be01-41ae-8ad9-2040e49be5dd', '/icon/local/20210611/202106111043498898.jpg', '202106111043498898.jpg', 1, 34093, '.jpg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2021-06-11 10:43:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
 INSERT INTO `oms_uploadfile` VALUES ('08d92c85-3e43-4b93-80d5-526b5525ee95', '/icon/local/20210611/202106111101432772.jpg', '202106111101432772.jpg', 1, 34093, '.jpg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2021-06-11 11:01:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_uploadfile` VALUES ('08da9aa6-ec28-4cfc-8654-406cfe41043c', '/icon/local/20220920/202209200924546486.jpg', '202209200924546486.jpg', 1, 55356, '.jpg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2022-09-20 09:24:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_uploadfile` VALUES ('08da9aad-7eab-42db-85fe-930eb30eb756', '/icon/local/20220920/202209201011579961.jpg', '202209201011579961.jpg', 1, 89085, '.jpg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2022-09-20 10:11:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_uploadfile` VALUES ('08da9aaf-1e2d-4143-8e61-c17b22af5527', '/icon/local/20220920/202209201023345823.jpeg', '202209201023345823.jpeg', 1, 144853, '.jpeg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2022-09-20 10:23:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_uploadfile` VALUES ('08da9aaf-bb4c-4b48-8b2c-da653a37756e', '/icon/local/20220920/202209201027579667.jpeg', '202209201027579667.jpeg', 1, 156081, '.jpeg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2022-09-20 10:27:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
 
 -- ----------------------------
 -- Table structure for sys_area
@@ -3907,6 +3983,7 @@ INSERT INTO `sys_itemsdetail` VALUES ('39fc87c1-15a9-292d-a4ad-27b3bdc43c99', '3
 INSERT INTO `sys_itemsdetail` VALUES ('39fc87c1-2fe4-c8ac-324f-9b9546888a47', '39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, '2', 'Post', NULL, 0, NULL, 2, 0, 1, '', '2021-05-16 22:28:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('39fc87c1-4dda-99fc-b451-2fe5a9d5214c', '39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, '3', 'Put', NULL, 0, NULL, 3, 0, 1, '', '2021-05-16 22:28:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('39fc87c1-679d-0818-ab56-79c34e727672', '39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, '4', 'Delete', NULL, 0, NULL, 4, 0, 1, '', '2021-05-16 22:29:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('39fc87c1-679d-0818-ab56-79c34e999999', '39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, '5', 'Sql', NULL, 0, NULL, 5, 0, 1, '', '2022-06-09 09:29:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('39fcc061-aaf8-2e3a-dfa3-138de46b189e', '39fcc059-5908-10be-14d9-a6bc5e7e9cfd', NULL, '0', '原料', NULL, 0, NULL, 0, 0, 1, '', '2021-05-27 22:22:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('39fcc061-c67e-7581-6a38-2d294231a9aa', '39fcc059-5908-10be-14d9-a6bc5e7e9cfd', NULL, '1', '半成品', NULL, 0, NULL, 1, 0, 1, '', '2021-05-27 22:22:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('39fcc061-e55e-4899-68f5-668e335fa285', '39fcc059-5908-10be-14d9-a6bc5e7e9cfd', NULL, '2', '成品', NULL, 0, NULL, 2, 0, 1, '', '2021-05-27 22:23:03', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-05-27 22:23:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
@@ -4137,6 +4214,47 @@ INSERT INTO `sys_log` VALUES ('08d92c8d-78ad-47a1-8b8d-42b4410dfb4b', '2021-06-1
 INSERT INTO `sys_log` VALUES ('08d92c8d-7c7e-42ac-82d8-c0ef3d292848', '2021-06-11 12:00:44', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '安全退出系统', '2021-06-11 12:00:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('08d92cab-f8bf-4984-8f9a-48e99e445aa3', '2021-06-11 15:38:57', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 15:38:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('08d92cac-3dde-45e6-8462-e71d78caa8b9', '2021-06-11 15:40:53', 'admin', '超级管理员', 'Login', '0.0.0.1', 'iana保留地址', NULL, '系统登录', 1, '登录成功', '2021-06-11 15:40:53', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9a21-872a-4ff0-8cc0-ad1492b2d111', '2022-09-19 17:30:02', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-19 17:30:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9a21-cb28-45d1-8a5f-41111ae479fe', '2022-09-19 17:31:56', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-19 17:31:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9a22-02f2-4dac-881c-178036763fcf', '2022-09-19 17:33:29', 'admin', '超级管理员', 'Login', '127.0.0.1', '本地局域网', NULL, '系统登录', 1, '登录成功', '2022-09-19 17:33:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9a22-27ca-4273-81e1-f9ba8307c272', '2022-09-19 17:34:31', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-19 17:34:31', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9a22-5edf-4a1b-8cb1-c4f480c3716f', '2022-09-19 17:36:04', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-19 17:36:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9a22-ded0-4b5e-8401-d2d526736bc8', '2022-09-19 17:39:38', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-19 17:39:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9a23-364f-424d-8596-c7aa16c6ad87', '2022-09-19 17:42:05', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-19 17:42:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9a23-b325-4c88-8634-c77dac08cd22', '2022-09-19 17:45:34', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-19 17:45:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9a24-eecc-42c8-86fe-c50d9f1393ce', '2022-09-19 17:54:24', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-19 17:54:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aa6-b6b1-4aad-8c20-72fba498cbd7', '2022-09-20 09:23:25', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-20 09:23:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aa6-ec38-4555-832d-649fd4f5afed', '2022-09-20 09:24:54', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,新增操作成功。', '2022-09-20 09:24:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aa6-ec43-4a6e-87c0-0bcd9fe46741', '2022-09-20 09:24:55', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,访问操作成功。', '2022-09-20 09:24:55', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aa6-f6de-4355-85e9-92f080444944', '2022-09-20 09:25:12', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,新增操作成功。', '2022-09-20 09:25:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aa7-0032-4967-8410-1cd2be2a0323', '2022-09-20 09:25:28', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '安全退出系统', '2022-09-20 09:25:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aa7-04b2-4d8a-8a68-f90393476471', '2022-09-20 09:25:35', 'ceshi', 'ceshi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 0, '登录失败，ConfigId was not found t001', '2022-09-20 09:25:36', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aa8-2082-4f1f-856e-6d50de2eb54b', '2022-09-20 09:33:31', 'ceshi', 'ceshi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 0, '登录失败，SqlSugarException.ArgumentNullException：AddConnection.connection can\'t be null', '2022-09-20 09:33:32', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aa8-537a-4c7c-8a8a-230b106a6900', '2022-09-20 09:34:57', 'ceshi', 'ceshi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-20 09:34:57', '08da9aa6-f69e-44b7-8533-98219ca33e3b', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aa8-ac81-43a4-8738-bea7f7c3ea25', '2022-09-20 09:37:27', 'ceshi', 'ceshi', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,新增操作成功。', '2022-09-20 09:37:27', '08da9aa6-f69e-44b7-8533-98219ca33e3b', '', '08da9aa6-ec9d-4e65-82be-8651cf6af0ba');
+INSERT INTO `sys_log` VALUES ('08da9aa9-6bb5-451b-8074-4f1ae7d76eec', '2022-09-20 09:42:47', 'ceshi', 'ceshi', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,新增操作成功。', '2022-09-20 09:42:47', '08da9aa6-f69e-44b7-8533-98219ca33e3b', '', '08da9aa6-ec9d-4e65-82be-8651cf6af0ba');
+INSERT INTO `sys_log` VALUES ('08da9aad-4476-4a56-8807-bc9058884502', '2022-09-20 10:10:19', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-20 10:10:19', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aad-7ec3-40fa-82b5-17ea794cb26e', '2022-09-20 10:11:57', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,新增操作成功。', '2022-09-20 10:11:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aad-7ed8-40b5-8201-ed1cfb5fe2ca', '2022-09-20 10:11:57', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,访问操作成功。', '2022-09-20 10:11:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aad-89a6-416b-8a33-d3d647d49113', '2022-09-20 10:12:16', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,新增操作成功。', '2022-09-20 10:12:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aad-8dba-4e67-8617-6da0cd4aa330', '2022-09-20 10:12:22', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '安全退出系统', '2022-09-20 10:12:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aad-9308-43d9-837c-f4e77ae769bf', '2022-09-20 10:12:31', 'ceshi', 'ceshi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2022-09-20 10:12:31', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aad-9b74-4b0f-8110-923e686990e6', '2022-09-20 10:12:45', 'ceshi', 'ceshi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2022-09-20 10:12:45', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aad-f886-4015-89b7-0ae977f39189', '2022-09-20 10:15:21', 'ceshi', 'ceshi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2022-09-20 10:15:22', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aae-8b6f-4a86-8b9d-ac56e82a62b3', '2022-09-20 10:19:28', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-20 10:19:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aae-eedc-4eac-8e5b-de3dbeb1f6bf', '2022-09-20 10:22:15', 'admin', '超级管理员', 'Login', '127.0.0.1', '本地局域网', NULL, '系统登录', 1, '登录成功', '2022-09-20 10:22:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aaf-1e44-42fd-8604-5c4cefe17917', '2022-09-20 10:23:34', 'admin', '超级管理员', 'Create', '127.0.0.1', '本地局域网', NULL, '', 1, '操作,新增操作成功。', '2022-09-20 10:23:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aaf-1e59-4246-871b-56cfff47dfc4', '2022-09-20 10:23:34', 'admin', '超级管理员', 'Visit', '127.0.0.1', '本地局域网', NULL, '', 1, '操作,访问操作成功。', '2022-09-20 10:23:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aaf-276c-4488-8754-9efe1054b53c', '2022-09-20 10:23:50', 'admin', '超级管理员', 'Create', '127.0.0.1', '本地局域网', NULL, '', 1, '操作,新增操作成功。', '2022-09-20 10:23:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aaf-473b-4404-8330-4baec9d10a13', '2022-09-20 10:24:43', 'admin', '超级管理员', 'Exit', '127.0.0.1', '本地局域网', NULL, '系统登录', 1, '安全退出系统', '2022-09-20 10:24:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aaf-932d-4d12-8397-da26dd6fd6fe', '2022-09-20 10:26:50', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-09-20 10:26:51', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aaf-bb62-4a77-8ea0-6d34d8b211e2', '2022-09-20 10:27:58', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,新增操作成功。', '2022-09-20 10:27:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aaf-bb76-4f76-8891-2e911ab6bb1f', '2022-09-20 10:27:58', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,访问操作成功。', '2022-09-20 10:27:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aaf-c5b8-4976-8b1a-b1c570ac1fb1', '2022-09-20 10:28:15', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,新增操作成功。', '2022-09-20 10:28:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9aaf-c926-4c86-8fe7-a9dad27546ad', '2022-09-20 10:28:21', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '安全退出系统', '2022-09-20 10:28:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9ab0-22e4-4791-83cc-cee53e9e61af', '2022-09-20 10:30:51', 'cesi', 'cesi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2022-09-20 10:30:52', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9ab0-2ad3-40b3-848b-cacba25128a0', '2022-09-20 10:31:05', 'cesi', 'cesi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2022-09-20 10:31:05', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08da9ab0-a9fe-4234-894c-318221f281ca', '2022-09-20 10:34:38', 'ceshi', 'ceshi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 0, '登录失败，SqlSugarException.ArgumentNullException：AddConnection.connection can\'t be null', '2022-09-20 10:34:38', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('095f9844-3ecf-4075-b5d1-5e8a41776742', '2020-10-28 13:01:37', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 13:01:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('09714166-6ffd-4cea-a8ec-15caf7acffc2', '2020-07-10 08:50:52', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('09a9f4ff-4c91-4d66-889c-1c5ed8b19e08', '2020-06-28 16:44:56', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,新增操作成功', '2020-06-28 16:44:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -5087,6 +5205,8 @@ CREATE TABLE `sys_module`  (
 -- ----------------------------
 INSERT INTO `sys_module` VALUES ('01849cc9-c6da-4184-92f8-34875dac1d42', '462027E0-0848-41DD-BCC3-025DCAE65555', 2, 'CodeGenerator', '代码生成', 'fa fa-code', '/SystemManage/CodeGenerator/Index', 'iframe', 1, 0, 0, 0, 0, 0, 2, 0, 1, '', '2020-05-06 13:11:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-16 09:27:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('06bb3ea8-ec7f-4556-a427-8ff0ce62e873', '873e2274-6884-4849-b636-7f04cca8242c', 2, 'TextTool', '富文本编辑器', 'fa fa-credit-card', '../page/editor.html', 'expand', 1, 0, 0, 0, 0, 0, 5, 0, 1, '', '2020-06-23 11:07:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-02 08:44:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
+INSERT INTO `sys_module` VALUES ('08d94532-39d1-4822-80b3-0c25a8183155', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, 'OrderManagement', '订单管理', 'fa fa-first-order', NULL, 'expand', 1, 1, 0, 0, 0, 0, 7, 0, 1, '', '2021-07-12 20:40:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
+INSERT INTO `sys_module` VALUES ('08d94532-98ac-4751-8cd4-c6c5ec4048e6', '08d94532-39d1-4822-80b3-0c25a8183155', 3, 'Order', '订单信息', 'fa fa-anchor', '/OrderManagement/Order/Index', 'iframe', 1, 0, 0, 0, 0, 0, 1, 0, 1, '', '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-07-13 09:45:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
 INSERT INTO `sys_module` VALUES ('152a8e93-cebb-4574-ae74-2a86595ff986', '462027E0-0848-41DD-BCC3-025DCAE65555', 2, 'ModuleFields', '字段管理', 'fa fa-table', '/SystemManage/ModuleFields/Index', 'iframe', 0, 0, 0, 0, 0, 0, 4, 0, 1, '', '2020-05-21 14:39:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-15 14:55:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('1dff096a-db2f-410c-af2f-12294bdbeccd', '873e2274-6884-4849-b636-7f04cca8242c', 2, 'UploadTool', '文件上传', 'fa fa-arrow-up', '../page/upload.html', 'expand', 1, 0, 0, 0, 0, 0, 4, 0, 1, '', '2020-06-23 11:06:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-02 08:42:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('1e60fce5-3164-439d-8d29-4950b33011e2', '873e2274-6884-4849-b636-7f04cca8242c', 2, 'ColorTool', '颜色选择', 'fa fa-dashboard', '../page/color-select.html', 'expand', 1, 0, 0, 0, 0, 0, 2, 0, 1, '', '2020-06-23 11:05:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-02 08:41:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
@@ -5173,6 +5293,11 @@ CREATE TABLE `sys_modulebutton`  (
 -- ----------------------------
 INSERT INTO `sys_modulebutton` VALUES ('01600a2b-c218-48d6-bb37-842daa727248', '152a8e93-cebb-4574-ae74-2a86595ff986', '0', 1, 'NF-delete', '删除字段', NULL, 2, 'delete', '/SystemManage/ModuleFields/DeleteForm', 0, 0, 0, 0, 2, 0, 1, '', '2020-05-21 14:39:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-05-21 15:15:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('071f5982-efb2-4fa3-a6cf-a02f3f1f9d92', 'ed757a25-82d5-43cc-89f4-ed26a51fb4f0', '0', 1, 'NF-add', '新增按钮', NULL, 1, 'add', '/SystemManage/ModuleButton/Form', 0, 0, 0, 0, 1, 0, 1, NULL, NULL, NULL, '2020-04-27 16:56:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08d94532-98b0-4b60-86a7-eca606765531', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-add', '新增', NULL, 1, 'add', '/OrderManagement/Order/Form', 0, 0, 0, 0, 0, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08d94532-98b0-4b92-8a2f-4da9f59afa21', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-edit', '修改', NULL, 2, 'edit', '/OrderManagement/Order/Form', 0, 0, 0, 0, 1, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08d94532-98b0-4ba2-87b3-6c976665cb6b', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-delete', '删除', NULL, 2, 'delete', '/OrderManagement/Order/DeleteForm', 0, 0, 0, 0, 2, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08d94532-98b0-4bac-8e49-471d5b61be95', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-details', '查看', NULL, 2, 'details', '/OrderManagement/Order/Details', 0, 0, 0, 0, 3, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08d9bde2-f14d-4b33-8f9b-2af0bf40812b', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, 'NF-cancle', '撤回', NULL, 1, 'cancle', '/FlowManage/Flowinstance/CancleForm', NULL, 0, 0, 0, 4, 0, 1, '', '2021-12-13 10:47:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
 INSERT INTO `sys_modulebutton` VALUES ('0a1ba1d7-b4f3-45a4-a4da-e70fb25bb766', 'e9190a56-e173-4483-8a3e-f17b86e4766e', '0', 1, 'NF-delete', '删除', NULL, 2, 'delete', '/InfoManage/Message/DeleteForm', 0, 0, 0, 0, 2, 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('0b1b307b-2aac-456b-acfb-484a05c71bd7', '26452c9a-243d-4c81-97b9-a3ad581c3bf4', '0', 1, 'NF-edit', '修改机构', NULL, 2, 'edit', '/SystemOrganize/Organize/Form', 0, 0, 0, 0, 2, 0, 1, '', NULL, NULL, '2020-07-23 10:47:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('0d777b07-041a-4205-a393-d1a009aaafc7', '423A200B-FA5F-4B29-B7B7-A3F5474B725F', '0', 1, 'NF-edit', '修改字典', NULL, 2, 'edit', '/SystemManage/ItemsData/Form', 0, 0, 0, 0, 3, 0, 1, NULL, NULL, NULL, '2016-07-25 15:37:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
@@ -5310,6 +5435,14 @@ CREATE TABLE `sys_modulefields`  (
 -- ----------------------------
 INSERT INTO `sys_modulefields` VALUES ('00a79cc3-a490-4772-909a-38567e3ea6da', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_ProjectName', '项目名称', 0, 1, '', '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-12 16:13:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 1);
 INSERT INTO `sys_modulefields` VALUES ('035d9296-1e17-42b7-9d8f-c9cc3b1d8e3f', '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 'F_FileExtension', '文件扩展名', 0, 1, NULL, '2020-07-22 12:05:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4bb9-843f-6a42d29d5b04', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_OrderCode', '订单编号', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4bca-822e-9e44e86864e5', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_OrderState', '订单状态(0待确认，待采购，1已完成)', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4bd5-8ba3-fc7834814f3e', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_NeedTime', '需求时间', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4be2-8991-3b929d082f6c', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_ActualTime', '实际时间', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4beb-89d3-425505eb2d36', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_EnabledMark', 'F_EnabledMark', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4bf6-82f3-9f62b0b5cec6', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_Description', 'F_Description', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4c01-86ff-7b056e669066', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_CreatorTime', 'F_CreatorTime', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4c0c-81e2-b66009a2420f', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_CreatorUserName', 'F_CreatorUserName', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
 INSERT INTO `sys_modulefields` VALUES ('0917606f-f448-49d3-b78d-e08a17a1cc4f', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_CreatorTime', '创建时间', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
 INSERT INTO `sys_modulefields` VALUES ('0927895a-9d35-435c-b980-13f7102043c3', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_PrincipalMan', '联系人', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
 INSERT INTO `sys_modulefields` VALUES ('0986da5b-16a3-4330-8449-0508699c93e3', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_SchemeName', '流程名称', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
@@ -5427,15 +5560,15 @@ CREATE TABLE `sys_notice`  (
   `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
   `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
   `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorTime` timestamp NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyTime` timestamp NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteTime` timestamp NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `sys_notice_key1`(`F_Title`) USING BTREE COMMENT '唯一键'
+  UNIQUE INDEX `IX_Sys_Notice`(`F_Title`) USING BTREE COMMENT '唯一键'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -5443,7 +5576,7 @@ CREATE TABLE `sys_notice`  (
 -- ----------------------------
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa1', '1.0.0版本说明', '2020/7/23 \n功能变更：\n1、增加表单设计；\n2、增加流程设计；\n3、增加流程中心；\n4、增加文件管理。\n4、去除Respository实现类和接口\n5、代码生成增加实体生成功能\nbug修复：\n1、tab iframe刷新tab iframe问题；\n2、流程中心处理界面显示问题。\n3、修复公告换行问题', 0, 1, NULL, '2020-07-23 11:44:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-08-12 11:11:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa2', '1.0.1版本更新', '2020/8/3\n功能变更：\n1、增加信息中心；\n2、完善通知功能（除私信）；\nbug修复：\n1、当前用户信息对象为空问题；\n2、流程中心部分问题；\n3、代码生成实体生成显示问题；', 0, 1, NULL, '2020-08-03 17:22:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2020-08-12 11:11:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa3', '1.0.2版本更新', '2020/8/10\n功能变更：\n1、更新流程2张表和信息历史表名称长度\n2、修改清空缓存功能，只对管理员开放，成功跳转登录页\n3、增加oracle数据库脚本\n4、信息和流程删除设置为假删\n5、更新tableselect插件\n6、修改系统设置提交关闭问题\n7、选择弹框增加清除方法\n8、选择弹框增加双击事件\n9、区域查询把下级数据也加进去\nbug修复：\n1、通知中心加载问题修复；\n2、修复oracle数据库查询服务bug\n3、修复流程新增缺少F_EnabledMark字段问题\n4、修复用户查看明细显示问题\n5、模板修复树生成问题\n6、修复选择组织、角色、用户弹窗 鉴权异常\n7、修复用户中角色和部门显示问题\n8、二次确认框解决确认没有关闭的问题\n9、修复检测图片 gif异常问题\n', 0, 1, NULL, '2020-08-12 11:11:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa3', '1.0.2版本更新', '2020/8/10\n功能变更：\n1、更新流程2张表和信息历史表名称长度\n2、修改清空缓存功能，只对管理员开放，成功跳转登录页\n3、增加oracle数据库脚本\n4、信息和流程删除设置为假删\n5、更新tableselect插件\n6、修改系统设置提交关闭问题\n7、选择弹框增加清除方法\n8、选择弹框增加双击事件\n9、区域查询把下级数据也加进去\nbug修复：\n1、通知中心加载问题修复；\n2、修复oracle数据库查询服务bug\n3、修复流程新增缺少EnabledMark字段问题\n4、修复用户查看明细显示问题\n5、模板修复树生成问题\n6、修复选择组织、角色、用户弹窗 鉴权异常\n7、修复用户中角色和部门显示问题\n8、二次确认框解决确认没有关闭的问题\n9、修复检测图片 gif异常问题\n', 0, 1, NULL, '2020-08-12 11:11:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa4', '1.0.3版本更新', '2020/8/12\n功能变更：\n1、upload报错信息改为动态信息；\n2、upload上传地址修改；\n3、导入文件路径修改，增加日期\n4、修改弹窗，改为top.layer.open，修改相应界面\n6、去掉界面中的isMax参数\n7、弹窗大小取消判断\nbug修复：\n1、修复多列模板样式问题；', 0, 1, NULL, '2020-08-12 11:15:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa5', '1.0.4版本更新', '2020/8/12\n功能变更：\n1、upload增加excel类别；\n2、岗位管理增加导入导出功能；\n3、菜单全移入常规管理以便二次开发使用新模块\n4、数据库更新、增加导入导出按钮，菜单更新', 0, 1, NULL, '2020-08-12 11:24:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8baa6', '1.0.5版本更新', '2020/8/17\n功能变更：\n1、增加字典管理分类查询功能\n2、增加字段管理分类的滚动条\n3、模板生成表单，input增加默认显示\n4、自定义测试表单，添加创建人名称\nBUG修复：\n1、修复首次启动更新信息的问题\n2、修复表单设计中date 点击不出现的bug\n3、权限bug修复\n4、修复弹窗超出界面bug\n5、修改addform返回有效的数据\n6、submitPost方法取消关闭loading修复\n7、模板修复是否树的引用\n8、修改modalOpen方法 增加返回值index\n9、修改modalOpen方法 高度宽度不对问题\n10、修复获取用户信息bug', 0, 1, NULL, '2020-08-20 16:48:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-05-28 08:32:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
@@ -5469,7 +5602,7 @@ INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac8', '1.9.0�
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bac9', '2.0.0版本更新', '2020/01/05\n功能变更：\n1、增加防重复锁特性，用户本身默认5秒\n2、优化.Result改成同步方式执行\n3、api增加防重复验证，用户本身默认5秒\n4、优化soultable过滤\n\nBUG修复：\n1、修复用户管理按钮bug\n2、修复上传安全问题，指定文件格式\n3、权限问题修复\n4、api修复刷新token问题\n5、datetime2生成问题修复\n6、修复oracle number参数生成问题\n7、修复快捷菜单显示非菜单模块的Bug', 0, 1, NULL, '2021-01-05 22:10:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad0', '2.1.0版本更新', '2020/01/10\n功能变更：\n1、前端新增单个按钮权限控制方法\n2、按钮界面增加编号显示\n3、修复token文字\n4、修改流程图配置，增加自定义显示功能\n5、替换前端流程样式', 0, 1, NULL, '2021-01-10 12:43:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-01-10 12:44:02', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad1', '2.2.0版本更新', '2020/01/29\n功能变更：\n1、更新日志传入key 类型\n2、岗位导入前端显示增加soultable\n3、更新信息服务 hub默认不传\n4、给系统设置加上管理员验证\n5、前端增加参数null删除表单元素的方法\n6、消息未读查询优化\n7、增加自适应大屏\nBUG修复：\n1、岗位导入修复文件名重复异常\n2、修复定时任务没有后台启动的BUG\n3、修复ip控制多选bug\n4、修复数据库连接保留问题\n5、修复字段权限对象为空的bug', 0, 1, NULL, '2021-01-29 10:24:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-01-29 10:24:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad2', '2.3.0版本更新', '2020/02/10\n功能变更：\n1、更新信息即时通知，改成http调用，方便api调用，需要修改配置文件配合\n2、更新ip获取地址方法，增加配置是否本地局域网\n3、删除多余前端文件\n4、更新echarts文件，删除主题\n5、增加权限验证方法，可根据参数进行验证，菜单和按钮增加字段F_Authorize\n6、新增api权限验证\n\nBUG修复：\n1、table修复点击按钮触发行点击事件的bug\n2、修复获取ip的bug', 0, 1, NULL, '2021-02-10 13:50:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad2', '2.3.0版本更新', '2020/02/10\n功能变更：\n1、更新信息即时通知，改成http调用，方便api调用，需要修改配置文件配合\n2、更新ip获取地址方法，增加配置是否本地局域网\n3、删除多余前端文件\n4、更新echarts文件，删除主题\n5、增加权限验证方法，可根据参数进行验证，菜单和按钮增加字段Authorize\n6、新增api权限验证\n\nBUG修复：\n1、table修复点击按钮触发行点击事件的bug\n2、修复获取ip的bug', 0, 1, NULL, '2021-02-10 13:50:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad3', '2.4.0版本更新', '2020/02/26\n功能变更：\n1、更新树形表格插件，增加复选框联动设置\n2、重构代码生成\n3、表单设计器优化，表单设计增加表头和上传url设置\n4、优化实时通讯，支持其他客户端登录者连接\n5、表单设计增加表头和上传url设置\n6、前端优化重复提交方式，统一放到submitForm中\n\nBUG修复：\n1、修复api 登录参数异常', 0, 1, NULL, '2021-02-26 10:02:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-02-26 10:17:33', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad4', '2.5.0版本更新', '2020/03/10\n功能变更：\n1、启动增加清理缓存，快捷菜单优化\n2、表单设计器赋值优化，实体模板删除多余\n3、定时任务增加cron表达式\n\nBUG修复：\n1、修复树形单选不触发行点击事件bug', 0, 1, NULL, '2021-03-10 16:01:40', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-03-10 16:01:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad5', '2.6.0版本更新', '2020/03/23\n功能变更：\n1、更新前端插件，如layui、soultable\n2、增加雪花id方法\n3、更新layui库，改成layui，方便以后升级\n4、配置增加后台定时任务开关\n5、优化权限判断，优先使用缓存数据\n6、更正配置跨域参数名称\n7、代码生成新增删除字段和创建字段，优化代码生成\n8、代码生成列表增加上下移动\n9、删除cardtable中的 缓存验证\n10、新增树形表格插件，增加soultable支持，更新代码生成\n\nBUG修复：\n1、修复菜单按钮 关键字查询无效BUG\n2、修复表单number验证问题\n3、修复省市区联动初始化赋值示例\n4、修复消息提示全部清空无效的BUG\n5、修复权限验证登录验证 读取缓存的BUG\n6、修复ie11访问异常问题\n7、修复用户查询报错问题，暂时去掉岗位部门的过滤\n8、修复获取lanip方法iv6异常的BUG\n9、修复代码生成添加字段失败的BUG\n10、解决表单设计器日期的BUG\n11、修复一些界面操作列还存在按钮的BUG', 0, 1, NULL, '2021-03-23 16:26:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-03-23 16:26:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
@@ -5477,6 +5610,19 @@ INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad6', '2.7.0�
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad7', '2.8.0版本更新', '2021/4/30\n功能变更：\n1、更新卡片组件；\n2、代码生成 mssql增加视图；\n3、更新select 默认值问题；\n4、修改菜单，允许无路由菜单添加按钮；\n5、流程申请增加指定角色或者指定用户；\n6、流程申请界面优化\n7、流程增加显示当前审批人；\n\nbug修复：\n1、修复定时任务不显示删除按钮的bug；\n2、修复代码生成模板bug；\n3、修复流程修改后没有申请人和所属部门bug；\n4、修复soultable 排序引起的分页插件配置异常；\n5、修复微端 表单显示问题；\n6、修复sql 传输级错误问题；\n7、修复startup使用数据库连接，没有包using问题；\n8、解决resize()，表格最底行点击异常问题；\n9、修复用户组织异常', 0, 1, NULL, '2021-04-30 14:08:23', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fc76fe-f79d-a2ce-2b2c-54bb04e8bad8', '2.9.0版本更新', '2021/5/13\n功能变更：\n1、表单设计器样式调整；\n2、修改dbhelper文件；\n3、配置数据库类型简化；\n4、ORM改成SqlSugar;\n5、去除所有service缓存；\n6、id默认使用连续集合id；\n7、修改部分文件名；\n\nbug修复：\n1、修复soultable类型bug;\n2、修复ChloeIQuery类型bug；\n3、修复流程设计自适应问题；', 0, 1, NULL, '2021-05-13 16:22:43', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_notice` VALUES ('39fcc2c9-894f-48c7-5e87-bb2f4505cbe1', '2.10.0版本更新', '2021/5/28\n功能变更：\n1、增加单库事务和多库事务区分；\n2、增加多库及多租户实现；(多租户只缺少实体CodeFirst)\n3、定时任务增加远程调用功能；\n4、定时任务增加执行功能；\n5、定时任务增加租户号；\n6、更新layui2.6.7；\n7、去除前端格式化时间；\n\nbug修复：\n1、修复切换orm的各种问题；\n2、修复webapi 唯一登录问题；\n3、修复筛选bool类型和时间类型问题；', 0, 1, NULL, '2021-05-28 09:35:30', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('40d92cb5-f58f-4673-8f37-f7419ff3f79a', '2.11.0版本更新', '2021/6/11\n功能变更：\n1、通知样式调整；\n2、实体类修改，多租户codefirst完善；\n3、更新自增Guid；\n4、更新soultable；\n5、signalr增加登录计数；\n6、登录账号封禁，改成IP禁用\nip禁用表增加到期时间字段；\n\nbug修复：\n1、修复定时任务立即执行事务问题；\n2、修复定时任务界面显示；\n3、修复treetable滚动条出现时，表头宽度不对的问题；', 0, 1, NULL, '2021-06-11 16:50:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('40d93a04-3e4e-4548-8597-e49c235af6f7', '2.12.0版本更新', '2021/6/28\n功能变更：\n1、IP控制移到服务切换数据库之后；\n2、定时任务调用服务切换数据库连接，远程调用请求头增加租户号参数；\n3、项目中的watercloud前缀修改成可配置；\n4、增加配置是否重置主系统管理员账户；\n5、增加菜单定位，默认记录最后一次菜单位置，正常退出不记录，基于mini的hash功能；\n6、重新登录增加非后台界面跳转；\n7、表单设计器美化；\n8、为了记录非菜单打开的tab，minitab的sessionStorage改成cookie；\n\nbug修复：\n1、修复表格倒序BUG；\n2、修复字段权限模块为null的异常问题\n3、修复select 默认选中的问题；\n4、修复密码长度设置，导致验证提示失效问题；\n5、修复定时任务切换数据库的BUG;\n', 0, 1, NULL, '2021-06-28 15:13:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('41d945ba-19d4-40d8-88b0-ada458a8cda5', '2.13.0版本更新', '2021/7/13\n功能变更：\n1、优化加载，layui模块放到登陆页加载；\n2、修改更新租户，禁止修改数据库连接有关参数；\n3、规范化；\n4、新增主从表案例，含数据库文件；\n\nbug修复：\n1、修复定时任务切换数据库的BUG；\n2、修复soultable过滤导致的分页插件问题；\n3、修复日志keyValue长度过长问题；\n4、修复内容管理预览图片问题；', 0, 1, NULL, '2021-07-13 12:53:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('41d945ba-19d4-40d8-88b0-ada458a8cda6', '2.14.0版本更新', '2021/9/14\n功能变更：\n1、更新插件版本；\n2、减少miniTab 记录的cookie；\n3、配置增加登录错误次数；\n4、退出登录优化；\n\nbug修复：\n1、修复cookie中文乱码问题；\n2、修复订单删除问题；\n3、修复oracle查询数据库的问题；\n4、修复soultable 不带过滤，后台排序失效的问题，Pagination中的sort统一改成field；\n5、修复前端排序问题；\n6、修复layuiedit的问题；\n7、修复流程预览图片异常；\n8、修复流程界面参数显示问题；', 0, 1, NULL, '2021-09-14 15:40:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('41d945ba-19d4-40d8-88b0-ada458a8cda7', '2.15.0版本更新', '2021/10/27\n功能变更：\n1、菜单界面新增复制，修改排序，排序自增功能；\n2、更新layui文档地址；\n3、多库连接改成数组；\n4、更新系统页面可以单页使用；\n\nbug修复：\n1、修复框架弹窗重复出现问题;\n2、修复文件中心组织筛选问题', 0, 1, NULL, '2021-10-27 15:02:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('41d945ba-19d4-40d8-88b0-ada458a8cda8', '2.16.0版本更新', '2021/11/16\n功能变更：\n1、删除多余参数sqlkey；\n2、支持单页使用；\n3、前端用户参数转移到clientdata里面；\n4、修改不存在角色，设置为游客角色；\n5、增加定时任务集群并优化(冬天提供及测试)；\n\nbug修复：\n1、修复无角色时，基础数据异常；\n2、修复定时任务执行问题；', 0, 1, NULL, '2021-11-16 15:37:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('41d945bb-19d4-40d8-88b0-ada458a8cda8', '2.17.0版本更新', '2021/12/13\n功能变更：\n1、新增parentWindow()方法，获取父界面;\n2、新增传值方式，common.modalOpen（新增父子界面关系绑定)，原data参数改成dataJson参数，子界面使用common.parentWindow().dataJson即可获取传值的参数；\n3、前端框架优化；\n4、增加cron表达式判断；\n5、删除配置中的超管信息；\n6、重命名IsSystem，改成IsSuperAdmin;\n7、优化数据库注入方式，多租户创建完成后，无需重启应用；\n8、soultable增加时间范围；\n9、优化打印sql；\n10、优化数据库类型以orm的为准；\n11、代码生成器优化，实体类中增加codefirst必要参数（除了唯一键）；\n12、实体类租户修改，使用orm的TenantAttribute特性；\n13、流程增加撤回功能。', 0, 1, NULL, '2021-12-13 12:52:16', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('41d945bb-19d4-40d8-88b0-ada458a8cda9', '2.18.0版本更新', '2021/12/29\n功能变更：\n1、[工作流] 流程中心显示优化；\n2、[后台框架] 优化代码、去除警告；\n3、[后台框架] 升级net6，去除警告；\n\nbug修复：\n1、[工作流] 修复流程新增BUG；\n2、[代码生成器] 修复代码生成器自增ID问题', 0, 1, NULL, '2021-12-29 08:47:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2022-09-07 15:18:22', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('41d945bb-19d4-40d8-88b0-ada458a8cdb1', '2.19.0版本更新', '2022/01/27\n功能变更：\n1、[后台框架] 解决session不能使用的问题；\n2、[后台框架] 优化查询的反格式化，把中文放dictionary的value中；\n3、[后台框架] 优化代码判断存在改成any()；\n4、[后台框架] 优化第一次请求页面判断逻辑；\n5、[前台框架] 表单设计器更换插件；\n6、[后台框架] 仓储增加切换数据库方法；\n7、[前台框架] 更新soultable插件；\n\nbug修复：\n1、[定时任务] 修复定时任务null object异常；\n2、[后台框架] 修复表达式 or改成orelse， and改成andalso；\n3、[后台框架] 修复数据权限界面Bug；\n4、[前台框架] 修复系统设置上传图片Bug；\n5、[定时任务] 修复定时任务执行异常bug；\n6、[后台框架] 修复创建租户问题；\n7、[后台框架] 修复管理员权限控制问题，默认超管，false为管理员；\n8、[后台框架] 修复租户修改上传文件，没有更新问题', 0, 1, NULL, '2022-01-27 20:20:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2022-09-07 15:17:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('41d945bb-19d4-40d8-88b0-ada458a8cdb2', '2.20.0版本更新', '2022/3/7\n功能变更：\n1、[前台框架] tab切换增加动作执行table resize方法；\n2、[后台框架] 优化卡片表格组件；\n3、[代码生成器] 删除IDatabaseTable封装，使用sqlsugar获取表数据和结构，加强兼容性；\n4、[后台框架] 优化数据库注入，增加扩展库注入；\n5、[代码生成器] 增加数据库选择；\n6、[后台框架] 租户数据库类型，前端写死改为后端获取DbType枚举；\n7、[后台框架] 完善二级缓存，优化缓存方法；\n8、[后台框架] 优化管理数据库连接；\n\nbug修复：\n1、[后台框架] 修复时间导入格式问题；\n2、[前台框架] 修复首页粒子特效问题；\n3、[后台框架] 修复ChangeEntityDb方法切换数据库未生效问题；\n4、[后台框架] 修复数据权限无法设置无效的问题；', 0, 1, NULL, '2022-03-07 21:18:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2022-09-07 15:16:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('41d945bb-19d4-40d8-88b0-ada458a8cdb3', '2.21.0版本更新', '2022/4/11\n功能变更：\n1、[前台框架] 增加表格人性化开关，在home页面控制，默认开启;\n2、[定时任务] 定时任务执行job，增加格式化显示；\n3、[后台框架] 优化结构、控制器的权限特性等；\n4、[后台框架] 增加rabbitmq的帮助类及引用；\n5、[前台框架] 优化soultable日期范围选择；\n6、[后台框架] 优化获取服务，区分root服务和scope服务；\n7、[后台框架] 优化获取模块名称方法；\n\nbug修复：\n1、[后台框架] 修复其他数据库没有打印sql的问题;\n2、[代码生成器] 修复代码生成若干bug\n3、[后台框架] 修复租户生成(sqlserver)异常问题；\n4、[后台框架] 修复多数据库的异常；\n5、[工作流] 修复自定义流程出现的异常；\n6、[前台框架] 修复tab切换，刷新异常的问题；', 0, 1, NULL, '2022-04-11 08:37:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2022-09-07 15:14:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('41d945bb-19d4-40d8-88b0-ada458a8cdb4', '2.22.0版本更新', '2022/5/31\n功能变更：\n1、[后台框架] 去除仓储OrderList方法，改成扩展方法;\n2、[后台框架] 优化仓储，优化注册SqlSugar方法，重写获取服务的方法；\n3、[配置] 增加rabbit安装文件，增加使用rabbitmq案例，消息推送使用mq，默认开启；\n4、[前台框架] 升级layui 2.6.9；\n5、[配置] 增加sqlite脚本；\n6、[配置] 升级nuget，去除sqlprofiler文件；\n7、[前台框架] 手机端去除表格的固定列；\n8、[后台框架] 重写登录验证和权限验证；\n\nbug修复：\n1、[前台框架] 修复表单设计器ice编辑器问题；\n2、[代码生成器] 修复模板问题；\n3、[后台框架] 修复管理员权限卡控问题；\n4、[前台框架] 修复弹窗选择清除按钮失效问题；', 0, 1, NULL, '2022-06-06 16:50:53', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2022-09-07 15:13:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
+INSERT INTO `sys_notice` VALUES ('41d945bb-19d4-40d8-88b0-ada458a8cdb5', '2.23.0版本更新', '2022/9/7\n功能变更：\n1、[框架底层] 服务注册器去除瞬时服务判断；\n2、[代码生成器] 优化模板；\n3、[前端框架] 更新layui 2.7.5;\n4、[定时任务] 远程请求，增加类型，默认json，成功返回json；\n5、[前端框架] layuimini增加是否缩放参数，默认否；\n6、[定时任务] 代码优化，新增sql执行；\n7、[配置] rabbitmq默认设置关闭；\n8、[配置] 重置密码时，清除缓存；\n9、[后台框架] 增加租户生成忽视创建类的列表；\n10、[前端框架] 优化top.iframesList；\n11、[后台框架] WaterCloud.Web 集成API，优化登录信息存储；\n12、[后台框架] MVC定义的基类ControllerBase重命名BaseController；\n\nbug修复：\n1、[前端框架] 修复framework-ui绑定radio数据问题；\n2、[前端框架] 修复表格高度带搜索框异常的问题；\n3、[前端框架] 修复 Iframe无法关闭的问题；\n4、[后台框架] 修复realreturnurl不生效的问题；\n5、[前端框架] 修复cron的部分异常；', 0, 1, NULL, '2022-09-07 15:07:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2022-09-07 15:11:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_openjob
@@ -5490,29 +5636,34 @@ CREATE TABLE `sys_openjob`  (
   `F_StarRunTime` datetime NULL DEFAULT NULL,
   `F_EndRunTime` datetime NULL DEFAULT NULL,
   `F_CronExpress` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_DeleteMark` tinyint NULL DEFAULT NULL,
+  `F_EnabledMark` tinyint NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `F_CreatorTime` datetime NULL DEFAULT NULL,
   `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_LastModifyTime` datetime NULL DEFAULT NULL,
   `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `F_DeleteTime` datetime NULL DEFAULT NULL,
   `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastRunTime` datetime NULL DEFAULT NULL COMMENT '最后一次执行时间',
-  `F_JobType` int NOT NULL DEFAULT 0 COMMENT '任务类型0Run,1Get,2Post,3Put,4Delete',
-  `F_RequestHeaders` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求头',
-  `F_RequestString` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求内容',
-  `F_RequestUrl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求地址',
-  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据库数字',
+  `F_LastRunTime` datetime NULL DEFAULT NULL,
+  `F_LastRunMark` tinyint NULL DEFAULT NULL,
+  `F_LastRunErrTime` datetime NULL DEFAULT NULL,
+  `F_LastRunErrMsg` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `F_JobType` int NOT NULL,
+  `F_IsLog` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_RequestHeaders` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `F_RequestString` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `F_RequestUrl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `F_JobSql` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `F_JobSqlParm` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `F_JobDBProvider` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`F_Id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_openjob
 -- ----------------------------
-INSERT INTO `sys_openjob` VALUES ('08d92c83-8743-41a6-878e-930d5c34fec1', 'WaterCloud.Service.AutoJob.SaveServerStateJob', '服务器状态', 'WaterCloud', '2021-06-11 10:49:27', NULL, '0 0/10 * * * ?', 0, 1, '', '2021-06-11 10:49:27', '08d92c82-c515-4fcd-8963-ec5a8ad36b5b', '2021-06-11 10:49:27', '08d92c82-c515-4fcd-8963-ec5a8ad36b5b', NULL, NULL, '2021-06-11 10:49:27', 0, '', '', '', '1');
-INSERT INTO `sys_openjob` VALUES ('1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'WaterCloud.Service.AutoJob.SaveServerStateJob', '服务器状态', 'WaterCloud', '2021-06-09 12:19:03', '2021-06-09 12:19:01', '0 0/10 * * * ?', 0, 1, '每10分钟更新一次服务器状态', '2020-05-26 14:50:41', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-06-09 12:21:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '2021-06-09 12:23:01', 0, '', '', '', '0');
 
 -- ----------------------------
 -- Table structure for sys_openjoblog
@@ -5669,6 +5820,638 @@ CREATE TABLE `sys_roleauthorize`  (
 -- ----------------------------
 -- Records of sys_roleauthorize
 -- ----------------------------
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-477f-8542-b90a2af0e197', 1, '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48ab-867a-3a994bb0aec3', 1, '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48ae-81dd-57f247f72228', 1, '7e4e4a48-4d51-4159-a113-2a211186f13a', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48af-85c7-61483a88fa71', 2, '3f69d32f-cb3b-4fa0-863b-98b9a090d7e9', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48d2-8b4c-1281250cc455', 2, '9fc77888-bbca-4996-9240-a0f389819f6f', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48d4-8fe3-a91f2c3f335c', 2, '8f698747-a1c3-468d-9279-99990987e0f9', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48d6-8bb2-ddb794b767e8', 2, '7ee3ff62-ab18-4886-9451-89b1d152172e', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48d9-8e54-ed791749108b', 1, 'a303cbe1-60eb-437b-9a69-77ff8b48f173', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48db-85be-b37c7b1996f9', 2, 'd26da420-7e73-41ef-8361-86551b8dd1bb', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48de-8787-c5667b1727b5', 2, '926ae4a9-0ecb-4d5e-a66e-5bae15ae27c2', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48df-8b7d-5117508739ec', 2, '1d1e71a6-dd8b-4052-8093-f1d7d347b9bc', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48e1-805d-8e51f7954b04', 1, '26452c9a-243d-4c81-97b9-a3ad581c3bf4', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48e2-8a00-f77308f34c0c', 2, '7e10a7ac-8b65-4c7c-8eee-92d69d7dcbd9', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48e4-8697-6bcc44b576b5', 2, '0b1b307b-2aac-456b-acfb-484a05c71bd7', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48e5-8e64-a325f0cb4d82', 2, 'f51da6f6-8511-49f3-982b-a30ed0946706', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48e7-89de-1a0a9d7c2406', 2, '1b72be70-e44d-43d6-91d0-dc3ad628d22e', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48e9-85af-bfbb3d02da4d', 1, '262ca754-1c73-436c-a9a2-b6374451a845', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48eb-80e1-b525967606b9', 2, 'b83c84e4-6264-4b8e-b319-a49fbf34860d', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48ec-8821-10e4c9fecb11', 2, '82b2f4a2-55a1-4f44-b667-3449739643f6', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48ed-8b69-7bbacd87e5cb', 2, '0fa5e0a8-c786-40af-81af-b133b42dded5', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48ef-8102-9d8f4dea3757', 1, '91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48f0-8b2a-ff62cf1e3709', 2, '5d708d9d-6ebe-40ea-8589-e3efce9e74ec', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48f1-8ca3-01f7aabb33d6', 2, 'ffffe7f8-900c-413a-9970-bee7d6599cce', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48f3-89ba-eafb457bb104', 2, '239077ff-13e1-4720-84e1-67b6f0276979', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48f5-8de1-5f4dd6422b2a', 2, 'f93763ff-51a1-478d-9585-3c86084c54f3', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48f7-8b34-4d88d991d51b', 1, 'F298F868-B689-4982-8C8B-9268CBF0308D', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48f9-847b-5aa5c5bbd1ec', 2, '13c9a15f-c50d-4f09-8344-fd0050f70086', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48fa-8617-0914c1d06619', 2, 'e75e4efc-d461-4334-a764-56992fec38e6', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48fb-8e5e-c780ab02b831', 2, '8a9993af-69b2-4d8a-85b3-337745a1f428', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48fd-8a56-9cb80eed1981', 2, '88f7b3a8-fd6d-4f8e-a861-11405f434868', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-48ff-8725-92b9c417bf8f', 2, '29306956-f9b2-4e76-bc23-4b8f02d21be3', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4901-8f60-1b90bd6c7ca7', 2, 'd7a452f3-3596-4339-8803-d61fb4eec013', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4903-8ff0-160278813ac3', 1, '38CA5A66-C993-4410-AF95-50489B22939C', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4905-8ce7-07451e54a201', 2, '74eecdfb-3bee-405d-be07-27a78219c179', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4906-8e1f-aac5e046daa7', 2, '4727adf7-5525-4c8c-9de5-39e49c268349', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4908-8327-bb992fe71ecd', 2, '14617a4f-bfef-4bc2-b943-d18d3ff8d22f', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4909-8d31-4cd52e8ed59f', 2, 'abfdff21-8ebf-4024-8555-401b4df6acd9', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-490c-8c43-9589c184c23f', 2, '38e39592-6e86-42fb-8f72-adea0c82cbc1', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-490e-8b29-8544d5431f7b', 2, '15362a59-b242-494a-bc6e-413b4a63580e', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4910-8a81-88dd52199ff5', 2, '2a8f5342-5eb7-491c-a1a9-a2631d8eb5d6', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4912-8984-b986b23956b3', 1, '462027E0-0848-41DD-BCC3-025DCAE65555', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4914-8901-bcb9f7448ac8', 1, '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4915-8dc1-02fdb7952d6f', 1, '64A1C550-2C61-4A8C-833D-ACD0C012260F', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4917-8365-8ec5fbc6f44d', 2, '9FD543DB-C5BB-4789-ACFF-C5865AFB032C', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4918-8628-a104a32bb36f', 2, 'E29FCBA7-F848-4A8B-BC41-A3C668A9005D', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4919-8f44-1e33eaae2fec', 2, '85F5212F-E321-4124-B155-9374AA5D9C10', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-491b-8958-dd48b43a1f3f', 2, 'D4FCAFED-7640-449E-80B7-622DDACD5012', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-491d-8e71-e359c73995da', 2, 'FD3D073C-4F88-467A-AE3B-CDD060952CE6', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-491f-8ee7-125932527e30', 2, '23780fa8-b92c-4c0e-830e-ddcbe6cf4463', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4921-8ed4-6d7645a41454', 1, '01849cc9-c6da-4184-92f8-34875dac1d42', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4923-84c9-c3dfc43a3e08', 2, '8f32069f-20f3-48c9-8e35-cd245fffcf64', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4924-83d1-87ec27539c70', 2, 'e6514544-1436-431d-acbc-c44802831ea8', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4925-8775-da674e650999', 2, 'ba72435b-1185-4108-8020-7310c5a70233', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4926-8dc6-4310ae173e19', 1, 'ed757a25-82d5-43cc-89f4-ed26a51fb4f0', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4928-8ee1-0ed04c4bebe6', 2, '071f5982-efb2-4fa3-a6cf-a02f3f1f9d92', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4929-8f5f-95a4a0a8dd72', 2, '3d0e99d1-a150-43dc-84ae-f0e2e0ad2217', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-492b-842b-d66bd65ae8e7', 2, '4f727b61-0aa4-45f0-83b5-7fcddfe034e8', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-492c-8e22-5c674894a233', 2, '746629aa-858b-4c5e-9335-71b0fa08a584', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-492e-8a3a-b97f9b1c8717', 2, '43e09a61-c2b0-46c1-9b81-76d686b390d4', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4930-8ce3-a3042bb9efe7', 1, '152a8e93-cebb-4574-ae74-2a86595ff986', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4932-8c58-b0a3c52394b2', 2, '85bfbb9d-24f0-4a6f-8bb8-0f87826d04fa', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4933-8ca6-04e8e27c1db3', 2, 'd1086ccf-e605-44a4-9777-629810cec02d', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4935-806f-ac3586b2980f', 2, '01600a2b-c218-48d6-bb37-842daa727248', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4936-843d-e06acbd8a0cd', 2, '63cd2162-ab5f-4b7f-9bbd-5c2e7625e639', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4937-8e9e-0ba0b2e644bb', 2, '98c2519c-b39f-4bf3-9543-5cc2630a4bbd', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-493a-8791-83162859f65a', 1, '423A200B-FA5F-4B29-B7B7-A3F5474B725F', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-493c-80f8-aa302e8b6d9e', 2, '104bcc01-0cfd-433f-87f4-29a8a3efb313', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-493d-818d-cf85bc63e32f', 2, '4b876abc-1b85-47b0-abc7-96e313b18ed8', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-493e-86d7-c53d68c3bf09', 2, '0d777b07-041a-4205-a393-d1a009aaafc7', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-493f-8e1f-313a1a7053ac', 2, '1ee1c46b-e767-4532-8636-936ea4c12003', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4941-8a7c-d3258b2aba24', 2, '82f162cb-beb9-4a79-8924-cd1860e26e2e', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4943-8834-0a102eadfcf4', 1, 'd742c96e-b61c-4cea-afeb-81805789687b', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4945-8bba-d3ae8f193965', 2, 'd9e74251-61ff-4472-adec-ad316cb9a307', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4946-8fa0-36c9c7ad063e', 2, '0e156a57-8133-4d1b-9d0f-9b7554e7b1fc', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4948-8734-d4be2e1737f0', 2, 'cba403cb-6418-44b7-868d-19e04af673ce', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-494a-85cd-59bc7fa05109', 2, '30bf72ed-f62f-49a9-adfc-49693871605f', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-494c-8397-ba2e9592d1fe', 1, '337A4661-99A5-4E5E-B028-861CACAF9917', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-494e-819f-66d6c93fe1bb', 2, '48afe7b3-e158-4256-b50c-cd0ee7c6dcc9', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-494f-8bfc-e1a0b4f8ade8', 2, '89d7a69d-b953-4ce2-9294-db4f50f2a157', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4951-827e-8cbc8368e43a', 2, '8c7013a9-3682-4367-8bc6-c77ca89f346b', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4954-84cb-bab426eabcba', 2, 'a0a41d87-494b-40b5-bd03-0f75c75be7cb', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4956-82a6-1da504778242', 1, '2c2ddbce-ee87-4134-9b32-54d0bd572910', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4957-8e95-e860518a8f46', 2, '55cc5aba-8121-4151-8df5-f6846396d1a3', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4958-8dc3-5aa169902fc5', 2, '4c794628-9b09-4d60-8fb5-63c1a37b2b60', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-495a-8796-6ac1885b41c0', 2, '91d768bb-fb68-4807-b3b6-db355bdd6e09', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-495b-8e68-5f6646928347', 2, '832f5195-f3ab-4683-82ad-a66a71735ffc', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-495d-8806-714c2ef3f0ab', 2, '2cde1cd0-cfc8-4901-96ef-1fe0c8bf997c', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-495f-873e-82be4af3e48e', 1, 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4961-81fe-f1cb2a6f3033', 2, 'ec452d72-4969-4880-b52f-316ffdfa19bd', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4962-8f64-9fca01ee7155', 2, '35fc1b7c-40b0-42b8-a0f9-c67087566289', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4964-804d-96af17c4f2cd', 2, 'd30ff0f3-39da-4033-a320-56f26edd5b51', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4965-882e-210d1ad60654', 2, '73ac1957-7558-49f6-8642-59946d05b8e6', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4967-8274-1566b6615c4a', 1, '73FD1267-79BA-4E23-A152-744AF73117E9', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4969-8637-90523eaec239', 1, '30c629a0-910e-404b-8c29-a73a6291fd95', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-496a-8bdb-73c64105109e', 1, '96EE855E-8CD2-47FC-A51D-127C131C9FB9', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-496c-807b-8fd7394c869a', 2, '3a35c662-a356-45e4-953d-00ebd981cad6', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-496d-8442-095f24a15d7c', 1, 'a3a4742d-ca39-42ec-b95a-8552a6fae579', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-496e-8bf2-1f42d687b406', 2, 'd4074121-0d4f-465e-ad37-409bbe15bf8a', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-496f-8e3c-86c5fcf87cb7', 2, 'aaf58c1b-4af2-4e5f-a3e4-c48e86378191', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4971-8d91-ac0f2983b5a7', 2, '8379135e-5b13-4236-bfb1-9289e6129034', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4973-88b9-d244523efd4c', 2, '329c0326-ce68-4a24-904d-aade67a90fc7', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4975-8421-e569e9e98bb6', 1, 'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4976-8c40-d4f175d33b90', 2, '87068c95-42c8-4f20-b786-27cb9d3d5ff7', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4977-8ff7-df96c795de06', 2, 'd2ecb5e8-e5cc-49c8-ba86-dbd7e51ca20b', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4979-86f4-4bf1a3ebeba0', 2, '310bb831-a46f-4117-9d02-a3e551611dcf', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-497b-8783-151dc95b3743', 2, '208c2915-d6d0-4bb0-8ec4-154f86561f5a', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-497d-84f8-8fabdbd9e596', 2, '39fc8a42-6335-1ed5-6c73-a055419b61c8', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-497f-8079-e015e6ce67fb', 2, 'e06965bc-b693-4b91-96f9-fc10ca2aa1f0', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4981-8037-3763787240ce', 2, 'cc115cef-c2d1-4b97-adbc-ea885aea6190', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4982-8f04-3e45967158fe', 1, '49F61713-C1E4-420E-BEEC-0B4DBC2D7DE8', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4984-8762-93e1cd8f8a6c', 1, '5f9873e9-0308-4a8e-84b7-1c4c61f37654', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4985-8e98-6cfc2a071c39', 1, 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4987-8c50-fc3e7e6528db', 2, '772eb88a-5f67-4bb1-a122-0c83a2bdb5ef', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4988-8bc5-31d3d6e974d9', 2, 'c8eed325-56ad-4210-b610-3e3bb68eb0be', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-498a-81cf-57665f161824', 2, '5c321b1f-4f56-4276-a1aa-dd23ce12a1fc', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-498b-877d-051d409b02d5', 2, '153e4773-7425-403f-abf7-42db13f84c8d', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-498c-8f81-094c055a9359', 2, '08d9bde2-f14d-4b33-8f9b-2af0bf40812b', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-498f-88c6-a4732e4b9b94', 1, '605444e5-704f-4cca-8d00-75175e2aef05', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4991-85af-f5da72d4b16f', 2, 'd42aaaae-4973-427c-ad86-7a6b20b09325', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4992-85ad-71685b41699b', 2, 'e376d482-023e-4715-a9c8-2a393c24426e', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4993-8a31-57a57a342be2', 1, 'ee136db7-178a-4bb0-b878-51287a5e2e2b', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4995-81dd-6d436482a9a2', 2, 'b4be6eee-3509-4685-8064-34b9cacc690a', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4996-84a5-84a03a4080f5', 1, '6b196514-0df1-41aa-ae64-9bb598960709', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4997-8c64-60b0fafdc39b', 1, '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-4999-892e-9fd1407abafb', 2, '17a0e46f-28f9-4787-832c-0da25c321ce4', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-499a-8980-e21dd71acfbe', 2, '1a588a3b-95d7-4b3a-b50a-d3bc40de9fe3', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-499b-8aca-acb48c3f80a6', 1, 'a5b323e7-db24-468f-97d7-a17bf5396742', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-499d-84ad-71e4caade7e9', 1, 'e9190a56-e173-4483-8a3e-f17b86e4766e', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-499e-89d1-b74eb55d6744', 2, 'fcb4d9f0-63f0-4bd0-9779-eed26da5c4b3', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49a0-83b3-2353bfac7c49', 2, '6f872aa0-1aae-4f42-a3ba-a61079057749', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49a1-8696-5083d7416ec2', 2, '0a1ba1d7-b4f3-45a4-a4da-e70fb25bb766', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49a2-8b5c-f7b5ff0c6ce9', 2, '957a355d-d931-40f6-9da0-dddfd9135fe0', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49a4-88c2-151834ee7ff6', 1, 'bcd52760-009f-4673-80e5-ff166aa07687', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49a6-81f4-2e95f96769ba', 1, '4efd6f84-a4a9-4176-aedd-153e7748cbac', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49a7-86f2-a25597e410cf', 2, '9450c723-d64d-459c-9c52-555773a8b50e', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49a9-81e9-0a3c6b98882c', 2, 'd6ed1d69-84f8-4933-9072-4009a3fcba85', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49aa-898e-b5847bea1aae', 2, 'a2e2a8ba-9311-4699-bcef-b79a2b59b08f', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49ac-844c-bae5f7baaf4b', 2, 'de205812-51c2-4a64-857d-b5638c06c65c', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49ae-8259-e1578940a132', 1, 'f3277ddd-1bf1-4202-8a4b-15c29a405bd5', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49af-880b-313c8896028f', 2, 'd3a41d48-6288-49ec-90c5-952fa676591f', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49b0-8cfb-6a00783507d7', 2, '6cd4c3ac-048c-485a-bd4d-e0923f8d7f6e', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49b2-8aaa-91fc0ab13524', 2, 'a5619a09-f283-4ed7-82e0-9609815cb62a', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49b4-861a-e716ca49cdea', 2, '761f50a6-c1b2-4234-b0af-8f515ec74fe8', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49b6-82b5-10b715e37850', 1, '08d94532-39d1-4822-80b3-0c25a8183155', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49b7-8d4a-b67dcfcfd21d', 1, '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49b9-826b-99609fb123f5', 2, '08d94532-98b0-4b60-86a7-eca606765531', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49ba-82bf-9e5ce76f1edb', 2, '08d94532-98b0-4b92-8a2f-4da9f59afa21', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49bb-8bbf-eeda21e921fe', 2, '08d94532-98b0-4ba2-87b3-6c976665cb6b', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49bd-823d-a7f0897f5390', 2, '08d94532-98b0-4bac-8e49-471d5b61be95', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49be-8b37-4a0ed506f8e8', 1, '873e2274-6884-4849-b636-7f04cca8242c', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49c0-8624-cd1e9461ce68', 1, 'd419160a-0a54-4da2-98fe-fc57f2461a2d', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49c1-8c1e-daa0e4caafaf', 1, '2536fbf0-53ff-40a6-a093-73aa0a8fc035', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49c3-8127-26af294ca144', 1, '1e60fce5-3164-439d-8d29-4950b33011e2', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49c4-8749-c416697d599f', 1, '8e52143d-2f97-49e5-89a4-13469f66fc77', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49c6-850d-4a8743a7978f', 1, '1dff096a-db2f-410c-af2f-12294bdbeccd', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49c7-8dde-c3114823240b', 1, '06bb3ea8-ec7f-4556-a427-8ff0ce62e873', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49c9-859b-89c4dffffefe', 1, 'c14ab4f2-a1cf-4abd-953b-bacd70e78e8c', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49ca-8ea2-9232c7c35106', 1, 'ca45b5ae-0252-4783-a23d-8633fc35e7e3', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49cc-885e-59a966c90fb6', 1, '39fcc5ad-48af-7778-53a5-4c3c9d18cbd3', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca4-49ce-82f0-ac53d1b4febd', 1, 'e5dc1c07-4234-46d1-bddb-d0442196c6b6', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca6-4262-84a5-36ceb4349639', 3, 'ddd93ca7-d821-4abd-a342-9be1782dabe9', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca6-428b-83d5-48cccad45119', 3, 'dc4cd5fd-8933-44f8-9500-fc36285f50b2', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca6-428c-8745-c7b6237fd016', 3, 'bf5a2919-281c-44e2-a83b-74576e08743e', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca6-428d-8e63-1b225ef21747', 3, 'b67b5eb6-ecae-4156-8ef8-9e80b7a1345a', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca6-428f-8a75-cc0d9834aa54', 3, '1cecc967-7ea1-46d0-b4fa-f90a15783d1c', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca6-4293-89b8-31803edfdecc', 3, 'd52c6878-9283-45d7-82f9-b465fa33a89b', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca6-4294-86e8-c0c982ca25aa', 3, 'bfbe0195-3fae-42d2-9d46-6bf5400d64ea', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca6-4295-8744-d062844289c8', 3, 'be804654-d6d7-44d1-8950-6841a2626720', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca6-4296-86f9-7c050c125c2c', 3, 'a24c6ed3-8c91-4ade-a5c1-8c5eb9719368', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca6-4297-8924-93138b6e0a86', 3, '309c622d-2217-499f-aa83-2eccd72205a1', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aa6-eca6-4299-80d1-5dde990a0a96', 3, '21d40431-d289-415f-bfaf-5a23bf4dac9c', 2, '08da9aa6-ec9d-4e65-82be-8651cf6af0ba', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4692-8149-5766052a250f', 1, '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4848-8d8f-e1e2a3c3d209', 1, '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-484e-8e20-c45dcae29c97', 1, '7e4e4a48-4d51-4159-a113-2a211186f13a', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4851-825a-513f0dfcb189', 2, '3f69d32f-cb3b-4fa0-863b-98b9a090d7e9', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-488a-8f18-1192d55cf21e', 2, '9fc77888-bbca-4996-9240-a0f389819f6f', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-488e-8ce2-c55d6fef54dd', 2, '8f698747-a1c3-468d-9279-99990987e0f9', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4891-894e-efc760de9fbb', 2, '7ee3ff62-ab18-4886-9451-89b1d152172e', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4896-88eb-8af43642d988', 1, '26452c9a-243d-4c81-97b9-a3ad581c3bf4', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4899-8168-e4d3b8c31d90', 2, '7e10a7ac-8b65-4c7c-8eee-92d69d7dcbd9', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-489b-8493-58eb3ba376de', 2, '0b1b307b-2aac-456b-acfb-484a05c71bd7', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-489d-8a20-6b1b3dda98e7', 2, 'f51da6f6-8511-49f3-982b-a30ed0946706', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48a0-8864-4f4bb30630e7', 2, '1b72be70-e44d-43d6-91d0-dc3ad628d22e', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48a3-86c3-e8c83afc79e2', 1, '262ca754-1c73-436c-a9a2-b6374451a845', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48a6-86d1-f4f6294b656c', 2, 'b83c84e4-6264-4b8e-b319-a49fbf34860d', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48a8-8376-254b1d346423', 2, '82b2f4a2-55a1-4f44-b667-3449739643f6', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48aa-8341-583b86ab9fdf', 2, '0fa5e0a8-c786-40af-81af-b133b42dded5', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48ac-8774-c540cde3430d', 1, '91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48af-84d6-94a4fa164c8c', 2, '5d708d9d-6ebe-40ea-8589-e3efce9e74ec', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48b1-8892-413caedf315e', 2, 'ffffe7f8-900c-413a-9970-bee7d6599cce', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48b4-8093-7628507419e6', 2, '239077ff-13e1-4720-84e1-67b6f0276979', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48b6-8960-5b3e9aeff8bf', 2, 'f93763ff-51a1-478d-9585-3c86084c54f3', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48b9-8ad9-80d50aa050ae', 1, 'F298F868-B689-4982-8C8B-9268CBF0308D', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48bc-8d34-53619fb1021d', 2, '13c9a15f-c50d-4f09-8344-fd0050f70086', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48be-892d-77f11207d698', 2, 'e75e4efc-d461-4334-a764-56992fec38e6', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48c1-8b2c-37f4b7fe18ee', 2, '8a9993af-69b2-4d8a-85b3-337745a1f428', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48c4-880d-401a3b8285ef', 2, '88f7b3a8-fd6d-4f8e-a861-11405f434868', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48c7-8a2c-0b89e76206ce', 2, '29306956-f9b2-4e76-bc23-4b8f02d21be3', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48ca-8dc7-5d6a48da9777', 2, 'd7a452f3-3596-4339-8803-d61fb4eec013', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48ce-8407-8090216c7a2c', 1, '38CA5A66-C993-4410-AF95-50489B22939C', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48d1-82f9-a7aad6920bed', 2, '74eecdfb-3bee-405d-be07-27a78219c179', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48d3-815f-ac4b1c283435', 2, '4727adf7-5525-4c8c-9de5-39e49c268349', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48d6-8049-63cbd5fb43c8', 2, '14617a4f-bfef-4bc2-b943-d18d3ff8d22f', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48d9-877d-e6a72fc1f1b5', 2, 'abfdff21-8ebf-4024-8555-401b4df6acd9', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48de-8ae5-75aedab8c927', 2, '38e39592-6e86-42fb-8f72-adea0c82cbc1', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48e4-8648-57ede67a8705', 2, '15362a59-b242-494a-bc6e-413b4a63580e', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48ea-8174-61cc3fa4c443', 2, '2a8f5342-5eb7-491c-a1a9-a2631d8eb5d6', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48ef-8bb5-566482d09c1f', 1, '462027E0-0848-41DD-BCC3-025DCAE65555', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48f4-879d-f08ea72f6d34', 1, '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48f7-8ea6-35bf9a94fedd', 1, '64A1C550-2C61-4A8C-833D-ACD0C012260F', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48fb-877f-74c96f22ba0a', 2, '9FD543DB-C5BB-4789-ACFF-C5865AFB032C', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-48fe-8a05-5cc449e0f29a', 2, 'E29FCBA7-F848-4A8B-BC41-A3C668A9005D', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4903-8353-42d83ab226cc', 2, '85F5212F-E321-4124-B155-9374AA5D9C10', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4907-8dd4-631dcacfaac4', 2, 'D4FCAFED-7640-449E-80B7-622DDACD5012', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-490d-8203-78bcc567c743', 2, 'FD3D073C-4F88-467A-AE3B-CDD060952CE6', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4912-8f6b-0fd64ba56d95', 2, '23780fa8-b92c-4c0e-830e-ddcbe6cf4463', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4918-8942-e1cd7614fd08', 1, 'ed757a25-82d5-43cc-89f4-ed26a51fb4f0', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-491c-8971-60876be87029', 2, '071f5982-efb2-4fa3-a6cf-a02f3f1f9d92', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-491f-877a-8e1367ab72cc', 2, '3d0e99d1-a150-43dc-84ae-f0e2e0ad2217', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4922-8f9d-04e0a0dca2ed', 2, '4f727b61-0aa4-45f0-83b5-7fcddfe034e8', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4926-89e1-be7632a98557', 2, '746629aa-858b-4c5e-9335-71b0fa08a584', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4929-89ad-7e579aec2b58', 2, '43e09a61-c2b0-46c1-9b81-76d686b390d4', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-492c-8fdf-1a0e1ff5363b', 1, '152a8e93-cebb-4574-ae74-2a86595ff986', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-492f-8afd-97f3f90f14f3', 2, '85bfbb9d-24f0-4a6f-8bb8-0f87826d04fa', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4931-872c-7a34432eb0fc', 2, 'd1086ccf-e605-44a4-9777-629810cec02d', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4933-8d71-16946acbffb3', 2, '01600a2b-c218-48d6-bb37-842daa727248', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4936-8115-47947e17cb08', 2, '63cd2162-ab5f-4b7f-9bbd-5c2e7625e639', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4938-8eea-bd66367feaff', 2, '98c2519c-b39f-4bf3-9543-5cc2630a4bbd', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-493c-8637-1c5f94f5594e', 1, '423A200B-FA5F-4B29-B7B7-A3F5474B725F', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-493f-848d-6c4073a4cacd', 2, '104bcc01-0cfd-433f-87f4-29a8a3efb313', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4941-87cd-a9116c5d346a', 2, '4b876abc-1b85-47b0-abc7-96e313b18ed8', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4944-8a3d-3e04a6c67496', 2, '0d777b07-041a-4205-a393-d1a009aaafc7', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4947-869f-ca78fd511ff7', 2, '1ee1c46b-e767-4532-8636-936ea4c12003', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-494a-8518-1e8c0d5a095c', 2, '82f162cb-beb9-4a79-8924-cd1860e26e2e', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-494d-8cbd-47e227547c7f', 1, 'd742c96e-b61c-4cea-afeb-81805789687b', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4950-8938-103ee8fe7df0', 2, 'd9e74251-61ff-4472-adec-ad316cb9a307', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4953-8625-09b54ade2b9d', 2, '0e156a57-8133-4d1b-9d0f-9b7554e7b1fc', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4956-81dd-a58b94c8f69f', 2, 'cba403cb-6418-44b7-868d-19e04af673ce', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4959-8628-7870017d7395', 2, '30bf72ed-f62f-49a9-adfc-49693871605f', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-495c-8aa6-48f2eff78f20', 1, '337A4661-99A5-4E5E-B028-861CACAF9917', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-495f-8f0f-fc3e27ac3e93', 2, '48afe7b3-e158-4256-b50c-cd0ee7c6dcc9', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4961-8f08-0d289b3cec38', 2, '89d7a69d-b953-4ce2-9294-db4f50f2a157', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4964-8611-64de3d8665bc', 2, '8c7013a9-3682-4367-8bc6-c77ca89f346b', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4967-8b74-43bfda91cadc', 2, 'a0a41d87-494b-40b5-bd03-0f75c75be7cb', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-496b-80f5-5c8b0824d146', 1, '2c2ddbce-ee87-4134-9b32-54d0bd572910', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-496e-83c9-c7db5517f125', 2, '55cc5aba-8121-4151-8df5-f6846396d1a3', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4972-874e-36ad54c68af8', 2, '4c794628-9b09-4d60-8fb5-63c1a37b2b60', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4974-8a54-75ee9b3a0fe8', 2, '91d768bb-fb68-4807-b3b6-db355bdd6e09', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4977-87dd-b51683889478', 2, '832f5195-f3ab-4683-82ad-a66a71735ffc', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-497a-8812-8fffb7497724', 2, '2cde1cd0-cfc8-4901-96ef-1fe0c8bf997c', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-497d-8d3b-a8338a248b53', 1, 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4980-8df8-d5bc32af99fe', 2, 'ec452d72-4969-4880-b52f-316ffdfa19bd', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4982-8aa1-17f891956d3b', 2, '35fc1b7c-40b0-42b8-a0f9-c67087566289', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4984-89ef-9d202286226e', 2, 'd30ff0f3-39da-4033-a320-56f26edd5b51', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4987-8b57-16557f19c256', 2, '73ac1957-7558-49f6-8642-59946d05b8e6', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-498a-8805-bb5cdd35e574', 1, '73FD1267-79BA-4E23-A152-744AF73117E9', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-498d-81b5-222c8cdabdb7', 1, '30c629a0-910e-404b-8c29-a73a6291fd95', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-498f-83eb-8b0ac729489d', 1, '96EE855E-8CD2-47FC-A51D-127C131C9FB9', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4991-899c-cdf5d4fd470b', 2, '3a35c662-a356-45e4-953d-00ebd981cad6', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4993-8940-5708415e2d5b', 1, 'a3a4742d-ca39-42ec-b95a-8552a6fae579', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4996-8abb-c3711b100494', 2, 'd4074121-0d4f-465e-ad37-409bbe15bf8a', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-4998-8d17-1a6103d59178', 2, 'aaf58c1b-4af2-4e5f-a3e4-c48e86378191', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-499b-8585-9d0757e7f7eb', 2, '8379135e-5b13-4236-bfb1-9289e6129034', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-499e-839b-914e29055c3b', 2, '329c0326-ce68-4a24-904d-aade67a90fc7', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49a1-8a5a-b6d58465db4e', 1, 'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49a4-8516-340ba35faa2a', 2, '87068c95-42c8-4f20-b786-27cb9d3d5ff7', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49a6-87f7-883c157ed4bb', 2, 'd2ecb5e8-e5cc-49c8-ba86-dbd7e51ca20b', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49a9-856f-7be5eebd448b', 2, '310bb831-a46f-4117-9d02-a3e551611dcf', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49ac-8083-19cb9dd8a2ad', 2, '208c2915-d6d0-4bb0-8ec4-154f86561f5a', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49af-82b4-dc2e676716eb', 2, '39fc8a42-6335-1ed5-6c73-a055419b61c8', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49b2-8aff-b636134b3dcf', 2, 'e06965bc-b693-4b91-96f9-fc10ca2aa1f0', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49b6-80f5-018684ce8042', 2, 'cc115cef-c2d1-4b97-adbc-ea885aea6190', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49b9-87c2-ab30cd5f18a0', 1, '49F61713-C1E4-420E-BEEC-0B4DBC2D7DE8', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49bc-82d5-088a70154aab', 1, '5f9873e9-0308-4a8e-84b7-1c4c61f37654', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49be-8cd6-2541d697eb43', 1, 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49c1-801b-67ea70a23892', 2, '772eb88a-5f67-4bb1-a122-0c83a2bdb5ef', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49c3-801d-a96dd29431e4', 2, 'c8eed325-56ad-4210-b610-3e3bb68eb0be', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49c5-8447-36299298d3a5', 2, '5c321b1f-4f56-4276-a1aa-dd23ce12a1fc', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49c7-8a54-537f0abb8233', 2, '153e4773-7425-403f-abf7-42db13f84c8d', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49ca-8799-f2e669a8690a', 2, '08d9bde2-f14d-4b33-8f9b-2af0bf40812b', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49cd-8702-bb4b778f2b4c', 1, '605444e5-704f-4cca-8d00-75175e2aef05', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49cf-8c35-b8d3c72204fa', 2, 'd42aaaae-4973-427c-ad86-7a6b20b09325', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49d1-894d-1e72492c544a', 2, 'e376d482-023e-4715-a9c8-2a393c24426e', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49d4-81b4-505addd7936a', 1, 'ee136db7-178a-4bb0-b878-51287a5e2e2b', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49d6-8bb7-fb41cd26d930', 2, 'b4be6eee-3509-4685-8064-34b9cacc690a', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49d9-8247-692f27137347', 1, '6b196514-0df1-41aa-ae64-9bb598960709', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49db-8ea5-1c7498a1847a', 1, '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49de-86dd-342b40ddbf46', 2, '17a0e46f-28f9-4787-832c-0da25c321ce4', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49e0-815b-8e58bbf6c5ec', 2, '1a588a3b-95d7-4b3a-b50a-d3bc40de9fe3', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49e2-8554-8c3fcab269d9', 1, 'a5b323e7-db24-468f-97d7-a17bf5396742', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49e5-82eb-ed2724f47230', 1, 'e9190a56-e173-4483-8a3e-f17b86e4766e', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49e7-8974-6bc960c924a5', 2, 'fcb4d9f0-63f0-4bd0-9779-eed26da5c4b3', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49e9-8861-d1d831a4ec28', 2, '6f872aa0-1aae-4f42-a3ba-a61079057749', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49eb-88f2-8834900a6514', 2, '0a1ba1d7-b4f3-45a4-a4da-e70fb25bb766', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3b-49ed-8ddf-5cd28c805906', 2, '957a355d-d931-40f6-9da0-dddfd9135fe0', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3c-4db5-890c-dbb87e18ea63', 3, 'ddd93ca7-d821-4abd-a342-9be1782dabe9', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3c-4ddd-8138-60f4ee7c1d0d', 3, 'dc4cd5fd-8933-44f8-9500-fc36285f50b2', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3c-4dde-8794-49427d42269d', 3, 'bf5a2919-281c-44e2-a83b-74576e08743e', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3c-4ddf-8db9-843dce2c0382', 3, 'b67b5eb6-ecae-4156-8ef8-9e80b7a1345a', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3c-4de1-8bec-1405884a1ad9', 3, '1cecc967-7ea1-46d0-b4fa-f90a15783d1c', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3c-4de6-857a-4d4e7c22efdc', 3, 'd52c6878-9283-45d7-82f9-b465fa33a89b', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3c-4de7-8707-aeea03e83fb1', 3, 'bfbe0195-3fae-42d2-9d46-6bf5400d64ea', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3c-4de8-8800-383ded5f7e60', 3, 'be804654-d6d7-44d1-8950-6841a2626720', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3c-4de9-872a-a90f6512f654', 3, 'a24c6ed3-8c91-4ade-a5c1-8c5eb9719368', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3c-4dea-8ae2-22eed29a2547', 3, '309c622d-2217-499f-aa83-2eccd72205a1', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aad-7f3c-4dec-826c-f7772ee361dc', 3, '21d40431-d289-415f-bfaf-5a23bf4dac9c', 2, '08da9aad-7f35-4e44-89de-0287c0ab7127', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-438b-8b02-c4de1869c7cb', 1, '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-44d2-86ee-cf5d06fe137a', 1, '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-44d6-8ec0-b5319a59b3df', 1, '7e4e4a48-4d51-4159-a113-2a211186f13a', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-44d8-8e78-1e17a096cf06', 2, '3f69d32f-cb3b-4fa0-863b-98b9a090d7e9', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4505-8991-0770e7498869', 2, '9fc77888-bbca-4996-9240-a0f389819f6f', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4509-86d7-9d4249e4a85b', 2, '8f698747-a1c3-468d-9279-99990987e0f9', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-450c-8d8c-51d27a5ddaa8', 2, '7ee3ff62-ab18-4886-9451-89b1d152172e', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4514-861e-67fe6cbf330e', 1, '26452c9a-243d-4c81-97b9-a3ad581c3bf4', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4517-8487-6e3ced913e4c', 2, '7e10a7ac-8b65-4c7c-8eee-92d69d7dcbd9', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4519-8325-0e50a86b6984', 2, '0b1b307b-2aac-456b-acfb-484a05c71bd7', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-451b-8034-e9e4f993062b', 2, 'f51da6f6-8511-49f3-982b-a30ed0946706', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-451d-86bf-1dbd6dd455ec', 2, '1b72be70-e44d-43d6-91d0-dc3ad628d22e', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-451f-8e6c-8fee23b94c52', 1, '262ca754-1c73-436c-a9a2-b6374451a845', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4522-8193-d600c869eb9a', 2, 'b83c84e4-6264-4b8e-b319-a49fbf34860d', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4523-8e25-6fe4562e2282', 2, '82b2f4a2-55a1-4f44-b667-3449739643f6', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4525-8ae9-d95079ab775c', 2, '0fa5e0a8-c786-40af-81af-b133b42dded5', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4527-87b0-94763f732d11', 1, '91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4529-8eaa-6216c2bfd352', 2, '5d708d9d-6ebe-40ea-8589-e3efce9e74ec', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-452b-8882-44636a79fa3d', 2, 'ffffe7f8-900c-413a-9970-bee7d6599cce', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-452e-8649-91b43c5f822e', 2, '239077ff-13e1-4720-84e1-67b6f0276979', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4530-8a6b-33a62a2759d8', 2, 'f93763ff-51a1-478d-9585-3c86084c54f3', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4533-843d-4616db8c3e17', 1, 'F298F868-B689-4982-8C8B-9268CBF0308D', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4535-88ae-694d3d00e24d', 2, '13c9a15f-c50d-4f09-8344-fd0050f70086', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4537-8077-3c60a76e3bc1', 2, 'e75e4efc-d461-4334-a764-56992fec38e6', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4539-8316-4aca8b57f472', 2, '8a9993af-69b2-4d8a-85b3-337745a1f428', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-453b-8fcc-965b7f8da52b', 2, '88f7b3a8-fd6d-4f8e-a861-11405f434868', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-453e-884a-1be10bec8e0c', 2, '29306956-f9b2-4e76-bc23-4b8f02d21be3', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4541-82af-8917f9310a62', 2, 'd7a452f3-3596-4339-8803-d61fb4eec013', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4543-8fc3-24d1216dff32', 1, '38CA5A66-C993-4410-AF95-50489B22939C', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4546-8371-7a548d719ccd', 2, '74eecdfb-3bee-405d-be07-27a78219c179', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4547-8d1f-a3d8d91a635d', 2, '4727adf7-5525-4c8c-9de5-39e49c268349', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4549-8f18-724c6444b2b4', 2, '14617a4f-bfef-4bc2-b943-d18d3ff8d22f', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-454c-810b-d90c99d0ea32', 2, 'abfdff21-8ebf-4024-8555-401b4df6acd9', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-454e-8ca0-fbe2902985e3', 2, '38e39592-6e86-42fb-8f72-adea0c82cbc1', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4551-87ba-cf3b6118fdf8', 2, '15362a59-b242-494a-bc6e-413b4a63580e', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4554-8332-0f1f31c0f824', 2, '2a8f5342-5eb7-491c-a1a9-a2631d8eb5d6', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4557-806c-c54f74ead1bb', 1, '462027E0-0848-41DD-BCC3-025DCAE65555', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4559-8a27-dbf032fd1400', 1, '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-455b-87ba-5e870d359589', 1, '64A1C550-2C61-4A8C-833D-ACD0C012260F', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-455d-849f-00710177d166', 2, '9FD543DB-C5BB-4789-ACFF-C5865AFB032C', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-455e-8fb7-5e8108663de0', 2, 'E29FCBA7-F848-4A8B-BC41-A3C668A9005D', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4561-8015-fb2245f3d0ce', 2, '85F5212F-E321-4124-B155-9374AA5D9C10', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4563-8930-6efb06016945', 2, 'D4FCAFED-7640-449E-80B7-622DDACD5012', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4566-82bb-d3ebc8bfc546', 2, 'FD3D073C-4F88-467A-AE3B-CDD060952CE6', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4569-805c-67bf89ffa308', 2, '23780fa8-b92c-4c0e-830e-ddcbe6cf4463', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-456b-8d84-7470a909b02c', 1, 'ed757a25-82d5-43cc-89f4-ed26a51fb4f0', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-456d-8f16-f8f9df879acf', 2, '071f5982-efb2-4fa3-a6cf-a02f3f1f9d92', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-456f-8624-85008425df5e', 2, '3d0e99d1-a150-43dc-84ae-f0e2e0ad2217', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4571-8735-d2341a1572dc', 2, '4f727b61-0aa4-45f0-83b5-7fcddfe034e8', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4573-8be1-c2afdee74125', 2, '746629aa-858b-4c5e-9335-71b0fa08a584', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4576-83a3-5fc8a9454816', 2, '43e09a61-c2b0-46c1-9b81-76d686b390d4', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4578-8e8e-b4d2f74b0c45', 1, '152a8e93-cebb-4574-ae74-2a86595ff986', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-457b-800a-f40f6eb8d2dc', 2, '85bfbb9d-24f0-4a6f-8bb8-0f87826d04fa', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-457c-86ec-ff3e2bab7b19', 2, 'd1086ccf-e605-44a4-9777-629810cec02d', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-457e-8540-a31857e6b0d4', 2, '01600a2b-c218-48d6-bb37-842daa727248', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4580-845e-e30d6e77e2f0', 2, '63cd2162-ab5f-4b7f-9bbd-5c2e7625e639', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4582-8deb-5bedd5645c4a', 2, '98c2519c-b39f-4bf3-9543-5cc2630a4bbd', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4585-8fc3-0d203d3d48bf', 1, '423A200B-FA5F-4B29-B7B7-A3F5474B725F', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4587-8dbb-d3d5ec87597e', 2, '104bcc01-0cfd-433f-87f4-29a8a3efb313', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4588-8ead-2512c62b3ec5', 2, '4b876abc-1b85-47b0-abc7-96e313b18ed8', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-458a-885d-54a2d3660ace', 2, '0d777b07-041a-4205-a393-d1a009aaafc7', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-458c-80d1-2f9c01cdbade', 2, '1ee1c46b-e767-4532-8636-936ea4c12003', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-458d-8cc1-3f3b3e1b6888', 2, '82f162cb-beb9-4a79-8924-cd1860e26e2e', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-458f-8a5a-0758f53ffe47', 1, 'd742c96e-b61c-4cea-afeb-81805789687b', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4591-84d6-6f2c27850026', 2, 'd9e74251-61ff-4472-adec-ad316cb9a307', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4592-8af0-005980f06e72', 2, '0e156a57-8133-4d1b-9d0f-9b7554e7b1fc', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4594-85cd-2fbeb671ed1c', 2, 'cba403cb-6418-44b7-868d-19e04af673ce', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4596-8222-f44bfa88989d', 2, '30bf72ed-f62f-49a9-adfc-49693871605f', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4598-80e5-54181d667d25', 1, '337A4661-99A5-4E5E-B028-861CACAF9917', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4599-8ac9-b2fa5b0f62ce', 2, '48afe7b3-e158-4256-b50c-cd0ee7c6dcc9', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-459a-8c6a-b7a9896fbf58', 2, '89d7a69d-b953-4ce2-9294-db4f50f2a157', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-459c-8228-08802eda4e93', 2, '8c7013a9-3682-4367-8bc6-c77ca89f346b', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-459e-8006-ece6748d3252', 2, 'a0a41d87-494b-40b5-bd03-0f75c75be7cb', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-459f-8d28-05aa5a23ab5a', 1, '2c2ddbce-ee87-4134-9b32-54d0bd572910', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45a1-8b87-449fe0e4c459', 2, '55cc5aba-8121-4151-8df5-f6846396d1a3', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45a2-8aeb-d1d362a7532f', 2, '4c794628-9b09-4d60-8fb5-63c1a37b2b60', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45a3-8ba1-ffcd6f3baab8', 2, '91d768bb-fb68-4807-b3b6-db355bdd6e09', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45a6-8dec-230b8b4efd5e', 2, '832f5195-f3ab-4683-82ad-a66a71735ffc', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45a8-8c5f-91d46f76675f', 2, '2cde1cd0-cfc8-4901-96ef-1fe0c8bf997c', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45aa-8afc-7573dcf24b11', 1, 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45ac-8507-f2a3c5689f66', 2, 'ec452d72-4969-4880-b52f-316ffdfa19bd', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45ad-8525-a2174d34f799', 2, '35fc1b7c-40b0-42b8-a0f9-c67087566289', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45ae-86d0-4ccbb525be0d', 2, 'd30ff0f3-39da-4033-a320-56f26edd5b51', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45af-8e5c-0f64700b1b2e', 2, '73ac1957-7558-49f6-8642-59946d05b8e6', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45b1-8b2a-852581e472ec', 1, '73FD1267-79BA-4E23-A152-744AF73117E9', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45b3-83b1-c5b0789d3cb3', 1, '30c629a0-910e-404b-8c29-a73a6291fd95', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45b4-861c-e584b0edb627', 1, '96EE855E-8CD2-47FC-A51D-127C131C9FB9', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45b5-8ba2-f8db3343ee15', 2, '3a35c662-a356-45e4-953d-00ebd981cad6', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45b6-8d86-399fb49c5935', 1, 'a3a4742d-ca39-42ec-b95a-8552a6fae579', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45b9-8124-2f826006a141', 2, 'd4074121-0d4f-465e-ad37-409bbe15bf8a', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45ba-8571-2a2cfe1d4d1c', 2, 'aaf58c1b-4af2-4e5f-a3e4-c48e86378191', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45bb-8cd6-db02d95837ff', 2, '8379135e-5b13-4236-bfb1-9289e6129034', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45bd-8a9e-07f7b8abcfa2', 2, '329c0326-ce68-4a24-904d-aade67a90fc7', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45bf-8915-b39646c932f6', 1, 'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45c1-81c6-884c7bb3268c', 2, '87068c95-42c8-4f20-b786-27cb9d3d5ff7', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45c2-84fc-723277e04dbf', 2, 'd2ecb5e8-e5cc-49c8-ba86-dbd7e51ca20b', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45c3-8a45-402beefda8c7', 2, '310bb831-a46f-4117-9d02-a3e551611dcf', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45c5-8472-583aabae466d', 2, '208c2915-d6d0-4bb0-8ec4-154f86561f5a', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45c7-8008-fee23a6801d2', 2, '39fc8a42-6335-1ed5-6c73-a055419b61c8', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45c8-8c7a-832b93b86979', 2, 'e06965bc-b693-4b91-96f9-fc10ca2aa1f0', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45ca-8e10-de1a0b77fec8', 2, 'cc115cef-c2d1-4b97-adbc-ea885aea6190', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45cc-8f02-d391378c91eb', 1, '49F61713-C1E4-420E-BEEC-0B4DBC2D7DE8', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45ce-87ed-327ea6c7c041', 1, '5f9873e9-0308-4a8e-84b7-1c4c61f37654', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45cf-8fea-61c11104051f', 1, 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45d1-831c-05846d755795', 2, '772eb88a-5f67-4bb1-a122-0c83a2bdb5ef', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45d2-8216-d88e3cb61f4a', 2, 'c8eed325-56ad-4210-b610-3e3bb68eb0be', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45d3-88bf-fc8d384c5027', 2, '5c321b1f-4f56-4276-a1aa-dd23ce12a1fc', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45d4-8d27-ec88153c6069', 2, '153e4773-7425-403f-abf7-42db13f84c8d', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45d6-852a-52f101e96143', 2, '08d9bde2-f14d-4b33-8f9b-2af0bf40812b', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45d8-843b-ac9be74130a9', 1, '605444e5-704f-4cca-8d00-75175e2aef05', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45d9-8bb8-2efe1775d29b', 2, 'd42aaaae-4973-427c-ad86-7a6b20b09325', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45da-8b35-9a87ba70cb31', 2, 'e376d482-023e-4715-a9c8-2a393c24426e', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45dc-825d-43583bcb9ef0', 1, 'ee136db7-178a-4bb0-b878-51287a5e2e2b', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45dd-8998-3507691d0f62', 2, 'b4be6eee-3509-4685-8064-34b9cacc690a', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45de-8ccc-03da37323d90', 1, '6b196514-0df1-41aa-ae64-9bb598960709', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45e0-84d0-4f5bb7869a0e', 1, '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45e1-8a0f-5cff75c30dd7', 2, '17a0e46f-28f9-4787-832c-0da25c321ce4', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45e2-8903-3c93da4b973b', 2, '1a588a3b-95d7-4b3a-b50a-d3bc40de9fe3', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45e3-8aa1-170d2e5f794d', 1, 'a5b323e7-db24-468f-97d7-a17bf5396742', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45e5-87e0-6d731e9c92b8', 1, 'e9190a56-e173-4483-8a3e-f17b86e4766e', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45e6-8c18-270ef81077ee', 2, 'fcb4d9f0-63f0-4bd0-9779-eed26da5c4b3', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45e7-8c02-37fe1aee6840', 2, '6f872aa0-1aae-4f42-a3ba-a61079057749', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45e8-8de8-f98808dc332d', 2, '0a1ba1d7-b4f3-45a4-a4da-e70fb25bb766', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45ea-8215-2cb26c51391a', 2, '957a355d-d931-40f6-9da0-dddfd9135fe0', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45eb-8ca5-2da4f483e570', 1, 'bcd52760-009f-4673-80e5-ff166aa07687', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45ed-8981-a4dfdb8a3acb', 1, '4efd6f84-a4a9-4176-aedd-153e7748cbac', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45ef-800e-21c79aa4dee9', 2, '9450c723-d64d-459c-9c52-555773a8b50e', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45f0-838f-ac4535a0d8af', 2, 'd6ed1d69-84f8-4933-9072-4009a3fcba85', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45f1-8d58-eaaf6a7bf61a', 2, 'a2e2a8ba-9311-4699-bcef-b79a2b59b08f', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45f4-8179-ec3a1ce4f10c', 2, 'de205812-51c2-4a64-857d-b5638c06c65c', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45f6-80bd-e9ea1ebb9831', 1, 'f3277ddd-1bf1-4202-8a4b-15c29a405bd5', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45f7-8871-bd0745daa531', 2, 'd3a41d48-6288-49ec-90c5-952fa676591f', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45f8-8be0-15b9bcda02bd', 2, '6cd4c3ac-048c-485a-bd4d-e0923f8d7f6e', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45fa-81c9-1cdc3af7f562', 2, 'a5619a09-f283-4ed7-82e0-9609815cb62a', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45fb-8bee-c4577dd4e865', 2, '761f50a6-c1b2-4234-b0af-8f515ec74fe8', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45fd-8a50-f52379d6c3d9', 1, '08d94532-39d1-4822-80b3-0c25a8183155', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-45ff-89cc-563568680ba7', 1, '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4600-8ea4-e9421e4b585b', 2, '08d94532-98b0-4b60-86a7-eca606765531', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4601-8dff-adf7909610b7', 2, '08d94532-98b0-4b92-8a2f-4da9f59afa21', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4602-8d6c-03e38a381340', 2, '08d94532-98b0-4ba2-87b3-6c976665cb6b', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4604-83b1-6e209bbafff8', 2, '08d94532-98b0-4bac-8e49-471d5b61be95', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4605-8b71-2a2e7f02359e', 1, '873e2274-6884-4849-b636-7f04cca8242c', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4607-89a8-1cdab46958e7', 1, 'd419160a-0a54-4da2-98fe-fc57f2461a2d', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4608-8e21-9deffec78861', 1, '2536fbf0-53ff-40a6-a093-73aa0a8fc035', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-460a-8313-2a87e78bb39b', 1, '1e60fce5-3164-439d-8d29-4950b33011e2', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-460b-89a6-04dc1e128fbc', 1, '8e52143d-2f97-49e5-89a4-13469f66fc77', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-460d-8096-27ea682b185d', 1, '1dff096a-db2f-410c-af2f-12294bdbeccd', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-460e-8a4b-f0dff1cf334c', 1, '06bb3ea8-ec7f-4556-a427-8ff0ce62e873', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4610-8634-96b48ec13378', 1, 'c14ab4f2-a1cf-4abd-953b-bacd70e78e8c', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4612-8068-37bca58ee8ce', 1, 'ca45b5ae-0252-4783-a23d-8633fc35e7e3', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4613-8af7-58f770982e1b', 1, '39fcc5ad-48af-7778-53a5-4c3c9d18cbd3', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebc-4615-8449-161932e6945c', 1, 'e5dc1c07-4234-46d1-bddb-d0442196c6b6', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebe-4562-8023-2bd826949cc3', 3, 'ddd93ca7-d821-4abd-a342-9be1782dabe9', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebe-458b-846f-6563f41b2464', 3, 'dc4cd5fd-8933-44f8-9500-fc36285f50b2', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebe-458c-88f2-e9ef35f0e2b0', 3, 'bf5a2919-281c-44e2-a83b-74576e08743e', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebe-458d-8626-694d35742233', 3, 'b67b5eb6-ecae-4156-8ef8-9e80b7a1345a', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebe-458f-84d9-d3d23d19520e', 3, '1cecc967-7ea1-46d0-b4fa-f90a15783d1c', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebe-4593-8d76-eaf12368d0bd', 3, 'd52c6878-9283-45d7-82f9-b465fa33a89b', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebe-4594-8a25-3618169bbca9', 3, 'bfbe0195-3fae-42d2-9d46-6bf5400d64ea', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebe-4595-88f2-3ad25b247160', 3, 'be804654-d6d7-44d1-8950-6841a2626720', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebe-4597-82a5-4da511dd6264', 3, 'a24c6ed3-8c91-4ade-a5c1-8c5eb9719368', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebe-4598-850e-484837ec18f1', 3, '309c622d-2217-499f-aa83-2eccd72205a1', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-1ebe-459a-8750-3d7d8dd109d5', 3, '21d40431-d289-415f-bfaf-5a23bf4dac9c', 2, '08da9aaf-1eb5-4038-8e3d-d99a90b317a6', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd3-4eea-8417-e324fa4295b2', 1, '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4074-83e4-b656b51325bc', 1, '253646c6-ffd8-4c7f-9673-f349bbafcbe5', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4079-82e4-37c3b83d8581', 1, '7e4e4a48-4d51-4159-a113-2a211186f13a', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-407a-878c-7dc8ae8cb623', 2, '3f69d32f-cb3b-4fa0-863b-98b9a090d7e9', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40a3-89cf-b835b8229834', 2, '9fc77888-bbca-4996-9240-a0f389819f6f', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40a9-8259-522367579012', 2, '8f698747-a1c3-468d-9279-99990987e0f9', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40ab-807a-506ee3f1d979', 2, '7ee3ff62-ab18-4886-9451-89b1d152172e', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40ad-8c77-1c02af158c7a', 1, '26452c9a-243d-4c81-97b9-a3ad581c3bf4', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40af-84cb-d4bd4f77ddbf', 2, '7e10a7ac-8b65-4c7c-8eee-92d69d7dcbd9', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40b0-887c-b23b6610dc9e', 2, '0b1b307b-2aac-456b-acfb-484a05c71bd7', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40b1-8dd6-52792b360c7f', 2, 'f51da6f6-8511-49f3-982b-a30ed0946706', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40b5-80bd-91f76e5369c5', 2, '1b72be70-e44d-43d6-91d0-dc3ad628d22e', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40b6-8c87-4a377e3ee30c', 1, '262ca754-1c73-436c-a9a2-b6374451a845', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40b8-85cb-12c5df32bb41', 2, 'b83c84e4-6264-4b8e-b319-a49fbf34860d', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40b9-8656-c008302066c5', 2, '82b2f4a2-55a1-4f44-b667-3449739643f6', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40ba-886f-299496e8ce55', 2, '0fa5e0a8-c786-40af-81af-b133b42dded5', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40bb-8e34-2f96c1b06ff0', 1, '91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40c1-88e4-3f8ff6443171', 2, '5d708d9d-6ebe-40ea-8589-e3efce9e74ec', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40c2-8a1e-13a8caba79a4', 2, 'ffffe7f8-900c-413a-9970-bee7d6599cce', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40c4-89c4-5d4bf7ea0413', 2, '239077ff-13e1-4720-84e1-67b6f0276979', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40c6-826e-5ec290d17390', 2, 'f93763ff-51a1-478d-9585-3c86084c54f3', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40c7-8f9f-a0f676c2b1a3', 1, 'F298F868-B689-4982-8C8B-9268CBF0308D', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40c9-887f-dea76650c4be', 2, '13c9a15f-c50d-4f09-8344-fd0050f70086', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40cc-80e1-ea75554f936d', 2, 'e75e4efc-d461-4334-a764-56992fec38e6', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40cd-8823-782f51c64cf0', 2, '8a9993af-69b2-4d8a-85b3-337745a1f428', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40cf-8244-ab8a0e343b68', 2, '88f7b3a8-fd6d-4f8e-a861-11405f434868', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40d1-80a2-497b1d0e0e19', 2, '29306956-f9b2-4e76-bc23-4b8f02d21be3', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40d2-8fc8-689568637120', 2, 'd7a452f3-3596-4339-8803-d61fb4eec013', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40d4-8e09-580eddcf9b6f', 1, '38CA5A66-C993-4410-AF95-50489B22939C', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40d8-87fe-a7d3ae1b6327', 2, '74eecdfb-3bee-405d-be07-27a78219c179', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40d9-884b-26265236fe49', 2, '4727adf7-5525-4c8c-9de5-39e49c268349', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40da-8e8e-f8c759a7542f', 2, '14617a4f-bfef-4bc2-b943-d18d3ff8d22f', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40dc-866e-0f8ab0733cdc', 2, 'abfdff21-8ebf-4024-8555-401b4df6acd9', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40de-85d3-0d3756a67e04', 2, '38e39592-6e86-42fb-8f72-adea0c82cbc1', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40e0-83c2-231f5d09bfd5', 2, '15362a59-b242-494a-bc6e-413b4a63580e', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40e3-8932-91d4ba29710e', 2, '2a8f5342-5eb7-491c-a1a9-a2631d8eb5d6', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40e5-8949-b3d96193806d', 1, '462027E0-0848-41DD-BCC3-025DCAE65555', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40e7-859d-d9f611d42ad7', 1, '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40e8-89cc-62c624dfc724', 1, '64A1C550-2C61-4A8C-833D-ACD0C012260F', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40e9-8d8f-f4a97407091c', 2, '9FD543DB-C5BB-4789-ACFF-C5865AFB032C', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40ec-8c57-df47fb1a14f6', 2, 'E29FCBA7-F848-4A8B-BC41-A3C668A9005D', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40ee-8378-4916ee5fb68e', 2, '85F5212F-E321-4124-B155-9374AA5D9C10', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40ef-8d3f-f48e200a2878', 2, 'D4FCAFED-7640-449E-80B7-622DDACD5012', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40f1-8ad6-c185068e6175', 2, 'FD3D073C-4F88-467A-AE3B-CDD060952CE6', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40f3-894c-54dbb76d79ae', 2, '23780fa8-b92c-4c0e-830e-ddcbe6cf4463', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40f7-82f7-9602c7473a41', 1, 'ed757a25-82d5-43cc-89f4-ed26a51fb4f0', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40f8-8bf9-8707fdc4ae6c', 2, '071f5982-efb2-4fa3-a6cf-a02f3f1f9d92', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40f9-8aa0-bec332953b96', 2, '3d0e99d1-a150-43dc-84ae-f0e2e0ad2217', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40fa-8f1b-8c04f61d968d', 2, '4f727b61-0aa4-45f0-83b5-7fcddfe034e8', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40fc-886a-fcdb9c971e9f', 2, '746629aa-858b-4c5e-9335-71b0fa08a584', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-40fe-8407-278d38f3bce5', 2, '43e09a61-c2b0-46c1-9b81-76d686b390d4', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4100-833f-3e3ea13d8073', 1, '152a8e93-cebb-4574-ae74-2a86595ff986', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4103-8350-07bd533f0013', 2, '85bfbb9d-24f0-4a6f-8bb8-0f87826d04fa', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4104-83d3-4ee5f0665948', 2, 'd1086ccf-e605-44a4-9777-629810cec02d', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4105-86e3-e6d3aac48d5c', 2, '01600a2b-c218-48d6-bb37-842daa727248', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4106-8d02-a308fef03916', 2, '63cd2162-ab5f-4b7f-9bbd-5c2e7625e639', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4108-8631-7ee5fbe01908', 2, '98c2519c-b39f-4bf3-9543-5cc2630a4bbd', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-410a-847a-2f4603a03986', 1, '423A200B-FA5F-4B29-B7B7-A3F5474B725F', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-410e-8f14-49054cd62e97', 2, '104bcc01-0cfd-433f-87f4-29a8a3efb313', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-410f-8f65-a164d25bd876', 2, '4b876abc-1b85-47b0-abc7-96e313b18ed8', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4111-8418-2046a0efc94b', 2, '0d777b07-041a-4205-a393-d1a009aaafc7', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4112-8c7f-09709729b5f6', 2, '1ee1c46b-e767-4532-8636-936ea4c12003', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4114-87ab-d667623a86e0', 2, '82f162cb-beb9-4a79-8924-cd1860e26e2e', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4116-8676-d2e4d77cd825', 1, 'd742c96e-b61c-4cea-afeb-81805789687b', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-411a-86d6-cd01e332714f', 2, 'd9e74251-61ff-4472-adec-ad316cb9a307', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-411c-8d56-0978055f6ffa', 2, '0e156a57-8133-4d1b-9d0f-9b7554e7b1fc', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-411f-83b9-e8706d348a78', 2, 'cba403cb-6418-44b7-868d-19e04af673ce', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4122-8f87-2fc0542b02e2', 2, '30bf72ed-f62f-49a9-adfc-49693871605f', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4125-8f68-9ca5849eff6b', 1, '337A4661-99A5-4E5E-B028-861CACAF9917', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4128-8775-2840c2656376', 2, '48afe7b3-e158-4256-b50c-cd0ee7c6dcc9', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-412c-80e2-dd6c8dde6299', 2, '89d7a69d-b953-4ce2-9294-db4f50f2a157', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-412e-898b-f5e20fb29236', 2, '8c7013a9-3682-4367-8bc6-c77ca89f346b', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4131-8053-16e2ce8435fd', 2, 'a0a41d87-494b-40b5-bd03-0f75c75be7cb', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4133-89dd-402276eb07a3', 1, '2c2ddbce-ee87-4134-9b32-54d0bd572910', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4137-8910-72d5f68f5a96', 2, '55cc5aba-8121-4151-8df5-f6846396d1a3', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4139-8021-1cc8079cdbef', 2, '4c794628-9b09-4d60-8fb5-63c1a37b2b60', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-413c-89ba-60377bee6606', 2, '91d768bb-fb68-4807-b3b6-db355bdd6e09', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-413f-83ef-88f109ef9cd1', 2, '832f5195-f3ab-4683-82ad-a66a71735ffc', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4140-8f1e-22c19e617ca4', 2, '2cde1cd0-cfc8-4901-96ef-1fe0c8bf997c', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4142-8c41-1e7f4cba9a3b', 1, 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4145-8f2f-9b314078801c', 2, 'ec452d72-4969-4880-b52f-316ffdfa19bd', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4147-8050-2fddb36fc7c7', 2, '35fc1b7c-40b0-42b8-a0f9-c67087566289', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4149-89cd-44ac1ef7733a', 2, 'd30ff0f3-39da-4033-a320-56f26edd5b51', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-414b-8325-98fffe590668', 2, '73ac1957-7558-49f6-8642-59946d05b8e6', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-414c-8dbd-0ce0b4b14625', 1, '73FD1267-79BA-4E23-A152-744AF73117E9', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-414e-8412-d2f1bb508e0e', 1, '30c629a0-910e-404b-8c29-a73a6291fd95', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-414f-871e-db836a87df84', 1, '96EE855E-8CD2-47FC-A51D-127C131C9FB9', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4150-8b0b-7b0170c1b38d', 2, '3a35c662-a356-45e4-953d-00ebd981cad6', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4153-84b3-331a982f1459', 1, 'a3a4742d-ca39-42ec-b95a-8552a6fae579', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4155-81ec-9c9e060864c1', 2, 'd4074121-0d4f-465e-ad37-409bbe15bf8a', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4156-8417-5393fdb27dc4', 2, 'aaf58c1b-4af2-4e5f-a3e4-c48e86378191', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4159-8378-c030c66b16d2', 2, '8379135e-5b13-4236-bfb1-9289e6129034', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-415a-8ff6-f5da073b9be7', 2, '329c0326-ce68-4a24-904d-aade67a90fc7', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-415c-8a85-f75df9e5a6a2', 1, 'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-415e-82a6-70051a439ea3', 2, '87068c95-42c8-4f20-b786-27cb9d3d5ff7', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-415f-84cc-8053e0038f6b', 2, 'd2ecb5e8-e5cc-49c8-ba86-dbd7e51ca20b', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4160-8b59-e5259456adc5', 2, '310bb831-a46f-4117-9d02-a3e551611dcf', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4164-80ee-2d93eafdc9ef', 2, '208c2915-d6d0-4bb0-8ec4-154f86561f5a', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4165-8c3b-accf8d45c033', 2, '39fc8a42-6335-1ed5-6c73-a055419b61c8', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4167-886a-8c88eb6f656a', 2, 'e06965bc-b693-4b91-96f9-fc10ca2aa1f0', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4169-8679-d9a9bb20f170', 2, 'cc115cef-c2d1-4b97-adbc-ea885aea6190', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-416b-864a-1bb3e9c6f7bd', 1, '49F61713-C1E4-420E-BEEC-0B4DBC2D7DE8', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-416c-8eac-7040002fc41f', 1, '5f9873e9-0308-4a8e-84b7-1c4c61f37654', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-416e-8581-7646d538ea6e', 1, 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4171-818a-9be5d9991518', 2, '772eb88a-5f67-4bb1-a122-0c83a2bdb5ef', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4172-80cf-308842ae5555', 2, 'c8eed325-56ad-4210-b610-3e3bb68eb0be', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4173-8244-376c969652eb', 2, '5c321b1f-4f56-4276-a1aa-dd23ce12a1fc', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4174-87a8-6befda5c8d1d', 2, '153e4773-7425-403f-abf7-42db13f84c8d', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4175-8ffc-389038063e87', 2, '08d9bde2-f14d-4b33-8f9b-2af0bf40812b', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4177-8afc-a898bc7e64f2', 1, '605444e5-704f-4cca-8d00-75175e2aef05', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-417b-833b-ee1abbc903a3', 2, 'd42aaaae-4973-427c-ad86-7a6b20b09325', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-417c-82c3-5efff39cf011', 2, 'e376d482-023e-4715-a9c8-2a393c24426e', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-417d-8619-edf9fb829cb9', 1, 'ee136db7-178a-4bb0-b878-51287a5e2e2b', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-417e-8c09-4a98219b8ae4', 2, 'b4be6eee-3509-4685-8064-34b9cacc690a', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-417f-8ff3-c7fd023006fb', 1, '6b196514-0df1-41aa-ae64-9bb598960709', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4181-8611-3b531a3e5926', 1, '7cb65e00-8af2-4cf2-b318-8ba28b3c154e', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4184-8503-31ed1c9a6b79', 2, '17a0e46f-28f9-4787-832c-0da25c321ce4', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4185-837b-b6dc3ebefd67', 2, '1a588a3b-95d7-4b3a-b50a-d3bc40de9fe3', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4186-841f-e5a65328739e', 1, 'a5b323e7-db24-468f-97d7-a17bf5396742', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4187-8cd3-03a5ec4cf5a6', 1, 'e9190a56-e173-4483-8a3e-f17b86e4766e', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4189-820f-b177a8da0e3d', 2, 'fcb4d9f0-63f0-4bd0-9779-eed26da5c4b3', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-418a-8144-68a02e096814', 2, '6f872aa0-1aae-4f42-a3ba-a61079057749', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-418c-8d04-5eab8ea77a58', 2, '0a1ba1d7-b4f3-45a4-a4da-e70fb25bb766', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-418e-84e5-5e56030bf485', 2, '957a355d-d931-40f6-9da0-dddfd9135fe0', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-418f-8e00-8a7ec52c07cd', 1, 'bcd52760-009f-4673-80e5-ff166aa07687', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4191-88f0-d3dc92830ea7', 1, '4efd6f84-a4a9-4176-aedd-153e7748cbac', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4192-8da8-80197058ffa2', 2, '9450c723-d64d-459c-9c52-555773a8b50e', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4193-8f3f-c6e1271552ec', 2, 'd6ed1d69-84f8-4933-9072-4009a3fcba85', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4196-8d0d-0d2301f17e8d', 2, 'a2e2a8ba-9311-4699-bcef-b79a2b59b08f', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4198-8ba3-84ab34779c29', 2, 'de205812-51c2-4a64-857d-b5638c06c65c', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-419a-885b-cb61fc7e2a90', 1, 'f3277ddd-1bf1-4202-8a4b-15c29a405bd5', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-419b-8e71-6a3440e81442', 2, 'd3a41d48-6288-49ec-90c5-952fa676591f', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-419d-8172-ac34d578ae4b', 2, '6cd4c3ac-048c-485a-bd4d-e0923f8d7f6e', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-419f-8fe9-45666cdfe119', 2, 'a5619a09-f283-4ed7-82e0-9609815cb62a', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41a1-8bb3-0bd790605700', 2, '761f50a6-c1b2-4234-b0af-8f515ec74fe8', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41a3-872e-90e60d557a04', 1, '08d94532-39d1-4822-80b3-0c25a8183155', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41a5-81f6-b09d5e8af761', 1, '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41a6-866c-2cad5de1b0d9', 2, '08d94532-98b0-4b60-86a7-eca606765531', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41a7-841a-2d5100e2fcd9', 2, '08d94532-98b0-4b92-8a2f-4da9f59afa21', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41aa-8025-ac67eed732b9', 2, '08d94532-98b0-4ba2-87b3-6c976665cb6b', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41ab-8509-f5b1aa70e88a', 2, '08d94532-98b0-4bac-8e49-471d5b61be95', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41ac-8e92-03bfca2a25a3', 1, '873e2274-6884-4849-b636-7f04cca8242c', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41ae-8983-23c1b11a2eed', 1, 'd419160a-0a54-4da2-98fe-fc57f2461a2d', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41af-8d5a-0ce291da0d2d', 1, '2536fbf0-53ff-40a6-a093-73aa0a8fc035', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41b1-8183-62fddc4d4f9f', 1, '1e60fce5-3164-439d-8d29-4950b33011e2', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41b2-8732-a053e5dd836e', 1, '8e52143d-2f97-49e5-89a4-13469f66fc77', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41b5-86de-dc4b480e2400', 1, '1dff096a-db2f-410c-af2f-12294bdbeccd', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41b7-816a-9f0b70466d63', 1, '06bb3ea8-ec7f-4556-a427-8ff0ce62e873', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41b8-885a-595a4bb6afe1', 1, 'c14ab4f2-a1cf-4abd-953b-bacd70e78e8c', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41ba-80ab-eb66cdc0ffbf', 1, 'ca45b5ae-0252-4783-a23d-8633fc35e7e3', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41bb-89ab-7f1beae37922', 1, '39fcc5ad-48af-7778-53a5-4c3c9d18cbd3', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-41bd-839a-76a8423ed331', 1, 'e5dc1c07-4234-46d1-bddb-d0442196c6b6', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4ae6-87a0-e909747b16f6', 3, 'ddd93ca7-d821-4abd-a342-9be1782dabe9', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4b0c-88d7-775499142ac8', 3, 'dc4cd5fd-8933-44f8-9500-fc36285f50b2', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4b0d-8bcd-65596c6b1509', 3, 'bf5a2919-281c-44e2-a83b-74576e08743e', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4b11-8075-e0e22a1e51da', 3, 'b67b5eb6-ecae-4156-8ef8-9e80b7a1345a', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4b12-88d2-34933d7687da', 3, '1cecc967-7ea1-46d0-b4fa-f90a15783d1c', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4b18-851b-670e9467125d', 3, 'd52c6878-9283-45d7-82f9-b465fa33a89b', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4b19-88e3-0e4c808f856c', 3, 'bfbe0195-3fae-42d2-9d46-6bf5400d64ea', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4b1e-893f-56bb5faafc32', 3, 'be804654-d6d7-44d1-8950-6841a2626720', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4b20-847f-70efb4a037e9', 3, 'a24c6ed3-8c91-4ade-a5c1-8c5eb9719368', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4b21-8f7d-e9bc736413cf', 3, '309c622d-2217-499f-aa83-2eccd72205a1', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
+INSERT INTO `sys_roleauthorize` VALUES ('08da9aaf-bbd4-4b24-8773-992d2a3668a5', 3, '21d40431-d289-415f-bfaf-5a23bf4dac9c', 2, '08da9aaf-bbd1-4149-84e4-0e35a8f2a733', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_serverstate
@@ -5918,112 +6701,4 @@ CREATE TABLE `sys_userlogon`  (
 -- ----------------------------
 INSERT INTO `sys_userlogon` VALUES ('9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '99e5c8431f64527c0acd80b34a3dce3c', '74aeb85d04e4b485', NULL, NULL, NULL, NULL, NULL, '2020-04-17 14:47:44', '2020-04-17 14:59:58', NULL, 0, 360, 0, NULL, NULL, 0, NULL, NULL, 'evrcyibdv42f3ykhfy1yz3ur', 0);
 
-
-CREATE TABLE `crm_order`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
-  `F_OrderCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单编号',
-  `F_OrderState` int NOT NULL COMMENT '订单状态(0未完成，1已完成)',
-  `F_NeedTime` datetime NULL DEFAULT NULL COMMENT '需求时间',
-  `F_ActualTime` datetime NULL DEFAULT NULL COMMENT '实际完成时间',
-  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `crm_order_key1`(`F_OrderCode`) USING BTREE COMMENT '编号唯一'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of crm_order
--- ----------------------------
-INSERT INTO `crm_order` VALUES ('08d9459c-5cd7-453f-8240-d566f1fe058c', 'OR-20210713091957', 1, '2021-07-13 00:00:00', '2021-07-13 00:00:00', 0, 1, '', '2021-07-13 09:20:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-07-13 09:29:45', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
-
--- ----------------------------
--- Table structure for crm_orderdetail
--- ----------------------------
-CREATE TABLE `crm_orderdetail`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
-  `F_OrderId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_OrderState` int NOT NULL COMMENT '订单状态',
-  `F_ProductName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品名称',
-  `F_ProductDescription` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品规格',
-  `F_ProductUnit` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产品单位',
-  `F_NeedNum` int NULL DEFAULT NULL COMMENT '需求数量',
-  `F_ActualNum` int NULL DEFAULT NULL COMMENT '实际数量',
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `F_NeedTime` datetime NULL DEFAULT NULL COMMENT '需求时间',
-  `F_ActualTime` datetime NULL DEFAULT NULL COMMENT '实际时间',
-  PRIMARY KEY (`F_Id`) USING BTREE,
-  UNIQUE INDEX `crm_orderdetail_key1`(`F_OrderId`, `F_ProductName`) USING BTREE COMMENT '唯一键'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of crm_orderdetail
--- ----------------------------
-INSERT INTO `crm_orderdetail` VALUES ('08d9459d-b222-4ad5-8e4e-c5153e69a752', '08d9459c-5cd7-453f-8240-d566f1fe058c', 1, '222', '', '', 3, 2, '', NULL, '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员', '2021-07-13 00:00:00', '2021-07-13 00:00:00');
-
-INSERT INTO `sys_module` (`F_Id`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_UrlAddress`, `F_Target`, `F_IsMenu`, `F_IsExpand`, `F_IsFields`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-98ac-4751-8cd4-c6c5ec4048e6', '08d94532-39d1-4822-80b3-0c25a8183155', 3, 'Order', '订单信息', 'fa fa-anchor', '/OrderManagement/Order/Index', 'iframe', 1, 0, 0, 0, 0, 0, 1, 0, 1, '', '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-07-13 09:45:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
-INSERT INTO `sys_module` (`F_Id`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_UrlAddress`, `F_Target`, `F_IsMenu`, `F_IsExpand`, `F_IsFields`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-39d1-4822-80b3-0c25a8183155', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, 'OrderManagement', '订单管理', 'fa fa-first-order', NULL, 'expand', 1, 1, 0, 0, 0, 0, 7, 0, 1, '', '2021-07-12 20:40:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
-INSERT INTO `sys_modulebutton` (`F_Id`, `F_ModuleId`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_Location`, `F_JsEvent`, `F_UrlAddress`, `F_Split`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-98b0-4b60-86a7-eca606765531', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-add', '新增', NULL, 1, 'add', '/OrderManagement/Order/Form', 0, 0, 0, 0, 0, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_modulebutton` (`F_Id`, `F_ModuleId`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_Location`, `F_JsEvent`, `F_UrlAddress`, `F_Split`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-98b0-4b92-8a2f-4da9f59afa21', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-edit', '修改', NULL, 2, 'edit', '/OrderManagement/Order/Form', 0, 0, 0, 0, 1, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_modulebutton` (`F_Id`, `F_ModuleId`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_Location`, `F_JsEvent`, `F_UrlAddress`, `F_Split`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-98b0-4ba2-87b3-6c976665cb6b', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-delete', '删除', NULL, 2, 'delete', '/OrderManagement/Order/DeleteForm', 0, 0, 0, 0, 2, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_modulebutton` (`F_Id`, `F_ModuleId`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_Location`, `F_JsEvent`, `F_UrlAddress`, `F_Split`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d94532-98b0-4bac-8e49-471d5b61be95', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-details', '查看', NULL, 2, 'details', '/OrderManagement/Order/Details', 0, 0, 0, 0, 3, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4bb9-843f-6a42d29d5b04', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_OrderCode', '订单编号', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4bca-822e-9e44e86864e5', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_OrderState', '订单状态(0待确认，待采购，1已完成)', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4bd5-8ba3-fc7834814f3e', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_NeedTime', '需求时间', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4be2-8991-3b929d082f6c', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_ActualTime', '实际时间', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4beb-89d3-425505eb2d36', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_EnabledMark', 'F_EnabledMark', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4bf6-82f3-9f62b0b5cec6', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_Description', 'F_Description', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4c01-86ff-7b056e669066', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_CreatorTime', 'F_CreatorTime', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
-INSERT INTO `sys_modulefields` (`F_Id`, `F_ModuleId`, `F_EnCode`, `F_FullName`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_IsPublic`) VALUES ('08d94532-98b0-4c0c-81e2-b66009a2420f', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_CreatorUserName', 'F_CreatorUserName', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
--- ----------------------------
--- Table structure for sys_openjob
--- ----------------------------
-DROP TABLE IF EXISTS `sys_openjob`;
-CREATE TABLE `sys_openjob`  (
-  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `F_FileName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_JobName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_JobGroup` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_StarRunTime` datetime NULL DEFAULT NULL,
-  `F_EndRunTime` datetime NULL DEFAULT NULL,
-  `F_CronExpress` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteMark` tinyint NULL DEFAULT NULL,
-  `F_EnabledMark` tinyint NULL DEFAULT NULL,
-  `F_Description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_CreatorTime` datetime NULL DEFAULT NULL,
-  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastModifyTime` datetime NULL DEFAULT NULL,
-  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_DeleteTime` datetime NULL DEFAULT NULL,
-  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_LastRunTime` datetime NULL DEFAULT NULL,
-  `F_LastRunMark` tinyint NULL DEFAULT NULL,
-  `F_LastRunErrTime` datetime NULL DEFAULT NULL,
-  `F_LastRunErrMsg` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_JobType` int NOT NULL,
-  `F_IsLog` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_RequestHeaders` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_RequestString` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_RequestUrl` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_DbNumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `F_JobSql` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_JobSqlParm` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `F_JobDBProvider` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  PRIMARY KEY (`F_Id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
-INSERT INTO `sys_modulebutton` (`F_Id`, `F_ModuleId`, `F_ParentId`, `F_Layers`, `F_EnCode`, `F_FullName`, `F_Icon`, `F_Location`, `F_JsEvent`, `F_UrlAddress`, `F_Split`, `F_IsPublic`, `F_AllowEdit`, `F_AllowDelete`, `F_SortCode`, `F_DeleteMark`, `F_EnabledMark`, `F_Description`, `F_CreatorTime`, `F_CreatorUserId`, `F_LastModifyTime`, `F_LastModifyUserId`, `F_DeleteTime`, `F_DeleteUserId`, `F_Authorize`) VALUES ('08d9bde2-f14d-4b33-8f9b-2af0bf40812b', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, 'NF-cancle', '撤回', NULL, 1, 'cancle', '/FlowManage/Flowinstance/CancleForm', NULL, 0, 0, 0, 4, 0, 1, '', '2021-12-13 10:47:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
-
 SET FOREIGN_KEY_CHECKS = 1;
-
-INSERT INTO `sys_itemsdetail` VALUES ('39fc87c1-679d-0818-ab56-79c34e999999', '39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, '5', 'Sql', NULL, 0, NULL, 5, 0, 1, '', '2022-06-09 09:29:01', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
