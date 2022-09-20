@@ -68,6 +68,9 @@
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="watercloudnetdb.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <!--自定义配置runtimeconfig.json 支持System.Drawing.Common在.net6.0非windows平台使用-->
