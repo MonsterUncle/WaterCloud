@@ -84,7 +84,7 @@ namespace WaterCloud.Service
 				//roles.Sort();
 				rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINROLE,
 					roles);
-				var orgs = currentuser.DepartmentId;
+				var orgs = currentuser.OrganizeId;
 				//var orgs = loginUser.Orgs.Select(u => u.Id).ToList();//多部门
 				//orgs.Sort();
 				rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
@@ -119,7 +119,7 @@ namespace WaterCloud.Service
 				var roles = currentuser.RoleId;
 				rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINROLE,
 					roles);
-				var orgs = currentuser.DepartmentId;
+				var orgs = currentuser.OrganizeId;
 				rule.F_PrivilegeRules = rule.F_PrivilegeRules.Replace(Define.DATAPRIVILEGE_LOGINORG,
 					orgs);
 			}

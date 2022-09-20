@@ -102,15 +102,15 @@ namespace WaterCloud.Domain.SystemOrganize
 		/// 公司Id
 		/// </summary>
 		[Required(ErrorMessage = "公司不能为空")]
-		[SugarColumn(IsNullable = true, ColumnName = "F_OrganizeId", ColumnDataType = "nvarchar(50)", ColumnDescription = "公司Id")]
-		public string F_OrganizeId { get; set; }
+		[SugarColumn(IsNullable = true, ColumnName = "F_CompanyId", ColumnDataType = "nvarchar(50)", ColumnDescription = "公司Id")]
+		public string F_CompanyId { get; set; }
 
 		/// <summary>
 		/// 部门Id
 		/// </summary>
 		[Required(ErrorMessage = "部门不能为空")]
-		[SugarColumn(IsNullable = true, ColumnName = "F_DepartmentId", ColumnDataType = "longtext", ColumnDescription = "部门Id")]
-		public string F_DepartmentId { get; set; }
+		[SugarColumn(IsNullable = true, ColumnName = "F_OrganizeId", ColumnDataType = "longtext", ColumnDescription = "部门Id")]
+		public string F_OrganizeId { get; set; }
 
 		/// <summary>
 		/// 角色Id
@@ -248,7 +248,7 @@ namespace WaterCloud.Domain.SystemOrganize
 		public string F_HeadImgUrl { get; set; }
 
 		[SugarColumn(IsIgnore = true)]
-		public string F_DepartmentName { get; set; }
+		public string F_OrganizeName { get; set; }
 
 		[SugarColumn(IsIgnore = true)]
 		public string F_RoleName { get; set; }

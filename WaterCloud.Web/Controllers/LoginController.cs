@@ -158,8 +158,8 @@ namespace WaterCloud.Web.Controllers
 				operatorModel.UserId = userEntity.F_Id;
 				operatorModel.UserCode = userEntity.F_Account;
 				operatorModel.UserName = userEntity.F_RealName;
-				operatorModel.CompanyId = userEntity.F_OrganizeId;
-				operatorModel.DepartmentId = userEntity.F_DepartmentId;
+				operatorModel.CompanyId = userEntity.F_CompanyId;
+				operatorModel.OrganizeId = userEntity.F_OrganizeId;
 				operatorModel.RoleId = userEntity.F_RoleId;
 				operatorModel.LoginIPAddress = WebHelper.Ip;
 				if (GlobalContext.SystemConfig.LocalLAN != false)
@@ -179,7 +179,7 @@ namespace WaterCloud.Web.Controllers
 				operatorModel.IsBoss = userEntity.F_IsBoss.Value;
 				operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
 				operatorModel.IsSenior = userEntity.F_IsSenior.Value;
-				SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_OrganizeId);
+				SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_CompanyId);
 				operatorModel.DbNumber = setEntity.F_DbNumber;
 				if (operatorModel.IsAdmin && operatorModel.DbNumber == GlobalContext.SystemConfig.MainDbNumber)
 				{

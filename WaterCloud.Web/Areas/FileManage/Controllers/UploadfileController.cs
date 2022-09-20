@@ -138,7 +138,7 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
 					entity.F_FileSize = size.ToIntOrNull();
 
 					entity.F_FileName = fileName;
-					entity.F_OrganizeId = _service.currentuser.DepartmentId;
+					entity.F_OrganizeId = _service.currentuser.OrganizeId;
 					if (fileName.LastIndexOf(".") >= 0)
 					{
 						entity.F_FileExtension = fileName.Substring(fileName.LastIndexOf("."));

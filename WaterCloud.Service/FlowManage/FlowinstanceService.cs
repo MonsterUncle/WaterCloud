@@ -542,10 +542,10 @@ namespace WaterCloud.Service.FlowManage
 						var tempList = new List<UserEntity>();
 						if (node.setInfo.NodeDesignateData.currentDepart)
 						{
-							var currentDepartment = repository.Db.Queryable<UserEntity>().InSingle(flowCreator).F_DepartmentId.Split(',').ToList();
+							var currentDepartment = repository.Db.Queryable<UserEntity>().InSingle(flowCreator).F_OrganizeId.Split(',').ToList();
 							foreach (var user in temp)
 							{
-								var nextCurrentDepartment = user.F_DepartmentId.Split(',').ToList();
+								var nextCurrentDepartment = user.F_OrganizeId.Split(',').ToList();
 								if (TextHelper.IsArrayIntersection(currentDepartment, nextCurrentDepartment))
 								{
 									tempList.Add(user);
@@ -616,10 +616,10 @@ namespace WaterCloud.Service.FlowManage
 						var tempList = new List<UserEntity>();
 						if (runtime.nextNode.setInfo.NodeDesignateData.currentDepart)
 						{
-							var currentDepartment = repository.Db.Queryable<UserEntity>().InSingle(flowCreator).F_DepartmentId.Split(',').ToList();
+							var currentDepartment = repository.Db.Queryable<UserEntity>().InSingle(flowCreator).F_OrganizeId.Split(',').ToList();
 							foreach (var user in temp)
 							{
-								var nextCurrentDepartment = user.F_DepartmentId.Split(',').ToList();
+								var nextCurrentDepartment = user.F_OrganizeId.Split(',').ToList();
 								if (TextHelper.IsArrayIntersection(currentDepartment, nextCurrentDepartment))
 								{
 									tempList.Add(user);
@@ -753,7 +753,7 @@ namespace WaterCloud.Service.FlowManage
 			}
 			if (!dic.ContainsKey("所属部门"))
 			{
-				dic.Add("所属部门", currentuser.DepartmentId);
+				dic.Add("所属部门", currentuser.OrganizeId);
 			}
 			entity.F_FrmData = dic.ToJson();
 			entity.F_InstanceSchemeId = "";
@@ -883,7 +883,7 @@ namespace WaterCloud.Service.FlowManage
 			}
 			if (!dic.ContainsKey("所属部门"))
 			{
-				dic.Add("所属部门", currentuser.DepartmentId);
+				dic.Add("所属部门", currentuser.OrganizeId);
 			}
 			entity.F_FrmData = dic.ToJson();
 			var wfruntime = new FlowRuntime(await repository.FindEntity(entity.F_Id));

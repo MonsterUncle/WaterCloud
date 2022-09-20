@@ -32,7 +32,7 @@ namespace WaterCloud.Service.SystemManage
 			{
 				query = query.Where(a => a.F_SchemeCode.Contains(keyword) || a.F_SchemeName.Contains(keyword));
 			}
-			var list = currentuser.DepartmentId?.Split(',');
+			var list = currentuser.OrganizeId?.Split(',');
 			if (list.Any())
 			{
 				return await query.Where(a => a.F_DeleteMark == false && (a.F_OrganizeId == "" || a.F_OrganizeId == null || list.Contains(a.F_OrganizeId))).OrderBy(a => a.F_Id, OrderByType.Desc).ToListAsync();
@@ -111,10 +111,10 @@ namespace WaterCloud.Service.SystemManage
 						var tempList = new List<UserEntity>();
 						if (runtime.nextNode.setInfo.NodeDesignateData.currentDepart)
 						{
-							var currentDepartment = repository.Db.Queryable<UserEntity>().InSingle(currentuser.UserId).F_DepartmentId.Split(',').ToList();
+							var currentDepartment = repository.Db.Queryable<UserEntity>().InSingle(currentuser.UserId).F_OrganizeId.Split(',').ToList();
 							foreach (var user in usertemp)
 							{
-								var nextCurrentDepartment = user.F_DepartmentId.Split(',').ToList();
+								var nextCurrentDepartment = user.F_OrganizeId.Split(',').ToList();
 								if (TextHelper.IsArrayIntersection(currentDepartment, nextCurrentDepartment))
 								{
 									tempList.Add(user);

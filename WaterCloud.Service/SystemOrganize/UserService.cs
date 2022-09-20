@@ -60,8 +60,8 @@ namespace WaterCloud.Service.SystemOrganize
 			foreach (var item in data)
 			{
 				string[] roleIds = item.F_RoleId.Split(',');
-				string[] departmentIds = item.F_DepartmentId.Split(',');
-				item.F_DepartmentName = string.Join(',', orgs.Where(a => departmentIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
+				string[] departmentIds = item.F_OrganizeId.Split(',');
+				item.F_OrganizeName = string.Join(',', orgs.Where(a => departmentIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
 				item.F_RoleName = string.Join(',', roles.Where(a => roleIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
 			}
 			return data;
@@ -80,8 +80,8 @@ namespace WaterCloud.Service.SystemOrganize
 			foreach (var item in data)
 			{
 				string[] roleIds = item.F_RoleId.Split(',');
-				string[] departmentIds = item.F_DepartmentId.Split(',');
-				item.F_DepartmentName = string.Join(',', orgs.Where(a => departmentIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
+				string[] departmentIds = item.F_OrganizeId.Split(',');
+				item.F_OrganizeName = string.Join(',', orgs.Where(a => departmentIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
 				item.F_RoleName = string.Join(',', roles.Where(a => roleIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
 			}
 			return data;
@@ -91,7 +91,7 @@ namespace WaterCloud.Service.SystemOrganize
 		{
 			var query = repository.Db.Queryable<UserEntity, RoleEntity, SystemSetEntity>((a, b, c) => new JoinQueryInfos(
 				JoinType.Left, a.F_DutyId == b.F_Id,
-				JoinType.Left, a.F_OrganizeId == c.F_Id
+				JoinType.Left, a.F_CompanyId == c.F_Id
 				)).Where(a => a.F_DeleteMark == false)
 				.Select((a, b, c) => new UserExtend
 				{
@@ -105,7 +105,7 @@ namespace WaterCloud.Service.SystemOrganize
 					F_CompanyName = c.F_CompanyName,
 					F_CreatorTime = a.F_CreatorTime,
 					F_CreatorUserId = a.F_CreatorUserId,
-					F_DepartmentId = a.F_DepartmentId,
+					F_OrganizeId = a.F_OrganizeId,
 					F_Description = a.F_Description,
 					F_DingTalkUserId = a.F_DingTalkUserId,
 					F_DingTalkUserName = a.F_DingTalkUserName,
@@ -121,7 +121,7 @@ namespace WaterCloud.Service.SystemOrganize
 					F_ManagerId = a.F_ManagerId,
 					F_MobilePhone = a.F_MobilePhone,
 					F_NickName = a.F_NickName,
-					F_OrganizeId = a.F_OrganizeId,
+					F_CompanyId = a.F_CompanyId,
 					F_RealName = a.F_RealName,
 					F_Remark = a.F_RealName,
 					F_RoleId = a.F_RoleId,
@@ -130,7 +130,7 @@ namespace WaterCloud.Service.SystemOrganize
 					F_WeChat = a.F_WeChat,
 					F_WxNickName = a.F_WxNickName,
 					F_WxOpenId = a.F_WxOpenId,
-					F_DepartmentName = "",
+					F_OrganizeName = "",
 					F_RoleName = ""
 				}).MergeTable();
 			return query;
@@ -166,10 +166,10 @@ namespace WaterCloud.Service.SystemOrganize
 				temp = data.F_RoleId.Split(',');
 				data.F_RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
 			}
-			if (data.F_DepartmentId != null)
+			if (data.F_OrganizeId != null)
 			{
-				temp = data.F_DepartmentId.Split(',');
-				data.F_DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+				temp = data.F_OrganizeId.Split(',');
+				data.F_OrganizeName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
 			}
 			return data;
 		}
@@ -183,10 +183,10 @@ namespace WaterCloud.Service.SystemOrganize
 				temp = data.F_RoleId.Split(',');
 				data.F_RoleName = string.Join(",", repository.Db.Queryable<RoleEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
 			}
-			if (data.F_DepartmentId != null)
+			if (data.F_OrganizeId != null)
 			{
-				temp = data.F_DepartmentId.Split(',');
-				data.F_DepartmentName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
+				temp = data.F_OrganizeId.Split(',');
+				data.F_OrganizeName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
 			}
 			return GetFieldsFilterData(data);
 		}

@@ -182,7 +182,7 @@ namespace WaterCloud.Service
 					{
 						context.Ado.BeginTran();
 						var systemSet = context.Queryable<SystemSetEntity>().First(a => a.F_DbNumber == data.MainDbNumber);
-						var user = context.Queryable<UserEntity>().First(a => a.F_OrganizeId == systemSet.F_Id && a.F_IsAdmin == true);
+						var user = context.Queryable<UserEntity>().First(a => a.F_CompanyId == systemSet.F_Id && a.F_IsAdmin == true);
 						var userinfo = context.Queryable<UserLogOnEntity>().Where(a => a.F_UserId == user.F_Id).First();
 						userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
 						userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(systemSet.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();

@@ -206,7 +206,7 @@ namespace WaterCloud.Service.SystemOrganize
 					user.F_Account = entity.F_AdminAccount;
 					user.F_RealName = entity.F_CompanyName;
 					user.F_Gender = true;
-					user.F_OrganizeId = entity.F_Id;
+					user.F_CompanyId = entity.F_Id;
 					user.F_IsAdmin = true;
 					user.F_DeleteMark = false;
 					user.F_EnabledMark = true;
@@ -301,7 +301,7 @@ namespace WaterCloud.Service.SystemOrganize
 				{
 					var tenant = await repository.Db.Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
 					repository.ChangeEntityDb(tenant.F_DbNumber);
-					var user = repository.Db.Queryable<UserEntity>().First(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true);
+					var user = repository.Db.Queryable<UserEntity>().First(a => a.F_CompanyId == entity.F_Id && a.F_IsAdmin == true);
 					var userinfo = repository.Db.Queryable<UserLogOnEntity>().First(a => a.F_UserId == user.F_Id);
 					userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
 					userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();
@@ -333,7 +333,7 @@ namespace WaterCloud.Service.SystemOrganize
 				}
 				else
 				{
-					var user = repository.Db.Queryable<UserEntity>().First(a => a.F_OrganizeId == entity.F_Id && a.F_IsAdmin == true);
+					var user = repository.Db.Queryable<UserEntity>().First(a => a.F_CompanyId == entity.F_Id && a.F_IsAdmin == true);
 					var userinfo = repository.Db.Queryable<UserLogOnEntity>().First(a => a.F_UserId == user.F_Id);
 					userinfo.F_UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
 					userinfo.F_UserPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(entity.F_AdminPassword, 32).ToLower(), userinfo.F_UserSecretkey).ToLower(), 32).ToLower();

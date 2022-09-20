@@ -52,7 +52,7 @@ namespace WaterCloud.Service.SystemOrganize
 			}
 			else
 			{
-				if (await repository.Db.Queryable<UserEntity>().Where(a => a.F_OrganizeId == keyValue).AnyAsync() || await repository.Db.Queryable<UserEntity>().Where(a => a.F_DepartmentId == keyValue).AnyAsync())
+				if (await repository.Db.Queryable<UserEntity>().Where(a => a.F_CompanyId == keyValue).AnyAsync() || await repository.Db.Queryable<UserEntity>().Where(a => a.F_OrganizeId == keyValue).AnyAsync())
 				{
 					throw new Exception("组织使用中，无法删除");
 				}

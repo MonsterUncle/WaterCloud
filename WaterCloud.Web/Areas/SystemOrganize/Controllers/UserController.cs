@@ -32,7 +32,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 		{
 			if (string.IsNullOrEmpty(pagination.field))
 			{
-				pagination.field = "F_DepartmentId";
+				pagination.field = "F_OrganizeId";
 				pagination.order = "asc";
 			}
 			var data = await _service.GetLookList(pagination, keyword);
@@ -70,10 +70,10 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 		public async Task<ActionResult> GetFormJson(string keyValue)
 		{
 			var data = await _service.GetLookForm(keyValue);
-			if (!string.IsNullOrEmpty(data.F_DepartmentId))
+			if (!string.IsNullOrEmpty(data.F_OrganizeId))
 			{
 				List<string> str = new List<string>();
-				foreach (var item in data.F_DepartmentId.Split(','))
+				foreach (var item in data.F_OrganizeId.Split(','))
 				{
 					var temp = await _orgService.GetForm(item);
 					if (temp != null)
@@ -81,7 +81,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 						str.Add(temp.F_FullName);
 					}
 				}
-				data.F_DepartmentName = string.Join("  ", str.ToArray());
+				data.F_OrganizeName = string.Join("  ", str.ToArray());
 			}
 			if (!string.IsNullOrEmpty(data.F_RoleId))
 			{
@@ -104,10 +104,10 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 		public async Task<ActionResult> GetUserFormJson()
 		{
 			var data = await _service.GetFormExtend(_service.currentuser.UserId);
-			if (!string.IsNullOrEmpty(data.F_DepartmentId))
+			if (!string.IsNullOrEmpty(data.F_OrganizeId))
 			{
 				List<string> str = new List<string>();
-				foreach (var item in data.F_DepartmentId.Split(','))
+				foreach (var item in data.F_OrganizeId.Split(','))
 				{
 					var temp = await _orgService.GetForm(item);
 					if (temp != null)
@@ -115,7 +115,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 						str.Add(temp.F_FullName);
 					}
 				}
-				data.F_DepartmentName = string.Join("  ", str.ToArray());
+				data.F_OrganizeName = string.Join("  ", str.ToArray());
 			}
 			if (!string.IsNullOrEmpty(data.F_RoleId))
 			{
@@ -167,7 +167,7 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 				userEntity.F_IsAdmin = false;
 				userEntity.F_DeleteMark = false;
 				userEntity.F_IsBoss = false;
-				userEntity.F_OrganizeId = _service.currentuser.CompanyId;
+				userEntity.F_CompanyId = _service.currentuser.CompanyId;
 			}
 			else
 			{

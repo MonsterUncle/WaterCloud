@@ -94,7 +94,7 @@
             else if (fileds == '部门') {
                 common.modalOpen({
                     title: "选择组织",
-                    url: "/SystemOrganize/Organize/AddForm?name=" + "F_DepartmentName" + "&value=" + "F_DepartmentId" + "&ids=" + $('#F_DepartmentId').val(),
+                    url: "/SystemOrganize/Organize/AddForm?name=" + "F_OrganizeName" + "&value=" + "F_OrganizeId" + "&ids=" + $('#F_OrganizeId').val(),
                     width: "650px",
                     height: "600px",
                 });
@@ -134,8 +134,8 @@
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label required">部门</label>
                         <div class="layui-input-block">
-                            <input id="F_DepartmentName" name="F_DepartmentName" type="text" lay-verify="required" maxlength="50" autocomplete="off" class="layui-input" onclick="search('部门')" />
-                            <input id="F_DepartmentId" name="F_DepartmentId" type="text" hidden />
+                            <input id="F_OrganizeName" name="F_OrganizeName" type="text" lay-verify="required" maxlength="50" autocomplete="off" class="layui-input" onclick="search('部门')" />
+                            <input id="F_OrganizeId" name="F_OrganizeId" type="text" hidden />
                         </div>
                     </div>
                 </div>

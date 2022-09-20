@@ -1,20 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : 昆山mssql
- Source Server Type    : SQL Server
- Source Server Version : 10501600
- Source Host           : 112.25.179.163:1433
- Source Catalog        : WaterCloudNetDb
- Source Schema         : dbo
-
- Target Server Type    : SQL Server
- Target Server Version : 10501600
- File Encoding         : 65001
-
- Date: 01/12/2021 09:40:31
-*/
-
 
 -- ----------------------------
 -- Table structure for cms_articlecategory
@@ -18604,8 +18587,8 @@ CREATE TABLE [dbo].[sys_user] (
   [F_ManagerId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SecurityLevel] int  NULL,
   [F_Signature] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
-  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
-  [F_DepartmentId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CompanyId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_OrganizeId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_RoleId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DutyId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsAdmin] tinyint  NULL,
@@ -18638,7 +18621,7 @@ GO
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO [dbo].[sys_user] ([F_Id], [F_Account], [F_RealName], [F_NickName], [F_HeadIcon], [F_Gender], [F_Birthday], [F_MobilePhone], [F_Email], [F_WeChat], [F_ManagerId], [F_SecurityLevel], [F_Signature], [F_OrganizeId], [F_DepartmentId], [F_RoleId], [F_DutyId], [F_IsAdmin], [F_IsBoss], [F_IsLeaderInDepts], [F_IsSenior], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_DingTalkUserId], [F_DingTalkUserName], [F_DingTalkAvatar], [F_WxOpenId], [F_WxNickName], [F_HeadImgUrl]) VALUES (N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'admin', N'超级管理员', N'超级管理员', NULL, N'1', N'2020-03-27 00:00:00.0000000', N'13600000000', N'3333', NULL, NULL, NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'5AB270C0-5D33-4203-A54F-4552699FDA3C', NULL, NULL, N'1', N'0', N'0', N'0', NULL, N'0', N'1', N'系统内置账户', N'2016-07-20 00:00:00.0000000', NULL, NULL, NULL, NULL, NULL, NULL, N'闫志辉', NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[sys_user] ([F_Id], [F_Account], [F_RealName], [F_NickName], [F_HeadIcon], [F_Gender], [F_Birthday], [F_MobilePhone], [F_Email], [F_WeChat], [F_ManagerId], [F_SecurityLevel], [F_Signature], [F_CompanyId], [F_OrganizeId], [F_RoleId], [F_DutyId], [F_IsAdmin], [F_IsBoss], [F_IsLeaderInDepts], [F_IsSenior], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_DingTalkUserId], [F_DingTalkUserName], [F_DingTalkAvatar], [F_WxOpenId], [F_WxNickName], [F_HeadImgUrl]) VALUES (N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'admin', N'超级管理员', N'超级管理员', NULL, N'1', N'2020-03-27 00:00:00.0000000', N'13600000000', N'3333', NULL, NULL, NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'5AB270C0-5D33-4203-A54F-4552699FDA3C', NULL, NULL, N'1', N'0', N'0', N'0', NULL, N'0', N'1', N'系统内置账户', N'2016-07-20 00:00:00.0000000', NULL, NULL, NULL, NULL, NULL, NULL, N'闫志辉', NULL, NULL, NULL, NULL)
 GO
 
 
