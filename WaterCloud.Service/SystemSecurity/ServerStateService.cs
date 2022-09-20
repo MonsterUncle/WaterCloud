@@ -17,7 +17,7 @@ using SqlSugar;
 
 namespace WaterCloud.Service.SystemSecurity
 {
-    public class ServerStateService : DataFilterService<ServerStateEntity>, IDenpendency
+    public class ServerStateService : BaseService<ServerStateEntity>, IDenpendency
     {
         public ServerStateService(ISqlSugarClient context) : base(context)
         {

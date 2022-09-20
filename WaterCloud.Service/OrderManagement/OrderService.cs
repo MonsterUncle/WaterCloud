@@ -14,7 +14,7 @@ namespace WaterCloud.Service.OrderManagement
     /// 日 期：2021-07-12 20:41
     /// 描 述：订单管理服务类
     /// </summary>
-    public class OrderService : DataFilterService<OrderEntity>, IDenpendency
+    public class OrderService : BaseService<OrderEntity>, IDenpendency
     {
         public OrderService(ISqlSugarClient context) : base(context)
 		{

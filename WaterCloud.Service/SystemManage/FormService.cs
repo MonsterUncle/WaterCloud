@@ -15,7 +15,7 @@ namespace WaterCloud.Service.SystemManage
     /// 日 期：2020-07-08 14:33
     /// 描 述：表单设计服务类
     /// </summary>
-    public class FormService : DataFilterService<FormEntity>, IDenpendency
+    public class FormService : BaseService<FormEntity>, IDenpendency
     {
         public FormService(ISqlSugarClient context) : base(context)
 		{

@@ -117,7 +117,7 @@ namespace WaterCloud.Web.Areas.SystemSecurity.Controllers
         [HandlerAjaxOnly]
         public ActionResult GetDBListJson()
         {
-            var data = DBInitialize.GetConnectionConfigs();
+            var data = DBInitialize.GetConnectionConfigs(true);
             return Content(data.Select(a => a.ConfigId).ToJson());
         }
         /// <summary>

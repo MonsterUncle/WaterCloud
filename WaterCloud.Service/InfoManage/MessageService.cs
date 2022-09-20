@@ -20,7 +20,7 @@ namespace WaterCloud.Service.InfoManage
     /// 日 期：2020-07-29 16:41
     /// 描 述：通知管理服务类
     /// </summary>
-    public class MessageService : DataFilterService<MessageEntity>, IDenpendency
+    public class MessageService : BaseService<MessageEntity>, IDenpendency
     {
         public ItemsDataService itemsApp { get; set; }
         public RabbitMqHelper rabbitMqHelper { get; set; }

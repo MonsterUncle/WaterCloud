@@ -18,7 +18,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class QuickModuleService:DataFilterService<QuickModuleEntity> ,IDenpendency
+    public class QuickModuleService:BaseService<QuickModuleEntity> ,IDenpendency
     {
         public QuickModuleService(ISqlSugarClient context) : base(context)
 		{

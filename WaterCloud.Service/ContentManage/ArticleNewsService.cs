@@ -14,7 +14,7 @@ namespace WaterCloud.Service.ContentManage
 	/// 日 期：2020-06-09 19:42
 	/// 描 述：新闻管理服务类
 	/// </summary>
-	public class ArticleNewsService : DataFilterService<ArticleNewsEntity>, IDenpendency
+	public class ArticleNewsService : BaseService<ArticleNewsEntity>, IDenpendency
     {
         public ArticleNewsService(ISqlSugarClient context) : base(context)
 

@@ -14,7 +14,7 @@ namespace WaterCloud.Service.SystemOrganize
     /// 日 期：2020-06-01 09:44
     /// 描 述：数据权限服务类
     /// </summary>
-    public class DataPrivilegeRuleService : DataFilterService<DataPrivilegeRuleEntity>,IDenpendency
+    public class DataPrivilegeRuleService : BaseService<DataPrivilegeRuleEntity>,IDenpendency
     {
         public DataPrivilegeRuleService(ISqlSugarClient context) : base(context)
 		{

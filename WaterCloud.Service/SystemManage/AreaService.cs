@@ -15,7 +15,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class AreaService : DataFilterService<AreaEntity>, IDenpendency
+    public class AreaService : BaseService<AreaEntity>, IDenpendency
     {
         public AreaService(ISqlSugarClient context) : base(context)
 		{

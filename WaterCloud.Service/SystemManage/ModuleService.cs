@@ -16,7 +16,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class ModuleService : DataFilterService<ModuleEntity>, IDenpendency
+    public class ModuleService : BaseService<ModuleEntity>, IDenpendency
     {
         /// <summary>
         /// 缓存操作类

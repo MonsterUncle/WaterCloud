@@ -17,7 +17,7 @@ using WaterCloud.Domain.SystemSecurity;
 
 namespace WaterCloud.Service.SystemOrganize
 {
-    public class UserService : DataFilterService<UserEntity>, IDenpendency
+    public class UserService : BaseService<UserEntity>, IDenpendency
     {
         public SystemSetService syssetApp { get; set; }
         public FilterIPService ipApp { get; set; }
@@ -243,8 +243,18 @@ namespace WaterCloud.Service.SystemOrganize
 					{
                         throw new Exception("租户已到期，请联系供应商");
                     }
-					repository.ChangeEntityDb(setTemp.F_DbNumber);
-                }
+					if (!_context.AsTenant().IsAnyConnection(setTemp.F_DbNumber))
+					{
+						var dblist = DBInitialize.GetConnectionConfigs(true);
+						_context.AsTenant().AddConnection(dblist.FirstOrDefault(a => a.ConfigId == setTemp.F_DbNumber));
+						repository.ChangeEntityDb(setTemp.F_DbNumber);
+						(repository.Db as SqlSugarProvider).DefaultConfig();
+                    }
+                    else
+                    {
+						repository.ChangeEntityDb(setTemp.F_DbNumber);
+					}
+				}
             }
             if (!(await CheckIP()))
             {

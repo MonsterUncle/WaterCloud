@@ -16,7 +16,7 @@ namespace WaterCloud.Service.SystemManage
 	/// 日 期：2020-07-10 08:49
 	/// 描 述：流程设计服务类
 	/// </summary>
-	public class FlowschemeService : DataFilterService<FlowschemeEntity>, IDenpendency
+	public class FlowschemeService : BaseService<FlowschemeEntity>, IDenpendency
     {
         public FlowschemeService(ISqlSugarClient context) : base(context)
 		{

@@ -29,8 +29,7 @@ namespace WaterCloud.Service
         /// <param name="services"></param>
 		public static IServiceCollection AddSqlSugar(this IServiceCollection services)
 		{
-            DBInitialize.GetConnectionConfigs(true);
-			var configList = DBInitialize.GetConnectionConfigs();
+			var configList = DBInitialize.GetConnectionConfigs(true);
 			SqlSugarScope sqlSugarScope = new SqlSugarScope(configList,
 				//全局上下文生效
 				db =>

@@ -13,7 +13,7 @@ using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service.SystemOrganize
 {
-    public class UserLogOnService : DataFilterService<UserLogOnEntity>, IDenpendency
+    public class UserLogOnService : BaseService<UserLogOnEntity>, IDenpendency
     {
         /// <summary>
         /// 缓存操作类

@@ -16,7 +16,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class ModuleButtonService : DataFilterService<ModuleButtonEntity>, IDenpendency
+    public class ModuleButtonService : BaseService<ModuleButtonEntity>, IDenpendency
     {
         private string authorizecacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_authorizeurldata_";// +权限
         public ModuleButtonService(ISqlSugarClient context) : base(context)

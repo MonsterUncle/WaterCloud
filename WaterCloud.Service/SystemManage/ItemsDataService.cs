@@ -14,7 +14,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class ItemsDataService : DataFilterService<ItemsDetailEntity>,IDenpendency
+    public class ItemsDataService : BaseService<ItemsDetailEntity>,IDenpendency
     {
         public ItemsTypeService itemApp { get; set; }
         /// <summary>

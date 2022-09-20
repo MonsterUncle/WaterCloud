@@ -15,7 +15,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemSecurity
 {
-    public class FilterIPService : DataFilterService<FilterIPEntity>, IDenpendency
+    public class FilterIPService : BaseService<FilterIPEntity>, IDenpendency
     {
         public FilterIPService(ISqlSugarClient context) : base(context)
 		{

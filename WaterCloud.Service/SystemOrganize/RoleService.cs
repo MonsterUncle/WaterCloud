@@ -16,7 +16,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemOrganize
 {
-    public class RoleService : DataFilterService<RoleEntity>, IDenpendency
+    public class RoleService : BaseService<RoleEntity>, IDenpendency
     {
         public ModuleService moduleApp { get; set; }
         public ModuleButtonService moduleButtonApp { get; set; }

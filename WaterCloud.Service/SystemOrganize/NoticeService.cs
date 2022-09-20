@@ -17,7 +17,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemOrganize
 {
-    public class NoticeService: DataFilterService<NoticeEntity>,IDenpendency
+    public class NoticeService: BaseService<NoticeEntity>,IDenpendency
     {
         public NoticeService(ISqlSugarClient context) : base(context)
 		{

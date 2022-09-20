@@ -15,7 +15,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemOrganize
 {
-    public class OrganizeService : DataFilterService<OrganizeEntity>, IDenpendency
+    public class OrganizeService : BaseService<OrganizeEntity>, IDenpendency
     {
         public OrganizeService(ISqlSugarClient context) : base(context)
 		{

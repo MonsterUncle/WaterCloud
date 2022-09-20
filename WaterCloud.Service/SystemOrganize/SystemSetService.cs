@@ -19,7 +19,7 @@ namespace WaterCloud.Service.SystemOrganize
     /// 日 期：2020-06-12 13:50
     /// 描 述：系统设置服务类
     /// </summary>
-    public class SystemSetService : DataFilterService<SystemSetEntity>, IDenpendency
+    public class SystemSetService : BaseService<SystemSetEntity>, IDenpendency
     {
         private string cacheKeyOperator = GlobalContext.SystemConfig.ProjectPrefix + "_operator_";// +登录者token
         private static string cacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_dblist";// 数据库键
@@ -346,7 +346,7 @@ namespace WaterCloud.Service.SystemOrganize
                     }).Where(a => a.F_Id == userinfo.F_Id).ExecuteCommandAsync();
                 }
                 var set = await repository.Db.Queryable<SystemSetEntity>().InSingleAsync(entity.F_Id);
-                var tempkey = repository.ChangeEntityDb(isMaster:true).Queryable<UserEntity>().First(a => a.F_IsAdmin == true).F_Id;
+                var tempkey = repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber).Queryable<UserEntity>().First(a => a.F_IsAdmin == true).F_Id;
                 await CacheHelper.RemoveAsync(cacheKeyOperator + "info_" + tempkey);
             }
             repository.Dbs.CommitTran();

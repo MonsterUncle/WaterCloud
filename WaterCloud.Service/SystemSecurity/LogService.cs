@@ -18,7 +18,7 @@ using WaterCloud.Domain.SystemOrganize;
 
 namespace WaterCloud.Service.SystemSecurity
 {
-    public class LogService : DataFilterService<LogEntity>, IDenpendency
+    public class LogService : BaseService<LogEntity>, IDenpendency
     {
         //登录信息保存方式
         private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
@@ -145,9 +145,14 @@ namespace WaterCloud.Service.SystemSecurity
         {
             logEntity.F_Id = Utils.GuId();
             logEntity.F_Date = DateTime.Now;
-            var dbNumber = _context.CurrentConnectionConfig.ConfigId;
-            repository.ChangeEntityDb(isMaster:true);
-            var systemSet = await repository.Db.Queryable<SystemSetEntity>().Where(a => a.F_DbNumber == "0").FirstAsync();
+            currentuser = OperatorProvider.Provider.GetCurrent();
+			var dbNumber = GlobalContext.SystemConfig.MainDbNumber;
+			if (currentuser!=null)
+            {
+				dbNumber = currentuser.DbNumber;
+			}
+            repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber);
+            var systemSet = await repository.Db.Queryable<SystemSetEntity>().Where(a => a.F_DbNumber == GlobalContext.SystemConfig.MainDbNumber).FirstAsync();
 			repository.ChangeEntityDb(dbNumber);
             try
             {

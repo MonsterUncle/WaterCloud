@@ -17,7 +17,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemOrganize
 {
-    public class DutyService : DataFilterService<RoleEntity>, IDenpendency
+    public class DutyService : BaseService<RoleEntity>, IDenpendency
     {
         public SystemSetService setApp { get; set; }
         public DutyService(ISqlSugarClient context) : base(context)

@@ -42,26 +42,19 @@ namespace WaterCloud.DataBase
         /// </summary>
         /// <param name="configId"></param>
         /// <returns></returns>
-        public ISqlSugarClient ChangeEntityDb(object configId = null,bool isMaster = false)
+        public ISqlSugarClient ChangeEntityDb(object configId = null)
 		{
-            if (isMaster)
-            {
-				_dbBase = _dbs.GetConnection(GlobalContext.SystemConfig.MainDbNumber);
+			if (!configId.IsEmpty())
+			{
+				_dbBase = _dbs.GetConnection(configId);
 			}
-            else
-            {
-				if (!configId.IsEmpty())
-				{
-					_dbBase = _dbs.GetConnection(configId);
-				}
-				else
-				{
-					_dbBase = _dbs.GetConnectionWithAttr<TEntity>();
-				}
+			else
+			{
+				_dbBase = _dbs.GetConnectionWithAttr<TEntity>();
 			}
 			return _dbBase;
 		}
-        public RepositoryBase(ISqlSugarClient scope)
+		public RepositoryBase(ISqlSugarClient scope)
         {
 			_dbs = (SqlSugarScope)scope;
             _dbBase = Dbs.GetConnectionWithAttr<TEntity>();

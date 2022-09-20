@@ -12,7 +12,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.FlowManage
 {
-    public class FormTestService : DataFilterService<FormTestEntity>, IDenpendency,ICustomerForm
+    public class FormTestService : BaseService<FormTestEntity>, IDenpendency,ICustomerForm
     {
         public FormTestService(ISqlSugarClient context) : base(context)
 		{

@@ -15,7 +15,7 @@ namespace WaterCloud.Service.FileManage
     /// 日 期：2020-07-22 12:04
     /// 描 述：文件管理服务类
     /// </summary>
-    public class UploadfileService : DataFilterService<UploadfileEntity>, IDenpendency
+    public class UploadfileService : BaseService<UploadfileEntity>, IDenpendency
     {       
         public UploadfileService(ISqlSugarClient context) : base(context)
 		{

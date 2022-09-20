@@ -15,7 +15,7 @@ using WaterCloud.DataBase;
 
 namespace WaterCloud.Service.SystemManage
 {
-    public class ItemsTypeService : DataFilterService<ItemsEntity>,IDenpendency
+    public class ItemsTypeService : BaseService<ItemsEntity>,IDenpendency
     {
         public ItemsTypeService(ISqlSugarClient context) : base(context)
 		{

@@ -21,7 +21,7 @@ namespace WaterCloud.Service.FlowManage
 	/// 日 期：2020-07-14 09:18
 	/// 描 述：我的流程服务类
 	/// </summary>
-	public class FlowinstanceService : DataFilterService<FlowinstanceEntity>, IDenpendency
+	public class FlowinstanceService : BaseService<FlowinstanceEntity>, IDenpendency
     {
         public IHttpClientFactory _httpClientFactory { get; set; }
         public MessageService messageApp { get; set; }
