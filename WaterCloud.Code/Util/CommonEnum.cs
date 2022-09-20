@@ -1,125 +1,124 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WaterCloud.Code
 {
-    public enum StatusEnum
-    {
-        [Description("启用")]
-        Yes = 1,
+	public enum StatusEnum
+	{
+		[Description("启用")]
+		Yes = 1,
 
-        [Description("禁用")]
-        No = 0
-    }
+		[Description("禁用")]
+		No = 0
+	}
 
-    public enum IsEnum
-    {
-        [Description("是")]
-        Yes = 1,
+	public enum IsEnum
+	{
+		[Description("是")]
+		Yes = 1,
 
-        [Description("否")]
-        No = 0
-    }
+		[Description("否")]
+		No = 0
+	}
 
-    public enum NeedEnum
-    {
-        [Description("不需要")]
-        NotNeed = 0,
+	public enum NeedEnum
+	{
+		[Description("不需要")]
+		NotNeed = 0,
 
-        [Description("需要")]
-        Need = 1
-    }
+		[Description("需要")]
+		Need = 1
+	}
 
-    public enum OperateStatusEnum
-    {
-        [Description("失败")]
-        Fail = 0,
+	public enum OperateStatusEnum
+	{
+		[Description("失败")]
+		Fail = 0,
 
-        [Description("成功")]
-        Success = 1
-    }
+		[Description("成功")]
+		Success = 1
+	}
 
-    public enum UploadFileType
-    {
-        [Description("头像")]
-        Portrait = 1,
+	public enum UploadFileType
+	{
+		[Description("头像")]
+		Portrait = 1,
 
-        [Description("新闻图片")]
-        News = 2,
+		[Description("新闻图片")]
+		News = 2,
 
-        [Description("导入的文件")]
-        Import = 10
-    }
+		[Description("导入的文件")]
+		Import = 10
+	}
 
-    public enum PlatformEnum
-    {
-        [Description("Web后台")]
-        Web = 1,
+	public enum PlatformEnum
+	{
+		[Description("Web后台")]
+		Web = 1,
 
-        [Description("WebApi")]
-        WebApi = 2
-    }
+		[Description("WebApi")]
+		WebApi = 2
+	}
 
-    public enum PayStatusEnum
-    {
-        [Description("未知")]
-        Unknown = 0,
+	public enum PayStatusEnum
+	{
+		[Description("未知")]
+		Unknown = 0,
 
-        [Description("已支付")]
-        Success = 1,
+		[Description("已支付")]
+		Success = 1,
 
-        [Description("转入退款")]
-        Refund = 2,
+		[Description("转入退款")]
+		Refund = 2,
 
-        [Description("未支付")]
-        NotPay = 3,
+		[Description("未支付")]
+		NotPay = 3,
 
-        [Description("已关闭")]
-        Closed = 4,
+		[Description("已关闭")]
+		Closed = 4,
 
-        [Description("已撤销（付款码支付）")]
-        Revoked = 5,
+		[Description("已撤销（付款码支付）")]
+		Revoked = 5,
 
-        [Description("用户支付中（付款码支付）")]
-        UserPaying = 6,
+		[Description("用户支付中（付款码支付）")]
+		UserPaying = 6,
 
-        [Description("支付失败(其他原因，如银行返回失败)")]
-        PayError = 7
-    }
-    public class EnumHelper
-    {
-        /// <summary>
-        /// 获取枚举列表
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static Dictionary<int,string> EnumToDic<T>()
-        {
-            Dictionary<int, string> list = new Dictionary<int, string>();
-            foreach (var e in Enum.GetValues(typeof(T)))
-            {
-                list.Add(Convert.ToInt32(e), e.GetDescriptionByEnum<T>());
-            }
-            return list;
-        }
-        /// <summary>
-        /// 获取枚举列表
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static List<string> EnumToList<T>()
-        {
-            List<string> list = new List<string>();
+		[Description("支付失败(其他原因，如银行返回失败)")]
+		PayError = 7
+	}
 
-            foreach (var e in Enum.GetValues(typeof(T)))
-            {
-                list.Add(e.GetDescriptionByEnum<T>());
-            }
-            return list;
-        }
-    }
+	public class EnumHelper
+	{
+		/// <summary>
+		/// 获取枚举列表
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static Dictionary<int, string> EnumToDic<T>()
+		{
+			Dictionary<int, string> list = new Dictionary<int, string>();
+			foreach (var e in Enum.GetValues(typeof(T)))
+			{
+				list.Add(Convert.ToInt32(e), e.GetDescriptionByEnum<T>());
+			}
+			return list;
+		}
+
+		/// <summary>
+		/// 获取枚举列表
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static List<string> EnumToList<T>()
+		{
+			List<string> list = new List<string>();
+
+			foreach (var e in Enum.GetValues(typeof(T)))
+			{
+				list.Add(e.GetDescriptionByEnum<T>());
+			}
+			return list;
+		}
+	}
 }

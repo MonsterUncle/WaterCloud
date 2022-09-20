@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace WaterCloud.Code
 {
-    public class FilterSo
-    {
+	public class FilterSo
+	{
 		/**
 	 * 唯一id
 	 */
