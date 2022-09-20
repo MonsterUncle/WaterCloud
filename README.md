@@ -8,10 +8,10 @@
 
 [![star](https://gitee.com/qian_wei_hong/WaterCloud/badge/star.svg)](https://gitee.com/qian_wei_hong/WaterCloud/stargazers) 
 [![fork](https://gitee.com/qian_wei_hong/WaterCloud/badge/fork.svg)](https://gitee.com/qian_wei_hong/WaterCloud/members)
-![](https://img.shields.io/badge/release-2.23.0-red)
+![](https://img.shields.io/badge/release-3.0.0-preview-red)
 
 ![](https://img.shields.io/badge/.net-6.0.0-blue)
-![](https://img.shields.io/badge/SqlSugar-5.1.1-blue)
+![](https://img.shields.io/badge/SqlSugar-5.1.3.1-blue)
 ![](https://img.shields.io/badge/layui-2.7.5-blue)
 </div>
 
