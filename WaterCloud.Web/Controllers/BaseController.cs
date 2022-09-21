@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Jaina.EventBus;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WaterCloud.Code;
+using WaterCloud.Service.Event;
 using WaterCloud.Service.SystemSecurity;
 
 namespace WaterCloud.Web
@@ -78,7 +80,8 @@ namespace WaterCloud.Web
 		protected virtual async Task<ActionResult> Success(string message, string className = "", object keyValue = null, DbLogType? logType = null)
 		{
 			className = string.IsNullOrEmpty(className) ? ReflectionHelper.GetModuleName(isReplace: false, prefix: "Controller") : className;
-			await _logService.WriteLog(message, className, keyValue != null && keyValue.ToString() != "0" ? keyValue.ToString() : "", logType);
+			var log = await _logService.CreateLog(message, className, keyValue != null && keyValue.ToString() != "0" ? keyValue.ToString() : "", logType);
+			await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", log, _logService.currentuser));
 			return Content(new AlwaysResult { state = ResultType.success.ToString(), message = message }.ToJson());
 		}
 
@@ -105,7 +108,8 @@ namespace WaterCloud.Web
 		protected virtual async Task<ActionResult> Error(string message, string className, object keyValue = null, DbLogType? logType = null)
 		{
 			className = string.IsNullOrEmpty(className) ? ReflectionHelper.GetModuleName(isReplace: false, prefix: "Controller") : className;
-			await _logService.WriteLog(message, className, keyValue != null && keyValue.ToString() != "0" ? keyValue.ToString() : "", logType, true);
+			var log = await _logService.CreateLog(message, className, keyValue != null && keyValue.ToString() != "0" ? keyValue.ToString() : "", logType, true);
+			await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", log, _logService.currentuser));
 			return Content(new AlwaysResult { state = ResultType.error.ToString(), message = LogHelper.ExMsgFormat(message) }.ToJson());
 		}
 

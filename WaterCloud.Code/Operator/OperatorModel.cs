@@ -9,6 +9,9 @@ using System;
 
 namespace WaterCloud.Code
 {
+	/// <summary>
+	/// 当前用户信息
+	/// </summary>
 	public class OperatorModel
 	{
 		public string UserId { get; set; }

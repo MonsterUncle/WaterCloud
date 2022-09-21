@@ -200,15 +200,7 @@ namespace WaterCloud.Service.AutoJob
 									}
 									if (dbJobEntity.F_IsLog == "是")
 									{
-										string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
-										if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
-										{
-											repository.Db.Insertable(log).ExecuteCommand();
-										}
-										else
-										{
-											await HandleLogHelper.HSetAsync(log.F_JobId, log.F_Id, log);
-										}
+										repository.Db.Insertable(log).ExecuteCommand();
 									}
 									repository.Db.Ado.CommitTran();
 								}

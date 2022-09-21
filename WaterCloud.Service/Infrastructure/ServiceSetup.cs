@@ -4,6 +4,7 @@ using Quartz;
 using Quartz.Impl;
 using Quartz.Impl.AdoJobStore.Common;
 using Quartz.Spi;
+using RabbitMQ.Client;
 using SqlSugar;
 using System;
 using System.Collections.Specialized;
@@ -14,6 +15,7 @@ using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Service.AutoJob;
+using WaterCloud.Service.Event;
 
 namespace WaterCloud.Service
 {
@@ -205,6 +207,37 @@ namespace WaterCloud.Service
 				LogHelper.Write(ex);
 			}
 			return services;
+		}
+		/// <summary>
+		/// 注册事件总线
+		/// </summary>
+		/// <param name="services"></param>
+		/// <returns></returns>
+		public static IServiceCollection AddEventBus(this IServiceCollection services)
+		{
+			// 注册 EventBus 服务
+			return services.AddEventBus(builder =>
+			{
+				if (GlobalContext.SystemConfig.RabbitMq.Enabled)
+				{
+					// 创建连接工厂
+					var factory = new ConnectionFactory
+					{
+						UserName = GlobalContext.SystemConfig.RabbitMq.UserName,
+						Password = GlobalContext.SystemConfig.RabbitMq.Password
+					};
+					// 创建默认内存通道事件源对象，可自定义队列路由key，比如这里是 eventbus
+					var rbmqEventSourceStorer = new RabbitMQEventSourceStorer(factory, GlobalContext.SystemConfig.ProjectPrefix + "eventbus", 3000);
+					// 替换默认事件总线存储器
+					builder.ReplaceStorer(serviceProvider =>
+					{
+						return rbmqEventSourceStorer;
+					});
+				}
+				// 注册 ToDo 事件订阅者
+				builder.AddSubscriber<LogEventSubscriber>();
+				builder.AddSubscriber<MessageEventSubscriber>();
+			});
 		}
 	}
 }

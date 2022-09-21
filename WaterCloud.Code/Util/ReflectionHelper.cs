@@ -10,7 +10,7 @@ namespace WaterCloud.Code
 	public class ReflectionHelper
 	{
 		private static ConcurrentDictionary<string, object> dictCache = new ConcurrentDictionary<string, object>();
-		private static List<string> exceptionList = new List<string> { "DataFilterService", "BaseController" };
+		private static List<string> exceptionList = new List<string> { "BaseService", "BaseController" };
 
 		#region 得到类里面的属性集合
 
@@ -71,7 +71,7 @@ namespace WaterCloud.Code
 		/// <param name="count">搜索层级</param>
 		/// <param name="prefix">前缀</param>
 		/// <returns></returns>
-		public static string GetModuleName(int count = 5, bool isReplace = true, string prefix = "Service")
+		public static string GetModuleName(int count = 10, bool isReplace = true, string prefix = "Service")
 		{
 			try
 			{
@@ -79,6 +79,10 @@ namespace WaterCloud.Code
 
 				for (int i = 0; i < count; i++)
 				{
+					if (!string.IsNullOrEmpty(moduleName))
+					{
+						break;
+					}
 					string className = new StackFrame(i, true).GetMethod().DeclaringType.FullName;
 					className = className.Split('+')[0];
 					className = className.Split('.').LastOrDefault();

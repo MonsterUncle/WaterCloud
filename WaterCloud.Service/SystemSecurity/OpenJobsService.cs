@@ -27,7 +27,6 @@ namespace WaterCloud.Service.SystemSecurity
 	{
 		private RepositoryBase<OpenJobEntity> repository;
 		private IScheduler _scheduler;
-		private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
 		private HttpWebClient _httpClient;
 
 		public OpenJobsService(ISqlSugarClient context, ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory, IHttpClientFactory httpClient)
@@ -55,17 +54,7 @@ namespace WaterCloud.Service.SystemSecurity
 
 		public async Task<List<OpenJobLogEntity>> GetLogList(string keyValue)
 		{
-			return await Task.Run(() =>
-			{
-				if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
-				{
-					return repository.Db.Queryable<OpenJobLogEntity>().Where(a => a.F_JobId == keyValue).OrderBy(a => a.F_CreatorTime, OrderByType.Desc).ToList();
-				}
-				else
-				{
-					return HandleLogHelper.HGetAll<OpenJobLogEntity>(keyValue).Values.OrderByDescending(a => a.F_CreatorTime).ToList(); ;
-				}
-			});
+			return await repository.Db.Queryable<OpenJobLogEntity>().Where(a => a.F_JobId == keyValue).OrderBy(a => a.F_CreatorTime, OrderByType.Desc).ToListAsync();
 		}
 
 		public async Task<List<OpenJobEntity>> GetList(string keyword = "")
@@ -367,15 +356,7 @@ namespace WaterCloud.Service.SystemSecurity
 					}
 					if (dbJobEntity.F_IsLog == "是")
 					{
-						string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
-						if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
-						{
-							await repository.Db.Insertable(log).ExecuteCommandAsync();
-						}
-						else
-						{
-							await HandleLogHelper.HSetAsync(log.F_JobId, log.F_Id, log);
-						}
+						await repository.Db.Insertable(log).ExecuteCommandAsync();
 					}
 					repository.Db.Ado.CommitTran();
 				}
@@ -393,15 +374,7 @@ namespace WaterCloud.Service.SystemSecurity
 
 		public async Task DeleteLogForm(string keyValue)
 		{
-			if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
-			{
-				await repository.Db.Deleteable<OpenJobLogEntity>(a => a.F_JobId == keyValue).ExecuteCommandAsync();
-			}
-			else
-			{
-				string[] list = HandleLogHelper.HGetAll<OpenJobLogEntity>(keyValue).Keys.ToArray();
-				await HandleLogHelper.HDelAsync(keyValue, list);
-			}
+			await repository.Db.Deleteable<OpenJobLogEntity>(a => a.F_JobId == keyValue).ExecuteCommandAsync();
 		}
 
 		#endregion 定时任务运行相关操作

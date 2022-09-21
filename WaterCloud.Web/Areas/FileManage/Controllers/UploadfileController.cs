@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Jaina.EventBus;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.Domain.FileManage;
+using WaterCloud.Service.Event;
 using WaterCloud.Service.FileManage;
 using WaterCloud.Service.SystemOrganize;
 
@@ -158,12 +160,14 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
 					}
 					list.Add(new { src = entity.F_FilePath, title = fileName });
 				}
-				await _logService.WriteLog("操作成功。", "", "", DbLogType.Visit);
+				var log = await _logService.CreateLog("操作成功。", "", "", DbLogType.Visit);
+				await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", log,_service.currentuser));
 				return Content(new { code = 0, msg = "操作成功", data = list }.ToJson());
 			}
 			catch (Exception ex)
 			{
-				await _logService.WriteLog(ex.Message, "", "", DbLogType.Visit, true);
+				var log = await _logService.CreateLog(ex.Message, "", "", DbLogType.Visit, true);
+				await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", log, _service.currentuser));
 				return Content(new { code = 400, msg = "操作失败," + ex.Message }.ToJson());
 			}
 		}

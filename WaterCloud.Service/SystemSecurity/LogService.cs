@@ -21,9 +21,6 @@ namespace WaterCloud.Service.SystemSecurity
 {
 	public class LogService : BaseService<LogEntity>, IDenpendency
 	{
-		//登录信息保存方式
-		private string HandleLogProvider = GlobalContext.SystemConfig.HandleLogProvider;
-
 		public ModuleService moduleservice { get; set; }
 		//获取类名
 
@@ -57,47 +54,20 @@ namespace WaterCloud.Service.SystemSecurity
 				default:
 					break;
 			}
-			if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
+			var query = repository.IQueryable();
+			if (!string.IsNullOrEmpty(keyword))
 			{
-				var query = repository.IQueryable();
-				if (!string.IsNullOrEmpty(keyword))
-				{
-					query = query.Where(a => a.F_Account.Contains(keyword) || a.F_Description.Contains(keyword) || a.F_ModuleName.Contains(keyword));
-				}
+				query = query.Where(a => a.F_Account.Contains(keyword) || a.F_Description.Contains(keyword) || a.F_ModuleName.Contains(keyword));
+			}
 
-				query = query.Where(a => a.F_Date >= startTime && a.F_Date <= endTime);
-				result = await query.ToPageListAsync(pagination);
-			}
-			else
-			{
-				result = HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList();
-				if (!string.IsNullOrEmpty(keyword))
-				{
-					result = result.Where(a => a.F_Account.Contains(keyword) || a.F_Description.Contains(keyword) || a.F_ModuleName.Contains(keyword)).Where(a => a.F_Date >= startTime && a.F_Date <= endTime).ToList();
-				}
-				else
-				{
-					result = result.Where(a => a.F_Date >= startTime && a.F_Date <= endTime).ToList();
-				}
-				pagination.records = result.Count();
-				result = result.OrderByDescending(a => a.F_CreatorTime).Skip((pagination.page - 1) * pagination.rows).Take(pagination.rows).ToList();
-			}
-			return GetFieldsFilterData(result);
+			query = query.Where(a => a.F_Date >= startTime && a.F_Date <= endTime);
+
+			return GetFieldsFilterData(await query.ToPageListAsync(pagination));
 		}
 
 		public async Task<List<LogEntity>> GetList()
 		{
-			return await Task.Run(() =>
-			{
-				if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
-				{
-					return repository.IQueryable().ToList();
-				}
-				else
-				{
-					return HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList(); ;
-				}
-			});
+			return await repository.IQueryable().ToListAsync();
 		}
 
 		public async Task RemoveLog(string keepTime)
@@ -115,59 +85,31 @@ namespace WaterCloud.Service.SystemSecurity
 			{
 				operateTime = DateTime.Now.AddMonths(-3);
 			}
-			if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
-			{
-				var expression = ExtLinq.True<LogEntity>();
-				expression = expression.AndAlso(a => a.F_Date <= operateTime);
-				await repository.Delete(expression);
-			}
-			else
-			{
-				var list = HandleLogHelper.HGetAll<LogEntity>(currentuser.CompanyId).Values.ToList();
-				var strList = list.Where(a => a.F_Date <= operateTime).Select(a => a.F_Id).ToList();
-				await HandleLogHelper.HDelAsync(currentuser.CompanyId, strList.ToArray());
-			}
+			var expression = ExtLinq.True<LogEntity>();
+			expression = expression.AndAlso(a => a.F_Date <= operateTime);
+			await repository.Delete(expression);
 		}
 
-		public async Task WriteDbLog(bool result, string resultLog)
-		{
-			LogEntity logEntity = new LogEntity();
-			logEntity.F_Id = Utils.GuId();
-			logEntity.F_Date = DateTime.Now;
-			logEntity.F_Account = currentuser.UserCode;
-			logEntity.F_NickName = currentuser.UserName;
-			logEntity.F_IPAddress = currentuser.LoginIPAddress;
-			logEntity.F_IPAddressName = currentuser.LoginIPAddressName;
-			logEntity.F_CompanyId = currentuser.CompanyId;
-			logEntity.F_Result = result;
-			logEntity.F_Description = resultLog;
-			logEntity.Create();
-			if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
-			{
-				await repository.Insert(logEntity);
-			}
-			else
-			{
-				await HandleLogHelper.HSetAsync(currentuser.CompanyId, logEntity.F_Id, logEntity);
-			}
-		}
-
-		public async Task WriteDbLog(LogEntity logEntity)
+		public async Task WriteDbLog(LogEntity logEntity, OperatorModel user = null)
 		{
 			logEntity.F_Id = Utils.GuId();
 			logEntity.F_Date = DateTime.Now;
 			currentuser = OperatorProvider.Provider.GetCurrent();
-			var dbNumber = GlobalContext.SystemConfig.MainDbNumber;
-			if (currentuser != null)
+			if (user == null || string.IsNullOrEmpty(user.UserId))
 			{
-				dbNumber = currentuser.DbNumber;
+				user = currentuser;
+			}
+			var dbNumber = GlobalContext.SystemConfig.MainDbNumber;
+			if (user != null)
+			{
+				dbNumber = user.DbNumber;
 			}
 			repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber);
 			var systemSet = await repository.Db.Queryable<SystemSetEntity>().Where(a => a.F_DbNumber == GlobalContext.SystemConfig.MainDbNumber).FirstAsync();
 			repository.ChangeEntityDb(dbNumber);
 			try
 			{
-				if (currentuser == null || string.IsNullOrEmpty(currentuser.UserId))
+				if (user == null || string.IsNullOrEmpty(user.UserId))
 				{
 					logEntity.F_IPAddress = WebHelper.Ip;
 					if (GlobalContext.SystemConfig.LocalLAN != false)
@@ -182,38 +124,30 @@ namespace WaterCloud.Service.SystemSecurity
 				}
 				else
 				{
-					logEntity.F_IPAddress = currentuser.LoginIPAddress;
-					logEntity.F_IPAddressName = currentuser.LoginIPAddressName;
-					logEntity.F_CompanyId = currentuser.CompanyId;
+					logEntity.F_IPAddress = user.LoginIPAddress;
+					logEntity.F_IPAddressName = user.LoginIPAddressName;
+					logEntity.F_CompanyId = user.CompanyId;
 				}
 				logEntity.Create();
-				if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
+				if (!string.IsNullOrEmpty(logEntity.F_KeyValue))
 				{
-					repository.Dbs.RollbackTran();
-					if (!string.IsNullOrEmpty(logEntity.F_KeyValue))
+					//批量删除时，循环拆分F_KeyValue，以免截断二进制错误
+					//方便以后根据F_KeyValue查询；
+					var keylist = logEntity.F_KeyValue.Split(",").ToList();
+					var loglist = new List<LogEntity>();
+					foreach (var key in keylist)
 					{
-						//批量删除时，循环拆分F_KeyValue，以免截断二进制错误
-						//方便以后根据F_KeyValue查询；
-						var keylist = logEntity.F_KeyValue.Split(",").ToList();
-						var loglist = new List<LogEntity>();
-						foreach (var key in keylist)
-						{
-							var log = new LogEntity();
-							log = logEntity.ToJson().ToObject<LogEntity>();
-							log.F_KeyValue = key;
-							log.F_Id = Utils.GuId();
-							loglist.Add(log);
-						}
-						await repository.Insert(loglist);
+						var log = new LogEntity();
+						log = logEntity.ToJson().ToObject<LogEntity>();
+						log.F_KeyValue = key;
+						log.F_Id = Utils.GuId();
+						loglist.Add(log);
 					}
-					else
-					{
-						await repository.Insert(logEntity);
-					}
+					await repository.Insert(loglist);
 				}
 				else
 				{
-					await HandleLogHelper.HSetAsync(logEntity.F_CompanyId, logEntity.F_Id, logEntity);
+					await repository.Insert(logEntity);
 				}
 			}
 			catch (Exception)
@@ -229,18 +163,11 @@ namespace WaterCloud.Service.SystemSecurity
 				}
 				logEntity.F_CompanyId = systemSet.F_Id;
 				logEntity.Create();
-				if (HandleLogProvider != Define.CACHEPROVIDER_REDIS)
-				{
-					await repository.Insert(logEntity);
-				}
-				else
-				{
-					await HandleLogHelper.HSetAsync(logEntity.F_CompanyId, logEntity.F_Id, logEntity);
-				}
+				await repository.Insert(logEntity);
 			}
 		}
 
-		public async Task<LogEntity> CreateLog(string className, DbLogType type)
+		private async Task<LogEntity> CreateLog(string className, DbLogType type)
 		{
 			try
 			{
@@ -258,25 +185,7 @@ namespace WaterCloud.Service.SystemSecurity
 			}
 		}
 
-		public async Task<LogEntity> CreateLog(string className, string type)
-		{
-			try
-			{
-				var moduleitem = (await moduleservice.GetList()).Where(a => a.F_IsExpand == false && a.F_EnCode == className.Substring(0, className.Length - 10)).FirstOrDefault();
-				if (moduleitem == null)
-				{
-					throw new Exception();
-				}
-				var module = (await moduleservice.GetList()).Where(a => a.F_Id == moduleitem.F_ParentId).First();
-				return new LogEntity(await CreateModule(module), moduleitem == null ? "" : moduleitem.F_FullName, type);
-			}
-			catch (Exception)
-			{
-				return new LogEntity(className, "", type.ToString());
-			}
-		}
-
-		public async Task<string> CreateModule(ModuleEntity module, string str = "")
+		private async Task<string> CreateModule(ModuleEntity module, string str = "")
 		{
 			if (module == null)
 			{
@@ -294,7 +203,7 @@ namespace WaterCloud.Service.SystemSecurity
 			}
 		}
 
-		public async Task WriteLog(string message, string className, string keyValue = "", DbLogType? logType = null, bool isError = false)
+		public async Task<LogEntity> CreateLog(string message, string className, string keyValue = "", DbLogType? logType = null, bool isError = false)
 		{
 			LogEntity logEntity;
 			if (logType != null)
@@ -330,7 +239,7 @@ namespace WaterCloud.Service.SystemSecurity
 				logEntity.F_Account = currentuser.UserCode;
 				logEntity.F_NickName = currentuser.UserName;
 			}
-			await WriteDbLog(logEntity);
+			return logEntity;
 		}
 	}
 }

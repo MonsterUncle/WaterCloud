@@ -5,7 +5,9 @@
  * Website：
 *********************************************************************************/
 
+using Jaina.EventBus;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using SqlSugar;
 using System;
 using System.Linq;
@@ -13,6 +15,7 @@ using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Domain.SystemSecurity;
+using WaterCloud.Service.Event;
 using WaterCloud.Service.SystemOrganize;
 using WaterCloud.Service.SystemSecurity;
 
@@ -84,7 +87,7 @@ namespace WaterCloud.Web.Controllers
 		[HttpGet]
 		public async Task<ActionResult> OutLogin()
 		{
-			await _logService.WriteDbLog(new LogEntity
+			var logEntity = new LogEntity
 			{
 				F_ModuleName = "系统登录",
 				F_Type = DbLogType.Exit.ToString(),
@@ -92,7 +95,8 @@ namespace WaterCloud.Web.Controllers
 				F_NickName = _setService.currentuser.UserName,
 				F_Result = true,
 				F_Description = "安全退出系统",
-			});
+			};
+			await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", logEntity, _userService.currentuser));
 			await OperatorProvider.Provider.EmptyCurrent("pc_");
 			return Content(new AlwaysResult { state = ResultType.success.ToString() }.ToJson());
 		}
@@ -199,7 +203,7 @@ namespace WaterCloud.Web.Controllers
 				logEntity.F_NickName = userEntity.F_RealName;
 				logEntity.F_Result = true;
 				logEntity.F_Description = "登录成功";
-				await _logService.WriteDbLog(logEntity);
+				await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", logEntity, operatorModel));
 				//验证回退路由是否有权限，没有就删除
 				await CheckReturnUrl(operatorModel.UserId);
 				return Content(new AlwaysResult { state = ResultType.success.ToString(), message = "登录成功。" }.ToJson());
@@ -210,7 +214,7 @@ namespace WaterCloud.Web.Controllers
 				logEntity.F_NickName = username;
 				logEntity.F_Result = false;
 				logEntity.F_Description = "登录失败，" + ex.Message;
-				await _logService.WriteDbLog(logEntity);
+				await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", logEntity));
 				return Content(new AlwaysResult { state = ResultType.error.ToString(), message = ex.Message }.ToJson());
 			}
 		}

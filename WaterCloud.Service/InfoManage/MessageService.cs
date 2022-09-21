@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using Jaina.EventBus;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.InfoManage;
 using WaterCloud.Domain.SystemOrganize;
+using WaterCloud.Service.Event;
 using WaterCloud.Service.SystemManage;
 
 namespace WaterCloud.Service.InfoManage
@@ -19,7 +21,6 @@ namespace WaterCloud.Service.InfoManage
 	public class MessageService : BaseService<MessageEntity>, IDenpendency
 	{
 		public ItemsDataService itemsApp { get; set; }
-		public RabbitMqHelper rabbitMqHelper { get; set; }
 
 		public MessageService(ISqlSugarClient context) : base(context)
 		{
@@ -119,8 +120,7 @@ namespace WaterCloud.Service.InfoManage
 			}
 			//通过http发送消息
 			messageEntity.companyId = currentuser.CompanyId;
-			if (GlobalContext.SystemConfig.RabbitMq.Enabled)
-				rabbitMqHelper.Publish(messageEntity);
+			await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Message:send", messageEntity,currentuser));
 		}
 
 		public async Task ReadAllMsgForm(int type)

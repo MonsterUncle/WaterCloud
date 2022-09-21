@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Jaina.EventBus;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Domain.SystemSecurity;
+using WaterCloud.Service.Event;
 using WaterCloud.Service.SystemOrganize;
 using WaterCloud.Service.SystemSecurity;
 
@@ -91,7 +93,8 @@ namespace WaterCloud.Web.Controllers
 				logEntity.F_NickName = userEntity.F_RealName;
 				logEntity.F_Result = true;
 				logEntity.F_Description = "登录成功";
-				await _logService.WriteDbLog(logEntity);
+				await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", logEntity, operatorModel));
+
 				// 设置刷新Token令牌
 				_httpContextAccessor.HttpContext.Response.Headers[GlobalContext.SystemConfig.TokenName] = apitoken;
 				return new AlwaysResult<string> { state = ResultType.success.ToString(), message = "登录成功。", data = apitoken };
@@ -102,7 +105,7 @@ namespace WaterCloud.Web.Controllers
 				logEntity.F_NickName = request.userName;
 				logEntity.F_Result = false;
 				logEntity.F_Description = "登录失败，" + ex.Message;
-				await _logService.WriteDbLog(logEntity);
+				await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", logEntity));
 				return new AlwaysResult<string> { state = ResultType.error.ToString(), message = ex.Message, data = apitoken };
 			}
 		}
@@ -121,7 +124,7 @@ namespace WaterCloud.Web.Controllers
 		[LoginFilter]
 		public async Task<AlwaysResult> LoginOff()
 		{
-			await _logService.WriteDbLog(new LogEntity
+			var logEntity = new LogEntity
 			{
 				F_ModuleName = "用户Api",
 				F_Type = DbLogType.Exit.ToString(),
@@ -129,7 +132,9 @@ namespace WaterCloud.Web.Controllers
 				F_NickName = _userService.currentuser.UserName,
 				F_Result = true,
 				F_Description = "安全退出系统",
-			});
+			};
+			await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", logEntity, _userService.currentuser));
+
 			await OperatorProvider.Provider.EmptyCurrent("api_");
 			return new AlwaysResult { state = ResultType.success.ToString() };
 		}
