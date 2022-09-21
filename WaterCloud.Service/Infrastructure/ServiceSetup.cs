@@ -227,7 +227,8 @@ namespace WaterCloud.Service
 						Password = GlobalContext.SystemConfig.RabbitMq.Password
 					};
 					// 创建默认内存通道事件源对象，可自定义队列路由key，比如这里是 eventbus
-					var rbmqEventSourceStorer = new RabbitMQEventSourceStorer(factory, GlobalContext.SystemConfig.ProjectPrefix + "eventbus", 3000);
+					var rbmqEventSourceStorer = new RabbitMQEventSourceStorer(factory, GlobalContext.SystemConfig.ProjectPrefix 
+						+ "_eventbus", 3000);
 					// 替换默认事件总线存储器
 					builder.ReplaceStorer(serviceProvider =>
 					{
