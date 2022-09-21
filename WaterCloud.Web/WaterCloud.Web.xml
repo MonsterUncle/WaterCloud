@@ -134,6 +134,49 @@
             清除任务计划
             </summary>
         </member>
+        <member name="T:WaterCloud.Web.TestController">
+            <summary>
+            测试文件
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.UserController">
+            <summary>
+            用户接口
+            </summary>
+        </member>
+        <member name="M:WaterCloud.Web.UserController.Login(WaterCloud.Web.UserController.LoginRequest)">
+            <summary>
+            用户登录
+            </summary>
+            <param name="request">请求对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:WaterCloud.Web.UserController.LoginOff">
+            <summary>
+            用户退出登录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WaterCloud.Web.UserController.LoginRequest">
+            <summary>
+            登录请求对象
+            </summary>
+        </member>
+        <member name="P:WaterCloud.Web.UserController.LoginRequest.userName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:WaterCloud.Web.UserController.LoginRequest.password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:WaterCloud.Web.UserController.LoginRequest.localurl">
+            <summary>
+            域名
+            </summary>
+        </member>
         <member name="M:WaterCloud.Web.BaseController.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
             <summary>
             演示模式过滤
@@ -259,49 +302,6 @@
             <param name="password">密码</param>
             <param name="localurl">域名</param>
             <returns></returns>
-        </member>
-        <member name="T:WaterCloud.Web.Controllers.TestController">
-            <summary>
-            测试文件
-            </summary>
-        </member>
-        <member name="T:WaterCloud.Web.Controllers.UserController">
-            <summary>
-            用户接口
-            </summary>
-        </member>
-        <member name="M:WaterCloud.Web.Controllers.UserController.Login(WaterCloud.Web.Controllers.UserController.LoginRequest)">
-            <summary>
-            用户登录
-            </summary>
-            <param name="request">请求对象</param>
-            <returns></returns>
-        </member>
-        <member name="M:WaterCloud.Web.Controllers.UserController.LoginOff">
-            <summary>
-            用户退出登录
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:WaterCloud.Web.Controllers.UserController.LoginRequest">
-            <summary>
-            登录请求对象
-            </summary>
-        </member>
-        <member name="P:WaterCloud.Web.Controllers.UserController.LoginRequest.userName">
-            <summary>
-            用户名
-            </summary>
-        </member>
-        <member name="P:WaterCloud.Web.Controllers.UserController.LoginRequest.password">
-            <summary>
-            密码
-            </summary>
-        </member>
-        <member name="P:WaterCloud.Web.Controllers.UserController.LoginRequest.localurl">
-            <summary>
-            域名
-            </summary>
         </member>
         <member name="T:WaterCloud.Web.AuthorizeFilterAttribute">
             <summary>
