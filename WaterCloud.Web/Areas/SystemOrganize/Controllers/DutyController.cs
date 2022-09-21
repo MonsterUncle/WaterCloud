@@ -8,9 +8,8 @@
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
+using MiniExcelLibs;
 using Newtonsoft.Json;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -192,45 +191,29 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 		public async Task<FileResult> ExportExcel(string keyword = "")
 		{
 			var list = await _service.GetList(keyword);
-
-			#region NPOI
-
-			HSSFWorkbook book = new HSSFWorkbook();
-			//添加一个sheet
-			ISheet sheet1 = book.CreateSheet("Sheet1");
-
-			//给sheet1添加第一行的头部标题
-
-			IRow row1 = sheet1.CreateRow(0);
-			row1.CreateCell(0).SetCellValue("序号");
-			row1.CreateCell(1).SetCellValue("岗位编号");
-			row1.CreateCell(2).SetCellValue("岗位名称");
-			row1.CreateCell(3).SetCellValue("归属公司");
-			row1.CreateCell(4).SetCellValue("有效状态");
-			row1.CreateCell(5).SetCellValue("创建时间");
-			row1.CreateCell(6).SetCellValue("备注");
-			//将数据逐步写入sheet1各个行
-			for (int i = 0; i < list.Count; i++)
-			{
-				IRow rowtemp = sheet1.CreateRow(i + 1);
-				rowtemp.CreateCell(0).SetCellValue((i + 1).ToString());
-				rowtemp.CreateCell(1).SetCellValue(list[i].F_EnCode != null ? list[i].F_EnCode.ToString() : "");
-				rowtemp.CreateCell(2).SetCellValue(list[i].F_FullName != null ? list[i].F_FullName.ToString() : "");
-				var set = await _setService.GetForm(_service.currentuser.CompanyId);
-				rowtemp.CreateCell(3).SetCellValue(set != null ? set.F_CompanyName : "");
-				rowtemp.CreateCell(4).SetCellValue(list[i].F_EnabledMark == true ? "有效" : "无效");
-				rowtemp.CreateCell(5).SetCellValue(list[i].F_CreatorTime != null ? list[i].F_CreatorTime.ToString() : "");
-				rowtemp.CreateCell(6).SetCellValue(list[i].F_Description != null ? list[i].F_Description.ToString() : "");
-			}
-			System.IO.MemoryStream ms = new System.IO.MemoryStream();
-			book.Write(ms);
-			ms.Seek(0, SeekOrigin.Begin);
 			string filename = "岗位信息" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".xls";
 			var contentType = MimeMapping.GetMimeMapping(filename);
-
-			#endregion NPOI
-
-			return File(ms, contentType, filename);
+			var values = new List<Dictionary<string, object>>();
+			var set = await _setService.GetForm(_service.currentuser.CompanyId);
+			for (int i = 0; i < list.Count; i++)
+			{
+				var dic = new Dictionary<string, object> ();
+				dic.Add("序号",i+1);
+				dic.Add("岗位编号", list[i].F_EnCode);
+				dic.Add("岗位名称", list[i].F_FullName);
+				dic.Add("归属公司", set.F_CompanyName);
+				dic.Add("有效状态", list[i].F_EnabledMark);
+				dic.Add("创建时间", list[i].F_CreatorTime);
+				dic.Add("备注", list[i].F_Description);
+				values.Add(dic);
+			}
+			var memoryStream = new MemoryStream();
+			memoryStream.SaveAs(values);
+			memoryStream.Seek(0, SeekOrigin.Begin);
+			return new FileStreamResult(memoryStream, contentType)
+			{
+				FileDownloadName = filename
+			};
 		}
 
 		[HttpGet]

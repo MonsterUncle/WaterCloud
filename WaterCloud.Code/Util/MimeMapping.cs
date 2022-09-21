@@ -230,6 +230,7 @@ namespace WaterCloud.Code
 			MimeMapping.AddMimeMapping(".z", "application/x-compress");
 			MimeMapping.AddMimeMapping(".zip", "application/x-zip-compressed");
 			MimeMapping.AddMimeMapping(".*", "application/octet-stream");
+			MimeMapping.AddMimeMapping(".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 		}
 	}
 }

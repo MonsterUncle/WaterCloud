@@ -71,8 +71,9 @@
 - 服务端验证：实体模型验证
 - 缓存框架：Redis/Memory（单点登录控制）
 - 消息队列: RabbitMq
+- 事件总线: Jaina
 - 日志管理：Log、登录日志、操作日志
-- 工具类：NPOI、Newtonsoft.Json、验证码、丰富公共类
+- 工具类：MiniExcel、Newtonsoft.Json、验证码、丰富公共类
 - 其他：AutoFac、Swagger
 
 
