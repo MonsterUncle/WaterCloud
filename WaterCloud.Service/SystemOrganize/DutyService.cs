@@ -5,6 +5,7 @@
  * Website：
 *********************************************************************************/
 
+using MiniExcelLibs;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -122,7 +123,7 @@ namespace WaterCloud.Service.SystemOrganize
 				throw new Exception("文件不是有效的Excel文件!");
 			}
 			//文件解析
-			var list = new ExcelHelper<RoleExtend>().ImportFromExcel(fileFullName);
+			var list = MiniExcel.Query<RoleExtend>(fileFullName).ToList(); ;
 			//删除文件
 			File.Delete(fileFullName);
 			foreach (var item in list)

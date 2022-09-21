@@ -5,6 +5,7 @@
  * Website：
 *********************************************************************************/
 
+using MiniExcelLibs.Attributes;
 using SqlSugar;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -41,6 +42,7 @@ namespace WaterCloud.Domain.SystemOrganize
 		/// </summary>
 		[Required(ErrorMessage = "编号不能为空")]
 		[SugarColumn(IsNullable = true, ColumnName = "F_EnCode", ColumnDataType = "nvarchar(50)", ColumnDescription = "编号", UniqueGroupNameList = new string[] { "sys_role" })]
+		[ExcelColumnName("岗位编号")]
 		public string F_EnCode { get; set; }
 
 		/// <summary>
@@ -48,6 +50,7 @@ namespace WaterCloud.Domain.SystemOrganize
 		/// </summary>
 		[Required(ErrorMessage = "名称不能为空")]
 		[SugarColumn(IsNullable = true, ColumnName = "F_FullName", ColumnDataType = "nvarchar(50)", ColumnDescription = "名称")]
+		[ExcelColumnName("岗位名称")]
 		public string F_FullName { get; set; }
 
 		/// <summary>
@@ -92,6 +95,7 @@ namespace WaterCloud.Domain.SystemOrganize
 		/// 备注
 		/// </summary>
 		[SugarColumn(IsNullable = true, ColumnName = "F_Description", ColumnDataType = "longtext", ColumnDescription = "备注")]
+		[ExcelColumnName("备注")]
 		public string F_Description { get; set; }
 
 		/// <summary>
