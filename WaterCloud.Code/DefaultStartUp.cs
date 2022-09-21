@@ -313,11 +313,13 @@ namespace WaterCloud.Code
 			var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "*.dll")
 				.Select(x => x.Substring(@"\").Substring(@"/").Replace(".dll", ""))
 				.Select(x => Assembly.Load(x)).ToArray();
+			//排除列表
+			var ignoreList= new List<string>{ "EventBusHostedService" };
 			foreach (var item in assemblies)
 			{
 				ret.AddRange(item.GetTypes() //获取当前类库下所有类型
 				 .Where(t => typeof(BackgroundService).IsAssignableFrom(t)) //获取间接或直接继承t的所有类型
-				 .Where(t => !t.IsAbstract && t.IsClass));//获取非抽象类 排除接口继承
+				 .Where(t => !t.IsAbstract && t.IsClass && !ignoreList.Contains(t.Name)));//获取非抽象类 排除接口继承
 			}
 			foreach (var item in ret)
 			{
