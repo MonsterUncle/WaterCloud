@@ -3584,7 +3584,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     '  , colorpicker = layui.colorpicker\n' +
                     '  , carousel = layui.carousel\n' +
                     '  , form = layui.form\n' +
-                    '  , upload = layui.upload\n' +v
+                    '  , upload = layui.upload\n' +
                     '  , formField = layui.formField\n' +
                     '  , hint = layui.hint\n' +
                     '  , numberInput = layui.numberInput\n' +
