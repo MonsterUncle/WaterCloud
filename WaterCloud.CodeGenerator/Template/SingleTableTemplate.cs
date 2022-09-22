@@ -632,22 +632,22 @@ namespace WaterCloud.CodeGenerator
 			if (baseConfigModel.PageIndex.ButtonList.Contains("add"))
 			{
 				KeyValue button = list.Where(p => p.Key == "add").First();
-				sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe654;</i>" + button.Description + "</button>");
+				sb.AppendLine($"                 <button id=\"{button.Value}\" name=\"{button.Value}\" authorize class=\"layui-btn layui-btn-sm\" lay-event=\"{button.Key}\"><i class=\"layui-icon\">&#xe654;</i>{button.Description}</button>");
 			}
 			if (baseConfigModel.PageIndex.ButtonList.Contains("edit"))
 			{
 				KeyValue button = list.Where(p => p.Key == "edit").First();
-				sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-warm layui-hide\" lay-event=\"" + button.Key + "\"><i class=\"layui-icon\">&#xe642;</i>" + button.Description + "</button>");
+				sb.AppendLine($"                 <button id=\"{button.Value}\" name=\"{button.Value}\" authorize class=\"layui-btn layui-btn-sm layui-btn-warm layui-hide\" lay-event=\"{button.Key}\"><i class=\"layui-icon\">&#xe642;</i>{button.Description}</button>");
 			}
 			if (baseConfigModel.PageIndex.ButtonList.Contains("delete"))
 			{
 				KeyValue button = list.Where(p => p.Key == "delete").First();
-				sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-danger layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe640;</i>" + button.Description + "</button>");
+				sb.AppendLine($"                 <button id=\"{button.Value}\" name=\"{button.Value}\" authorize class=\"layui-btn layui-btn-sm layui-btn-danger layui-hide\" lay-event=\"{button.Key}\"> <i class=\"layui-icon\">&#xe640;</i>{button.Description}</button>");
 			}
 			if (baseConfigModel.PageIndex.ButtonList.Contains("details"))
 			{
 				KeyValue button = list.Where(p => p.Key == "details").First();
-				sb.AppendLine("                 <button id=\"" + button.Value + "\" name=\"" + button.Value + "\" authorize class=\"layui-btn layui-btn-sm layui-btn-normal layui-hide\" lay-event=\"" + button.Key + "\"> <i class=\"layui-icon\">&#xe60b;</i>" + button.Description + "</button>");
+				sb.AppendLine($"                 <button id=\"{button.Value}\" name=\"{button.Value}\" authorize class=\"layui-btn layui-btn-sm layui-btn-normal layui-hide\" lay-event=\"{button.Key}\"> <i class=\"layui-icon\">&#xe60b;</i>{button.Description}</button>");
 			}
 			sb.AppendLine("             </div>");
 			sb.AppendLine("         </script>");
@@ -660,15 +660,18 @@ namespace WaterCloud.CodeGenerator
 				sb.AppendLine("        <script type=\"text/html\" id=\"currentTableBar\">");
 				if (baseConfigModel.PageIndex.ButtonList.Contains("edit"))
 				{
-					sb.AppendLine("            <a id=\"NF-edit\" authorize class=\"layui-btn layui-btn-sm\" lay-event=\"edit\"><i class=\"layui-icon\">&#xe642;</i></a>");
+					KeyValue button = list.Where(p => p.Key == "edit").First();
+					sb.AppendLine($"            <a id=\"{button.Value}\" authorize class=\"layui-btn layui-btn-xs\" lay-event=\"{button.Key}\">{button.Description}</a>");
 				}
 				if (baseConfigModel.PageIndex.ButtonList.Contains("delete"))
 				{
-					sb.AppendLine("            <a id=\"NF-delete\" authorize class=\"layui-btn layui-btn-sm layui-btn-danger\" lay-event=\"delete\"><i class=\"layui-icon\">&#xe640;</i></a>");
+					KeyValue button = list.Where(p => p.Key == "delete").First();
+					sb.AppendLine($"            <a id=\"{button.Value}\" authorize class=\"layui-btn layui-btn-xs layui-btn-danger\" lay-event=\"{button.Key}\">{button.Description}</a>");
 				}
 				if (baseConfigModel.PageIndex.ButtonList.Contains("details"))
 				{
-					sb.AppendLine("            <a id=\"NF-details\" authorize class=\"layui-btn layui-btn-sm layui-btn-normal\" lay-event=\"details\"><i class=\"layui-icon\">&#xe60b;</i></a>");
+					KeyValue button = list.Where(p => p.Key == "details").First();
+					sb.AppendLine($"            <a id=\"{button.Value}\" authorize class=\"layui-btn layui-btn-xs layui-btn-normal\" lay-event=\"{button.Key}\">{button.Description}</a>");
 				}
 				sb.AppendLine("        </script>");
 			}

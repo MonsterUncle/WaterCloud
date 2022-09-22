@@ -107,7 +107,7 @@
                     }
                 },
                 { field: 'F_Description', title: '备注', minWidth: 100, filter: true },
-                { title: '操作', width: 260, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
+                { title: '操作', width: 270, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]]
         };
         commonTable.rendertreetable(options);
@@ -321,21 +321,21 @@
         </fieldset>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
-                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
+                <button id="NF-add" authorize="yes" class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe654;</i>新建</button>
                 <button id="NF-edit"name="NF-edit" authorize="yes" class="layui-btn layui-btn-sm  layui-btn-normal layui-hide" lay-event="clone"><i class="fa fa-paste"></i>复制</button>
-                <button id="NF-edit" name="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
-                <button id="NF-delete" name="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
-                <button id="NF-details" name="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
-                <button id="NF-modulebutton" name="NF-modulebutton" authorize="yes" class="layui-btn layui-btn-sm  data-modulebutton-btn layui-hide" lay-event="modulebutton"> <i class="fa fa-gavel"></i>按钮管理</button>
-                <button id="NF-modulefields" name="NF-modulefields" authorize="yes" class="layui-btn layui-btn-sm  data-modulefields-btn layui-hide" lay-event="modulefields"> <i class="fa fa-table"></i>字段管理</button>
+                <button id="NF-edit" name="NF-edit" authorize="yes" class="layui-btn layui-btn-sm layui-btn-warm layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                <button id="NF-delete" name="NF-delete" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                <button id="NF-details" name="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+                <button id="NF-modulebutton" name="NF-modulebutton" authorize="yes" class="layui-btn layui-btn-sm layui-hide" lay-event="modulebutton"> <i class="fa fa-gavel"></i>按钮管理</button>
+                <button id="NF-modulefields" name="NF-modulefields" authorize="yes" class="layui-btn layui-btn-sm layui-hide" lay-event="modulefields"> <i class="fa fa-table"></i>字段管理</button>
             </div>
         </script>
         <script type="text/html" id="currentTableBar">
-            <a id="NF-edit" authorize class="layui-btn layui-btn-sm layui-btn-normal" lay-event="clone"><i class="fa fa-paste"></i></a>
-            <a id="NF-edit" authorize class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
-            <a id="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"><i class="layui-icon">&#xe640;</i></a>
-            <a id="NF-modulebutton" authorize class="layui-btn layui-btn-sm data-info-btn" lay-event="modulebutton"> <i class="fa fa-gavel"></i></a>
-            <a id="NF-modulefields" authorize class="layui-btn layui-btn-sm data-info-btn" lay-event="modulefields"> <i class="fa fa-table"></i></a>
+            <a id="NF-edit" authorize class="layui-btn layui-btn-xs layui-btn-normal" lay-event="clone">克隆</a>
+            <a id="NF-edit" authorize class="layui-btn layui-btn-xs  layui-btn-warm" lay-event="edit">编辑</a>
+            <a id="NF-delete" authorize class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+            <a id="NF-modulebutton" authorize class="layui-btn layui-btn-xs" lay-event="modulebutton">按钮</a>
+            <a id="NF-modulefields" authorize class="layui-btn layui-btn-xs" lay-event="modulefields">字段</a>
         </script>
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
     </div>

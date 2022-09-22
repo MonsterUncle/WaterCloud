@@ -39,7 +39,7 @@
                          }
                      } 
                 },
-                { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
+                { title: '操作', width: 215, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]]
         });
         var dbNumber = $('#dbNumber').val();
@@ -167,15 +167,15 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
-                <button id="NF-add" name="NF-add" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="add"><i class="layui-icon">&#xe654;</i>模板生成</button>
-                <button id="NF-entitycode" name="NF-entitycode" authorize="yes" class="layui-btn layui-btn-sm data-add-btn layui-hide" lay-event="entitycode"><i class="layui-icon">&#xe67a;</i>实体生成</button>
-                <button id="NF-details" name="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
+                <button id="NF-add" name="NF-add" authorize="yes" class="layui-btn layui-btn-sm layui-hide" lay-event="add"><i class="layui-icon">&#xe654;</i>模板生成</button>
+                <button id="NF-entitycode" name="NF-entitycode" authorize="yes" class="layui-btn layui-btn-sm layui-btn-danger layui-hide" lay-event="entitycode"><i class="layui-icon">&#xe67a;</i>实体生成</button>
+                <button id="NF-details" name="NF-details" authorize="yes" class="layui-btn layui-btn-sm layui-btn-normal layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>查看</button>
             </div>
         </script>
         <script type="text/html" id="currentTableBar">
-            <a id="NF-add" authorize class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe654;</i></a>
-            <a id="NF-entitycode" authorize class="layui-btn layui-btn-sm " lay-event="entitycode"><i class="layui-icon">&#xe67a;</i></a>
-            <a id="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"><i class="layui-icon">&#xe60b;</i></a>
+            <a id="NF-add" authorize class="layui-btn layui-btn-xs" lay-event="add">模板生成</a>
+            <a id="NF-entitycode" authorize class="layui-btn layui-btn-xs layui-btn-danger" lay-event="entitycode">实体生成</a>
+            <a id="NF-details" authorize class="layui-btn layui-btn-xs layui-btn-normal" lay-event="details">查看</a>
         </script>
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 

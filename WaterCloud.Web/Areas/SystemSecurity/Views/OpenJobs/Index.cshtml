@@ -63,7 +63,7 @@
                 { field: 'F_JobSqlParm', title: 'Sql参数', width: 180, sort: true ,hide:true },
                 { field: 'F_CronExpress', title: 'CRON', width: 150 },
                 { field: 'F_Description', title: '备注', width: 150, sort: true },
-                { title: '操作', width: 310, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
+                { title: '操作', width: 320, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
 
             ]]
         });
@@ -296,23 +296,23 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
-                <button id="NF-clear" name="NF-clear" authorize class="layui-btn layui-btn-sm data-add-btn" lay-event="clear"><i class="layui-icon">&#xe665;</i>清除任务计划</button>
-                <button id="NF-add" name="NF-add" authorize class="layui-btn layui-btn-sm data-add-btn" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
-                <button id="NF-edit" name="NF-edit" authorize class="layui-btn layui-btn-sm layui-btn-warm data-edit-btn layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
-                <button id="NF-delete" name="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
-                <button id="NF-doNow" name="NF-doNow" authorize class="layui-btn layui-btn-sm layui-btn-warm layui-hide" lay-event="doNow"><i class="layui-icon">&#xe609;</i>执行</button>
-                <button id="NF-enabled" name="NF-enabled" authorize class="layui-btn layui-btn-sm data-enabled-btn layui-hide" lay-event="enabled"> <i class="fa fa-play-circle"></i>启动</button>
-                <button id="NF-disabled" name="NF-disabled" authorize class="layui-btn layui-btn-sm layui-btn-danger data-disabled-btn layui-hide" lay-event="disabled"><i class="fa fa-stop-circle"></i>关闭</button>
-                <button id="NF-log" name="NF-log" authorize class="layui-btn layui-btn-sm data-log-btn layui-hide" lay-event="log"><i class="layui-icon">&#xe702;</i>日志</button>
+                <button id="NF-clear" name="NF-clear" authorize class="layui-btn layui-btn-sm" lay-event="clear"><i class="layui-icon">&#xe665;</i>清除任务计划</button>
+                <button id="NF-add" name="NF-add" authorize class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe654;</i>新增</button>
+                <button id="NF-edit" name="NF-edit" authorize class="layui-btn layui-btn-sm layui-btn-warm layui-hide" lay-event="edit"><i class="layui-icon">&#xe642;</i>修改</button>
+                <button id="NF-delete" name="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger layui-hide" lay-event="delete"> <i class="layui-icon">&#xe640;</i>删除</button>
+                <button id="NF-doNow" name="NF-doNow" authorize class="layui-btn layui-btn-sm layui-btn-normal layui-hide" lay-event="doNow"><i class="layui-icon">&#xe609;</i>执行</button>
+                <button id="NF-enabled" name="NF-enabled" authorize class="layui-btn layui-btn-sm layui-hide" lay-event="enabled"> <i class="fa fa-play-circle"></i>启动</button>
+                <button id="NF-disabled" name="NF-disabled" authorize class="layui-btn layui-btn-sm layui-btn-danger layui-hide" lay-event="disabled"><i class="fa fa-stop-circle"></i>关闭</button>
+                <button id="NF-log" name="NF-log" authorize class="layui-btn layui-btn-sm layui-btn-normal layui-hide" lay-event="log"><i class="layui-icon">&#xe702;</i>日志</button>
             </div>
         </script>
         <script type="text/html" id="currentTableBar">
-            <a id="NF-edit" authorize class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
-            <a id="NF-delete" authorize class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"><i class="layui-icon">&#xe640;</i></a>
-            <a id="NF-doNow" authorize class="layui-btn layui-btn-sm layui-btn-warm" lay-event="doNow"><i class="layui-icon">&#xe609;</i></a>
-            <a id="NF-enabled" authorize class="layui-btn layui-btn-sm" lay-event="enabled"><i class="fa fa-play-circle"></i></a>
-            <a id="NF-disabled" authorize class="layui-btn layui-btn-danger layui-btn-sm" lay-event="disabled"><i class="fa fa-stop-circle"></i></a>
-            <a id="NF-log" authorize class="layui-btn layui-btn-sm" lay-event="log"><i class="layui-icon">&#xe702;</i></a>
+            <a id="NF-edit" authorize class="layui-btn layui-btn-xs  layui-btn-warm" lay-event="edit">编辑</a>
+            <a id="NF-delete" authorize class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+            <a id="NF-doNow" authorize class="layui-btn layui-btn-xs layui-btn-normal" lay-event="doNow">执行</a>
+            <a id="NF-enabled" authorize class="layui-btn layui-btn-xs" lay-event="enabled">启用</a>
+            <a id="NF-disabled" authorize class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disabled">禁用</a>
+            <a id="NF-log" authorize class="layui-btn layui-btn-xs layui-btn-normal" lay-event="log">日志</a>
         </script>
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 

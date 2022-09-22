@@ -24,12 +24,12 @@
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
                 <button id="NF-vft" name="NF-vft" authorize class="layui-btn layui-btn-sm data-vft-btn layui-hide" lay-event="vft"><i class="layui-icon">&#xe654;</i>处理</button>
-                <button id="NF-details" name="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>进度</button>
+                <button id="NF-details" name="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal layui-hide" lay-event="details"> <i class="layui-icon">&#xe60b;</i>进度</button>
             </div>
         </script>
         <script type="text/html" id="currentTableBar">
-            <a id="NF-vft" authorize class="layui-btn layui-btn-sm" lay-event="vft"><i class="layui-icon">&#xe654;</i></a>
-            <a id="NF-details" authorize class="layui-btn layui-btn-sm layui-btn-normal data-info-btn" lay-event="details"><i class="layui-icon">&#xe60b;</i></a>
+            <a id="NF-vft" authorize class="layui-btn layui-btn-xs" lay-event="vft">处理</a>
+            <a id="NF-details" authorize class="layui-btn layui-btn-xs layui-btn-normal" lay-event="details">进度</a>
         </script>
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
     </div>
