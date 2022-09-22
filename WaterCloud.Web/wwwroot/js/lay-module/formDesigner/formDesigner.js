@@ -17,7 +17,7 @@
  + 4.表单数据的获取与回显,禁用全表单
  +------------------------------------------------------------------------------------+
  */
-layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate", "colorpicker", "layedit", "carousel", "upload", "formField","numberInput","iconPicker", "cron","labelGeneration"]
+layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate", "colorpicker", "carousel", "upload", "formField","numberInput","iconPicker", "cron","labelGeneration"]
     , function (exports) {
         var $ = layui.jquery
             , layer = layui.layer
@@ -31,7 +31,6 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
             , carousel = layui.carousel
             , form = layui.form
             , upload = layui.upload
-            , layedit = layui.layedit
             , formField = layui.formField
             , hint = layui.hint
             , numberInput = layui.numberInput
@@ -3012,13 +3011,6 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                             that.components[_json.tag].update(_json);//局部更新
                         }
                     }
-                    if (_key == 'uploadImage') {
-                        _json[_key] = _value;
-                        layedit.build(_json.tag + _json.id, {
-                            height: _json['height'],
-                            uploadImage: _value
-                        }); //建立编辑器
-                    }
                     if (_key === 'defaultValue') {
                         _json[_key] = _value;
                         if (_json.tag === 'slider') {
@@ -3580,7 +3572,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     '  <script type="text/javascript" src="~/js/lay-module/iceEditor/iceEditor.js"></script>\n' +
                     '  <script type="text/javascript" src="~/js/config.js?v=100"></script>'
                     , '<script>'
-                    , 'layui.use(["layer", "laytpl", "element", "form", "slider", "laydate", "rate", "colorpicker", "layedit", "carousel", "upload", "formField","numberInput","iconPicker", "cron","labelGeneration"], function () {'
+                    , 'layui.use(["layer", "laytpl", "element", "form", "slider", "laydate", "rate", "colorpicker", "carousel", "upload", "formField","numberInput","iconPicker", "cron","labelGeneration"], function () {'
                     , 'var $ = layui.jquery'
                     , ', layer = layui.layer\n' +
                     '  , laytpl = layui.laytpl\n' +
@@ -3592,8 +3584,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                     '  , colorpicker = layui.colorpicker\n' +
                     '  , carousel = layui.carousel\n' +
                     '  , form = layui.form\n' +
-                    '  , upload = layui.upload\n' +
-                    '  , layedit = layui.layedit\n' +
+                    '  , upload = layui.upload\n' +v
                     '  , formField = layui.formField\n' +
                     '  , hint = layui.hint\n' +
                     '  , numberInput = layui.numberInput\n' +

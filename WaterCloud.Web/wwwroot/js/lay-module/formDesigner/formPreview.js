@@ -17,7 +17,7 @@
  + 4.表单数据的获取与回显,禁用全表单
  +------------------------------------------------------------------------------------+
  */
-layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'layedit', 'carousel', 'upload', 'formField',"numberInput","iconPicker", "cron","labelGeneration"]
+layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate', 'colorpicker', 'carousel', 'upload', 'formField',"numberInput","iconPicker", "cron","labelGeneration"]
     , function (exports) {
         var $ = layui.jquery
             , layer = layui.layer
@@ -31,7 +31,6 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
             , carousel = layui.carousel
             , form = layui.form
             , upload = layui.upload
-            , layedit = layui.layedit
             , formField = layui.formField
             , hint = layui.hint
             , numberInput = layui.numberInput
