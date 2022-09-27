@@ -90,7 +90,10 @@ namespace WaterCloud.Code
 							UserName = config.UserName,
 
 							//密码
-							Password = config.Password
+							Password = config.Password,
+
+							//配置端口
+							Port=config.Port
 						}.CreateConnection();
 				}
 			}
