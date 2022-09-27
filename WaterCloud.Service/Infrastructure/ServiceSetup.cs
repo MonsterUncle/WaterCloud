@@ -223,6 +223,9 @@ namespace WaterCloud.Service
 					// 创建连接工厂
 					var factory = new ConnectionFactory
 					{
+						HostName= GlobalContext.SystemConfig.RabbitMq.HostName,
+						VirtualHost= GlobalContext.SystemConfig.RabbitMq.VirtualHost,
+						Port= GlobalContext.SystemConfig.RabbitMq.Port,
 						UserName = GlobalContext.SystemConfig.RabbitMq.UserName,
 						Password = GlobalContext.SystemConfig.RabbitMq.Password
 					};
