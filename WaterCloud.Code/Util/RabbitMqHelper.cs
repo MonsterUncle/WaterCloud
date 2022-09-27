@@ -84,12 +84,15 @@ namespace WaterCloud.Code
                             //用户名
                             UserName = config.UserName,
 
-                            //密码
-                            Password = config.Password
-                        }.CreateConnection();
-                }
-            }
-        }
+							//密码
+							Password = config.Password,
+
+							//配置端口
+							Port=config.Port
+						}.CreateConnection();
+				}
+			}
+		}
 
         /// <summary>
         /// 构造函数
