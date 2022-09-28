@@ -184,7 +184,7 @@ layui.define(['table', 'laypage', 'jquery', 'element', 'laytpl'], function (expo
 	};
 	function getCheckedData(obj, elem) {
 		var item = {};
-		if (!obj.id && obj.nodeName == "DIV") {
+		if (!obj.id || obj.nodeName != "DIV") {
 			return getCheckedData(obj.parentElement, elem);
 		}
 		var reElem = obj;
