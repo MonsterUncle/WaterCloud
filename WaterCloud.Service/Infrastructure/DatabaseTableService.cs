@@ -9,7 +9,7 @@ namespace WaterCloud.Service
 {
 	public class DatabaseTableService : IDenpendency
 	{
-		private RepositoryBase<LogEntity> repository;
+		public RepositoryBase<LogEntity> repository;
 		private static string cacheKey = GlobalContext.SystemConfig.ProjectPrefix + "_dblist";// 数据库键
 
 		public DatabaseTableService(ISqlSugarClient context)
