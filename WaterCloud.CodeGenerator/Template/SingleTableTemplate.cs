@@ -195,7 +195,7 @@ namespace WaterCloud.CodeGenerator
 
 			SetClassDescription("服务类", baseConfigModel, sb);
 
-			sb.AppendLine("    public class " + baseConfigModel.FileConfig.ServiceName + " : DataFilterService<" + baseConfigModel.FileConfig.EntityName + ">, IDenpendency");
+			sb.AppendLine("    public class " + baseConfigModel.FileConfig.ServiceName + " : BaseService<" + baseConfigModel.FileConfig.EntityName + ">, IDenpendency");
 			sb.AppendLine("    {");
 			if (baseConfigModel.PageIndex.IsCache == true)
 			{

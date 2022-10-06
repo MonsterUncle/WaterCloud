@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Details"; 
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    layui.use(['jquery', 'form', 'laydate', 'common'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            common = layui.common,
+            laydate = layui.laydate;
+        var keyValue = $.request("keyValue");
+        //权限字段
+        common.authorizeFields('adminform');
+        //此处需修改
+        //类型为时间时
+        //laydate.render({
+            //elem: '#F_Birthday'
+            //, btns: ['clear', 'now']
+            //, trigger: 'click',
+            //format: 'yyyy-MM-dd',
+        //});
+
+        $(function () {
+            initControl();
+            common.ajax({
+                url: '/SystemManage/Coderule/GetFormJson',
+                dataType: 'json',
+                data: { keyValue: keyValue },
+                async: false,
+                success: function (data) {
+                    common.val('adminform', data);
+                    common.setReadOnly('adminform');
+                    form.render();
+                 }
+            });
+       });
+       wcLoading.close();
+
+       function initControl() {
+           //此处需修改
+           //绑定数据源
+           //类型为下拉框时
+       }
+   });
+</script>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form" lay-filter="adminform">
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label required">规则名称</label>
+                   <div class="layui-input-block">
+                        <input type="text" id="F_RuleName" name="F_RuleName" lay-verify="required" class="layui-input">
+                   </div>
+               </div>
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label required">规则内容</label>
+                   <div class="layui-input-block">
+                        <input type="text" id="F_RuleJson" name="F_RuleJson" lay-verify="required" class="layui-input">
+                   </div>
+               </div>
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label required">重设机制</label>
+                   <div class="layui-input-block">
+                        <input type="text" id="F_Reset" name="F_Reset" lay-verify="required" class="layui-input">
+                   </div>
+               </div>
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label required">打印模板</label>
+                   <div class="layui-input-block">
+                        <input type="text" id="F_PrintTemplate" name="F_PrintTemplate" lay-verify="required" class="layui-input">
+                   </div>
+               </div>
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label required">打印方式</label>
+                   <div class="layui-input-block">
+                        <input type="text" id="F_PrintType" name="F_PrintType" lay-verify="required" class="layui-input">
+                   </div>
+               </div>
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label required">状态</label>
+                   <div class="layui-input-block">
+                        <input type="text" id="F_EnabledMark" name="F_EnabledMark" lay-verify="required" class="layui-input">
+                   </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</body>
+

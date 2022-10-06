@@ -178,7 +178,7 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
 					}
 				}
 				DataTable dt = DataTableHelper.ListToDataTable(list);  // 用DataTable类型，避免依赖
-				var tableinfo = _context.DbMaintenance.GetColumnInfosByTableName(baseConfig.TableName, false);
+				var tableinfo = _service.repository.Db.DbMaintenance.GetColumnInfosByTableName(baseConfig.TableName, false);
 				string codeEntity = template.BuildEntity(baseConfig, dt, idcolumn);
 				string codeService = template.BuildService(baseConfig, dt, idcolumn, idType);
 				string codeController = template.BuildController(baseConfig, idcolumn, idType);
