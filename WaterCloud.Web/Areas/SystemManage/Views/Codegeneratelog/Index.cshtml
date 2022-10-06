@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <fieldset class="table-search-fieldset layui-hide" id="searchField">
+            <div>
+                <form class="layui-form layui-form-pane">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">关键字:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="txt_keyword" name="txt_keyword" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit lay-filter="data-search-btn"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container" id="toolbar">
+            <button id="NF-reprint" name="NF-reprint" authorize class="layui-btn layui-btn-sm layui-btn-warm layui-hide" lay-event="reprint"><i class="layui-icon">&#xe642;</i>补印</button>
+            </div>
+        </script>
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+        <script type="text/html" id="currentTableBar">
+            <a id="NF-reprint" authorize class="layui-btn layui-btn-sm layui-btn-warm layui-hide" lay-event="details">查看</a>
+        </script>
+    </div>
+</div>
+<script>
+    layui.use(['jquery', 'form', 'table', 'commonTable', 'common', 'optimizeSelectOption'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table, commonTable = layui.commonTable
+        common = layui.common;
+        //权限控制(js是值传递)
+        currentTableBar.innerHTML = common.authorizeButtonNew(currentTableBar.innerHTML);
+        toolbarDemo.innerHTML = common.authorizeButtonNew(toolbarDemo.innerHTML);
+        commonTable.rendertable({
+            elem: '#currentTableId',
+            id: 'currentTableId',
+            url: '/SystemManage/Codegeneratelog/GetGridJson',
+            cols: [[
+                //此处需修改
+                { type: "checkbox", width: 50, fixed: 'left' },
+                { field: 'F_Code', title: '条码', minWidth: 150, sort: true, filter: true },
+                { field: 'F_RuleName', title: '规则名称', minWidth: 150, sort: true, filter: true },
+                { field: 'F_PrintJson', title: '打印Json', width: 150, sort: true, filter: true },
+                { field: 'F_EnabledMark', title: '状态', width: 100, sort: true, filter: true, templet: function (d) { if (d.F_EnabledMark == true) { return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>"; } else { return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>"; } } },
+                { field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true, filter: true },
+                { title: '操作', width: 90, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
+            ]]
+        });
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            //执行搜索重载
+            commonTable.reloadtable({
+                elem: 'currentTableId',
+                curr: 1,
+                where: { keyword: data.field.txt_keyword }
+            });
+            return false;
+        });
+        wcLoading.close();
+        //行点击事件监听，控制按钮显示
+        var oneList = ["NF-reprint"];//选择1条显示
+        commonTable.tableRowClick("checkbox", "currentTableFilter", "currentTableId", oneList, null);
+        //toolbar监听事件
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            var data = table.checkStatus('currentTableId').data;
+            var id = data.length > 0 ? data[0].F_Id : null;
+            if (obj.event === 'reprint') {  // 监听添加操作
+                common.ajax({
+                    url: "/SystemManage/Codegeneratelog/Reprint",
+                    dataType: "json",
+                    data: { keyValue: keyValue},
+                    async: false,
+                    success: function (data) {
+                        if (top.websocket == null || top.websocket.readyState == 3) {
+                            common.modalMsg("打印服务未开启", "warning");
+                            return false;
+                        }
+                        top.sendWSPush(data);
+                        common.reload('data-search-btn');
+                    }
+                });
+            }
+            else if (obj.event === 'TABLE_SEARCH') {
+                var _that = $("#searchField");
+                if (_that.hasClass("layui-hide")) {
+                    _that.removeClass('layui-hide');
+                } else {
+                    _that.addClass('layui-hide');
+                }
+                table.resize();
+            }
+            return false;
+        });
+        //toolrow监听事件
+        table.on('tool(currentTableFilter)', function (obj) {
+            var id = obj.data.F_Id;
+            if (obj.event === 'reprint') {
+                common.ajax({
+                    url: "/SystemManage/Codegeneratelog/Reprint",
+                    dataType: "json",
+                    data: { keyValue: keyValue},
+                    async: false,
+                    success: function (data) {
+                        if (top.websocket == null || top.websocket.readyState == 3) {
+                            common.modalMsg("打印服务未开启", "warning");
+                            return false;
+                        }
+                        top.sendWSPush(data);
+                        common.reload('data-search-btn');
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>

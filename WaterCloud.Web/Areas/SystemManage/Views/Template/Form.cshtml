@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "Form"; 
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    layui.use(['jquery', 'upload', 'form', 'laydate', 'common', 'optimizeSelectOption'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            upload = layui.upload,
+            common = layui.common,
+            laydate = layui.laydate;
+        var keyValue = $.request("keyValue");
+        //权限字段
+        common.authorizeFields('adminform');
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            , url: '/FileManage/Uploadfile/Upload' //改成您自己的上传接口
+            , size: 1024
+            , accept: 'file'
+            , data: { filetype: 3, fileby: 'template' }
+            , auto: true//不自动提交
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    //失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                    common.modalMsg(res.msg, "warning");
+                    return false;
+                }
+                $('#F_TemplateFile').val(res.data[0].src);
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+        $(function () {
+            initControl();
+            if (!!keyValue) {
+                 common.ajax({
+                   url: '/SystemManage/Template/GetFormJson',
+                   dataType: 'json',
+                   data: { keyValue: keyValue },
+                   async: false,
+                   success: function (data) {
+                       common.val('adminform', data);
+                    }
+               });
+           }
+           form.render();
+       });
+       wcLoading.close();
+
+       function initControl() {
+           //此处需修改
+            $("#F_TemplateDBProvider").bindSelect({
+                url: "/SystemSecurity/OpenJobs/GetDBListJson",
+                id: ""
+            });
+            $("#F_PrintType").bindSelect({
+                data: top.clients.dataItems["PrintType"],
+                id: ""
+            });
+       }
+
+       //监听提交
+       form.on('submit(saveBtn)', function (data) {
+            var postData = data.field;
+            common.submitForm({
+                url: '/SystemManage/Template/SubmitForm?keyValue=' + keyValue,
+                param: postData,
+                success: function () {
+                    common.parentreload('data-search-btn');
+                }
+            })
+           return false;
+       });
+   });
+</script>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form" lay-filter="adminform">
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label required">模板名称</label>
+                   <div class="layui-input-block">
+                        <input type="text" id="F_TemplateName" name="F_TemplateName" autocomplete="off" lay-verify="required" placeholder="请输入模板名称" class="layui-input">
+                   </div>
+               </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">模板文件</label>
+                    <div class="layui-input-block" style="padding-right: 70px;">
+                        <input type="text" id="F_TemplateFile" name="F_TemplateFile" readonly disabled class="layui-input">
+                        <button class="layui-btn" style="position: absolute;top: 0;right: 6px;cursor: pointer;" id="test1">上传</button>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label required">打印方式</label>
+                   <div class="layui-input-block">
+                        <select id="F_PrintType" name="F_PrintType" lay-verify="required">
+                            <option value="">==请选择==</option>
+                        </select>
+                    </div>
+               </div>
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label required">模板执行库</label>
+                   <div class="layui-input-block">
+                        <select id="F_TemplateDBProvider" name="F_TemplateDBProvider">
+                            <option value="">==请选择==</option>
+                        </select>
+                    </div>
+               </div>
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label required">模板执行sql</label>
+                   <div class="layui-input-block">
+                        <textarea id="F_TemplateSql" name="F_TemplateSql" value="" lay-verify="required" autocomplete="off" class="layui-textarea"></textarea>
+                   </div>
+               </div>
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label">模板执行参数</label>
+                   <div class="layui-input-block">
+                        <textarea id="F_TemplateSqlParm" name="F_TemplateSqlParm" value="" autocomplete="off" class="layui-textarea"></textarea>
+                   </div>
+               </div>
+                <div class="layui-form-item layui-hide">
+                   <label class="layui-form-label required">状态</label>
+                   <div class="layui-input-block">
+                        <input type="checkbox" checked="" id="F_EnabledMark" name="F_EnabledMark" lay-skin="switch" lay-filter="switchTest" value="true" lay-text="ON|OFF">
+                    </div>
+               </div>
+                <div class="layui-form-item layui-hide">
+                    <button class="layui-btn site-demo-active" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+

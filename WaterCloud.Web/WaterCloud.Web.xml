@@ -67,6 +67,20 @@
             描 述：订单管理控制器类
             </summary>
         </member>
+        <member name="T:WaterCloud.Web.Areas.SystemManage.Controllers.CodegeneratelogController">
+            <summary>
+            创 建：超级管理员
+            日 期：2022-10-06 14:18
+            描 述：条码生成记录控制器类
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.SystemManage.Controllers.CoderuleController">
+            <summary>
+            创 建：超级管理员
+            日 期：2022-10-06 11:25
+            描 述：条码规则控制器类
+            </summary>
+        </member>
         <member name="T:WaterCloud.Web.Areas.SystemManage.Controllers.FlowschemeController">
             <summary>
             创 建：超级管理员
@@ -86,6 +100,13 @@
             创 建：超级管理员
             日 期：2020-05-21 14:38
             描 述：字段管理控制器类
+            </summary>
+        </member>
+        <member name="T:WaterCloud.Web.Areas.SystemManage.Controllers.TemplateController">
+            <summary>
+            创 建：超级管理员
+            日 期：2022-10-06 14:11
+            描 述：打印模板控制器类
             </summary>
         </member>
         <member name="T:WaterCloud.Web.Areas.SystemOrganize.Controllers.DataPrivilegeRuleController">

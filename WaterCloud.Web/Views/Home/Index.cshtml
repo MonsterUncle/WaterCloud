@@ -138,7 +138,38 @@
     <script src="~/js/framework-ui.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script src="~/lib/signalr/dist/browser/signalr.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
     <script src="~/js/chat.js?v=@WaterCloud.Code.GlobalContext.GetVersion()"></script>
+    <script src="~/js/websocket.js"></script>
     <script>
+        // 接收消息
+        function getsocketData(e) {  // 创建接收消息函数
+            const data = e && e.detail.data;
+            if (data != "pong" && data != "Close!") {
+                var json = JSON.parse(data);
+                if (!!json.status) {
+                    layui.use(['notice'], function () {
+                        var notice = layui.notice;
+                        notice.options = {
+                            positionClass: "toast-bottom-right",//弹出的位置,
+                        };
+                        if (json.status == "打印完成") {
+                            notice.success("打印成功！");
+                        }
+                        else {
+                            notice.warning("打印失败！" + json.status);
+                        }
+                    })
+                }
+                else if (data.cmd = "getPrinters") {
+                    top.clients.printers = json.printers;
+                    top.clients.defaultPrinter = json.defaultPrinter;
+                }
+            }
+        }
+        // 注册监听事件
+        window.addEventListener('onmessageWS', getsocketData);
+        //创建websocket
+        createSocket('ws://127.0.0.1:' + '7181');
+
         function btn_revisepassword() {
             layui.use(['common'], function () {
                 var common = layui.common;

@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Details"; 
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    layui.use(['jquery', 'form', 'laydate', 'common'], function () {
+        var form = layui.form,
+            $ = layui.$,
+            common = layui.common,
+            laydate = layui.laydate;
+        var keyValue = $.request("keyValue");
+        //权限字段
+        common.authorizeFields('adminform');
+
+        $(function () {
+            initControl();
+            common.ajax({
+                url: '/SystemManage/Template/GetFormJson',
+                dataType: 'json',
+                data: { keyValue: keyValue },
+                async: false,
+                success: function (data) {
+                    common.val('adminform', data);
+                    common.setReadOnly('adminform');
+                    form.render();
+                 }
+            });
+       });
+       wcLoading.close();
+
+       function initControl() {
+            //此处需修改
+            $("#F_TemplateDBProvider").bindSelect({
+                url: "/SystemSecurity/OpenJobs/GetDBListJson",
+                id: ""
+            });
+            $("#F_PrintType").bindSelect({
+                data: top.clients.dataItems["PrintType"],
+                id: ""
+            });
+            form.render();
+       }
+   });
+</script>
+
+<body>
+    <div class="layuimini-container">
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form" lay-filter="adminform">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">模板名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_TemplateName" name="F_TemplateName" autocomplete="off" lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">模板文件</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="F_TemplateFile" name="F_TemplateFile" autocomplete="off" lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">打印方式</label>
+                    <div class="layui-input-block">
+                        <select id="F_PrintType" name="F_PrintType" lay-verify="required">
+                            <option value="">==请选择==</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">模板执行库</label>
+                    <div class="layui-input-block">
+                        <select id="F_TemplateDBProvider" name="F_TemplateDBProvider">
+                            <option value="">==请选择==</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">模板执行sql</label>
+                    <div class="layui-input-block">
+                        <textarea id="F_TemplateSql" name="F_TemplateSql" value="" lay-verify="required" autocomplete="off" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">模板执行参数</label>
+                    <div class="layui-input-block">
+                        <textarea id="F_TemplateSqlParm" name="F_TemplateSqlParm" value="" autocomplete="off" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label required">状态</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" checked="" id="F_EnabledMark" name="F_EnabledMark" lay-skin="switch" lay-filter="switchTest" value="true" lay-text="ON|OFF">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+

@@ -340,3 +340,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database 
 healthchecksdb
 /WaterCloud.Web/DataProtection
+/WaterCloud.Web/wwwroot/file/local/20221006
