@@ -3,32 +3,109 @@
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'laydate', 'common'], function () {
+    layui.use(['jquery', 'form', 'laydate', 'tableEdit', 'commonTable', 'table', 'common', 'optimizeSelectOption'], function () {
         var form = layui.form,
             $ = layui.$,
-            common = layui.common,
-            laydate = layui.laydate;
+            laydate = layui.laydate,
+            tableEdit = layui.tableEdit,
+            table = layui.table,
+            commonTable = layui.commonTable,
+            common = layui.common;
         var keyValue = $.request("keyValue");
         //权限字段
         common.authorizeFields('adminform');
-
+        var listData = [];
         $(function () {
             initControl();
-            common.ajax({
-                url: '/SystemManage/Coderule/GetFormJson',
-                dataType: 'json',
-                data: { keyValue: keyValue },
-                async: false,
-                success: function (data) {
-                    common.val('adminform', data);
-                    common.setReadOnly('adminform');
-                    form.render();
-                 }
+            if (!!keyValue) {
+                common.ajax({
+                    url: '/SystemManage/Coderule/GetFormJson',
+                    dataType: 'json',
+                    data: { keyValue: keyValue },
+                    async: false,
+                    success: function (data) {
+                        common.val('adminform', data);
+                        common.setReadOnly('adminform');
+                        if (!!data.F_RuleJson) {
+                            listData = JSON.parse(data.F_RuleJson);
+                        }
+                    }
+                });
+            }
+            form.render();
+            //1-固定参数 2-日期 3-年 4-月 5-日 6-周别 7-周几 8-小时 9-上午下午 10-班别 11-流水号 12-自定义
+            var params = [{ name: '固定参数', value: 1 }, { name: '日期', value: 2 }, { name: '年', value: 3 }, { name: '月', value: 4 }, { name: '日', value: 5 },
+            { name: '周别', value: 6 }, { name: '周几', value: 7 }, { name: '小时', value: 8 }, { name: '上下午', value: 9 }, { name: '班别', value: 10 },
+            { name: '流水号', value: 11 }, { name: '自定义', value: 12 }
+            ];
+            var cols = [[
+                { type: "radio", width: 50 },
+                {
+                    field: 'FormatType', title: '编码类型', width: 90
+                    , templet: function (d) {
+                        if (d.FormatType || d.FormatType == 0) {
+                            if (d.FormatType.value || d.FormatType.value == 0) {
+                                return d.FormatType.name;
+                            }
+                            for (var i = 0; i < params.length; i++) {
+                                if (params[i].value == d.FormatType) {
+                                    return params[i].name;
+                                }
+                            }
+                        }
+                        return ''
+                    }
+                },
+                {
+                    field: 'FormatString', title: '格式化字符串', width: 115
+                },
+                { field: 'ToBase', title: '进制', width: 60},
+                { field: 'InitValue', title: '流水号初始值', width: 120},
+                { field: 'MaxValue', title: '最大值', width: 75},
+                { field: 'Increment', title: '步长', width: 60 },
+                {
+                    field: 'DiyDate', title: '自定义', width: 130, templet: function (d) {
+                        if (d.DiyDate && d.DiyDate instanceof Array) {
+                            return d.DiyDate.join(",");
+                        }
+                        return d.DiyDate;
+                    }
+                }
+            ]];
+            commonTable.rendertable({
+                elem: '#currentTableId',
+                data: listData,
+                defaultToolbar: [],
+                search: false,
+                limit: 9999,//每页数据 默认
+                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['count'] //自定义分页布局
+                    , first: false //不显示首页
+                    , last: false //不显示尾页
+                },
+                height: '300px',
+                filter: {
+                    clearFilter: false,
+                },
+                cols: cols
             });
-       });
-       wcLoading.close();
-
-       function initControl() {
+            var aopTable = tableEdit.aopObj(cols); //获取一个aop对象
+            aopTable.on('tool(currentTableFilter)', function (obj) {
+                var field = obj.field; //单元格字段
+                var value = obj.value; //修改后的值
+                var data = obj.data; //当前行旧数据
+                var event = obj.event; //当前单元格事件属性值
+                var update = {};
+                update[field] = value;
+                //把value更新到行中
+                obj.update(update);
+            });
+            //行点击事件监听，控制按钮显示
+            var oneList = ["NF-delete"];//选择1条显示
+            commonTable.tableRowClick("radio", "currentTableFilter", "currentTableId", oneList, null);
+        });
+        wcLoading.close();
+        function initControl() {
             //此处需修改
             $("#F_TemplateId").bindSelect({
                 url: "/SystemManage/Template/GetListJson",
@@ -39,7 +116,7 @@
                 data: top.clients.dataItems["RuleReset"],
                 id: ""
             });
-       }
+        }
    });
 </script>
 
@@ -51,12 +128,6 @@
                    <label class="layui-form-label required">规则名称</label>
                    <div class="layui-input-block">
                         <input type="text" id="F_RuleName" name="F_RuleName" lay-verify="required" class="layui-input">
-                   </div>
-               </div>
-                <div class="layui-form-item layui-hide">
-                   <label class="layui-form-label required">规则内容</label>
-                   <div class="layui-input-block">
-                        <input type="text" id="F_RuleJson" name="F_RuleJson" lay-verify="required" class="layui-input">
                    </div>
                </div>
                 <div class="layui-form-item layui-hide">
@@ -79,6 +150,12 @@
                     <label class="layui-form-label">选项</label>
                     <div class="layui-input-block">
                         <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">规则内容</label>
+                    <div class="layui-input-block">
+                        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
                     </div>
                 </div>
             </div>

@@ -181,7 +181,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             };
             var options = $.extend(defaults, options);
             //ie缓存问题
-            options.url = obj.urlAddTime(options.url);
+            //options.url = obj.urlAddTime(options.url);
             //options.url = obj.urlAddTime(options.url);
             //高度宽度超出就适应屏幕
             var _width = document.body.clientWidth > parseInt(options.width.replace('px', '')) ? options.width : document.body.clientWidth - 20 + 'px';

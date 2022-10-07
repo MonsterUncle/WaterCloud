@@ -61,9 +61,9 @@ namespace WaterCloud.Service.SystemManage
 			dic.Add("F_Reset", resetTemp);
 			var printList = await GlobalContext.GetService<ItemsDataService>().GetItemList("PrintType");
 			Dictionary<string, string> printTemp = new Dictionary<string, string>();
-			foreach (var item in setList)
+			foreach (var item in printList)
 			{
-				resetTemp.Add(item.F_ItemCode, item.F_ItemName);
+				printTemp.Add(item.F_ItemCode, item.F_ItemName);
 			}
 			dic.Add("F_PrintType", printTemp);
 			pagination = ChangeSoulData(dic, pagination);
@@ -88,7 +88,7 @@ namespace WaterCloud.Service.SystemManage
         }
 		private ISugarQueryable<CoderuleEntity> GetQuery()
 		{
-			var query = repository.IQueryable().Where(a => a.F_DeleteMark == false)
+			var query = repository.IQueryable()
                 .InnerJoin<TemplateEntity>((a,b)=>a.F_TemplateId == b.F_Id)
 				.Select((a, b) => new CoderuleEntity
 				{
@@ -96,7 +96,7 @@ namespace WaterCloud.Service.SystemManage
                     F_TemplateName = b.F_TemplateName,
                     F_PrintType = b.F_PrintType,
                     F_Batch=b.F_Batch
-				}).MergeTable();
+				}).MergeTable().Where(a => a.F_DeleteMark == false);
 			return query;
 		}
 		public async Task<CoderuleEntity> GetLookForm(string keyValue)
