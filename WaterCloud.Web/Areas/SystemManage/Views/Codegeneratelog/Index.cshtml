@@ -50,8 +50,8 @@
                 { type: "checkbox", width: 50, fixed: 'left' },
                 { field: 'F_Code', title: '条码', minWidth: 150, sort: true, filter: true },
                 { field: 'F_RuleName', title: '规则名称', minWidth: 150, sort: true, filter: true },
-                { field: 'F_PrintJson', title: '打印Json', width: 150, sort: true, filter: true },
-                { field: 'F_EnabledMark', title: '状态', width: 100, sort: true, filter: true, templet: function (d) { if (d.F_EnabledMark == true) { return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>"; } else { return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>"; } } },
+                { field: 'F_PrintJson', title: '打印Json', minWidth: 150, sort: true, filter: true },
+                { field: 'F_PrintCount', title: '打印次数', width: 120, sort: true, filter: true },
                 { field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true, filter: true },
                 { title: '操作', width: 90, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]]

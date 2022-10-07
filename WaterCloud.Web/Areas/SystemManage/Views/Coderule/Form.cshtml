@@ -11,14 +11,6 @@
         var keyValue = $.request("keyValue");
         //权限字段
         common.authorizeFields('adminform');
-        //此处需修改
-        //类型为时间时
-        //laydate.render({
-            //elem: '#F_Birthday'
-            //, btns: ['clear', 'now']
-            //, trigger: 'click',
-            //format: 'yyyy-MM-dd',
-        //});
 
         $(function () {
             initControl();
@@ -39,13 +31,21 @@
 
        function initControl() {
            //此处需修改
-           //绑定数据源
-           //类型为下拉框时
+            $("#F_TemplateId").bindSelect({
+                url: "/SystemManage/Template/GetListJson",
+                id: "F_Id",
+                text: "F_TemplateName"
+            });
+            $("#F_Reset").bindSelect({
+                data: top.clients.dataItems["RuleReset"],
+                id: ""
+            });
        }
 
        //监听提交
        form.on('submit(saveBtn)', function (data) {
            var postData = data.field;
+            if (!postData["F_EnabledMark"]) postData["F_EnabledMark"] = false;
            common.submitForm({
                url: '/SystemManage/Coderule/SubmitForm?keyValue=' + keyValue,
                param: postData,
@@ -77,15 +77,25 @@
                 <div class="layui-form-item layui-hide">
                    <label class="layui-form-label required">重设机制</label>
                    <div class="layui-input-block">
-                        <input type="text" id="F_Reset" name="F_Reset" autocomplete="off" lay-verify="required" placeholder="请输入" class="layui-input">
+                        <select id="F_Reset" name="F_Reset" lay-verify="required">
+                            <option value="">==请选择==</option>
+                        </select>
                    </div>
                </div>
                 <div class="layui-form-item layui-hide">
-                   <label class="layui-form-label required">状态</label>
-                   <div class="layui-input-block">
-                        <input type="text" id="F_EnabledMark" name="F_EnabledMark" autocomplete="off" lay-verify="required" placeholder="请输入" class="layui-input">
-                   </div>
-               </div>
+                    <label class="layui-form-label required">打印模板</label>
+                    <div class="layui-input-block">
+                        <select id="F_TemplateId" name="F_TemplateId" lay-verify="required">
+                            <option value="">==请选择==</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">选项</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="F_EnabledMark" id="F_EnabledMark" checked="" value="true" title="有效">
+                    </div>
+                </div>
                 <div class="layui-form-item layui-hide">
                     <button class="layui-btn site-demo-active" lay-submit id="submit" lay-filter="saveBtn">确认保存</button>
                 </div>

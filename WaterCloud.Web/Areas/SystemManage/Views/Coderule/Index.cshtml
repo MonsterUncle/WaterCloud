@@ -59,22 +59,7 @@
                 { field: 'F_RuleJson', title: '规则内容', minWidth: 150, sort: true, filter: true,hide:true },
                 { field: 'F_Reset', title: '重设机制', width: 150, sort: true, filter: true,
                     templet: function (d) {
-                        switch (d.F_Reset) {
-                            //By 年 月 日 周
-                            case "yyyy":
-                                return "年";
-                                break;
-                            case "yyyy-MM":
-                                return "月";
-                                break;
-                            case "yyyy-MM-dd":
-                                return "日";
-                                break;
-                            //By 周
-                            case "yyyy-MM-WW":
-                                return "周";
-                                break;
-                        }
+                        return top.clients.dataItems["RuleReset"][d.F_Reset] == undefined ? "" : top.clients.dataItems["RuleReset"][d.F_Reset];
                     }
                 },
                 { field: 'F_TemplateId', title: '打印模板Id', width: 150, sort: true, hide: true },

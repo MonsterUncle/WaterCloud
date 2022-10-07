@@ -14,6 +14,7 @@ using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Domain.SystemSecurity;
+using WaterCloud.Service.SystemManage;
 using WaterCloud.Service.SystemSecurity;
 
 namespace WaterCloud.Service.SystemOrganize
@@ -43,8 +44,11 @@ namespace WaterCloud.Service.SystemOrganize
 			enabledTemp.Add("0", "无效");
 			dic.Add("F_EnabledMark", enabledTemp);
 			Dictionary<string, string> sexTemp = new Dictionary<string, string>();
-			sexTemp.Add("1", "男");
-			sexTemp.Add("0", "女");
+			var sexList = await GlobalContext.GetService<ItemsDataService>().GetItemList("104");
+			foreach (var item in sexList)
+			{
+				sexTemp.Add(item.F_ItemCode, item.F_ItemName);
+			}
 			dic.Add("F_Gender", sexTemp);
 			pagination = ChangeSoulData(dic, pagination);
 			//获取数据权限

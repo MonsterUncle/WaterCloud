@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using SqlSugar;
 
 namespace WaterCloud.Domain.SystemManage
@@ -97,5 +96,10 @@ namespace WaterCloud.Domain.SystemManage
 		/// </summary>
 		[SugarColumn(IsIgnore = true)]
 		public int? F_PrintType { get; set; }
+		/// <summary>
+		/// 是否批量
+		/// </summary>
+		[SugarColumn(IsIgnore = true)]
+		public bool? F_Batch { get; set; }
 	}
 }

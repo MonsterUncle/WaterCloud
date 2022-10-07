@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using SqlSugar;
 
 namespace WaterCloud.Domain.SystemManage
