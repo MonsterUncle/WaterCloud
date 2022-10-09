@@ -8,6 +8,7 @@ using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemManage;
 using WaterCloud.Code.Model;
 using System.Globalization;
+using NetTaste;
 
 namespace WaterCloud.Service.SystemManage
 {
@@ -288,7 +289,7 @@ namespace WaterCloud.Service.SystemManage
 					//自定义方法
 					case 12:
 						//反射执行方法获取参数
-						var udf = "";
+						var udf =((Task<string>)this.GetType().GetMethod(item.FormatString, new Type[] { }).Invoke(this, new object[] { ruleName })).GetAwaiter().GetResult();
 						format += udf;
 						break;
 					//通配符
