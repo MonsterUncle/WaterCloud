@@ -29,6 +29,7 @@
     <Compile Include="Extend\Ext.Linq.cs" />
     <Compile Include="Extend\Ext.List.cs" />
     <Compile Include="Extend\Ext.Table.cs" />
+    <Compile Include="Extend\Ext.Number.cs" />
   </ItemGroup>
 
   <ItemGroup>

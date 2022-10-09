@@ -14,6 +14,10 @@ namespace WaterCloud.Code
 				(IEqualityComparer<string>)StringComparer.OrdinalIgnoreCase)
 			{
 				{
+					".frx",
+					"application/rtf"
+				},
+				{
 					".323",
 					"text/h323"
 				},

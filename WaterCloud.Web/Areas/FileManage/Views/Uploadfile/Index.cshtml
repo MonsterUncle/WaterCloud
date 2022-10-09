@@ -59,11 +59,13 @@
                  {
                      field: 'F_FileType', title: '文件类型', width: 120, sort: true, filter: true,
                      templet: function (d) {
-                         if (d.F_FileType == 0) {
-                             return "文件";
-                         } else if (d.F_FileType == 1) {
-                             return "图片";
+                         if (d.F_FileType == 1) {
+                            return "图片";
+                         } else if (d.F_FileType == 2) {
+                             return "excel";
                          }
+                         else
+                            return "其他";
                      }
                  },
                  { field: 'F_FileSize', title: '文件大小', width: 100, sort: true, hide: true, filter: true },

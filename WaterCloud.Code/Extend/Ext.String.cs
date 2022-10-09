@@ -24,5 +24,14 @@ namespace WaterCloud.Code
 			var length = @this.Length - startIndex;
 			return @this.Substring(startIndex, length);
 		}
+		#region 字符串截取第一个
+		public static string ReplaceFrist(this string str, string oldChar, string newChar)
+		{
+			int idx = str.IndexOf(oldChar);
+			str = str.Remove(idx, oldChar.Length);
+			str = str.Insert(idx, newChar);
+			return str;
+		}
+		#endregion
 	}
 }

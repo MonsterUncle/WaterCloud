@@ -91,7 +91,7 @@ namespace WaterCloud.Service.SystemManage
 				entity.data.printIniInfo.printType = template.F_PrintType;
 				entity.data.printIniInfo.isBatch = template.F_Batch;
 				entity.data.printIniInfo.realName = template.F_TemplateName;
-				entity.data.printIniInfo.filePath = template.F_TemplateFile;
+				entity.data.printIniInfo.filePath = (GlobalContext.HttpContext.Request.IsHttps ? "https://" : "http://") + GlobalContext.HttpContext.Request.Host + template.F_TemplateFile;
 				entity.requestId = Utils.GetGuid();
                 var listJson = new List<Dictionary<string, string>>();
                 for (int i = 0; i < count; i++)
@@ -111,7 +111,7 @@ namespace WaterCloud.Service.SystemManage
 					entity.data.printIniInfo.printType = template.F_PrintType;
 					entity.data.printIniInfo.isBatch = template.F_Batch;
 					entity.data.printIniInfo.realName = template.F_TemplateName;
-					entity.data.printIniInfo.filePath = template.F_TemplateFile;
+					entity.data.printIniInfo.filePath = (GlobalContext.HttpContext.Request.IsHttps ? "https://" : "http://") + GlobalContext.HttpContext.Request.Host + template.F_TemplateFile;
 					entity.requestId = Utils.GetGuid();
 					entity.data.data = data.F_PrintJson.ToObject<Dictionary<string, string>>();
 					list.Add(entity);

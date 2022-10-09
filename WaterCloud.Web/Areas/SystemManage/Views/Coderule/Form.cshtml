@@ -35,7 +35,7 @@
             //1-固定参数 2-日期 3-年 4-月 5-日 6-周别 7-周几 8-小时 9-上午下午 10-班别 11-流水号 12-自定义
             var params = [{ name: '固定参数', value: 1 }, { name: '日期', value: 2 }, { name: '年', value: 3 }, { name: '月', value: 4 }, { name: '日', value: 5 },
             { name: '周别', value: 6 }, { name: '周几', value: 7 }, { name: '小时', value: 8 }, { name: '上下午', value: 9 }, { name: '班别', value: 10 },
-            { name: '流水号', value: 11 }, { name: '自定义', value: 12 }
+            { name: '流水号', value: 11 }, { name: '自定义', value: 12 }, { name: '预留码', value: 13 }
             ];
             var cols = [[
                 { type: "radio", width: 50 },
@@ -98,6 +98,140 @@
                 var event = obj.event; //当前单元格事件属性值
                 var update = {};
                 update[field] = value;
+                if (obj.field == "FormatType")
+                    obj.data.FormatType=value;
+                switch (!!obj.data.FormatType.value ? obj.data.FormatType.value : obj.data.FormatType) {
+                    case 1:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "";
+                        }
+                        update["ToBase"] = null;
+                        update["InitValue"] = null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        update["DiyDate"] = null;
+                        break;
+                    case 2:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "yyyyMMdd";
+                        }
+                        update["ToBase"] = null;
+                        update["InitValue"] = null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        update["DiyDate"] = null;
+                        break;
+                    case 3:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "yyyy";
+                        }
+                        update["ToBase"] = null;
+                        update["InitValue"] = null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        update["DiyDate"] = null;
+                        break;
+                    case 4:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "MM";
+                            update["DiyDate"] = [01, 02, 03, 04, 05, 06, 07,08, 09, 10, 11, 12];
+                        }
+                        update["ToBase"] = null;
+                        update["InitValue"] = null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        break;
+                    case 5:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "dd";
+                            update["DiyDate"] = [01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+                        }
+                        update["ToBase"] = null;
+                        update["InitValue"] = null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        break;
+                    case 6:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "WW";
+                        }
+                        update["ToBase"] = null;
+                        update["InitValue"] = null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        update["DiyDate"] = null;
+                        break;
+                    case 7:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "WD";
+                            update["DiyDate"] = [1,2,3,4,5,6,7];
+                        }
+                        update["ToBase"] = null;
+                        update["InitValue"] = null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        break;
+                    case 8:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "HH";
+                        }
+                        update["ToBase"] = null;
+                        update["InitValue"] = null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        update["DiyDate"] = null;
+                        break;
+                    case 9:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "TM";
+                            update["DiyDate"] = ["AM","PM"];
+                        }
+                        update["ToBase"] = null;
+                        update["InitValue"] = null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        break;
+                    case 10:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "CS";
+                            update["DiyDate"] = ["A.8:30-20:30","B.20:30-8:30"];
+                        }
+                        update["ToBase"] = null;
+                        update["InitValue"] = null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        break;
+                    case 12:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "";
+                        }
+                        update["ToBase"]=null;
+                        update["InitValue"]=null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        update["DiyDate"] = null;
+                        break;
+                    case 13:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "*";
+                        }
+                        update["ToBase"] = null;
+                        update["InitValue"] = null;
+                        update["MaxValue"] = null;
+                        update["Increment"] = null;
+                        update["DiyDate"] = null;
+                        break;
+                    case 11:
+                        if (obj.field == "FormatType") {
+                            update["FormatString"] = "0000";
+                            update["ToBase"] = 10;
+                            update["InitValue"] = 1;
+                            update["MaxValue"] = -1;
+                            update["Increment"] = 1;
+                        }
+                        update["DiyDate"] = null;
+                        break;
+                }
                 //把value更新到行中
                 obj.update(update);
             });

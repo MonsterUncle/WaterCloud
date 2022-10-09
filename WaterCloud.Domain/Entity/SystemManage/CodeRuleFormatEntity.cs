@@ -9,7 +9,7 @@ namespace WaterCloud.Domain.SystemManage
 	public class CodeRuleFormatEntity
 	{
 		/// <summary>
-		/// 编码前缀类型 1-固定参数 2-日期 3-年 4-月 5-日 6-周别 7-周几 8-小时 9-上午下午 10-班别 11-流水号 12-自定义
+		/// 编码前缀类型 1-固定参数 2-日期 3-年 4-月 5-日 6-周别 7-周几 8-小时 9-上午下午 10-班别 11-流水号 12-自定义 13-通配符
 		/// </summary>
 		[Range(1, 15)]
 		public int FormatType { get; set; }
@@ -40,7 +40,7 @@ namespace WaterCloud.Domain.SystemManage
 		public decimal? Increment { get; set; } = 1;
 
 		/// <summary>
-		/// 10进制、16进制、34进制
+		/// 进制
 		/// </summary>
 		[Range(2, 36)]
 		public int ToBase { get; set; } = 10;

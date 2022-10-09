@@ -23,12 +23,12 @@
         </fieldset>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container" id="toolbar">
-            <button id="NF-reprint" name="NF-reprint" authorize class="layui-btn layui-btn-sm layui-btn-warm layui-hide" lay-event="reprint"><i class="layui-icon">&#xe642;</i>补印</button>
+            <button id="NF-reprint" name="NF-reprint" authorize class="layui-btn layui-btn-sm layui-btn-warm layui-hide" lay-event="reprint"><i class="layui-icon">&#xe642;</i>打印</button>
             </div>
         </script>
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
         <script type="text/html" id="currentTableBar">
-            <a id="NF-reprint" authorize class="layui-btn layui-btn-sm layui-btn-warm layui-hide" lay-event="details">查看</a>
+            <a id="NF-reprint" authorize class="layui-btn layui-btn-sm layui-btn-warm" lay-event="reprint">打印</a>
         </script>
     </div>
 </div>
@@ -52,7 +52,7 @@
                 { field: 'F_RuleName', title: '规则名称', minWidth: 150, sort: true, filter: true },
                 { field: 'F_PrintJson', title: '打印Json', minWidth: 150, sort: true, filter: true },
                 { field: 'F_PrintCount', title: '打印次数', width: 120, sort: true, filter: true },
-                { field: 'F_CreatorTime', title: '创建时间', width: 120, sort: true, filter: true },
+                { field: 'F_CreatorTime', title: '创建时间', width: 160, sort: true, filter: true },
                 { title: '操作', width: 90, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]]
         });
@@ -78,14 +78,17 @@
                 common.ajax({
                     url: "/SystemManage/Codegeneratelog/Reprint",
                     dataType: "json",
-                    data: { keyValue: keyValue},
+                    data: { keyValue: id},
                     async: false,
                     success: function (data) {
                         if (top.websocket == null || top.websocket.readyState == 3) {
                             common.modalMsg("打印服务未开启", "warning");
                             return false;
                         }
-                        top.sendWSPush(data);
+                        for (var i = 0; i < data.length; i++)
+                        {
+                            top.sendWSPush(data[i]);
+                        }
                         common.reload('data-search-btn');
                     }
                 });
@@ -108,14 +111,17 @@
                 common.ajax({
                     url: "/SystemManage/Codegeneratelog/Reprint",
                     dataType: "json",
-                    data: { keyValue: keyValue},
+                    data: { keyValue: id},
                     async: false,
                     success: function (data) {
                         if (top.websocket == null || top.websocket.readyState == 3) {
                             common.modalMsg("打印服务未开启", "warning");
                             return false;
                         }
-                        top.sendWSPush(data);
+                        for (var i = 0; i < data.length; i++)
+                        {
+                            top.sendWSPush(data[i]);
+                        }
                         common.reload('data-search-btn');
                     }
                 });

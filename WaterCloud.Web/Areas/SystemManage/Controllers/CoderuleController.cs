@@ -8,6 +8,7 @@ using WaterCloud.Domain.SystemManage;
 using WaterCloud.Service;
 using Microsoft.AspNetCore.Authorization;
 using WaterCloud.Service.SystemManage;
+using static Serenity.Web.PropertyItemsScript;
 
 namespace WaterCloud.Web.Areas.SystemManage.Controllers
 {
@@ -67,8 +68,21 @@ namespace WaterCloud.Web.Areas.SystemManage.Controllers
                 return await Error(ex.Message, "", keyValue);
             }
         }
-
-        [HttpPost]
+		[HttpPost]
+		[HandlerAjaxOnly]
+		public async Task<ActionResult> CreateForm(string keyValue,int count = 1,bool needPrint = false)
+		{
+            try
+            {
+				var data = await _service.CreateForm(keyValue, count, needPrint);
+                return Success("操作成功。", data);
+			}
+            catch (Exception ex)
+            {
+				return await Error(ex.Message, "", keyValue);
+			}
+		}
+		[HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
         public async Task<ActionResult> DeleteForm(string keyValue)
