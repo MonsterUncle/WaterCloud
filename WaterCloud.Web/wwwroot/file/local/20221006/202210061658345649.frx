@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/13/2021 08:28:26" ReportInfo.Modified="01/13/2021 10:16:51" ReportInfo.CreatorVersion="2016.1.0.0">
+  <Dictionary>
+    <Parameter Name="barId" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="50" PaperHeight="40" LeftMargin="1.3" TopMargin="1.3" RightMargin="1.3" BottomMargin="1.3" FirstPageSource="256" OtherPagesSource="256">
+    <DataBand Name="Data1" Width="179.17" Height="141.37">
+      <TableObject Name="Table1" Left="3.78" Top="3.78" Width="170.1" Height="132.3" Border.Lines="All">
+        <TableColumn Name="Column1" Width="103.95"/>
+        <TableColumn Name="Column2"/>
+        <TableRow Name="Row1" Height="66.15">
+          <TableCell Name="Cell1" Border.Lines="All" Font="宋体, 9pt" RowSpan="2">
+            <BarcodeObject Name="barId" Left="3.78" Top="3.78" Width="94.5" Height="124.74" Border.Lines="All" AutoSize="false" Expression="[barId]" Text="123" ShowText="false" Barcode="QR Code" Barcode.ErrorCorrection="L" Barcode.Encoding="UTF8" Barcode.QuietZone="false"/>
+          </TableCell>
+          <TableCell Name="code" Border.Lines="All" Text="[code]" Font="宋体, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row2" Height="66.15">
+          <TableCell Name="Cell6" Border.Lines="All" Font="宋体, 9pt"/>
+          <TableCell Name="name" Border.Lines="All" Text="[name]" Font="宋体, 9pt"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+  </ReportPage>
+</Report>
