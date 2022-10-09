@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 80027
  Source Host           : localhost:3306
- Source Schema         : watercloud
+ Source Schema         : waterclouddb
 
  Target Server Type    : MySQL
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 20/09/2022 13:05:14
+ Date: 09/10/2022 13:33:56
 */
 
 SET NAMES utf8mb4;
@@ -365,12 +365,7 @@ CREATE TABLE `oms_uploadfile`  (
 -- ----------------------------
 -- Records of oms_uploadfile
 -- ----------------------------
-INSERT INTO `oms_uploadfile` VALUES ('08d92c82-be01-41ae-8ad9-2040e49be5dd', '/icon/local/20210611/202106111043498898.jpg', '202106111043498898.jpg', 1, 34093, '.jpg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2021-06-11 10:43:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
-INSERT INTO `oms_uploadfile` VALUES ('08d92c85-3e43-4b93-80d5-526b5525ee95', '/icon/local/20210611/202106111101432772.jpg', '202106111101432772.jpg', 1, 34093, '.jpg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2021-06-11 11:01:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
-INSERT INTO `oms_uploadfile` VALUES ('08da9aa6-ec28-4cfc-8654-406cfe41043c', '/icon/local/20220920/202209200924546486.jpg', '202209200924546486.jpg', 1, 55356, '.jpg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2022-09-20 09:24:54', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
-INSERT INTO `oms_uploadfile` VALUES ('08da9aad-7eab-42db-85fe-930eb30eb756', '/icon/local/20220920/202209201011579961.jpg', '202209201011579961.jpg', 1, 89085, '.jpg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2022-09-20 10:11:57', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
-INSERT INTO `oms_uploadfile` VALUES ('08da9aaf-1e2d-4143-8e61-c17b22af5527', '/icon/local/20220920/202209201023345823.jpeg', '202209201023345823.jpeg', 1, 144853, '.jpeg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2022-09-20 10:23:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
-INSERT INTO `oms_uploadfile` VALUES ('08da9aaf-bb4c-4b48-8b2c-da653a37756e', '/icon/local/20220920/202209201027579667.jpeg', '202209201027579667.jpeg', 1, 156081, '.jpeg', '公司logo', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2022-09-20 10:27:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
+INSERT INTO `oms_uploadfile` VALUES ('08daa778-f35a-409d-8029-a0d53e090d26', '/file/local/20221006/202210061658345649.frx', '202210061658345649.frx', 3, 1564, '.frx', 'template', NULL, '5AB270C0-5D33-4203-A54F-4552699FDA3C', 1, '2022-10-06 16:58:35', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '超级管理员');
 
 -- ----------------------------
 -- Table structure for sys_area
@@ -3765,6 +3760,80 @@ INSERT INTO `sys_area` VALUES ('659004000000', '659000000000', 3, '659004000000'
 INSERT INTO `sys_area` VALUES ('659006000000', '659000000000', 3, '659006000000', '铁门关市', NULL, 659006000000, 0, 1, NULL, '2020-05-27 15:00:07', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
+-- Table structure for sys_codegeneratelog
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_codegeneratelog`;
+CREATE TABLE `sys_codegeneratelog`  (
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `F_Code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '条码',
+  `F_RuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '规则id',
+  `F_RuleName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '规则名称',
+  `F_PrintJson` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '打印Json',
+  `F_PrintCount` int NULL DEFAULT NULL COMMENT '打印次数',
+  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`F_Id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '条码生成记录' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_codegeneratelog
+-- ----------------------------
+INSERT INTO `sys_codegeneratelog` VALUES ('08daa90a-d690-4c92-8f7d-a7c394d295a8', '0009', '08daa908-a7c1-4cc0-84ea-6fab3fa2bea6', '测试', '{\"barid\":\"Company\",\"code\":\"Company\",\"name\":\"上海东鞋贸易有限公司\",\"rulecode\":\"0009\"}', 0, 0, 1, NULL, '2022-10-08 16:55:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for sys_coderule
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_coderule`;
+CREATE TABLE `sys_coderule`  (
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `F_RuleName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '规则名称',
+  `F_RuleJson` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '规则内容',
+  `F_Reset` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '重设机制',
+  `F_TemplateId` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '打印模板Id',
+  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`F_Id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '条码规则' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_coderule
+-- ----------------------------
+INSERT INTO `sys_coderule` VALUES ('08daa908-a7c1-4cc0-84ea-6fab3fa2bea6', '测试', '[{\"Id\":\"1668a472-e5d2-412e-8879-393b1cbc59a4\",\"FormatType\":11,\"FormatString\":\"0000\",\"ToBase\":10,\"InitValue\":1,\"MaxValue\":-1,\"Increment\":1,\"DiyDate\":null,\"LAY_TABLE_INDEX\":0}]', 'yyyy-MM-dd', '08daa778-f508-4fd6-8f60-e60cb414b464', 0, 1, NULL, '2022-10-08 16:39:47', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for sys_coderulelog
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_coderulelog`;
+CREATE TABLE `sys_coderulelog`  (
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `F_RuleId` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '规则Id',
+  `F_Key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'key',
+  `F_Value` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'value',
+  `F_Score` int NULL DEFAULT NULL COMMENT '计数',
+  PRIMARY KEY (`F_Id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_coderulelog
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for sys_dataprivilegerule
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dataprivilegerule`;
@@ -3921,6 +3990,8 @@ CREATE TABLE `sys_items`  (
 -- Records of sys_items
 -- ----------------------------
 INSERT INTO `sys_items` VALUES ('00F76465-DBBA-484A-B75C-E81DEE9313E6', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'Education', '学历', 0, 2, 8, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_items` VALUES ('08daa75d-8081-4460-8cec-88e1bf314c5f', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'PrintType', '打印方式', 0, 2, 19, 0, 1, '', '2022-10-06 13:42:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_items` VALUES ('08daa800-7d0b-41e5-86f5-ab10853267d7', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'RuleReset', '规则重设类型', 0, 2, 20, 0, 1, '', '2022-10-07 09:08:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('0DF5B725-5FB8-487F-B0E4-BC563A77EB04', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'DbType', '数据库类型', 0, 2, 4, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('15023A4E-4856-44EB-BE71-36A106E2AA59', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', '103', '民族', 0, 2, 14, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('2748F35F-4EE2-417C-A907-3453146AAF67', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'Certificate', '证件名称', 0, 2, 7, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3929,7 +4000,7 @@ INSERT INTO `sys_items` VALUES ('64c10822-0c85-4516-9b59-879b818547ae', '7707011
 INSERT INTO `sys_items` VALUES ('77070117-3F1A-41BA-BF81-B8B85BF10D5E', '0', 'Sys_Items', '通用字典', 1, 1, 1, 0, 1, NULL, NULL, NULL, '2020-04-20 17:17:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_items` VALUES ('8CEB2F71-026C-4FA6-9A61-378127AE7320', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', '102', '生育', 0, 2, 13, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('954AB9A1-9928-4C6D-820A-FC1CDC85CDE0', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'AuditState', '审核状态', 0, 2, 6, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_items` VALUES ('9a7079bd-0660-4549-9c2d-db5e8616619f', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'DbLogType', '系统日志', 0, 2, 16, 0, 1, NULL, '2016-07-19 17:09:45', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_items` VALUES ('9a7079bd-0660-4549-9c2d-db5e8616619f', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'DbLogType', '系统日志', 0, 2, 17, 0, 1, '', '2016-07-19 17:09:45', NULL, '2022-10-06 13:41:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_items` VALUES ('9EB4602B-BF9A-4710-9D80-C73CE89BEC5D', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'OrganizeCategory', '机构分类', 0, 2, 2, 0, 1, NULL, NULL, NULL, '2020-04-28 09:07:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL);
 INSERT INTO `sys_items` VALUES ('BDD797C3-2323-4868-9A63-C8CC3437AEAA', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', '104', '性别', 0, 2, 15, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_items` VALUES ('D94E4DC1-C2FD-4D19-9D5D-3886D39900CE', '77070117-3F1A-41BA-BF81-B8B85BF10D5E', 'RoleType', '角色类型', 0, 2, 3, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -3967,6 +4038,16 @@ CREATE TABLE `sys_itemsdetail`  (
 -- ----------------------------
 INSERT INTO `sys_itemsdetail` VALUES ('0096ad81-4317-486e-9144-a6a02999ff19', '2748F35F-4EE2-417C-A907-3453146AAF67', NULL, '4', '护照', NULL, 0, NULL, 4, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('04aba88d-f09b-46c6-bd90-a38471399b0e', 'D94E4DC1-C2FD-4D19-9D5D-3886D39900CE', NULL, '2', '业务角色', NULL, 0, NULL, 2, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('08daa75d-8dd6-4447-8cbe-3a9b7914e88c', '08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, '1', 'FastReport', NULL, 0, NULL, 1, 0, 1, '', '2022-10-06 13:42:28', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('08daa75d-91a6-49e4-8423-89711305954d', '08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, '2', '水晶报表', NULL, 0, NULL, 2, 0, 1, '', '2022-10-06 13:42:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('08daa75d-95ec-4b27-8f78-291616a91adb', '08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, '3', 'HTML', NULL, 0, NULL, 3, 0, 1, '', '2022-10-06 13:42:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('08daa75d-9a7d-43a1-86ac-10223e692e16', '08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, '4', 'PDF', NULL, 0, NULL, 4, 0, 1, '', '2022-10-06 13:42:49', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('08daa75d-a05d-40f0-86ec-76b7782f8b91', '08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, '5', '图片', NULL, 0, NULL, 5, 0, 1, '', '2022-10-06 13:42:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('08daa75d-a401-49f0-8ff2-a6c8171d92f9', '08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, '6', 'Bartender', NULL, 0, NULL, 6, 0, 1, '', '2022-10-06 13:43:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('08daa800-9785-4ba1-861c-8aea35c7df50', '08daa800-7d0b-41e5-86f5-ab10853267d7', NULL, 'yyyy', '年', NULL, 0, NULL, 0, 0, 1, '', '2022-10-07 09:09:32', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('08daa800-a00c-434c-8568-07eac1bbaa9e', '08daa800-7d0b-41e5-86f5-ab10853267d7', NULL, 'yyyy-MM', '月', NULL, 0, NULL, 1, 0, 1, '', '2022-10-07 09:09:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('08daa800-a6f0-4bd7-85ab-6fcd16124192', '08daa800-7d0b-41e5-86f5-ab10853267d7', NULL, 'yyyy-MM-dd', '日', NULL, 0, NULL, 2, 0, 1, '', '2022-10-07 09:09:58', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_itemsdetail` VALUES ('08daa800-aeb3-4274-839c-98145f5e7fd3', '08daa800-7d0b-41e5-86f5-ab10853267d7', NULL, 'yyyy-MM-WW', '周', NULL, 0, NULL, 3, 0, 1, '', '2022-10-07 09:10:11', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('0a2ba6b9-716f-410f-8e89-929ec2277333', '64c10822-0c85-4516-9b59-879b818547ae', NULL, '1', '私信', NULL, 0, NULL, 1, 0, 1, '', '2020-07-29 16:51:59', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('1950efdf-8685-4341-8d2c-ac85ac7addd0', '00F76465-DBBA-484A-B75C-E81DEE9313E6', NULL, '1', '小学', NULL, 0, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_itemsdetail` VALUES ('19EE595A-E775-409D-A48F-B33CF9F262C7', '9EB4602B-BF9A-4710-9D80-C73CE89BEC5D', NULL, 'WorkGroup', '小组', NULL, 0, NULL, 7, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -4255,6 +4336,65 @@ INSERT INTO `sys_log` VALUES ('08da9aaf-c926-4c86-8fe7-a9dad27546ad', '2022-09-2
 INSERT INTO `sys_log` VALUES ('08da9ab0-22e4-4791-83cc-cee53e9e61af', '2022-09-20 10:30:51', 'cesi', 'cesi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2022-09-20 10:30:52', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('08da9ab0-2ad3-40b3-848b-cacba25128a0', '2022-09-20 10:31:05', 'cesi', 'cesi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 0, '登录失败，账户不存在，请重新输入', '2022-09-20 10:31:05', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('08da9ab0-a9fe-4234-894c-318221f281ca', '2022-09-20 10:34:38', 'ceshi', 'ceshi', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 0, '登录失败，SqlSugarException.ArgumentNullException：AddConnection.connection can\'t be null', '2022-09-20 10:34:38', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75d-5a98-4b5b-85ba-339fc3f4bf6c', '2022-10-06 13:41:02', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-06 13:41:02', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75d-6299-4f5a-888c-292d657ae56c', '2022-10-06 13:41:15', 'admin', '超级管理员', 'Update', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,修改操作成功。', '2022-10-06 13:41:15', NULL, '9a7079bd-0660-4549-9c2d-db5e8616619f', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75d-808e-479f-8c46-dd39acbfb1f8', '2022-10-06 13:42:06', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,新增操作成功。', '2022-10-06 13:42:06', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75d-8de2-4932-829a-70703988afef', '2022-10-06 13:42:28', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2022-10-06 13:42:28', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75d-91b2-4a8b-85e1-431b04ce123d', '2022-10-06 13:42:34', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2022-10-06 13:42:34', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75d-95f8-440d-8c24-8d65780e8c48', '2022-10-06 13:42:42', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2022-10-06 13:42:42', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75d-9a8e-48a8-8dc6-782b485300ba', '2022-10-06 13:42:49', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2022-10-06 13:42:49', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75d-a06a-4470-86d7-cfee5b3f76eb', '2022-10-06 13:42:59', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2022-10-06 13:42:59', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75d-a412-4339-8619-1bb9165edd03', '2022-10-06 13:43:05', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2022-10-06 13:43:05', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75e-aa8b-43cc-83b1-cd40c907cddb', '2022-10-06 13:50:26', 'admin', '超级管理员', 'Exit', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '安全退出系统', '2022-10-06 13:50:26', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75e-b0eb-4b7a-8f1b-73e829490323', '2022-10-06 13:50:36', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-06 13:50:36', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75e-b88c-4f84-83db-0b76cde60eb0', '2022-10-06 13:50:49', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-06 13:50:49', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75e-e6ff-4be0-88a9-f324fcb42d6b', '2022-10-06 13:52:07', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-06 13:52:07', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa75f-bbac-4b7b-8c34-43d914a8aac5', '2022-10-06 13:58:04', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-06 13:58:04', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa760-2c09-481e-8f57-e4dc9ea56a3a', '2022-10-06 14:01:12', 'admin', '超级管理员', 'Update', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-字段管理', 1, '字段管理操作,修改操作成功。', '2022-10-06 14:01:12', NULL, '08daa74b-eb2c-45de-8d9e-dd704382c544', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa761-0f7d-4744-8f01-aa117ef8a877', '2022-10-06 14:07:34', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-06 14:07:34', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa761-e8d3-497c-8f17-6104e8f936dc', '2022-10-06 14:13:39', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功。', '2022-10-06 14:13:39', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa761-fa87-4bdd-8a77-3cc01142b16c', '2022-10-06 14:14:08', 'admin', '超级管理员', 'Update', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2022-10-06 14:14:08', NULL, '08daa761-e8bd-4385-8260-70452b199643', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa762-8120-4cee-8060-988fa25b5feb', '2022-10-06 14:17:54', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-06 14:17:54', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa762-eb85-4b41-8ea7-0d944bc51917', '2022-10-06 14:20:53', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功。', '2022-10-06 14:20:53', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa762-fcb4-45de-855e-226c9b4f7008', '2022-10-06 14:21:21', 'admin', '超级管理员', 'Update', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-系统菜单', 1, '系统菜单操作,修改操作成功。', '2022-10-06 14:21:21', NULL, '08daa762-eb69-45bf-8b79-a2bece3f91d7', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa763-d4e1-4f75-8721-1624b25f892f', '2022-10-06 14:27:24', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-06 14:27:24', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa763-f27a-46e9-839e-a1d5b0c9bb65', '2022-10-06 14:28:13', 'admin', '超级管理员', 'Update', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功。', '2022-10-06 14:28:13', NULL, '08daa762-eb70-4380-80e1-6c505d95ff84', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa763-f8ce-4300-8243-b3656846d497', '2022-10-06 14:28:24', 'admin', '超级管理员', 'Update', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,修改操作成功。', '2022-10-06 14:28:24', NULL, '08daa762-eb70-4380-80e1-6c505d95ff84', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa775-477b-47ff-88b5-bf12877eb04f', '2022-10-06 16:32:18', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-06 16:32:18', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa777-e214-48b4-80a1-e000b3e0ca7a', '2022-10-06 16:50:56', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2022-10-06 16:50:56', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa777-e219-49f6-8799-5df5de71714f', '2022-10-06 16:50:56', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,访问操作成功。', '2022-10-06 16:50:56', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa777-ef2d-4767-8596-74a361ad8069', '2022-10-06 16:51:18', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2022-10-06 16:51:18', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa777-ef32-43af-8fee-1824ffe75ba6', '2022-10-06 16:51:18', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,访问操作成功。', '2022-10-06 16:51:18', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa778-2460-4f1e-8837-2aa38ba363a0', '2022-10-06 16:52:47', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2022-10-06 16:52:47', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa778-2466-43e2-8332-c2e08771df5e', '2022-10-06 16:52:47', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,访问操作成功。', '2022-10-06 16:52:47', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa778-676f-4efc-887a-033da95b3988', '2022-10-06 16:54:40', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2022-10-06 16:54:40', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa778-6775-404b-83d9-a00ff4d7d06a', '2022-10-06 16:54:40', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,访问操作成功。', '2022-10-06 16:54:40', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa778-f36a-4ed4-8e05-6145be32915f', '2022-10-06 16:58:35', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-文件中心-文件管理', 1, '文件管理操作,新增操作成功。', '2022-10-06 16:58:35', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa778-f370-4726-871d-f72bb611aa9f', '2022-10-06 16:58:35', 'admin', '超级管理员', 'Visit', '0.0.0.1', 'IANA保留地址', NULL, '', 1, '操作,访问操作成功。', '2022-10-06 16:58:35', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa778-f514-471e-8f24-444d0a43786c', '2022-10-06 16:58:38', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-打印模板', 1, '打印模板操作,新增操作成功。', '2022-10-06 16:58:38', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa77b-8669-4644-8523-f2a01d579bf7', '2022-10-06 17:17:00', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-06 17:17:00', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa800-1851-4315-850d-b3ca89bddfc6', '2022-10-07 09:05:59', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-07 09:05:59', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa800-7d1b-4709-8de7-e37dbc851429', '2022-10-07 09:08:48', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-字典分类', 1, '字典分类操作,新增操作成功。', '2022-10-07 09:08:48', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa800-978e-455e-86de-192005f6843c', '2022-10-07 09:09:32', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2022-10-07 09:09:32', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa800-a016-477e-8728-a282fdc91ec5', '2022-10-07 09:09:47', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2022-10-07 09:09:47', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa800-a6f8-46f7-8630-d9396422a918', '2022-10-07 09:09:58', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2022-10-07 09:09:58', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa800-aebc-47bf-8047-6f5e965e8ba2', '2022-10-07 09:10:11', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-数据字典', 1, '数据字典操作,新增操作成功。', '2022-10-07 09:10:11', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa800-bd70-4d59-84ff-612408fa719b', '2022-10-07 09:10:36', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-条码规则', 1, '条码规则操作,新增操作成功。', '2022-10-07 09:10:36', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa826-aef8-4d55-8a70-3dc4e2874399', '2022-10-07 13:42:12', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-07 13:42:12', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa826-f9d5-4b2c-808b-65157b6c4da8', '2022-10-07 13:44:18', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-07 13:44:18', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa831-c0f5-4156-8893-891d7d73b948', '2022-10-07 15:01:26', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-条码规则', 1, '条码规则操作,删除操作成功。', '2022-10-07 15:01:27', NULL, '08daa800-bd67-48e5-8a9f-9ed078b33390', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa833-1296-423c-872b-5dfd5c8f0f80', '2022-10-07 15:10:53', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-条码规则', 0, '条码规则操作,新增操作失败，Column \'F_RuleJson\' cannot be null', '2022-10-07 15:10:53', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa833-7bea-499a-82d1-af6f186f3679', '2022-10-07 15:13:50', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-条码规则', 0, '条码规则操作,新增操作失败，Column \'F_RuleJson\' cannot be null', '2022-10-07 15:13:50', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa833-ae79-43e0-8292-b8e5c65fa95a', '2022-10-07 15:15:15', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-条码规则', 1, '条码规则操作,新增操作成功。', '2022-10-07 15:15:15', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa833-df07-46d6-8079-5a4b22346f9a', '2022-10-07 15:16:36', 'admin', '超级管理员', 'Update', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-条码规则', 1, '条码规则操作,修改操作成功。', '2022-10-07 15:16:36', NULL, '08daa833-ae62-44b7-80e8-1b0876f61b24', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa834-d789-417d-81aa-aa833fb01b3c', '2022-10-07 15:23:33', 'admin', '超级管理员', 'Delete', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-条码规则', 1, '条码规则操作,删除操作成功。', '2022-10-07 15:23:33', NULL, '08daa833-ae62-44b7-80e8-1b0876f61b24', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa8ce-4b5a-4beb-80e6-66f89c752c90', '2022-10-08 09:42:01', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-08 09:42:01', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa8f6-c2e1-4c4c-862b-9326c1d002fe', '2022-10-08 14:31:41', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-08 14:31:41', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa905-db18-4d1b-8fde-75e353a92481', '2022-10-08 16:19:44', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-08 16:19:44', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa905-f0b6-46d3-871e-4982ab78031a', '2022-10-08 16:20:20', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功。', '2022-10-08 16:20:20', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa908-83de-4df1-8d4b-c03f54782650', '2022-10-08 16:38:46', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-菜单按钮', 1, '菜单按钮操作,新增操作成功。', '2022-10-08 16:38:46', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa908-a7ce-4ade-8e16-a0d5dc4d8e5e', '2022-10-08 16:39:47', 'admin', '超级管理员', 'Create', '0.0.0.1', 'IANA保留地址', NULL, '常规管理-系统管理-条码规则', 1, '条码规则操作,新增操作成功。', '2022-10-08 16:39:47', NULL, '', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
+INSERT INTO `sys_log` VALUES ('08daa9b0-eeae-4b66-8fa9-ea5f82f9a483', '2022-10-09 12:44:21', 'admin', '超级管理员', 'Login', '0.0.0.1', 'IANA保留地址', NULL, '系统登录', 1, '登录成功', '2022-10-09 12:44:21', NULL, NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('095f9844-3ecf-4075-b5d1-5e8a41776742', '2020-10-28 13:01:37', 'admin', '超级管理员', 'Update', '192.168.3.42', '本地局域网', NULL, '常规管理-系统安全-定时任务', 1, '定时任务操作,修改操作成功。', '2020-10-28 13:01:37', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '1d9ffe9c-4c59-4431-8539-4c5ea364237e', 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('09714166-6ffd-4cea-a8ec-15caf7acffc2', '2020-07-10 08:50:52', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '常规管理-系统管理-代码生成', 1, '代码生成操作,新增操作成功', '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
 INSERT INTO `sys_log` VALUES ('09a9f4ff-4c91-4d66-889c-1c5ed8b19e08', '2020-06-28 16:44:56', 'admin', '超级管理员', 'Create', '192.168.1.117', '本地局域网', NULL, '网站管理-内容管理-新闻管理', 1, '新闻管理操作,新增操作成功', '2020-06-28 16:44:56', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, 'd69fd66a-6a77-4011-8a25-53a79bdf5001');
@@ -5207,6 +5347,9 @@ INSERT INTO `sys_module` VALUES ('01849cc9-c6da-4184-92f8-34875dac1d42', '462027
 INSERT INTO `sys_module` VALUES ('06bb3ea8-ec7f-4556-a427-8ff0ce62e873', '873e2274-6884-4849-b636-7f04cca8242c', 2, 'TextTool', '富文本编辑器', 'fa fa-credit-card', '../page/editor.html', 'expand', 1, 0, 0, 0, 0, 0, 5, 0, 1, '', '2020-06-23 11:07:34', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-02 08:44:44', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('08d94532-39d1-4822-80b3-0c25a8183155', '87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', 2, 'OrderManagement', '订单管理', 'fa fa-first-order', NULL, 'expand', 1, 1, 0, 0, 0, 0, 7, 0, 1, '', '2021-07-12 20:40:27', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
 INSERT INTO `sys_module` VALUES ('08d94532-98ac-4751-8cd4-c6c5ec4048e6', '08d94532-39d1-4822-80b3-0c25a8183155', 3, 'Order', '订单信息', 'fa fa-anchor', '/OrderManagement/Order/Index', 'iframe', 1, 0, 0, 0, 0, 0, 1, 0, 1, '', '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-07-13 09:45:05', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
+INSERT INTO `sys_module` VALUES ('08daa74b-eb27-4112-8675-2f20f9ea5f8c', '462027E0-0848-41DD-BCC3-025DCAE65555', 3, 'Coderule', '条码规则', 'fa fa-barcode', '/SystemManage/Coderule/Index', 'iframe', 1, 0, 0, 0, 0, 0, 10, 0, 1, '', '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2022-10-06 11:37:25', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
+INSERT INTO `sys_module` VALUES ('08daa761-e8bd-4385-8260-70452b199643', '462027E0-0848-41DD-BCC3-025DCAE65555', 3, 'Template', '打印模板', 'fa fa-codepen', '/SystemManage/Template/Index', 'iframe', 1, 0, 0, 0, 0, 0, 11, 0, 1, '', '2022-10-06 14:13:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2022-10-06 14:14:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
+INSERT INTO `sys_module` VALUES ('08daa762-eb69-45bf-8b79-a2bece3f91d7', '462027E0-0848-41DD-BCC3-025DCAE65555', 3, 'Codegeneratelog', '条码生成记录', 'fa fa-file-code-o', '/SystemManage/Codegeneratelog/Index', 'iframe', 1, 0, 0, 0, 0, 0, 12, 0, 1, '', '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2022-10-06 14:21:21', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
 INSERT INTO `sys_module` VALUES ('152a8e93-cebb-4574-ae74-2a86595ff986', '462027E0-0848-41DD-BCC3-025DCAE65555', 2, 'ModuleFields', '字段管理', 'fa fa-table', '/SystemManage/ModuleFields/Index', 'iframe', 0, 0, 0, 0, 0, 0, 4, 0, 1, '', '2020-05-21 14:39:20', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-06-15 14:55:50', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('1dff096a-db2f-410c-af2f-12294bdbeccd', '873e2274-6884-4849-b636-7f04cca8242c', 2, 'UploadTool', '文件上传', 'fa fa-arrow-up', '../page/upload.html', 'expand', 1, 0, 0, 0, 0, 0, 4, 0, 1, '', '2020-06-23 11:06:48', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-02 08:42:17', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_module` VALUES ('1e60fce5-3164-439d-8d29-4950b33011e2', '873e2274-6884-4849-b636-7f04cca8242c', 2, 'ColorTool', '颜色选择', 'fa fa-dashboard', '../page/color-select.html', 'expand', 1, 0, 0, 0, 0, 0, 2, 0, 1, '', '2020-06-23 11:05:36', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2020-07-02 08:41:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
@@ -5298,6 +5441,16 @@ INSERT INTO `sys_modulebutton` VALUES ('08d94532-98b0-4b92-8a2f-4da9f59afa21', '
 INSERT INTO `sys_modulebutton` VALUES ('08d94532-98b0-4ba2-87b3-6c976665cb6b', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-delete', '删除', NULL, 2, 'delete', '/OrderManagement/Order/DeleteForm', 0, 0, 0, 0, 2, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('08d94532-98b0-4bac-8e49-471d5b61be95', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', '0', 1, 'NF-details', '查看', NULL, 2, 'details', '/OrderManagement/Order/Details', 0, 0, 0, 0, 3, 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('08d9bde2-f14d-4b33-8f9b-2af0bf40812b', 'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, 'NF-cancle', '撤回', NULL, 1, 'cancle', '/FlowManage/Flowinstance/CancleForm', NULL, 0, 0, 0, 4, 0, 1, '', '2021-12-13 10:47:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
+INSERT INTO `sys_modulebutton` VALUES ('08daa74b-eb2c-4564-81ea-b0a247e2d1c1', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', '0', 1, 'NF-add', '新增', NULL, 1, 'add', '/SystemManage/Coderule/Form', 0, 0, 0, 0, 0, 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08daa74b-eb2c-45a2-8f15-de416e949b49', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', '0', 1, 'NF-edit', '修改', NULL, 2, 'edit', '/SystemManage/Coderule/Form', 0, 0, 0, 0, 1, 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08daa74b-eb2c-45ae-826d-f3daa858a373', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', '0', 1, 'NF-delete', '删除', NULL, 2, 'delete', '/SystemManage/Coderule/DeleteForm', 0, 0, 0, 0, 2, 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08daa74b-eb2c-45b7-838a-e638b9b5fbc4', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', '0', 1, 'NF-details', '查看', NULL, 2, 'details', '/SystemManage/Coderule/Details', 0, 0, 0, 0, 3, 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08daa761-e8c2-451d-82bd-42a949ca6b2b', '08daa761-e8bd-4385-8260-70452b199643', '0', 1, 'NF-add', '新增', NULL, 1, 'add', '/SystemManage/Template/Form', 0, 0, 0, 0, 0, 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08daa761-e8c2-455c-8aa1-2631fcd858ef', '08daa761-e8bd-4385-8260-70452b199643', '0', 1, 'NF-edit', '修改', NULL, 2, 'edit', '/SystemManage/Template/Form', 0, 0, 0, 0, 1, 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08daa761-e8c2-4568-8044-b7d35d082d6f', '08daa761-e8bd-4385-8260-70452b199643', '0', 1, 'NF-delete', '删除', NULL, 2, 'delete', '/SystemManage/Template/DeleteForm', 0, 0, 0, 0, 2, 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08daa761-e8c2-4571-8673-5f693d4dd7a7', '08daa761-e8bd-4385-8260-70452b199643', '0', 1, 'NF-details', '查看', NULL, 2, 'details', '/SystemManage/Template/Details', 0, 0, 0, 0, 3, 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_modulebutton` VALUES ('08daa762-eb70-4380-80e1-6c505d95ff84', '08daa762-eb69-45bf-8b79-a2bece3f91d7', '0', 1, 'NF-reprint', '补印', NULL, 2, 'reprint', '/SystemManage/Codegeneratelog/Reprint', 0, 0, 0, 0, 0, 0, 1, '', '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2022-10-06 14:28:24', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '');
+INSERT INTO `sys_modulebutton` VALUES ('08daa908-83be-459b-85f6-2280b2aa3323', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', '0', 1, 'NF-create', '生成条码', NULL, 2, 'create', '/SystemManage/Coderule/CreateForm', NULL, 0, 0, 0, 4, 0, 1, '', '2022-10-08 16:38:46', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '');
 INSERT INTO `sys_modulebutton` VALUES ('0a1ba1d7-b4f3-45a4-a4da-e70fb25bb766', 'e9190a56-e173-4483-8a3e-f17b86e4766e', '0', 1, 'NF-delete', '删除', NULL, 2, 'delete', '/InfoManage/Message/DeleteForm', 0, 0, 0, 0, 2, 0, 1, NULL, '2020-07-29 16:44:08', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('0b1b307b-2aac-456b-acfb-484a05c71bd7', '26452c9a-243d-4c81-97b9-a3ad581c3bf4', '0', 1, 'NF-edit', '修改机构', NULL, 2, 'edit', '/SystemOrganize/Organize/Form', 0, 0, 0, 0, 2, 0, 1, '', NULL, NULL, '2020-07-23 10:47:04', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
 INSERT INTO `sys_modulebutton` VALUES ('0d777b07-041a-4205-a393-d1a009aaafc7', '423A200B-FA5F-4B29-B7B7-A3F5474B725F', '0', 1, 'NF-edit', '修改字典', NULL, 2, 'edit', '/SystemManage/ItemsData/Form', 0, 0, 0, 0, 3, 0, 1, NULL, NULL, NULL, '2016-07-25 15:37:42', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL);
@@ -5443,6 +5596,37 @@ INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4beb-89d3-425505eb2d36', '
 INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4bf6-82f3-9f62b0b5cec6', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_Description', 'F_Description', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
 INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4c01-86ff-7b056e669066', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_CreatorTime', 'F_CreatorTime', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
 INSERT INTO `sys_modulefields` VALUES ('08d94532-98b0-4c0c-81e2-b66009a2420f', '08d94532-98ac-4751-8cd4-c6c5ec4048e6', 'F_CreatorUserName', 'F_CreatorUserName', 0, 1, NULL, '2021-07-12 20:43:06', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa74b-eb2c-45c0-8fca-14d20aa11839', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', 'F_RuleName', '规则名称', 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa74b-eb2c-45cd-88fa-d18628637b4d', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', 'F_RuleJson', '规则内容', 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa74b-eb2c-45d6-8015-6d6aa8e4af15', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', 'F_Reset', '重设机制', 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa74b-eb2c-45de-8d9e-dd704382c544', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', 'F_TemplateName', '模板名称', 0, 1, '', '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2022-10-06 14:01:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa74b-eb2c-45e7-807f-4868b3841e50', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', 'F_PrintType', '打印方式', 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa74b-eb2c-45ef-87ef-ff950508caab', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', 'F_EnabledMark', '状态', 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa74b-eb2c-45f7-8b88-5c6644b10c49', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', 'F_Description', 'F_Description', 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa74b-eb2c-45ff-8f80-36e16ccf7d20', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', 'F_CreatorTime', 'F_CreatorTime', 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa74b-eb2c-4608-8b0c-38d830774de0', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', 'F_CreatorUserId', 'F_CreatorUserId', 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa74b-eb2c-4611-8c9c-d8c06a5ba0fe', '08daa74b-eb27-4112-8675-2f20f9ea5f8c', 'F_CreatorUserName', 'F_CreatorUserName', 0, 1, NULL, '2022-10-06 11:36:14', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa761-e8c2-457a-8a3a-b0f493f50238', '08daa761-e8bd-4385-8260-70452b199643', 'F_TemplateName', '模板名称', 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa761-e8c2-4588-8e53-8869fe05743d', '08daa761-e8bd-4385-8260-70452b199643', 'F_TemplateFile', '模板文件', 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa761-e8c2-4591-8969-e850aeed97f4', '08daa761-e8bd-4385-8260-70452b199643', 'F_TemplateDBProvider', '模板执行库', 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa761-e8c2-4599-8e1e-9253e585a63d', '08daa761-e8bd-4385-8260-70452b199643', 'F_TemplateSql', '模板执行sql', 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa761-e8c2-45a8-83d0-70dea211f165', '08daa761-e8bd-4385-8260-70452b199643', 'F_TemplateSqlParm', '模板执行参数', 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa761-e8c2-45b1-8801-767f6291f9f4', '08daa761-e8bd-4385-8260-70452b199643', 'F_PrintType', '打印方式', 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa761-e8c2-45ba-80ef-659402507dbe', '08daa761-e8bd-4385-8260-70452b199643', 'F_EnabledMark', '状态', 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa761-e8c2-45c2-8400-9fa89a641a13', '08daa761-e8bd-4385-8260-70452b199643', 'F_Description', 'F_Description', 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa761-e8c2-45cb-8078-b67bb629ed7d', '08daa761-e8bd-4385-8260-70452b199643', 'F_CreatorTime', 'F_CreatorTime', 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa761-e8c2-45d3-8cd5-1883780a9c9b', '08daa761-e8bd-4385-8260-70452b199643', 'F_CreatorUserId', 'F_CreatorUserId', 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa761-e8c2-45dc-8c40-450d9a90b426', '08daa761-e8bd-4385-8260-70452b199643', 'F_CreatorUserName', 'F_CreatorUserName', 0, 1, NULL, '2022-10-06 14:13:39', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa762-eb70-43bc-84b7-298916956a3f', '08daa762-eb69-45bf-8b79-a2bece3f91d7', 'F_Code', '条码', 0, 1, NULL, '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa762-eb70-43ce-84d2-dd171ecc46bf', '08daa762-eb69-45bf-8b79-a2bece3f91d7', 'F_RuleId', '规则id', 0, 1, NULL, '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa762-eb70-43d8-84e5-1375f17164cb', '08daa762-eb69-45bf-8b79-a2bece3f91d7', 'F_RuleName', '规则名称', 0, 1, NULL, '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa762-eb70-43e1-8caa-692428dbdf47', '08daa762-eb69-45bf-8b79-a2bece3f91d7', 'F_PrintJson', '打印Json', 0, 1, NULL, '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa762-eb70-43eb-8395-79cb1a24cb52', '08daa762-eb69-45bf-8b79-a2bece3f91d7', 'F_PrintCount', '打印次数', 0, 1, NULL, '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa762-eb70-43f5-82ae-3be048c23b6f', '08daa762-eb69-45bf-8b79-a2bece3f91d7', 'F_EnabledMark', '状态', 0, 1, NULL, '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa762-eb70-4400-8d08-5962b9662150', '08daa762-eb69-45bf-8b79-a2bece3f91d7', 'F_Description', 'F_Description', 0, 1, NULL, '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa762-eb70-440b-8ddd-65b1f1a89189', '08daa762-eb69-45bf-8b79-a2bece3f91d7', 'F_CreatorTime', '创建时间', 0, 1, NULL, '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa762-eb70-4416-8101-0f994fa4c0e4', '08daa762-eb69-45bf-8b79-a2bece3f91d7', 'F_CreatorUserId', 'F_CreatorUserId', 0, 1, NULL, '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `sys_modulefields` VALUES ('08daa762-eb70-441f-8c4c-5fdf38c7534b', '08daa762-eb69-45bf-8b79-a2bece3f91d7', 'F_CreatorUserName', 'F_CreatorUserName', 0, 1, NULL, '2022-10-06 14:20:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
 INSERT INTO `sys_modulefields` VALUES ('0917606f-f448-49d3-b78d-e08a17a1cc4f', '2c2ddbce-ee87-4134-9b32-54d0bd572910', 'F_CreatorTime', '创建时间', 0, 1, NULL, '2020-07-08 14:34:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
 INSERT INTO `sys_modulefields` VALUES ('0927895a-9d35-435c-b980-13f7102043c3', '484269cb-9aea-4af1-b7f6-f99e7e396ad1', 'F_PrincipalMan', '联系人', 0, 1, NULL, '2020-06-12 14:33:15', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
 INSERT INTO `sys_modulefields` VALUES ('0986da5b-16a3-4330-8449-0508699c93e3', 'f82fd629-5f3a-45d6-8681-5ec47e66a807', 'F_SchemeName', '流程名称', 0, 1, NULL, '2020-07-10 08:50:52', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, 1);
@@ -6613,6 +6797,37 @@ CREATE TABLE `sys_systemset`  (
 -- Records of sys_systemset
 -- ----------------------------
 INSERT INTO `sys_systemset` VALUES ('d69fd66a-6a77-4011-8a25-53a79bdf5001', '/icon/favicon.ico', 'WaterCloud', '水之云信息系统', '水之云', 'admin', '0000', 0, 1, '', '2020-06-12 16:30:00', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '2021-06-09 13:22:12', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, '13621551864', 'MonsterUncle', '2032-06-26 00:00:00', 'data source=localhost;database=watercloudnetdb;uid=root;pwd=root;', 'MySql.Data.MySqlClient', 'localhost', '0');
+
+-- ----------------------------
+-- Table structure for sys_template
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_template`;
+CREATE TABLE `sys_template`  (
+  `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `F_TemplateName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '模板名称',
+  `F_TemplateFile` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '模板文件',
+  `F_TemplateDBProvider` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '模板执行库',
+  `F_TemplateSql` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '模板执行sql',
+  `F_TemplateSqlParm` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '模板执行参数',
+  `F_PrintType` int NULL DEFAULT NULL COMMENT '打印方式',
+  `F_Batch` tinyint(1) NULL DEFAULT NULL COMMENT '是否批量',
+  `F_DeleteMark` tinyint(1) NULL DEFAULT NULL,
+  `F_EnabledMark` tinyint(1) NULL DEFAULT NULL,
+  `F_Description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
+  `F_CreatorTime` datetime NULL DEFAULT NULL,
+  `F_CreatorUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_CreatorUserName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_LastModifyTime` datetime NULL DEFAULT NULL,
+  `F_LastModifyUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_DeleteTime` datetime NULL DEFAULT NULL,
+  `F_DeleteUserId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`F_Id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '模板' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_template
+-- ----------------------------
+INSERT INTO `sys_template` VALUES ('08daa778-f508-4fd6-8f60-e60cb414b464', '测试模板', '/file/local/20221006/202210061658345649.frx', '0', 'SELECT F_EnCode barId,F_EnCode code,F_FullName name FROM `sys_organize` where F_Id=\'5AB270C0-5D33-4203-A54F-4552699FDA3C\'', '', 1, 0, 0, 1, NULL, '2022-10-06 16:58:38', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user
