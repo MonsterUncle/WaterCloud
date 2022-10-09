@@ -384,7 +384,7 @@ namespace WaterCloud.Service.SystemManage
 					list.Add(new SugarParameter(item.Key, item.Value));
 				}
 			}
-			var printResult = await repository.Db.Ado.SqlQueryAsync<dynamic>(template.F_TemplateSql, list);
+			var printResult = string.IsNullOrEmpty(template.F_TemplateSql) ? null : await repository.Db.Ado.SqlQueryAsync<dynamic>(template.F_TemplateSql, list);
 			if (printResult!=null && printResult.Count>0)
 			{
 				var printData = (printResult[0] as IDictionary<string, object>)?.ToDictionary(k => k.Key.ToLower(), v => v.Value?.ToString());
@@ -393,7 +393,9 @@ namespace WaterCloud.Service.SystemManage
 			}
 			else
 			{
-				return new Dictionary<string, string>();
+				var printData = new Dictionary<string, string>();
+				printData.Add("rulecode", code);
+				return printData;
 			}
 		}
 		public async Task<List<PrintEntity>> CreateForm(string keyValue, int count = 1, bool needPrint = false)

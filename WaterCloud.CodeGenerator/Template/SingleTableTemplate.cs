@@ -885,7 +885,7 @@ namespace WaterCloud.CodeGenerator
 			sb.AppendLine("            if (obj.event === 'delete') {");
 			sb.AppendLine("                common.deleteForm({");
 			sb.AppendLine("                     url: \"/" + baseConfigModel.OutputConfig.OutputModule + "/" + baseConfigModel.FileConfig.ClassPrefix + "/DeleteForm\",");
-			sb.AppendLine("                     param: { keyValue: obj.data." + idColumn + " },");
+			sb.AppendLine("                     param: { keyValue: id },");
 			sb.AppendLine("                     success: function () {");
 			sb.AppendLine("                        obj.del();");
 			sb.AppendLine("                   }");
