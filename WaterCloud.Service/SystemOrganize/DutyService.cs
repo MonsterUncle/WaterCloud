@@ -78,7 +78,7 @@ namespace WaterCloud.Service.SystemOrganize
 		private ISugarQueryable<RoleExtend> GetQuery()
 		{
 			var query = repository.Db.Queryable<RoleEntity, SystemSetEntity>((a, b) => new JoinQueryInfos(
-				JoinType.Left, a.F_OrganizeId == b.F_Id
+				JoinType.Left, a.F_CompanyId == b.F_Id
 
 				)).Where(a => a.F_DeleteMark == false && a.F_Category == 2)
 				.Select((a, b) => new RoleExtend
@@ -131,7 +131,7 @@ namespace WaterCloud.Service.SystemOrganize
 				item.F_Id = Utils.GuId();
 				item.F_EnabledMark = true;
 				item.F_DeleteMark = false;
-				item.F_OrganizeId = currentuser.CompanyId;
+				item.F_CompanyId = currentuser.CompanyId;
 				item.F_SortCode = 1;
 				item.F_Category = 2;
 				item.F_AllowEdit = false;
