@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 09/10/2022 13:33:56
+ Date: 10/10/2022 09:48:32
 */
 
 SET NAMES utf8mb4;
@@ -5960,7 +5960,7 @@ INSERT INTO `sys_quickmodule` VALUES ('39fcd21d-5575-f2b5-227f-b92f88bb8817', '2
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role`  (
   `F_Id` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `F_OrganizeId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `F_CompanyId` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_Category` int NULL DEFAULT NULL,
   `F_EnCode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `F_FullName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,

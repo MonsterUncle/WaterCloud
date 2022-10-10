@@ -28,8 +28,8 @@ namespace WaterCloud.Domain.SystemOrganize
 		/// 公司Id
 		/// </summary>
 		[Required(ErrorMessage = "公司不能为空")]
-		[SugarColumn(IsNullable = true, ColumnName = "F_OrganizeId", ColumnDataType = "nvarchar(50)", ColumnDescription = "公司Id")]
-		public string F_OrganizeId { get; set; }
+		[SugarColumn(IsNullable = true, ColumnName = "F_CompanyId", ColumnDataType = "nvarchar(50)", ColumnDescription = "公司Id")]
+		public string F_CompanyId { get; set; }
 
 		/// <summary>
 		/// 类型
