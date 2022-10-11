@@ -314,20 +314,20 @@ namespace WaterCloud.Service.SystemManage
 					//预览
 					if (!preview)
 					{
-						if (GlobalContext.SystemConfig.CacheProvider== Define.CACHEPROVIDER_REDIS)
+						if (GlobalContext.SystemConfig.CacheProvider == Define.CACHEPROVIDER_REDIS)
 						{
 							score = await BaseHelper.ZIncrByAsync(GlobalContext.SystemConfig.ProjectPrefix + $"_BillNumber:{ruleName}", resetRule, increment);
 						}
 						else
 						{
-							var rulelog= await repository.Db.Queryable<CoderulelogEntity>().FirstAsync(a => a.F_Key == GlobalContext.SystemConfig.ProjectPrefix + $"_BillNumber:{ruleName}" && a.F_Value == resetRule);
+							var rulelog = await repository.Db.Queryable<CoderulelogEntity>().FirstAsync(a => a.F_Key == GlobalContext.SystemConfig.ProjectPrefix + $"_BillNumber:{ruleName}" && a.F_Value == resetRule);
 							if (rulelog == null)
 							{
 								rulelog = new CoderulelogEntity();
 								rulelog.F_Id = Utils.GetGuid();
 								rulelog.F_Key = GlobalContext.SystemConfig.ProjectPrefix + $"_BillNumber:{ruleName}";
 								rulelog.F_Value = resetRule;
-								rulelog.F_Score = 1;
+								rulelog.F_Score = (int)increment;
 								rulelog.F_RuleId = rule.F_Id;
 								await repository.Db.Insertable(rulelog).ExecuteCommandAsync();
 							}
@@ -335,23 +335,43 @@ namespace WaterCloud.Service.SystemManage
 							{
 								await repository.Db.Updateable<CoderulelogEntity>(a => new CoderulelogEntity
 								{
-									F_Score = a.F_Score+1
+									F_Score = a.F_Score + (int)increment
 								}).Where(a => a.F_Id == rulelog.F_Id).ExecuteCommandAsync();
 							}
 						}
-						//10进制流水号
-						var flowNumber = score + initVal;
-
-						//判断流水号是否超过流水号设定的最大值
-						if (maxVal > 0 && flowNumber > maxVal)
-							throw new Exception($"Morethan the flownumber settinged max value:{maxVal} and now value:{flowNumber}");
-
-						//默认10进制
-						scoreString = flowNumber.ToString();
-
-						if (toBase != 10)
-							scoreString = scoreString.ToLong().ToBase(toBase);
 					}
+					else
+					{
+						if (GlobalContext.SystemConfig.CacheProvider == Define.CACHEPROVIDER_REDIS)
+						{
+							score = await BaseHelper.ZScoreAsync(GlobalContext.SystemConfig.ProjectPrefix + $"_BillNumber:{ruleName}", resetRule)??0;
+							score += increment;
+						}
+						else
+						{
+							var rulelog = await repository.Db.Queryable<CoderulelogEntity>().FirstAsync(a => a.F_Key == GlobalContext.SystemConfig.ProjectPrefix + $"_BillNumber:{ruleName}" && a.F_Value == resetRule);
+							if (rulelog == null)
+							{
+								score += increment;
+							}
+							else
+							{
+								score = (rulelog.F_Score??0) + increment;
+							}
+						}
+					}
+					//10进制流水号
+					var flowNumber = score + initVal;
+
+					//判断流水号是否超过流水号设定的最大值
+					if (maxVal > 0 && flowNumber > maxVal)
+						throw new Exception($"Morethan the flownumber settinged max value:{maxVal} and now value:{flowNumber}");
+
+					//默认10进制
+					scoreString = flowNumber.ToString();
+
+					if (toBase != 10)
+						scoreString = scoreString.ToLong().ToBase(toBase);
 
 					//^_^是代表可以任意位置流水号
 					var flow = scoreString.PadLeft(flowNumberLength, '0');
