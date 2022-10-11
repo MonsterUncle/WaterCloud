@@ -21,6 +21,7 @@ layui.define(['table', 'laypage', 'jquery', 'element', 'laytpl'], function (expo
 		data: [],       //静态数据
 		limits: [],     //页码
 		page: true, //是否分页
+		image: false,//图片模式
 		layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],//分页控件
 		request: {
 			pageName: 'page' //页码的参数名称，默认：page
@@ -110,7 +111,7 @@ layui.define(['table', 'laypage', 'jquery', 'element', 'laytpl'], function (expo
 		}
 		// 根据结果进行相应结构的创建
 		if (!!option.data && option.data.length > 0) {
-			html = createComponent(option.linenum, option.data, option.toolbar);
+			html = createComponent(option.linenum, option.data, option.toolbar, option.image);
 			html += "<div id='cardpage'></div>";
 		}
 		else {
@@ -173,7 +174,7 @@ layui.define(['table', 'laypage', 'jquery', 'element', 'laytpl'], function (expo
 				, othis: reElem
 			});
 		});
-		if (!!option.toolbar) {
+		if (!!option.toolbar && !option.image) {
 			$(option.elem).unbind('click');
 		}
 		//行工具条操作事件
@@ -184,13 +185,13 @@ layui.define(['table', 'laypage', 'jquery', 'element', 'laytpl'], function (expo
 	};
 	function getCheckedData(obj, elem) {
 		var item = {};
-		if (!obj.id || obj.nodeName != "DIV") {
+		if (!obj.id) {
 			return getCheckedData(obj.parentElement, elem);
 		}
 		var reElem = obj;
 		$(reElem).addClass('layui-table-click').siblings().removeClass('layui-table-click');
 		item.id = reElem.id;
-		if (item.id) {
+		if (!obj.id || obj.nodeName != "DIV") {
 			item.id = item.id.replace('card_', '');
 		}
 		var option = _instances[elem].option;
@@ -223,25 +224,25 @@ layui.define(['table', 'laypage', 'jquery', 'element', 'laytpl'], function (expo
 		}
 		return item;
 	}
-	function createComponent(linenum, data, toolbar) {
+	function createComponent(linenum, data, toolbar, image) {
 		var html = "<div class='cloud-card-component'>"
-		var content = createCards(linenum, data, toolbar);
+		var content = createCards(linenum, data, toolbar, image);
 		var page = "";
 		content = content + page;
 		html += content + "</div>"
 		return html;
 	}
 	/** 创建指定数量的卡片 */
-	function createCards(linenum, data, toolbar) {
+	function createCards(linenum, data, toolbar, image) {
 		var content = "<div class='layui-row layui-col-space30'>";
 		for (var i = 0; i < data.length; i++) {
-			content += createCard(linenum, data[i], i, toolbar);
+			content += createCard(linenum, data[i], i, toolbar, image);
 		}
 		content += "</div>";
 		return content;
 	}
 	/** 创建一个卡片 */
-	function createCard(linenum, item, index, toolbar) {
+	function createCard(linenum, item, index, toolbar, image) {
 		var line = 12 / linenum;
 		var tplData = $.extend(true, {
 			LAY_INDEX: index
@@ -250,9 +251,13 @@ layui.define(['table', 'laypage', 'jquery', 'element', 'laytpl'], function (expo
 		if (!!toolbar) {
 			template = laytpl($('#' + toolbar).html() || '').render(tplData);
 		}
-		var card =
-			'<div type=card id=card_' + item.id + ' class="layui-col-md' + line + ' ew-datagrid-item" data-index="' + index + '" data-number="1"> <div class="project-list-item">' + (!!item.image ? ' <img class="project-list-item-cover" src="' + item.image + '">' : '') + '<div class="project-list-item-body"> <h2>' + item.title + '</h2> <div class="project-list-item-text layui-text">' + item.remark + '</div> <div class="project-list-item-desc"> <span class="time">' + item.time + '</span>' + (!!template ? ' <div class="ew-head-list">' + template + '</div>' : '') + ' </div> </div > </div > </div > '
-		return card;
+		if (image) {
+			return '<div type=card id=card_' + item.id + ' class="layui-col-md' + line + ' ew-datagrid-item" data-index="' + index + '" data-number="1"> <div class="project-list-item">' + (!!item.image ? ' <img class="project-list-item-cover" src="' + item.image + '">' : '') + ' </div > </div > ';
+		}
+		else {
+			return '<div type=card id=card_' + item.id + ' class="layui-col-md' + line + ' ew-datagrid-item" data-index="' + index + '" data-number="1"> <div class="project-list-item">' + (!!item.image ? ' <img class="project-list-item-cover" src="' + item.image + '">' : '') + '<div class="project-list-item-body"> <h2>' + item.title + '</h2> <div class="project-list-item-text layui-text">' + item.remark + '</div> <div class="project-list-item-desc"> <span class="time">' + item.time + '</span>' + (!!template ? ' <div class="ew-head-list">' + template + '</div>' : '') + ' </div> </div > </div > </div > ';
+		}
+
 	}
 	/** 格式化返回参数 */
 	function initData(tempData, option) {
