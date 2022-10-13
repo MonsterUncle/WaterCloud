@@ -10,7 +10,7 @@
         <TableColumn Name="Column2"/>
         <TableRow Name="Row1" Height="66.15">
           <TableCell Name="Cell1" Border.Lines="All" Font="宋体, 9pt" RowSpan="2">
-            <BarcodeObject Name="barId" Left="3.78" Top="3.78" Width="94.5" Height="124.74" Border.Lines="All" AutoSize="false" Expression="[barId]" Text="123" ShowText="false" Barcode="QR Code" Barcode.ErrorCorrection="L" Barcode.Encoding="UTF8" Barcode.QuietZone="false"/>
+            <BarcodeObject Name="barId" Left="3.78" Top="3.78" Width="94.5" Height="124.74" Border.Lines="All" AutoSize="false" Expression="[barid]" Text="123" ShowText="false" Barcode="QR Code" Barcode.ErrorCorrection="L" Barcode.Encoding="UTF8" Barcode.QuietZone="false"/>
           </TableCell>
           <TableCell Name="code" Border.Lines="All" Text="[code]" Font="宋体, 9pt"/>
         </TableRow>
