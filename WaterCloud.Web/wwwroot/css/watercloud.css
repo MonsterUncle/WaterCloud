@@ -250,3 +250,9 @@
     height: 100%;
     background-color: #2D8CF0;
 }
+.layui-table th, .layui-table td, .layui-table[lay-skin="line"], .layui-table[lay-skin="row"], .layui-table-view, .layui-table-tool, .layui-table-header, .layui-table-col-set, .layui-table-total, .layui-table-page, .layui-table-fixed-r, .layui-table-tips-main, .layui-table-grid-down {
+    border-color: #e6e6e6;
+}
+    .layui-table thead tr, .layui-table-header, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table-patch, .layui-table-mend, .layui-table tbody tr:hover, .layui-table-hover, .layui-table-click {
+        background-color: #f2f2f2;
+    }
