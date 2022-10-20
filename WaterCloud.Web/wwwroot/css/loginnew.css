@@ -1,0 +1,239 @@
+﻿html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden
+}
+
+body {
+    background-image: url(/images/bgnew.jpeg);
+    background-size: cover;
+    font-family: 'Open Sans', sans-serif;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+    body:after {
+        content: '';
+        background-repeat: no-repeat;
+        background-size: cover;
+        -webkit-filter: blur(3px);
+        -moz-filter: blur(3px);
+        -o-filter: blur(3px);
+        -ms-filter: blur(3px);
+        filter: blur(3px);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+    }
+
+.layui-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden
+}
+
+.admin-login-background {
+    color: #ff5722;
+    width: 360px;
+    height: 300px;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    margin-left: -180px;
+    margin-top: -100px;
+}
+
+.logo-title {
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 14px 0;
+}
+
+    .logo-title h1 {
+        color: #1e9fff;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+.login-form {
+    border: 1px solid #fafafa;
+    border-radius: 3px;
+    padding: 14px 20px;
+    box-shadow: 0 0 8px #333;
+}
+
+    .login-form .layui-form-item {
+        position: relative;
+    }
+
+        .login-form .layui-form-item label {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            width: 38px;
+            line-height: 36px;
+            text-align: center;
+            color: #d2d2d2;
+        }
+
+        .login-form .layui-form-item input {
+            padding-left: 36px;
+        }
+
+        .login-form .layui-form-item .layui-btn {
+            background-color: #1e9fff;
+            color: #fafafa;
+        }
+
+.captcha {
+    width: 60%;
+    display: inline-block;
+}
+
+.captcha-img {
+    display: inline-block;
+    width: 34%;
+    float: right;
+}
+
+    .captcha-img img {
+        height: 34px;
+        border: 1px solid #e6e6e6;
+        height: 36px;
+        width: 100%;
+    }
+
+.tips_msg {
+    height: 30px;
+    line-height: 30px;
+    color: red;
+    margin: 0 auto;
+    border-radius: 5px;
+    width: 300px;
+    font-size: 14px;
+}
+
+    .tips_msg i {
+        position: relative;
+        top: 0.5px;
+        font-size: 15px;
+        padding-right: 5px;
+    }
+
+#starsBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    opacity: .5;
+}
+
+    #starsBox span {
+        display: inline-block;
+        width: auto;
+        position: absolute;
+        border-radius: 100%;
+        transition: 100s linear;
+    }
+
+p {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    transform: translateY(-50%);
+    font-size: 40px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 0 50px black;
+    text-transform: capitalize;
+    font-family: 'Roboto','Helvetica','Arial',sans-serif;
+    letter-spacing: 5px;
+}
+
+    p > span {
+        display: block;
+        font-size: 12px;
+        color: #bdc3c7;
+        margin-top: 30px;
+        font-weight: 100;
+        text-shadow: 0 0 50px black;
+        letter-spacing: 3px;
+    }
+
+        p > span > a {
+            font-weight: 700;
+            text-decoration: none;
+            color: #d64541;
+            padding-bottom: 2px;
+            border-bottom: 0px solid #d64541;
+            transition: 0.5s;
+        }
+
+            p > span > a:hover {
+                padding-bottom: 5px;
+                border-bottom: 2px solid #d64541;
+            }
+
+.layui-form-item .layui-form-checkbox[lay-skin=primary] {
+    margin-top: 0px;
+}
+
+.layui-form-checked[lay-skin=primary] i {
+    border-color: orange !important;
+    background-color: orange;
+    color: #fff;
+}
+
+.code {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.input-val {
+    width: 63%;
+    background: #ffffff;
+    height: 2.8rem;
+    padding: 0 2%;
+    border-radius: 5px;
+    border: none;
+    border: 1px solid rgba(0,0,0,.2);
+    font-size: 0.9rem;
+}
+
+#canvas {
+    float: right;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.layui-tab-title {
+    position: relative;
+    left: 0;
+    height: 40px;
+    white-space: nowrap;
+    font-size: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: unset;
+    transition: all .2s;
+    -webkit-transition: all .2s;
+}
+
+    .layui-tab-title .layui-this {
+        color: orange;
+        background-color: #FFFFCE;
+    }
+
+.layui-form-select dl dd {
+    cursor: pointer;
+    color: black;
+}

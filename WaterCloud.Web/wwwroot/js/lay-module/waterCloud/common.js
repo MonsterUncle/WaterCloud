@@ -147,8 +147,8 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 IsClose = true;
             }
             if (IsClose) {
-                if (top.iframesList) {
-                    delete top.iframesList[index];
+                if (window.top.iframesList) {
+                    delete window.top.iframesList[index];
                 }
                 parent.layer.close(index);
             } else {
@@ -204,12 +204,12 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 success: function (layero, index) {
                     $(layero).addClass("scroll-wrapper");//苹果 iframe 滚动条失效解决方式
                     //建立父子关系
-                    if (!top.iframesList) {
-                        top.iframesList = {};
+                    if (!window.top.iframesList) {
+                        window.top.iframesList = {};
                     }
-                    top.iframesList[index] = window;
+                    window.top.iframesList[index] = window;
                     //新增传值方式
-                    top.iframesList[index].dataJson = options.dataJson;
+                    window.top.iframesList[index].dataJson = options.dataJson;
                     if (!!options.success) {
                         options.success(layero, index);
                     }
@@ -224,14 +224,14 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                         options.btn2(index, layero);
                     }
                     else {
-                        if (top.iframesList) {
-                            delete top.iframesList[index];
+                        if (window.top.iframesList) {
+                            delete window.top.iframesList[index];
                         }
                         return true;
                     }
                 }, cancel: function (index, layero) {
-                    if (top.iframesList) {
-                        delete top.iframesList[index];
+                    if (window.top.iframesList) {
+                        delete window.top.iframesList[index];
                     }
                     if (!!options.cancel) {
                         options.cancel(index, layero);
@@ -530,8 +530,8 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         //父窗体
         parentWindow: function () {
             var index = parent.layer.getFrameIndex(window.name);
-            if (top.iframesList) {
-                return top.iframesList[index];
+            if (window.top.iframesList) {
+                return window.top.iframesList[index];
             }
             else {
                 return null;

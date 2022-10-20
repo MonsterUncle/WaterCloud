@@ -11,7 +11,7 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="icon" href="@ViewBag.LogoIcon">
     <link rel="stylesheet" href="~/lib/layui/css/layui.css?v=@WaterCloud.Code.GlobalContext.GetVersion()" media="all">
-    <link rel="stylesheet" href="~/css/login.css?v=@WaterCloud.Code.GlobalContext.GetVersion()" media="all">
+    <link rel="stylesheet" href="~/css/loginnew.css?v=@WaterCloud.Code.GlobalContext.GetVersion()" media="all">
 </head>
 
 <body>
@@ -27,7 +27,7 @@
         });
     </script>
     @*动画特效*@
-    <div id="starsBox"></div>
+@*    <div id="starsBox"></div>*@
     <div class="layui-container">
         <div class="admin-login-background">
             <div class="layui-form login-form">
@@ -57,15 +57,15 @@
                     <div class="layui-form-item">
                         <span>
                             <input type="checkbox" name="remember_user" id="remember_user" lay-skin="primary" style="vertical-align:middle;" value="true">
-                            <span style="color:#FFFFCE;vertical-align:middle;">记住密码</span>
+                            <span>记住密码</span>
                         </span>
                     </div>
-                    <div class="row" style="margin-top:5px;color:orange;">
+                    <div class="row">
                         <span>测试账号admin,密码0000</span>
                     </div>
                     <div class="layui-form-item">
                         <div class="login_tips"></div>
-                        <button id="login_button" class="layui-btn layui-btn-fluid" style="background-color:#FFFFCE;color:orange" lay-submit="" lay-filter="login">登 入</button>
+                        <button id="login_button" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="login">登 入</button>
                     </div>
                 </form>
             </div>

@@ -273,7 +273,7 @@ function uuid() {
 //父窗体方法
 Window.prototype.parentWindow = function () { //author: meizz
     var index = parent.layer.getFrameIndex(this.name);
-    return top.iframesList[index];
+    return window.top.iframesList[index];
 };
 function setIframeHeight(iframe) {
     if (iframe) {

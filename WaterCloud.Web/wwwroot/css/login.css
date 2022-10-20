@@ -36,7 +36,7 @@ body {
 }
 
 .admin-login-background {
-    color: #FFFFCE;
+    color: #ffb800;
     width: 360px;
     height: 300px;
     position: absolute;
@@ -81,6 +81,11 @@ body {
 
         .login-form .layui-form-item input {
             padding-left: 36px;
+        }
+
+        .login-form .layui-form-item .layui-btn {
+            background-color: #2f4056;
+            color: #fafafa;
         }
 
 .captcha {
