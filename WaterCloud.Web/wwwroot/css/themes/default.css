@@ -10,7 +10,7 @@
 
     /*头部右侧字体颜色 headerRightColor */
     .layui-layout-admin .layui-header .layui-nav .layui-nav-item a {
-        color: rgba(255,255,255,.7);
+        color: #fafafa;
     }
 
     /**头部右侧下拉字体颜色 headerRightChildColor */
@@ -25,12 +25,12 @@
 
 /*头部右侧更多下拉颜色 headerRightNavMore */
 .layui-header .layui-nav .layui-nav-more {
-    border-top-color: rgba(255,255,255,.7) !important;
+    border-top-color: #fafafa !important;
 }
 
 /*头部右侧更多下拉颜色 headerRightNavMore */
 .layui-header .layui-nav .layui-nav-mored, .layui-header .layui-nav-itemed > a .layui-nav-more {
-    border-color: transparent transparent rgba(255,255,255,.7) !important;
+    border-color: transparent transparent #fafafa !important;
 }
 
 /**头部右侧更多下拉配置色 headerRightNavMoreBg headerRightNavMoreColor */
@@ -56,12 +56,12 @@
 
 /*左侧菜单更多下拉样式 leftMenuNavMore */
 .layuimini-menu-left .layui-nav .layui-nav-more, .layuimini-menu-left-zoom.layui-nav .layui-nav-more {
-    border-top-color: rgb(191, 187, 187);
+    border-top-color: #ffffff;
 }
 
 /*左侧菜单更多下拉样式 leftMenuNavMore */
 .layuimini-menu-left .layui-nav .layui-nav-mored, .layuimini-menu-left .layui-nav-itemed > a .layui-nav-more, .layuimini-menu-left-zoom.layui-nav .layui-nav-mored, .layuimini-menu-left-zoom.layui-nav-itemed > a .layui-nav-more {
-    border-color: transparent transparent rgb(191, 187, 187) !important;
+    border-color: transparent transparent #ffffff !important;
 }
 
 /*左侧菜单背景 leftMenuBg */
@@ -81,7 +81,7 @@
 
 /*左侧菜单字体颜色 leftMenuColor */
 .layuimini-menu-left .layui-nav .layui-nav-item a, .layuimini-menu-left-zoom.layui-nav .layui-nav-item a {
-    color: rgb(191, 187, 187) !important;
+    color: #ffffff !important;
 }
 
     /*左侧菜单选中字体颜色 leftMenuColorThis */

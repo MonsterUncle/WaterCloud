@@ -183,11 +183,11 @@
         }
 
     .layuimini-tab .layui-tab-title span {
-        color: #acafb1;
+        color: #666;
     }
 
     .layuimini-tab .layui-tab-title .layui-this span {
-        color: dimgray;
+        color: #2D8CF0;
     }
 
     .layuimini-tab .layui-tab-title .layui-tab-close {
@@ -875,4 +875,13 @@
 /**替换原有样式更新 2.6.7*/
 .layui-nav-tree .layui-nav-item > a .layui-nav-more {
     padding: 0px 0;
+}
+.layui-table {
+    width: 100%;
+    margin: 10px 0;
+    background-color: #fff;
+    color: black;
+}
+.layui-tab-control > ul > .layui-nav-item.layui-this {
+    background-color: none;
 }
