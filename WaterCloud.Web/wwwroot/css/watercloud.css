@@ -266,3 +266,6 @@
 .layui-checkbox-disabled span {
     background-color: #d2d2d2 !important;
 }
+.layui-btn + .layui-btn {
+    margin-left: 5px;
+}

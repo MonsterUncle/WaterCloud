@@ -717,15 +717,15 @@ namespace WaterCloud.CodeGenerator
 				switch (buttonCount)
 				{
 					case 1:
-						sb.AppendLine("                { title: '操作', width: 90, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
+						sb.AppendLine("                { title: '操作', width: 80, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
 						break;
 
 					case 2:
-						sb.AppendLine("                { title: '操作', width: 130, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
+						sb.AppendLine("                { title: '操作', width: 120, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
 						break;
 
 					case 3:
-						sb.AppendLine("                { title: '操作', width: 175, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
+						sb.AppendLine("                { title: '操作', width: 160, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
 						break;
 
 					default:
@@ -767,15 +767,15 @@ namespace WaterCloud.CodeGenerator
 				switch (buttonCount)
 				{
 					case 1:
-						sb.AppendLine("                { title: '操作', width: 90, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
+						sb.AppendLine("                { title: '操作', width: 80, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
 						break;
 
 					case 2:
-						sb.AppendLine("                { title: '操作', width: 130, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
+						sb.AppendLine("                { title: '操作', width: 120, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
 						break;
 
 					case 3:
-						sb.AppendLine("                { title: '操作', width: 175, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
+						sb.AppendLine("                { title: '操作', width: 160, toolbar: '#currentTableBar', align: \"center\", fixed: 'right' }");
 						break;
 
 					default:

@@ -63,7 +63,7 @@
                 { field: 'F_TemplateSqlParm', title: '模板执行参数', width: 150, sort: true, filter: true },
                 { field: 'F_PrintType', title: '打印方式', width: 120, sort: true, filter: true, templet: function (d) { return top.clients.dataItems["PrintType"][d.F_PrintType] == undefined ? "" : top.clients.dataItems["PrintType"][d.F_PrintType]; } },
                 { field: 'F_EnabledMark', title: '状态', width: 100, sort: true, filter: true, templet: function (d) { if (d.F_EnabledMark == true) { return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>"; } else { return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>"; } } },
-                { title: '操作', width: 175, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
+                { title: '操作', width: 160, toolbar: '#currentTableBar', align: "center", fixed: 'right' }
             ]]
         });
         // 监听搜索操作
