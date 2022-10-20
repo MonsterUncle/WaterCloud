@@ -256,3 +256,13 @@
     .layui-table thead tr, .layui-table-header, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table-patch, .layui-table-mend, .layui-table tbody tr:hover, .layui-table-hover, .layui-table-click {
         background-color: #f2f2f2;
     }
+.layui-form-pane .layui-form-label {
+    background-color: #f2f2f2;
+}
+.layui-disabled, .layui-disabled:hover {
+    color: rgba(0,0,0,.85) !important;
+    cursor: not-allowed !important;
+}
+.layui-checkbox-disabled span {
+    background-color: #d2d2d2 !important;
+}
