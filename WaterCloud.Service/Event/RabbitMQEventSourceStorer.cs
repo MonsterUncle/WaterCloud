@@ -60,7 +60,7 @@ namespace WaterCloud.Service.Event
 				// 转换为 IEventSource，这里可以选择自己喜欢的序列化工具，如果自定义了 EventSource，注意属性是可读可写
 				var eventSource = JsonSerializer.Deserialize<BaseEventSource>(stringEventSource);
 				// 写入内存管道存储器
-				_channel.Writer.TryWrite(eventSource);
+				_channel.Writer.WriteAsync(eventSource);
 				// 确认该消息已被消费
 				_model.BasicAck(ea.DeliveryTag, false);
 			};
