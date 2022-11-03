@@ -51,7 +51,7 @@ namespace WaterCloud.Service.SystemOrganize
 			{
 				orgizeTemp.Add(item.F_Id, item.F_CompanyName);
 			}
-			dic.Add("F_OrganizeId", orgizeTemp);
+			dic.Add("F_CompanyId", orgizeTemp);
 			pagination = ChangeSoulData(dic, pagination);
 			var query = GetQuery();
 			if (!string.IsNullOrEmpty(keyword))

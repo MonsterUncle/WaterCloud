@@ -44,7 +44,7 @@
         });
         wcLoading.close();
         function initControl() {
-            $("#F_OrganizeId").bindSelect({
+            $("#F_CompanyId").bindSelect({
                 url: "/SystemOrganize/SystemSet/GetListJson",
                 id: "F_Id",
                 text: "F_CompanyName"
@@ -150,7 +150,7 @@
                         <div class="layui-form-item layui-hide">
                             <label class="layui-form-label required">归属公司</label>
                             <div class="layui-input-block">
-                                <select id="F_OrganizeId" name="F_OrganizeId" lay-verify="required" lay-search>
+                                <select id="F_CompanyId" name="F_CompanyId" lay-verify="required" lay-search>
                                 </select>
                             </div>
                         </div>
