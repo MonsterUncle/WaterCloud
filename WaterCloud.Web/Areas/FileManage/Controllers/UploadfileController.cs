@@ -172,6 +172,104 @@ namespace WaterCloud.Web.Areas.FileManage.Controllers
 			}
 		}
 
+		[HttpPost]
+		[HandlerLogin]
+		[IgnoreAntiforgeryToken]
+		public async Task<ActionResult> UploadICE(int filetype = 3)
+		{
+			try
+			{
+				string stemp = "local";
+				if (_service.currentuser.DbNumber != GlobalContext.SystemConfig.MainDbNumber)
+				{
+					var temp = await _setService.GetForm(_service.currentuser.CompanyId);
+					if (temp != null)
+					{
+						stemp = temp.F_CompanyName;
+					}
+					else
+					{
+						throw new Exception("租户不存在");
+					}
+				}
+				var files = HttpContext.Request.Form.Files;
+				long size = files.Sum(f => f.Length);
+				if (size > 104857600)
+				{
+					throw new Exception("大小必须小于100M");
+				}
+				List<object> list = new List<object>();
+				foreach (var file in files)
+				{
+					var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+					var ispic = FileHelper.IsPicture(fileName);
+					if (filetype == 1 && !ispic)
+					{
+						throw new Exception("请上传图片");
+					}
+					var isexcle = FileHelper.IsExcel(fileName);
+					if (filetype == 2 && !isexcle)
+					{
+						throw new Exception("请上传Excel");
+					}
+					if (ispic)
+					{
+						filetype = 1;
+					}
+					if (isexcle)
+					{
+						filetype = 2;
+					}
+					string fileValue = "file";
+					string filePath = "";
+					fileName = Utils.CreateNo() + fileName.Substring(fileName.LastIndexOf("."));
+					UploadfileEntity entity = new UploadfileEntity();
+					if (!string.IsNullOrEmpty(stemp))
+					{
+						entity.F_FilePath = $@"/" + fileValue + $@"/" + stemp + $@"/" + DateTime.Now.ToString("yyyyMMdd") + $@"/" + fileName;
+						filePath = GlobalContext.HostingEnvironment.WebRootPath + $@"/" + fileValue + $@"/" + stemp + $@"/" + DateTime.Now.ToString("yyyyMMdd") + $@"/";
+					}
+					string fileFullName = filePath + fileName;
+					entity.Create();
+					entity.F_EnabledMark = true;
+					entity.F_FileBy = "ICE富文本";
+					entity.F_FileType = filetype;
+					entity.F_CreatorUserName = _service.currentuser.UserName;
+					entity.F_FileSize = size.ToIntOrNull();
+
+					entity.F_FileName = fileName;
+					entity.F_OrganizeId = _service.currentuser.OrganizeId;
+					if (fileName.LastIndexOf(".") >= 0)
+					{
+						entity.F_FileExtension = fileName.Substring(fileName.LastIndexOf("."));
+					}
+					if (!await SubmitForm(entity, ""))
+					{
+						throw new Exception("数据库操作失败");
+					}
+					if (!Directory.Exists(filePath))
+					{
+						Directory.CreateDirectory(filePath);
+					}
+					using (FileStream fs = System.IO.File.Create(fileFullName))
+					{
+						file.CopyTo(fs);
+						fs.Flush();
+					}
+					list.Add(new { url = entity.F_FilePath, name = fileName,error = 0 });
+				}
+				var log = await _logService.CreateLog("操作成功。", "", "", DbLogType.Visit);
+				await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", log, _service.currentuser));
+				return Content(list.ToJson());
+			}
+			catch (Exception ex)
+			{
+				var log = await _logService.CreateLog(ex.Message, "", "", DbLogType.Visit, true);
+				await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", log, _service.currentuser));
+				return Content(new { error = 1 }.ToJson());
+			}
+		}
+
 		[HttpGet]
 		[HandlerLogin]
 		[HandlerAuthorize]
