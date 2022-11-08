@@ -209,7 +209,7 @@ namespace WaterCloud.Service
 			}
 			var rolelist = currentuser.RoleId.Split(',');
 			var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
-			var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
+			var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_EnabledMark == true && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
 			//反射获取主键
 			PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(SugarColumn), false).Length > 0).First();
 			var idName = "F_Id";
@@ -250,7 +250,7 @@ namespace WaterCloud.Service
 			}
 			var rolelist = currentuser.RoleId.Split(',');
 			var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
-			var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
+			var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_EnabledMark == true && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
 			//反射获取主键
 			PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(SugarColumn), false).Length > 0).First();
 			var idName = "F_Id";
@@ -288,7 +288,7 @@ namespace WaterCloud.Service
 			}
 			var rolelist = currentuser.RoleId.Split(',');
 			var rule = repository.Db.Queryable<RoleAuthorizeEntity>().Where(u => rolelist.Contains(u.F_ObjectId) && u.F_ItemType == 3).Select(a => a.F_ItemId).Distinct().ToList();
-			var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
+			var fieldsList = repository.Db.Queryable<ModuleFieldsEntity>().Where(u => (rule.Contains(u.F_Id) || u.F_IsPublic == true) && u.F_EnabledMark == true && u.F_ModuleId == module.F_Id).Select(u => u.F_EnCode).ToList();
 			//反射获取主键
 			PropertyInfo pkProp = typeof(TEntity).GetProperties().Where(p => p.GetCustomAttributes(typeof(SugarColumn), false).Length > 0).First();
 			var idName = "F_Id";
