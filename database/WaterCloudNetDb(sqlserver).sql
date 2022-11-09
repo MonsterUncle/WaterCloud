@@ -18128,7 +18128,7 @@ GO
 
 CREATE TABLE [dbo].[sys_role] (
   [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
-  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CompanyId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Category] int  NULL,
   [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
