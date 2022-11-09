@@ -344,7 +344,7 @@ namespace WaterCloud.Web.Controllers
 				var dataModuleId = data.Where(a => a.F_ModuleId != null && a.F_ModuleId != "" && a.F_EnabledMark == true).Distinct(new ExtList<ModuleButtonEntity>("F_ModuleId"));
 				foreach (ModuleButtonEntity item in dataModuleId)
 				{
-					var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId && a.F_EnabledMark == true).ToList();
+					var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId && t.F_EnabledMark == true).ToList();
 					dictionarytemp.Add(item.F_ModuleId, buttonList);
 					if (dictionarylist.ContainsKey(item.F_ModuleId))
 					{
@@ -389,7 +389,7 @@ namespace WaterCloud.Web.Controllers
 				var dataModuleId = data.Where(a => a.F_ModuleId != null && a.F_ModuleId != "" && a.F_EnabledMark == true).Distinct(new ExtList<ModuleFieldsEntity>("F_ModuleId"));
 				foreach (ModuleFieldsEntity item in dataModuleId)
 				{
-					var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId && a.F_EnabledMark == true).ToList();
+					var buttonList = data.Where(t => t.F_ModuleId == item.F_ModuleId && t.F_EnabledMark == true).ToList();
 					dictionarytemp.Add(item.F_ModuleId, buttonList);
 					if (dictionarylist.ContainsKey(item.F_ModuleId))
 					{
