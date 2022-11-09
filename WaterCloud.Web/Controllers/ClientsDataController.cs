@@ -323,10 +323,10 @@ namespace WaterCloud.Web.Controllers
             {
                 var dictionarytemp = new Dictionary<string, List<ModuleButtonEntity>>();
                 var data = await _roleAuthorizeService.GetButtonList(roles);
-                var dataModuleId = data.Where(a => a.ModuleId != null && a.ModuleId != "").Distinct(new ExtList<ModuleButtonEntity>("ModuleId"));
+                var dataModuleId = data.Where(a => a.ModuleId != null && a.ModuleId != "" && a.EnabledMark == true).Distinct(new ExtList<ModuleButtonEntity>("ModuleId"));
                 foreach (ModuleButtonEntity item in dataModuleId)
                 {
-                    var buttonList = data.Where(t => t.ModuleId == item.ModuleId).ToList();
+                    var buttonList = data.Where(t => t.ModuleId == item.ModuleId && t.EnabledMark == true).ToList();
                     dictionarytemp.Add(item.ModuleId, buttonList);
                     if (dictionarylist.ContainsKey(item.ModuleId))
                     {
@@ -367,10 +367,10 @@ namespace WaterCloud.Web.Controllers
             {
                 var dictionarytemp = new Dictionary<string, List<ModuleFieldsEntity>>();
                 var data = await _roleAuthorizeService.GetFieldsList(roles);
-                var dataModuleId = data.Where(a => a.ModuleId != null && a.ModuleId != "").Distinct(new ExtList<ModuleFieldsEntity>("ModuleId"));
+                var dataModuleId = data.Where(a => a.ModuleId != null && a.ModuleId != "" && a.EnabledMark == true).Distinct(new ExtList<ModuleFieldsEntity>("ModuleId"));
                 foreach (ModuleFieldsEntity item in dataModuleId)
                 {
-                    var buttonList = data.Where(t => t.ModuleId == item.ModuleId).ToList();
+                    var buttonList = data.Where(t => t.ModuleId == item.ModuleId && t.EnabledMark == true).ToList();
                     dictionarytemp.Add(item.ModuleId, buttonList);
                     if (dictionarylist.ContainsKey(item.ModuleId))
                     {
