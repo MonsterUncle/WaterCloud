@@ -93,7 +93,7 @@ namespace WaterCloud.Code
 			});
 			services.Configure<BrotliCompressionProviderOptions>(options =>
 			{
-				options.Level = (CompressionLevel)4; // 4 or 5 is OK
+				options.Level = CompressionLevel.SmallestSize; 
 			});
 			services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(GlobalContext.HostingEnvironment.ContentRootPath + Path.DirectorySeparatorChar + "DataProtection"));
 		}
