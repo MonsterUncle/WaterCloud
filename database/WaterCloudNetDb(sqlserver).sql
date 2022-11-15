@@ -17015,13 +17015,7 @@ ALTER TABLE [dbo].[sys_systemset] SET (LOCK_ESCALATION = TABLE)
 GO
 
 
--- ----------------------------
--- Records of sys_systemset
--- ----------------------------
-INSERT INTO [dbo].[sys_systemset] ([F_Id], [F_Logo], [F_LogoCode], [F_ProjectName], [F_CompanyName], [F_AdminAccount], [F_AdminPassword], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_MobilePhone], [F_PrincipalMan], [F_EndTime], [F_DbString], [F_DBProvider], [F_HostUrl], [F_DbNumber]) VALUES (N'08dab0c3-6b99-4654-8684-705994c1d32e', N'/icon/local/20221018/202210181244189323.jpg', N'test', N'test', N'tst', N'test', N'0000', N'0', N'1', NULL, N'2022-10-18 12:44:19.6674095', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'13295893319', N'test', N'2022-11-18 00:00:00.0000000', N'data source=localhost;database=test;uid=root;pwd=123456;', N'MySql', N'128.0.0.1', N't-1')
-GO
-
-INSERT INTO [dbo].[sys_systemset] ([F_Id], [F_Logo], [F_LogoCode], [F_ProjectName], [F_CompanyName], [F_AdminAccount], [F_AdminPassword], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_MobilePhone], [F_PrincipalMan], [F_EndTime], [F_DbString], [F_DBProvider], [F_HostUrl], [F_DbNumber]) VALUES (N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'/icon/favicon.ico', N'WaterCloud', N'水之云信息系统', N'水之云', N'admin', N'0000', N'0', N'1', N'', N'2020-06-12 16:30:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2021-06-09 13:22:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'13621551864', N'MonsterUncle', N'2032-06-26 00:00:00.0000000', N'data source=localhost;database=watercloudnetdb;uid=root;pwd=root;', N'MySql.Data.MySqlClient', N'localhost', N'0')
+INSERT INTO [dbo].[sys_systemset] ([F_Id], [F_Logo], [F_LogoCode], [F_ProjectName], [F_CompanyName], [F_AdminAccount], [F_AdminPassword], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_MobilePhone], [F_PrincipalMan], [F_EndTime], [F_DbString], [F_DBProvider], [F_HostUrl], [F_DbNumber]) VALUES (N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'/icon/favicon.ico', N'WaterCloud', N'水之云信息系统', N'水之云', N'admin', N'0000', N'0', N'1', N'', N'2020-06-12 16:30:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2021-06-09 13:22:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'13621551864', N'MonsterUncle', N'2032-06-26 00:00:00.0000000', N'Data Source = .;Initial Catalog = WaterCloudNetDb;User ID=sa;Password=12345678;MultipleActiveResultSets=true;', N'SqlServer', N'localhost', N'0')
 GO
 
 
