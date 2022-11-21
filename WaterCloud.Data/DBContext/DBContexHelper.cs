@@ -25,7 +25,6 @@ namespace WaterCloud.DataBase
 					ConnectionString = ConnectStr,
 					MoreSettings = new ConnMoreSettings()
 					{
-						IsWithNoLockQuery = true,
 						IsAutoRemoveDataCache = true//自动清理缓存
 					},
 					ConfigureExternalServices = new ConfigureExternalServices()
