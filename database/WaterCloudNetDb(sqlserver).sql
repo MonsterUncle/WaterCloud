@@ -1,21 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : 昆山mssql
- Source Server Type    : SQL Server
- Source Server Version : 10501600
- Source Host           : 112.25.179.163:1433
- Source Catalog        : WaterCloudNetDb
- Source Schema         : dbo
-
- Target Server Type    : SQL Server
- Target Server Version : 10501600
- File Encoding         : 65001
-
- Date: 01/12/2021 09:40:31
-*/
-
-
 -- ----------------------------
 -- Table structure for cms_articlecategory
 -- ----------------------------
@@ -24,25 +6,25 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[cm
 GO
 
 CREATE TABLE [dbo].[cms_articlecategory] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_FullName] nvarchar(100)  NULL,
-  [F_ParentId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_FullName] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NOT NULL,
-  [F_Description] nvarchar(max)  NULL,
-  [F_LinkUrl] nvarchar(255)  NULL,
-  [F_ImgUrl] nvarchar(255)  NULL,
-  [F_SeoTitle] nvarchar(255)  NULL,
-  [F_SeoKeywords] nvarchar(255)  NULL,
-  [F_SeoDescription] nvarchar(255)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LinkUrl] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ImgUrl] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoTitle] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoKeywords] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoDescription] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsHot] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -159,32 +141,32 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[cm
 GO
 
 CREATE TABLE [dbo].[cms_articlenews] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_CategoryId] nvarchar(50)  NOT NULL,
-  [F_Title] nvarchar(200)  NULL,
-  [F_LinkUrl] nvarchar(255)  NULL,
-  [F_ImgUrl] nvarchar(255)  NULL,
-  [F_SeoTitle] nvarchar(255)  NULL,
-  [F_SeoKeywords] nvarchar(255)  NULL,
-  [F_SeoDescription] nvarchar(255)  NULL,
-  [F_Tags] nvarchar(max)  NULL,
-  [F_Zhaiyao] nvarchar(255)  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_CategoryId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Title] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LinkUrl] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ImgUrl] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoTitle] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoKeywords] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoDescription] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Tags] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Zhaiyao] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NULL,
   [F_IsTop] tinyint  NULL,
   [F_IsHot] tinyint  NULL,
   [F_IsRed] tinyint  NULL,
   [F_Click] int  NULL,
-  [F_Source] nvarchar(50)  NULL,
-  [F_Author] nvarchar(50)  NULL,
+  [F_Source] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Author] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -385,21 +367,21 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[cr
 GO
 
 CREATE TABLE [dbo].[crm_order] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_OrderCode] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_OrderCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_OrderState] int  NOT NULL,
   [F_NeedTime] datetime2(7)  NULL,
   [F_ActualTime] datetime2(7)  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -448,6 +430,9 @@ GO
 INSERT INTO [dbo].[crm_order] ([F_Id], [F_OrderCode], [F_OrderState], [F_NeedTime], [F_ActualTime], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08d9459c-5cd7-453f-8240-d566f1fe058c', N'OR-20210713091957', N'1', N'2021-07-13 00:00:00.0000000', N'2021-07-13 00:00:00.0000000', N'0', N'1', N'', N'2021-07-13 09:20:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', N'2021-07-13 09:29:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
 GO
 
+INSERT INTO [dbo].[crm_order] ([F_Id], [F_OrderCode], [F_OrderState], [F_NeedTime], [F_ActualTime], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08da83f4-06f1-409f-8069-cb99fbebed5a', N'OR-20220822120803', N'0', N'2022-08-23 00:00:00.0000000', NULL, N'0', N'1', N'', N'2022-08-22 04:08:53.8066641', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, NULL)
+GO
+
 
 -- ----------------------------
 -- Table structure for crm_orderdetail
@@ -457,18 +442,18 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[cr
 GO
 
 CREATE TABLE [dbo].[crm_orderdetail] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_OrderId] nvarchar(50)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_OrderId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_OrderState] int  NOT NULL,
-  [F_ProductName] nvarchar(50)  NULL,
-  [F_ProductDescription] nvarchar(100)  NULL,
-  [F_ProductUnit] nvarchar(5)  NULL,
+  [F_ProductName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ProductDescription] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ProductUnit] nvarchar(5) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_NeedNum] int  NULL,
   [F_ActualNum] int  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_NeedTime] datetime2(7)  NULL,
   [F_ActualTime] datetime2(7)  NULL
 )
@@ -547,6 +532,9 @@ GO
 INSERT INTO [dbo].[crm_orderdetail] ([F_Id], [F_OrderId], [F_OrderState], [F_ProductName], [F_ProductDescription], [F_ProductUnit], [F_NeedNum], [F_ActualNum], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_NeedTime], [F_ActualTime]) VALUES (N'08d9459d-b222-4ad5-8e4e-c5153e69a752', N'08d9459c-5cd7-453f-8240-d566f1fe058c', N'1', N'222', N'', N'', N'3', N'2', N'', NULL, N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', N'2021-07-13 00:00:00.0000000', N'2021-07-13 00:00:00.0000000')
 GO
 
+INSERT INTO [dbo].[crm_orderdetail] ([F_Id], [F_OrderId], [F_OrderState], [F_ProductName], [F_ProductDescription], [F_ProductUnit], [F_NeedNum], [F_ActualNum], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_NeedTime], [F_ActualTime]) VALUES (N'08da83f4-06f1-40f6-8af1-c756eb6c7b8d', N'08da83f4-06f1-409f-8069-cb99fbebed5a', N'0', N'11222', N'889465-6546', N'PC', N'0', N'0', N'', N'2022-08-22 04:08:53.8066641', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', N'2022-08-23 00:00:00.0000000', N'2022-08-22 00:00:00.0000000')
+GO
+
 
 -- ----------------------------
 -- Table structure for oms_flowinstance
@@ -556,33 +544,33 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_flowinstance] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_InstanceSchemeId] nvarchar(50)  NOT NULL,
-  [F_Code] nvarchar(200)  NULL,
-  [F_CustomName] nvarchar(200)  NULL,
-  [F_ActivityId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_InstanceSchemeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Code] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CustomName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ActivityId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_ActivityType] int  NULL,
-  [F_ActivityName] nvarchar(200)  NULL,
-  [F_PreviousId] nvarchar(50)  NULL,
-  [F_SchemeContent] nvarchar(max)  NULL,
-  [F_SchemeId] nvarchar(50)  NULL,
-  [F_DbName] nvarchar(50)  NULL,
-  [F_FrmData] nvarchar(max)  NULL,
+  [F_ActivityName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_PreviousId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeContent] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DbName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FrmData] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FrmType] int  NOT NULL,
-  [F_FrmContentData] nvarchar(max)  NULL,
-  [F_FrmContentParse] nvarchar(max)  NULL,
-  [F_FrmId] nvarchar(50)  NULL,
-  [F_SchemeType] nvarchar(50)  NULL,
+  [F_FrmContentData] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FrmContentParse] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FrmId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeType] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FlowLevel] int  NOT NULL,
-  [F_Description] nvarchar(200)  NULL,
+  [F_Description] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsFinish] int  NOT NULL,
-  [F_MakerList] nvarchar(max)  NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
+  [F_MakerList] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
-  [F_FrmContent] nvarchar(max)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FrmContent] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1196,19 +1184,19 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_flowinstancehis] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_InstanceId] nvarchar(50)  NOT NULL,
-  [F_FromNodeId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_InstanceId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_FromNodeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FromNodeType] int  NULL,
-  [F_FromNodeName] nvarchar(200)  NULL,
-  [F_ToNodeId] nvarchar(50)  NULL,
+  [F_FromNodeName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ToNodeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_ToNodeType] int  NULL,
-  [F_ToNodeName] nvarchar(200)  NULL,
+  [F_ToNodeName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_TransitionSate] tinyint  NOT NULL,
   [F_IsFinish] tinyint  NOT NULL,
   [F_CreatorTime] datetime2(7)  NOT NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1337,12 +1325,12 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_flowinstanceinfo] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_InstanceId] nvarchar(50)  NOT NULL,
-  [F_Content] nvarchar(200)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_InstanceId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Content] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NOT NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1425,17 +1413,17 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_formtest] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_UserName] nvarchar(10)  NOT NULL,
-  [F_RequestType] nvarchar(20)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_UserName] nvarchar(10) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_RequestType] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_StartTime] datetime2(7)  NULL,
   [F_EndTime] datetime2(7)  NULL,
-  [F_RequestComment] nvarchar(max)  NULL,
-  [F_Attachment] nvarchar(max)  NULL,
+  [F_RequestComment] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Attachment] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NOT NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
-  [F_FlowInstanceId] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FlowInstanceId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1541,18 +1529,18 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_message] (
-  [F_Id] nvarchar(50)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_MessageType] int  NULL,
-  [F_ToUserId] nvarchar(50)  NULL,
-  [F_ToUserName] nvarchar(50)  NULL,
-  [F_MessageInfo] nvarchar(max)  NULL,
+  [F_ToUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ToUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_MessageInfo] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
-  [F_HrefTarget] nvarchar(50)  NULL,
-  [F_Href] nvarchar(100)  NULL,
-  [F_KeyValue] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_HrefTarget] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Href] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_KeyValue] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_ClickRead] tinyint  NULL
 )
 GO
@@ -1661,6 +1649,15 @@ GO
 INSERT INTO [dbo].[oms_message] ([F_Id], [F_MessageType], [F_ToUserId], [F_ToUserName], [F_MessageInfo], [F_EnabledMark], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_HrefTarget], [F_Href], [F_KeyValue], [F_ClickRead]) VALUES (N'08d92c86-34e1-4eab-8ef6-465f99cb5733', N'0', N'', N'所有人', N'222', N'1', N'2021-06-11 11:08:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, N'1')
 GO
 
+INSERT INTO [dbo].[oms_message] ([F_Id], [F_MessageType], [F_ToUserId], [F_ToUserName], [F_MessageInfo], [F_EnabledMark], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_HrefTarget], [F_Href], [F_KeyValue], [F_ClickRead]) VALUES (N'08da9b77-a86d-41d6-8ecf-b376220d8b62', N'0', N'', N'所有人', N'cessss', N'1', N'2022-09-21 10:19:05.5484261', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[oms_message] ([F_Id], [F_MessageType], [F_ToUserId], [F_ToUserName], [F_MessageInfo], [F_EnabledMark], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_HrefTarget], [F_Href], [F_KeyValue], [F_ClickRead]) VALUES (N'08da9b77-c824-4784-8fff-75aab4223826', N'0', N'', N'所有人', N'2222', N'1', N'2022-09-21 10:19:58.7594549', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[oms_message] ([F_Id], [F_MessageType], [F_ToUserId], [F_ToUserName], [F_MessageInfo], [F_EnabledMark], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_HrefTarget], [F_Href], [F_KeyValue], [F_ClickRead]) VALUES (N'08da9b78-1438-4d41-8f41-62ef9844f309', N'0', N'', N'所有人', N'2222', N'1', N'2022-09-21 10:22:06.3996908', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, N'1')
+GO
+
 INSERT INTO [dbo].[oms_message] ([F_Id], [F_MessageType], [F_ToUserId], [F_ToUserName], [F_MessageInfo], [F_EnabledMark], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_HrefTarget], [F_Href], [F_KeyValue], [F_ClickRead]) VALUES (N'1e4776e9-85ad-45a3-ba04-0d02d3cc670e', N'0', N'', N'所有人', N'测测', N'0', N'2020-08-04 11:24:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, N'1')
 GO
 
@@ -1709,11 +1706,11 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_messagehis] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_MessageId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_MessageId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1760,6 +1757,12 @@ GO
 -- Records of oms_messagehis
 -- ----------------------------
 INSERT INTO [dbo].[oms_messagehis] ([F_Id], [F_MessageId], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName]) VALUES (N'08d92c86-3822-47aa-85d8-d186a900ce62', N'08d92c86-34e1-4eab-8ef6-465f99cb5733', N'2021-06-11 11:08:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员')
+GO
+
+INSERT INTO [dbo].[oms_messagehis] ([F_Id], [F_MessageId], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName]) VALUES (N'08da27f5-e608-44de-846a-ff0d3c64765c', N'4bc9ed34-6cf0-4005-ba61-ea8e2953ebdd', N'2022-04-27 02:30:30.6123729', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员')
+GO
+
+INSERT INTO [dbo].[oms_messagehis] ([F_Id], [F_MessageId], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName]) VALUES (N'08da7065-a328-4952-8a90-975e8429e8e8', N'39fcc2ee-ade2-52de-f1b2-61070045ac9f', N'2022-07-28 06:51:45.7703523', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员')
 GO
 
 INSERT INTO [dbo].[oms_messagehis] ([F_Id], [F_MessageId], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName]) VALUES (N'12fd3f0b-a8bf-466f-9f9b-629c4989f433', N'ad9be7a7-ae65-4066-bd73-f41e646a25cc', N'2020-08-03 16:44:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员')
@@ -1813,19 +1816,19 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_uploadfile] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_FilePath] nvarchar(50)  NULL,
-  [F_FileName] nvarchar(200)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_FilePath] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FileName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_FileType] int  NULL,
   [F_FileSize] int  NULL,
-  [F_FileExtension] nvarchar(20)  NULL,
-  [F_FileBy] nvarchar(50)  NULL,
-  [F_Description] nvarchar(200)  NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
+  [F_FileExtension] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FileBy] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Description] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1927,10 +1930,10 @@ GO
 -- ----------------------------
 -- Records of oms_uploadfile
 -- ----------------------------
-INSERT INTO [dbo].[oms_uploadfile] ([F_Id], [F_FilePath], [F_FileName], [F_FileType], [F_FileSize], [F_FileExtension], [F_FileBy], [F_Description], [F_OrganizeId], [F_EnabledMark], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName]) VALUES (N'08d92c82-be01-41ae-8ad9-2040e49be5dd', N'/icon/local/20210611/202106111043498898.jpg', N'202106111043498898.jpg', N'1', N'34093', N'.jpg', N'公司logo', NULL, N'5AB270C0-5D33-4203-A54F-4552699FDA3C', N'1', N'2021-06-11 10:43:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员')
+INSERT INTO [dbo].[oms_uploadfile] ([F_Id], [F_FilePath], [F_FileName], [F_FileType], [F_FileSize], [F_FileExtension], [F_FileBy], [F_Description], [F_OrganizeId], [F_EnabledMark], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName]) VALUES (N'08daa778-f35a-409d-8029-a0d53e090d26', N'/file/local/20221006/202210061658345649.frx', N'202210061658345649.frx', N'3', N'1564', N'.frx', N'template', NULL, N'5AB270C0-5D33-4203-A54F-4552699FDA3C', N'1', N'2022-10-06 16:58:35.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员')
 GO
 
-INSERT INTO [dbo].[oms_uploadfile] ([F_Id], [F_FilePath], [F_FileName], [F_FileType], [F_FileSize], [F_FileExtension], [F_FileBy], [F_Description], [F_OrganizeId], [F_EnabledMark], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName]) VALUES (N'08d92c85-3e43-4b93-80d5-526b5525ee95', N'/icon/local/20210611/202106111101432772.jpg', N'202106111101432772.jpg', N'1', N'34093', N'.jpg', N'公司logo', NULL, N'5AB270C0-5D33-4203-A54F-4552699FDA3C', N'1', N'2021-06-11 11:01:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员')
+INSERT INTO [dbo].[oms_uploadfile] ([F_Id], [F_FilePath], [F_FileName], [F_FileType], [F_FileSize], [F_FileExtension], [F_FileBy], [F_Description], [F_OrganizeId], [F_EnabledMark], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName]) VALUES (N'08dab0c3-6b27-49e2-8155-34464f27bbf7', N'/icon/local/20221018/202210181244189323.jpg', N'202210181244189323.jpg', N'1', N'55356', N'.jpg', N'公司logo', NULL, N'5AB270C0-5D33-4203-A54F-4552699FDA3C', N'1', N'2022-10-18 12:44:18.9216890', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员')
 GO
 
 
@@ -1942,22 +1945,22 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_area] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ParentId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Layers] int  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
-  [F_SimpleSpelling] nvarchar(50)  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SimpleSpelling] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] bigint  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12177,6 +12180,229 @@ GO
 
 
 -- ----------------------------
+-- Table structure for sys_codegeneratelog
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sys_codegeneratelog]') AND type IN ('U'))
+	DROP TABLE [dbo].[sys_codegeneratelog]
+GO
+
+CREATE TABLE [dbo].[sys_codegeneratelog] (
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Code] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_RuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_RuleName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_PrintJson] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_PrintCount] int  NULL,
+  [F_DeleteMark] tinyint  NULL,
+  [F_EnabledMark] tinyint  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorTime] datetime2(7)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LastModifyTime] datetime2(7)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DeleteTime] datetime2(7)  NULL,
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
+)
+GO
+
+ALTER TABLE [dbo].[sys_codegeneratelog] SET (LOCK_ESCALATION = TABLE)
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'主键',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_codegeneratelog',
+'COLUMN', N'F_Id'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'条码',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_codegeneratelog',
+'COLUMN', N'F_Code'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'规则id',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_codegeneratelog',
+'COLUMN', N'F_RuleId'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'规则名称',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_codegeneratelog',
+'COLUMN', N'F_RuleName'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'打印Json',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_codegeneratelog',
+'COLUMN', N'F_PrintJson'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'打印次数',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_codegeneratelog',
+'COLUMN', N'F_PrintCount'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'条码生成记录',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_codegeneratelog'
+GO
+
+
+-- ----------------------------
+-- Records of sys_codegeneratelog
+-- ----------------------------
+INSERT INTO [dbo].[sys_codegeneratelog] ([F_Id], [F_Code], [F_RuleId], [F_RuleName], [F_PrintJson], [F_PrintCount], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa90a-d690-4c92-8f7d-a7c394d295a8', N'0009', N'08daa908-a7c1-4cc0-84ea-6fab3fa2bea6', N'测试', N'{"barid":"Company","code":"Company","name":"上海东鞋贸易有限公司","rulecode":"0009"}', N'0', N'0', N'1', NULL, N'2022-10-08 16:55:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+
+-- ----------------------------
+-- Table structure for sys_coderule
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sys_coderule]') AND type IN ('U'))
+	DROP TABLE [dbo].[sys_coderule]
+GO
+
+CREATE TABLE [dbo].[sys_coderule] (
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_RuleName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_RuleJson] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Reset] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_TemplateId] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DeleteMark] tinyint  NULL,
+  [F_EnabledMark] tinyint  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorTime] datetime2(7)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LastModifyTime] datetime2(7)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DeleteTime] datetime2(7)  NULL,
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
+)
+GO
+
+ALTER TABLE [dbo].[sys_coderule] SET (LOCK_ESCALATION = TABLE)
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'主键',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_coderule',
+'COLUMN', N'F_Id'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'规则名称',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_coderule',
+'COLUMN', N'F_RuleName'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'规则内容',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_coderule',
+'COLUMN', N'F_RuleJson'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'重设机制',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_coderule',
+'COLUMN', N'F_Reset'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'打印模板Id',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_coderule',
+'COLUMN', N'F_TemplateId'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'条码规则',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_coderule'
+GO
+
+
+-- ----------------------------
+-- Records of sys_coderule
+-- ----------------------------
+INSERT INTO [dbo].[sys_coderule] ([F_Id], [F_RuleName], [F_RuleJson], [F_Reset], [F_TemplateId], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa908-a7c1-4cc0-84ea-6fab3fa2bea6', N'测试', N'[{"Id":"1668a472-e5d2-412e-8879-393b1cbc59a4","FormatType":11,"FormatString":"0000","ToBase":10,"InitValue":1,"MaxValue":-1,"Increment":1,"DiyDate":null,"LAY_TABLE_INDEX":0}]', N'yyyy-MM-dd', N'08daa778-f508-4fd6-8f60-e60cb414b464', N'0', N'1', NULL, N'2022-10-08 16:39:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+
+-- ----------------------------
+-- Table structure for sys_coderulelog
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sys_coderulelog]') AND type IN ('U'))
+	DROP TABLE [dbo].[sys_coderulelog]
+GO
+
+CREATE TABLE [dbo].[sys_coderulelog] (
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_RuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Key] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Value] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Score] int  NULL
+)
+GO
+
+ALTER TABLE [dbo].[sys_coderulelog] SET (LOCK_ESCALATION = TABLE)
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'主键',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_coderulelog',
+'COLUMN', N'F_Id'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'规则Id',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_coderulelog',
+'COLUMN', N'F_RuleId'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'key',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_coderulelog',
+'COLUMN', N'F_Key'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'value',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_coderulelog',
+'COLUMN', N'F_Value'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'计数',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_coderulelog',
+'COLUMN', N'F_Score'
+GO
+
+
+-- ----------------------------
+-- Records of sys_coderulelog
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for sys_dataprivilegerule
 -- ----------------------------
 IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sys_dataprivilegerule]') AND type IN ('U'))
@@ -12184,20 +12410,20 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_dataprivilegerule] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ModuleId] nvarchar(50)  NULL,
-  [F_ModuleCode] nvarchar(50)  NULL,
-  [F_PrivilegeRules] nvarchar(max)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ModuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ModuleCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_PrivilegeRules] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12220,20 +12446,20 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_filterip] (
-  [F_Id] nvarchar(50)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_Type] tinyint  NULL,
-  [F_StartIP] nvarchar(50)  NULL,
-  [F_EndIP] nvarchar(50)  NULL,
+  [F_StartIP] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_EndIP] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(max)  NULL,
+  [F_DeleteUserId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EndTime] datetime2(7)  NULL
 )
 GO
@@ -12245,6 +12471,9 @@ GO
 -- ----------------------------
 -- Records of sys_filterip
 -- ----------------------------
+INSERT INTO [dbo].[sys_filterip] ([F_Id], [F_Type], [F_StartIP], [F_EndIP], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_EndTime]) VALUES (N'08da9c6c-ee80-4e93-884f-61a310860a89', N'0', N'128.0.0.2', N'', NULL, N'0', N'1', N'', N'2022-09-22 15:34:49.8178932', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'2022-09-22 00:00:00.0000000')
+GO
+
 
 -- ----------------------------
 -- Table structure for sys_flowscheme
@@ -12254,29 +12483,29 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_flowscheme] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_SchemeCode] nvarchar(50)  NULL,
-  [F_SchemeName] nvarchar(200)  NULL,
-  [F_SchemeType] nvarchar(50)  NULL,
-  [F_SchemeVersion] nvarchar(50)  NULL,
-  [F_SchemeCanUser] nvarchar(max)  NULL,
-  [F_SchemeContent] nvarchar(max)  NULL,
-  [F_FrmId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_SchemeCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeType] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeVersion] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeCanUser] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeContent] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FrmId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FrmType] int  NOT NULL,
   [F_AuthorizeType] int  NOT NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(200)  NULL,
+  [F_Description] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
-  [F_LastModifyUserName] nvarchar(50)  NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LastModifyUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12469,26 +12698,26 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_form] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_Name] nvarchar(200)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Name] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FrmType] int  NULL,
-  [F_WebId] nvarchar(50)  NULL,
+  [F_WebId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Fields] int  NULL,
-  [F_ContentData] nvarchar(max)  NULL,
-  [F_ContentParse] nvarchar(max)  NULL,
-  [F_Content] nvarchar(max)  NULL,
+  [F_ContentData] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ContentParse] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Content] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
-  [F_Description] nvarchar(max)  NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
-  [F_DbName] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DbName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12806,7 +13035,7 @@ INSERT INTO [dbo].[sys_form] ([F_Id], [F_Name], [F_FrmType], [F_WebId], [F_Field
 ]', N'33', N'1', N'0', N'2021-06-08 16:35:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2021-06-08 22:49:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'', N'', NULL)
 GO
 
-INSERT INTO [dbo].[sys_form] ([F_Id], [F_Name], [F_FrmType], [F_WebId], [F_Fields], [F_ContentData], [F_ContentParse], [F_Content], [F_SortCode], [F_EnabledMark], [F_DeleteMark], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Description], [F_OrganizeId], [F_DbName]) VALUES (N'8faff4e5-b729-44d2-ac26-e899a228f63d', N'系统内置的复杂请假条表单', N'1', N'FormTest', N'11', N'F_Id,F_UserName,F_RequestType,F_StartTime,F_EndTime,F_RequestComment,F_Attachment,F_FlowInstanceId,F_CreatorTime,F_CreatorUserId,F_CreatorUserName', N'', N'', N'0', N'1', N'0', N'2019-07-29 01:03:36.0000000', N'6ba79766-faa0-4259-8139-a4a6d35784e0', N'2020-07-23 08:49:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2019-07-29 01:03:36.0000000', N'6ba79766-faa0-4259-8139-a4a6d35784e0', N'企业版内置的复杂请假条表单', N'', NULL)
+INSERT INTO [dbo].[sys_form] ([F_Id], [F_Name], [F_FrmType], [F_WebId], [F_Fields], [F_ContentData], [F_ContentParse], [F_Content], [F_SortCode], [F_EnabledMark], [F_DeleteMark], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Description], [F_OrganizeId], [F_DbName]) VALUES (N'8faff4e5-b729-44d2-ac26-e899a228f63d', N'系统内置的复杂请假条表单', N'1', N'FormTest', N'11', N'F_Id,F_UserName,F_RequestType,F_StartTime,F_EndTime,F_RequestComment,F_Attachment,F_FlowInstanceId,F_CreatorTime,F_CreatorUserId,F_CreatorUserName', N'', N'', N'0', N'1', N'0', N'2019-07-29 01:03:36.0000000', N'6ba79766-faa0-4259-8139-a4a6d35784e0', N'2022-07-19 03:08:11.9246435', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2019-07-29 01:03:36.0000000', N'6ba79766-faa0-4259-8139-a4a6d35784e0', N'企业版内置的复杂请假条表单', N'', NULL)
 GO
 
 
@@ -12818,22 +13047,22 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_items] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ParentId] nvarchar(50)  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsTree] tinyint  NULL,
   [F_Layers] int  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12845,6 +13074,12 @@ GO
 -- Records of sys_items
 -- ----------------------------
 INSERT INTO [dbo].[sys_items] ([F_Id], [F_ParentId], [F_EnCode], [F_FullName], [F_IsTree], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'00F76465-DBBA-484A-B75C-E81DEE9313E6', N'77070117-3F1A-41BA-BF81-B8B85BF10D5E', N'Education', N'学历', N'0', N'2', N'8', N'0', N'1', NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_items] ([F_Id], [F_ParentId], [F_EnCode], [F_FullName], [F_IsTree], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa75d-8081-4460-8cec-88e1bf314c5f', N'77070117-3F1A-41BA-BF81-B8B85BF10D5E', N'PrintType', N'打印方式', N'0', N'2', N'19', N'0', N'1', N'', N'2022-10-06 13:42:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_items] ([F_Id], [F_ParentId], [F_EnCode], [F_FullName], [F_IsTree], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa800-7d0b-41e5-86f5-ab10853267d7', N'77070117-3F1A-41BA-BF81-B8B85BF10D5E', N'RuleReset', N'规则重设类型', N'0', N'2', N'20', N'0', N'1', N'', N'2022-10-07 09:08:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
 GO
 
 INSERT INTO [dbo].[sys_items] ([F_Id], [F_ParentId], [F_EnCode], [F_FullName], [F_IsTree], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'0DF5B725-5FB8-487F-B0E4-BC563A77EB04', N'77070117-3F1A-41BA-BF81-B8B85BF10D5E', N'DbType', N'数据库类型', N'0', N'2', N'4', N'0', N'1', NULL, NULL, NULL, NULL, NULL, NULL, NULL)
@@ -12871,7 +13106,7 @@ GO
 INSERT INTO [dbo].[sys_items] ([F_Id], [F_ParentId], [F_EnCode], [F_FullName], [F_IsTree], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'954AB9A1-9928-4C6D-820A-FC1CDC85CDE0', N'77070117-3F1A-41BA-BF81-B8B85BF10D5E', N'AuditState', N'审核状态', N'0', N'2', N'6', N'0', N'1', NULL, NULL, NULL, NULL, NULL, NULL, NULL)
 GO
 
-INSERT INTO [dbo].[sys_items] ([F_Id], [F_ParentId], [F_EnCode], [F_FullName], [F_IsTree], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'9a7079bd-0660-4549-9c2d-db5e8616619f', N'77070117-3F1A-41BA-BF81-B8B85BF10D5E', N'DbLogType', N'系统日志', N'0', N'2', N'16', N'0', N'1', NULL, N'2016-07-19 17:09:45.0000000', NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[sys_items] ([F_Id], [F_ParentId], [F_EnCode], [F_FullName], [F_IsTree], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'9a7079bd-0660-4549-9c2d-db5e8616619f', N'77070117-3F1A-41BA-BF81-B8B85BF10D5E', N'DbLogType', N'系统日志', N'0', N'2', N'17', N'0', N'1', N'', N'2016-07-19 17:09:45.0000000', NULL, N'2022-10-06 13:41:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
 GO
 
 INSERT INTO [dbo].[sys_items] ([F_Id], [F_ParentId], [F_EnCode], [F_FullName], [F_IsTree], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'9EB4602B-BF9A-4710-9D80-C73CE89BEC5D', N'77070117-3F1A-41BA-BF81-B8B85BF10D5E', N'OrganizeCategory', N'机构分类', N'0', N'2', N'2', N'0', N'1', NULL, NULL, NULL, N'2020-04-28 09:07:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
@@ -12895,24 +13130,24 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_itemsdetail] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ItemId] nvarchar(50)  NULL,
-  [F_ParentId] nvarchar(50)  NULL,
-  [F_ItemCode] nvarchar(50)  NULL,
-  [F_ItemName] nvarchar(50)  NULL,
-  [F_SimpleSpelling] nvarchar(max)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ItemId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ItemCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ItemName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SimpleSpelling] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsDefault] tinyint  NULL,
   [F_Layers] int  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12927,6 +13162,36 @@ INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCo
 GO
 
 INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'04aba88d-f09b-46c6-bd90-a38471399b0e', N'D94E4DC1-C2FD-4D19-9D5D-3886D39900CE', NULL, N'2', N'业务角色', NULL, N'0', NULL, N'2', N'0', N'1', NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa75d-8dd6-4447-8cbe-3a9b7914e88c', N'08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, N'1', N'FastReport', NULL, N'0', NULL, N'1', N'0', N'1', N'', N'2022-10-06 13:42:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa75d-91a6-49e4-8423-89711305954d', N'08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, N'2', N'水晶报表', NULL, N'0', NULL, N'2', N'0', N'1', N'', N'2022-10-06 13:42:34.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa75d-95ec-4b27-8f78-291616a91adb', N'08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, N'3', N'HTML', NULL, N'0', NULL, N'3', N'0', N'1', N'', N'2022-10-06 13:42:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa75d-9a7d-43a1-86ac-10223e692e16', N'08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, N'4', N'PDF', NULL, N'0', NULL, N'4', N'0', N'1', N'', N'2022-10-06 13:42:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa75d-a05d-40f0-86ec-76b7782f8b91', N'08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, N'5', N'图片', NULL, N'0', NULL, N'5', N'0', N'1', N'', N'2022-10-06 13:42:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa75d-a401-49f0-8ff2-a6c8171d92f9', N'08daa75d-8081-4460-8cec-88e1bf314c5f', NULL, N'6', N'Bartender', NULL, N'0', NULL, N'6', N'0', N'1', N'', N'2022-10-06 13:43:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa800-9785-4ba1-861c-8aea35c7df50', N'08daa800-7d0b-41e5-86f5-ab10853267d7', NULL, N'yyyy', N'年', NULL, N'0', NULL, N'0', N'0', N'1', N'', N'2022-10-07 09:09:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa800-a00c-434c-8568-07eac1bbaa9e', N'08daa800-7d0b-41e5-86f5-ab10853267d7', NULL, N'yyyy-MM', N'月', NULL, N'0', NULL, N'1', N'0', N'1', N'', N'2022-10-07 09:09:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa800-a6f0-4bd7-85ab-6fcd16124192', N'08daa800-7d0b-41e5-86f5-ab10853267d7', NULL, N'yyyy-MM-dd', N'日', NULL, N'0', NULL, N'2', N'0', N'1', N'', N'2022-10-07 09:09:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa800-aeb3-4274-839c-98145f5e7fd3', N'08daa800-7d0b-41e5-86f5-ab10853267d7', NULL, N'yyyy-MM-WW', N'周', NULL, N'0', NULL, N'3', N'0', N'1', N'', N'2022-10-07 09:10:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
 GO
 
 INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'0a2ba6b9-716f-410f-8e89-929ec2277333', N'64c10822-0c85-4516-9b59-879b818547ae', NULL, N'1', N'私信', NULL, N'0', NULL, N'1', N'0', N'1', N'', N'2020-07-29 16:51:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
@@ -12975,6 +13240,9 @@ INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCo
 GO
 
 INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'39fc87c1-679d-0818-ab56-79c34e727672', N'39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, N'4', N'Delete', NULL, N'0', NULL, N'4', N'0', N'1', N'', N'2021-05-16 22:29:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'39fc87c1-679d-0818-ab56-79c34e999999', N'39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, N'5', N'Sql', NULL, N'0', NULL, N'5', N'0', N'1', N'', N'2022-06-09 09:29:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
 GO
 
 INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'39fcc061-aaf8-2e3a-dfa3-138de46b189e', N'39fcc059-5908-10be-14d9-a6bc5e7e9cfd', NULL, N'0', N'原料', NULL, N'0', NULL, N'0', N'0', N'1', N'', N'2021-05-27 22:22:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
@@ -13133,21 +13401,21 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_log] (
-  [F_Id] nvarchar(50)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_Date] datetime2(7)  NULL,
-  [F_Account] nvarchar(50)  NULL,
-  [F_NickName] nvarchar(50)  NULL,
-  [F_Type] nvarchar(50)  NULL,
-  [F_IPAddress] nvarchar(50)  NULL,
-  [F_IPAddressName] nvarchar(50)  NULL,
-  [F_ModuleId] nvarchar(50)  NULL,
-  [F_ModuleName] nvarchar(50)  NULL,
+  [F_Account] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_NickName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Type] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_IPAddress] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_IPAddressName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ModuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ModuleName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Result] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_KeyValue] nvarchar(max)  NULL,
-  [F_CompanyId] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_KeyValue] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CompanyId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -13158,3220 +13426,148 @@ GO
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0021446f-3d41-4298-b4b3-e8b0d79a5955', N'2020-10-14 10:26:04.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-14 10:26:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08da9b7b-814f-4426-87ae-3313f2409558', N'2022-09-21 10:46:37.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'未知', NULL, N'常规管理-单位组织-岗位管理', N'1', N'岗位管理操作,修改操作成功。', N'2022-09-21 10:46:37.0000000', NULL, N'08da9b75-9474-4da4-8801-ca3a549a8800', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0080d0d7-5d76-4873-a37d-1710867ce0bd', N'2021-02-10 12:30:37.0000000', N'20000', N'xxxx', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-02-10 12:30:38.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08da9b7b-a774-4e94-89fd-4806bac64550', N'2022-09-21 10:47:41.8467532', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-09-21 10:47:41.9086483', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'00ae8d92-506f-422a-abf1-3e8e23f341a6', N'2021-02-10 12:32:28.0000000', N'20000', N'xxxx', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-02-10 12:32:29.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08da9b7c-01cc-40b6-8d30-7cb64e21b4bc', N'2022-09-21 10:50:13.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'未知', NULL, N'常规管理-单位组织-岗位管理', N'1', N'岗位管理操作,修改操作成功。', N'2022-09-21 10:50:13.0000000', NULL, N'08da9b75-9474-4da4-8801-ca3a549a8800', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'01263523-1c1c-4839-a509-f600016a9fca', N'2020-09-07 10:44:04.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-09-07 10:44:04.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08da9b81-3403-4335-8af8-b36a4bf61492', N'2022-09-21 11:27:25.1536152', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-09-21 11:27:25.2058319', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'01c17d91-64b9-4103-b6da-da2a2a3ca869', N'2020-07-02 14:02:57.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry ''xxxxx'' for key ''IX_Sys_Notice''', N'2020-07-02 14:02:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08da9c69-a085-4b92-84d4-4cbe5e6502cf', N'2022-09-22 15:11:10.4118146', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-09-22 15:11:10.4964588', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'01c570ae-e8b2-4588-924d-c4213a2398ff', N'2020-10-12 15:14:07.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 15:14:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08da9c6b-e5fb-4c84-8938-9214dac4d3f2', N'2022-09-22 15:27:25.9690483', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-09-22 15:27:26.0264118', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0200dd69-378a-4719-bcc1-d41bdebf6296', N'2020-07-22 16:10:32.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 16:10:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08da9c6c-01ad-4de3-87c2-361ef1bd1bda', N'2022-09-22 15:28:12.4225888', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,新增操作成功。', N'2022-09-22 15:28:12.4919490', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'023fc161-1ec2-41c9-80a5-ce98969842a8', N'2020-07-23 08:48:48.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-23 08:48:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08da9c6c-107b-4be8-8e73-67c0f02d1846', N'2022-09-22 15:28:37.3035650', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,新增操作成功。', N'2022-09-22 15:28:37.3292807', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'02924efd-1fcb-4801-bb3d-bf27a3c7ecbb', N'2020-07-22 16:10:18.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 16:10:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08da9c6c-6d13-41c6-87cf-a50645470540', N'2022-09-22 15:31:12.6480176', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-单位组织-用户管理', N'1', N'用户管理操作,新增操作成功。', N'2022-09-22 15:31:12.6716657', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'02c44948-0d0f-4c63-aa72-69d63af6cf66', N'2020-07-08 10:10:35.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-08 10:10:35.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08da9c6c-ee8a-4bf3-8d23-643c61d85af2', N'2022-09-22 15:34:49.8582571', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-系统安全-访问控制', N'1', N'访问控制操作,新增操作成功。', N'2022-09-22 15:34:49.8817980', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'02dd78e4-504c-4e9f-bb7e-df553bd72bd4', N'2020-06-28 15:02:43.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-06-28 15:02:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08da9c6c-fd02-4d65-8628-a69cd8aaa8e2', N'2022-09-22 15:35:14.1333376', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,新增操作成功。', N'2022-09-22 15:35:14.1569257', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'02e38376-7212-46e5-8dc3-8d4addf9c9c7', N'2020-06-28 12:41:58.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功', N'2020-06-28 12:41:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa290-9c8a-4574-8bde-cb0324f39406', N'2022-09-30 11:05:21.1043921', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-09-30 11:05:21.1649271', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0336e7a1-3cfa-4a23-8104-5540ea0b10dd', N'2021-02-10 11:15:58.0000000', N'20000', N'xxxx', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-02-10 11:15:59.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa291-24c6-40b4-829d-78e8640d4ece', N'2022-09-30 11:09:09.6555048', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-09-30 11:09:09.7263469', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'035a572b-7e8b-451d-bd56-ab9b01f883af', N'2020-07-31 17:31:21.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-07-31 17:31:21.0000000', NULL, NULL, NULL)
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa291-ef0f-43c6-8aab-3c844d7b1125', N'2022-09-30 11:14:49.0495207', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-09-30 11:14:49.1057602', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'04b9d1e4-4da9-44d2-9991-1e03dccceb2b', N'2020-07-23 08:59:52.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,新增操作成功', N'2020-07-23 08:59:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa743-e646-4928-8266-be71cf8ada64', N'2022-10-06 10:38:49.3418196', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-10-06 10:38:49.4379164', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0504a623-ccd8-4650-9958-093d0e21a59c', N'2020-07-13 16:06:58.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_AuthorizeType'' cannot be null', N'2020-07-13 16:06:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa74a-503a-432c-8281-6f8a7a1b9d0c', N'2022-10-06 11:24:44.1235086', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-10-06 11:24:44.1756863', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'05919823-d70a-4465-b2de-e96deb1d3c66', N'2020-07-13 16:43:16.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_SchemeType'' cannot be null', N'2020-07-13 16:43:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa74b-eb3e-48b3-841d-1a52958f3a2a', N'2022-10-06 11:36:13.7159686', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功。', N'2022-10-06 11:36:13.7477057', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0623896b-3b04-417b-a9ac-c60ef430441b', N'2020-06-28 14:18:07.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-06-28 14:18:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa74c-15e8-4010-86e7-b0b6c80b9507', N'2022-10-06 11:37:25.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2022-10-06 11:37:25.0000000', NULL, N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'06325602-a8bd-461e-a3f6-75aa975b9c4c', N'2020-08-03 16:35:20.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功', N'2020-08-03 16:35:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa74c-d8e8-4f7d-8e6e-9430c438f8fb', N'2022-10-06 11:42:52.4218215', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-10-06 11:42:52.4846368', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0679eb47-1f45-48f3-9837-88196efe2fdb', N'2020-07-31 17:50:03.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 17:50:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa752-4db9-44f4-8180-b88140973289', N'2022-10-06 12:21:55.8767129', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-10-06 12:21:55.9493772', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'069a9221-40db-4b52-9002-888e77219ad9', N'2020-09-29 14:39:27.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功。', N'2020-09-29 14:39:27.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'b2ac5f2c-a2b7-4ca9-86d8-6439bf8186a4', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa75b-6ea0-4d88-88d2-fc5a0a1dc4c3', N'2022-10-06 13:27:16.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-字典分类', N'1', N'字典分类操作,修改操作成功。', N'2022-10-06 13:27:16.0000000', NULL, N'9a7079bd-0660-4549-9c2d-db5e8616619f', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'07614de9-cff6-4afe-8ba4-3650735c6f98', N'2020-09-01 16:37:31.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-09-01 16:37:31.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa75b-7fe2-4d02-8bd6-504be061d8ab', N'2022-10-06 13:27:45.5539143', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-字典分类', N'1', N'字典分类操作,新增操作成功。', N'2022-10-06 13:27:45.5780000', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'079e054c-9d26-4120-b7ae-56767e8c0c8c', N'2020-09-09 11:50:59.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功。', N'2020-09-09 11:50:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'9165dd75-8902-4a63-aad1-2a5286be5169', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa75b-c702-4eea-88ba-0b8d94e6e3b1', N'2022-10-06 13:29:44.8580701', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功。', N'2022-10-06 13:29:44.9067308', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'07a00af6-b824-4c0a-a6e3-1d5a2fb2c19b', N'2020-10-13 16:13:09.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-13 16:13:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa75b-d182-422b-8a5e-bbedae413072', N'2022-10-06 13:30:02.4861779', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功。', N'2022-10-06 13:30:02.5175965', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'07ba8628-05cb-41f1-b768-9d85d4307034', N'2020-08-04 08:32:20.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:32:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa75b-d995-4715-8366-e90dff337f04', N'2022-10-06 13:30:16.0387725', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功。', N'2022-10-06 13:30:16.0659007', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'07ee2e53-e245-4f5a-b2b0-322ae1059bdd', N'2020-07-21 17:52:13.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,新增操作成功', N'2020-07-21 17:52:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa75b-dfbe-474b-829d-def5db720223', N'2022-10-06 13:30:26.3751566', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功。', N'2022-10-06 13:30:26.4010067', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d9270c-c0db-4ae8-8409-0316ac74a2f5', N'2021-06-04 11:56:38.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-06-04 11:56:38.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa75b-e521-4473-8f8f-9ba7f9cb307b', N'2022-10-06 13:30:35.4110378', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功。', N'2022-10-06 13:30:35.4372524', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d9270c-c505-4897-861d-a8ccb9c0406b', N'2021-06-04 11:56:45.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-04 11:56:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa75b-ecca-4204-86ec-1ca4a731cc00', N'2022-10-06 13:30:48.2625959', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功。', N'2022-10-06 13:30:48.2878653', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d9270c-c7ef-4879-87a8-7d94623b707e', N'2021-06-04 11:56:50.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,修改操作失败，Object reference not set to an instance of an object.', N'2021-06-04 11:56:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08daa9b6-831b-46ab-84bf-56ee25a12bd9', N'2022-10-09 13:24:17.4508599', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-10-09 13:24:17.5100952', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d9270c-ca28-4e7b-8bbf-a38f8aedba98', N'2021-06-04 11:56:53.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,修改操作失败，Object reference not set to an instance of an object.', N'2021-06-04 11:56:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dab0c3-1c09-492e-8916-cefe73c02996', N'2022-10-18 12:42:06.0891632', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-10-18 12:42:06.1847804', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d9270c-f789-477d-8018-19fea3b9696a', N'2021-06-04 11:58:10.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,修改操作失败，Object reference not set to an instance of an object.', N'2021-06-04 11:58:10.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dab0c3-6b3e-4811-8328-70ced14cbd1c', N'2022-10-18 12:44:18.9747285', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2022-10-18 12:44:19.0716540', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d9270d-21e4-47f4-8837-24ac676c2ecf', N'2021-06-04 11:59:21.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,修改操作失败，Object reference not set to an instance of an object.', N'2021-06-04 11:59:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dab0c3-6b45-4762-8361-85bddfe3569f', N'2022-10-18 12:44:19.0924500', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'未知', NULL, N'', N'1', N'操作,访问操作成功。', N'2022-10-18 12:44:19.1172285', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d9270d-248e-49b7-8318-9e0e9f4ccb80', N'2021-06-04 11:59:25.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功。', N'2021-06-04 11:59:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dab0c3-7642-4699-8c55-d44f673c0e9b', N'2022-10-18 12:44:37.5298254', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功。', N'2022-10-18 12:44:37.5521873', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92714-1c71-41bf-8099-0af7c95a1033', N'2021-06-04 12:49:18.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-04 12:49:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dab0c3-7a4e-4318-87d9-b83e332964a2', N'2022-10-18 12:44:44.2861360', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'安全退出系统', N'2022-10-18 12:44:44.3402839', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92714-5667-4efc-8806-8441c639abdf', N'2021-06-04 12:50:55.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-06-04 12:50:55.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dab23c-ee59-4dd4-8fa0-9146692d669c', N'2022-10-20 09:46:39.2249937', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-10-20 09:46:39.2995499', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92714-5a27-4092-87aa-3629e74b412b', N'2021-06-04 12:51:01.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-04 12:51:01.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dab23d-0d51-4eeb-82b4-5a3a9ab6e461', N'2022-10-20 09:47:31.1926654', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'安全退出系统', N'2022-10-20 09:47:31.2569172', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92714-80f8-43c4-8dfb-3e181b74211c', N'2021-06-04 12:52:06.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-04 12:52:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dab23d-11da-4588-84dc-5be8c2217d4d', N'2022-10-20 09:47:38.8337798', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-10-20 09:47:38.8617969', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92714-ad6d-46f6-8a96-ac747c53efa4', N'2021-06-04 12:53:21.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-04 12:53:21.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dab23d-1562-4556-834b-c7d4e9c040ae', N'2022-10-20 09:47:44.7021517', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'安全退出系统', N'2022-10-20 09:47:44.7861732', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92716-3ffa-4d78-80d4-9c3b1b9b2681', N'2021-06-04 13:04:36.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-04 13:04:37.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dab23d-6d03-4d7b-8978-a2d2ff286a40', N'2022-10-20 09:50:11.7783116', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-10-20 09:50:11.8064168', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92716-e2ed-4fa6-846c-17e2f633b4ec', N'2021-06-04 13:09:10.0000000', N'admin', N'超级管理员', N'Login', N'127.0.0.1', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-04 13:09:10.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dabd36-76c9-42eb-8fe5-77d2b4267e83', N'2022-11-03 08:58:04.4117039', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-11-03 08:58:04.5126677', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d9275e-5a52-4276-88cb-010368d54496', N'2021-06-04 21:40:44.0000000', N'coreShop', N'coreShop', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，账户不存在，请重新输入', N'2021-06-04 21:40:45.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dabd36-7be9-48ce-8607-408b2f54d717', N'2022-11-03 08:58:13.0360842', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'安全退出系统', N'2022-11-03 08:58:13.1133848', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d9275e-61ab-4aa2-8541-694f7d1f9567', N'2021-06-04 21:40:57.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-04 21:40:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dabd36-8068-4876-8764-4190d69dd709', N'2022-11-03 08:58:20.5809083', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-11-03 08:58:20.6564417', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d9275f-0407-4e59-8790-0f3bfa6def6c', N'2021-06-04 21:45:29.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-04 21:45:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dac5ff-d440-4ff9-8240-4145c69ae974', N'2022-11-14 13:19:39.4264304', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-11-14 13:19:39.4708639', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d928f0-d77c-4ac8-8461-8df7841a5109', N'2021-06-06 21:41:52.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-06 21:41:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dac600-b5ea-4b4b-8885-024849cc652b', N'2022-11-14 13:25:58.0241240', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-11-14 13:25:58.0704820', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d928f0-e111-4126-83a5-f779d6d5ecad', N'2021-06-06 21:42:08.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-06 21:42:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dac601-a0b9-428e-8777-b28b021f8575', N'2022-11-14 13:32:31.9647128', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'未知', NULL, N'系统登录', N'1', N'登录成功', N'2022-11-14 13:32:32.0102930', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d928f0-e120-41dc-816b-d1edefe0675e', N'2021-06-06 21:42:08.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-06 21:42:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dac601-eb18-44cb-86e1-0e9a65084632', N'2022-11-14 13:34:36.7563770', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'未知', NULL, N'常规管理-单位组织-岗位管理', N'1', N'岗位管理操作,新增导入成功。', N'2022-11-14 13:34:36.7851936', NULL, N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d928f0-e17a-4b13-873a-9c67131435cd', N'2021-06-06 21:42:09.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功。', N'2021-06-06 21:42:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dac603-8c73-49ac-84e8-1dd9c42d8756', N'2022-11-14 13:46:16.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2022-11-14 13:46:16.0000000', NULL, N'F298F868-B689-4982-8C8B-9268CBF0308D', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d928f1-08df-4659-8ecf-3118c03890d2', N'2021-06-06 21:43:15.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-06 21:43:15.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d928f1-4656-450f-8caa-4f1b8a23fdec', N'2021-06-06 21:44:58.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-06 21:44:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d928f1-4cd4-4647-8f49-8bae14d9601f', N'2021-06-06 21:45:09.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-06 21:45:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d928f1-4cdf-4bea-8cbf-3f3e11a06035', N'2021-06-06 21:45:09.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-06 21:45:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d928f1-500d-465e-8dde-01c8118ae649', N'2021-06-06 21:45:14.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-内容管理-新闻管理', N'1', N'新闻管理操作,修改操作成功。', N'2021-06-06 21:45:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92966-3624-4b83-81a1-ba75661bdb26', N'2021-06-07 11:42:02.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-07 11:42:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92966-aa45-47ad-8bda-fa65fccca941', N'2021-06-07 11:45:17.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-07 11:45:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92978-765f-4a4b-802e-e2f82e4d15ba', N'2021-06-07 13:52:41.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-06-07 13:52:41.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92978-79ac-4852-8c5f-c5cf9fb3f591', N'2021-06-07 13:52:46.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-07 13:52:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92978-a7eb-45c1-8f1f-eda73e3ed7e7', N'2021-06-07 13:54:04.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功。', N'2021-06-07 13:54:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92978-cef0-4192-810f-03ae26c1e830', N'2021-06-07 13:55:09.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功。', N'2021-06-07 13:55:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92978-f1ad-4052-876e-abdd507a420b', N'2021-06-07 13:56:08.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-07 13:56:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-0be0-4447-8158-1b3ded9948f6', N'2021-06-07 13:56:52.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,新增操作成功。', N'2021-06-07 13:56:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-1f02-4901-8aa6-6356c55e4870', N'2021-06-07 13:57:24.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-岗位管理', N'1', N'岗位管理操作,新增操作成功。', N'2021-06-07 13:57:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-2bac-4665-807b-5ed06ca959dc', N'2021-06-07 13:57:45.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-用户管理', N'1', N'用户管理操作,新增操作成功。', N'2021-06-07 13:57:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-2ec9-4911-8cd5-2cf87d783be5', N'2021-06-07 13:57:50.0000000', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'安全退出系统', N'2021-06-07 13:57:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-34d3-4604-81a2-edfc7356b183', N'2021-06-07 13:58:00.0000000', N'10000', N'11111', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-07 13:58:00.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-4ea2-437b-83ba-b4693d5c0fd3', N'2021-06-07 13:58:44.0000000', N'10000', N'11111', N'Exit', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'安全退出系统', N'2021-06-07 13:58:44.0000000', N'08d92979-2ba7-43b2-85c0-ef44f060604e', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-523d-4bbe-817e-02f20325c8d4', N'2021-06-07 13:58:50.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-07 13:58:50.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-57f3-492b-8ce5-34019483fdff', N'2021-06-07 13:58:59.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功。', N'2021-06-07 13:58:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'08d92978-ceda-45c4-8a98-e94a332ac4b6', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-5a90-4e5b-8ab5-53fba58937b3', N'2021-06-07 13:59:04.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功。', N'2021-06-07 13:59:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'08d92978-a7e4-4a72-8eff-f387d37391c2', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-5d6a-4fee-80da-e6a5a09d03e9', N'2021-06-07 13:59:08.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-用户管理', N'1', N'用户管理操作,删除操作成功。', N'2021-06-07 13:59:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'08d92979-2ba7-43b2-85c0-ef44f060604e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-607c-4afc-8a5c-fd5555a7a494', N'2021-06-07 13:59:14.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,删除操作成功。', N'2021-06-07 13:59:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'08d92979-0bd7-41d4-80b4-43a29a550dc3', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92979-62ae-4292-8c7c-06cb1fe04fde', N'2021-06-07 13:59:17.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-岗位管理', N'1', N'岗位管理操作,删除操作成功。', N'2021-06-07 13:59:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'08d92979-1eff-4c27-8aca-625b3a4c2604', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a49-52c0-40ed-8b3c-0110cefe2094', N'2021-06-08 14:47:46.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-06-08 14:47:46.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a49-591d-4534-822e-89bbd7601759', N'2021-06-08 14:47:56.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-08 14:47:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a4e-77d0-440f-8305-34daa7a18dc9', N'2021-06-08 15:24:35.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-08 15:24:36.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a51-c05c-47c0-89ba-eb311ab3966c', N'2021-06-08 15:48:06.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-08 15:48:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a58-5322-4490-82d6-4efa472df444', N'2021-06-08 16:35:09.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,新增操作成功。', N'2021-06-08 16:35:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a58-6175-47ac-8462-ec7971ab4ef0', N'2021-06-08 16:35:33.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,删除操作成功。', N'2021-06-08 16:35:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'3b6922f9-b4ba-4615-aa3f-b00110da54c6', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a58-6cde-4c70-89ff-ce6bf30bcd79', N'2021-06-08 16:35:52.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,删除操作成功。', N'2021-06-08 16:35:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'49c506c3-ee0b-43eb-ac64-b1c31fd5eb57', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a86-e53e-41cc-895f-41bf6e8f95fc', N'2021-06-08 22:08:31.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-08 22:08:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a87-0ce9-4958-8c2b-57082369b5c3', N'2021-06-08 22:09:38.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,新增操作成功。', N'2021-06-08 22:09:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8b-462e-4c65-8c6e-e644e8923437', N'2021-06-08 22:39:52.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功。', N'2021-06-08 22:39:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'08d92a58-531c-43ec-8546-d359e0f81347', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8b-aac8-4926-8431-12b49909e655', N'2021-06-08 22:42:40.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,修改操作成功。', N'2021-06-08 22:42:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'08d92a87-0ce5-4cab-8359-8536c3763dcc', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8b-bc2b-46ca-846e-d8924457d18d', N'2021-06-08 22:43:10.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-08 22:43:10.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8b-bc35-45c7-87f7-3952e45da45c', N'2021-06-08 22:43:10.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-08 22:43:10.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8b-cf87-46c0-8e1b-1ff7e3be408c', N'2021-06-08 22:43:42.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-08 22:43:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8b-cf90-4e78-8f0b-963cf09db98e', N'2021-06-08 22:43:42.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-08 22:43:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8b-e381-4de5-8e94-b125d30a1b2a', N'2021-06-08 22:44:16.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-08 22:44:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8b-e38a-4d62-8eab-5e58f01ad254', N'2021-06-08 22:44:16.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-08 22:44:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8b-e38a-4f61-85db-8819a3a8a0b7', N'2021-06-08 22:44:16.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-08 22:44:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8b-e393-4b11-8e67-5358d6cba6ae', N'2021-06-08 22:44:16.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-08 22:44:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8c-9efe-4d9c-81cd-b65bd678d049', N'2021-06-08 22:49:30.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功。', N'2021-06-08 22:49:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'08d92a58-531c-43ec-8546-d359e0f81347', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8c-b028-49c4-8e78-44ec2a5a729a', N'2021-06-08 22:49:59.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,修改操作成功。', N'2021-06-08 22:49:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'08d92a87-0ce5-4cab-8359-8536c3763dcc', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8c-b54f-4c3f-8d5c-5183a7676770', N'2021-06-08 22:50:08.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-08 22:50:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8c-b557-42ce-8cf2-0583a449a791', N'2021-06-08 22:50:08.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-08 22:50:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8c-d278-4f79-84ca-458f25c71a30', N'2021-06-08 22:50:56.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-08 22:50:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8c-e21a-4c43-8f58-66d2b7fd5260', N'2021-06-08 22:51:23.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-08 22:51:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8c-e700-4494-82a0-0fcc86cd06c9', N'2021-06-08 22:51:31.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-08 22:51:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8c-f517-4f47-8176-b983157ee16b', N'2021-06-08 22:51:55.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-08 22:51:55.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8c-f523-4b5f-804e-0319fafbab6e', N'2021-06-08 22:51:55.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-08 22:51:55.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8c-f876-4825-8893-eb904eba7ede', N'2021-06-08 22:52:00.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-08 22:52:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8c-f87d-4cec-819c-753fe532c238', N'2021-06-08 22:52:00.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-08 22:52:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8d-537e-4396-8961-48063c80b1c9', N'2021-06-08 22:54:33.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功。', N'2021-06-08 22:54:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8e-927e-4e34-8006-2de285538073', N'2021-06-08 23:03:28.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-08 23:03:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8e-9287-4266-8ca3-1b9ae8375b75', N'2021-06-08 23:03:28.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-08 23:03:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8f-1fe9-4ef4-8fc2-d69ce542b799', N'2021-06-08 23:07:25.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-08 23:07:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92a8f-1ff1-4ee3-8914-9d3c8c16749a', N'2021-06-08 23:07:25.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-08 23:07:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92af9-b9cc-45d7-8f3a-7c881c8d2025', N'2021-06-09 11:50:30.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-09 11:50:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afc-f83e-46ba-8240-c24d88de00c0', N'2021-06-09 12:13:43.0000000', N'admin', N'admin', N'Login', N'127.0.0.1', N'本地局域网', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-06-09 12:13:43.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afd-6e63-4592-82b1-937477e4acb8', N'2021-06-09 12:17:02.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-09 12:17:02.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afd-a268-4d5c-84f0-5fd9a35f6f91', N'2021-06-09 12:18:29.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2021-06-09 12:18:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afd-a615-43b0-8777-25530ec94ccc', N'2021-06-09 12:18:35.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统安全-定时任务', N'0', N'定时任务操作,新增操作失败，Constructor on type ''WaterCloud.Service.AutoJob.SaveServerStateJob'' not found.', N'2021-06-09 12:18:35.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afd-adc7-4a06-8078-86993b1290f3', N'2021-06-09 12:18:48.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2021-06-09 12:18:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afd-b20a-40df-87bd-4675ff96bbb4', N'2021-06-09 12:18:55.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统安全-定时任务', N'0', N'定时任务操作,新增操作失败，Constructor on type ''WaterCloud.Service.AutoJob.SaveServerStateJob'' not found.', N'2021-06-09 12:18:55.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afd-b57e-4d52-8c42-fb1a4536126b', N'2021-06-09 12:19:01.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2021-06-09 12:19:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afd-b6a9-40ea-846c-b422587fd3a8', N'2021-06-09 12:19:03.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2021-06-09 12:19:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afe-1943-4e08-8f06-94ce1bcd6e11', N'2021-06-09 12:21:48.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2021-06-09 12:21:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afe-1e76-4550-80d3-4dd3e1555012', N'2021-06-09 12:21:57.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统安全-定时任务', N'0', N'定时任务操作,新增操作失败，Constructor on type ''WaterCloud.Service.AutoJob.SaveServerStateJob'' not found.', N'2021-06-09 12:21:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afe-41da-4cef-8771-daebed4fb6c7', N'2021-06-09 12:22:56.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统安全-定时任务', N'0', N'定时任务操作,新增操作失败，There is an object reference not set to an instance in expression tree. The type of null object is ''WaterCloud.Service.SystemSecurity.OpenJobsService+<>c__DisplayClass13_0''.', N'2021-06-09 12:22:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92afe-454c-4143-8054-8bbf024bbd12', N'2021-06-09 12:23:02.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,新增操作成功。', N'2021-06-09 12:23:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92b06-1b3f-4f06-807c-4a3d9c6a9708', N'2021-06-09 13:19:08.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-09 13:19:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92b06-8d70-480b-8d7a-277cce92d7a6', N'2021-06-09 13:22:19.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-09 13:22:19.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92b1b-e394-4486-84df-bd4d867b3594', N'2021-06-09 15:55:03.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-06-09 15:55:03.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92b1c-2046-446b-8162-5544fd6c5224', N'2021-06-09 15:56:45.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，Unable to cast object of type ''System.String'' to type ''System.Collections.Generic.List`1[WaterCloud.Domain.SystemSecurity.FilterIPEntity]''.', N'2021-06-09 15:56:45.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92b1c-f0cf-44a6-85c4-7399d6766b57', N'2021-06-09 16:02:35.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，Unable to cast object of type ''System.String'' to type ''System.Collections.Generic.List`1[WaterCloud.Domain.SystemSecurity.FilterIPEntity]''.', N'2021-06-09 16:02:37.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c82-6c65-4f12-8465-aa5225db86df', N'2021-06-11 10:41:32.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-06-11 10:41:33.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c82-7058-4a01-87c8-49f3c46496f2', N'2021-06-11 10:41:39.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 10:41:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c82-be07-4139-8da1-54097d4ce06e', N'2021-06-11 10:43:50.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-11 10:43:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c82-be16-484d-80a6-8a6290e7f13f', N'2021-06-11 10:43:50.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-11 10:43:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c82-c527-4967-8b08-1748c26b5e97', N'2021-06-11 10:44:01.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功。', N'2021-06-11 10:44:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c83-8835-49a8-8c0e-7205c25416e8', N'2021-06-11 10:49:29.0000000', N'ceshi', N'ceshi', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,新增操作成功。', N'2021-06-11 10:49:29.0000000', N'08d92c82-c515-4fcd-8963-ec5a8ad36b5b', N'', N'08d92c82-be71-4969-8b78-43299a9a5bda')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c83-cca6-4b0b-8b70-273cef57d327', N'2021-06-11 10:51:23.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-06-11 10:51:24.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c83-d185-4ab7-8260-db13d670219c', N'2021-06-11 10:51:32.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 10:51:32.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c84-ec4e-400f-8a84-e86207e3a7e8', N'2021-06-11 10:59:26.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 10:59:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c85-3e49-4555-8ea4-ffa0172448a7', N'2021-06-11 11:01:44.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-06-11 11:01:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c85-3e55-4ca4-8681-d2ae9fa5d8df', N'2021-06-11 11:01:44.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-06-11 11:01:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c85-45c2-4faa-86f3-132fdf039c43', N'2021-06-11 11:01:56.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功。', N'2021-06-11 11:01:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c85-5266-4256-8ace-69524f5104ed', N'2021-06-11 11:02:17.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 11:02:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c85-5e09-44c4-8312-9f93e2437207', N'2021-06-11 11:02:37.0000000', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'安全退出系统', N'2021-06-11 11:02:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c86-2f19-4574-8a15-d9f79034d484', N'2021-06-11 11:08:28.0000000', N'admin', N'超级管理员', N'Login', N'127.0.0.1', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 11:08:28.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c86-34ff-4be1-89c3-4982e8e84825', N'2021-06-11 11:08:38.0000000', N'admin', N'超级管理员', N'Create', N'127.0.0.1', N'本地局域网', NULL, N'常规管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功。', N'2021-06-11 11:08:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c86-3825-4177-8723-e8b9dfdf44f8', N'2021-06-11 11:08:43.0000000', N'admin', N'超级管理员', N'Update', N'127.0.0.1', N'本地局域网', NULL, N'常规管理-信息中心-通知管理', N'1', N'通知管理操作,修改操作成功。', N'2021-06-11 11:08:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'08d92c86-34e1-4eab-8ef6-465f99cb5733', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c87-90eb-4ef8-87df-4f81d1fc51c2', N'2021-06-11 11:18:21.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 11:18:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c87-bafb-4ebe-8de0-22a4a8102ae0', N'2021-06-11 11:19:32.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 11:19:32.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c88-0b8f-4706-8380-d45b61d6a76b', N'2021-06-11 11:21:47.0000000', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'安全退出系统', N'2021-06-11 11:21:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c88-2ba8-45a8-897f-fbeeb6a6dbef', N'2021-06-11 11:22:41.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 11:22:41.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c88-3ecc-4dc8-87d0-52ef87eb688d', N'2021-06-11 11:23:13.0000000', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'安全退出系统', N'2021-06-11 11:23:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c88-deec-4e4f-80c1-740c4eeb4840', N'2021-06-11 11:27:42.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 11:27:42.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c88-e2fd-4088-8e61-29a040f89831', N'2021-06-11 11:27:49.0000000', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'安全退出系统', N'2021-06-11 11:27:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c8d-39bc-4820-8b9f-af0af4f65b2e', N'2021-06-11 11:58:52.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 11:58:52.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c8d-4970-4417-8f8c-aa0df2a83c25', N'2021-06-11 11:59:18.0000000', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'安全退出系统', N'2021-06-11 11:59:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c8d-78ad-47a1-8b8d-42b4410dfb4b', N'2021-06-11 12:00:38.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 12:00:38.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92c8d-7c7e-42ac-82d8-c0ef3d292848', N'2021-06-11 12:00:44.0000000', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'安全退出系统', N'2021-06-11 12:00:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92cab-f8bf-4984-8f9a-48e99e445aa3', N'2021-06-11 15:38:57.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 15:38:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92cac-3dde-45e6-8462-e71d78caa8b9', N'2021-06-11 15:40:53.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 15:40:53.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'095f9844-3ecf-4075-b5d1-5e8a41776742', N'2020-10-28 13:01:37.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 13:01:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'09714166-6ffd-4cea-a8ec-15caf7acffc2', N'2020-07-10 08:50:52.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功', N'2020-07-10 08:50:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'09a9f4ff-4c91-4d66-889c-1c5ed8b19e08', N'2020-06-28 16:44:56.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,新增操作成功', N'2020-06-28 16:44:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0ac9e521-621a-43ad-962b-d7e698468b45', N'2020-07-31 17:48:58.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 17:48:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0b143b43-421d-4a9c-a96f-cef8102fbcc2', N'2020-07-29 16:51:50.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功', N'2020-07-29 16:51:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0be12d1f-7ed1-499c-b70a-5c3af63be349', N'2020-08-11 13:20:57.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,修改操作成功', N'2020-08-11 13:20:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0becb4ce-fdba-4e88-80e9-9134916fa4fe', N'2020-07-21 07:58:05.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-21 07:58:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0c0cbaae-f29c-4154-be6c-b74b037223ec', N'2020-08-03 16:15:04.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-08-03 16:15:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0c28a004-f73c-4b9f-af11-dba4d52694f2', N'2020-08-03 17:03:41.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 17:03:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0c5c2dff-5c77-4211-886a-cf13e542e1c6', N'2020-07-23 15:44:22.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-07-23 15:44:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'873db213-2d22-4c00-af03-2d1898f13481', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0d40cabf-ba34-434d-8c84-b59bc139129b', N'2021-02-10 12:27:01.0000000', N'20000', N'xxxx', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-02-10 12:27:01.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0d4981eb-1b99-44f4-a30a-191de865bf4e', N'2020-07-02 14:01:38.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功', N'2020-07-02 14:01:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0d9ec810-c382-4248-9a61-827c2ae036e6', N'2020-06-29 17:36:05.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-字典分类', N'1', N'字典分类操作,新增操作成功', N'2020-06-29 17:36:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0df1fb6a-f8d7-4567-8ca7-03daaf273360', N'2020-07-13 13:59:26.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-13 13:59:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'318bb233-c9df-4374-9937-e55b71fbcf99', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0e52e7e6-8179-4a30-89b9-8363b791c362', N'2020-06-30 12:00:53.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 12:00:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0edc2f74-d838-4ce3-8073-17ba3e62ff6c', N'2020-06-30 10:02:37.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-06-30 10:02:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c2c5efce-96a2-4793-bbee-89a989f4eaf5', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0f1f5bd1-beb2-466b-8fd5-f92aa5ec2089', N'2020-10-12 09:38:11.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 09:38:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0fc4ad23-fdf3-4985-96b0-610533d29076', N'2020-08-03 16:56:21.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-03 16:56:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0fc90da8-62e5-4908-88f4-e4393fffc2c4', N'2020-07-31 17:25:35.0000000', N'20000', N'xxxx', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 17:25:35.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'0ffb3e58-6dd6-430b-881b-221f76d753c3', N'2020-10-15 09:00:10.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 09:00:10.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'10484357-1f43-4640-9159-235e7c5697f6', N'2020-06-24 15:03:36.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-24 15:03:36.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1127654a-6239-426b-9ca6-3e2a293b7fb3', N'2020-08-12 10:56:47.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-12 10:56:47.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'116038a1-8f4e-4088-9617-b44a10022950', N'2020-07-03 10:52:47.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-03 10:52:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'12383c78-3b6a-4d97-b57c-5e4a58064712', N'2020-07-23 11:35:18.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,删除操作成功', N'2020-07-23 11:35:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'123e91fa-cff0-4fcd-a90b-4cb399ce8205', N'2020-08-03 11:24:38.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-03 11:24:38.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1253244d-0854-4ff2-b59d-71841404f346', N'2020-09-04 13:23:04.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-09-04 13:23:04.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'12bb2c61-61d5-44b6-9fcd-8e3302c94295', N'2020-07-08 15:26:44.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-08 15:26:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2c2ddbce-ee87-4134-9b32-54d0bd572910', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'12ed0f18-1b2b-421c-8db9-bc6ea47ad87d', N'2020-07-02 13:53:49.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry ''xxxxx'' for key ''IX_Sys_Notice''', N'2020-07-02 13:53:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'132e7361-51f1-4a8b-9b1e-784372c6bfa7', N'2020-07-02 14:46:15.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry ''xxxxx'' for key ''IX_Sys_Notice''', N'2020-07-02 14:46:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'142d7864-dd73-42e4-9842-25d8a1cfd757', N'2020-07-29 16:50:54.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功', N'2020-07-29 16:50:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'14377694-7edc-4000-9510-4bee5a03c802', N'2020-07-03 15:26:17.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-03 15:26:17.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1485216a-efba-4909-aadd-c0a407d07ad6', N'2020-10-19 12:44:42.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 12:44:42.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'152eadcb-0d54-41b0-8ad1-3cf24643615f', N'2020-07-14 08:57:20.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-14 08:57:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'b4fc0b00-6101-4166-8396-520735f0cdec', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'15b4a971-329c-45e6-9083-37e95efe0eb2', N'2020-07-22 14:47:05.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,删除操作成功', N'2020-07-22 14:47:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'15f9d0b1-f49e-42ed-925a-e5a5017196fd', N'2020-08-04 08:38:50.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:38:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1607d204-7531-445a-8c8b-1056a2304bff', N'2020-06-28 14:21:08.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-06-28 14:21:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'165c62c7-48b4-4f99-b251-002f0f32fabe', N'2020-07-02 13:54:00.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry ''xxxxx'' for key ''IX_Sys_Notice''', N'2020-07-02 13:54:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1678855c-a82d-4d09-9d80-6640df6beb5b', N'2020-08-04 08:52:45.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:52:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'167c0288-9a5a-422b-8cd4-65a6fa6c5c2b', N'2020-07-31 17:52:29.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 17:52:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'16bd3a2b-6063-4364-b1a5-345683e3117e', N'2020-07-08 14:34:38.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功', N'2020-07-08 14:34:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'173ad1c4-c4a0-4e32-aa3e-a0de8c2fb307', N'2020-10-15 09:00:16.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 09:00:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'177466c6-0793-4aeb-bbf1-fa6d08ae59eb', N'2020-07-24 14:02:39.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,新增操作成功', N'2020-07-24 14:02:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'17ce796c-d3d0-486d-8059-b99e4e1519d8', N'2020-10-19 13:10:50.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 13:10:50.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'17d9a2b3-09ac-4163-85ca-9e43ce7f8620', N'2020-10-28 11:22:51.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 11:22:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'17f0531e-b8ed-4a0f-8800-693132833adb', N'2020-08-11 14:52:18.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-08-11 14:52:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'3b6922f9-b4ba-4615-aa3f-b00110da54c6', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'18040b37-ab14-46ce-af45-e2265d3efed8', N'2020-08-04 09:51:11.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功', N'2020-08-04 09:51:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1882c7b7-ef7d-4439-bedb-22bb4cec9e95', N'2020-08-03 16:54:23.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 16:54:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'18c14b7f-f3ce-4842-838f-d75792653305', N'2020-07-22 16:07:54.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 16:07:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1a2d980b-48e4-459e-b94d-895f43ccde48', N'2020-07-24 14:08:20.0000000', N'10000', N'hhh', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-24 14:08:20.0000000', N'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', N'7e8a523a-3183-43b8-a83c-830fde0aa13b', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1a5ed086-a799-4bf6-8120-98ae3f1ceb9c', N'2020-09-01 08:29:31.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-09-01 08:29:31.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1a94c4d2-cb60-42d0-b640-aedbe669bc1e', N'2020-07-30 10:19:38.0000000', N'10000', N'hhh', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-30 10:19:38.0000000', N'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1ac41139-55c6-476a-83c1-2e38678e38e5', N'2020-07-31 17:59:07.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-31 17:59:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'e9190a56-e173-4483-8a3e-f17b86e4766e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1b7ff20f-555d-4fee-b543-4df54eca2770', N'2020-10-19 11:05:45.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 11:05:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1c476c28-ae5b-491f-9d39-8f328a4d2f0e', N'2020-07-23 15:40:48.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功', N'2020-07-23 15:40:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1c5aa95e-604e-451d-92e6-5da707a8d009', N'2020-07-23 09:00:59.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-23 09:00:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1ca7cdc1-5293-4c16-a60e-56b161bdd86d', N'2020-07-21 17:51:08.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,新增操作成功', N'2020-07-21 17:51:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1cff725e-de47-4547-b453-7ffe59ba8756', N'2020-08-03 17:02:04.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 17:02:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1d7a2b8c-969c-4765-aa19-06bbe44fe5dd', N'2020-10-15 10:05:58.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:05:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1dade866-37e0-4a6f-9b4d-66bc54205acd', N'2020-07-23 15:41:58.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-23 15:41:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'5f9873e9-0308-4a8e-84b7-1c4c61f37654', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1ded98bf-c771-4f4e-a1e2-defe5f654b82', N'2020-08-27 14:49:00.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-08-27 14:49:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'4767b688-83aa-4fd8-b3f6-85175185ec85', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1e10a4fb-5069-41cd-8cbf-233663e44e68', N'2020-07-22 14:17:45.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 14:17:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1e349006-26a2-4100-9adf-d752b6497d15', N'2020-07-30 15:41:30.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-30 15:41:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1e695269-cdd1-46ab-b28a-6efeb584ae35', N'2020-10-15 10:22:47.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:22:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1fa11095-99aa-4091-9a20-96803cff09d1', N'2020-10-09 15:24:20.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-09 15:24:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'1fb71c78-1df5-4290-a69f-e1a8c4e0edd5', N'2020-07-09 12:06:05.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,新增操作成功', N'2020-07-09 12:06:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'203fc40e-600d-4f56-a6be-cb67e262cd05', N'2020-10-12 15:46:54.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 15:46:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'218c51d3-536b-4da7-bbc1-be869f5bf806', N'2020-07-14 15:39:44.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功', N'2020-07-14 15:39:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'21d268f7-3847-4bb8-8527-c0a2811e3c32', N'2020-07-22 14:47:46.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-22 14:47:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1a588a3b-95d7-4b3a-b50a-d3bc40de9fe3', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'21fcb2cd-6922-4678-b81d-74fbbc77b625', N'2020-08-12 11:17:52.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-08-12 11:17:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'a5b323e7-db24-468f-97d7-a17bf5396742', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'226b8ed7-c00f-48a9-909b-54bac2cf2ff7', N'2020-07-15 15:04:15.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-15 15:04:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'e376d482-023e-4715-a9c8-2a393c24426e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'228bab42-7b6e-4667-b3ba-a99418b4f209', N'2020-07-23 15:45:17.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功', N'2020-07-23 15:45:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'230abd79-eaf7-4cf7-b181-f22bc2ff7def', N'2020-08-03 17:04:30.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 17:04:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2319c9da-073c-4f63-8cd7-b0f2d34ad143', N'2020-07-07 13:32:42.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-07 13:32:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2353d67a-593c-4b75-8e74-81a3e3786211', N'2020-06-28 14:20:46.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-06-28 14:20:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'235699b4-da93-446a-90e3-3999688b41b5', N'2020-06-28 14:15:46.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-06-28 14:15:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'23de76d5-6159-479e-bab0-2ab34eb05c9c', N'2020-07-31 15:23:53.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-31 15:23:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'248e6731-25fc-4202-a37c-d0e99bf59c8d', N'2020-07-22 17:12:18.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 17:12:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'24a3aa54-23fa-406e-88bc-705315e4548f', N'2020-07-14 09:21:41.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功', N'2020-07-14 09:21:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2575bbe1-a07d-4520-b7f8-e85296824ee5', N'2020-08-04 08:52:20.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:52:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'26545095-9b21-463f-9641-1cc0c632f1ee', N'2020-10-15 09:20:25.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 09:20:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'26b0fec0-49d0-4443-827e-6a90e9c65baf', N'2020-07-22 17:35:29.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,修改操作成功', N'2020-07-22 17:35:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'edbbf77a-6321-4be5-a000-8fc70c9cf895', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'26bd4fdb-c8a9-48ea-b6ad-676709463303', N'2020-07-22 17:08:57.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-22 17:08:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8ea9a328-4b20-4af4-ae99-e3be5b520317', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'26d4ba49-820e-4b98-858e-1dc4307cad23', N'2020-10-14 10:35:07.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-14 10:35:07.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'26e5e101-9f23-4c7b-b2e6-a469300ebe26', N'2020-07-02 08:38:57.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-02 08:38:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'27098bfa-b1f9-4daa-b265-1c09796aaed1', N'2020-07-30 16:45:19.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-30 16:45:19.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'924456df-e40f-426f-b086-245ced28325e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'27345574-22d9-4855-ae8a-0e81bb6bbb6f', N'2020-07-21 14:12:11.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-21 14:12:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8faff4e5-b729-44d2-ac26-e899a228f63d', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'278f4e5f-0105-4577-a093-a43a99b6540e', N'2020-08-12 11:17:09.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-08-12 11:17:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'5f9873e9-0308-4a8e-84b7-1c4c61f37654', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2795001e-71ba-4f2a-b284-f2cce6ba4535', N'2020-07-21 13:39:05.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,新增操作成功', N'2020-07-21 13:39:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'27e38d57-915e-4079-9a57-b5f4dc7dd0c7', N'2020-08-20 16:49:11.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-08-20 16:49:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'eaa34917-4924-4661-bd17-28d2be9a855a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'27fcdf20-2205-4a7f-af59-93b13b8f7460', N'2020-07-13 09:22:02.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-13 09:22:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'281513c3-67d2-439e-ae28-bb25e427be7f', N'2020-10-19 12:55:04.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 12:55:04.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'28249534-84b6-4273-849b-0738124debd3', N'2020-08-04 11:24:08.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-04 11:24:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2839d991-4c0d-4e2d-92ea-6382e11f79a1', N'2020-09-04 14:33:00.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-09-04 14:33:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2869931e-0e1c-4d79-8685-c50c4f7d0515', N'2020-07-30 15:51:17.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-30 15:51:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8a381383-5db2-4700-b26e-0f5aed3fb3a2', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'287313c8-005b-433a-8130-f64a88cdbb4c', N'2020-07-22 14:18:12.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 14:18:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'287bd5b8-c3cc-492a-bd3c-4a63e8732253', N'2020-07-22 14:18:15.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功', N'2020-07-22 14:18:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'28e38c07-2faf-4a3c-81ce-95ae3cf201ff', N'2020-07-24 14:07:26.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,修改操作成功', N'2020-07-24 14:07:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd71324b7-e7eb-47b2-bdea-f0293d36bb7f', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'29431cd0-66a1-4348-8844-a3272e16bfb8', N'2020-06-30 17:39:56.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-06-30 17:39:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2a237fe6-3bbf-42c4-b4aa-a8d907d7e746', N'2020-10-15 10:13:17.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:13:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2a279585-325b-4960-abd0-364973d626e0', N'2020-10-14 10:35:17.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:35:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7e4e4a48-4d51-4159-a113-2a211186f13a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2a4b7db6-385a-465d-af3c-0f49390114a2', N'2020-07-21 17:51:24.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,删除操作成功', N'2020-07-21 17:51:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2a86fc34-aebe-40b1-ad55-1d0d22e29c5a', N'2020-07-22 09:49:18.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-22 09:49:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2a9c38b8-e0f9-4282-9d5b-c4ca194683fc', N'2020-10-19 10:12:17.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 10:12:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2b5e9633-3c61-4dcb-8b66-ad8d28f29350', N'2020-08-03 11:24:57.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-03 11:24:57.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2c189382-23fa-4695-9399-f82200af254b', N'2020-08-03 16:52:18.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 16:52:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2c3a7cd8-3d01-4021-b9d9-c4ab2d678dad', N'2020-09-02 09:04:44.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功', N'2020-09-02 09:04:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2c69424d-3404-44d0-8cab-d991d19a91fe', N'2020-07-24 14:13:05.0000000', N'10000', N'hhh', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-24 14:13:05.0000000', N'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2cd9e25e-171c-404f-a7fa-b52403147eaa', N'2020-06-29 17:24:42.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-29 17:24:42.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2d2a42be-8263-42d1-86a9-5dd9ba873195', N'2020-07-30 16:46:35.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-30 16:46:35.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'924456df-e40f-426f-b086-245ced28325e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2dce4127-b124-42c9-aed1-918c59ab2a91', N'2020-10-28 11:23:00.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 11:23:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2e82e8d2-8f34-460c-9766-b940167ece25', N'2020-06-30 11:58:44.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 11:58:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2e873f5f-488f-4e1f-a615-1f1eb06ab3ac', N'2020-10-20 09:02:01.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-20 09:02:01.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2efe72ba-282d-4e23-a27d-d7aad851ac9c', N'2020-06-24 08:30:42.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-24 08:30:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2f2766f8-5ec0-428a-b91e-62e45771a540', N'2020-08-31 10:50:59.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-用户管理', N'1', N'用户管理操作,修改操作成功', N'2020-08-31 10:50:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'df821722-2fae-4023-ae57-23bebfccad85', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'2f46a6a4-c343-4b7d-912b-f681cee183dc', N'2021-05-28 21:41:23.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-05-28 21:41:23.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'306380a7-3717-4242-b89c-a4363fbec59c', N'2020-07-24 14:29:45.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-用户管理', N'1', N'用户管理操作,修改操作成功', N'2020-07-24 14:29:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'30cb9a42-5b53-4466-a3ca-95e9e94ff55a', N'2020-07-24 15:36:51.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,修改操作成功', N'2020-07-24 15:36:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'599669e9-2b1b-4c51-a842-ed0165075432', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'31a823ea-1539-4430-818f-46c3ce14eba7', N'2020-07-31 16:23:32.0000000', N'20000', N'xxxx', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 16:23:32.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'31b9cb98-452b-4125-aaea-db2137b0d27d', N'2020-07-23 11:50:09.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-07-23 11:50:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'873db213-2d22-4c00-af03-2d1898f13481', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'31c52261-6aaf-4b6e-9091-118d909dcf1e', N'2020-07-31 17:50:35.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 17:50:35.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3207046e-5887-43b4-ad53-7a9fd1177807', N'2020-06-28 12:27:57.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column ''F_Title'' at row 1', N'2020-06-28 12:28:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c2c5efce-96a2-4793-bbee-89a989f4eaf5', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'332ad5ef-71d2-4d07-b4e2-fc14e9702351', N'2020-10-19 12:38:11.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 12:38:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'33722239-549a-48ea-b5fb-2e8d4e1ac7e6', N'2020-06-30 10:45:51.0000000', N'20000', N'xxxx', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-30 10:45:51.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'338ebe3b-ae99-45f3-90da-7ffefe2b6c33', N'2020-07-07 13:50:02.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,删除操作成功', N'2020-07-07 13:50:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'33ab9399-ccc9-4695-b505-cff3957f9a71', N'2020-07-08 10:41:26.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,新增克隆成功', N'2020-07-08 10:41:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'33d32ed4-69cc-43bc-8a4a-d9405ff5884e', N'2020-06-28 16:37:33.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,新增操作成功', N'2020-06-28 16:37:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'33d5ca19-dbd0-42c2-a13a-0ecdb821d59c', N'2020-06-28 14:17:37.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-06-28 14:17:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3413f529-6954-4a3f-8586-5394ef31a12c', N'2020-06-28 14:15:49.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-06-28 14:15:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'343e18c0-debd-448c-b1b1-92b59093c3fc', N'2020-08-04 08:50:12.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:50:12.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3456acad-2b52-40c5-8105-a3041c1119b8', N'2020-07-08 10:12:57.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-08 10:12:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'96EE855E-8CD2-47FC-A51D-127C131C9FB9', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3595c3f3-a727-4e8c-b5eb-63c58bf0b493', N'2020-07-06 10:15:12.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-07-06 10:15:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'35ada9db-c28d-47a1-9bbb-3a8a6ac1cf66', N'2020-07-31 16:08:57.0000000', N'20000', N'xxxx', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 16:08:57.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'35e129d7-dcde-4191-8f88-08ef89e99de1', N'2020-06-30 12:03:22.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 12:03:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'365d0486-fd4e-4611-8011-a05e8fcd1623', N'2020-06-28 14:05:52.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column ''F_MobilePhone'' at row 1', N'2020-06-28 14:05:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'366db9df-03d6-4aa7-ab5a-7d47b870242e', N'2021-06-02 22:26:06.0000000', N'admin', N'超级管理员', N'Login', N'127.0.0.1', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-02 22:26:06.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'36e6f632-e72f-4430-a874-adc25ce9c6eb', N'2020-07-02 08:42:17.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-02 08:42:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1dff096a-db2f-410c-af2f-12294bdbeccd', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3712a3c9-4c13-454c-a828-a696dfaa5a4d', N'2020-10-19 09:23:32.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 09:23:32.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3728bb4f-95e9-494b-9bfa-42d594d73164', N'2020-07-22 17:12:22.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-22 17:12:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3733917b-81ce-4122-a84a-74a876bdb5de', N'2020-07-08 12:44:51.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-08 12:44:51.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'37cf477d-9ae0-48b7-9b62-d721080e7e83', N'2020-07-14 17:05:47.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'0', N'我的流程操作,新增操作失败，''string'' does not contain a definition for ''lines''', N'2020-07-14 17:05:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'37d1f60c-1a02-411c-a676-04a2de0f80ff', N'2020-07-07 08:15:02.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功', N'2020-07-07 08:15:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'38366eed-7be1-44e1-954a-98778bdf7b1e', N'2020-07-09 10:21:30.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,新增操作成功', N'2020-07-09 10:21:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'383b075e-de1c-482c-83e8-01a4e3e9a98a', N'2020-07-14 08:53:52.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-14 08:53:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'f82fd629-5f3a-45d6-8681-5ec47e66a807', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'387797dd-2c04-4d6b-92dd-311412a1bb53', N'2020-06-30 10:45:38.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,修改操作成功', N'2020-06-30 10:45:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'74a7c517-dbc4-4c7d-b9ba-9795a3dc008c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'38ec47d0-adf6-40b2-865d-4696a5d8ac0d', N'2020-08-03 16:56:23.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-03 16:56:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'38efbbf3-9d8a-450f-b2b6-24e542cfea72', N'2020-07-07 14:23:17.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-07 14:23:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'396ac648-6f1d-4a0c-ae5f-d8ce942b0484', N'2020-10-19 12:40:29.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 12:40:29.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39c67bfc-6e7a-4eab-8944-c93f27a8ce22', N'2020-08-04 08:46:13.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:46:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39d5a99f-56de-482b-9851-cfee2b54c73e', N'2020-10-14 10:35:20.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:35:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'253646c6-ffd8-4c7f-9673-f349bbafcbe5', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fc76f9-c4a9-77f0-7897-f7ed73a2201d', N'2021-05-13 16:17:02.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-13 16:17:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fc76fe-f7ca-06c6-5f94-50e0037f92fd', N'2021-05-13 16:22:43.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2021-05-13 16:22:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fc9a60-5d77-07bb-5082-c98afef72bfd', N'2021-05-20 13:15:48.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-20 13:15:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fc9a62-18be-97be-c71e-45c6fbd0edb0', N'2021-05-20 13:17:42.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-20 13:17:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fc9e86-8801-c971-fb2b-55223c8d7f90', N'2021-05-21 08:35:58.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-21 08:35:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcb89e-e9b8-4928-64ab-98f1837bb82f', N'2021-05-26 10:12:44.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-26 10:12:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcb8a5-696c-9bdb-0cd4-81108387aba9', N'2021-05-26 10:19:50.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-26 10:19:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcb8a6-7aa2-d0c2-989f-d5659d948d53', N'2021-05-26 10:21:00.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-26 10:21:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcb952-d9b4-5795-1c1b-02cf40c09240', N'2021-05-26 13:29:16.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-26 13:29:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc057-5f26-6030-c1fd-933857c9f5e9', N'2021-05-27 22:11:33.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-05-27 22:11:33.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc057-7b48-f803-f016-69fa7992533f', N'2021-05-27 22:11:40.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-27 22:11:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc058-b4e5-4e26-ed76-1ad304e875c7', N'2021-05-27 22:13:01.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-字典分类', N'1', N'字典分类操作,新增操作成功。', N'2021-05-27 22:13:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc059-592c-c8fb-f235-636881c8c370', N'2021-05-27 22:13:43.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-字典分类', N'1', N'字典分类操作,新增操作成功。', N'2021-05-27 22:13:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc05b-4dc7-5883-e2d0-208959e30ebe', N'2021-05-27 22:15:51.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-字典分类', N'1', N'字典分类操作,新增操作成功。', N'2021-05-27 22:15:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc05d-eab4-502d-b545-b19306f0e263', N'2021-05-27 22:18:42.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功。', N'2021-05-27 22:18:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc05e-f85d-929e-7f8b-9cfb054cb3b8', N'2021-05-27 22:19:51.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功。', N'2021-05-27 22:19:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc060-0285-d7e0-a94e-aa120e44b779', N'2021-05-27 22:20:59.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功。', N'2021-05-27 22:20:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc060-ef84-3706-cc1f-5f702606fb3f', N'2021-05-27 22:22:00.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功。', N'2021-05-27 22:22:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc061-6329-db19-775f-10898f05d19f', N'2021-05-27 22:22:30.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功。', N'2021-05-27 22:22:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc061-ab2b-c8aa-77e9-967cf20c46bb', N'2021-05-27 22:22:48.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功。', N'2021-05-27 22:22:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc061-c69f-06b8-b05d-e79c2c31ceed', N'2021-05-27 22:22:55.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功。', N'2021-05-27 22:22:55.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc061-e582-c9d0-e99a-54576b2eb527', N'2021-05-27 22:23:03.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功。', N'2021-05-27 22:23:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc062-0c8e-7239-3733-ffb4eb0d10cb', N'2021-05-27 22:23:13.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功。', N'2021-05-27 22:23:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc062-2ea7-1fdb-f0d7-8c38f629b8ee', N'2021-05-27 22:23:22.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功。', N'2021-05-27 22:23:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc062-5889-40c3-9a65-cc7a02eae4a1', N'2021-05-27 22:23:32.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,修改操作成功。', N'2021-05-27 22:23:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc061-e55e-4899-68f5-668e335fa285', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc066-f66e-7226-0691-71718f86542f', N'2021-05-27 22:28:35.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-27 22:28:35.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc069-9315-3436-1a33-febc0078af1f', N'2021-05-27 22:31:26.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-27 22:31:26.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc27a-d65e-8976-b3e6-13999002513f', N'2021-05-28 08:09:32.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 08:09:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc27b-bba8-10e2-920e-55c06df58377', N'2021-05-28 08:10:31.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 08:10:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc27d-437f-bd9e-4292-07c7d5db2969', N'2021-05-28 08:12:11.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 08:12:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc27f-0495-55da-1ba6-f313a56943bc', N'2021-05-28 08:14:06.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 08:14:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc27f-7df4-bfb9-6cbc-74e6cffa264c', N'2021-05-28 08:14:37.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功。', N'2021-05-28 08:14:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'eaa34917-4924-4661-bd17-28d2be9a855a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc281-7560-7f29-b221-733b5de9fb32', N'2021-05-28 08:16:46.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 08:16:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc287-4e99-7163-0e43-9b3d58e37434', N'2021-05-28 08:23:09.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 08:23:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc290-177a-bb5b-0872-9ffe1ce1b3e7', N'2021-05-28 08:32:45.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功。', N'2021-05-28 08:32:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'eaa34917-4924-4661-bd17-28d2be9a855a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2a3-da43-1068-e617-bd14c9f652ae', N'2021-05-28 08:54:20.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 08:54:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2a4-3aaa-2f97-f15f-963ab06329bc', N'2021-05-28 08:54:45.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'Mes系统-基础信息-工序管理', N'1', N'工序管理操作,新增操作成功。', N'2021-05-28 08:54:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2a4-6732-e3fc-0d68-4c766a2fd457', N'2021-05-28 08:54:56.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'Mes系统-基础信息-工序管理', N'1', N'工序管理操作,删除操作成功。', N'2021-05-28 08:54:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc2a4-3a81-a95f-5e4a-ad9276052081', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2a9-500a-2425-bf00-9c27cb840805', N'2021-05-28 09:00:18.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 09:00:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2a9-7749-4835-d2e3-19ae0d9afda2', N'2021-05-28 09:00:28.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'Mes系统-基础信息-工序管理', N'1', N'工序管理操作,新增操作成功。', N'2021-05-28 09:00:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2ab-da75-ac2a-a230-c52c1152aaff', N'2021-05-28 09:03:04.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 09:03:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2ae-3f01-dcc5-e3d3-292fd235c7e8', N'2021-05-28 09:05:41.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 09:05:41.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2ae-ec7a-2091-2c20-d546cf461cdc', N'2021-05-28 09:06:26.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2021-05-28 09:06:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc05e-f839-7aa2-8cda-a9a92b03be33', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2af-04e0-5bf7-9113-d19a37d78839', N'2021-05-28 09:06:32.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功。', N'2021-05-28 09:06:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc05d-ea81-b53f-6425-364473a7588c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2b0-4bd3-30cc-51d5-9e67eb3d22f0', N'2021-05-28 09:07:55.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2021-05-28 09:07:55.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc05e-f839-7aa2-8cda-a9a92b03be33', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2b1-68eb-bb9e-968d-3a9ce900a301', N'2021-05-28 09:09:08.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2021-05-28 09:09:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc05e-f839-7aa2-8cda-a9a92b03be33', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2b2-50cb-2ddc-6555-e84507cc4940', N'2021-05-28 09:10:08.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-字典分类', N'1', N'字典分类操作,删除操作成功。', N'2021-05-28 09:10:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc059-5908-10be-14d9-a6bc5e7e9cfd', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2b2-5f31-d5a4-de0d-936608d15d50', N'2021-05-28 09:10:12.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-字典分类', N'1', N'字典分类操作,删除操作成功。', N'2021-05-28 09:10:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc05b-4d9a-ea9d-c621-49c4295ece65', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2b2-6d14-f095-ec94-94474b929cfe', N'2021-05-28 09:10:15.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-字典分类', N'1', N'字典分类操作,删除操作成功。', N'2021-05-28 09:10:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc058-b4bc-14d8-ca7d-e08bc10c170a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2b4-6cd1-62d0-a82d-ae646cd67cf4', N'2021-05-28 09:12:26.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功。', N'2021-05-28 09:12:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc060-0213-361c-472b-660a790aeafa', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2b4-9e6d-79b3-587e-af0b0ef8d7d4', N'2021-05-28 09:12:39.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功。', N'2021-05-28 09:12:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc060-ef0e-434d-a8b7-ff8f611f1899', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2b4-b99f-86bc-23cc-eb9e99568241', N'2021-05-28 09:12:46.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功。', N'2021-05-28 09:12:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc061-62ce-3904-6e0a-7b0cd5e6bb2a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2b4-e2e3-a24c-8173-e9d6f42b2e9e', N'2021-05-28 09:12:56.0000000', N'admin', N'超级管理员', N'Delete', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功。', N'2021-05-28 09:12:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc05e-f839-7aa2-8cda-a9a92b03be33', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2ba-96c9-7ab9-5ffd-1fa475054412', N'2021-05-28 09:19:10.0000000', N'admin', N'超级管理员', N'Login', N'127.0.0.1', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 09:19:10.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2ba-b6be-2061-aeca-489e4a0a6907', N'2021-05-28 09:19:18.0000000', N'admin', N'超级管理员', N'Create', N'127.0.0.1', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2021-05-28 09:19:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2ba-c92b-d4f9-fd59-2a569d124bbe', N'2021-05-28 09:19:23.0000000', N'admin', N'超级管理员', N'Create', N'127.0.0.1', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2021-05-28 09:19:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2bb-a16b-2b74-d931-4428a9466bc7', N'2021-05-28 09:20:18.0000000', N'admin', N'超级管理员', N'Create', N'127.0.0.1', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2021-05-28 09:20:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2bc-41a2-a564-5e84-f49ed7e21bb1', N'2021-05-28 09:20:59.0000000', N'admin', N'超级管理员', N'Delete', N'127.0.0.1', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,删除操作成功。', N'2021-05-28 09:20:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc2bb-a151-ff0a-4cc2-4055454da90c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2bc-6048-0e0e-4f83-a776a978585d', N'2021-05-28 09:21:07.0000000', N'admin', N'超级管理员', N'Create', N'127.0.0.1', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2021-05-28 09:21:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2bc-6e07-cb31-acc4-9f3967530e3c', N'2021-05-28 09:21:11.0000000', N'admin', N'超级管理员', N'Create', N'127.0.0.1', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2021-05-28 09:21:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2bd-d034-68a4-aaa2-72de0a1468d8', N'2021-05-28 09:22:41.0000000', N'admin', N'超级管理员', N'Delete', N'127.0.0.1', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,删除操作失败，Data too long for column ''F_KeyValue'' at row 1', N'2021-05-28 09:22:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc2bc-6de1-239f-27cd-f2449059daa7,39fcc2bc-6022-5d40-c23d-c966a302ca59', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2c1-a490-d724-9451-13379df668e5', N'2021-05-28 09:26:52.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 09:26:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2c9-899a-953e-8841-011dafa3c471', N'2021-05-28 09:35:30.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2021-05-28 09:35:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2cc-4e58-eba1-2f57-875363c22964', N'2021-05-28 09:38:31.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 09:38:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2eb-96bb-dd64-c74e-aace338b9dc8', N'2021-05-28 10:12:41.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功。', N'2021-05-28 10:12:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2ed-ea79-2fce-8ff8-72b8035b45fc', N'2021-05-28 10:15:14.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 10:15:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2ee-4ea1-9c4e-2a5a-d8a66cba9d98', N'2021-05-28 10:15:39.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功。', N'2021-05-28 10:15:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2ee-6ea0-907c-a555-565345115f45', N'2021-05-28 10:15:48.0000000', N'admin', N'超级管理员', N'Submit', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功。', N'2021-05-28 10:15:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc2eb-9367-b566-9078-9f411bc4f050', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc2ee-ae3d-073f-802b-50f26be0e950', N'2021-05-28 10:16:04.0000000', N'admin', N'超级管理员', N'Submit', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功。', N'2021-05-28 10:16:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc2eb-9367-b566-9078-9f411bc4f050', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc5ab-3d30-7bd6-86fd-ad3b99e6efb7', N'2021-05-28 23:01:16.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 23:01:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc5ad-48de-7cdc-a767-f630d2d05c3b', N'2021-05-28 23:03:30.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功。', N'2021-05-28 23:03:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcc5ad-ec1b-8f16-7fc5-c72c81e7e7a8', N'2021-05-28 23:04:12.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2021-05-28 23:04:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'39fcc5ad-48af-7778-53a5-4c3c9d18cbd3', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccf9b-d6d9-e61d-ed10-fe8965766ac1', N'2021-05-30 21:20:38.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 21:20:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccf9e-48d0-f5ea-f3ca-15e6aae793a2', N'2021-05-30 21:23:19.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 21:23:19.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfaa-dc37-480e-b8ba-8d1a212259d4', N'2021-05-30 21:37:03.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 21:37:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfab-4d70-51d8-14a7-b87bf8e3571f', N'2021-05-30 21:37:32.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2021-05-30 21:37:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'a303cbe1-60eb-437b-9a69-77ff8b48f173', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfae-91b4-e049-c663-9bd48a03e626', N'2021-05-30 21:41:06.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 21:41:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfae-9278-1b06-c9d9-ab8154ef3e3f', N'2021-05-30 21:41:06.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 21:41:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfae-98fd-f9c4-d2e5-16aa921a13b0', N'2021-05-30 21:41:08.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 21:41:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfae-d55c-8c8b-6e23-d5d030c123b3', N'2021-05-30 21:41:23.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 21:41:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfae-d5f6-a0b7-cc73-1e0ceb0b2048', N'2021-05-30 21:41:24.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 21:41:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfaf-b295-5609-2da0-a27112f66df5', N'2021-05-30 21:42:20.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 21:42:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb1-6992-4d40-4c61-6175aa0f3d6d', N'2021-05-30 21:44:12.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 21:44:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb1-6a2a-7f47-6926-cfb0ecc82c1c', N'2021-05-30 21:44:13.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 21:44:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb1-7cd3-87d8-0df2-f4fc980db59d', N'2021-05-30 21:44:17.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 21:44:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb1-e437-1299-ce35-d8ca1d94e633', N'2021-05-30 21:44:44.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 21:44:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb1-e4cc-c9cf-1919-3aba8c6c26b2', N'2021-05-30 21:44:44.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 21:44:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb1-e9f0-d540-379d-85812097ad14', N'2021-05-30 21:44:45.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 21:44:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb2-2d36-b883-2342-4a46e265ee75', N'2021-05-30 21:45:03.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 21:45:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb2-2dda-748d-e80d-01f09f7a0f5d', N'2021-05-30 21:45:03.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 21:45:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb3-72a8-864b-89e5-762fa9a23520', N'2021-05-30 21:46:26.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 21:46:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb5-510c-427d-ecde-2e5cd1b30756', N'2021-05-30 21:48:28.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 21:48:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb6-9dff-ef7e-ddd2-aaedc44348ae', N'2021-05-30 21:49:54.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 21:49:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfb6-9eb3-1387-2f6b-c32d6bbc55d6', N'2021-05-30 21:49:54.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 21:49:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfbb-bc59-028c-0a07-261491c763b4', N'2021-05-30 21:55:29.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''(50) DEFAULT NULL   , Primary key(`F_Id`))'' at line 14', N'2021-05-30 21:55:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfbb-ca4c-5315-65fe-5e5558e2038c', N'2021-05-30 21:55:33.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 21:55:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfbb-cade-7088-c688-f28dd98a520d', N'2021-05-30 21:55:33.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 21:55:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfbc-cd60-5339-9554-43867483bb8b', N'2021-05-30 21:56:39.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''(50) DEFAULT NULL   , Primary key(`F_Id`))'' at line 14', N'2021-05-30 21:56:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfc3-fc56-37fa-5011-44ec4f8165ff', N'2021-05-30 22:04:30.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:04:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfc3-fcdb-c19f-3d10-cf1af2a60a53', N'2021-05-30 22:04:30.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:04:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfc4-d554-c8ab-84dc-6bb82fb0f814', N'2021-05-30 22:05:25.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 22:05:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfc6-1cf0-7f0e-08be-1e3af708e0c4', N'2021-05-30 22:06:49.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:06:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfc6-1e45-bd6b-91c5-c6c30b67a191', N'2021-05-30 22:06:49.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:06:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfca-1acd-7ce2-d256-2191df227dc3', N'2021-05-30 22:11:11.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 22:11:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfcb-4095-28bf-7dc8-814c65f292ad', N'2021-05-30 22:12:26.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:12:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfcb-41ac-43ec-e7e8-3337cd262b16', N'2021-05-30 22:12:26.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:12:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfce-03d5-6eac-645d-9b8b1f2a488f', N'2021-05-30 22:15:27.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 22:15:27.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfce-0e81-e644-dd84-ceae9ade914d', N'2021-05-30 22:15:30.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:15:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfce-0ef9-7941-9023-880372b3c86a', N'2021-05-30 22:15:30.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:15:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd2-5ba6-2d58-6124-7de985b5a8a4', N'2021-05-30 22:20:11.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 22:20:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd2-65d0-ed99-c230-32aa6844eed3', N'2021-05-30 22:20:14.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:20:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd2-6677-9c2e-5faf-a861fae04fe3', N'2021-05-30 22:20:14.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:20:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd3-1129-a513-f0d3-99a28676d532', N'2021-05-30 22:20:58.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 22:20:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd3-1cdb-9da0-5b58-d2841b41b811', N'2021-05-30 22:21:01.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:21:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd3-1d6c-6c35-44a4-adbebf8930c8', N'2021-05-30 22:21:01.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:21:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd3-b361-bcae-b8b9-c724723bf4a1', N'2021-05-30 22:21:40.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 22:21:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd3-be87-420d-6c77-b8442b485763', N'2021-05-30 22:21:42.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:21:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd3-bf61-59e9-cac7-00b4c89dcc07', N'2021-05-30 22:21:43.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:21:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd3-ecc5-c047-9da3-85c7a7dddf6b', N'2021-05-30 22:21:54.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 22:21:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd5-19c6-c06a-83fa-be78832d5d26', N'2021-05-30 22:23:11.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:23:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd5-1aa9-caa5-4eb3-3e75c88a3f1d', N'2021-05-30 22:23:12.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:23:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd8-4ae2-e1cd-abc9-3bf2ffd19295', N'2021-05-30 22:26:40.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 22:26:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd8-5387-40e3-78cb-14d18ec8eafb', N'2021-05-30 22:26:43.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:26:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfd8-5437-7d95-61a8-eb5b5cf80bcc', N'2021-05-30 22:26:43.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:26:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfdb-cb22-d081-1e3b-9efe86f3da7c', N'2021-05-30 22:30:30.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 22:30:30.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfdb-e972-2e23-f476-23cba51c2273', N'2021-05-30 22:30:38.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:30:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfdb-e9fe-e0fc-9a57-c9a4f1c70896', N'2021-05-30 22:30:38.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:30:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfdc-b44c-e1f4-37ca-50ad65d19ac4', N'2021-05-30 22:31:29.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 22:31:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfdc-be9a-1958-ff1b-5ae0d0525fd6', N'2021-05-30 22:31:32.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:31:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfdc-bf3b-9cb0-8af0-f9250db7cdb4', N'2021-05-30 22:31:32.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:31:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfe4-8832-843a-e4a3-cee6a3c95c17', N'2021-05-30 22:40:02.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 22:40:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfe4-b4af-2f67-77ec-8f988a908081', N'2021-05-30 22:40:14.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:40:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfe4-b562-8fc4-9ce2-35782f2448f8', N'2021-05-30 22:40:14.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:40:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfe5-a40a-8761-6767-fde61153529d', N'2021-05-30 22:41:15.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 22:41:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfec-32d3-b966-92a4-631334140bd3', N'2021-05-30 22:48:25.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 22:48:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfec-70e2-8cc9-13d8-1296b952977f', N'2021-05-30 22:48:41.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:48:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfec-7189-a532-1118-7170bf6083ba', N'2021-05-30 22:48:41.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:48:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfec-79a5-2594-032a-23236967939e', N'2021-05-30 22:48:43.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 22:48:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfed-2d4c-ce31-f322-b64eff2de5c4', N'2021-05-30 22:49:29.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:49:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfed-2de9-2e5a-bbad-80cb3db9890b', N'2021-05-30 22:49:29.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:49:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccfed-972d-eb42-3ea7-fa9e732cc792', N'2021-05-30 22:49:56.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Max) DEFAULT NULL  ,
-`F_CreatorTime` datetime DEFAULT NULL  ,
-`F_CreatorUserId'' at line 12', N'2021-05-30 22:49:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccff2-94e1-674f-5aa0-f95c11da18a4', N'2021-05-30 22:55:23.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 22:55:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccff2-ad4f-eead-f0c9-54acac73dac3', N'2021-05-30 22:55:30.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:55:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccff2-ae2a-763b-434f-8d3dea597e66', N'2021-05-30 22:55:30.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:55:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccff2-b5d8-bccd-be73-abe73cefee87', N'2021-05-30 22:55:32.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，Table ''watercloudnettest.sys_user'' doesn''t exist', N'2021-05-30 22:55:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccff4-e08a-accc-f3c8-93a62f6bac94', N'2021-05-30 22:57:54.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-30 22:57:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccff4-e826-3242-7fd2-9296ed61274a', N'2021-05-30 22:57:56.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-30 22:57:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccff4-e8be-66c8-cd07-90fd17d6c608', N'2021-05-30 22:57:56.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-30 22:57:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fccff5-2c87-3056-572a-c8c032ff6953', N'2021-05-30 22:58:13.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功。', N'2021-05-30 22:58:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1ee-08af-cad9-7091-b85d22af8576', N'2021-05-31 08:09:40.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-31 08:09:40.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1f1-6da9-2555-22b1-afd3558b5dfe', N'2021-05-31 08:13:22.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-31 08:13:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1f1-6e0a-ba45-fc32-55b50600a23a', N'2021-05-31 08:13:22.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-31 08:13:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1f1-9676-813f-d9af-8c8e5fa5d235', N'2021-05-31 08:13:33.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，ConfigId was not found 1', N'2021-05-31 08:13:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1f8-d593-2786-cd19-f5428f877ccc', N'2021-05-31 08:21:27.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-31 08:21:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1f9-f2f8-2d5b-065e-4935cbc69e4a', N'2021-05-31 08:22:41.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-31 08:22:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1f9-f353-ad5b-af49-1292fc97e273', N'2021-05-31 08:22:41.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-31 08:22:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1fb-27c2-7b66-f1dd-c33cd8c4851b', N'2021-05-31 08:24:00.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，ConfigId was not found 1', N'2021-05-31 08:24:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1fe-86d4-edb8-9ea8-da9ff824d3b8', N'2021-05-31 08:27:40.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-05-31 08:27:41.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1fe-a7c2-0177-f5fe-fe832a1a0d29', N'2021-05-31 08:27:49.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-31 08:27:49.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1ff-c785-9d82-22e9-43b0b7203550', N'2021-05-31 08:29:03.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-31 08:29:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1ff-c7d0-d6f3-749d-901e6c78e204', N'2021-05-31 08:29:03.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-31 08:29:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd1ff-eee4-a883-fb82-e7eca77f99fe', N'2021-05-31 08:29:13.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功。', N'2021-05-31 08:29:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd202-5f68-b21f-a7ea-6f6a2e53b187', N'2021-05-31 08:31:53.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-31 08:31:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd202-5fa5-5dfb-4e54-f3a7debad10a', N'2021-05-31 08:31:53.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-31 08:31:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd202-8748-9c4f-73fd-206cb866a91f', N'2021-05-31 08:32:03.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功。', N'2021-05-31 08:32:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd203-7833-fc37-6b6f-15e0f4681847', N'2021-05-31 08:33:04.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-31 08:33:05.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd204-de66-9dbe-3842-1ee8eaca31b7', N'2021-05-31 08:34:36.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-31 08:34:36.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd204-dec1-03ea-84dd-33844d2d8552', N'2021-05-31 08:34:36.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-31 08:34:36.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd205-0a2f-2e50-b698-7e714ffec362', N'2021-05-31 08:34:47.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功。', N'2021-05-31 08:34:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd207-c419-9254-1bda-3e680a9918a5', N'2021-05-31 08:37:46.0000000', N'test', N'test', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，账户不存在，请重新输入', N'2021-05-31 08:37:46.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd20e-89e7-faef-6b87-ea17c5f85090', N'2021-05-31 08:45:10.0000000', N'test', N'test', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，账户不存在，请重新输入', N'2021-05-31 08:45:10.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd210-8738-cd95-5c51-d325a0f85f71', N'2021-05-31 08:47:20.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-31 08:47:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd21d-50a3-bcfd-dfc6-f0508d90f582', N'2021-05-31 09:01:18.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-31 09:01:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd21e-44ce-9bc1-a554-04beb1a01848', N'2021-05-31 09:02:21.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-31 09:02:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd21e-4549-030c-2ba9-23b4fc80bc04', N'2021-05-31 09:02:21.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-31 09:02:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd21e-6fae-d784-6f52-d98ac292e2aa', N'2021-05-31 09:02:32.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功。', N'2021-05-31 09:02:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd22b-7e33-f569-b6c9-8119dfb1a7d7', N'2021-05-31 09:16:47.0000000', N'test', N'test', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，账户不存在，请重新输入', N'2021-05-31 09:16:48.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd22f-0ad8-077b-eeee-08546ee499c1', N'2021-05-31 09:20:40.0000000', N'test', N'test', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，账户不存在，请重新输入', N'2021-05-31 09:20:40.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd23b-fbee-3e91-d764-6be95f5aeb50', N'2021-05-31 09:34:48.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-31 09:34:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd23d-8b17-6cf1-c7a1-5ccd677ca149', N'2021-05-31 09:36:30.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-31 09:36:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd23d-8b77-1b68-d6ef-040cc83714fe', N'2021-05-31 09:36:31.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-31 09:36:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd23d-b681-4752-e816-7686b30a5f76', N'2021-05-31 09:36:42.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，Duplicate entry ''87dc2de3-ccbc-4dab-bb90-89fc68cbde4f'' for key ''sys_module.PRIMARY''', N'2021-05-31 09:36:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd23f-5e44-ef4f-a3b8-6ebf466d9577', N'2021-05-31 09:38:30.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-31 09:38:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd23f-5e8d-b5ce-31cc-44988b288e6f', N'2021-05-31 09:38:30.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-31 09:38:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd242-45fd-9a2e-d86e-0a9823cd4228', N'2021-05-31 09:41:40.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，Duplicate entry ''87dc2de3-ccbc-4dab-bb90-89fc68cbde4f'' for key ''sys_module.PRIMARY''', N'2021-05-31 09:41:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd242-de74-0bfc-eaf3-bbe8abdcf9b4', N'2021-05-31 09:42:20.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-31 09:42:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd242-deb0-78d9-fe27-340495a7c961', N'2021-05-31 09:42:20.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-31 09:42:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd243-4cea-ef90-4bf3-fe85a97c34a4', N'2021-05-31 09:42:48.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，Duplicate entry ''87dc2de3-ccbc-4dab-bb90-89fc68cbde4f'' for key ''sys_module.PRIMARY''', N'2021-05-31 09:42:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd243-ede9-f662-999a-c19cab255685', N'2021-05-31 09:43:29.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-31 09:43:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd243-ee22-36ee-c473-46dfa8c2020e', N'2021-05-31 09:43:29.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-31 09:43:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd244-3673-7769-3651-d74bbb257889', N'2021-05-31 09:43:48.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,新增操作失败，Duplicate entry ''87dc2de3-ccbc-4dab-bb90-89fc68cbde4f'' for key ''sys_module.PRIMARY''', N'2021-05-31 09:43:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd247-027c-c73e-f7e1-5495b5ddef8a', N'2021-05-31 09:46:51.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功。', N'2021-05-31 09:46:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd247-02b8-3f69-f479-ee426c5f4217', N'2021-05-31 09:46:51.0000000', N'admin', N'超级管理员', N'Visit', N'0.0.0.1', N'iana保留地址', NULL, N'', N'1', N'操作,访问操作成功。', N'2021-05-31 09:46:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd247-2e45-d2b0-646b-580aefa1f50a', N'2021-05-31 09:47:02.0000000', N'admin', N'超级管理员', N'Create', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功。', N'2021-05-31 09:47:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'39fcd24b-966b-db91-0dc2-d94ae56e0ec0', N'2021-05-31 09:51:51.0000000', N'test', N'test', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，账户不存在，请重新输入', N'2021-05-31 09:51:51.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3adb9d5f-5a12-4532-a344-8c539e3162ec', N'2020-08-03 16:56:27.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 16:56:27.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3b28a449-de94-4d04-b366-608157001b65', N'2020-08-04 10:33:57.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-04 10:33:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3b693727-47a0-43e6-9582-32db997aced2', N'2020-07-02 11:13:53.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-02 11:13:53.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3b9af832-8c80-41ad-b5f5-baedc59ca6ca', N'2020-07-23 09:02:08.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-23 09:02:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3bbe6fb8-91c7-4f0f-9323-3abf9636186f', N'2020-06-28 14:20:01.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-06-28 14:20:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3bbff95d-f624-4bcb-b1b7-dd01b2f75d2e', N'2020-08-03 11:24:44.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-08-03 11:24:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3c4fc9bd-0466-4517-bd53-e2701e2c97b5', N'2020-07-03 10:42:04.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-03 10:42:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3d1f0207-04fd-456d-83d0-d8eeab8ca4af', N'2020-07-07 08:14:41.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-07 08:14:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3d2a2572-53a3-455b-aed5-2e756d447c0e', N'2020-07-30 10:18:19.0000000', N'10000', N'hhh', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-30 10:18:19.0000000', N'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', N'2b1a2313-6b79-4e07-9866-fb0aa93805f7', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3d5bec94-43cd-475d-bbd7-026ea7d0fcdf', N'2020-07-29 16:52:21.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功', N'2020-07-29 16:52:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3d7f30fe-2870-4359-b909-9b18094d50ba', N'2020-10-12 10:02:57.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 10:02:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3df592e2-ab9e-4a60-b284-ebb33fa75423', N'2020-07-22 17:30:39.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'0', N'我的流程操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_CreatorTime'' cannot be null', N'2020-07-22 17:30:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'edbbf77a-6321-4be5-a000-8fc70c9cf895', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3e59fa1d-22a2-4dd3-b905-50defb3278eb', N'2020-10-19 12:57:36.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 12:57:36.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3f13dfbf-6f8b-4ce6-9818-30c773ee5dec', N'2020-08-04 10:33:38.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-04 10:33:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3f9a4a6c-1718-45fa-95b7-3b0c58cadcd4', N'2020-07-03 10:54:38.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-03 10:54:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'3fbc7def-3620-4f8b-a400-4ef86d28354c', N'2020-07-13 13:58:11.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-13 13:58:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'318bb233-c9df-4374-9937-e55b71fbcf99', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'402b72e2-fde9-4282-86e0-95ca2c4fcb35', N'2020-07-22 17:12:18.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 17:12:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4059f6f1-fb54-4c83-83ee-a8defab8619d', N'2020-08-04 09:50:12.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功', N'2020-08-04 09:50:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'409b2158-f77d-471b-8b6b-800476468233', N'2020-08-11 14:26:17.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-08-11 14:26:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'3b6922f9-b4ba-4615-aa3f-b00110da54c6', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'409f4427-0989-436d-b706-ce05c926a238', N'2020-06-24 09:02:54.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-区域管理', N'1', N'区域管理操作,修改操作成功', N'2020-06-24 09:02:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'130000000000', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'40ee4e3f-e1d9-4c8b-9a28-38bdc7a99f6d', N'2020-07-22 14:40:24.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-22 14:40:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'40fbf041-b66a-4fc6-a5f3-b8b11d96b276', N'2020-07-10 09:16:53.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-10 09:16:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'318bb233-c9df-4374-9937-e55b71fbcf99', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'421f3eb1-f629-4cd3-898a-f4c01a11a2fd', N'2020-10-12 10:09:23.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 10:09:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'43516abe-f181-45b6-966c-1c7a045a8129', N'2020-10-09 15:59:52.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-09 15:59:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'43fcfa46-9d70-478e-b06a-e55c114113d2', N'2020-07-14 17:10:51.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'0', N'我的流程操作,新增操作失败，Value cannot be null. (Parameter ''key'')', N'2020-07-14 17:10:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'448df0c2-ed3e-4f32-b983-b25e07a3c2c3', N'2020-08-31 10:40:11.0000000', N'10000', N'hhh', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-数据权限', N'1', N'数据权限操作,修改操作成功', N'2020-08-31 10:40:11.0000000', N'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', N'07999ec1-9fbb-46b5-bcea-d343bf49e6d8', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'44a6a264-ad38-419b-8faf-1c0e8e224e56', N'2020-07-24 14:07:40.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-用户管理', N'1', N'用户管理操作,修改操作成功', N'2020-07-24 14:07:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'456befa6-b559-4058-9768-aa894fb9a562', N'2020-08-03 17:03:50.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 17:03:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'46006baa-bb35-48b9-aa13-75f630c95094', N'2020-06-30 12:02:22.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 12:02:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'460e00ac-dfc3-4961-bae5-780751d37fe9', N'2020-07-09 17:05:44.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-09 17:05:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'0411376a-18fd-4f52-bffb-22ae0d3fa21d', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'46f92b12-6d8a-43e3-905d-50d4b84e87b2', N'2020-07-07 14:00:09.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,新增操作成功', N'2020-07-07 14:00:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'474587db-36c0-4e8f-992e-30d0ad9d33c0', N'2020-07-09 15:49:16.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功', N'2020-07-09 15:49:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'47bd78af-c553-4fe2-b471-48c0b82b3b21', N'2020-07-22 16:07:55.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 16:07:55.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'47ec85a5-a1e1-4813-bccb-009ae99ef266', N'2020-10-12 10:14:32.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 10:14:32.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'47f62c0a-ef1c-4595-871e-40ad40842865', N'2020-07-23 10:24:21.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,新增操作成功', N'2020-07-23 10:24:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'47fb8aad-bb69-496c-91f5-19698dfa5cfb', N'2020-07-01 13:38:53.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,删除操作成功', N'2020-07-01 13:38:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'484933f8-f39b-48dc-8607-a08eb474aa7e', N'2020-07-23 15:36:42.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-23 15:36:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'e6514544-1436-431d-acbc-c44802831ea8', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'485852a7-f03c-4f4b-8886-62a2b2647c89', N'2020-07-07 08:15:21.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功', N'2020-07-07 08:15:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'488aa59e-25b3-4b42-aef8-1b47f5d087ac', N'2020-07-01 16:26:53.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-01 16:26:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'48e6046e-f5de-40b3-a958-d61bd9806ac0', N'2020-07-14 17:06:39.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'0', N'我的流程操作,新增操作失败，''string'' does not contain a definition for ''lines''', N'2020-07-14 17:06:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4987a67d-8d91-4845-b4bc-639e3f4c2ede', N'2020-07-24 14:05:30.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,修改操作成功', N'2020-07-24 14:05:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'599669e9-2b1b-4c51-a842-ed0165075432', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'499b95ca-89a2-4266-ba6c-89bfa08737a8', N'2020-10-15 10:10:52.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:10:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'49d6a56f-e0f4-4a65-b066-7900e2329153', N'2020-10-12 10:00:49.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 10:00:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4a0b2f68-1039-4ff2-9cb7-2adbb0184d98', N'2020-07-13 15:38:33.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,新增操作成功', N'2020-07-13 15:38:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4a6d54cc-df4b-4cb0-b35e-e7955a6dc1e3', N'2021-02-10 11:13:53.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,修改操作成功。', N'2021-02-10 11:13:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8c119bce-0d70-4a56-8389-214d8e14e107', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4ac49c8b-48d1-4bcc-a00e-33130633ad81', N'2020-08-03 16:13:56.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-08-03 16:13:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'e9190a56-e173-4483-8a3e-f17b86e4766e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4b6ff4d8-b9d2-4409-bba3-33461734de3c', N'2020-06-30 17:39:30.0000000', N'20000', N'xxxx', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-06-30 17:39:30.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4b8b68f6-152a-4ef1-87a6-0b1cdd91169d', N'2020-08-11 14:52:30.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-08-11 14:52:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'3b6922f9-b4ba-4615-aa3f-b00110da54c6', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4bbe3383-fc00-4ec4-82f5-cda9b5a215e6', N'2020-07-14 17:07:41.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'0', N'我的流程操作,新增操作失败，''string'' does not contain a definition for ''lines''', N'2020-07-14 17:07:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4bd64165-f328-4886-8ccb-45fa69c47fb9', N'2021-02-10 11:14:15.0000000', N'admin', N'超级管理员', N'Exit', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'安全退出系统', N'2021-02-10 11:14:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4c1b859e-087b-4f29-8d61-f34b2a3bbff0', N'2020-07-23 08:58:31.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,新增操作成功', N'2020-07-23 08:58:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4c6bf073-c0e0-478d-8dd0-819a23548279', N'2020-07-24 14:03:21.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'0', N'我的流程操作,新增操作失败，节点node_4是会签节点，不能用所有人,请检查!', N'2020-07-24 14:03:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4c7bb9ac-7b43-4e3c-99c7-01149e39ef60', N'2020-06-30 12:09:53.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 12:09:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4caa5dc8-8c50-4366-af6f-ccbed81c17ba', N'2021-02-10 12:28:07.0000000', N'20000', N'xxxx', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-02-10 12:28:07.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4ce4a544-e97b-45c6-9fc4-c596b8fc40e1', N'2020-10-28 11:24:11.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 11:24:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4d410009-0ce5-4359-81fc-eeef00a74130', N'2020-10-28 13:01:59.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 13:01:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4e27cb6f-9145-46f3-9615-45459a21bc1e', N'2020-10-09 16:00:02.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-09 16:00:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4ee41510-ede5-4676-a559-7073a4b805e1', N'2020-08-04 11:35:44.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-04 11:35:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4f7d332d-f0a3-43c0-b89d-83cc345da6b5', N'2020-07-22 15:23:22.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 15:23:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4f98b790-fd2b-424a-9821-61e78f745b4a', N'2020-07-13 16:02:09.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_FrmType'' cannot be null', N'2020-07-13 16:02:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4f9e05f8-73b8-43f1-98f6-b342fd6cba9d', N'2020-10-15 10:39:16.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:39:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4fc7cb85-af23-4f28-ac3e-6c59fa51e128', N'2020-06-24 08:31:03.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,删除操作成功', N'2020-06-24 08:31:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'4ff78831-1c06-4278-bea2-fc6c65681e09', N'2020-07-13 16:44:24.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_SchemeType'' cannot be null', N'2020-07-13 16:44:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5145fe05-9a1c-4dc4-801b-9418daf9ee27', N'2020-07-02 14:02:12.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column ''F_Title'' at row 1', N'2020-07-02 14:02:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5164dd51-7592-4e6e-b88b-618fcbcf4fc3', N'2020-07-21 16:31:21.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,新增操作成功', N'2020-07-21 16:31:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'525f1e4c-1651-41cf-b8d9-181b1daa9637', N'2020-07-30 10:15:26.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-30 10:15:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5307c499-d737-49fe-b496-475e097b5eaa', N'2020-07-23 09:02:08.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-23 09:02:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5460b10e-eb84-42cb-892e-1df89863f248', N'2020-08-20 16:37:41.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-08-20 16:37:41.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'54f8e371-f5ce-4790-9d7b-0be0c50e8112', N'2020-07-20 09:07:39.0000000', N'admin', N'超级管理员', N'Login', N'172.17.180.1', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-20 09:07:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5564d483-7d1a-4e05-8305-37e29caf9ec7', N'2020-07-24 14:07:15.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,修改操作成功', N'2020-07-24 14:07:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8c119bce-0d70-4a56-8389-214d8e14e107', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'556d4d7a-ffb3-45b1-a2bd-2a0a5d838b26', N'2020-07-03 10:53:07.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-03 10:53:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'55f095aa-b298-4374-b395-e9d63ba5fda7', N'2021-02-10 12:36:02.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-02-10 12:36:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'560051a4-b1fb-44f0-8c98-933228fa72fa', N'2020-07-08 10:12:24.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'0', N'系统菜单操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry ''系统日志'' for key ''IX_Sys_Module''', N'2020-07-08 10:12:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5733007f-6edf-4bd0-8adb-e295a06fb87d', N'2020-06-30 12:03:58.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 12:03:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'573efddf-a4ec-4f74-91e1-f8ac3ded57e8', N'2020-07-15 15:04:24.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-15 15:04:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd42aaaae-4973-427c-ad86-7a6b20b09325', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'574b2a48-1b1a-43f9-a6fc-b0813db291d9', N'2020-07-24 16:21:37.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'0', N'我的流程操作,新增操作失败，Input string was not in a correct format.', N'2020-07-24 16:21:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5756e105-3c2d-4585-a37b-66267ebd73bb', N'2020-07-13 16:07:25.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,新增操作成功', N'2020-07-13 16:07:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'57d0f1ad-ef92-41fc-8e6c-20356454632c', N'2020-08-03 16:13:24.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功', N'2020-08-03 16:13:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'580ed846-9cd3-40b5-aeb7-baacb8298562', N'2020-07-01 13:53:38.0000000', N'222', N'222', N'Login', N'未连接未知', N'本地局域网', NULL, N'用户Api', N'0', N'登录失败，账户不存在，请重新输入', N'2020-07-01 13:53:38.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'582a31c4-71b0-48da-af55-4fbdde6b17d5', N'2020-07-24 15:55:15.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-24 15:55:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'58756e94-c310-4ac4-a19d-378207649249', N'2020-07-15 11:51:13.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-15 11:51:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'588cf9ff-6f3a-4c09-aa0f-b9ccebda99c6', N'2021-06-02 23:11:50.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-02 23:11:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'58ba375b-3e5e-4af9-875e-ff899090c7fd', N'2020-07-07 15:59:10.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'0', N'代码生成操作,新增操作失败，列表页已存在，列表页生成失败！', N'2020-07-07 15:59:10.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'58bd8652-8987-4432-ad69-d1bc9b7ce6d4', N'2020-08-31 10:39:13.0000000', N'10000', N'hhh', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-08-31 10:39:13.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5914e2ba-cb58-4ca2-aa62-b3550c7405ca', N'2020-08-04 08:35:49.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:35:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'59942a41-91b0-427e-b0d2-4b0602cca135', N'2020-06-28 13:55:23.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-06-28 13:55:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5acb06ad-7f57-411a-b0a7-afd4799f2a3c', N'2020-06-23 16:59:19.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功', N'2020-06-23 16:59:19.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5aef9372-251b-4fb4-8fc4-3b4cf6553f61', N'2020-07-22 17:10:24.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 17:10:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5b907a00-f514-4c91-994b-55ec45cece5a', N'2020-09-02 09:02:16.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-09-02 09:02:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'dbc4780d-b56d-4e57-ad46-8ddc218983f6', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5bb693c8-c72d-413e-972f-bb74d94ff670', N'2020-10-12 11:02:24.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 11:02:24.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5c027cca-b8a0-411d-8a62-bdc0453d9ee4', N'2020-09-02 09:02:40.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-09-02 09:02:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'dbc4780d-b56d-4e57-ad46-8ddc218983f6', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5cf20d7c-d16c-4a66-930e-b9ffd662545d', N'2020-07-15 15:03:33.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,新增克隆成功', N'2020-07-15 15:03:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5d02086b-251d-4baf-928f-531f741e94e5', N'2020-06-29 15:05:13.0000000', N'admin', N'admin', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'0', N'登录失败，使用前请初始化 RedisHelper.Initialization(new CSRedis.CSRedisClient("127.0.0.1:6379,pass=123,defaultDatabase=13,poolsize=50,ssl=false,writeBuffer=10240,prefix=key前辍"));', N'2020-06-29 15:05:14.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5e580f5e-acaa-4448-8a04-56b3a1b2e670', N'2020-08-04 09:48:47.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功', N'2020-08-04 09:48:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5ecc0d87-6efb-4039-9f17-1c8285eb4286', N'2020-07-22 11:41:20.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-22 11:41:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'b4fc0b00-6101-4166-8396-520735f0cdec', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5fb542d4-e1aa-4f25-873d-9cfb87b04a53', N'2020-09-02 09:11:47.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-09-02 09:11:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'dbc4780d-b56d-4e57-ad46-8ddc218983f6', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'5ff540a1-6458-441e-91c4-1ce4c93b773c', N'2020-09-01 08:29:23.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-09-01 08:29:23.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6089dc12-c83c-4f01-a5e6-28c4eb402147', N'2020-10-15 10:15:29.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:15:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'60adb533-0f91-4217-bf99-3c08c9ba485d', N'2020-08-12 11:18:13.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-08-12 11:18:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'873e2274-6884-4849-b636-7f04cca8242c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'60bf09e4-51ac-4609-8bf1-b0fced21192b', N'2020-07-30 16:16:40.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-30 16:16:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'f2a2a708-3b9e-4e0f-91eb-029594464a55', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'611dd0ff-54dc-4648-90dd-84f3c74986b0', N'2020-10-28 11:23:14.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 11:23:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6122f143-c49e-4642-9f3d-c4651b1b52a2', N'2020-06-28 15:02:39.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-06-28 15:02:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'616ddd4e-83c8-44f8-b963-328f69b15f23', N'2020-07-23 08:58:47.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,修改操作成功', N'2020-07-23 08:58:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'0f4924b8-22a6-4f28-958c-488265d0bcc1', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'621c57c5-f33e-48d0-afcf-4c9b040f303f', N'2020-10-15 09:12:36.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 09:12:36.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6243519c-de9b-4f8c-a026-41d3ee976adf', N'2021-02-10 11:23:13.0000000', N'20000', N'20000', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入，还有4次机会', N'2021-02-10 11:23:13.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'62dd20ff-b013-46c3-a293-090d0d116836', N'2020-10-27 15:04:08.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-27 15:04:08.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6392f56a-2d1f-4a01-a81a-f62daff057ec', N'2020-08-04 11:35:35.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-04 11:35:35.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6487e20e-d798-427f-adc7-8b7748a90f27', N'2020-08-03 17:04:15.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 17:04:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'64fe451c-0c1e-48c5-b81a-75b712aaf8dd', N'2020-08-12 11:18:47.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功', N'2020-08-12 11:18:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'65307c82-66dc-4b97-ae1b-75be03da2bfa', N'2020-10-15 10:27:58.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:27:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'66964dbd-6004-4e15-a177-a53ed9700c0b', N'2020-07-30 10:14:47.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-07-30 10:14:47.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'66e41781-854f-46a7-ba3c-ffc86329b176', N'2020-07-02 14:01:41.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,删除操作成功', N'2020-07-02 14:01:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'67b3edec-f0d4-4cfc-9307-4f5f8c39da0f', N'2020-07-10 09:26:37.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-10 09:26:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'318bb233-c9df-4374-9937-e55b71fbcf99', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'67b6cdf5-cc16-400e-bfb9-ad32a8c0a000', N'2020-10-15 10:39:06.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:39:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'681a5249-6018-4db3-9291-db8b0cc27b86', N'2020-07-02 10:55:01.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功', N'2020-07-02 10:55:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6916df05-89db-46a9-9097-ae57796438ee', N'2020-08-03 17:02:26.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 17:02:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'69a7c27e-1057-4781-adf7-4a9c932a4fb7', N'2020-09-04 13:22:56.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-09-04 13:22:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6aecb515-0ac2-4b9e-b6bc-6ba68df88063', N'2020-07-10 17:08:46.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-10 17:08:46.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6b52bc63-a658-4103-939c-10c59625f97b', N'2020-10-14 10:35:23.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:35:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6bc73396-1fdd-484d-86b9-a5b1d8bc3506', N'2020-10-15 10:27:48.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:27:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6dc3a7f6-a7c2-4039-9628-676b70f83dc4', N'2020-07-23 10:47:10.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-23 10:47:10.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'f51da6f6-8511-49f3-982b-a30ed0946706', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6dcde5c0-edd9-488e-be95-454415240798', N'2020-07-23 09:02:19.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-23 09:02:19.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6de538c2-7c97-4199-9874-65bdb61b6103', N'2020-07-09 14:12:21.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-09 14:12:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'0411376a-18fd-4f52-bffb-22ae0d3fa21d', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6dec64d7-63dc-40d8-8ec2-5631fb5dd193', N'2020-06-28 14:17:42.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'0', N'定时任务操作,修改操作失败，Unable to store Job: ''WaterCloud.服务器状态'', because one already exists with this identification.', N'2020-06-28 14:17:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6e81d1cf-e1b6-48c1-b798-b666f2516cce', N'2020-10-14 10:26:42.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:26:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7e4e4a48-4d51-4159-a113-2a211186f13a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6ee3986a-11f7-4f20-a952-7b5e23249c4a', N'2020-07-07 13:59:39.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,删除操作成功', N'2020-07-07 13:59:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6f53074f-6766-47e0-aba1-c7b87e9b7973', N'2020-07-22 16:02:32.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 16:02:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'6fb52b1d-0385-4406-bdb2-4b7f2ef0b98b', N'2020-08-31 10:12:00.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-08-31 10:12:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7094022b-6104-4950-9e7e-5e2e60222918', N'2020-06-30 12:01:58.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 12:01:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'711225cb-73e9-4a8e-85d6-be38d05acf43', N'2020-07-24 14:19:55.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-24 14:19:55.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'717303f5-a747-4312-95e1-f2618ce0f396', N'2020-07-23 11:42:37.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-07-23 11:42:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'719decb4-fd6d-40bb-b56c-d5228332cd8c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'71b5a663-e6cf-4c87-a453-6f7ae82b7c85', N'2020-07-02 11:11:00.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功', N'2020-07-02 11:11:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'723af10f-1185-47ff-84eb-6e2d5e704748', N'2020-06-28 12:18:18.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-28 12:18:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'74447dd5-1b56-4542-9981-f90ee9a10b93', N'2020-10-19 12:52:58.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 12:52:58.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'74694f63-90dd-48ff-aaec-7676c078c1b1', N'2020-07-23 09:07:47.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-23 09:07:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'747fae5f-7829-46f9-ad33-4f1826ae7161', N'2020-10-14 10:28:36.0000000', N'20000', N'xxxx', N'Exit', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-10-14 10:28:36.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7506fd3d-e8bb-464a-8cb2-0c81ce63ef3d', N'2020-10-27 14:12:20.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-27 14:12:20.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'751c49b4-1a05-475c-ad09-b03fe5cd45be', N'2020-07-31 17:46:30.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 17:46:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'754bac05-f313-463e-af61-cfddc2a5ddec', N'2020-08-31 10:50:17.0000000', N'20000', N'xxxx', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-08-31 10:50:17.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'76070e4d-70f7-482c-ad60-59767b14f364', N'2020-07-31 17:41:55.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 17:41:55.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'765d2325-b4d8-4610-aa85-aec273f0c54a', N'2020-10-14 10:27:55.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:27:55.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'253646c6-ffd8-4c7f-9673-f349bbafcbe5', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7744b823-c7ac-43bc-a6db-c82c2934ed55', N'2020-10-14 10:28:22.0000000', N'20000', N'xxxx', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-14 10:28:22.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'77bf6f4b-becf-4ff7-a347-71fdf2fbbbc2', N'2020-08-12 11:11:15.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功', N'2020-08-12 11:11:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7809aae2-0945-4366-9712-0bc618fc7b96', N'2020-06-30 11:34:14.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'0', N'新闻类别操作,删除操作失败，新闻类别使用中，无法删除', N'2020-06-30 11:34:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7815c85b-4813-4434-add1-27d80bf37191', N'2020-06-30 10:02:24.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-06-30 10:02:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7e4e4a48-4d51-4159-a113-2a211186f13a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'78335eae-2772-4f49-8334-48e68856f2bb', N'2020-07-13 15:57:41.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_FrmType'' cannot be null', N'2020-07-13 15:57:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'78969a7a-ac7a-4d13-9127-a470579ef78a', N'2020-07-21 11:00:58.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-21 11:00:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'11847a81-b6fe-4de9-864d-9b1f5dd89d0e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'78ed971a-9f9d-41b6-9a94-727da3bec2f8', N'2020-07-14 17:23:46.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-14 17:23:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7919e50f-a3ab-4e96-ab10-3967983a0303', N'2020-07-23 11:44:46.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,删除操作成功', N'2020-07-23 11:44:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'79424de2-80e4-49a2-a2d3-3dc5ba7f4ec7', N'2020-10-12 09:58:52.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 09:58:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'794cc647-afee-4abc-a4ce-0055751e3028', N'2020-06-30 17:39:00.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-06-30 17:39:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'798b362b-69cf-4253-8eb8-da68d9c2805e', N'2020-07-07 13:45:16.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-用户管理', N'1', N'用户管理操作,修改操作成功', N'2020-07-07 13:45:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'df821722-2fae-4023-ae57-23bebfccad85', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'79929902-588e-4164-a829-00a4dd7ed14e', N'2020-07-01 17:23:56.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-01 17:23:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'79cf66ae-6121-45b7-ba56-4d883266ee5f', N'2020-10-14 10:27:28.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:27:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'253646c6-ffd8-4c7f-9673-f349bbafcbe5', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7a957e41-b2a2-4f72-a60d-2ab193373aaf', N'2020-07-13 16:03:18.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_AuthorizeType'' cannot be null', N'2020-07-13 16:03:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7a9807ab-25e7-4833-b56c-f71f49480397', N'2020-06-28 13:55:34.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-28 13:55:34.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7aaa13b5-bbab-4446-84ca-a77d904e19f4', N'2020-09-09 11:52:27.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2020-09-09 11:52:27.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7b382d9f-c58c-40b3-81b0-c863494adeb8', N'2020-07-02 14:46:56.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column ''F_Title'' at row 1', N'2020-07-02 14:46:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7b425510-f963-401a-b0e0-e9bd62093880', N'2020-10-14 10:27:25.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:27:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7e4e4a48-4d51-4159-a113-2a211186f13a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7bdc566b-ad81-4a73-927f-1e86c4f88fe9', N'2020-07-02 12:13:21.0000000', N'20000', N'xxxx', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-02 12:13:21.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7bf9b6d5-669a-46ac-adcf-cf3c60f43a2c', N'2020-07-22 12:05:35.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功', N'2020-07-22 12:05:35.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7c7d5f94-8e14-4ae7-a1eb-ef21397a819f', N'2020-07-24 15:58:58.0000000', N'20000', N'xxxx', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-24 15:58:58.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7c891b45-8872-4095-8a60-8d4b19170593', N'2020-07-30 16:43:54.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-30 16:43:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7c9e02b8-1835-471a-a727-94f3415de576', N'2020-07-09 15:37:00.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功', N'2020-07-09 15:37:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7cec0a6d-b358-41ea-95f2-7d20a76f7889', N'2020-09-02 09:08:08.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功', N'2020-09-02 09:08:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7cf18a26-3e7b-4161-b612-9756cb8eefe7', N'2020-10-15 09:09:29.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 09:09:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7cf83261-fa41-47e7-b732-31fbe784a6d8', N'2020-07-14 17:11:42.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'0', N'我的流程操作,新增操作失败，Value cannot be null. (Parameter ''key'')', N'2020-07-14 17:11:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7d0f9c7c-ba82-497a-b9fb-a56223c7440a', N'2020-08-12 11:24:24.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功', N'2020-08-12 11:24:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7dca8cad-d5ea-4b5a-850f-5475c54d0627', N'2020-09-09 11:35:44.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功。', N'2020-09-09 11:35:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'cde8cdbb-86df-419e-9074-a38911936df7', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7e0a085d-b4b8-4332-b52f-1190257737c6', N'2020-06-28 13:04:23.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'0', N'租户设置操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column ''F_MobilePhone'' at row 1', N'2020-06-28 13:04:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7e3cde3a-84d4-4c4d-9393-c7d7c8862bfa', N'2020-08-03 17:03:46.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-03 17:03:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7e4f5713-6943-4c81-a1d6-f6b2d7ae2b2d', N'2020-08-04 08:36:46.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:36:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7ed44a0c-3a7f-40dc-a484-fc07464ef32f', N'2020-10-28 13:01:24.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 13:01:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7ef0f0be-d881-49d8-854a-23bda481c444', N'2020-06-28 14:09:55.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-28 14:09:55.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7f12c880-126e-492c-9d18-83ffebfd040e', N'2020-07-31 17:31:14.0000000', N'20000', N'xxxx', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-31 17:31:14.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7f5ec92a-ce6e-450d-9da0-75d209497320', N'2020-10-19 09:23:20.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 09:23:20.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7f61d267-db59-443f-9105-9b3547e278aa', N'2020-10-14 10:26:27.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:26:27.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7f98dd32-e509-4c40-826e-9048269f9f97', N'2020-06-29 17:25:28.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-29 17:25:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'b2be2ea5-819e-485b-a277-26be5396db65', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7fa9faa2-4407-44ed-8746-7f00054351d6', N'2020-07-07 13:49:48.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-用户管理', N'1', N'用户管理操作,修改操作成功', N'2020-07-07 13:49:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'df821722-2fae-4023-ae57-23bebfccad85', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7fb71f57-8241-4d04-a2f7-5400bca3635f', N'2021-02-10 11:17:49.0000000', N'20000', N'xxxx', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-02-10 11:17:49.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'7fba68c5-feb2-4e30-bd41-6c3b67513094', N'2020-07-30 16:12:29.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-30 16:12:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'f2a2a708-3b9e-4e0f-91eb-029594464a55', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'80655c79-5932-41d6-bf1b-b49cd3efcb73', N'2020-10-14 10:27:31.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:27:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'808f72a9-ea13-4fa8-b84e-4234f2a99feb', N'2020-06-29 17:36:09.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-字典分类', N'1', N'字典分类操作,删除操作成功', N'2020-06-29 17:36:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'80a2f968-e427-40a7-9ca2-dd3f1c0bdeb4', N'2020-07-24 14:07:47.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-24 14:07:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'811d0eb9-b719-4e97-a050-edc72a6a7119', N'2020-07-13 16:43:57.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_SchemeType'' cannot be null', N'2020-07-13 16:43:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'811d5a80-d22a-4144-903f-670a3725d79c', N'2021-02-10 11:18:58.0000000', N'20000', N'xxxx', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-02-10 11:18:58.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'81235a5e-09ec-48ab-915b-384fc9d07485', N'2020-10-12 10:06:58.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 10:06:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8236abe8-05c2-4b91-bf77-a8b5193b239d', N'2020-10-19 12:52:04.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 12:52:04.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'824261f9-273a-478f-9c20-8bfc264f69a8', N'2020-08-11 13:20:02.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-11 13:20:02.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'828b252f-9da2-46e5-97fd-b447722bd1d0', N'2020-07-15 08:39:20.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-15 08:39:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'82ac3b90-7fa4-46dd-b768-d2455440382a', N'2020-09-01 11:36:34.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-09-01 11:36:34.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'82ff2bcc-e1a7-45fc-a366-12433d04cbbb', N'2020-07-22 17:10:24.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 17:10:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'83568341-4b8f-40c6-b8a6-ba5afed957d0', N'2020-10-19 10:14:28.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 10:14:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'843d5d23-51bb-451f-b0dc-584811e224c0', N'2020-07-24 15:44:26.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,修改操作成功', N'2020-07-24 15:44:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'599669e9-2b1b-4c51-a842-ed0165075432', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'844cff0b-261e-4ad5-997b-3a777f4b3d85', N'2020-07-02 14:10:51.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,新增操作失败，Object reference not set to an instance of an object.', N'2020-07-02 14:10:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'84bff078-0ef6-443c-a1b0-d18bc6a3605d', N'2020-07-24 14:05:58.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-24 14:05:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'84ca40d3-d147-43a0-a23c-cacfddb4f286', N'2020-08-20 16:48:40.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功', N'2020-08-20 16:48:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'84fac8bd-d0ec-470f-834d-d42d1c785dd6', N'2020-08-20 16:50:41.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功', N'2020-08-20 16:50:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'853ddc07-364d-4b57-bc98-e282cde45cf5', N'2020-07-14 08:52:44.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功', N'2020-07-14 08:52:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'854c602e-a217-4b68-89e2-bf004c66bdfd', N'2020-08-03 16:44:40.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 16:44:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8551ed87-dc7b-47a2-9b6f-6386b1b5250f', N'2020-07-13 15:40:39.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_FrmType'' cannot be null', N'2020-07-13 15:40:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'860e1a98-5c1d-4359-bb41-e9ea6f3799fd', N'2020-07-21 11:05:51.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-21 11:05:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'11847a81-b6fe-4de9-864d-9b1f5dd89d0e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8706cb52-6724-4258-933f-625b68516fd3', N'2020-07-13 13:59:37.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-13 13:59:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'b08bb00f-e1df-44f8-904f-58ee5b1f4eb4', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'871dc075-9e32-46d4-b505-f8d08c6a36ab', N'2020-08-03 16:15:09.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-03 16:15:09.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'878955bc-1591-4684-8f2d-de094ea0fa65', N'2020-07-31 17:33:40.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,修改操作成功', N'2020-07-31 17:33:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8892186f-22ff-40c4-9907-e80721f9c5fe', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'87af1763-05c7-4b1e-9d9b-7e9df1707742', N'2020-08-03 16:56:16.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-03 16:56:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'88bc6562-9782-4983-ab18-53587b5a95c2', N'2020-07-30 16:18:22.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-30 16:18:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8924c6db-38e2-4399-9a9c-319339951fec', N'2020-07-14 15:37:48.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-14 15:37:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'b4fc0b00-6101-4166-8396-520735f0cdec', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'895131f9-fa7d-4a94-b0e9-330993f2325d', N'2020-08-04 08:33:33.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:33:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8960a635-95b5-4fea-9bb8-72b87d5c462c', N'2020-07-22 15:48:07.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功', N'2020-07-22 15:48:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8970007d-c9d2-48a6-afd7-5a6502ef14fb', N'2020-08-12 11:11:22.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-08-12 11:11:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'db12ad90-1c30-41ae-89c2-8b835ecacbd9', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'89c080ae-6539-4475-b9c1-807745001c61', N'2020-06-30 08:31:42.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-30 08:31:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8a7d9c27-3f77-4e02-b53d-d6ff0eab14f3', N'2020-07-02 11:14:46.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功', N'2020-07-02 11:14:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8a873f2a-32f2-4b66-855b-be23f5d03147', N'2020-07-23 11:41:49.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-07-23 11:41:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'719decb4-fd6d-40bb-b56c-d5228332cd8c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8b65d6c8-3235-458f-828f-d84199d10550', N'2021-02-10 11:23:20.0000000', N'20000', N'xxxx', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-02-10 11:23:20.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8bc3fc2e-2488-4e4b-8d3d-444e7d9ceece', N'2020-07-30 16:18:47.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-30 16:18:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8b059c40-d1bf-4a8c-94ea-850ade3d0745', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8c4d4bdf-36d3-4823-b077-1817e4c12d4b', N'2020-07-02 08:42:23.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-02 08:42:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'06bb3ea8-ec7f-4556-a427-8ff0ce62e873', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8cbcacbc-53ae-4bd3-8245-68b4835d9f02', N'2020-07-28 10:12:52.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-28 10:12:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8cbdb322-5f9a-4c0d-9d31-435f4edbb464', N'2020-07-10 08:47:06.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-10 08:47:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8ced495f-8b8a-4ec3-84ea-70e5823181f8', N'2020-06-29 17:35:53.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,删除操作成功', N'2020-06-29 17:35:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8dc7b19b-3afd-43f6-aadc-5a8ca7d2f364', N'2020-06-29 17:36:46.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功', N'2020-06-29 17:36:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8defb737-bc97-4362-a410-166613a7394a', N'2020-10-15 09:04:28.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 09:04:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8ed603aa-c50f-4f99-9a2e-e966a1ce287e', N'2020-09-09 11:35:24.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-09-09 11:35:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8f63d149-858a-4ecb-a083-aef5b2b71ae2', N'2020-07-14 15:40:20.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-14 15:40:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c87cd44f-d064-4d3c-a43e-de01a7a8785e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8fcec9d7-366b-4763-bb96-baa5a75a8557', N'2021-05-28 21:41:36.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-05-28 21:41:36.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'8fd54e67-50c6-4acf-a8f0-6395887b25f3', N'2020-07-22 16:14:50.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-22 16:14:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'90d19572-360a-45d4-850c-1260d79e5439', N'2020-10-13 16:13:19.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-13 16:13:19.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'912318ca-d22f-429f-9fef-f32febd7855e', N'2020-06-30 12:02:31.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 12:02:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9164b46a-112f-40ff-84c8-d30db97c7a54', N'2020-07-06 15:04:14.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,修改操作成功', N'2020-07-06 15:04:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8c119bce-0d70-4a56-8389-214d8e14e107', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'91f25667-f03e-45a6-b1dd-c123adc552fb', N'2020-09-29 14:42:59.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功。', N'2020-09-29 14:42:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'b2ac5f2c-a2b7-4ca9-86d8-6439bf8186a4', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9295e050-9308-46a5-9bb9-cf61c0e84231', N'2020-07-22 17:10:29.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-22 17:10:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'92c1d908-82b6-4c54-9ebe-8a21506f7e3a', N'2020-10-12 09:36:06.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 09:36:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'92d5d337-41d9-419a-a604-f69b8eee2e42', N'2020-07-29 16:44:29.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功', N'2020-07-29 16:44:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'92fcd038-f324-4001-bf50-64efc781844b', N'2020-08-27 14:51:55.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功', N'2020-08-27 14:51:55.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9313297c-529b-4876-9b2b-77f04e5a89d9', N'2021-02-10 11:13:23.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-02-10 11:13:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'931637b2-6057-4975-b9f0-c2a1ff381385', N'2020-07-24 14:13:16.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-24 14:13:16.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'931f24e4-ad42-48c0-89a0-24495760c31d', N'2020-07-29 16:51:19.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-字典分类', N'1', N'字典分类操作,新增操作成功', N'2020-07-29 16:51:19.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'955c0a26-c0c4-428a-952c-90e8f6f1c091', N'2020-06-28 14:16:50.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-06-28 14:16:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'95c81cf3-f29f-420c-833c-d0b38b19ee86', N'2020-07-31 17:54:08.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 17:54:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'966c9ba6-5db0-43a2-8bc3-552085560754', N'2020-08-04 10:34:05.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-04 10:34:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9679c919-81da-4539-ab4b-35574f076d1b', N'2020-07-21 11:43:02.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-21 11:43:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'11847a81-b6fe-4de9-864d-9b1f5dd89d0e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9686e8c5-7568-4a54-aea8-cdb9dc9f8b7d', N'2020-07-22 17:28:27.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-22 17:28:27.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'971158e8-ac45-4f02-8510-d33b243d05d3', N'2020-07-02 14:20:25.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry ''xxxxx'' for key ''IX_Sys_Notice''', N'2020-07-02 14:20:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'97a3c837-bb0c-4c10-ad0f-6ff070a2b945', N'2020-07-08 12:50:33.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,新增操作成功', N'2020-07-08 12:50:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'97e480eb-37f4-4a20-bc42-e06802c9b217', N'2020-06-30 11:56:38.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 11:56:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'982b1f39-1c64-4ad0-aa65-cdd42000d875', N'2020-07-22 16:02:32.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 16:02:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9868035b-e3a8-4dfc-a327-621fd3003d11', N'2020-07-21 16:30:20.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,新增操作成功', N'2020-07-21 16:30:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9928659b-0048-478c-a376-9571bc20db5a', N'2020-07-14 13:58:30.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-14 13:58:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'772eb88a-5f67-4bb1-a122-0c83a2bdb5ef', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9985eed5-3234-4d2e-819e-21d79bd4ee25', N'2020-08-12 10:54:57.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-12 10:54:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'99c4d099-29e6-413c-94a4-72292e313365', N'2020-07-02 08:41:12.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-02 08:41:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2536fbf0-53ff-40a6-a093-73aa0a8fc035', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'99fb6293-e59f-4e7e-b1fd-4da2e95fd262', N'2020-07-14 17:06:12.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'0', N'我的流程操作,新增操作失败，''string'' does not contain a definition for ''lines''', N'2020-07-14 17:06:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9a71c8b3-3e58-4c3e-a2f9-447419bca58b', N'2020-07-02 11:05:45.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-02 11:05:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9a8a4d0a-29aa-4fa9-a57d-54f61d52069a', N'2020-08-03 11:18:59.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-03 11:18:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9afad845-5e75-4b11-b18c-8cf245d5e5b8', N'2020-07-01 16:27:08.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-01 16:27:08.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9b4d5c10-4cdc-4cb4-ac21-a5da20e8c1d5', N'2020-07-24 14:03:05.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'0', N'我的流程操作,新增操作失败，节点node_4是会签节点，不能用所有人,请检查!', N'2020-07-24 14:03:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9bb8c42e-b8d0-4f40-981e-155fed6e7a60', N'2020-07-02 08:41:52.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-02 08:41:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1e60fce5-3164-439d-8d29-4950b33011e2', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9bbbd7bb-fc8e-490b-afce-171b764fdbad', N'2020-07-23 09:19:37.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-23 09:19:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9be88c0b-cbc7-41b0-a5dc-f6f620f7ebc4', N'2020-08-03 11:23:51.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-03 11:23:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9c131e67-0e97-47c5-9eef-e8a38821796b', N'2020-07-31 16:24:42.0000000', N'20000', N'xxxx', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 16:24:42.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9c21ffd2-e5b8-490d-864a-51a2a97856dc', N'2020-07-22 17:20:34.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-22 17:20:34.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7cb65e00-8af2-4cf2-b318-8ba28b3c154e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9cbfcdac-c36e-45fd-9d72-0badb718b35e', N'2020-06-30 17:39:36.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-30 17:39:36.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9d1664e6-3827-4ef6-b67a-5d3fb6326203', N'2020-07-02 13:53:34.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-02 13:53:34.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9d5106eb-c3ed-4dbf-b72a-a751ec836ab6', N'2020-07-23 11:48:53.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-07-23 11:48:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'873db213-2d22-4c00-af03-2d1898f13481', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9d5fef45-e749-4344-8f6c-71e034d2c386', N'2020-07-06 09:15:53.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-06 09:15:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9d6efc0b-cbb9-47cf-808f-6c19de1482b5', N'2020-06-28 14:13:11.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-28 14:13:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9ed3f76a-b920-4440-af80-26920c4df439', N'2020-06-28 14:16:47.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-06-28 14:16:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9f927624-c858-4189-9d26-961c60079e50', N'2020-08-12 10:59:03.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-岗位管理', N'1', N'岗位管理操作,新增操作成功', N'2020-08-12 10:59:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9fa12470-19f7-4446-9dd5-bb8a5608ac62', N'2020-08-03 11:25:21.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-08-03 11:25:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'9fe4aa1c-636e-43dc-acde-fc2a07e14d2e', N'2020-10-14 10:33:49.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-14 10:33:49.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a0239505-0207-4bd7-9f25-06c722d9ea1a', N'2020-07-02 12:13:14.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-02 12:13:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a06aa08f-94e2-4174-a0e5-1647e1da920a', N'2020-07-08 11:10:19.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-07-08 11:10:19.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a0a0deee-395e-494a-a71e-abc3ceaac48c', N'2020-07-31 10:37:38.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-07-31 10:37:38.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a0ac723a-883b-4d1f-9cb2-a7acacca9b7d', N'2020-07-14 08:29:27.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-14 08:29:27.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a0adb01f-5770-4059-935d-06c7e0872cb2', N'2020-10-19 10:54:04.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 10:54:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a0bcb1c9-acdf-4bc0-a261-f3642cbe2c3f', N'2020-08-04 11:35:32.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-04 11:35:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a0de3a21-00f4-4e19-863b-b07ca34b68c9', N'2020-07-24 16:18:43.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,修改操作成功', N'2020-07-24 16:18:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'599669e9-2b1b-4c51-a842-ed0165075432', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a0f05146-b05d-4cae-8348-4ac2f9ab5ae8', N'2020-07-15 16:49:23.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-15 16:49:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'642c0210-162c-4ded-b8e7-e2ea51158a0c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a13195d2-e3d2-4c7b-8462-44746503d510', N'2020-08-04 10:34:56.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-08-04 10:34:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a19cbffd-c453-4ee5-a409-9ae81015208e', N'2020-07-22 15:23:23.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功', N'2020-07-22 15:23:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a20de7eb-312e-4714-a2f2-669d6178a320', N'2020-06-30 12:01:06.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 12:01:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a2c98050-1495-4272-9f53-5acb9bac60a9', N'2020-07-23 08:56:20.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,新增操作成功', N'2020-07-23 08:56:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a3a9eb94-b57d-423f-8004-db682c179a4b', N'2020-07-24 15:59:04.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-24 15:59:04.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a3b1ee11-d8c9-4d3f-b065-510bec56dd17', N'2020-08-03 16:57:45.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-03 16:57:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a3b481a1-ced1-4bb3-86ce-5470caf136ea', N'2020-07-23 09:20:21.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-23 09:20:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'6b196514-0df1-41aa-ae64-9bb598960709', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a3ba7cf2-2d6f-42be-81fe-76a947c7d7b8', N'2020-06-29 17:24:33.0000000', N'admin', N'admin', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2020-06-29 17:24:33.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a49dd0da-e8f2-4a86-a1f7-a87893f3c218', N'2020-09-29 14:23:08.0000000', N'admin', N'?????', N'Create', N'192.168.3.41', N'?????', NULL, N'????-????-????', N'1', N'??????,???????', N'2020-09-29 14:23:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a54fc972-5a82-4226-a022-d1882218e29a', N'2020-10-14 10:32:32.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:32:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'26452c9a-243d-4c81-97b9-a3ad581c3bf4', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a5c64b81-c4cc-49c8-898c-b5279b2ec0e7', N'2020-08-11 13:20:37.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,修改操作成功', N'2020-08-11 13:20:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a6c90098-8487-482c-9adf-5144d4b31f7f', N'2020-07-21 14:01:42.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'0', N'表单设计操作,修改操作失败，Object reference not set to an instance of an object.', N'2020-07-21 14:01:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8faff4e5-b729-44d2-ac26-e899a228f63d', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a773ba61-ea4b-42d6-a036-7dfc982ba8f7', N'2020-06-28 16:38:13.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,删除操作成功', N'2020-06-28 16:38:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a7bf1ea1-dbb7-423b-ab7e-c73d4c22aaf2', N'2020-07-29 16:44:08.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'1', N'代码生成操作,新增操作成功', N'2020-07-29 16:44:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a7dde9e4-7d15-445d-8db9-d32e96d83036', N'2020-06-29 17:35:07.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,修改操作成功', N'2020-06-29 17:35:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'B97BD7F5-B212-40C1-A1F7-DD9A2E63EEF2', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a813fdfc-964e-4761-a5d3-a0d65d66d934', N'2020-07-23 08:49:20.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-23 08:49:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8faff4e5-b729-44d2-ac26-e899a228f63d', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a823217f-80d2-4c62-9c75-85b4872103c7', N'2020-10-28 13:01:33.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 13:01:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a8475e1f-0715-40cd-b60b-0dd1086f6d2f', N'2020-07-08 10:13:54.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-08 10:13:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a8be3009-c170-4038-9955-22b52d57ec4d', N'2020-07-31 17:31:30.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 17:31:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a93f8b47-d4af-4132-b9a4-732c5f1e7b6d', N'2020-07-29 16:40:58.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功', N'2020-07-29 16:40:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'a9828db1-f425-4516-8893-409215b747d2', N'2020-08-04 08:37:46.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:37:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'aa38441a-e980-47e1-ac41-dcd4962e978a', N'2020-08-04 11:35:47.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-04 11:35:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'aa98fc8a-c232-46c0-a4f5-e95e549efca8', N'2020-10-15 08:59:39.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-15 08:59:39.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ab559e65-f01e-45c6-8b6c-297daa84b4a6', N'2020-07-23 15:36:31.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-23 15:36:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f32069f-20f3-48c9-8e35-cd245fffcf64', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ab7cdc27-1284-4bb9-8c09-c0f3ca39abe3', N'2020-07-23 14:52:15.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-23 14:52:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ab845c40-e11a-4c9a-a195-f7e953970c21', N'2020-08-04 10:34:18.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-04 10:34:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ab8f7cd5-8419-481c-a4c7-dbb94ce0dc64', N'2020-07-14 13:58:40.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-14 13:58:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'153e4773-7425-403f-abf7-42db13f84c8d', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'acbc9484-dcf2-43f6-88b5-153a80a0069a', N'2020-07-22 14:32:58.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-22 14:32:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ad44686c-bda2-417f-bfb2-ddd85910150f', N'2020-10-15 10:06:31.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:06:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ad8db02e-a3bb-4a9b-b589-a7dafc9c340f', N'2020-07-14 11:33:37.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-我的流程', N'0', N'我的流程操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_InstanceSchemeId'' cannot be null', N'2020-07-14 11:33:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'addc9339-97d0-4c90-9fdd-daf50cd3b166', N'2020-07-24 09:50:25.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-24 09:50:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ae239b1e-8e85-4eb9-8b20-2dc9d7df0a17', N'2020-06-29 17:24:23.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-06-29 17:24:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ae565ca4-dc6a-4d5a-a2cc-9430f3d85d06', N'2021-02-10 11:14:09.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'iana保留地址', NULL, N'常规管理-单位组织-用户管理', N'1', N'用户管理操作,修改重置密码成功。', N'2021-02-10 11:14:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'df821722-2fae-4023-ae57-23bebfccad85', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'af224b1a-b4c7-42bd-929e-07c50934a135', N'2020-07-31 17:44:02.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 17:44:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'af318fb8-e3f2-4bbe-ad22-26fed896e9f5', N'2020-09-09 11:50:46.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2020-09-09 11:50:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'af63e132-d610-4e98-9f8a-7609161915e0', N'2020-07-30 16:41:25.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-30 16:41:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8b059c40-d1bf-4a8c-94ea-850ade3d0745', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'afb88abb-617c-454c-b81c-d832e08376f8', N'2020-07-15 15:05:48.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,新增克隆成功', N'2020-07-15 15:05:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b0169231-dd09-4fd7-8cab-d2cc2a4e132a', N'2020-10-14 10:27:40.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,修改操作成功。', N'2020-10-14 10:27:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8c119bce-0d70-4a56-8389-214d8e14e107', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b02dbd41-09ff-48c2-9e28-d9c322811e49', N'2020-07-23 10:46:58.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-23 10:46:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7e10a7ac-8b65-4c7c-8eee-92d69d7dcbd9', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b0411762-f182-404c-8924-ad8345dc1f8d', N'2020-10-15 09:04:33.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 09:04:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b09a0747-7ec3-41c7-973f-ce5c4d363896', N'2020-07-31 17:30:30.0000000', N'20000', N'xxxx', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-31 17:30:30.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', N'34601f70-2a2b-4eee-a7d9-d2f79749aa24', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b0a5e980-2b7c-4520-9f4e-9dfb835cda28', N'2020-08-03 17:02:22.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-03 17:02:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b20877d9-6feb-4c96-a565-5deb27e6dd22', N'2020-07-22 16:14:40.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 16:14:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b2b06c53-65f9-4c65-8cfc-3d661f6392fd', N'2020-06-29 09:52:02.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-29 09:52:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b33a50d2-5779-4a5f-b462-6c1bd62ee976', N'2020-07-02 12:12:25.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-02 12:12:25.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b36653a2-921e-4d7b-80da-7de488655c22', N'2020-10-27 14:11:57.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-27 14:11:57.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b37c1b22-7ae3-468e-af0b-7921485141e6', N'2020-09-07 10:43:54.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-09-07 10:43:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b3ad4660-f22a-4d4a-9a8d-46cf88d46d99', N'2020-07-09 08:13:00.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-09 08:13:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b3b2c499-ffc9-4452-b7d5-ddbe9c953948', N'2020-06-30 12:08:44.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 12:08:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b3e06fa0-ebfe-4c14-b048-db46e60f8ce1', N'2020-07-24 15:58:49.0000000', N'20000', N'xxxx', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-24 15:58:49.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', N'03a0545e-76b7-47e8-9d30-efd7320b6e8a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b44d6f20-d1c2-4ae4-8b75-bb7eafc4df6f', N'2020-07-03 15:17:33.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-07-03 15:17:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd036623f-bac8-443b-8d0b-663965aef337', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b4ac55e7-8ed3-4964-99a5-9e6b499a0ecb', N'2020-10-27 14:09:18.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-27 14:09:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b52b53bd-5f27-454f-9143-51500971898c', N'2020-08-04 09:49:13.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-08-04 09:49:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7eed7439-bf24-425c-a1f9-8786a221ee89', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b558dc15-2667-4b55-91a1-e11dca120160', N'2020-10-13 16:14:28.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-13 16:14:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b5dfc767-c7bd-4327-8b85-237d3bbdc0a9', N'2020-10-14 10:26:35.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:26:35.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'253646c6-ffd8-4c7f-9673-f349bbafcbe5', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b675b4aa-f024-4d69-af47-15d1cf926adc', N'2020-07-02 08:45:07.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-02 08:45:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'49F61713-C1E4-420E-BEEC-0B4DBC2D7DE8', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b6791c89-2eed-4d07-b076-67de627b99db', N'2020-08-11 13:22:20.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-08-11 13:22:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b6909a4d-4190-46d5-9097-b53aba08e1cd', N'2020-07-23 11:35:13.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,删除操作成功', N'2020-07-23 11:35:13.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b6d35765-2d24-44e4-beef-68c31865b766', N'2020-08-04 08:46:53.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:46:53.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b70a9aa3-f624-48a1-a8fd-2395b90d6c9a', N'2020-10-13 16:14:40.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-13 16:14:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b72efa56-37da-43f0-9fda-b054222e834c', N'2020-06-30 17:40:02.0000000', N'20000', N'xxxx', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-30 17:40:02.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b777d667-70aa-42a1-a6e2-a43265ea2fdd', N'2020-08-12 11:17:33.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-08-12 11:17:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'5f9873e9-0308-4a8e-84b7-1c4c61f37654', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b78b3ed5-f4eb-4791-aa6b-f48556a97eef', N'2020-07-21 14:49:44.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-21 14:49:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b79a5d76-877d-44b2-8089-c460cb177136', N'2020-07-02 08:42:05.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-02 08:42:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8e52143d-2f97-49e5-89a4-13469f66fc77', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b7d79e4c-67e2-448a-bc89-481792dc48e5', N'2020-10-13 16:10:41.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-13 16:10:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b802b50f-94d2-4b48-af8b-84e01fdcb5e0', N'2020-07-20 16:42:31.0000000', N'admin', N'超级管理员', N'Create', N'172.17.180.1', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,新增操作成功', N'2020-07-20 16:42:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b83dc0f4-436e-4964-babb-cd87a64d0a24', N'2020-07-22 11:41:03.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-22 11:41:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'b4fc0b00-6101-4166-8396-520735f0cdec', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b88174c8-6218-4f10-9446-4a1ccf23e1fe', N'2020-08-04 11:24:11.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-04 11:24:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b889693e-b2a6-43c8-b048-a8843c0d961c', N'2020-06-23 17:34:05.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-23 17:34:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b90310ae-8d33-4cc7-81e4-58bad6ab3831', N'2021-06-02 22:09:13.0000000', N'admin', N'admin', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'0', N'登录失败，密码不正确，请重新输入', N'2021-06-02 22:09:13.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b952ed06-ec19-477b-9cf2-a53e07af13f7', N'2020-07-14 08:57:09.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-14 08:57:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'e283c8a6-5d21-4256-97cf-d08268d88c1b', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b998885b-dd15-4004-b6f5-68b891882621', N'2020-07-22 15:52:32.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-22 15:52:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b999c00c-e254-4187-bb11-efcaee60c638', N'2020-07-15 15:05:33.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功', N'2020-07-15 15:05:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'b9b12553-a008-4e7c-bcdc-c109525df76d', N'2020-08-03 11:02:17.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-03 11:02:17.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ba487f2d-8b1f-493d-91eb-84feeaaa309d', N'2020-07-23 14:56:09.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-07-23 14:56:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'873db213-2d22-4c00-af03-2d1898f13481', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'baeb1ef9-ffba-4016-acd7-274cd29038c4', N'2020-07-31 17:36:33.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 17:36:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bb11bb19-f389-4129-81c8-f1ef4c076617', N'2020-10-28 11:35:25.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 11:35:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bb29bd72-5979-418c-921f-43dfda640fe8', N'2020-10-13 16:13:34.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-13 16:13:34.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bbacbd94-4bd7-4060-90a4-df24a2d260e9', N'2020-07-15 15:04:10.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-15 15:04:10.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd42aaaae-4973-427c-ad86-7a6b20b09325', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bbc20c36-4953-4d9a-9aa1-d9bfe198f356', N'2020-07-13 14:00:26.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-13 14:00:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'b08bb00f-e1df-44f8-904f-58ee5b1f4eb4', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bbc24bbb-e987-471a-a708-8aee279c857e', N'2020-07-24 14:19:32.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,修改操作成功', N'2020-07-24 14:19:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'599669e9-2b1b-4c51-a842-ed0165075432', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bc128af6-de35-4e6f-842f-c34ca9a6f0f3', N'2020-08-03 11:28:14.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-03 11:28:14.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bc6a92cd-2970-4479-8c5f-0e40c8a1c9f6', N'2020-07-09 17:00:18.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功', N'2020-07-09 17:00:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bc8f04ac-0a89-4213-a059-000071b7d76e', N'2020-07-15 13:28:40.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-15 13:28:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bcc21186-acfd-4097-9e10-812752ad1898', N'2020-07-15 16:33:42.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-15 16:33:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bd0ea87b-7756-4296-9d3c-ef7bd5433fa3', N'2020-07-08 12:50:52.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,删除操作成功', N'2020-07-08 12:50:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bd3f93e0-6923-43ec-ac85-c2c74bda6ada', N'2020-10-13 16:11:08.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-13 16:11:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bda7067d-d0fe-4572-977b-cd778383e1f9', N'2020-07-24 15:57:47.0000000', N'10000', N'hhh', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-24 15:57:47.0000000', N'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'be674239-a654-4524-ac9f-6c1b4741c34d', N'2020-07-02 10:55:01.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功', N'2020-07-02 10:55:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'beb64490-f21d-48de-94bf-201c3715ce3e', N'2020-10-13 16:11:18.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-13 16:11:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'beda3d6d-3b59-429e-87b5-9a5bd52b955d', N'2020-07-13 16:06:41.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_AuthorizeType'' cannot be null', N'2020-07-13 16:06:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'befdeea1-f7f8-422c-b282-3f93498d734d', N'2020-07-23 10:47:04.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-23 10:47:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'0b1b307b-2aac-456b-acfb-484a05c71bd7', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bf675bfa-9547-4ec2-9e8f-6b9c47fcc61c', N'2020-07-22 15:23:22.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 15:23:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bfbc149a-f07f-47db-9e3d-74af45952399', N'2020-08-03 17:14:25.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-03 17:14:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bfc99a5e-69c2-480a-b117-96f944e130f3', N'2020-10-14 10:32:51.0000000', N'20000', N'xxxx', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-14 10:32:51.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'bfdbeb21-b3a6-41eb-b418-eddb8f1f8ba7', N'2020-07-08 10:13:23.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-08 10:13:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'96EE855E-8CD2-47FC-A51D-127C131C9FB9', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c03d5cad-6dd9-4c87-81af-d474b9066893', N'2020-10-28 11:23:04.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 11:23:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c03f816c-3b09-41ba-b47e-4eb112635eb3', N'2020-10-19 12:53:20.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 12:53:20.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c08c9123-198f-4b44-b1c7-5f5305292824', N'2020-07-22 14:47:39.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-22 14:47:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'17a0e46f-28f9-4787-832c-0da25c321ce4', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c093a28d-0f1b-4f13-bf2d-fdb341737787', N'2020-07-23 10:38:46.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,修改操作成功', N'2020-07-23 10:38:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'59966d73-fb8d-448e-9576-12e6a2efd7ed', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c095800a-6bc1-4235-8413-69e5b61b9957', N'2020-07-22 16:10:18.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 16:10:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c0d6082e-5bc0-46a4-8e3a-0bd88b60034a', N'2020-10-19 09:44:53.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 09:44:53.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c1698b46-d5fe-42a4-816f-904260d6e319', N'2020-08-04 08:32:44.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:32:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c1e23f02-b300-44b3-88a6-8b2f5ae355f6', N'2020-07-23 10:33:24.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,修改操作成功', N'2020-07-23 10:33:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'59966d73-fb8d-448e-9576-12e6a2efd7ed', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c1e636d8-3c90-4a39-824a-32ccb85fa10a', N'2020-06-28 14:07:18.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-06-28 14:07:18.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c1e82643-4eac-41e5-8977-ff1b1ba3381a', N'2020-07-23 10:47:15.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-23 10:47:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1b72be70-e44d-43d6-91d0-dc3ad628d22e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c1fdf2ae-a101-4321-91c1-4d5195123d9e', N'2020-07-01 09:03:26.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-01 09:03:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c24548bf-c287-4df5-a86b-dc94e98150d8', N'2020-07-21 11:07:04.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-21 11:07:04.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'11847a81-b6fe-4de9-864d-9b1f5dd89d0e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c280cb7a-1ba5-4ba7-8a60-d14080d6f729', N'2020-07-14 17:05:21.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'0', N'我的流程操作,新增操作失败，''string'' does not contain a definition for ''lines''', N'2020-07-14 17:05:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c37bbeba-b2d5-47e7-be75-1f052066c538', N'2020-08-31 10:50:23.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-08-31 10:50:23.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c3b63631-388f-45dc-b2e8-b49448425a5a', N'2020-10-14 10:33:58.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:33:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'26452c9a-243d-4c81-97b9-a3ad581c3bf4', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c3b91e9a-6ef3-407a-bdf2-3f9ff1bbf084', N'2020-07-10 10:35:42.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-10 10:35:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'f82fd629-5f3a-45d6-8681-5ec47e66a807', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c3bcaaf3-6fb1-41b7-9870-d1f4a31bc971', N'2020-07-22 14:47:03.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,删除操作成功', N'2020-07-22 14:47:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c43cdf9e-50fe-4b5f-a0d1-acdfdcb50f3e', N'2020-07-07 15:54:51.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-代码生成', N'0', N'代码生成操作,新增操作失败，Object reference not set to an instance of an object.', N'2020-07-07 15:54:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c5c59f72-5336-4fed-82d1-81afda0ef803', N'2020-06-30 11:57:34.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 11:57:34.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c5d394b1-9278-44ef-b30a-05b7b42a3fc8', N'2020-07-24 16:16:02.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'1', N'流程设计操作,修改操作成功', N'2020-07-24 16:16:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'599669e9-2b1b-4c51-a842-ed0165075432', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c737b163-866b-44f7-9b1c-52cbf17869af', N'2020-10-28 11:23:19.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 11:23:19.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c75fd5af-ae34-4d0c-9f1a-7ceb65596a91', N'2020-08-29 10:36:09.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-08-29 10:36:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c7d946aa-ef32-4f35-8218-6ade2a597e4e', N'2020-10-15 09:01:17.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 09:01:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c8023da4-3674-4fb6-a338-c38a9b58d315', N'2020-08-11 14:51:59.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-08-11 14:51:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'3b6922f9-b4ba-4615-aa3f-b00110da54c6', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c80a7fd9-a93b-4bc0-ba44-9a470921d399', N'2020-07-07 14:02:57.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-07 14:02:57.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c81ba20e-33eb-4b9b-8688-6c1d6dc2895b', N'2020-08-12 11:19:29.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-08-12 11:19:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'873e2274-6884-4849-b636-7f04cca8242c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c86d8500-55aa-4417-8203-58ce03391adc', N'2020-07-03 10:54:24.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-03 10:54:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'c8fd05b5-f3d8-41cb-8b1a-202bd0e2c6b8', N'2020-10-19 13:11:12.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 13:11:12.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ca02af45-06fa-4322-b982-88a2bb009e47', N'2020-07-08 10:41:43.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-08 10:41:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'3c8bc8ed-4cc4-43bc-accd-d4acb2a0358d', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ca5dbc78-c01d-46c5-b866-3056c013239b', N'2020-07-24 15:59:25.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-24 15:59:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c87cd44f-d064-4d3c-a43e-de01a7a8785e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ca689563-3153-40a7-93b7-3dfb7c4e1c68', N'2020-07-29 13:20:52.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-07-29 13:20:52.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ca8a3689-a24c-4b90-ae5e-425deab40701', N'2020-06-30 17:39:07.0000000', N'20000', N'xxxx', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-30 17:39:07.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cb3c39dc-e54f-4b1b-b6f8-0379edff58fd', N'2020-11-02 16:42:51.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.50', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-11-02 16:42:51.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cb463af3-ae05-470f-9efd-d3d09b2c99b8', N'2020-06-30 11:56:16.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,新增操作成功', N'2020-06-30 11:56:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cb69f1de-d51d-4855-9ea8-b48033a8bd77', N'2020-06-30 10:03:08.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-06-30 10:03:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7e4e4a48-4d51-4159-a113-2a211186f13a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cb788148-e2d2-4a2b-b860-a0518d8a6c4e', N'2020-07-30 16:07:22.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-30 16:07:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cba7a037-39e9-44db-adfe-2bc0969ddb61', N'2020-07-30 10:19:46.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-07-30 10:19:46.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cc100350-b90b-411d-83c8-9888a19982c1', N'2020-07-06 10:14:44.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-07-06 10:14:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cc5b902b-64d9-4131-a5fe-d7f19586a08b', N'2020-10-12 10:05:26.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 10:05:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ccde214e-c732-459e-9922-5ce20d924a6e', N'2020-08-12 11:18:40.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功', N'2020-08-12 11:18:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ccf5543d-bc08-4eac-bfab-4c61f3ee4bca', N'2020-07-02 08:40:56.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-02 08:40:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd419160a-0a54-4da2-98fe-fc57f2461a2d', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cd22153a-b6ab-4ea0-a0f9-84a945cd02fe', N'2020-07-31 15:24:13.0000000', N'20000', N'xxxx', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-07-31 15:24:13.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cdd9db27-7c26-4234-87db-47c504355a1b', N'2020-08-12 11:17:44.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-08-12 11:17:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'6b196514-0df1-41aa-ae64-9bb598960709', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ce581465-f409-42ca-aaf2-499929067a74', N'2020-07-15 16:37:20.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-15 16:37:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cea8d73e-63d9-4588-b1ff-14786a381b1f', N'2020-11-02 16:49:17.0000000', N'admin', N'超级管理员', N'Create', N'192.168.3.50', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2020-11-02 16:49:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ceaf1f2f-6ddc-4946-9314-53106f2083c1', N'2020-08-12 11:11:28.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-08-12 11:11:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'873db213-2d22-4c00-af03-2d1898f13481', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ceb24ff4-7d97-4b50-9079-e3f58be7572a', N'2020-10-19 09:34:38.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 09:34:38.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ced762da-c138-4072-8116-564725f649ea', N'2020-06-28 12:44:40.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功', N'2020-06-28 12:44:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cedbfd1e-f162-44c1-ab5f-1727f78c33ab', N'2020-10-15 09:18:58.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 09:18:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cf5491f5-7f21-4368-a117-264088c207c4', N'2020-08-31 10:40:23.0000000', N'20000', N'xxxx', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-08-31 10:40:23.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cf625dfb-57c5-45d6-987b-9fceac0de351', N'2020-07-24 16:30:51.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-24 16:30:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cf6bc4e1-a819-4a99-90e2-db48325cd40b', N'2020-10-27 14:09:41.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-27 14:09:41.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'cfab2adb-1c97-4fdf-9001-fa0157246c30', N'2020-08-03 16:15:24.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-08-03 16:15:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'babca5e0-7c69-4200-b445-9a65b92aaa01', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd07ca215-a9cc-4768-97c3-b8fcc4ae0277', N'2020-06-29 17:35:48.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功', N'2020-06-29 17:35:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd1664e8c-6df8-42fc-a29d-60069a637738', N'2020-10-15 10:26:29.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:26:29.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd1b20723-3129-4d55-a51f-25728bad35e4', N'2020-08-11 14:27:55.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功', N'2020-08-11 14:27:55.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd1c0d6f5-6dbd-402d-bc87-9319572e0493', N'2020-07-09 15:40:03.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功', N'2020-07-09 15:40:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd1c892fc-62ce-4f7f-9839-b26e581d6587', N'2020-07-31 17:59:56.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-31 17:59:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'e9190a56-e173-4483-8a3e-f17b86e4766e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd1ed8c80-0af2-4419-b069-38f9bde55965', N'2020-06-28 12:41:38.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功', N'2020-06-28 12:41:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd31fa33b-f7b1-4d58-a8f4-bff99b8f3fad', N'2020-07-15 15:03:12.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功', N'2020-07-15 15:03:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd333f5f8-ccc7-45ac-8297-ccf46c53d0f8', N'2020-07-31 15:24:09.0000000', N'10000', N'hhh', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-31 15:24:09.0000000', N'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd366507a-a343-4933-b80a-98c06a90e00b', N'2020-07-22 16:02:05.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-22 16:02:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd45ebb7b-4002-4170-879f-0c332fc4c17d', N'2020-07-02 14:00:50.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry ''xxxxx'' for key ''IX_Sys_Notice''', N'2020-07-02 14:00:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd46312d7-fe8d-4282-96d4-362f36e91bbe', N'2020-08-12 10:59:17.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-岗位管理', N'1', N'岗位管理操作,删除操作成功', N'2020-08-12 10:59:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd4744a44-a2b4-4a3a-a89b-b35ec502774b', N'2020-07-31 15:24:00.0000000', N'10000', N'hhh', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-07-31 15:24:00.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd4a2698b-4540-4765-a0e4-f094a0df6abb', N'2020-07-21 16:30:41.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-21 16:30:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'eb4bbf40-2f55-4b79-86ec-82f0555427fa', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd5784b04-bf71-4eaf-b0ed-524e63425410', N'2020-08-03 16:44:26.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 16:44:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd5be52c0-ea70-4c31-8d53-1bcf63afcbd3', N'2020-07-15 14:26:52.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-15 14:26:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd67fa3e5-f565-4d41-aeb3-fd57a22da082', N'2020-07-08 11:04:45.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-08 11:04:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'3c8bc8ed-4cc4-43bc-accd-d4acb2a0358d', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd685fd43-622b-4c31-96b2-91feec2c21a1', N'2020-07-10 09:32:20.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-10 09:32:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'318bb233-c9df-4374-9937-e55b71fbcf99', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd6974ce2-e80c-4e2f-9232-32daed650411', N'2020-07-23 11:48:38.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-07-23 11:48:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'873db213-2d22-4c00-af03-2d1898f13481', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd73ef7b8-263e-46cd-a413-8a6f441257bd', N'2020-07-22 17:30:22.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-22 17:30:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'edbbf77a-6321-4be5-a000-8fc70c9cf895', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd75bdc55-22f4-420d-b86b-a7fe32fe5f02', N'2020-10-14 10:27:52.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:27:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd76916ef-fef9-4d56-9a85-ac028f65bf32', N'2020-06-24 09:08:22.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,修改操作成功', N'2020-06-24 09:08:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'e5079bae-a8c0-4209-9019-6a2b4a3a7dac', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd79e5e14-9e35-4872-8c55-a5baea41033c', N'2020-10-19 12:59:10.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 12:59:10.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd7cc7c54-9a64-4974-8ba5-ac26accb3848', N'2020-08-03 16:56:19.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-03 16:56:19.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd7e2acc2-195e-4aec-82e5-6719bf407fd7', N'2020-07-03 10:45:36.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-03 10:45:36.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd86944cf-9497-492e-bf5d-74839d1ef57d', N'2020-08-31 10:39:07.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-08-31 10:39:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd944fcff-e167-4b73-aa39-5270e6645270', N'2020-07-22 15:48:07.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 15:48:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'd9ae72c8-a0cc-4487-8bc2-2a004633acd4', N'2020-07-30 15:49:07.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-30 15:49:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8a381383-5db2-4700-b26e-0f5aed3fb3a2', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'da6795ae-25be-40bc-a896-312792b7fcec', N'2020-07-03 13:53:53.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-03 13:53:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'da8a7745-fdc0-4e6c-b584-eab0d33c0e3b', N'2020-07-23 15:36:23.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,新增操作成功', N'2020-07-23 15:36:23.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'db33eef1-45ed-4f38-b7ea-4092ab86923a', N'2020-07-07 17:13:57.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-07 17:13:57.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'db40daa9-7ee1-4d6c-91c6-352074fa7e03', N'2020-07-09 17:07:00.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,删除操作成功', N'2020-07-09 17:07:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'db919a56-292a-425e-8a18-7aa786b74fe6', N'2020-08-04 10:33:43.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,删除操作成功', N'2020-08-04 10:33:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'db965db1-42ca-45ee-bb85-0c25481cfb02', N'2020-09-29 14:22:58.0000000', N'admin', N'?????', N'Login', N'192.168.3.41', N'?????', NULL, N'????', N'1', N'????', N'2020-09-29 14:22:58.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dba85c5e-b364-42fa-9e29-f0a716dd5a5a', N'2020-07-31 15:23:45.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,新增操作成功', N'2020-07-31 15:23:45.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dbb3a55a-1630-4a31-bbd9-804bd4fc23e2', N'2020-06-28 14:07:24.0000000', N'10000', N'hhh', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-28 14:07:24.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dbc3fae6-09be-4097-bf52-81116c7de50b', N'2020-07-13 16:06:32.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_AuthorizeType'' cannot be null', N'2020-07-13 16:06:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dbcef240-8cd4-4f51-a1ca-38ef55196c9b', N'2020-07-14 17:03:43.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'0', N'我的流程操作,新增操作失败，''string'' does not contain a definition for ''lines''', N'2020-07-14 17:03:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dbd22967-b8b1-433a-aeaf-3760a54fb112', N'2020-10-19 14:59:03.0000000', N'admin', N'超级管理员', N'Create', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2020-10-19 14:59:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dc1ae85e-660b-4726-ab7d-89f1c55c60ff', N'2020-06-30 17:43:42.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-30 17:43:42.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dc4dc05f-ea95-442b-9520-154b3d76d9e1', N'2020-07-03 10:51:50.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-03 10:51:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dc592ab8-38e2-47b5-8294-50aaf3543b16', N'2020-07-02 08:44:44.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-02 08:44:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'06bb3ea8-ec7f-4556-a427-8ff0ce62e873', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dcce46ba-82d5-420a-8ba5-9b28e891acf3', N'2020-08-03 11:24:28.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-08-03 11:24:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dced4b56-5f33-46ca-bf25-3663434bb410', N'2020-06-29 17:36:50.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,删除操作成功', N'2020-06-29 17:36:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dd162a70-ed5d-46c1-b3dc-a9840206df7a', N'2020-08-04 08:40:58.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-04 08:40:58.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dd64f21c-1b20-4fee-9c69-af0b71dd4d99', N'2020-06-30 10:47:57.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-06-30 10:47:57.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'dd76e18d-9471-4472-bf78-4abaacac45b8', N'2020-08-03 17:04:10.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 17:04:10.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'df841ada-fdea-4cab-ab6a-c73a103da7e7', N'2020-07-07 14:21:59.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-07 14:21:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e01982af-77cb-483a-b5ef-49f47216f25e', N'2020-07-09 13:57:11.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-09 13:57:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'0411376a-18fd-4f52-bffb-22ae0d3fa21d', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e019aea8-0f92-4f6e-99d7-6319e78ce2a5', N'2020-07-29 16:50:59.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,删除操作成功', N'2020-07-29 16:50:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e07a8a8b-73a0-4231-bd1d-84dc4a85f89e', N'2020-10-19 10:04:56.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 10:04:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e1c64da4-6287-4d47-88ee-1b38dc566f84', N'2020-06-30 17:43:37.0000000', N'20000', N'xxxx', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-06-30 17:43:37.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e1d3f705-4b30-4f5d-bc3f-a9d3d9d1a4c3', N'2020-06-30 12:04:08.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 12:04:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e24bca97-ba78-42c7-b3d2-eea9a3e026a1', N'2021-06-02 22:15:47.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-02 22:15:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e38d8769-1f42-4e99-acc3-9ad26a939db0', N'2020-08-04 09:52:33.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,删除操作成功', N'2020-08-04 09:52:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e41d2741-b6ef-4b56-b32c-0e20ee1ef606', N'2020-07-29 16:51:59.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-数据字典', N'1', N'数据字典操作,新增操作成功', N'2020-07-29 16:51:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e47c123f-c81d-4673-b256-98c21c63bfca', N'2020-07-22 16:10:32.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 16:10:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e55817f7-a008-447f-b961-a398652b06f1', N'2020-09-09 11:47:49.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功。', N'2020-09-09 11:47:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e5b9439b-c04c-40b9-be26-5d57c76a2cd2', N'2020-07-24 15:57:20.0000000', N'10000', N'hhh', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-24 15:57:20.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e5c39c46-d2aa-4617-a865-0b30bbe90b37', N'2020-07-22 15:47:52.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-22 15:47:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e5f08d48-0e44-4215-8f2d-ae14b811886b', N'2020-07-22 15:48:07.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 15:48:07.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e65cd5c4-1d90-4259-8ae6-d8e046dce879', N'2020-09-02 08:37:51.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-09-02 08:37:51.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e68a3f94-34ee-4ef0-b692-855477bc82be', N'2020-07-24 16:14:49.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,修改操作成功', N'2020-07-24 16:14:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'03a0545e-76b7-47e8-9d30-efd7320b6e8a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e6973d34-bdf2-4d90-9e35-0844e846cf7d', N'2020-07-23 10:39:03.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,修改操作成功', N'2020-07-23 10:39:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'59966d73-fb8d-448e-9576-12e6a2efd7ed', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e6ffe35a-72a2-435f-bcac-723950501b11', N'2020-10-19 09:21:31.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 09:21:31.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e700a3da-cc6b-449e-9a27-d49f3a434696', N'2020-10-19 10:03:25.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 10:03:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e743c018-d500-4e2b-a5ac-beedcd6eddc0', N'2020-08-31 10:40:17.0000000', N'10000', N'hhh', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-08-31 10:40:17.0000000', N'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e7bdc154-caf0-4d13-802e-a9450dddf31a', N'2020-07-02 08:42:30.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-02 08:42:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c14ab4f2-a1cf-4abd-953b-bacd70e78e8c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e91ef139-6ce2-4b09-a911-496ef17d236a', N'2020-07-23 11:35:15.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,删除操作成功', N'2020-07-23 11:35:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e962c159-e348-485c-9e72-d6a9dd5d8161', N'2020-08-03 17:02:15.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-03 17:02:15.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'e999d32e-740e-4fab-9b2f-23d549891e8c', N'2020-07-06 09:16:09.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-07-06 09:16:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ea8d5b20-715a-4b04-85e4-f2b539002546', N'2020-07-15 13:51:26.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-15 13:51:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'eb2eefe2-3508-4080-b1db-e627b2f5eb6b', N'2020-10-19 11:00:43.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 11:00:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'eb4b0bb4-82c1-4ad0-823b-f4ff7dff792f', N'2020-09-02 09:01:35.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-09-02 09:01:35.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ebcf676f-2502-45de-aa7a-92542303587b', N'2020-10-28 09:59:50.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-28 09:59:50.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ec1b7135-e832-4cca-b1cc-8e3956413837', N'2020-10-15 10:40:53.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:40:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ec1bcb2c-461a-4d8e-be7a-282527f037bc', N'2020-10-15 09:40:28.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 09:40:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ec4ab95c-b8cb-43f0-af7e-f22e4658b59d', N'2020-08-12 11:26:41.0000000', N'admin', N'超级管理员', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-08-12 11:26:41.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ec9b477b-21ac-4025-b955-518de22ec963', N'2020-07-08 10:12:42.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功', N'2020-07-08 10:12:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'eca31bc1-3eef-4338-84f7-53c6a3c57fbe', N'2020-07-14 15:45:36.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-14 15:45:36.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'64A1C550-2C61-4A8C-833D-ACD0C012260F', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'edd99e72-b6fa-419a-a3c7-0c1f5b43327d', N'2020-07-21 17:51:48.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,新增操作成功', N'2020-07-21 17:51:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'edf49eb9-2877-4b85-b9ed-a2850724f0f4', N'2020-07-10 09:31:17.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-10 09:31:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'318bb233-c9df-4374-9937-e55b71fbcf99', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'eed0d204-fd8a-455b-8dbe-4c03755d00c6', N'2020-07-08 10:13:41.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-08 10:13:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'eed79e86-f89b-457b-8dbc-bd6f69b423d1', N'2020-10-27 14:11:39.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-27 14:11:39.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ef2a761c-42fe-4466-8575-1f45f5fd2b2d', N'2020-10-28 11:35:47.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 11:35:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ef4d41a3-6cef-45af-964c-2478e8689751', N'2020-07-23 15:35:01.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-菜单按钮', N'1', N'菜单按钮操作,修改操作成功', N'2020-07-23 15:35:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f32069f-20f3-48c9-8e35-cd245fffcf64', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ef5db5d3-0c4d-44a8-a7ea-bbafb66db8af', N'2021-02-10 11:24:17.0000000', N'20000', N'xxxx', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-02-10 11:24:17.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'efeb7d06-9836-4f59-a6da-899e5fd4de2a', N'2020-10-15 10:27:26.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 10:27:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'eff9dd15-8b1a-415f-b592-88bfe60c8257', N'2020-10-14 10:28:09.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-10-14 10:28:09.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f07d8cbe-fbe4-4147-8663-fd332b7884c1', N'2020-11-02 11:18:24.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.50', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-11-02 11:18:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f11f277a-eda5-4247-8da9-f5f43e1b5c2b', N'2020-08-28 10:44:28.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-08-28 10:44:28.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f13b5641-5f5c-4c38-9968-7eaf16575afc', N'2020-07-22 17:11:25.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-22 17:11:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'29c5321d-9625-4f97-a750-f49761082d6e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f18373cc-5c93-4bd6-958b-c2ab1534fd3f', N'2020-07-13 15:42:47.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_FrmType'' cannot be null', N'2020-07-13 15:42:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f1aa3465-0173-4044-8d65-b11050eeac00', N'2020-06-30 12:06:26.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 12:06:26.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f1b058c8-2a99-4633-9a83-9e0010367069', N'2020-06-30 10:47:49.0000000', N'20000', N'xxxx', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-06-30 10:47:49.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f1c5f093-fc28-42a3-b3ab-6a74b58b2bb7', N'2020-10-13 11:13:32.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-13 11:13:32.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f25920e5-5049-44cf-92bc-98dc683a1c7e', N'2020-10-12 10:04:14.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-12 10:04:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f27ccdf8-87ae-4e6c-8904-3b416b8d0cd2', N'2020-06-28 12:42:40.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,修改操作成功', N'2020-06-28 12:42:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f2a1f86b-c596-41e9-a230-ca4133b359bb', N'2020-06-30 17:39:51.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,修改操作成功', N'2020-06-30 17:39:51.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'74a7c517-dbc4-4c7d-b9ba-9795a3dc008c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f2ee85da-1ea3-422c-aa81-d5647d2f7538', N'2020-08-04 10:33:39.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-08-04 10:33:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f30a2409-cdfd-4f1c-8939-1fd0fd723be6', N'2020-08-12 11:15:16.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功', N'2020-08-12 11:15:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f3571817-1112-42bd-8917-57d4e10b9f04', N'2020-06-28 14:07:57.0000000', N'10000', N'hhh', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-06-28 14:07:57.0000000', N'ac7610db-b66e-4f57-916c-c7ea0a4b84c9', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f3811f8d-f793-468b-8416-91ca81767f00', N'2020-06-30 11:37:30.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,删除操作成功', N'2020-06-30 11:37:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f3960291-a3e4-45a6-9aa8-77647c20c894', N'2020-07-22 16:14:40.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-文件中心-文件管理', N'1', N'文件管理操作,新增操作成功', N'2020-07-22 16:14:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f41dc977-d3e2-4a43-9bed-27574ae751a0', N'2020-10-14 10:27:59.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2020-10-14 10:27:59.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7e4e4a48-4d51-4159-a113-2a211186f13a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f4372dce-67e8-43f6-ad88-92f9da96d7ce', N'2020-07-24 15:57:54.0000000', N'20000', N'xxxx', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-24 15:57:54.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f445157d-705c-44f5-82fa-ffe4868572aa', N'2020-07-24 15:57:11.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-07-24 15:57:11.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f446a6fd-de02-47d4-ae75-b2ef1002f0de', N'2020-07-23 08:56:28.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-表单设计', N'1', N'表单设计操作,修改操作成功', N'2020-07-23 08:56:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'3b6922f9-b4ba-4615-aa3f-b00110da54c6', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f44d7c7d-edcb-486f-bcea-e9407e10ff07', N'2020-07-02 12:12:47.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-02 12:12:47.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f4a1fe2c-4b5f-492c-a27a-4247a14c8f3e', N'2020-10-14 10:32:42.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-10-14 10:32:42.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f4a30a78-8deb-43ea-8dc7-f7cd240b163a', N'2020-07-08 10:14:06.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-07-08 10:14:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'30c629a0-910e-404b-8c29-a73a6291fd95', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f4d53c3d-0efc-499a-984b-da44161a6f50', N'2020-08-11 13:21:33.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻管理', N'1', N'新闻管理操作,修改操作成功', N'2020-08-11 13:21:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7b33eab5-fc0f-471e-9ba9-1eaf34f37cd7', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f4e70de5-e713-4d46-8f54-4aacc7f1be69', N'2020-08-12 11:18:03.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-08-12 11:18:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'bcd52760-009f-4673-80e5-ff166aa07687', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f4f46cdd-2624-4313-a2d2-332f09a372bf', N'2020-06-30 11:56:49.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 11:56:49.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f5061b15-e214-445f-8385-02964b41a50c', N'2020-06-28 12:24:57.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'0', N'系统菜单操作,修改操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Data too long for column ''F_EnCode'' at row 1', N'2020-06-28 12:24:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'7e4e4a48-4d51-4159-a113-2a211186f13a', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f547c971-0c61-4173-bf1f-ed881eef1ab3', N'2021-06-02 22:09:19.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-02 22:09:19.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f6b3f275-35cf-4358-9121-d89ccef2ac2d', N'2020-07-24 14:07:56.0000000', N'10000', N'hhh', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-07-24 14:07:56.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f6c61edd-a80b-471f-86a8-3c8ba8d3c84a', N'2020-10-19 11:01:46.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 11:01:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f84c0d46-1299-425d-a04b-188bbaa299ab', N'2020-06-30 11:58:16.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,修改操作成功', N'2020-06-30 11:58:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c71f577a-8c9b-409b-b21c-bb7081060338', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f8585bc8-1ffb-4454-8272-80b30ece1b17', N'2020-07-07 13:44:43.0000000', N'admin', N'超级管理员', N'Delete', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-角色管理', N'0', N'角色管理操作,删除操作失败，角色使用中，无法删除', N'2020-07-07 13:44:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f8865b04-dff5-4eef-a6b8-3e8e25f6c4ae', N'2020-08-27 13:25:44.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-08-27 13:25:44.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f8888be9-98e2-44be-8f82-2c9920b1a8b2', N'2020-07-02 11:14:40.0000000', N'admin', N'超级管理员', N'Visit', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-租户设置', N'1', N'租户设置操作,新增操作成功', N'2020-07-02 11:14:40.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f8c1a31a-d44f-47e0-9871-4087f70b64ed', N'2020-07-02 14:00:02.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'0', N'系统公告操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Duplicate entry ''xxxxx'' for key ''IX_Sys_Notice''', N'2020-07-02 14:00:02.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f8e0b462-a379-4e42-94a0-7b1ed6284e2c', N'2020-10-15 09:14:32.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-15 09:14:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f8e5672d-8a72-4fbe-b09b-3fb208b9640c', N'2020-07-23 11:44:43.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功', N'2020-07-23 11:44:43.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f914b5c6-04ef-4be3-9020-8a42531f5d7d', N'2020-10-14 10:31:58.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.41', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-14 10:31:58.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f95c0967-e24b-41e8-848f-e656244d5736', N'2020-07-01 13:38:41.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'网站管理-内容管理-新闻类别', N'1', N'新闻类别操作,新增操作成功', N'2020-07-01 13:38:41.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'f9c558f3-8c52-4bb9-b2ab-17ceeab1749c', N'2020-07-22 11:43:27.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,新增操作成功', N'2020-07-22 11:43:27.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'fa3bcb50-ca00-40be-ae28-bc1d2522ea24', N'2020-07-31 16:16:41.0000000', N'20000', N'xxxx', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'办公管理-信息中心-通知管理', N'1', N'通知管理操作,新增操作成功', N'2020-07-31 16:16:41.0000000', N'df821722-2fae-4023-ae57-23bebfccad85', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'fa56a6a6-a9c4-44af-af74-f2975c20dfd5', N'2020-10-14 10:27:46.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.41', N'本地局域网', NULL, N'常规管理-单位组织-角色管理', N'1', N'角色管理操作,修改操作成功。', N'2020-10-14 10:27:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'd71324b7-e7eb-47b2-bdea-f0293d36bb7f', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'fa7d511b-11cd-4cc1-b10b-05f1365e4b05', N'2020-07-30 10:15:34.0000000', N'10000', N'hhh', N'Login', NULL, NULL, NULL, N'系统登录', N'1', N'登录成功', N'2020-07-30 10:15:34.0000000', NULL, NULL, NULL)
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'fb7f9eaa-b448-4222-b730-7435aec07a38', N'2020-07-06 09:16:14.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功', N'2020-07-06 09:16:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'fca466de-3469-4093-a053-d9a5fd892943', N'2020-06-29 17:25:10.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,修改操作成功', N'2020-06-29 17:25:10.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'c2c5efce-96a2-4793-bbee-89a989f4eaf5', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'fd8cc91f-2e4b-4466-8064-88f4c0d2537f', N'2020-10-28 10:00:20.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 10:00:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'8f7b8d82-53c2-4d0e-885f-145a06141c81', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'fe5c3eb1-98f9-4193-9430-49fb6addb49c', N'2020-06-30 10:45:44.0000000', N'admin', N'超级管理员', N'Exit', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'安全退出系统', N'2020-06-30 10:45:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'fe7258d9-a415-4c9b-bec5-a0b67b9e42d5', N'2020-07-15 16:24:39.0000000', N'admin', N'超级管理员', N'Submit', N'192.168.1.117', N'本地局域网', NULL, N'流程管理-流程中心-我的流程', N'1', N'我的流程操作,提交操作成功', N'2020-07-15 16:24:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'642c0210-162c-4ded-b8e7-e2ea51158a0c', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'fe81a2f4-de5c-48f6-84af-acc295142619', N'2020-10-19 12:53:41.0000000', N'admin', N'超级管理员', N'Login', N'192.168.3.42', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-10-19 12:53:41.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'fec62b77-6727-4c1c-b7d2-36589429e938', N'2020-08-29 10:36:18.0000000', N'admin', N'超级管理员', N'Login', N'192.168.1.117', N'本地局域网', NULL, N'系统登录', N'1', N'登录成功', N'2020-08-29 10:36:18.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ff0189d4-d500-4bf1-ae47-18944c21cfc2', N'2020-08-03 17:22:25.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-单位组织-系统公告', N'1', N'系统公告操作,新增操作成功', N'2020-08-03 17:22:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ff9355a5-4197-49c7-a5cd-289cc82093bc', N'2020-07-13 16:05:20.0000000', N'admin', N'超级管理员', N'Create', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-流程设计', N'0', N'流程设计操作,新增操作失败，An exception occurred while executing DbCommand. For details please see the inner exception. Column ''F_AuthorizeType'' cannot be null', N'2020-07-13 16:05:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
-GO
-
-INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'ffecd92d-ba79-463c-9695-4f065f3684b4', N'2020-08-12 11:18:28.0000000', N'admin', N'超级管理员', N'Update', N'192.168.1.117', N'本地局域网', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功', N'2020-08-12 11:18:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'b4fc0b00-6101-4166-8396-520735f0cdec', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dac603-d664-47e4-8a8a-3470d10daf56', N'2022-11-14 13:48:21.0000000', N'admin', N'超级管理员', N'Update', N'0.0.0.1', N'未知', NULL, N'常规管理-系统管理-系统菜单', N'1', N'系统菜单操作,修改操作成功。', N'2022-11-14 13:48:21.0000000', NULL, N'F298F868-B689-4982-8C8B-9268CBF0308D', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
 
@@ -16383,14 +13579,14 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_module] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ParentId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Layers] int  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
-  [F_Icon] nvarchar(50)  NULL,
-  [F_UrlAddress] nvarchar(max)  NULL,
-  [F_Target] nvarchar(50)  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Icon] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_UrlAddress] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Target] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsMenu] tinyint  NULL,
   [F_IsExpand] tinyint  NULL,
   [F_IsFields] tinyint  NULL,
@@ -16400,14 +13596,14 @@ CREATE TABLE [dbo].[sys_module] (
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
-  [F_Authorize] nvarchar(100)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Authorize] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -16428,6 +13624,15 @@ INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F
 GO
 
 INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08d94532-98ac-4751-8cd4-c6c5ec4048e6', N'08d94532-39d1-4822-80b3-0c25a8183155', N'3', N'Order', N'订单信息', N'fa fa-anchor', N'/OrderManagement/Order/Index', N'iframe', N'1', N'0', N'0', N'0', N'0', N'0', N'1', N'0', N'1', N'', N'2021-07-12 20:43:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2021-07-13 09:45:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'')
+GO
+
+INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'462027E0-0848-41DD-BCC3-025DCAE65555', N'3', N'Coderule', N'条码规则', N'fa fa-barcode', N'/SystemManage/Coderule/Index', N'iframe', N'1', N'0', N'0', N'0', N'0', N'0', N'10', N'0', N'1', N'', N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2022-10-06 11:37:25.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'')
+GO
+
+INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa761-e8bd-4385-8260-70452b199643', N'462027E0-0848-41DD-BCC3-025DCAE65555', N'3', N'Template', N'打印模板', N'fa fa-codepen', N'/SystemManage/Template/Index', N'iframe', N'1', N'0', N'0', N'0', N'0', N'0', N'11', N'0', N'1', N'', N'2022-10-06 14:13:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2022-10-06 14:14:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'')
+GO
+
+INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'462027E0-0848-41DD-BCC3-025DCAE65555', N'3', N'Codegeneratelog', N'条码生成记录', N'fa fa-file-code-o', N'/SystemManage/Codegeneratelog/Index', N'iframe', N'1', N'0', N'0', N'0', N'0', N'0', N'12', N'0', N'1', N'', N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2022-10-06 14:21:21.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'')
 GO
 
 INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'152a8e93-cebb-4574-ae74-2a86595ff986', N'462027E0-0848-41DD-BCC3-025DCAE65555', N'2', N'ModuleFields', N'字段管理', N'fa fa-table', N'/SystemManage/ModuleFields/Index', N'iframe', N'0', N'0', N'0', N'0', N'0', N'0', N'4', N'0', N'1', N'', N'2020-05-21 14:39:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2020-06-15 14:55:50.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL)
@@ -16559,7 +13764,7 @@ GO
 INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'ee136db7-178a-4bb0-b878-51287a5e2e2b', N'5f9873e9-0308-4a8e-84b7-1c4c61f37654', N'3', N'DoneFlow', N'已处理流程', N'fa fa-history', N'/FlowManage/Flowinstance/DoneFlow', N'iframe', N'1', N'0', N'0', N'0', N'0', N'0', N'2', N'0', N'1', N'', N'2020-07-15 15:05:33.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
 GO
 
-INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'F298F868-B689-4982-8C8B-9268CBF0308D', N'253646c6-ffd8-4c7f-9673-f349bbafcbe5', N'2', N'Duty', N'岗位管理', N'fa fa-users', N'/SystemOrganize/Duty/Index', N'iframe', N'1', N'0', N'0', N'0', N'0', N'0', N'5', N'0', N'1', N'', NULL, NULL, N'2020-06-16 08:11:54.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL)
+INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'F298F868-B689-4982-8C8B-9268CBF0308D', N'253646c6-ffd8-4c7f-9673-f349bbafcbe5', N'3', N'Duty', N'岗位管理', N'fa fa-users', N'/SystemOrganize/Duty/Index', N'iframe', N'1', N'0', N'0', N'0', N'0', N'0', N'5', N'0', N'1', N'', NULL, NULL, N'2022-11-14 13:48:20.9734872', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'')
 GO
 
 INSERT INTO [dbo].[sys_module] ([F_Id], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_UrlAddress], [F_Target], [F_IsMenu], [F_IsExpand], [F_IsFields], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'f3277ddd-1bf1-4202-8a4b-15c29a405bd5', N'bcd52760-009f-4673-80e5-ff166aa07687', N'2', N'ArticleNews', N'新闻管理', N'fa fa-bell-o', N'/ContentManage/ArticleNews/Index', N'iframe', N'1', N'0', N'0', N'0', N'0', N'0', N'2', N'0', N'1', N'', N'2020-06-09 19:43:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2020-06-23 16:00:03.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL)
@@ -16577,16 +13782,16 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_modulebutton] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ModuleId] nvarchar(50)  NULL,
-  [F_ParentId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ModuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Layers] int  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
-  [F_Icon] nvarchar(50)  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Icon] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Location] int  NULL,
-  [F_JsEvent] nvarchar(50)  NULL,
-  [F_UrlAddress] nvarchar(max)  NULL,
+  [F_JsEvent] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_UrlAddress] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Split] tinyint  NULL,
   [F_IsPublic] tinyint  NULL,
   [F_AllowEdit] tinyint  NULL,
@@ -16594,14 +13799,14 @@ CREATE TABLE [dbo].[sys_modulebutton] (
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
-  [F_Authorize] nvarchar(100)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Authorize] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -16628,6 +13833,39 @@ INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Lay
 GO
 
 INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08d94532-98b0-4bac-8e49-471d5b61be95', N'08d94532-98ac-4751-8cd4-c6c5ec4048e6', N'0', N'1', N'NF-details', N'查看', NULL, N'2', N'details', N'/OrderManagement/Order/Details', N'0', N'0', N'0', N'0', N'3', N'0', N'1', NULL, N'2021-07-12 20:43:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08d9bde2-f14d-4b33-8f9b-2af0bf40812b', N'c87cd44f-d064-4d3c-a43e-de01a7a8785e', N'0', N'1', N'NF-cancle', N'撤回', NULL, N'1', N'cancle', N'/FlowManage/Flowinstance/CancleForm', NULL, N'0', N'0', N'0', N'4', N'0', N'1', N'', N'2021-12-13 10:47:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'')
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa74b-eb2c-4564-81ea-b0a247e2d1c1', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'0', N'1', N'NF-add', N'新增', NULL, N'1', N'add', N'/SystemManage/Coderule/Form', N'0', N'0', N'0', N'0', N'0', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa74b-eb2c-45a2-8f15-de416e949b49', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'0', N'1', N'NF-edit', N'修改', NULL, N'2', N'edit', N'/SystemManage/Coderule/Form', N'0', N'0', N'0', N'0', N'1', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa74b-eb2c-45ae-826d-f3daa858a373', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'0', N'1', N'NF-delete', N'删除', NULL, N'2', N'delete', N'/SystemManage/Coderule/DeleteForm', N'0', N'0', N'0', N'0', N'2', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa74b-eb2c-45b7-838a-e638b9b5fbc4', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'0', N'1', N'NF-details', N'查看', NULL, N'2', N'details', N'/SystemManage/Coderule/Details', N'0', N'0', N'0', N'0', N'3', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa761-e8c2-451d-82bd-42a949ca6b2b', N'08daa761-e8bd-4385-8260-70452b199643', N'0', N'1', N'NF-add', N'新增', NULL, N'1', N'add', N'/SystemManage/Template/Form', N'0', N'0', N'0', N'0', N'0', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa761-e8c2-455c-8aa1-2631fcd858ef', N'08daa761-e8bd-4385-8260-70452b199643', N'0', N'1', N'NF-edit', N'修改', NULL, N'2', N'edit', N'/SystemManage/Template/Form', N'0', N'0', N'0', N'0', N'1', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa761-e8c2-4568-8044-b7d35d082d6f', N'08daa761-e8bd-4385-8260-70452b199643', N'0', N'1', N'NF-delete', N'删除', NULL, N'2', N'delete', N'/SystemManage/Template/DeleteForm', N'0', N'0', N'0', N'0', N'2', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa761-e8c2-4571-8673-5f693d4dd7a7', N'08daa761-e8bd-4385-8260-70452b199643', N'0', N'1', N'NF-details', N'查看', NULL, N'2', N'details', N'/SystemManage/Template/Details', N'0', N'0', N'0', N'0', N'3', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa762-eb70-4380-80e1-6c505d95ff84', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'0', N'1', N'NF-reprint', N'补印', NULL, N'2', N'reprint', N'/SystemManage/Codegeneratelog/Reprint', N'0', N'0', N'0', N'0', N'0', N'0', N'1', N'', N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2022-10-06 14:28:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'')
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08daa908-83be-459b-85f6-2280b2aa3323', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'0', N'1', N'NF-create', N'生成条码', NULL, N'2', N'create', N'/SystemManage/Coderule/CreateForm', NULL, N'0', N'0', N'0', N'4', N'0', N'1', N'', N'2022-10-08 16:38:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'')
 GO
 
 INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'0a1ba1d7-b4f3-45a4-a4da-e70fb25bb766', N'e9190a56-e173-4483-8a3e-f17b86e4766e', N'0', N'1', N'NF-delete', N'删除', NULL, N'2', N'delete', N'/InfoManage/Message/DeleteForm', N'0', N'0', N'0', N'0', N'2', N'0', N'1', NULL, N'2020-07-29 16:44:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
@@ -16963,19 +14201,19 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_modulefields] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ModuleId] nvarchar(50)  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ModuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsPublic] tinyint  NULL
 )
 GO
@@ -17015,6 +14253,99 @@ INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullN
 GO
 
 INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08d94532-98b0-4c0c-81e2-b66009a2420f', N'08d94532-98ac-4751-8cd4-c6c5ec4048e6', N'F_CreatorUserName', N'F_CreatorUserName', N'0', N'1', NULL, N'2021-07-12 20:43:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa74b-eb2c-45c0-8fca-14d20aa11839', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'F_RuleName', N'规则名称', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa74b-eb2c-45cd-88fa-d18628637b4d', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'F_RuleJson', N'规则内容', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa74b-eb2c-45d6-8015-6d6aa8e4af15', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'F_Reset', N'重设机制', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa74b-eb2c-45de-8d9e-dd704382c544', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'F_TemplateName', N'模板名称', N'0', N'1', N'', N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2022-10-06 14:01:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa74b-eb2c-45e7-807f-4868b3841e50', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'F_PrintType', N'打印方式', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa74b-eb2c-45ef-87ef-ff950508caab', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'F_EnabledMark', N'状态', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa74b-eb2c-45f7-8b88-5c6644b10c49', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'F_Description', N'F_Description', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa74b-eb2c-45ff-8f80-36e16ccf7d20', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'F_CreatorTime', N'F_CreatorTime', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa74b-eb2c-4608-8b0c-38d830774de0', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'F_CreatorUserId', N'F_CreatorUserId', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa74b-eb2c-4611-8c9c-d8c06a5ba0fe', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'F_CreatorUserName', N'F_CreatorUserName', N'0', N'1', NULL, N'2022-10-06 11:36:14.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa761-e8c2-457a-8a3a-b0f493f50238', N'08daa761-e8bd-4385-8260-70452b199643', N'F_TemplateName', N'模板名称', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa761-e8c2-4588-8e53-8869fe05743d', N'08daa761-e8bd-4385-8260-70452b199643', N'F_TemplateFile', N'模板文件', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa761-e8c2-4591-8969-e850aeed97f4', N'08daa761-e8bd-4385-8260-70452b199643', N'F_TemplateDBProvider', N'模板执行库', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa761-e8c2-4599-8e1e-9253e585a63d', N'08daa761-e8bd-4385-8260-70452b199643', N'F_TemplateSql', N'模板执行sql', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa761-e8c2-45a8-83d0-70dea211f165', N'08daa761-e8bd-4385-8260-70452b199643', N'F_TemplateSqlParm', N'模板执行参数', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa761-e8c2-45b1-8801-767f6291f9f4', N'08daa761-e8bd-4385-8260-70452b199643', N'F_PrintType', N'打印方式', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa761-e8c2-45ba-80ef-659402507dbe', N'08daa761-e8bd-4385-8260-70452b199643', N'F_EnabledMark', N'状态', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa761-e8c2-45c2-8400-9fa89a641a13', N'08daa761-e8bd-4385-8260-70452b199643', N'F_Description', N'F_Description', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa761-e8c2-45cb-8078-b67bb629ed7d', N'08daa761-e8bd-4385-8260-70452b199643', N'F_CreatorTime', N'F_CreatorTime', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa761-e8c2-45d3-8cd5-1883780a9c9b', N'08daa761-e8bd-4385-8260-70452b199643', N'F_CreatorUserId', N'F_CreatorUserId', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa761-e8c2-45dc-8c40-450d9a90b426', N'08daa761-e8bd-4385-8260-70452b199643', N'F_CreatorUserName', N'F_CreatorUserName', N'0', N'1', NULL, N'2022-10-06 14:13:39.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa762-eb70-43bc-84b7-298916956a3f', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'F_Code', N'条码', N'0', N'1', NULL, N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa762-eb70-43ce-84d2-dd171ecc46bf', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'F_RuleId', N'规则id', N'0', N'1', NULL, N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa762-eb70-43d8-84e5-1375f17164cb', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'F_RuleName', N'规则名称', N'0', N'1', NULL, N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa762-eb70-43e1-8caa-692428dbdf47', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'F_PrintJson', N'打印Json', N'0', N'1', NULL, N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa762-eb70-43eb-8395-79cb1a24cb52', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'F_PrintCount', N'打印次数', N'0', N'1', NULL, N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa762-eb70-43f5-82ae-3be048c23b6f', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'F_EnabledMark', N'状态', N'0', N'1', NULL, N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa762-eb70-4400-8d08-5962b9662150', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'F_Description', N'F_Description', N'0', N'1', NULL, N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa762-eb70-440b-8ddd-65b1f1a89189', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'F_CreatorTime', N'创建时间', N'0', N'1', NULL, N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa762-eb70-4416-8101-0f994fa4c0e4', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'F_CreatorUserId', N'F_CreatorUserId', N'0', N'1', NULL, N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
+GO
+
+INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'08daa762-eb70-441f-8c4c-5fdf38c7534b', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'F_CreatorUserName', N'F_CreatorUserName', N'0', N'1', NULL, N'2022-10-06 14:20:52.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
 GO
 
 INSERT INTO [dbo].[sys_modulefields] ([F_Id], [F_ModuleId], [F_EnCode], [F_FullName], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_IsPublic]) VALUES (N'0917606f-f448-49d3-b78d-e08a17a1cc4f', N'2c2ddbce-ee87-4134-9b32-54d0bd572910', N'F_CreatorTime', N'创建时间', N'0', N'1', NULL, N'2020-07-08 14:34:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'1')
@@ -17341,19 +14672,19 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_notice] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_Title] nvarchar(50)  NULL,
-  [F_Content] nvarchar(max)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Title] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Content] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -17402,7 +14733,7 @@ INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], 
 bug修复：
 1、通知中心加载问题修复；
 2、修复oracle数据库查询服务bug
-3、修复流程新增缺少F_EnabledMark字段问题
+3、修复流程新增缺少EnabledMark字段问题
 4、修复用户查看明细显示问题
 5、模板修复树生成问题
 6、修复选择组织、角色、用户弹窗 鉴权异常
@@ -17745,7 +15076,7 @@ INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], 
 2、更新ip获取地址方法，增加配置是否本地局域网
 3、删除多余前端文件
 4、更新echarts文件，删除主题
-5、增加权限验证方法，可根据参数进行验证，菜单和按钮增加字段F_Authorize
+5、增加权限验证方法，可根据参数进行验证，菜单和按钮增加字段Authorize
 6、新增api权限验证
 
 BUG修复：
@@ -17875,6 +15206,226 @@ bug修复：
 3、修复筛选bool类型和时间类型问题；', N'0', N'1', NULL, N'2021-05-28 09:35:30.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, NULL)
 GO
 
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'40d92cb5-f58f-4673-8f37-f7419ff3f79a', N'2.11.0版本更新', N'2021/6/11
+功能变更：
+1、通知样式调整；
+2、实体类修改，多租户codefirst完善；
+3、更新自增Guid；
+4、更新soultable；
+5、signalr增加登录计数；
+6、登录账号封禁，改成IP禁用
+ip禁用表增加到期时间字段；
+
+bug修复：
+1、修复定时任务立即执行事务问题；
+2、修复定时任务界面显示；
+3、修复treetable滚动条出现时，表头宽度不对的问题；', N'0', N'1', NULL, N'2021-06-11 16:50:27.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'40d93a04-3e4e-4548-8597-e49c235af6f7', N'2.12.0版本更新', N'2021/6/28
+功能变更：
+1、IP控制移到服务切换数据库之后；
+2、定时任务调用服务切换数据库连接，远程调用请求头增加租户号参数；
+3、项目中的watercloud前缀修改成可配置；
+4、增加配置是否重置主系统管理员账户；
+5、增加菜单定位，默认记录最后一次菜单位置，正常退出不记录，基于mini的hash功能；
+6、重新登录增加非后台界面跳转；
+7、表单设计器美化；
+8、为了记录非菜单打开的tab，minitab的sessionStorage改成cookie；
+
+bug修复：
+1、修复表格倒序BUG；
+2、修复字段权限模块为null的异常问题
+3、修复select 默认选中的问题；
+4、修复密码长度设置，导致验证提示失效问题；
+5、修复定时任务切换数据库的BUG;
+', N'0', N'1', NULL, N'2021-06-28 15:13:35.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'41d945ba-19d4-40d8-88b0-ada458a8cda5', N'2.13.0版本更新', N'2021/7/13
+功能变更：
+1、优化加载，layui模块放到登陆页加载；
+2、修改更新租户，禁止修改数据库连接有关参数；
+3、规范化；
+4、新增主从表案例，含数据库文件；
+
+bug修复：
+1、修复定时任务切换数据库的BUG；
+2、修复soultable过滤导致的分页插件问题；
+3、修复日志keyValue长度过长问题；
+4、修复内容管理预览图片问题；', N'0', N'1', NULL, N'2021-07-13 12:53:05.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'41d945ba-19d4-40d8-88b0-ada458a8cda6', N'2.14.0版本更新', N'2021/9/14
+功能变更：
+1、更新插件版本；
+2、减少miniTab 记录的cookie；
+3、配置增加登录错误次数；
+4、退出登录优化；
+
+bug修复：
+1、修复cookie中文乱码问题；
+2、修复订单删除问题；
+3、修复oracle查询数据库的问题；
+4、修复soultable 不带过滤，后台排序失效的问题，Pagination中的sort统一改成field；
+5、修复前端排序问题；
+6、修复layuiedit的问题；
+7、修复流程预览图片异常；
+8、修复流程界面参数显示问题；', N'0', N'1', NULL, N'2021-09-14 15:40:17.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'41d945ba-19d4-40d8-88b0-ada458a8cda7', N'2.15.0版本更新', N'2021/10/27
+功能变更：
+1、菜单界面新增复制，修改排序，排序自增功能；
+2、更新layui文档地址；
+3、多库连接改成数组；
+4、更新系统页面可以单页使用；
+
+bug修复：
+1、修复框架弹窗重复出现问题;
+2、修复文件中心组织筛选问题', N'0', N'1', NULL, N'2021-10-27 15:02:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'41d945ba-19d4-40d8-88b0-ada458a8cda8', N'2.16.0版本更新', N'2021/11/16
+功能变更：
+1、删除多余参数sqlkey；
+2、支持单页使用；
+3、前端用户参数转移到clientdata里面；
+4、修改不存在角色，设置为游客角色；
+5、增加定时任务集群并优化(冬天提供及测试)；
+
+bug修复：
+1、修复无角色时，基础数据异常；
+2、修复定时任务执行问题；', N'0', N'1', NULL, N'2021-11-16 15:37:57.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'41d945bb-19d4-40d8-88b0-ada458a8cda8', N'2.17.0版本更新', N'2021/12/13
+功能变更：
+1、新增parentWindow()方法，获取父界面;
+2、新增传值方式，common.modalOpen（新增父子界面关系绑定)，原data参数改成dataJson参数，子界面使用common.parentWindow().dataJson即可获取传值的参数；
+3、前端框架优化；
+4、增加cron表达式判断；
+5、删除配置中的超管信息；
+6、重命名IsSystem，改成IsSuperAdmin;
+7、优化数据库注入方式，多租户创建完成后，无需重启应用；
+8、soultable增加时间范围；
+9、优化打印sql；
+10、优化数据库类型以orm的为准；
+11、代码生成器优化，实体类中增加codefirst必要参数（除了唯一键）；
+12、实体类租户修改，使用orm的TenantAttribute特性；
+13、流程增加撤回功能。', N'0', N'1', NULL, N'2021-12-13 12:52:16.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'41d945bb-19d4-40d8-88b0-ada458a8cda9', N'2.18.0版本更新', N'2021/12/29
+功能变更：
+1、[工作流] 流程中心显示优化；
+2、[后台框架] 优化代码、去除警告；
+3、[后台框架] 升级net6，去除警告；
+
+bug修复：
+1、[工作流] 修复流程新增BUG；
+2、[代码生成器] 修复代码生成器自增ID问题', N'0', N'1', NULL, N'2021-12-29 08:47:27.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', N'2022-09-07 15:18:22.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'41d945bb-19d4-40d8-88b0-ada458a8cdb1', N'2.19.0版本更新', N'2022/01/27
+功能变更：
+1、[后台框架] 解决session不能使用的问题；
+2、[后台框架] 优化查询的反格式化，把中文放dictionary的value中；
+3、[后台框架] 优化代码判断存在改成any()；
+4、[后台框架] 优化第一次请求页面判断逻辑；
+5、[前台框架] 表单设计器更换插件；
+6、[后台框架] 仓储增加切换数据库方法；
+7、[前台框架] 更新soultable插件；
+
+bug修复：
+1、[定时任务] 修复定时任务null object异常；
+2、[后台框架] 修复表达式 or改成orelse， and改成andalso；
+3、[后台框架] 修复数据权限界面Bug；
+4、[前台框架] 修复系统设置上传图片Bug；
+5、[定时任务] 修复定时任务执行异常bug；
+6、[后台框架] 修复创建租户问题；
+7、[后台框架] 修复管理员权限控制问题，默认超管，false为管理员；
+8、[后台框架] 修复租户修改上传文件，没有更新问题', N'0', N'1', NULL, N'2022-01-27 20:20:27.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', N'2022-09-07 15:17:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'41d945bb-19d4-40d8-88b0-ada458a8cdb2', N'2.20.0版本更新', N'2022/3/7
+功能变更：
+1、[前台框架] tab切换增加动作执行table resize方法；
+2、[后台框架] 优化卡片表格组件；
+3、[代码生成器] 删除IDatabaseTable封装，使用sqlsugar获取表数据和结构，加强兼容性；
+4、[后台框架] 优化数据库注入，增加扩展库注入；
+5、[代码生成器] 增加数据库选择；
+6、[后台框架] 租户数据库类型，前端写死改为后端获取DbType枚举；
+7、[后台框架] 完善二级缓存，优化缓存方法；
+8、[后台框架] 优化管理数据库连接；
+
+bug修复：
+1、[后台框架] 修复时间导入格式问题；
+2、[前台框架] 修复首页粒子特效问题；
+3、[后台框架] 修复ChangeEntityDb方法切换数据库未生效问题；
+4、[后台框架] 修复数据权限无法设置无效的问题；', N'0', N'1', NULL, N'2022-03-07 21:18:20.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', N'2022-09-07 15:16:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'41d945bb-19d4-40d8-88b0-ada458a8cdb3', N'2.21.0版本更新', N'2022/4/11
+功能变更：
+1、[前台框架] 增加表格人性化开关，在home页面控制，默认开启;
+2、[定时任务] 定时任务执行job，增加格式化显示；
+3、[后台框架] 优化结构、控制器的权限特性等；
+4、[后台框架] 增加rabbitmq的帮助类及引用；
+5、[前台框架] 优化soultable日期范围选择；
+6、[后台框架] 优化获取服务，区分root服务和scope服务；
+7、[后台框架] 优化获取模块名称方法；
+
+bug修复：
+1、[后台框架] 修复其他数据库没有打印sql的问题;
+2、[代码生成器] 修复代码生成若干bug
+3、[后台框架] 修复租户生成(sqlserver)异常问题；
+4、[后台框架] 修复多数据库的异常；
+5、[工作流] 修复自定义流程出现的异常；
+6、[前台框架] 修复tab切换，刷新异常的问题；', N'0', N'1', NULL, N'2022-04-11 08:37:32.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', N'2022-09-07 15:14:56.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'41d945bb-19d4-40d8-88b0-ada458a8cdb4', N'2.22.0版本更新', N'2022/5/31
+功能变更：
+1、[后台框架] 去除仓储OrderList方法，改成扩展方法;
+2、[后台框架] 优化仓储，优化注册SqlSugar方法，重写获取服务的方法；
+3、[配置] 增加rabbit安装文件，增加使用rabbitmq案例，消息推送使用mq，默认开启；
+4、[前台框架] 升级layui 2.6.9；
+5、[配置] 增加sqlite脚本；
+6、[配置] 升级nuget，去除sqlprofiler文件；
+7、[前台框架] 手机端去除表格的固定列；
+8、[后台框架] 重写登录验证和权限验证；
+
+bug修复：
+1、[前台框架] 修复表单设计器ice编辑器问题；
+2、[代码生成器] 修复模板问题；
+3、[后台框架] 修复管理员权限卡控问题；
+4、[前台框架] 修复弹窗选择清除按钮失效问题；', N'0', N'1', NULL, N'2022-06-06 16:50:53.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', N'2022-09-07 15:13:28.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_notice] ([F_Id], [F_Title], [F_Content], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'41d945bb-19d4-40d8-88b0-ada458a8cdb5', N'2.23.0版本更新', N'2022/9/7
+功能变更：
+1、[框架底层] 服务注册器去除瞬时服务判断；
+2、[代码生成器] 优化模板；
+3、[前端框架] 更新layui 2.7.5;
+4、[定时任务] 远程请求，增加类型，默认json，成功返回json；
+5、[前端框架] layuimini增加是否缩放参数，默认否；
+6、[定时任务] 代码优化，新增sql执行；
+7、[配置] rabbitmq默认设置关闭；
+8、[配置] 重置密码时，清除缓存；
+9、[后台框架] 增加租户生成忽视创建类的列表；
+10、[前端框架] 优化top.iframesList；
+11、[后台框架] WaterCloud.Web 集成API，优化登录信息存储；
+12、[后台框架] MVC定义的基类ControllerBase重命名BaseController；
+
+bug修复：
+1、[前端框架] 修复framework-ui绑定radio数据问题；
+2、[前端框架] 修复表格高度带搜索框异常的问题；
+3、[前端框架] 修复 Iframe无法关闭的问题；
+4、[后台框架] 修复realreturnurl不生效的问题；
+5、[前端框架] 修复cron的部分异常；', N'0', N'1', NULL, N'2022-09-07 15:07:24.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'超级管理员', N'2022-09-07 15:11:44.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
+GO
+
 
 -- ----------------------------
 -- Table structure for sys_openjob
@@ -17884,32 +15435,35 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_openjob] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_FileName] nvarchar(100)  NULL,
-  [F_JobName] nvarchar(50)  NULL,
-  [F_JobGroup] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_FileName] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobGroup] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_StarRunTime] datetime2(7)  NULL,
   [F_EndRunTime] datetime2(7)  NULL,
-  [F_CronExpress] nvarchar(50)  NULL,
+  [F_CronExpress] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(500)  NULL,
+  [F_Description] nvarchar(500) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastRunTime] datetime2(7)  NULL,
   [F_LastRunMark] tinyint  NULL,
   [F_LastRunErrTime] datetime2(7)  NULL,
-  [F_LastRunErrMsg] nvarchar(max)  NULL,
+  [F_LastRunErrMsg] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_JobType] int  NOT NULL,
-  [F_IsLog] char(2)  NULL,
-  [F_RequestHeaders] nvarchar(max)  NULL,
-  [F_RequestString] nvarchar(max)  NULL,
-  [F_RequestUrl] nvarchar(max)  NULL,
-  [F_DbNumber] nvarchar(50)  NULL
+  [F_IsLog] char(2) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_RequestHeaders] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_RequestString] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_RequestUrl] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DbNumber] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobSqlParm] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobSql] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobDBProvider] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -17927,6 +15481,9 @@ GO
 -- ----------------------------
 -- Records of sys_openjob
 -- ----------------------------
+INSERT INTO [dbo].[sys_openjob] ([F_Id], [F_FileName], [F_JobName], [F_JobGroup], [F_StarRunTime], [F_EndRunTime], [F_CronExpress], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_LastRunTime], [F_LastRunMark], [F_LastRunErrTime], [F_LastRunErrMsg], [F_JobType], [F_IsLog], [F_RequestHeaders], [F_RequestString], [F_RequestUrl], [F_DbNumber], [F_JobSqlParm], [F_JobSql], [F_JobDBProvider]) VALUES (N'08da9c6c-fcfa-456c-856b-e5d29ab7d906', N'WaterCloud.Service.AutoJob.SaveServerStateJob', N'更新服务时间', N'watercloud', NULL, NULL, N'0/20 * * * * ?', N'0', N'0', N'', N'2022-09-22 15:35:14.1014342', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'0', N'是', N'', N'', N'', N'0', N'', N'', N'')
+GO
+
 
 -- ----------------------------
 -- Table structure for sys_openjoblog
@@ -17936,12 +15493,12 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_openjoblog] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_JobId] nvarchar(50)  NOT NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_JobId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
   [F_EnabledMark] tinyint  NOT NULL,
-  [F_JobName] nvarchar(50)  NULL
+  [F_JobName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -18014,33 +15571,33 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_organize] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ParentId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Layers] int  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
-  [F_ShortName] nvarchar(50)  NULL,
-  [F_CategoryId] nvarchar(50)  NULL,
-  [F_ManagerId] nvarchar(50)  NULL,
-  [F_TelePhone] nvarchar(20)  NULL,
-  [F_MobilePhone] nvarchar(20)  NULL,
-  [F_WeChat] nvarchar(50)  NULL,
-  [F_Fax] nvarchar(20)  NULL,
-  [F_Email] nvarchar(50)  NULL,
-  [F_AreaId] nvarchar(50)  NULL,
-  [F_Address] nvarchar(max)  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ShortName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CategoryId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ManagerId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_TelePhone] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_MobilePhone] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_WeChat] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Fax] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Email] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_AreaId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Address] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_AllowEdit] tinyint  NULL,
   [F_AllowDelete] tinyint  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -18084,17 +15641,17 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_quickmodule] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ModuleId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ModuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -18141,24 +15698,24 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_role] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_CompanyId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Category] int  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
-  [F_Type] nvarchar(50)  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Type] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_AllowEdit] tinyint  NULL,
   [F_AllowDelete] tinyint  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -18169,6 +15726,18 @@ GO
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
+INSERT INTO [dbo].[sys_role] ([F_Id], [F_CompanyId], [F_Category], [F_EnCode], [F_FullName], [F_Type], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08da9b75-9474-4da4-8801-ca3a549a8800', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'2', N'11111', N'111111', NULL, N'0', N'0', N'11', N'0', N'1', N'', N'2022-09-21 10:04:13.0513223', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2022-09-21 11:22:04.4167701', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_role] ([F_Id], [F_CompanyId], [F_Category], [F_EnCode], [F_FullName], [F_Type], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08da9c6b-f455-46c0-8ffe-81edad14c7be', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'1', N'2222', N'22222', N'1', N'0', N'0', N'2', N'0', N'1', N'', N'2022-09-22 15:27:50.1022554', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_role] ([F_Id], [F_CompanyId], [F_Category], [F_EnCode], [F_FullName], [F_Type], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'1', N'33333', N'33333', N'1', N'0', N'0', N'3', N'0', N'1', N'', N'2022-09-22 15:28:36.2693743', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_role] ([F_Id], [F_CompanyId], [F_Category], [F_EnCode], [F_FullName], [F_Type], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08dac601-eb0c-4bdb-819a-d6ef3510aabf', N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'2', N'111112', N'11112', NULL, N'0', N'0', N'1', N'0', N'1', NULL, N'2022-11-14 13:34:36.7095101', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
 
 -- ----------------------------
 -- Table structure for sys_roleauthorize
@@ -18178,14 +15747,14 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_roleauthorize] (
-  [F_Id] nvarchar(50)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_ItemType] int  NULL,
-  [F_ItemId] nvarchar(50)  NULL,
+  [F_ItemId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_ObjectType] int  NULL,
-  [F_ObjectId] nvarchar(50)  NULL,
+  [F_ObjectId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -18196,6 +15765,879 @@ GO
 -- ----------------------------
 -- Records of sys_roleauthorize
 -- ----------------------------
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb63-46f8-8265-5835c6c85025', N'1', N'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4524-8a90-f7bfca0429f8', N'1', N'253646c6-ffd8-4c7f-9673-f349bbafcbe5', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-452b-8eee-4a7a727de9d4', N'1', N'7e4e4a48-4d51-4159-a113-2a211186f13a', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-452d-823f-1e1639bac067', N'2', N'3f69d32f-cb3b-4fa0-863b-98b9a090d7e9', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-452f-8818-fabb29227c89', N'2', N'9fc77888-bbca-4996-9240-a0f389819f6f', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4531-8bd9-c6da5b6061a8', N'2', N'8f698747-a1c3-468d-9279-99990987e0f9', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4532-8d5e-e06ed272f1b5', N'2', N'7ee3ff62-ab18-4886-9451-89b1d152172e', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4534-8183-f6cd93f481a9', N'1', N'26452c9a-243d-4c81-97b9-a3ad581c3bf4', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4537-86de-6999e2e3e2d7', N'2', N'7e10a7ac-8b65-4c7c-8eee-92d69d7dcbd9', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4538-8660-fe02b18adaa6', N'2', N'0b1b307b-2aac-456b-acfb-484a05c71bd7', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4539-86eb-e48d9acd45ca', N'2', N'f51da6f6-8511-49f3-982b-a30ed0946706', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-453a-89b5-03d26ab7f938', N'2', N'1b72be70-e44d-43d6-91d0-dc3ad628d22e', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-453b-8c40-6d006a677a5d', N'1', N'262ca754-1c73-436c-a9a2-b6374451a845', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-453c-8f92-36849410fbc8', N'2', N'b83c84e4-6264-4b8e-b319-a49fbf34860d', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-453f-86ff-dcd704a4ade3', N'2', N'82b2f4a2-55a1-4f44-b667-3449739643f6', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4541-8093-0432e07c4afb', N'2', N'0fa5e0a8-c786-40af-81af-b133b42dded5', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4542-804a-5d521fbbacf4', N'1', N'91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4543-8419-5dadbc7e5010', N'2', N'5d708d9d-6ebe-40ea-8589-e3efce9e74ec', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4544-8388-242bb2f68d4e', N'2', N'ffffe7f8-900c-413a-9970-bee7d6599cce', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4545-85eb-dd2e96967bf3', N'2', N'239077ff-13e1-4720-84e1-67b6f0276979', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4548-8675-779e4514043f', N'2', N'f93763ff-51a1-478d-9585-3c86084c54f3', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4549-8b03-1de1613fd38d', N'1', N'F298F868-B689-4982-8C8B-9268CBF0308D', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-454a-8f6a-674bd1bd22c4', N'2', N'13c9a15f-c50d-4f09-8344-fd0050f70086', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-454b-8e83-d85686ef7f1d', N'2', N'e75e4efc-d461-4334-a764-56992fec38e6', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-454c-8e70-8755acde9384', N'2', N'8a9993af-69b2-4d8a-85b3-337745a1f428', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-454e-81d7-354ed0e546d7', N'2', N'88f7b3a8-fd6d-4f8e-a861-11405f434868', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-454f-83ca-183c21c05beb', N'2', N'29306956-f9b2-4e76-bc23-4b8f02d21be3', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4552-80e4-a000d7f6fa75', N'2', N'd7a452f3-3596-4339-8803-d61fb4eec013', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4553-86ab-a1e57bd4980f', N'1', N'38CA5A66-C993-4410-AF95-50489B22939C', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4554-8be2-44dd519f886c', N'2', N'74eecdfb-3bee-405d-be07-27a78219c179', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4555-89d1-c60c292e013f', N'2', N'4727adf7-5525-4c8c-9de5-39e49c268349', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4556-8920-369d50755e6e', N'2', N'14617a4f-bfef-4bc2-b943-d18d3ff8d22f', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4557-8a20-1f769c7b14d0', N'2', N'abfdff21-8ebf-4024-8555-401b4df6acd9', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-455b-81b2-46a9d5eaa3e7', N'2', N'38e39592-6e86-42fb-8f72-adea0c82cbc1', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-455c-87c6-062cab46384f', N'2', N'15362a59-b242-494a-bc6e-413b4a63580e', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-455d-8c12-6929a888a773', N'2', N'2a8f5342-5eb7-491c-a1a9-a2631d8eb5d6', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-488e-80ec-989c378c1156', N'3', N'ddd93ca7-d821-4abd-a342-9be1782dabe9', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-4899-8a75-e7e0c179c915', N'3', N'dc4cd5fd-8933-44f8-9500-fc36285f50b2', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-489a-8fb0-9dd2aba8f1fe', N'3', N'bf5a2919-281c-44e2-a83b-74576e08743e', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-489c-82d1-bf514436f0fd', N'3', N'b67b5eb6-ecae-4156-8ef8-9e80b7a1345a', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6b-fb64-489d-8436-3990c4df4da8', N'3', N'1cecc967-7ea1-46d0-b4fa-f90a15783d1c', N'1', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a77-8947-640b6bed2500', N'1', N'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a81-85fb-95f9416ea58e', N'1', N'253646c6-ffd8-4c7f-9673-f349bbafcbe5', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a85-88d4-8be0745c222e', N'1', N'7e4e4a48-4d51-4159-a113-2a211186f13a', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a86-8ccd-8e4f7481e76e', N'2', N'3f69d32f-cb3b-4fa0-863b-98b9a090d7e9', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a89-801a-0cb8c8c693a6', N'2', N'9fc77888-bbca-4996-9240-a0f389819f6f', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a8a-8416-81165d8c9280', N'2', N'8f698747-a1c3-468d-9279-99990987e0f9', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a8b-86c0-e28a8827caed', N'2', N'7ee3ff62-ab18-4886-9451-89b1d152172e', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a8c-8947-910806e62327', N'1', N'a303cbe1-60eb-437b-9a69-77ff8b48f173', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a8d-8bad-c4a1606252c1', N'2', N'd26da420-7e73-41ef-8361-86551b8dd1bb', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a90-8e17-ad68645351c8', N'2', N'926ae4a9-0ecb-4d5e-a66e-5bae15ae27c2', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a91-8d5b-073eae790976', N'2', N'1d1e71a6-dd8b-4052-8093-f1d7d347b9bc', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a92-8dec-a8cd9b34401c', N'1', N'26452c9a-243d-4c81-97b9-a3ad581c3bf4', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a93-8fef-6c066cb368cc', N'2', N'7e10a7ac-8b65-4c7c-8eee-92d69d7dcbd9', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a95-879f-902f1715affb', N'2', N'0b1b307b-2aac-456b-acfb-484a05c71bd7', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a96-8744-47a8c9bb5503', N'2', N'f51da6f6-8511-49f3-982b-a30ed0946706', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a99-859e-9d0a6a4273f2', N'2', N'1b72be70-e44d-43d6-91d0-dc3ad628d22e', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a9a-8833-52ce73251e07', N'1', N'262ca754-1c73-436c-a9a2-b6374451a845', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a9b-8dfb-0c53fe1f76e4', N'2', N'b83c84e4-6264-4b8e-b319-a49fbf34860d', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a9c-8b1b-4f8a21043385', N'2', N'82b2f4a2-55a1-4f44-b667-3449739643f6', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a9d-89e8-88cf0fef2cea', N'2', N'0fa5e0a8-c786-40af-81af-b133b42dded5', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a9e-89c4-3369899abe30', N'1', N'91A6CFAD-B2F9-4294-BDAE-76DECF412C6C', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4a9f-8c14-d8e6f930f58d', N'2', N'5d708d9d-6ebe-40ea-8589-e3efce9e74ec', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aa2-8594-1be3d05f3755', N'2', N'ffffe7f8-900c-413a-9970-bee7d6599cce', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aa3-86aa-3b9e1f00d90d', N'2', N'239077ff-13e1-4720-84e1-67b6f0276979', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aa4-8853-f5d274105b54', N'2', N'f93763ff-51a1-478d-9585-3c86084c54f3', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aa5-8b92-79253d20c853', N'1', N'F298F868-B689-4982-8C8B-9268CBF0308D', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aa6-8ec9-dc4993221194', N'2', N'13c9a15f-c50d-4f09-8344-fd0050f70086', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aa7-8b98-8cc007ce836b', N'2', N'e75e4efc-d461-4334-a764-56992fec38e6', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aaa-8760-69971a67c1ad', N'2', N'8a9993af-69b2-4d8a-85b3-337745a1f428', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aab-8951-3fbb5aba6e9c', N'2', N'88f7b3a8-fd6d-4f8e-a861-11405f434868', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aac-8c4f-4c500eed9cf1', N'2', N'29306956-f9b2-4e76-bc23-4b8f02d21be3', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aae-819f-d8ca2f9a20f9', N'2', N'd7a452f3-3596-4339-8803-d61fb4eec013', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aaf-8883-86ab47fb885b', N'1', N'38CA5A66-C993-4410-AF95-50489B22939C', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ab0-8ee5-6fe862e8d999', N'2', N'74eecdfb-3bee-405d-be07-27a78219c179', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ab4-8a21-68a27e6d7956', N'2', N'4727adf7-5525-4c8c-9de5-39e49c268349', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ab5-8ba8-69804d1ff921', N'2', N'14617a4f-bfef-4bc2-b943-d18d3ff8d22f', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ab6-8cf9-75caa1b6d55a', N'2', N'abfdff21-8ebf-4024-8555-401b4df6acd9', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ab8-8047-00730b019771', N'2', N'38e39592-6e86-42fb-8f72-adea0c82cbc1', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ab9-8400-6273dec51b6a', N'2', N'15362a59-b242-494a-bc6e-413b4a63580e', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aba-8cb1-a250ab3ab483', N'2', N'2a8f5342-5eb7-491c-a1a9-a2631d8eb5d6', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4abc-81e7-1d7a9c8370fb', N'1', N'462027E0-0848-41DD-BCC3-025DCAE65555', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4abe-8b84-ac502871601a', N'1', N'484269cb-9aea-4af1-b7f6-f99e7e396ad1', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4abf-8ea3-fef9dc344f19', N'1', N'64A1C550-2C61-4A8C-833D-ACD0C012260F', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ac1-809f-4cdf64212084', N'2', N'9FD543DB-C5BB-4789-ACFF-C5865AFB032C', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ac1-8f7e-c0d8b0e22b67', N'2', N'E29FCBA7-F848-4A8B-BC41-A3C668A9005D', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ac3-80b7-bc5c67b6a010', N'2', N'85F5212F-E321-4124-B155-9374AA5D9C10', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ac4-83b7-0ffa533e52da', N'2', N'D4FCAFED-7640-449E-80B7-622DDACD5012', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ac5-86c5-cc2234532277', N'2', N'FD3D073C-4F88-467A-AE3B-CDD060952CE6', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ac8-8170-bb572a0e608f', N'2', N'23780fa8-b92c-4c0e-830e-ddcbe6cf4463', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ac9-8642-be033eb23dbf', N'1', N'01849cc9-c6da-4184-92f8-34875dac1d42', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aca-8b5c-46b36273609f', N'2', N'8f32069f-20f3-48c9-8e35-cd245fffcf64', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4acb-8874-633531be723d', N'2', N'e6514544-1436-431d-acbc-c44802831ea8', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4acc-88dc-93e8c4a34109', N'2', N'ba72435b-1185-4108-8020-7310c5a70233', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4acd-8860-d44e87901bbe', N'1', N'ed757a25-82d5-43cc-89f4-ed26a51fb4f0', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ad0-8584-5ab817fcd0ff', N'2', N'071f5982-efb2-4fa3-a6cf-a02f3f1f9d92', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ad1-832f-09886b9f13f9', N'2', N'3d0e99d1-a150-43dc-84ae-f0e2e0ad2217', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ad2-837b-d98db18a5685', N'2', N'4f727b61-0aa4-45f0-83b5-7fcddfe034e8', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ad3-84a8-d3cfeea48e3b', N'2', N'746629aa-858b-4c5e-9335-71b0fa08a584', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ad4-8735-625881470836', N'2', N'43e09a61-c2b0-46c1-9b81-76d686b390d4', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ad5-8bef-da4ac35f2c58', N'1', N'152a8e93-cebb-4574-ae74-2a86595ff986', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ad6-8ee7-85d4f5b44e52', N'2', N'85bfbb9d-24f0-4a6f-8bb8-0f87826d04fa', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ad9-88bc-3eb774b07d13', N'2', N'd1086ccf-e605-44a4-9777-629810cec02d', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ada-88ce-28509417dd23', N'2', N'01600a2b-c218-48d6-bb37-842daa727248', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4adb-8701-2b9edac39313', N'2', N'63cd2162-ab5f-4b7f-9bbd-5c2e7625e639', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4adc-899a-84096848b321', N'2', N'98c2519c-b39f-4bf3-9543-5cc2630a4bbd', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ade-80ec-4b1bcb52c01b', N'1', N'423A200B-FA5F-4B29-B7B7-A3F5474B725F', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4adf-834a-e59216d87c63', N'2', N'104bcc01-0cfd-433f-87f4-29a8a3efb313', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ae1-885a-f452fff08a7b', N'2', N'4b876abc-1b85-47b0-abc7-96e313b18ed8', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ae2-8ba8-c98e6106aab4', N'2', N'0d777b07-041a-4205-a393-d1a009aaafc7', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ae3-8da0-a8e251cf00be', N'2', N'1ee1c46b-e767-4532-8636-936ea4c12003', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ae4-8f38-d1c865c51d51', N'2', N'82f162cb-beb9-4a79-8924-cd1860e26e2e', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ae6-83f8-f898a7c84c4d', N'1', N'd742c96e-b61c-4cea-afeb-81805789687b', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4ae7-88d8-79d0224e3589', N'2', N'd9e74251-61ff-4472-adec-ad316cb9a307', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aea-8027-116963c15262', N'2', N'0e156a57-8133-4d1b-9d0f-9b7554e7b1fc', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aeb-822f-0a56aa2f33ca', N'2', N'cba403cb-6418-44b7-868d-19e04af673ce', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aec-857b-6f43079710c7', N'2', N'30bf72ed-f62f-49a9-adfc-49693871605f', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aed-882c-f92d2cfe6e4b', N'1', N'337A4661-99A5-4E5E-B028-861CACAF9917', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aee-8c77-72861c5aee65', N'2', N'48afe7b3-e158-4256-b50c-cd0ee7c6dcc9', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aef-8a7f-40d1e18e499e', N'2', N'89d7a69d-b953-4ce2-9294-db4f50f2a157', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4af0-8b30-e1d5632294cf', N'2', N'8c7013a9-3682-4367-8bc6-c77ca89f346b', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4af3-8694-bdd4a2e687e9', N'2', N'a0a41d87-494b-40b5-bd03-0f75c75be7cb', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4af4-8a31-f4ae03d770db', N'1', N'2c2ddbce-ee87-4134-9b32-54d0bd572910', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4af5-8eba-fa15cdcbc8cd', N'2', N'55cc5aba-8121-4151-8df5-f6846396d1a3', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4af6-8bce-1e38a5d6e5a0', N'2', N'4c794628-9b09-4d60-8fb5-63c1a37b2b60', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4af7-89db-015472755cbf', N'2', N'91d768bb-fb68-4807-b3b6-db355bdd6e09', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4af8-8936-c5c6e8c38f83', N'2', N'832f5195-f3ab-4683-82ad-a66a71735ffc', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4af9-8e66-5a2b1443ab7a', N'2', N'2cde1cd0-cfc8-4901-96ef-1fe0c8bf997c', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4afd-857f-a9546459eaee', N'1', N'f82fd629-5f3a-45d6-8681-5ec47e66a807', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4afe-8ac2-320d5ac0b32a', N'2', N'ec452d72-4969-4880-b52f-316ffdfa19bd', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4aff-87d9-edeec82fefaa', N'2', N'35fc1b7c-40b0-42b8-a0f9-c67087566289', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b00-85a3-a25b8e743498', N'2', N'd30ff0f3-39da-4033-a320-56f26edd5b51', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b01-86a2-d172bbd3bab1', N'2', N'73ac1957-7558-49f6-8642-59946d05b8e6', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b02-8792-308882b7a640', N'1', N'73FD1267-79BA-4E23-A152-744AF73117E9', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b05-87ad-ac963012f35b', N'1', N'30c629a0-910e-404b-8c29-a73a6291fd95', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b06-88ed-7e12ee648401', N'1', N'96EE855E-8CD2-47FC-A51D-127C131C9FB9', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b08-804d-d9bbbc33aa37', N'2', N'3a35c662-a356-45e4-953d-00ebd981cad6', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b09-86d8-b713f756a1bf', N'1', N'a3a4742d-ca39-42ec-b95a-8552a6fae579', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b0b-8356-d7a9c1e11358', N'2', N'd4074121-0d4f-465e-ad37-409bbe15bf8a', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b0c-8a2a-46e61753311b', N'2', N'aaf58c1b-4af2-4e5f-a3e4-c48e86378191', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b0e-83fc-715b5d56641c', N'2', N'8379135e-5b13-4236-bfb1-9289e6129034', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b13-8a52-cd882d766e35', N'2', N'329c0326-ce68-4a24-904d-aade67a90fc7', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b15-89f2-25c572e28dca', N'1', N'e3188a69-de3a-40ef-a5ff-5eaf460f5d20', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b17-8752-4216858ac504', N'2', N'87068c95-42c8-4f20-b786-27cb9d3d5ff7', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b19-80fd-f964c018b2a2', N'2', N'd2ecb5e8-e5cc-49c8-ba86-dbd7e51ca20b', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b1a-8c0e-6e3c10b43902', N'2', N'310bb831-a46f-4117-9d02-a3e551611dcf', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b1c-8f53-f627605c39ac', N'2', N'208c2915-d6d0-4bb0-8ec4-154f86561f5a', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b21-8082-aa7694069765', N'2', N'39fc8a42-6335-1ed5-6c73-a055419b61c8', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b22-8ff9-c4cbd1fdd034', N'2', N'e06965bc-b693-4b91-96f9-fc10ca2aa1f0', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b24-8ddc-1cdccab18a8d', N'2', N'cc115cef-c2d1-4b97-adbc-ea885aea6190', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b26-8c33-4762d3dc4f67', N'1', N'49F61713-C1E4-420E-BEEC-0B4DBC2D7DE8', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b28-8909-558f1f2c8cd1', N'1', N'5f9873e9-0308-4a8e-84b7-1c4c61f37654', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b2a-8b4d-6b9a8129984b', N'1', N'c87cd44f-d064-4d3c-a43e-de01a7a8785e', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b2c-876d-21722b4e3c7f', N'2', N'772eb88a-5f67-4bb1-a122-0c83a2bdb5ef', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b2f-8a4f-06c610650046', N'2', N'c8eed325-56ad-4210-b610-3e3bb68eb0be', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b30-8c2f-e03aede84572', N'2', N'5c321b1f-4f56-4276-a1aa-dd23ce12a1fc', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b31-8c61-5cbb91958d4c', N'2', N'153e4773-7425-403f-abf7-42db13f84c8d', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b32-8d97-6752daee06a9', N'2', N'08d9bde2-f14d-4b33-8f9b-2af0bf40812b', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b34-8000-856892a6ff0e', N'1', N'605444e5-704f-4cca-8d00-75175e2aef05', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b35-810f-d8f1d1a74cf2', N'2', N'd42aaaae-4973-427c-ad86-7a6b20b09325', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b35-8e34-2bee13edc35d', N'2', N'e376d482-023e-4715-a9c8-2a393c24426e', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b38-890f-f920fff60a64', N'1', N'ee136db7-178a-4bb0-b878-51287a5e2e2b', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b39-8bea-f9c9d8eb016d', N'2', N'b4be6eee-3509-4685-8064-34b9cacc690a', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b3a-8aba-fe94e03915ae', N'1', N'6b196514-0df1-41aa-ae64-9bb598960709', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b3c-818d-8cf085449310', N'1', N'7cb65e00-8af2-4cf2-b318-8ba28b3c154e', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b3d-8204-e2d25eb7b77d', N'2', N'17a0e46f-28f9-4787-832c-0da25c321ce4', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b3d-8f25-9b8fe0f29256', N'2', N'1a588a3b-95d7-4b3a-b50a-d3bc40de9fe3', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b40-86c0-c430d2e5e905', N'1', N'a5b323e7-db24-468f-97d7-a17bf5396742', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b41-8a06-b9e69a43935e', N'1', N'e9190a56-e173-4483-8a3e-f17b86e4766e', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b42-8b05-cce443b3da19', N'2', N'fcb4d9f0-63f0-4bd0-9779-eed26da5c4b3', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b43-8b75-c106db26f755', N'2', N'6f872aa0-1aae-4f42-a3ba-a61079057749', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b44-89b6-051bfff82d5e', N'2', N'0a1ba1d7-b4f3-45a4-a4da-e70fb25bb766', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b47-81a8-5cf57e071a76', N'2', N'957a355d-d931-40f6-9da0-dddfd9135fe0', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b48-8355-e2a08f499425', N'1', N'bcd52760-009f-4673-80e5-ff166aa07687', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b49-87d8-b699a5639a61', N'1', N'4efd6f84-a4a9-4176-aedd-153e7748cbac', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b4a-87a7-37a008d22acc', N'2', N'9450c723-d64d-459c-9c52-555773a8b50e', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b4b-86e4-b841e9c0037d', N'2', N'd6ed1d69-84f8-4933-9072-4009a3fcba85', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b4c-86e2-dbff791d948c', N'2', N'a2e2a8ba-9311-4699-bcef-b79a2b59b08f', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b4d-89ba-4d08d9dad475', N'2', N'de205812-51c2-4a64-857d-b5638c06c65c', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b50-8de7-c3e300707af0', N'1', N'f3277ddd-1bf1-4202-8a4b-15c29a405bd5', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b52-8036-81c69842ec25', N'2', N'd3a41d48-6288-49ec-90c5-952fa676591f', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b52-8fe9-b2e38438d653', N'2', N'6cd4c3ac-048c-485a-bd4d-e0923f8d7f6e', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b54-8102-6520a4bc85ac', N'2', N'a5619a09-f283-4ed7-82e0-9609815cb62a', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b55-82de-836fefc91242', N'2', N'761f50a6-c1b2-4234-b0af-8f515ec74fe8', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b56-8624-177bea26c885', N'1', N'08d94532-39d1-4822-80b3-0c25a8183155', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b57-8ab9-a091f4949511', N'1', N'08d94532-98ac-4751-8cd4-c6c5ec4048e6', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b5a-8658-cb27f3e18af8', N'2', N'08d94532-98b0-4b60-86a7-eca606765531', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b5b-83e6-d2be89b01b76', N'2', N'08d94532-98b0-4b92-8a2f-4da9f59afa21', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b5c-8171-37cc35d018e3', N'2', N'08d94532-98b0-4ba2-87b3-6c976665cb6b', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b5d-81da-0f69d08866f2', N'2', N'08d94532-98b0-4bac-8e49-471d5b61be95', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b5e-823c-cbf5a3dcc2c3', N'1', N'873e2274-6884-4849-b636-7f04cca8242c', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b5f-8661-848f28e9aa90', N'1', N'd419160a-0a54-4da2-98fe-fc57f2461a2d', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b62-81e9-4948774cf40b', N'1', N'2536fbf0-53ff-40a6-a093-73aa0a8fc035', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b63-8397-cd7bcec9f078', N'1', N'1e60fce5-3164-439d-8d29-4950b33011e2', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b64-8582-32e5c65a6fab', N'1', N'8e52143d-2f97-49e5-89a4-13469f66fc77', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b65-8709-cc52b09450c2', N'1', N'1dff096a-db2f-410c-af2f-12294bdbeccd', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b66-8982-37ea314f1058', N'1', N'06bb3ea8-ec7f-4556-a427-8ff0ce62e873', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b67-8cb8-99abd6d51d9e', N'1', N'c14ab4f2-a1cf-4abd-953b-bacd70e78e8c', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b68-8f7b-7ff7e630a2fc', N'1', N'ca45b5ae-0252-4783-a23d-8633fc35e7e3', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b6b-8f59-d5470a5dd573', N'1', N'39fcc5ad-48af-7778-53a5-4c3c9d18cbd3', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b6d-83e6-f317d3b1d388', N'1', N'e5dc1c07-4234-46d1-bddb-d0442196c6b6', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b73-869c-a2b2a073c5d4', N'3', N'ddd93ca7-d821-4abd-a342-9be1782dabe9', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b74-8189-923b72888b6a', N'3', N'dc4cd5fd-8933-44f8-9500-fc36285f50b2', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b76-8227-bce97854b900', N'3', N'bf5a2919-281c-44e2-a83b-74576e08743e', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b76-8de3-4cb2598ec27d', N'3', N'b67b5eb6-ecae-4156-8ef8-9e80b7a1345a', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b77-88f0-eac5bad80e6b', N'3', N'1cecc967-7ea1-46d0-b4fa-f90a15783d1c', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b7a-872f-2afa1471963c', N'3', N'd52c6878-9283-45d7-82f9-b465fa33a89b', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b7b-81a1-4ae78ad9fee2', N'3', N'bfbe0195-3fae-42d2-9d46-6bf5400d64ea', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b7d-8506-db2f5d70d0e5', N'3', N'be804654-d6d7-44d1-8950-6841a2626720', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b7e-80cc-bb393d91b32d', N'3', N'a24c6ed3-8c91-4ade-a5c1-8c5eb9719368', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b7e-8b26-e7bf74622f1c', N'3', N'309c622d-2217-499f-aa83-2eccd72205a1', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08da9c6c-0fdd-4b7f-8b3e-04b3914f5144', N'3', N'21d40431-d289-415f-bfaf-5a23bf4dac9c', N'1', N'08da9c6c-0fd9-4fde-8b5a-8c1bb0c385b5', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-467f-8729-8430251bf23b', N'1', N'87dc2de3-ccbc-4dab-bb90-89fc68cbde4f', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4802-8014-5152f49b34a6', N'1', N'253646c6-ffd8-4c7f-9673-f349bbafcbe5', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4806-833c-ef1d203fb576', N'1', N'7e4e4a48-4d51-4159-a113-2a211186f13a', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4808-8a02-ec240b5e729e', N'2', N'3f69d32f-cb3b-4fa0-863b-98b9a090d7e9', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-483a-839c-4ca15cf153c4', N'2', N'9fc77888-bbca-4996-9240-a0f389819f6f', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-483d-8ff3-65928cf73b8e', N'2', N'8f698747-a1c3-468d-9279-99990987e0f9', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4841-854a-b02791d80f7c', N'2', N'7ee3ff62-ab18-4886-9451-89b1d152172e', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4845-8f74-1fc32e6454bd', N'1', N'462027E0-0848-41DD-BCC3-025DCAE65555', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4848-8705-0b7f84742803', N'1', N'484269cb-9aea-4af1-b7f6-f99e7e396ad1', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-484a-8e38-b1a015f47929', N'1', N'64A1C550-2C61-4A8C-833D-ACD0C012260F', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-484f-846a-26c09968679b', N'2', N'9FD543DB-C5BB-4789-ACFF-C5865AFB032C', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4851-8a73-66a5156020b8', N'2', N'E29FCBA7-F848-4A8B-BC41-A3C668A9005D', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4854-86e2-013e2b1094bb', N'2', N'85F5212F-E321-4124-B155-9374AA5D9C10', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4857-8710-2215c5eaa178', N'2', N'D4FCAFED-7640-449E-80B7-622DDACD5012', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-485a-8dee-754b2f18205b', N'2', N'FD3D073C-4F88-467A-AE3B-CDD060952CE6', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-485e-8932-408c51a821cb', N'2', N'23780fa8-b92c-4c0e-830e-ddcbe6cf4463', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4864-822d-e4b9c088e629', N'1', N'ed757a25-82d5-43cc-89f4-ed26a51fb4f0', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4868-80bb-fec642eabf31', N'2', N'071f5982-efb2-4fa3-a6cf-a02f3f1f9d92', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4869-8f6b-16af19e21245', N'2', N'3d0e99d1-a150-43dc-84ae-f0e2e0ad2217', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-486c-886f-59bdf504b62d', N'2', N'4f727b61-0aa4-45f0-83b5-7fcddfe034e8', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-486f-8834-b6b9318880f8', N'2', N'746629aa-858b-4c5e-9335-71b0fa08a584', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4872-8c64-2bed01e10025', N'2', N'43e09a61-c2b0-46c1-9b81-76d686b390d4', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-487a-8a1f-35133aec2b51', N'1', N'152a8e93-cebb-4574-ae74-2a86595ff986', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-487d-8685-d729a1f23a4d', N'2', N'85bfbb9d-24f0-4a6f-8bb8-0f87826d04fa', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-487f-8322-4dc938fc2f5c', N'2', N'd1086ccf-e605-44a4-9777-629810cec02d', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4881-8950-82fc9069fe20', N'2', N'01600a2b-c218-48d6-bb37-842daa727248', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4883-8f54-c8262512e626', N'2', N'63cd2162-ab5f-4b7f-9bbd-5c2e7625e639', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4886-8f8f-1af6267f9646', N'2', N'98c2519c-b39f-4bf3-9543-5cc2630a4bbd', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-488c-8546-6eddc608da78', N'1', N'423A200B-FA5F-4B29-B7B7-A3F5474B725F', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-488f-838e-6f94118d8597', N'2', N'104bcc01-0cfd-433f-87f4-29a8a3efb313', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4891-835c-44d9521dc7b7', N'2', N'4b876abc-1b85-47b0-abc7-96e313b18ed8', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4893-8b4d-1e82c4f6ed9a', N'2', N'0d777b07-041a-4205-a393-d1a009aaafc7', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4896-8ae5-8618480cb98e', N'2', N'1ee1c46b-e767-4532-8636-936ea4c12003', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-489b-8be7-da585295d6fb', N'2', N'82f162cb-beb9-4a79-8924-cd1860e26e2e', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-489f-86bf-41c180dc2766', N'1', N'd742c96e-b61c-4cea-afeb-81805789687b', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48a2-8bd4-9999addc36e4', N'2', N'd9e74251-61ff-4472-adec-ad316cb9a307', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48a5-8212-954366e88ad8', N'2', N'0e156a57-8133-4d1b-9d0f-9b7554e7b1fc', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48a8-83b2-4ab12d4e0b0e', N'2', N'cba403cb-6418-44b7-868d-19e04af673ce', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48ad-8855-987dbd593048', N'2', N'30bf72ed-f62f-49a9-adfc-49693871605f', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48b1-81c5-2f1eb9ebe87e', N'1', N'337A4661-99A5-4E5E-B028-861CACAF9917', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48b4-80c8-81499d6dba0d', N'2', N'48afe7b3-e158-4256-b50c-cd0ee7c6dcc9', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48b6-8000-78386fcd3398', N'2', N'89d7a69d-b953-4ce2-9294-db4f50f2a157', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48b8-8916-72c41296d612', N'2', N'8c7013a9-3682-4367-8bc6-c77ca89f346b', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48bb-8a4d-bf37d94a9727', N'2', N'a0a41d87-494b-40b5-bd03-0f75c75be7cb', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48c0-8e29-c969a56492cd', N'1', N'2c2ddbce-ee87-4134-9b32-54d0bd572910', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48c3-8e80-1ed9f27638d1', N'2', N'55cc5aba-8121-4151-8df5-f6846396d1a3', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48c5-89ff-09563f4540ca', N'2', N'4c794628-9b09-4d60-8fb5-63c1a37b2b60', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48c7-8958-f315455c23e7', N'2', N'91d768bb-fb68-4807-b3b6-db355bdd6e09', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48ca-810f-bce144df6f65', N'2', N'832f5195-f3ab-4683-82ad-a66a71735ffc', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48cd-8166-e8f990d9db86', N'2', N'2cde1cd0-cfc8-4901-96ef-1fe0c8bf997c', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48d0-871c-cd485aff0508', N'1', N'f82fd629-5f3a-45d6-8681-5ec47e66a807', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48d5-86a0-013eb484ffd1', N'2', N'ec452d72-4969-4880-b52f-316ffdfa19bd', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48d7-834e-7bce54247165', N'2', N'35fc1b7c-40b0-42b8-a0f9-c67087566289', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48d9-88f1-bf0c602dc797', N'2', N'd30ff0f3-39da-4033-a320-56f26edd5b51', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48dc-83c6-0e6d9536bbc0', N'2', N'73ac1957-7558-49f6-8642-59946d05b8e6', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48df-82f2-585f4ec0f8a8', N'1', N'08daa74b-eb27-4112-8675-2f20f9ea5f8c', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48e2-8383-e1f0386e7e02', N'2', N'08daa74b-eb2c-4564-81ea-b0a247e2d1c1', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48e5-8b66-8dd0f082eaa5', N'2', N'08daa74b-eb2c-45a2-8f15-de416e949b49', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48e7-8a72-ce9b43e76e0a', N'2', N'08daa74b-eb2c-45ae-826d-f3daa858a373', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48ea-81da-99be636bb59b', N'2', N'08daa74b-eb2c-45b7-838a-e638b9b5fbc4', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48ec-8e17-dff522226175', N'2', N'08daa908-83be-459b-85f6-2280b2aa3323', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48f0-8111-cbcbe6abfadf', N'1', N'08daa761-e8bd-4385-8260-70452b199643', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48f3-815b-2ea5a9aa2b14', N'2', N'08daa761-e8c2-451d-82bd-42a949ca6b2b', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48f6-8987-c847dfa339cf', N'2', N'08daa761-e8c2-455c-8aa1-2631fcd858ef', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48f8-8986-f77973f866af', N'2', N'08daa761-e8c2-4568-8044-b7d35d082d6f', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48fb-8175-8a96c4f7f5bb', N'2', N'08daa761-e8c2-4571-8673-5f693d4dd7a7', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-48fd-8ee6-b90e4b5f6ebd', N'1', N'08daa762-eb69-45bf-8b79-a2bece3f91d7', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9b-4901-80f0-195924266222', N'2', N'08daa762-eb70-4380-80e1-6c505d95ff84', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9c-423a-8d67-b2c2619fdc9c', N'3', N'ddd93ca7-d821-4abd-a342-9be1782dabe9', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9c-4265-8724-de18f5147cec', N'3', N'dc4cd5fd-8933-44f8-9500-fc36285f50b2', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9c-4268-8e94-9e01044559db', N'3', N'bf5a2919-281c-44e2-a83b-74576e08743e', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9c-4269-8e37-c82bf853ff0d', N'3', N'b67b5eb6-ecae-4156-8ef8-9e80b7a1345a', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9c-426b-86dc-d881c0b70f47', N'3', N'1cecc967-7ea1-46d0-b4fa-f90a15783d1c', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9c-426f-88e8-ec6e3aef5cd4', N'3', N'd52c6878-9283-45d7-82f9-b465fa33a89b', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9c-4270-854f-617cc1159e5e', N'3', N'bfbe0195-3fae-42d2-9d46-6bf5400d64ea', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9c-4274-8826-44e15df6a5e9', N'3', N'be804654-d6d7-44d1-8950-6841a2626720', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9c-4275-877b-8e3c3ede3f1c', N'3', N'a24c6ed3-8c91-4ade-a5c1-8c5eb9719368', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9c-4276-8936-af8e9f9dcfc3', N'3', N'309c622d-2217-499f-aa83-2eccd72205a1', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_roleauthorize] ([F_Id], [F_ItemType], [F_ItemId], [F_ObjectType], [F_ObjectId], [F_SortCode], [F_CreatorTime], [F_CreatorUserId]) VALUES (N'08dab0c3-6b9c-4277-8f23-61428e4a8163', N'3', N'21d40431-d289-415f-bfaf-5a23bf4dac9c', N'2', N'08dab0c3-6b99-4654-8684-705994c1d32e', NULL, NULL, NULL)
+GO
+
 
 -- ----------------------------
 -- Table structure for sys_serverstate
@@ -18205,11 +16647,11 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_serverstate] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_WebSite] nvarchar(200)  NULL,
-  [F_ARM] nvarchar(50)  NULL,
-  [F_CPU] nvarchar(50)  NULL,
-  [F_IIS] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_WebSite] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ARM] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CPU] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_IIS] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Date] date  NULL,
   [F_Cout] int  NULL
 )
@@ -18543,29 +16985,29 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_systemset] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_Logo] nvarchar(max)  NULL,
-  [F_LogoCode] nvarchar(50)  NULL,
-  [F_ProjectName] nvarchar(50)  NULL,
-  [F_CompanyName] nvarchar(50)  NULL,
-  [F_AdminAccount] nvarchar(50)  NULL,
-  [F_AdminPassword] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Logo] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LogoCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ProjectName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CompanyName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_AdminAccount] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_AdminPassword] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
-  [F_MobilePhone] nvarchar(20)  NULL,
-  [F_PrincipalMan] nvarchar(50)  NULL,
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_MobilePhone] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_PrincipalMan] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EndTime] datetime2(7)  NULL,
-  [F_DbString] nvarchar(max)  NULL,
-  [F_DBProvider] nvarchar(50)  NULL,
-  [F_HostUrl] nvarchar(255)  NULL,
-  [F_DbNumber] nvarchar(50)  NOT NULL
+  [F_DbString] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DBProvider] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_HostUrl] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DbNumber] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL
 )
 GO
 
@@ -18573,10 +17015,109 @@ ALTER TABLE [dbo].[sys_systemset] SET (LOCK_ESCALATION = TABLE)
 GO
 
 
+INSERT INTO [dbo].[sys_systemset] ([F_Id], [F_Logo], [F_LogoCode], [F_ProjectName], [F_CompanyName], [F_AdminAccount], [F_AdminPassword], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_MobilePhone], [F_PrincipalMan], [F_EndTime], [F_DbString], [F_DBProvider], [F_HostUrl], [F_DbNumber]) VALUES (N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'/icon/favicon.ico', N'WaterCloud', N'水之云信息系统', N'水之云', N'admin', N'0000', N'0', N'1', N'', N'2020-06-12 16:30:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2021-06-09 13:22:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'13621551864', N'MonsterUncle', N'2032-06-26 00:00:00.0000000', N'Data Source = .;Initial Catalog = WaterCloudNetDb;User ID=sa;Password=12345678;MultipleActiveResultSets=true;', N'SqlServer', N'localhost', N'0')
+GO
+
+
 -- ----------------------------
--- Records of sys_systemset
+-- Table structure for sys_template
 -- ----------------------------
-INSERT INTO [dbo].[sys_systemset] ([F_Id], [F_Logo], [F_LogoCode], [F_ProjectName], [F_CompanyName], [F_AdminAccount], [F_AdminPassword], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_MobilePhone], [F_PrincipalMan], [F_EndTime], [F_DbString], [F_DBProvider], [F_HostUrl], [F_DbNumber]) VALUES (N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'/icon/favicon.ico', N'WaterCloud', N'水之云信息系统', N'水之云', N'admin', N'0000', N'0', N'1', N'', N'2020-06-12 16:30:00.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'2021-06-09 13:22:12.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, N'13621551864', N'MonsterUncle', N'2032-06-26 00:00:00.0000000', N'data source=localhost;database=watercloudnetdb;uid=root;pwd=root;', N'MySql.Data.MySqlClient', N'localhost', N'0')
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sys_template]') AND type IN ('U'))
+	DROP TABLE [dbo].[sys_template]
+GO
+
+CREATE TABLE [dbo].[sys_template] (
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_TemplateName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_TemplateFile] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_TemplateDBProvider] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_TemplateSql] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_TemplateSqlParm] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_PrintType] int  NULL,
+  [F_Batch] tinyint  NULL,
+  [F_DeleteMark] tinyint  NULL,
+  [F_EnabledMark] tinyint  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorTime] datetime2(7)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LastModifyTime] datetime2(7)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DeleteTime] datetime2(7)  NULL,
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
+)
+GO
+
+ALTER TABLE [dbo].[sys_template] SET (LOCK_ESCALATION = TABLE)
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'主键',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_template',
+'COLUMN', N'F_Id'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'模板名称',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_template',
+'COLUMN', N'F_TemplateName'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'模板文件',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_template',
+'COLUMN', N'F_TemplateFile'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'模板执行库',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_template',
+'COLUMN', N'F_TemplateDBProvider'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'模板执行sql',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_template',
+'COLUMN', N'F_TemplateSql'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'模板执行参数',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_template',
+'COLUMN', N'F_TemplateSqlParm'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'打印方式',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_template',
+'COLUMN', N'F_PrintType'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'是否批量',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_template',
+'COLUMN', N'F_Batch'
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'模板',
+'SCHEMA', N'dbo',
+'TABLE', N'sys_template'
+GO
+
+
+-- ----------------------------
+-- Records of sys_template
+-- ----------------------------
+INSERT INTO [dbo].[sys_template] ([F_Id], [F_TemplateName], [F_TemplateFile], [F_TemplateDBProvider], [F_TemplateSql], [F_TemplateSqlParm], [F_PrintType], [F_Batch], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_CreatorUserName], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'08daa778-f508-4fd6-8f60-e60cb414b464', N'测试模板', N'/file/local/20221006/202210061658345649.frx', N'0', N'SELECT F_EnCode barId,F_EnCode code,F_FullName name FROM `sys_organize` where F_Id=''5AB270C0-5D33-4203-A54F-4552699FDA3C''', N'', N'1', N'0', N'0', N'1', NULL, N'2022-10-06 16:58:38.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
 GO
 
 
@@ -18588,23 +17129,23 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_user] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_Account] nvarchar(50)  NULL,
-  [F_RealName] nvarchar(50)  NULL,
-  [F_NickName] nvarchar(50)  NULL,
-  [F_HeadIcon] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Account] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_RealName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_NickName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_HeadIcon] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Gender] tinyint  NULL,
   [F_Birthday] datetime2(7)  NULL,
-  [F_MobilePhone] nvarchar(20)  NULL,
-  [F_Email] nvarchar(50)  NULL,
-  [F_WeChat] nvarchar(50)  NULL,
-  [F_ManagerId] nvarchar(50)  NULL,
+  [F_MobilePhone] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Email] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_WeChat] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ManagerId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SecurityLevel] int  NULL,
-  [F_Signature] nvarchar(max)  NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
-  [F_DepartmentId] nvarchar(max)  NULL,
-  [F_RoleId] nvarchar(max)  NULL,
-  [F_DutyId] nvarchar(max)  NULL,
+  [F_Signature] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CompanyId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_OrganizeId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_RoleId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DutyId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsAdmin] tinyint  NULL,
   [F_IsBoss] tinyint  NULL,
   [F_IsLeaderInDepts] tinyint  NULL,
@@ -18612,19 +17153,19 @@ CREATE TABLE [dbo].[sys_user] (
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
-  [F_DingTalkUserId] nvarchar(50)  NULL,
-  [F_DingTalkUserName] nvarchar(50)  NULL,
-  [F_DingTalkAvatar] nvarchar(100)  NULL,
-  [F_WxOpenId] nvarchar(50)  NULL,
-  [F_WxNickName] nvarchar(50)  NULL,
-  [F_HeadImgUrl] nvarchar(100)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DingTalkUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DingTalkUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DingTalkAvatar] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_WxOpenId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_WxNickName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_HeadImgUrl] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -18635,7 +17176,10 @@ GO
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO [dbo].[sys_user] ([F_Id], [F_Account], [F_RealName], [F_NickName], [F_HeadIcon], [F_Gender], [F_Birthday], [F_MobilePhone], [F_Email], [F_WeChat], [F_ManagerId], [F_SecurityLevel], [F_Signature], [F_OrganizeId], [F_DepartmentId], [F_RoleId], [F_DutyId], [F_IsAdmin], [F_IsBoss], [F_IsLeaderInDepts], [F_IsSenior], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_DingTalkUserId], [F_DingTalkUserName], [F_DingTalkAvatar], [F_WxOpenId], [F_WxNickName], [F_HeadImgUrl]) VALUES (N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'admin', N'超级管理员', N'超级管理员', NULL, N'1', N'2020-03-27 00:00:00.0000000', N'13600000000', N'3333', NULL, NULL, NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'5AB270C0-5D33-4203-A54F-4552699FDA3C', NULL, NULL, N'1', N'0', N'0', N'0', NULL, N'0', N'1', N'系统内置账户', N'2016-07-20 00:00:00.0000000', NULL, NULL, NULL, NULL, NULL, NULL, N'闫志辉', NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[sys_user] ([F_Id], [F_Account], [F_RealName], [F_NickName], [F_HeadIcon], [F_Gender], [F_Birthday], [F_MobilePhone], [F_Email], [F_WeChat], [F_ManagerId], [F_SecurityLevel], [F_Signature], [F_CompanyId], [F_OrganizeId], [F_RoleId], [F_DutyId], [F_IsAdmin], [F_IsBoss], [F_IsLeaderInDepts], [F_IsSenior], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_DingTalkUserId], [F_DingTalkUserName], [F_DingTalkAvatar], [F_WxOpenId], [F_WxNickName], [F_HeadImgUrl]) VALUES (N'08da9c6c-6d08-47d7-83fe-69ad505d845b', N'33333', N'33333', NULL, NULL, N'1', NULL, N'', N'', N'', NULL, NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'5AB270C0-5D33-4203-A54F-4552699FDA3C', N'08da9c6b-f455-46c0-8ffe-81edad14c7be', N'08da9b75-9474-4da4-8801-ca3a549a8800', N'0', N'0', N'0', N'0', NULL, N'0', N'1', NULL, N'2022-09-22 15:31:12.6022639', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_user] ([F_Id], [F_Account], [F_RealName], [F_NickName], [F_HeadIcon], [F_Gender], [F_Birthday], [F_MobilePhone], [F_Email], [F_WeChat], [F_ManagerId], [F_SecurityLevel], [F_Signature], [F_CompanyId], [F_OrganizeId], [F_RoleId], [F_DutyId], [F_IsAdmin], [F_IsBoss], [F_IsLeaderInDepts], [F_IsSenior], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_DingTalkUserId], [F_DingTalkUserName], [F_DingTalkAvatar], [F_WxOpenId], [F_WxNickName], [F_HeadImgUrl]) VALUES (N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'admin', N'超级管理员', N'超级管理员', NULL, N'1', N'2020-03-27 00:00:00.0000000', N'13600000000', N'3333', NULL, NULL, NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001', N'5AB270C0-5D33-4203-A54F-4552699FDA3C', NULL, NULL, N'1', N'0', N'0', N'0', NULL, N'0', N'1', N'系统内置账户', N'2016-07-20 00:00:00.0000000', NULL, NULL, NULL, NULL, NULL, NULL, N'闫志辉', NULL, NULL, NULL, NULL)
 GO
 
 
@@ -18647,10 +17191,10 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_userlogon] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_UserId] nvarchar(50)  NULL,
-  [F_UserPassword] nvarchar(50)  NULL,
-  [F_UserSecretkey] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_UserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_UserPassword] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_UserSecretkey] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_AllowStartTime] datetime2(7)  NULL,
   [F_AllowEndTime] datetime2(7)  NULL,
   [F_LockStartDate] datetime2(7)  NULL,
@@ -18662,12 +17206,12 @@ CREATE TABLE [dbo].[sys_userlogon] (
   [F_MultiUserLogin] tinyint  NULL,
   [F_LogOnCount] int  NULL,
   [F_UserOnLine] tinyint  NULL,
-  [F_Question] nvarchar(50)  NULL,
-  [F_AnswerQuestion] nvarchar(max)  NULL,
+  [F_Question] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_AnswerQuestion] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CheckIPAddress] tinyint  NULL,
-  [F_Language] nvarchar(50)  NULL,
-  [F_Theme] nvarchar(50)  NULL,
-  [F_LoginSession] nvarchar(100)  NULL,
+  [F_Language] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Theme] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LoginSession] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_ErrorNum] int  NULL
 )
 GO
@@ -18679,6 +17223,9 @@ GO
 -- ----------------------------
 -- Records of sys_userlogon
 -- ----------------------------
+INSERT INTO [dbo].[sys_userlogon] ([F_Id], [F_UserId], [F_UserPassword], [F_UserSecretkey], [F_AllowStartTime], [F_AllowEndTime], [F_LockStartDate], [F_LockEndDate], [F_FirstVisitTime], [F_PreviousVisitTime], [F_LastVisitTime], [F_ChangePasswordDate], [F_MultiUserLogin], [F_LogOnCount], [F_UserOnLine], [F_Question], [F_AnswerQuestion], [F_CheckIPAddress], [F_Language], [F_Theme], [F_LoginSession], [F_ErrorNum]) VALUES (N'08da9c6c-6d08-47d7-83fe-69ad505d845b', N'08da9c6c-6d08-47d7-83fe-69ad505d845b', N'da0240692972ba3d87c3354ce4483331', N'8d130bda8b26f6dd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'0', N'0', NULL, NULL, NULL, NULL, NULL, NULL, N'0')
+GO
+
 INSERT INTO [dbo].[sys_userlogon] ([F_Id], [F_UserId], [F_UserPassword], [F_UserSecretkey], [F_AllowStartTime], [F_AllowEndTime], [F_LockStartDate], [F_LockEndDate], [F_FirstVisitTime], [F_PreviousVisitTime], [F_LastVisitTime], [F_ChangePasswordDate], [F_MultiUserLogin], [F_LogOnCount], [F_UserOnLine], [F_Question], [F_AnswerQuestion], [F_CheckIPAddress], [F_Language], [F_Theme], [F_LoginSession], [F_ErrorNum]) VALUES (N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'99e5c8431f64527c0acd80b34a3dce3c', N'74aeb85d04e4b485', NULL, NULL, NULL, NULL, NULL, N'2020-04-17 14:47:44.0000000', N'2020-04-17 14:59:58.0000000', NULL, N'0', N'360', N'0', NULL, NULL, N'0', NULL, NULL, N'evrcyibdv42f3ykhfy1yz3ur', N'0')
 GO
 
@@ -18879,6 +17426,33 @@ GO
 -- Primary Key structure for table sys_area
 -- ----------------------------
 ALTER TABLE [dbo].[sys_area] ADD CONSTRAINT [PK__sys_area__2C6EC7234A0359F1] PRIMARY KEY CLUSTERED ([F_Id])
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+ON [PRIMARY]
+GO
+
+
+-- ----------------------------
+-- Primary Key structure for table sys_codegeneratelog
+-- ----------------------------
+ALTER TABLE [dbo].[sys_codegeneratelog] ADD CONSTRAINT [PK__sys_code__2C6EC72327F98075] PRIMARY KEY CLUSTERED ([F_Id])
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+ON [PRIMARY]
+GO
+
+
+-- ----------------------------
+-- Primary Key structure for table sys_coderule
+-- ----------------------------
+ALTER TABLE [dbo].[sys_coderule] ADD CONSTRAINT [PK__sys_code__2C6EC7235EA6B31D] PRIMARY KEY CLUSTERED ([F_Id])
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+ON [PRIMARY]
+GO
+
+
+-- ----------------------------
+-- Primary Key structure for table sys_coderulelog
+-- ----------------------------
+ALTER TABLE [dbo].[sys_coderulelog] ADD CONSTRAINT [PK__sys_code__2C6EC7235EE7C97A] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19286,6 +17860,15 @@ GO
 
 
 -- ----------------------------
+-- Primary Key structure for table sys_template
+-- ----------------------------
+ALTER TABLE [dbo].[sys_template] ADD CONSTRAINT [PK__sys_temp__2C6EC723A210694A] PRIMARY KEY CLUSTERED ([F_Id])
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+ON [PRIMARY]
+GO
+
+
+-- ----------------------------
 -- Indexes structure for table sys_user
 -- ----------------------------
 CREATE UNIQUE NONCLUSTERED INDEX [sys_user_key1]
@@ -19327,7 +17910,4 @@ GO
 ALTER TABLE [dbo].[sys_userlogon] ADD CONSTRAINT [PK__sys_user__2C6EC72387C53FFC] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
-GO
-
-INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08d9bde2-f14d-4b33-8f9b-2af0bf40812b', N'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, N'NF-cancle', '撤回', NULL, 1, 'cancle', N'/FlowManage/Flowinstance/CancleForm', NULL, 0, 0, 0, 4, 0, 1, '', '2021-12-13 10:47:46', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '')
 GO
