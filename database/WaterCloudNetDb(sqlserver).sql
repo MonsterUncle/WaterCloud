@@ -1,4 +1,3 @@
-
 -- ----------------------------
 -- Table structure for cms_articlecategory
 -- ----------------------------
@@ -7,25 +6,25 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[cm
 GO
 
 CREATE TABLE [dbo].[cms_articlecategory] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_FullName] nvarchar(100)  NULL,
-  [F_ParentId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_FullName] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NOT NULL,
-  [F_Description] nvarchar(max)  NULL,
-  [F_LinkUrl] nvarchar(255)  NULL,
-  [F_ImgUrl] nvarchar(255)  NULL,
-  [F_SeoTitle] nvarchar(255)  NULL,
-  [F_SeoKeywords] nvarchar(255)  NULL,
-  [F_SeoDescription] nvarchar(255)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LinkUrl] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ImgUrl] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoTitle] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoKeywords] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoDescription] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsHot] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -142,32 +141,32 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[cm
 GO
 
 CREATE TABLE [dbo].[cms_articlenews] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_CategoryId] nvarchar(50)  NOT NULL,
-  [F_Title] nvarchar(200)  NULL,
-  [F_LinkUrl] nvarchar(255)  NULL,
-  [F_ImgUrl] nvarchar(255)  NULL,
-  [F_SeoTitle] nvarchar(255)  NULL,
-  [F_SeoKeywords] nvarchar(255)  NULL,
-  [F_SeoDescription] nvarchar(255)  NULL,
-  [F_Tags] nvarchar(max)  NULL,
-  [F_Zhaiyao] nvarchar(255)  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_CategoryId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Title] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LinkUrl] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ImgUrl] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoTitle] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoKeywords] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SeoDescription] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Tags] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Zhaiyao] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NULL,
   [F_IsTop] tinyint  NULL,
   [F_IsHot] tinyint  NULL,
   [F_IsRed] tinyint  NULL,
   [F_Click] int  NULL,
-  [F_Source] nvarchar(50)  NULL,
-  [F_Author] nvarchar(50)  NULL,
+  [F_Source] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Author] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -368,21 +367,21 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[cr
 GO
 
 CREATE TABLE [dbo].[crm_order] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_OrderCode] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_OrderCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_OrderState] int  NOT NULL,
   [F_NeedTime] datetime2(7)  NULL,
   [F_ActualTime] datetime2(7)  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -440,18 +439,18 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[cr
 GO
 
 CREATE TABLE [dbo].[crm_orderdetail] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_OrderId] nvarchar(50)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_OrderId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_OrderState] int  NOT NULL,
-  [F_ProductName] nvarchar(50)  NULL,
-  [F_ProductDescription] nvarchar(100)  NULL,
-  [F_ProductUnit] nvarchar(5)  NULL,
+  [F_ProductName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ProductDescription] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ProductUnit] nvarchar(5) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_NeedNum] int  NULL,
   [F_ActualNum] int  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_NeedTime] datetime2(7)  NULL,
   [F_ActualTime] datetime2(7)  NULL
 )
@@ -539,33 +538,33 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_flowinstance] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_InstanceSchemeId] nvarchar(50)  NOT NULL,
-  [F_Code] nvarchar(200)  NULL,
-  [F_CustomName] nvarchar(200)  NULL,
-  [F_ActivityId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_InstanceSchemeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Code] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CustomName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ActivityId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_ActivityType] int  NULL,
-  [F_ActivityName] nvarchar(200)  NULL,
-  [F_PreviousId] nvarchar(50)  NULL,
-  [F_SchemeContent] nvarchar(max)  NULL,
-  [F_SchemeId] nvarchar(50)  NULL,
-  [F_DbName] nvarchar(50)  NULL,
-  [F_FrmData] nvarchar(max)  NULL,
+  [F_ActivityName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_PreviousId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeContent] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DbName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FrmData] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FrmType] int  NOT NULL,
-  [F_FrmContentData] nvarchar(max)  NULL,
-  [F_FrmContentParse] nvarchar(max)  NULL,
-  [F_FrmId] nvarchar(50)  NULL,
-  [F_SchemeType] nvarchar(50)  NULL,
+  [F_FrmContentData] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FrmContentParse] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FrmId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeType] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FlowLevel] int  NOT NULL,
-  [F_Description] nvarchar(200)  NULL,
+  [F_Description] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsFinish] int  NOT NULL,
-  [F_MakerList] nvarchar(max)  NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
+  [F_MakerList] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
-  [F_FrmContent] nvarchar(max)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FrmContent] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1179,19 +1178,19 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_flowinstancehis] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_InstanceId] nvarchar(50)  NOT NULL,
-  [F_FromNodeId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_InstanceId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_FromNodeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FromNodeType] int  NULL,
-  [F_FromNodeName] nvarchar(200)  NULL,
-  [F_ToNodeId] nvarchar(50)  NULL,
+  [F_FromNodeName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ToNodeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_ToNodeType] int  NULL,
-  [F_ToNodeName] nvarchar(200)  NULL,
+  [F_ToNodeName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_TransitionSate] tinyint  NOT NULL,
   [F_IsFinish] tinyint  NOT NULL,
   [F_CreatorTime] datetime2(7)  NOT NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1320,12 +1319,12 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_flowinstanceinfo] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_InstanceId] nvarchar(50)  NOT NULL,
-  [F_Content] nvarchar(200)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_InstanceId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Content] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NOT NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1408,17 +1407,17 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_formtest] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_UserName] nvarchar(10)  NOT NULL,
-  [F_RequestType] nvarchar(20)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_UserName] nvarchar(10) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_RequestType] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_StartTime] datetime2(7)  NULL,
   [F_EndTime] datetime2(7)  NULL,
-  [F_RequestComment] nvarchar(max)  NULL,
-  [F_Attachment] nvarchar(max)  NULL,
+  [F_RequestComment] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Attachment] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NOT NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
-  [F_FlowInstanceId] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FlowInstanceId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1524,18 +1523,18 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_message] (
-  [F_Id] nvarchar(50)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_MessageType] int  NULL,
-  [F_ToUserId] nvarchar(50)  NULL,
-  [F_ToUserName] nvarchar(50)  NULL,
-  [F_MessageInfo] nvarchar(max)  NULL,
+  [F_ToUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ToUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_MessageInfo] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
-  [F_HrefTarget] nvarchar(50)  NULL,
-  [F_Href] nvarchar(100)  NULL,
-  [F_KeyValue] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_HrefTarget] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Href] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_KeyValue] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_ClickRead] tinyint  NULL
 )
 GO
@@ -1692,11 +1691,11 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_messagehis] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_MessageId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_MessageId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1796,19 +1795,19 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[om
 GO
 
 CREATE TABLE [dbo].[oms_uploadfile] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_FilePath] nvarchar(50)  NULL,
-  [F_FileName] nvarchar(200)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_FilePath] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FileName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_FileType] int  NULL,
   [F_FileSize] int  NULL,
-  [F_FileExtension] nvarchar(20)  NULL,
-  [F_FileBy] nvarchar(50)  NULL,
-  [F_Description] nvarchar(200)  NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
+  [F_FileExtension] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FileBy] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Description] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -1925,22 +1924,22 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_area] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ParentId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Layers] int  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
-  [F_SimpleSpelling] nvarchar(50)  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SimpleSpelling] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] bigint  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12167,20 +12166,20 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_dataprivilegerule] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ModuleId] nvarchar(50)  NULL,
-  [F_ModuleCode] nvarchar(50)  NULL,
-  [F_PrivilegeRules] nvarchar(max)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ModuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ModuleCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_PrivilegeRules] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12203,20 +12202,20 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_filterip] (
-  [F_Id] nvarchar(50)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_Type] tinyint  NULL,
-  [F_StartIP] nvarchar(50)  NULL,
-  [F_EndIP] nvarchar(50)  NULL,
+  [F_StartIP] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_EndIP] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(max)  NULL,
+  [F_DeleteUserId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EndTime] datetime2(7)  NULL
 )
 GO
@@ -12237,29 +12236,29 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_flowscheme] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_SchemeCode] nvarchar(50)  NULL,
-  [F_SchemeName] nvarchar(200)  NULL,
-  [F_SchemeType] nvarchar(50)  NULL,
-  [F_SchemeVersion] nvarchar(50)  NULL,
-  [F_SchemeCanUser] nvarchar(max)  NULL,
-  [F_SchemeContent] nvarchar(max)  NULL,
-  [F_FrmId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_SchemeCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeName] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeType] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeVersion] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeCanUser] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SchemeContent] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FrmId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FrmType] int  NOT NULL,
   [F_AuthorizeType] int  NOT NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(200)  NULL,
+  [F_Description] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
-  [F_LastModifyUserName] nvarchar(50)  NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LastModifyUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12452,26 +12451,26 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_form] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_Name] nvarchar(200)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Name] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_FrmType] int  NULL,
-  [F_WebId] nvarchar(50)  NULL,
+  [F_WebId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Fields] int  NULL,
-  [F_ContentData] nvarchar(max)  NULL,
-  [F_ContentParse] nvarchar(max)  NULL,
-  [F_Content] nvarchar(max)  NULL,
+  [F_ContentData] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ContentParse] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Content] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NULL,
   [F_EnabledMark] tinyint  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
-  [F_Description] nvarchar(max)  NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
-  [F_DbName] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DbName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12801,22 +12800,22 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_items] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ParentId] nvarchar(50)  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsTree] tinyint  NULL,
   [F_Layers] int  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12878,24 +12877,24 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_itemsdetail] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ItemId] nvarchar(50)  NULL,
-  [F_ParentId] nvarchar(50)  NULL,
-  [F_ItemCode] nvarchar(50)  NULL,
-  [F_ItemName] nvarchar(50)  NULL,
-  [F_SimpleSpelling] nvarchar(max)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ItemId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ItemCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ItemName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_SimpleSpelling] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsDefault] tinyint  NULL,
   [F_Layers] int  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -12958,6 +12957,9 @@ INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCo
 GO
 
 INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'39fc87c1-679d-0818-ab56-79c34e727672', N'39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, N'4', N'Delete', NULL, N'0', NULL, N'4', N'0', N'1', N'', N'2021-05-16 22:29:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'39fc87c1-679d-0818-ab56-79c34e999999', N'39fc87c0-7ff4-eeae-a897-b7418aeb4851', NULL, N'5', N'Sql', NULL, N'0', NULL, N'5', N'0', N'1', N'', N'2022-06-09 09:29:01.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
 GO
 
 INSERT INTO [dbo].[sys_itemsdetail] ([F_Id], [F_ItemId], [F_ParentId], [F_ItemCode], [F_ItemName], [F_SimpleSpelling], [F_IsDefault], [F_Layers], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId]) VALUES (N'39fcc061-aaf8-2e3a-dfa3-138de46b189e', N'39fcc059-5908-10be-14d9-a6bc5e7e9cfd', NULL, N'0', N'原料', NULL, N'0', NULL, N'0', N'0', N'1', N'', N'2021-05-27 22:22:48.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL)
@@ -13116,21 +13118,21 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_log] (
-  [F_Id] nvarchar(50)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_Date] datetime2(7)  NULL,
-  [F_Account] nvarchar(50)  NULL,
-  [F_NickName] nvarchar(50)  NULL,
-  [F_Type] nvarchar(50)  NULL,
-  [F_IPAddress] nvarchar(50)  NULL,
-  [F_IPAddressName] nvarchar(50)  NULL,
-  [F_ModuleId] nvarchar(50)  NULL,
-  [F_ModuleName] nvarchar(50)  NULL,
+  [F_Account] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_NickName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Type] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_IPAddress] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_IPAddressName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ModuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ModuleName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Result] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_KeyValue] nvarchar(max)  NULL,
-  [F_CompanyId] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_KeyValue] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CompanyId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -13601,6 +13603,9 @@ INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Typ
 GO
 
 INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08d92cac-3dde-45e6-8462-e71d78caa8b9', N'2021-06-11 15:40:53.0000000', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'iana保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2021-06-11 15:40:53.0000000', NULL, NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
+GO
+
+INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'08dacc27-9ee7-4d7a-8947-42a7d15cc9c0', N'2022-11-22 09:19:36.6966667', N'admin', N'超级管理员', N'Login', N'0.0.0.1', N'IANA保留地址', NULL, N'系统登录', N'1', N'登录成功', N'2022-11-22 09:19:36.8166667', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
 GO
 
 INSERT INTO [dbo].[sys_log] ([F_Id], [F_Date], [F_Account], [F_NickName], [F_Type], [F_IPAddress], [F_IPAddressName], [F_ModuleId], [F_ModuleName], [F_Result], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_KeyValue], [F_CompanyId]) VALUES (N'095f9844-3ecf-4075-b5d1-5e8a41776742', N'2020-10-28 13:01:37.0000000', N'admin', N'超级管理员', N'Update', N'192.168.3.42', N'本地局域网', NULL, N'常规管理-系统安全-定时任务', N'1', N'定时任务操作,修改操作成功。', N'2020-10-28 13:01:37.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', N'1d9ffe9c-4c59-4431-8539-4c5ea364237e', N'd69fd66a-6a77-4011-8a25-53a79bdf5001')
@@ -16366,14 +16371,14 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_module] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ParentId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Layers] int  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
-  [F_Icon] nvarchar(50)  NULL,
-  [F_UrlAddress] nvarchar(max)  NULL,
-  [F_Target] nvarchar(50)  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Icon] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_UrlAddress] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Target] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsMenu] tinyint  NULL,
   [F_IsExpand] tinyint  NULL,
   [F_IsFields] tinyint  NULL,
@@ -16383,14 +16388,14 @@ CREATE TABLE [dbo].[sys_module] (
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
-  [F_Authorize] nvarchar(100)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Authorize] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -16560,16 +16565,16 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_modulebutton] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ModuleId] nvarchar(50)  NULL,
-  [F_ParentId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ModuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Layers] int  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
-  [F_Icon] nvarchar(50)  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Icon] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Location] int  NULL,
-  [F_JsEvent] nvarchar(50)  NULL,
-  [F_UrlAddress] nvarchar(max)  NULL,
+  [F_JsEvent] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_UrlAddress] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Split] tinyint  NULL,
   [F_IsPublic] tinyint  NULL,
   [F_AllowEdit] tinyint  NULL,
@@ -16577,14 +16582,14 @@ CREATE TABLE [dbo].[sys_modulebutton] (
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
-  [F_Authorize] nvarchar(100)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Authorize] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -16611,6 +16616,9 @@ INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Lay
 GO
 
 INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08d94532-98b0-4bac-8e49-471d5b61be95', N'08d94532-98ac-4751-8cd4-c6c5ec4048e6', N'0', N'1', N'NF-details', N'查看', NULL, N'2', N'details', N'/OrderManagement/Order/Details', N'0', N'0', N'0', N'0', N'3', N'0', N'1', NULL, N'2021-07-12 20:43:06.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
+GO
+
+INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08d9bde2-f14d-4b33-8f9b-2af0bf40812b', N'c87cd44f-d064-4d3c-a43e-de01a7a8785e', N'0', N'1', N'NF-cancle', N'撤回', NULL, N'1', N'cancle', N'/FlowManage/Flowinstance/CancleForm', NULL, N'0', N'0', N'0', N'4', N'0', N'1', N'', N'2021-12-13 10:47:46.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, N'')
 GO
 
 INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'0a1ba1d7-b4f3-45a4-a4da-e70fb25bb766', N'e9190a56-e173-4483-8a3e-f17b86e4766e', N'0', N'1', N'NF-delete', N'删除', NULL, N'2', N'delete', N'/InfoManage/Message/DeleteForm', N'0', N'0', N'0', N'0', N'2', N'0', N'1', NULL, N'2020-07-29 16:44:08.0000000', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, NULL)
@@ -16946,19 +16954,19 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_modulefields] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ModuleId] nvarchar(50)  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ModuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsPublic] tinyint  NULL
 )
 GO
@@ -17324,19 +17332,19 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_notice] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_Title] nvarchar(50)  NULL,
-  [F_Content] nvarchar(max)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Title] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Content] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
-  [F_CreatorUserName] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CreatorUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -17867,43 +17875,39 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_openjob] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_FileName] nvarchar(100)  NULL,
-  [F_JobName] nvarchar(50)  NULL,
-  [F_JobGroup] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_FileName] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobGroup] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_StarRunTime] datetime2(7)  NULL,
   [F_EndRunTime] datetime2(7)  NULL,
-  [F_CronExpress] nvarchar(50)  NULL,
+  [F_CronExpress] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(500)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastRunTime] datetime2(7)  NULL,
   [F_LastRunMark] tinyint  NULL,
   [F_LastRunErrTime] datetime2(7)  NULL,
-  [F_LastRunErrMsg] nvarchar(max)  NULL,
+  [F_LastRunErrMsg] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_JobType] int  NOT NULL,
-  [F_IsLog] char(2)  NULL,
-  [F_RequestHeaders] nvarchar(max)  NULL,
-  [F_RequestString] nvarchar(max)  NULL,
-  [F_RequestUrl] nvarchar(max)  NULL,
-  [F_DbNumber] nvarchar(50)  NULL
+  [F_IsLog] nchar(2) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_RequestHeaders] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_RequestString] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_RequestUrl] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DbNumber] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobSql] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobSqlParm] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_JobDBProvider] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
 ALTER TABLE [dbo].[sys_openjob] SET (LOCK_ESCALATION = TABLE)
-GO
-
-EXEC sp_addextendedproperty
-'MS_Description', N'主键Id',
-'SCHEMA', N'dbo',
-'TABLE', N'sys_openjob',
-'COLUMN', N'F_Id'
 GO
 
 
@@ -17919,12 +17923,12 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_openjoblog] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_JobId] nvarchar(50)  NOT NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_JobId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
   [F_EnabledMark] tinyint  NOT NULL,
-  [F_JobName] nvarchar(50)  NULL
+  [F_JobName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -17997,33 +18001,33 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_organize] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ParentId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ParentId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Layers] int  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
-  [F_ShortName] nvarchar(50)  NULL,
-  [F_CategoryId] nvarchar(50)  NULL,
-  [F_ManagerId] nvarchar(50)  NULL,
-  [F_TelePhone] nvarchar(20)  NULL,
-  [F_MobilePhone] nvarchar(20)  NULL,
-  [F_WeChat] nvarchar(50)  NULL,
-  [F_Fax] nvarchar(20)  NULL,
-  [F_Email] nvarchar(50)  NULL,
-  [F_AreaId] nvarchar(50)  NULL,
-  [F_Address] nvarchar(max)  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ShortName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CategoryId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ManagerId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_TelePhone] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_MobilePhone] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_WeChat] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Fax] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Email] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_AreaId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Address] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_AllowEdit] tinyint  NULL,
   [F_AllowDelete] tinyint  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -18067,17 +18071,17 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_quickmodule] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_ModuleId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_ModuleId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -18124,24 +18128,24 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_role] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Category] int  NULL,
-  [F_EnCode] nvarchar(50)  NULL,
-  [F_FullName] nvarchar(50)  NULL,
-  [F_Type] nvarchar(50)  NULL,
+  [F_EnCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_FullName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Type] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_AllowEdit] tinyint  NULL,
   [F_AllowDelete] tinyint  NULL,
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -18161,14 +18165,14 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_roleauthorize] (
-  [F_Id] nvarchar(50)  NOT NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
   [F_ItemType] int  NULL,
-  [F_ItemId] nvarchar(50)  NULL,
+  [F_ItemId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_ObjectType] int  NULL,
-  [F_ObjectId] nvarchar(50)  NULL,
+  [F_ObjectId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SortCode] int  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -18188,11 +18192,11 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_serverstate] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_WebSite] nvarchar(200)  NULL,
-  [F_ARM] nvarchar(50)  NULL,
-  [F_CPU] nvarchar(50)  NULL,
-  [F_IIS] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_WebSite] nvarchar(200) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ARM] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CPU] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_IIS] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Date] date  NULL,
   [F_Cout] int  NULL
 )
@@ -18526,29 +18530,29 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_systemset] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_Logo] nvarchar(max)  NULL,
-  [F_LogoCode] nvarchar(50)  NULL,
-  [F_ProjectName] nvarchar(50)  NULL,
-  [F_CompanyName] nvarchar(50)  NULL,
-  [F_AdminAccount] nvarchar(50)  NULL,
-  [F_AdminPassword] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Logo] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LogoCode] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ProjectName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_CompanyName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_AdminAccount] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_AdminPassword] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
-  [F_MobilePhone] nvarchar(20)  NULL,
-  [F_PrincipalMan] nvarchar(50)  NULL,
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_MobilePhone] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_PrincipalMan] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_EndTime] datetime2(7)  NULL,
-  [F_DbString] nvarchar(max)  NULL,
-  [F_DBProvider] nvarchar(50)  NULL,
-  [F_HostUrl] nvarchar(255)  NULL,
-  [F_DbNumber] nvarchar(50)  NOT NULL
+  [F_DbString] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DBProvider] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_HostUrl] nvarchar(255) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DbNumber] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL
 )
 GO
 
@@ -18571,23 +18575,23 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_user] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_Account] nvarchar(50)  NULL,
-  [F_RealName] nvarchar(50)  NULL,
-  [F_NickName] nvarchar(50)  NULL,
-  [F_HeadIcon] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_Account] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_RealName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_NickName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_HeadIcon] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_Gender] tinyint  NULL,
   [F_Birthday] datetime2(7)  NULL,
-  [F_MobilePhone] nvarchar(20)  NULL,
-  [F_Email] nvarchar(50)  NULL,
-  [F_WeChat] nvarchar(50)  NULL,
-  [F_ManagerId] nvarchar(50)  NULL,
+  [F_MobilePhone] nvarchar(20) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Email] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_WeChat] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_ManagerId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_SecurityLevel] int  NULL,
-  [F_Signature] nvarchar(max)  NULL,
-  [F_OrganizeId] nvarchar(50)  NULL,
-  [F_DepartmentId] nvarchar(max)  NULL,
-  [F_RoleId] nvarchar(max)  NULL,
-  [F_DutyId] nvarchar(max)  NULL,
+  [F_Signature] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_OrganizeId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DepartmentId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_RoleId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DutyId] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_IsAdmin] tinyint  NULL,
   [F_IsBoss] tinyint  NULL,
   [F_IsLeaderInDepts] tinyint  NULL,
@@ -18595,19 +18599,19 @@ CREATE TABLE [dbo].[sys_user] (
   [F_SortCode] int  NULL,
   [F_DeleteMark] tinyint  NULL,
   [F_EnabledMark] tinyint  NULL,
-  [F_Description] nvarchar(max)  NULL,
+  [F_Description] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CreatorTime] datetime2(7)  NULL,
-  [F_CreatorUserId] nvarchar(50)  NULL,
+  [F_CreatorUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_LastModifyTime] datetime2(7)  NULL,
-  [F_LastModifyUserId] nvarchar(50)  NULL,
+  [F_LastModifyUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_DeleteTime] datetime2(7)  NULL,
-  [F_DeleteUserId] nvarchar(50)  NULL,
-  [F_DingTalkUserId] nvarchar(50)  NULL,
-  [F_DingTalkUserName] nvarchar(50)  NULL,
-  [F_DingTalkAvatar] nvarchar(100)  NULL,
-  [F_WxOpenId] nvarchar(50)  NULL,
-  [F_WxNickName] nvarchar(50)  NULL,
-  [F_HeadImgUrl] nvarchar(100)  NULL
+  [F_DeleteUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DingTalkUserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DingTalkUserName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_DingTalkAvatar] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_WxOpenId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_WxNickName] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_HeadImgUrl] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL
 )
 GO
 
@@ -18630,10 +18634,10 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[sy
 GO
 
 CREATE TABLE [dbo].[sys_userlogon] (
-  [F_Id] nvarchar(50)  NOT NULL,
-  [F_UserId] nvarchar(50)  NULL,
-  [F_UserPassword] nvarchar(50)  NULL,
-  [F_UserSecretkey] nvarchar(50)  NULL,
+  [F_Id] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NOT NULL,
+  [F_UserId] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_UserPassword] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_UserSecretkey] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_AllowStartTime] datetime2(7)  NULL,
   [F_AllowEndTime] datetime2(7)  NULL,
   [F_LockStartDate] datetime2(7)  NULL,
@@ -18645,12 +18649,12 @@ CREATE TABLE [dbo].[sys_userlogon] (
   [F_MultiUserLogin] tinyint  NULL,
   [F_LogOnCount] int  NULL,
   [F_UserOnLine] tinyint  NULL,
-  [F_Question] nvarchar(50)  NULL,
-  [F_AnswerQuestion] nvarchar(max)  NULL,
+  [F_Question] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_AnswerQuestion] nvarchar(max) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_CheckIPAddress] tinyint  NULL,
-  [F_Language] nvarchar(50)  NULL,
-  [F_Theme] nvarchar(50)  NULL,
-  [F_LoginSession] nvarchar(100)  NULL,
+  [F_Language] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_Theme] nvarchar(50) COLLATE Chinese_PRC_CI_AS  NULL,
+  [F_LoginSession] nvarchar(100) COLLATE Chinese_PRC_CI_AS  NULL,
   [F_ErrorNum] int  NULL
 )
 GO
@@ -18679,7 +18683,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table cms_articlecategory
 -- ----------------------------
-ALTER TABLE [dbo].[cms_articlecategory] ADD CONSTRAINT [PK__cms_arti__2C6EC7236FC12859] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[cms_articlecategory] ADD CONSTRAINT [PK__cms_arti__2C6EC72366D4DBB8] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18699,7 +18703,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table cms_articlenews
 -- ----------------------------
-ALTER TABLE [dbo].[cms_articlenews] ADD CONSTRAINT [PK__cms_arti__2C6EC723A669E568] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[cms_articlenews] ADD CONSTRAINT [PK__cms_arti__2C6EC7235A1E319D] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18725,7 +18729,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table crm_order
 -- ----------------------------
-ALTER TABLE [dbo].[crm_order] ADD CONSTRAINT [PK__crm_orde__2C6EC723652E10FE] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[crm_order] ADD CONSTRAINT [PK__crm_orde__2C6EC723698318EA] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18752,7 +18756,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table crm_orderdetail
 -- ----------------------------
-ALTER TABLE [dbo].[crm_orderdetail] ADD CONSTRAINT [PK__crm_orde__2C6EC7239DE559CA] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[crm_orderdetail] ADD CONSTRAINT [PK__crm_orde__2C6EC7232C0B5967] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18771,7 +18775,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_flowinstance
 -- ----------------------------
-ALTER TABLE [dbo].[oms_flowinstance] ADD CONSTRAINT [PK__oms_flow__2C6EC7234EC149C4] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_flowinstance] ADD CONSTRAINT [PK__oms_flow__2C6EC723EFA07C15] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18780,7 +18784,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_flowinstancehis
 -- ----------------------------
-ALTER TABLE [dbo].[oms_flowinstancehis] ADD CONSTRAINT [PK__oms_flow__2C6EC723FEBD1C76] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_flowinstancehis] ADD CONSTRAINT [PK__oms_flow__2C6EC723B59E94DA] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18789,7 +18793,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_flowinstanceinfo
 -- ----------------------------
-ALTER TABLE [dbo].[oms_flowinstanceinfo] ADD CONSTRAINT [PK__oms_flow__2C6EC7231253CD53] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_flowinstanceinfo] ADD CONSTRAINT [PK__oms_flow__2C6EC7238CCFDAEB] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18798,7 +18802,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_formtest
 -- ----------------------------
-ALTER TABLE [dbo].[oms_formtest] ADD CONSTRAINT [PK__oms_form__2C6EC7238B687B97] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_formtest] ADD CONSTRAINT [PK__oms_form__2C6EC723D1860EDD] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18807,7 +18811,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_message
 -- ----------------------------
-ALTER TABLE [dbo].[oms_message] ADD CONSTRAINT [PK__oms_mess__2C6EC7238BC47D88] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_message] ADD CONSTRAINT [PK__oms_mess__2C6EC7237C3FB430] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18816,7 +18820,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_messagehis
 -- ----------------------------
-ALTER TABLE [dbo].[oms_messagehis] ADD CONSTRAINT [PK__oms_mess__2C6EC723EAF9C232] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_messagehis] ADD CONSTRAINT [PK__oms_mess__2C6EC723FF0D94FC] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18842,7 +18846,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table oms_uploadfile
 -- ----------------------------
-ALTER TABLE [dbo].[oms_uploadfile] ADD CONSTRAINT [PK__oms_uplo__2C6EC723C7D25D2B] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[oms_uploadfile] ADD CONSTRAINT [PK__oms_uplo__2C6EC723D01BCE93] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18861,7 +18865,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_area
 -- ----------------------------
-ALTER TABLE [dbo].[sys_area] ADD CONSTRAINT [PK__sys_area__2C6EC7234A0359F1] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_area] ADD CONSTRAINT [PK__sys_area__2C6EC7233A6CF682] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18887,7 +18891,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_dataprivilegerule
 -- ----------------------------
-ALTER TABLE [dbo].[sys_dataprivilegerule] ADD CONSTRAINT [PK__sys_data__2C6EC72377389C0F] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_dataprivilegerule] ADD CONSTRAINT [PK__sys_data__2C6EC723ABE8BF76] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18896,7 +18900,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_filterip
 -- ----------------------------
-ALTER TABLE [dbo].[sys_filterip] ADD CONSTRAINT [PK__sys_filt__2C6EC7236F19E7C9] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_filterip] ADD CONSTRAINT [PK__sys_filt__2C6EC723532DF11D] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18915,7 +18919,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_flowscheme
 -- ----------------------------
-ALTER TABLE [dbo].[sys_flowscheme] ADD CONSTRAINT [PK__sys_flow__2C6EC72308DCA9DB] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_flowscheme] ADD CONSTRAINT [PK__sys_flow__2C6EC72391C554AE] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18941,7 +18945,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_form
 -- ----------------------------
-ALTER TABLE [dbo].[sys_form] ADD CONSTRAINT [PK__sys_form__2C6EC723B7085DF6] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_form] ADD CONSTRAINT [PK__sys_form__2C6EC723D3543B2A] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18967,7 +18971,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_items
 -- ----------------------------
-ALTER TABLE [dbo].[sys_items] ADD CONSTRAINT [PK__sys_item__2C6EC723A092701F] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_items] ADD CONSTRAINT [PK__sys_item__2C6EC72319E270AA] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -18994,7 +18998,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_itemsdetail
 -- ----------------------------
-ALTER TABLE [dbo].[sys_itemsdetail] ADD CONSTRAINT [PK__sys_item__2C6EC7233965730B] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_itemsdetail] ADD CONSTRAINT [PK__sys_item__2C6EC7235F0A4BB5] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19003,7 +19007,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_log
 -- ----------------------------
-ALTER TABLE [dbo].[sys_log] ADD CONSTRAINT [PK__sys_log__2C6EC7231BFD14AC] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_log] ADD CONSTRAINT [PK__sys_log__2C6EC72343C85760] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19029,7 +19033,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_module
 -- ----------------------------
-ALTER TABLE [dbo].[sys_module] ADD CONSTRAINT [PK__sys_modu__2C6EC723378CC01A] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_module] ADD CONSTRAINT [PK__sys_modu__2C6EC723C2175DC1] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19057,7 +19061,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_modulebutton
 -- ----------------------------
-ALTER TABLE [dbo].[sys_modulebutton] ADD CONSTRAINT [PK__sys_modu__2C6EC723D6D79974] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_modulebutton] ADD CONSTRAINT [PK__sys_modu__2C6EC7232FF08EE3] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19084,7 +19088,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_modulefields
 -- ----------------------------
-ALTER TABLE [dbo].[sys_modulefields] ADD CONSTRAINT [PK__sys_modu__2C6EC72383656FED] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_modulefields] ADD CONSTRAINT [PK__sys_modu__2C6EC72375E9E046] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19110,7 +19114,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_notice
 -- ----------------------------
-ALTER TABLE [dbo].[sys_notice] ADD CONSTRAINT [PK__sys_noti__2C6EC723E0859AC2] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_notice] ADD CONSTRAINT [PK__sys_noti__2C6EC7236FAEC4B2] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19119,7 +19123,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_openjob
 -- ----------------------------
-ALTER TABLE [dbo].[sys_openjob] ADD CONSTRAINT [PK__sys_open__2C6EC7233E52440B] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_openjob] ADD CONSTRAINT [PK__sys_open__2C6EC723D5EA536D] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19128,7 +19132,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_openjoblog
 -- ----------------------------
-ALTER TABLE [dbo].[sys_openjoblog] ADD CONSTRAINT [PK__sys_open__2C6EC723E76897B9] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_openjoblog] ADD CONSTRAINT [PK__sys_open__2C6EC723C343F3C2] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19154,7 +19158,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_organize
 -- ----------------------------
-ALTER TABLE [dbo].[sys_organize] ADD CONSTRAINT [PK__sys_orga__2C6EC7238FCE5A71] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_organize] ADD CONSTRAINT [PK__sys_orga__2C6EC723B55DDCD0] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19181,7 +19185,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_quickmodule
 -- ----------------------------
-ALTER TABLE [dbo].[sys_quickmodule] ADD CONSTRAINT [PK__sys_quic__2C6EC72399178528] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_quickmodule] ADD CONSTRAINT [PK__sys_quic__2C6EC723263DB3EA] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19207,7 +19211,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_role
 -- ----------------------------
-ALTER TABLE [dbo].[sys_role] ADD CONSTRAINT [PK__sys_role__2C6EC723A73B1012] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_role] ADD CONSTRAINT [PK__sys_role__2C6EC7231CBC5FB5] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19216,7 +19220,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_roleauthorize
 -- ----------------------------
-ALTER TABLE [dbo].[sys_roleauthorize] ADD CONSTRAINT [PK__sys_role__2C6EC7235BB03629] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_roleauthorize] ADD CONSTRAINT [PK__sys_role__2C6EC7236DCC4EF3] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19243,7 +19247,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_serverstate
 -- ----------------------------
-ALTER TABLE [dbo].[sys_serverstate] ADD CONSTRAINT [PK__sys_serv__2C6EC7238622D477] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_serverstate] ADD CONSTRAINT [PK__sys_serv__2C6EC7237C932FB5] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19262,7 +19266,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_systemset
 -- ----------------------------
-ALTER TABLE [dbo].[sys_systemset] ADD CONSTRAINT [PK__sys_syst__2C6EC72365900F98] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_systemset] ADD CONSTRAINT [PK__sys_syst__2C6EC7237F802519] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19288,7 +19292,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_user
 -- ----------------------------
-ALTER TABLE [dbo].[sys_user] ADD CONSTRAINT [PK__sys_user__2C6EC723D855CFB2] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_user] ADD CONSTRAINT [PK__sys_user__2C6EC72332E32583] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -19307,10 +19311,8 @@ GO
 -- ----------------------------
 -- Primary Key structure for table sys_userlogon
 -- ----------------------------
-ALTER TABLE [dbo].[sys_userlogon] ADD CONSTRAINT [PK__sys_user__2C6EC72387C53FFC] PRIMARY KEY CLUSTERED ([F_Id])
+ALTER TABLE [dbo].[sys_userlogon] ADD CONSTRAINT [PK__sys_user__2C6EC723E329C8FC] PRIMARY KEY CLUSTERED ([F_Id])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
 
-INSERT INTO [dbo].[sys_modulebutton] ([F_Id], [F_ModuleId], [F_ParentId], [F_Layers], [F_EnCode], [F_FullName], [F_Icon], [F_Location], [F_JsEvent], [F_UrlAddress], [F_Split], [F_IsPublic], [F_AllowEdit], [F_AllowDelete], [F_SortCode], [F_DeleteMark], [F_EnabledMark], [F_Description], [F_CreatorTime], [F_CreatorUserId], [F_LastModifyTime], [F_LastModifyUserId], [F_DeleteTime], [F_DeleteUserId], [F_Authorize]) VALUES (N'08d9bde2-f14d-4b33-8f9b-2af0bf40812b', N'c87cd44f-d064-4d3c-a43e-de01a7a8785e', '0', 1, N'NF-cancle', '撤回', NULL, 1, 'cancle', N'/FlowManage/Flowinstance/CancleForm', NULL, 0, 0, 0, 4, 0, 1, '', '2021-12-13 10:47:46', N'9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', NULL, NULL, NULL, NULL, '')
-GO
