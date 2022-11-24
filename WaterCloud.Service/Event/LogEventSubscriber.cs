@@ -19,7 +19,7 @@ namespace WaterCloud.Service.Event
 		public async Task SendMessages(EventHandlerExecutingContext context)
 		{
 			var todo = (BaseEventSource)context.Source;
-			var input = todo.Payload.ToJson().ToObject<LogEntity>();
+			var input = (LogEntity)todo.Payload;
 			var user = todo.User;
 			var serviceProvider= GlobalContext.RootServices.CreateScope();
 			var logService= serviceProvider.ServiceProvider.GetService<LogService>();

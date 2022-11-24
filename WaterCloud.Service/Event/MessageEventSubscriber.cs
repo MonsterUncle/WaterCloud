@@ -23,7 +23,7 @@ namespace WaterCloud.Service.Event
 		public async Task SendMessage(EventHandlerExecutingContext context)
 		{
 			var todo = (BaseEventSource)context.Source;
-			var input = todo.Payload.ToString().ToObject<MessageEntity>();
+			var input = (MessageEntity)todo.Payload;
 			if (!string.IsNullOrEmpty(input.companyId) && input.F_ToUserId.Length == 0)
 			{
 				await _messageHub.Clients.Group(input.companyId).SendAsync("ReceiveMessage", input.ToJson());
