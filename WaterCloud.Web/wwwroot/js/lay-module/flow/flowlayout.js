@@ -16,7 +16,7 @@
                 haveHead: false,
                 haveTool: true,
                 headLabel: true,
-                toolBtns: ["start round mix", "end round", "node", "join", "fork"],
+                toolBtns: ["start round mix", "end round", "node", "fork", "join"],
                 haveGroup: true,
                 useOperStack: true,
                 needNoTag: true,
@@ -36,16 +36,16 @@
                 cursor: "选择指针",
                 direct: "转换连线",
                 dashed: "关联虚线",
-                start: "开始结点",
-                end: "结束结点",
-                task: "任务结点",
-                node: "任务结点",
-                chat: "决策结点",
-                state: "状态结点",
+                start: "开始节点",
+                end: "结束节点",
+                task: "任务节点",
+                node: "任务节点",
+                chat: "决策节点",
+                state: "状态节点",
                 plug: "附加插件",
-                fork: "分支结点",
-                join: "联合结点",
-                complex: "复合结点",
+                fork: "会签开始节点",
+                join: "会签结束节点",
+                complex: "复合节点",
                 group: "组织划分框编辑开"
             });
             if (options != undefined
@@ -100,7 +100,7 @@
                             break;
                         case "node":
                             if (_node.setInfo == null) {
-                                layer.msg("请设置节点【"+_node.name+"】操作人员");
+                                layer.msg("请设置任务节点【"+_node.name+"】操作人员");
                                 return -1;
                             }
                             _flag = true;
@@ -131,7 +131,7 @@
                 }
 
                 if (fnodes.length != hnodes.length) {
-                    layer.msg("分流节点必须等于合流节点");
+                    layer.msg("会签开始的节点数量必须等于会签结束的节点数量");
                     return -1;
                 }
                 return data;
