@@ -3865,7 +3865,7 @@ layui.define(["layer", "laytpl", "element", "form", "slider", "laydate", "rate",
                             $('#uploader-list-' + item.id).append(
                                 '<div id="" class="file-iteme">' +
                                 '<div class="handle"><i class="layui-icon layui-icon-delete"></i></div>' +
-                                '<img style="width: 100px;height: 100px;" src=' + res.data.src + '>' +
+                                '<img style="width: 100px;height: 100px;" src='+ item.urlPrefix + res.data.src + '>' +
                                 '<div class="info">' + res.data.title + '</div>' +
                                 '</div>'
                             );
