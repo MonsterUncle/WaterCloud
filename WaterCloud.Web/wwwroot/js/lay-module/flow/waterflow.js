@@ -32,13 +32,13 @@ layui.define("jquery",
 			y:ev.clientY + document.documentElement.scrollTop  - document.body.clientTop
 		};
 	}
-	//计算两个结点间要连折线的话，连线的所有坐标
+	//计算两个节点间要连折线的话，连线的所有坐标
 	function calcPolyPoints(n1,n2,type,M,scale){
 		if(!scale)	scale=1.0;
 		var N1={left:n1.left*scale, top:n1.top*scale, width:n1.width*scale, height:n1.height*scale};
 		var N2={left:n2.left*scale, top:n2.top*scale, width:n2.width*scale, height:n2.height*scale};
 		M=M*scale;
-		//开始/结束两个结点的中心
+		//开始/结束两个节点的中心
 		var SP={x:N1.left+N1.width/2,y:N1.top+N1.height/2};
 		var EP={x:N2.left+N2.width/2,y:N2.top+N2.height/2};
 		var m1=[],m2=[],sp,ep;
@@ -91,21 +91,21 @@ layui.define("jquery",
 		}
 		return {start:sp,m1:m1,m2:m2,end:ep};
 	}
-	//计算两个结点间要连直线的话，连线的开始坐标和结束坐标
+	//计算两个节点间要连直线的话，连线的开始坐标和结束坐标
 	function calcStartEnd(n1,n2,scale){
 		if(!scale)	scale=1.0;
 		var X_1,Y_1,X_2,Y_2;
 		//X判断：
 		var x11=n1.left*scale ,x12=n1.left*scale +n1.width*scale ,x21=n2.left*scale ,x22=n2.left*scale +n2.width*scale ;
-		//结点2在结点1左边
+		//节点2在节点1左边
 		if(x11>=x22){
 			X_1=x11;X_2=x22;
 		}
-		//结点2在结点1右边
+		//节点2在节点1右边
 		else if(x12<=x21){
 			X_1=x12;X_2=x21;
 		}
-		//结点2在结点1水平部分重合
+		//节点2在节点1水平部分重合
 		else if(x11<=x21&&x12>=x21&&x12<=x22){
 			X_1=(x12+x21)/2;X_2=X_1;
 		}
@@ -121,15 +121,15 @@ layui.define("jquery",
 
 		//Y判断：
 		var y11=n1.top*scale ,y12=n1.top*scale +n1.height*scale ,y21=n2.top*scale ,y22=n2.top*scale +n2.height*scale ;
-		//结点2在结点1上边
+		//节点2在节点1上边
 		if(y11>=y22){
 			Y_1=y11;Y_2=y22;
 		}
-		//结点2在结点1下边
+		//节点2在节点1下边
 		else if(y12<=y21){
 			Y_1=y12;Y_2=y21;
 		}
-		//结点2在结点1垂直部分重合
+		//节点2在节点1垂直部分重合
 		else if(y11<=y21&&y12>=y21&&y12<=y22){
 			Y_1=(y12+y21)/2;Y_2=Y_1;
 		}
@@ -188,7 +188,7 @@ var WaterFlow = function(selector,property){
 	this.$nodeDom={};
 	this.$areaDom={};
 	this.$max=property.initNum||1;//计算默认ID值的起始SEQUENCE
-	this.$focus="";//当前被选定的结点/转换线ID,如果没选中或者工作区被清空,则为""
+	this.$focus="";//当前被选定的节点/转换线ID,如果没选中或者工作区被清空,则为""
 	//this.$cursor="default";//鼠标指针在工作区内的样式
 	this.$editable=false;//工作区是否可编辑
 	this.$deletedItem={};//在流程图的编辑操作中被删除掉的元素ID集合,元素ID为KEY,元素类型(node,line.area)为VALUE
@@ -331,8 +331,14 @@ var WaterFlow = function(selector,property){
 		else if (This.$nowType.indexOf("end") > -1) {
 			This.addNode(new Date().getTime().toString(), { name: "结束_" + This.$max, left: X, top: Y, type: This.$nowType });
 		}
+		else if (This.$nowType.indexOf("fork") > -1) {
+			This.addNode(new Date().getTime().toString(), { name: "会签开始_" + This.$max, left: X, top: Y, type: This.$nowType });
+		}
+		else if (This.$nowType.indexOf("join") > -1) {
+			This.addNode(new Date().getTime().toString(), { name: "会签结束_" + This.$max, left: X, top: Y, type: This.$nowType });
+		}
 		else {
-			This.addNode(new Date().getTime().toString(), { name: "结点_" + This.$max, left: X, top: Y, type: This.$nowType });
+			This.addNode(new Date().getTime().toString(), { name: "任务节点_" + This.$max, left: X, top: Y, type: This.$nowType });
 		}
 		This.$max++;
     });
@@ -346,37 +352,37 @@ var WaterFlow = function(selector,property){
 	this._initWorkForNode();
 
 	//一些基本的元素事件，这些事件可直接通过this访问对象本身
-	//当操作某个单元（结点/线）被由不选中变成选中时，触发的方法，返回FALSE可阻止选中事件的发生
+	//当操作某个单元（节点/线）被由不选中变成选中时，触发的方法，返回FALSE可阻止选中事件的发生
 	//格式function(id,type)：id是单元的唯一标识ID,type是单元的种类,有"node","line"两种取值,"area"不支持被选中
 	this.onItemFocus=null;
-	//当操作某个单元（结点/线）被由选中变成不选中时，触发的方法，返回FALSE可阻止取消选中事件的发生
+	//当操作某个单元（节点/线）被由选中变成不选中时，触发的方法，返回FALSE可阻止取消选中事件的发生
 	//格式function(id，type)：id是单元的唯一标识ID,type是单元的种类,有"node","line"两种取值,"area"不支持被取消选中
 	this.onItemBlur=null;
-	//当用重色标注某个结点/转换线时触发的方法，返回FALSE可阻止重定大小/造型事件的发生
-	//格式function(id，type，mark)：id是单元的唯一标识ID,type是单元类型（"node"结点,"line"转换线），mark为布尔值,表示是要标注TRUE还是取消标注FALSE
+	//当用重色标注某个节点/转换线时触发的方法，返回FALSE可阻止重定大小/造型事件的发生
+	//格式function(id，type，mark)：id是单元的唯一标识ID,type是单元类型（"node"节点,"line"转换线），mark为布尔值,表示是要标注TRUE还是取消标注FALSE
 	this.onItemMark=null;
-	//当操作某个单元（结点/线/区域块）被双击时，触发的方法，返回FALSE可阻止取消原来双击事件（双击后直接编辑）的发生
+	//当操作某个单元（节点/线/区域块）被双击时，触发的方法，返回FALSE可阻止取消原来双击事件（双击后直接编辑）的发生
 	//格式function(id，type)：id是单元的唯一标识ID,type是单元的种类,有"node","line","area"三种取值
 	this.onItemDbClick=null;
-	//当操作某个单元（结点/线/区域块）被右键点击时，触发的方法，返回FALSE可阻止取消原来右击事件（一般是浏览器默认的右键菜单）的发生
+	//当操作某个单元（节点/线/区域块）被右键点击时，触发的方法，返回FALSE可阻止取消原来右击事件（一般是浏览器默认的右键菜单）的发生
 	//格式function(id，type)：id是单元的唯一标识ID,type是单元的种类,有"node","line","area"三种取值
 	this.onItemRightClick=null;
 
 	if(this.$editable){
-		//绑定当结点/线/分组块的一些操作事件,这些事件可直接通过this访问对象本身
-		//当操作某个单元（结点/线/分组块）被添加时，触发的方法，返回FALSE可阻止添加事件的发生
+		//绑定当节点/线/分组块的一些操作事件,这些事件可直接通过this访问对象本身
+		//当操作某个单元（节点/线/分组块）被添加时，触发的方法，返回FALSE可阻止添加事件的发生
 		//格式function(id，type,json)：id是单元的唯一标识ID,type是单元的种类,有"node","line","area"三种取值,json即addNode,addLine或addArea方法的第二个传参json.
 		this.onItemAdd=null;
-		//当操作某个单元（结点/线/分组块）被删除时，触发的方法，返回FALSE可阻止删除事件的发生
+		//当操作某个单元（节点/线/分组块）被删除时，触发的方法，返回FALSE可阻止删除事件的发生
 		//格式function(id，type)：id是单元的唯一标识ID,type是单元的种类,有"node","line","area"三种取值
 		this.onItemDel=null;
-		//当操作某个单元（结点/分组块）被移动时，触发的方法，返回FALSE可阻止移动事件的发生
+		//当操作某个单元（节点/分组块）被移动时，触发的方法，返回FALSE可阻止移动事件的发生
 		//格式function(id，type,left,top)：id是单元的唯一标识ID,type是单元的种类,有"node","area"两种取值，线line不支持移动,left是新的左边距坐标，top是新的顶边距坐标
 		this.onItemMove=null;
-		//当操作某个单元（结点/线/分组块）被重命名时，触发的方法，返回FALSE可阻止重命名事件的发生
+		//当操作某个单元（节点/线/分组块）被重命名时，触发的方法，返回FALSE可阻止重命名事件的发生
 		//格式function(id,name,type)：id是单元的唯一标识ID,type是单元的种类,有"node","line","area"三种取值,name是新的名称
 		this.onItemRename=null;
-		//当操作某个单元（结点/分组块）被重定义大小或造型时，触发的方法，返回FALSE可阻止重定大小/造型事件的发生
+		//当操作某个单元（节点/分组块）被重定义大小或造型时，触发的方法，返回FALSE可阻止重定大小/造型事件的发生
 		//格式function(id，type,width,height)：id是单元的唯一标识ID,type是单元的种类,有"node","line","area"三种取值;width是新的宽度,height是新的高度
 		this.onItemResize=null;
 		//当移动某条折线中段的位置，触发的方法，返回FALSE可阻止重定大小/造型事件的发生
@@ -385,8 +391,8 @@ var WaterFlow = function(selector,property){
 		//当变换某条连接线的类型，触发的方法，返回FALSE可阻止重定大小/造型事件的发生
 		//格式function(id，type)：id是单元的唯一标识ID,type是连接线的新类型,"sl":直线,"lr":中段可左右移动的折线,"tb":中段可上下移动的折线
 		this.onLineSetType=null;
-		//当变换某条连接线的端点变更连接的结点时，触发的方法，返回FALSE可阻止重定大小/造型事件的发生
-		//格式function(id，newStart,newEnd)：id是连线单元的唯一标识ID,newStart,newEnd分别是起始结点的ID和到达结点的ID
+		//当变换某条连接线的端点变更连接的节点时，触发的方法，返回FALSE可阻止重定大小/造型事件的发生
+		//格式function(id，newStart,newEnd)：id是连线单元的唯一标识ID,newStart,newEnd分别是起始节点的ID和到达节点的ID
 		this.onLinePointMove=null;
 		this._initExpendFunc();//初始化手动扩展工作区宽高的功能
 		//对节点、区域块进行移动或者RESIZE时用来显示的遮罩层
@@ -824,13 +830,13 @@ WaterFlow.prototype={
 			}
 		});
 
-		//绑定结点的删除功能
+		//绑定节点的删除功能
 		this.$workArea.on("click",".rs_close",{inthis:this},function(e){
 			if(!e)e=window.event;
 			e.data.inthis.delNode(e.data.inthis.$focus);
 			return false;
 		});
-		//绑定结点的RESIZE功能
+		//绑定节点的RESIZE功能
 		this.$workArea.on("mousedown",".WaterFlow_item > div > div[class!=rs_close]",{inthis:this},function(e){
 			if(!e)e=window.event;
 			if(e.button===2)return false;
@@ -1070,7 +1076,7 @@ WaterFlow.prototype={
 					This.setLineType(id,"sl");break;
 			}
 		});
-		//新增移动线两个端点至新的结点功能移动功能，这里要提供移动用的DOM
+		//新增移动线两个端点至新的节点功能移动功能，这里要提供移动用的DOM
 		this.$mpFrom=$("<div class='WaterFlow_line_mp' style='display:none'></div>");
 		this.$mpTo=$("<div class='WaterFlow_line_mp' style='display:none'></div>");
 		this.$workArea.append(this.$mpFrom).append(this.$mpTo);
@@ -1174,7 +1180,7 @@ WaterFlow.prototype={
 		if(this.$head!=null)
 		this.$headBtnEvents=funcs;
 	},
-	//每一种类型结点及其按钮的说明文字
+	//每一种类型节点及其按钮的说明文字
 	setNodeRemarks:function(remark){
     if(this.$tool==null)  return;
 		this.$tool.children("a").each(function(){
@@ -1221,7 +1227,7 @@ WaterFlow.prototype={
 		if(this.$textArea&&this.$textArea.css("display")==="none")	this.$textArea.removeData("id").val("").hide();
 	},
 
-	//获取结点/连线/分组区域的详细信息
+	//获取节点/连线/分组区域的详细信息
 	getItemInfo:function(id,type){
 		switch(type){
 			case "node":	return this.$nodeData[id]||null;
@@ -1229,7 +1235,7 @@ WaterFlow.prototype={
 			case "area":	return this.$areaData[id]||null;
 		}
 	},
-	//取消所有结点/连线被选定的状态
+	//取消所有节点/连线被选定的状态
 	blurItem:function(){
 		if(this.$focus!==""){
 			var jq=$("#"+this.$focus);
@@ -1264,7 +1270,7 @@ WaterFlow.prototype={
 		this.$focus="";
 		return true;
 	},
-	//选定某个结点/转换线 bool:TRUE决定了要触发选中事件，FALSE则不触发选中事件，多用在程序内部调用。
+	//选定某个节点/转换线 bool:TRUE决定了要触发选中事件，FALSE则不触发选中事件，多用在程序内部调用。
 	focusItem: function (id, bool) {
         if (!id) {
 			return false;
@@ -1355,7 +1361,7 @@ WaterFlow.prototype={
 		}
 		if(!lane){	delete node.areaId;	} //不属于任何区域组(泳道)的情况
 	},
-	//增加一个流程结点,传参为一个JSON,有id,name,top,left,width,height,type(结点类型)等属性
+	//增加一个流程节点,传参为一个JSON,有id,name,top,left,width,height,type(节点类型)等属性
 	addNode: function (id, json) {
         if (json.id == undefined) {
             $.extend(json,{id:id});
@@ -1406,7 +1412,7 @@ WaterFlow.prototype={
 			if(this.$deletedItem[id])	delete this.$deletedItem[id];//在回退删除操作时,去掉该元素的删除记录
 		}
 	},
-	//移动结点到一个新的位置
+	//移动节点到一个新的位置
 	moveNode:function(id,left,top){
 		if(!this.$nodeData[id])	return;
 		if(typeof this.onItemMove==='function' && this.onItemMove(id,"node",left,top)===false)	return;
@@ -1426,10 +1432,10 @@ WaterFlow.prototype={
 			this._node2Area(id);
 		}
 	},
-	//设置结点/连线/分组区域的文字信息
+	//设置节点/连线/分组区域的文字信息
 	setName:function(id,name,type, setInfo){
 		var oldName;
-		if (type === "node") {//如果是结点
+		if (type === "node") {//如果是节点
 		    this.$nodeData[id].setInfo = setInfo;
 			if(!this.$nodeData[id])	return;
 			if(this.$nodeData[id].name===name)	return;
@@ -1506,7 +1512,7 @@ WaterFlow.prototype={
 			this.pushOper("setName",paras);
 		}
 	},
-	//设置结点的尺寸,仅支持非开始/结束结点
+	//设置节点的尺寸,仅支持非开始/结束节点
 	resizeNode:function(id,width,height){
 		if(!this.$nodeData[id])	return;
 		if(typeof this.onItemResize==='function' && this.onItemResize(id,"node",width,height)===false)	return;
@@ -1531,7 +1537,7 @@ WaterFlow.prototype={
 		this.resetLines(id,this.$nodeData[id]);
 		this._node2Area(id);
 	},
-	//删除结点
+	//删除节点
 	delNode:function(id,trigger){
 		if(!this.$nodeData[id])	return;
 		if(false!==trigger && typeof this.onItemDel==='function' && this.onItemDel(id,"node")===false)	return;
@@ -1544,7 +1550,7 @@ WaterFlow.prototype={
 				this.delLine(k,false);
 			}
 		}
-		//再删除结点本身
+		//再删除节点本身
 		if(this.$undoStack){
 			var paras=[id,this.$nodeData[id]];
 			this.pushOper("addNode",paras);
@@ -1931,7 +1937,7 @@ WaterFlow.prototype={
 	},
 	//原lineData已经设定好的情况下，只在绘图工作区画一条线的页面元素
 	addLineDom:function(id,lineData){
-		var n1=this.$nodeData[lineData.from],n2=this.$nodeData[lineData.to];//获取开始/结束结点的数据
+		var n1=this.$nodeData[lineData.from],n2=this.$nodeData[lineData.to];//获取开始/结束节点的数据
 		if(!n1||!n2)	return;
 		//开始计算线端点坐标
 		var res;
@@ -1975,7 +1981,7 @@ WaterFlow.prototype={
 			this.pushOper("delLine",[id]);
 		}
 		if(json.from===json.to)	return;
-		var n1=this.$nodeData[json.from],n2=this.$nodeData[json.to];//获取开始/结束结点的数据
+		var n1=this.$nodeData[json.from],n2=this.$nodeData[json.to];//获取开始/结束节点的数据
 		if(!n1||!n2)	return;
 		//避免两个节点间不能有一条以上同向接连线
 		for(var k in this.$lineData){
@@ -2009,10 +2015,10 @@ WaterFlow.prototype={
 			if(this.$deletedItem[id])	delete this.$deletedItem[id];//在回退删除操作时,去掉该元素的删除记录
 		}
 	},
-	//重构所有连向某个结点的线的显示，传参结构为$nodeData数组的一个单元结构
+	//重构所有连向某个节点的线的显示，传参结构为$nodeData数组的一个单元结构
 	resetLines:function(id,node){
 		for(var i in this.$lineData){
-		  var other=null;//获取结束/开始结点的数据
+		  var other=null;//获取结束/开始节点的数据
 		  var res;
 		  if(this.$lineData[i].from===id){//找结束点
 			other=this.$nodeData[this.$lineData[i].to]||null;
@@ -2159,8 +2165,8 @@ WaterFlow.prototype={
 			this.$lineOper.hide().removeData("tid");
 		}
 	},
-	//变更连线两个端点所连的结点
-	//参数：要变更端点的连线ID，新的开始结点ID、新的结束结点ID；如果开始/结束结点ID是传入null或者""，则表示原端点不变
+	//变更连线两个端点所连的节点
+	//参数：要变更端点的连线ID，新的开始节点ID、新的结束节点ID；如果开始/结束节点ID是传入null或者""，则表示原端点不变
 	moveLinePoints:function(lineId, newStart, newEnd, noStack){
 		if(newStart===newEnd)	return;
 		if(!lineId||!this.$lineData[lineId])	return;
@@ -2193,7 +2199,7 @@ WaterFlow.prototype={
 		}
 	},
 
-	//用颜色标注/取消标注一个结点或转换线，常用于显示重点或流程的进度。
+	//用颜色标注/取消标注一个节点或转换线，常用于显示重点或流程的进度。
 	//这是一个在编辑模式中无用,但是在纯浏览模式中非常有用的方法，实际运用中可用于跟踪流程的进度。
 	markItem:function(id,type,mark){
 		if(type==="node"){
@@ -2239,7 +2245,7 @@ WaterFlow.prototype={
 		}
 	},
 	////////////////////////以下为区域分组块操作
-	//传入一个区域组(泳道)的ID，判断图中所有结点在此区域组(泳道)的范围内
+	//传入一个区域组(泳道)的ID，判断图中所有节点在此区域组(泳道)的范围内
 	_areaFixNodes:function(areaId){
 		var area=this.$areaData[areaId];
 		for(var key in this.$nodeData){
