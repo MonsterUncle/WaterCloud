@@ -41,15 +41,14 @@ namespace WaterCloud.Service.AutoJob
 				JobDataMap jobData = null;
 				OpenJobEntity dbJobEntity = null;
 				DateTime now = DateTime.Now;
-				var dbContext = GlobalContext.RootServices.GetService<ISqlSugarClient>();
-				var repository = new RepositoryBase<LogEntity>(dbContext);
+				var dbContext = GlobalContext.RootServices.GetRequiredService<ISqlSugarClient>();
 				try
 				{
-					jobData = context.JobDetail.JobDataMap;
+                    jobData = context.JobDetail.JobDataMap;
 					jobId = jobData.GetString("F_Id");
-					OpenJobsService autoJobService = new OpenJobsService(dbContext, _schedulerFactory, _iocJobfactory, _httpClient);
-					// 获取数据库中的任务
-					dbJobEntity = await autoJobService.GetForm(jobId);
+					var dbContextNew = dbContext.CopyNew();
+                    // 获取数据库中的任务
+                    dbJobEntity = await dbContextNew.Queryable<OpenJobEntity>().Where(a=>a.F_Id== jobId).FirstAsync();
 					if (dbJobEntity != null)
 					{
 						if (dbJobEntity.F_EnabledMark == true)
@@ -84,7 +83,6 @@ namespace WaterCloud.Service.AutoJob
 										.Contains(typeof(IJobTask)))).ToArray();
 									string filename = dbJobEntity.F_FileName;
 									var implementType = types.Where(x => x.IsClass && x.FullName == filename).FirstOrDefault();
-									repository.ChangeEntityDb(dbJobEntity.F_DbNumber);
 									var obj = System.Activator.CreateInstance(implementType, dbContext);       // 创建实例(带参数)
 									MethodInfo method = implementType.GetMethod("Start", new Type[] { });      // 获取方法信息
 									object[] parameters = null;
@@ -102,10 +100,10 @@ namespace WaterCloud.Service.AutoJob
 								}
 								else if (dbJobEntity.F_JobType == 5)
 								{
-									try
+                                    var dbContextTemp = dbContextNew.GetConnectionScope(dbJobEntity.F_JobDBProvider);
+                                    try
 									{
-										repository.ChangeEntityDb(dbJobEntity.F_JobDBProvider);
-										repository.Db.Ado.BeginTran();
+                                        dbContextTemp.Ado.BeginTran();
 										if (!string.IsNullOrEmpty(dbJobEntity.F_JobSqlParm))
 										{
 											var dic = dbJobEntity.F_JobSqlParm.ToObject<Dictionary<string, object>>();
@@ -114,23 +112,23 @@ namespace WaterCloud.Service.AutoJob
 											{
 												list.Add(new SugarParameter(item.Key, item.Value));
 											}
-											var dbResult = await repository.Db.Ado.SqlQueryAsync<dynamic>(dbJobEntity.F_JobSql, list);
+											var dbResult = await dbContextTemp.Ado.SqlQueryAsync<dynamic>(dbJobEntity.F_JobSql, list);
 											log.F_EnabledMark = true;
 											log.F_Description = "执行成功，" + dbResult.ToJson();
 										}
 										else
 										{
-											var dbResult = await repository.Db.Ado.SqlQueryAsync<dynamic>(dbJobEntity.F_JobSql);
+											var dbResult = await dbContextTemp.Ado.SqlQueryAsync<dynamic>(dbJobEntity.F_JobSql);
 											log.F_EnabledMark = true;
 											log.F_Description = "执行成功，" + dbResult.ToJson();
 										}
-										repository.Db.Ado.CommitTran();
+                                        dbContextTemp.Ado.CommitTran();
 									}
 									catch (Exception ex)
 									{
 										log.F_EnabledMark = false;
 										log.F_Description = "执行失败，" + ex.Message;
-										repository.Db.Ado.RollbackTran();
+                                        dbContextTemp.Ado.RollbackTran();
 									}
 								}
 								else
@@ -174,13 +172,12 @@ namespace WaterCloud.Service.AutoJob
 									}
 								}
 
-								#endregion 执行任务
+                                #endregion 执行任务
 
-								repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber);
-								repository.Db.Ado.BeginTran();
+                                dbContextNew.Ado.BeginTran();
 								if (log.F_EnabledMark == true)
 								{
-									await repository.Db.Updateable<OpenJobEntity>(a => new OpenJobEntity
+									await dbContextNew.Updateable<OpenJobEntity>(a => new OpenJobEntity
 									{
 										F_LastRunMark = true,
 										F_LastRunTime = now,
@@ -188,7 +185,7 @@ namespace WaterCloud.Service.AutoJob
 								}
 								else
 								{
-									await repository.Db.Updateable<OpenJobEntity>(a => new OpenJobEntity
+									await dbContextNew.Updateable<OpenJobEntity>(a => new OpenJobEntity
 									{
 										F_LastRunMark = false,
 										F_LastRunTime = now,
@@ -198,16 +195,16 @@ namespace WaterCloud.Service.AutoJob
 								}
 								if (dbJobEntity.F_IsLog == "是")
 								{
-									repository.Db.Insertable(log).ExecuteCommand();
+                                    dbContextNew.Insertable(log).ExecuteCommand();
 								}
-								repository.Db.Ado.CommitTran();
+                                dbContextNew.Ado.CommitTran();
 							}
 						}
 					}
 				}
 				catch (Exception ex)
 				{
-					repository.Db.Ado.RollbackTran();
+                    dbContext.Ado.RollbackTran();
 					LogHelper.WriteWithTime(ex);
 				}
 			});

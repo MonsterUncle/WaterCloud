@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -96,18 +97,28 @@ namespace WaterCloud.Code
 			}
 			return RootServices;
 		}
-
+		/// <summary>
+		/// 获取版本号
+		/// </summary>
+		/// <returns></returns>
 		public static string GetVersion()
 		{
 			Version version = Assembly.GetEntryAssembly().GetName().Version;
 			return version.ToString();
 		}
-
-		/// <summary>
-		/// 程序启动时，记录目录
-		/// </summary>
-		/// <param name="env"></param>
-		public static void LogWhenStart(IWebHostEnvironment env)
+        /// <summary>
+        /// 获取请求跟踪 Id
+        /// </summary>
+        /// <returns></returns>
+        public static string GetTraceId()
+        {
+            return Activity.Current?.Id ?? (RootServices == null ? default : HttpContext?.TraceIdentifier);
+        }
+        /// <summary>
+        /// 程序启动时，记录目录
+        /// </summary>
+        /// <param name="env"></param>
+        public static void LogWhenStart(IWebHostEnvironment env)
 		{
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("程序启动");
