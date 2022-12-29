@@ -264,7 +264,7 @@ namespace WaterCloud.Service.SystemOrganize
 						var dblist = DBInitialize.GetConnectionConfigs(true);
 						_context.AsTenant().AddConnection(dblist.FirstOrDefault(a => a.ConfigId == setTemp.F_DbNumber));
 						repository.ChangeEntityDb(setTemp.F_DbNumber);
-						(repository.Db as SqlSugarProvider).DefaultConfig();
+						repository.Db.DefaultConfig();
 					}
 					else
 					{

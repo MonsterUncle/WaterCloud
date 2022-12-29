@@ -49,7 +49,7 @@ namespace WaterCloud.Service
 					var dblist = DBInitialize.GetConnectionConfigs(false);
 					_context.AsTenant().AddConnection(dblist.FirstOrDefault(a => a.ConfigId == currentuser.DbNumber));
 					repository.ChangeEntityDb(currentuser.DbNumber);
-					(repository.Db as SqlSugarProvider).DefaultConfig();
+					repository.Db.DefaultConfig();
 				}
 			}
 		}

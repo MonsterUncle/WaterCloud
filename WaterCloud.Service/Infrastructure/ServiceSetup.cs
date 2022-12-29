@@ -51,7 +51,7 @@ namespace WaterCloud.Service
 		/// sqlsugar配置
 		/// </summary>
 		/// <param name="db"></param>
-		public static void DefaultConfig(this SqlSugarProvider db)
+		public static void DefaultConfig(this ISqlSugarClient db)
 		{
 			db.Ado.CommandTimeOut = GlobalContext.SystemConfig.DBCommandTimeout;
 			db.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()

@@ -30,7 +30,7 @@ namespace WaterCloud.DataBase
 
 		private ISqlSugarClient _dbs;
 
-		private ISqlSugarClient _db
+		private SqlSugarScopeProvider _db
 		{
 			get
 			{
@@ -38,7 +38,7 @@ namespace WaterCloud.DataBase
 			}
 		}
 
-		public ISqlSugarClient Db
+		public SqlSugarScopeProvider Db
 		{
             get { return _dbBase; }
 		}
