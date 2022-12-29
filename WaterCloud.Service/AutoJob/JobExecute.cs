@@ -41,14 +41,13 @@ namespace WaterCloud.Service.AutoJob
 				JobDataMap jobData = null;
 				OpenJobEntity dbJobEntity = null;
 				DateTime now = DateTime.Now;
-				var dbContext = GlobalContext.RootServices.GetRequiredService<ISqlSugarClient>();
+				var dbContext = GlobalContext.RootServices.GetRequiredService<ISqlSugarClient>().CopyNew();
 				try
 				{
                     jobData = context.JobDetail.JobDataMap;
 					jobId = jobData.GetString("F_Id");
-					var dbContextNew = dbContext.CopyNew();
                     // 获取数据库中的任务
-                    dbJobEntity = await dbContextNew.Queryable<OpenJobEntity>().Where(a=>a.F_Id== jobId).FirstAsync();
+                    dbJobEntity = await dbContext.Queryable<OpenJobEntity>().Where(a=>a.F_Id== jobId).FirstAsync();
 					if (dbJobEntity != null)
 					{
 						if (dbJobEntity.F_EnabledMark == true)
@@ -100,7 +99,7 @@ namespace WaterCloud.Service.AutoJob
 								}
 								else if (dbJobEntity.F_JobType == 5)
 								{
-                                    var dbContextTemp = dbContextNew.GetConnectionScope(dbJobEntity.F_JobDBProvider);
+                                    var dbContextTemp = dbContext.GetConnectionScope(dbJobEntity.F_JobDBProvider);
                                     try
 									{
                                         dbContextTemp.Ado.BeginTran();
@@ -174,10 +173,10 @@ namespace WaterCloud.Service.AutoJob
 
                                 #endregion 执行任务
 
-                                dbContextNew.Ado.BeginTran();
+                                dbContext.Ado.BeginTran();
 								if (log.F_EnabledMark == true)
 								{
-									await dbContextNew.Updateable<OpenJobEntity>(a => new OpenJobEntity
+									await dbContext.Updateable<OpenJobEntity>(a => new OpenJobEntity
 									{
 										F_LastRunMark = true,
 										F_LastRunTime = now,
@@ -185,7 +184,7 @@ namespace WaterCloud.Service.AutoJob
 								}
 								else
 								{
-									await dbContextNew.Updateable<OpenJobEntity>(a => new OpenJobEntity
+									await dbContext.Updateable<OpenJobEntity>(a => new OpenJobEntity
 									{
 										F_LastRunMark = false,
 										F_LastRunTime = now,
@@ -195,16 +194,15 @@ namespace WaterCloud.Service.AutoJob
 								}
 								if (dbJobEntity.F_IsLog == "是")
 								{
-                                    dbContextNew.Insertable(log).ExecuteCommand();
+                                    dbContext.Insertable(log).ExecuteCommand();
 								}
-                                dbContextNew.Ado.CommitTran();
+                                dbContext.Ado.CommitTran();
 							}
 						}
 					}
 				}
 				catch (Exception ex)
 				{
-                    dbContext.Ado.RollbackTran();
 					LogHelper.WriteWithTime(ex);
 				}
 			});

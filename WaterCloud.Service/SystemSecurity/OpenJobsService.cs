@@ -261,7 +261,7 @@ namespace WaterCloud.Service.SystemSecurity
 					{
 						try
 						{
-							repository.Dbs.BeginTran();
+							repository.ChangeEntityDb(dbJobEntity.F_JobDBProvider).Ado.BeginTran();
 							if (!string.IsNullOrEmpty(dbJobEntity.F_JobSqlParm))
 							{
 								var dic = dbJobEntity.F_JobSqlParm.ToObject<Dictionary<string, object>>();
@@ -270,23 +270,23 @@ namespace WaterCloud.Service.SystemSecurity
 								{
 									list.Add(new SugarParameter(item.Key, item.Value));
 								}
-								var dbResult = await repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber).Ado.SqlQueryAsync<dynamic>(dbJobEntity.F_JobSql, list);
+								var dbResult = await repository.Db.Ado.SqlQueryAsync<dynamic>(dbJobEntity.F_JobSql, list);
 								log.F_EnabledMark = true;
 								log.F_Description = "执行成功，" + dbResult.ToJson();
 							}
 							else
 							{
-								var dbResult = await repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber).Ado.SqlQueryAsync<dynamic>(dbJobEntity.F_JobSql);
+								var dbResult = await repository.Db.Ado.SqlQueryAsync<dynamic>(dbJobEntity.F_JobSql);
 								log.F_EnabledMark = true;
 								log.F_Description = "执行成功，" + dbResult.ToJson();
 							}
-							repository.Dbs.CommitTran();
+							repository.Db.Ado.CommitTran();
 						}
 						catch (Exception ex)
 						{
 							log.F_EnabledMark = false;
 							log.F_Description = "执行失败，" + ex.Message;
-							repository.Dbs.RollbackTran();
+							repository.Dbs.AsTenant().RollbackTran();
 						}
 					}
 					else
@@ -363,7 +363,6 @@ namespace WaterCloud.Service.SystemSecurity
 			}
 			catch (Exception ex)
 			{
-				repository.Db.Ado.RollbackTran();
 				LogHelper.WriteWithTime(ex);
 				if (returnEx)
 				{
