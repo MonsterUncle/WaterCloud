@@ -259,7 +259,7 @@ namespace WaterCloud.Service.SystemSecurity
 					}
 					else if (dbJobEntity.F_JobType == 5)
 					{
-						try
+                        try
 						{
 							repository.ChangeEntityDb(dbJobEntity.F_JobDBProvider).Ado.BeginTran();
 							if (!string.IsNullOrEmpty(dbJobEntity.F_JobSqlParm))
@@ -286,7 +286,7 @@ namespace WaterCloud.Service.SystemSecurity
 						{
 							log.F_EnabledMark = false;
 							log.F_Description = "执行失败，" + ex.Message;
-							repository.Dbs.AsTenant().RollbackTran();
+							repository.Db.Ado.RollbackTran();
 						}
 					}
 					else
