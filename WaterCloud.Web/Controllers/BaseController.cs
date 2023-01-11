@@ -1,4 +1,4 @@
-﻿using Jaina.EventBus;
+﻿using Jaina;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;

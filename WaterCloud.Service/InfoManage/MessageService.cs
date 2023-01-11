@@ -1,4 +1,4 @@
-﻿using Jaina.EventBus;
+﻿using Jaina;
 using SqlSugar;
 using System;
 using System.Collections.Generic;

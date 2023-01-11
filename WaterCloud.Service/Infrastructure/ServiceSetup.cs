@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Impl.AdoJobStore.Common;

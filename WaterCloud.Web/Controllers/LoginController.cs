@@ -5,7 +5,7 @@
  * Website：
 *********************************************************************************/
 
-using Jaina.EventBus;
+using Jaina;
 using Microsoft.AspNetCore.Mvc;
 using SqlSugar;
 using System;

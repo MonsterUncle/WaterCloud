@@ -1,4 +1,4 @@
-﻿using Jaina.EventBus;
+﻿using Jaina;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;

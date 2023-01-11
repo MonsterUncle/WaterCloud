@@ -1,4 +1,4 @@
-﻿using Jaina.EventBus;
+﻿using Jaina;
 using System.Threading;
 using System;
 using WaterCloud.Code;

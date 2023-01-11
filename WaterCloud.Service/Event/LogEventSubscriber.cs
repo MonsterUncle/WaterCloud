@@ -1,4 +1,4 @@
-﻿using Jaina.EventBus;
+﻿using Jaina;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using WaterCloud.Code;

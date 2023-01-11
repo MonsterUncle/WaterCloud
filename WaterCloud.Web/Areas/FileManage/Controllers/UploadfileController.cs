@@ -1,4 +1,4 @@
-﻿using Jaina.EventBus;
+﻿using Jaina;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
