@@ -113,7 +113,7 @@ namespace WaterCloud.Service.SystemOrganize
 			//字典数据
 			var itemsTypes = await repository.Db.Queryable<ItemsEntity>().ToListAsync();
 			var itemsDetails = await repository.Db.Queryable<ItemsDetailEntity>().ToListAsync();
-			repository.Dbs.AsTenant().BeginTran();
+			repository.Tenant.BeginTran();
 			if (string.IsNullOrEmpty(keyValue))
 			{
 				entity.F_DeleteMark = false;
@@ -351,7 +351,7 @@ namespace WaterCloud.Service.SystemOrganize
 				var tempkey = repository.ChangeEntityDb(GlobalContext.SystemConfig.MainDbNumber).Queryable<UserEntity>().First(a => a.F_IsAdmin == true).F_Id;
 				await CacheHelper.RemoveAsync(cacheKeyOperator + "info_" + tempkey);
 			}
-			repository.Dbs.AsTenant().CommitTran();
+			repository.Tenant.CommitTran();
 			//清空缓存，重新拉数据
 			DBInitialize.GetConnectionConfigs(true);
 		}

@@ -20,27 +20,19 @@ namespace WaterCloud.DataBase
 	/// <typeparam name="TEntity"></typeparam>
 	public class RepositoryBase<TEntity> where TEntity : class, new()
 	{
-		private SqlSugarScopeProvider _dbBase;
-
 		// 用于其他表操作
-		public ISqlSugarClient Dbs
+		public ITenant Tenant
 		{
-			get { return _dbs; }
+			get { return _tenant; }
 		}
 
-		private ISqlSugarClient _dbs;
+		private ITenant _tenant;
 
-		private SqlSugarScopeProvider _db
-		{
-			get
-			{
-				return _dbBase;
-			}
-		}
+		private SqlSugarScopeProvider _db;
 
 		public SqlSugarScopeProvider Db
 		{
-            get { return _dbBase; }
+            get { return _db; }
 		}
 
 		/// <summary>
@@ -52,19 +44,19 @@ namespace WaterCloud.DataBase
 		{
 			if (!configId.IsEmpty())
 			{
-				_dbBase = _dbs.AsTenant().GetConnectionScope(configId);
+                _db = _tenant.GetConnectionScope(configId);
 			}
 			else
 			{
-				_dbBase = _dbs.AsTenant().GetConnectionScopeWithAttr<TEntity>();
+                _db = _tenant.GetConnectionScopeWithAttr<TEntity>();
 			}
-			return _dbBase;
+			return _db;
 		}
 
 		public RepositoryBase(ISqlSugarClient scope)
 		{
-			_dbs = scope;
-			_dbBase = Dbs.AsTenant().GetConnectionScopeWithAttr<TEntity>();
+			_tenant = scope.AsTenant();
+            _db = Tenant.GetConnectionScopeWithAttr<TEntity>();
 		}
 
 		public async Task<TEntity> Insert(TEntity entity)
