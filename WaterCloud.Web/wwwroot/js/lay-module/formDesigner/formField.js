@@ -432,10 +432,11 @@ layui.define(['layer'], function (exports) {
             showWordLimit: false,
             height: "200px",
             uploadUrl: '/upload/',
-            disabled:false,
+            disabled: false,
+            required: false,
             document: '',
-            urlPrefix: '',
-            uploadData: ''
+            uploadUrl: '',
+            urlPrefix: ''
         },
         grid:{
             id:'-1',
