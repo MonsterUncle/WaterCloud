@@ -51,7 +51,7 @@
             haveTool: false,
             OpenNode: function (object) {
                 FlowDesignObject = object; //为NodeInfo窗口提供调用
-
+                valueList = $("#valueList").val().split(',');
                 if (object.type == 'start round mix' || object.type == 'end round') {
                     layer.msg("开始节点与结束节点不能设置");
                     return false;
@@ -69,6 +69,7 @@
                         if (layero.find('iframe')[0].contentWindow.initForm) {
                             var data = {};
                             data.FlowDesignObject = FlowDesignObject;
+                            data.valueList = valueList;
                             layero.find('iframe')[0].contentWindow.initForm(data);
                         }
                     },
@@ -161,6 +162,7 @@
                             $('#NextMakerName').val("无人审核");
                         }
                     }
+                    $("#valueList").val(data.F_FrmContentData);
                     //预览流程
                     flowDesignPanel.loadData(JSON.parse(data.F_SchemeContent));
                     postData.F_CustomName = data.F_SchemeName + " " + new Date().Format("yyyy-MM-dd hh:mm:ss");
@@ -247,6 +249,7 @@
             if (content == -1) {
                 return false; //阻止表单跳转。
             }
+            valueList = $("#valueList").val().split(',');
             delete data.field.F_SchemeId;
             delete data.field.valueList;
             delete data.field.F_Code;

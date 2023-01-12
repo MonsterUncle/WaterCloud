@@ -28,6 +28,13 @@
                             </div>
                         </div>
                         <div class="layui-form-item layui-hide">
+                            <label class="layui-form-label">关联数据表</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="F_DbName" name="F_DbName"
+                                       placeholder="关联数据表" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-hide">
                             <label class="layui-form-label">系统内置表单</label>
                             <div class="layui-input-block">
                                 <select id="F_WebId" name="F_WebId" disabled lay-search lay-filter="WebId">
@@ -185,9 +192,12 @@
             function (data) {
                 if (!!data.value && data.value == 1) {
                     $('#F_WebId').removeAttr("disabled");
+                    $('#F_DbName').addClass("layui-hide");
+                    $('#F_DbName').val("");
                 } else {
                     $('#F_WebId').attr("disabled", "disabled");
                     $('#F_WebId').val("");
+                    $('#F_DbName').removeClass("layui-hide");
                 }
                 form.render();
             });

@@ -86,6 +86,8 @@ namespace WaterCloud.Service.SystemManage
 			var temp = cachedata.MapTo<FlowschemeExtend>();
 			var form = await repository.Db.Queryable<FormEntity>().InSingleAsync(cachedata.F_FrmId);
 			temp.F_WebId = form.F_WebId;
+			if (form.F_FrmType == 0)
+				temp.F_WebId = form.F_DbName;
 			temp.F_FrmContentData = form.F_ContentData;
 			temp.F_FrmContent = form.F_Content;
 			//创建运行实例

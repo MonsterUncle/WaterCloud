@@ -54,5 +54,11 @@ namespace WaterCloud.Domain.FlowManage
 		/// </summary>
 		[SugarColumn(IsNullable = true, ColumnName = "F_CreatorUserName", ColumnDataType = "nvarchar(50)", ColumnDescription = "创建用户")]
 		public string F_CreatorUserName { get; set; }
+
+		/// <summary>
+		/// 表单数据
+		/// </summary>
+		[SugarColumn(IsNullable = true, ColumnName = "F_FrmData", ColumnDataType = "longtext", ColumnDescription = "表单数据")]
+		public string F_FrmData { get; set; }
 	}
 }

@@ -38,7 +38,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="layui-form-item" v-if="isFork()">
+                        <div class="layui-form-item">
                             <label class="layui-form-label">会签方式</label>
                             <div class="layui-input-block">
                                 <select id="NodeConfluenceType" lay-filter="NodeConfluenceType" name="NodeConfluenceType">
@@ -53,6 +53,13 @@
                             <div class="layui-input-block">
                                 <input type="text" name="ThirdPartyUrl" id="ThirdPartyUrl"
                                        placeholder="http://www.xxxxxx.com/api/workflow/execute_callback" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">允许修改表单字段</label>
+                            <div class="layui-input-block">
+                                <div id="CanWriteFormItemIds" name="CanWriteFormItemIds">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -93,16 +100,18 @@
     </div>
 </div>
 <script>
-    var FlowDesignObject;
+    var FlowDesignObject, valueList;
     function initForm(data) {
         FlowDesignObject = data.FlowDesignObject;
+        valueList = data.valueList;
     }
-    layui.use(['form', 'commonTable', 'element', 'table', 'jquery', 'common', 'optimizeSelectOption'], function () {
+    layui.use(['form', 'commonTable', 'element', 'table', 'jquery', 'common', 'optimizeSelectOption', 'xmSelect'], function () {
         var commonTable = layui.commonTable,
             $ = layui.jquery,
             table = layui.table,
             common = layui.common,
             element = layui.element,
+            xmSelect = layui.xmSelect,
             form = layui.form;
         var Method = $.request("Method");
         //从flowschemes.js进入的节点信息
@@ -113,7 +122,8 @@
             NodeRejectType: "1",
             NodeDesignate: "ALL_USER",
             NodeConfluenceType: "all",
-            ThirdPartyUrl: ""
+            ThirdPartyUrl: "",
+            CanWriteFormItemIds:[]
         };
         $('#specialrole').addClass("layui-hide");
         $('#specialuser').addClass("layui-hide");
@@ -146,6 +156,26 @@
                 });
             }
 
+        }
+        var xmData=[];
+        for (var i = 0; i < valueList.length; i++)
+        {
+            xmData.push({
+             value:i,
+                name: valueList[i]
+            });
+        }
+        var demo1 = xmSelect.render({
+            el: '#CanWriteFormItemIds',
+            data: xmData,
+            model: {
+                type: 'relative', //默认 absolute
+            },
+            filterable: true,
+            toolbar: { show: true }
+        });
+        if (!!tmp.CanWriteFormItemIds) {
+            demo1.setValue(tmp.CanWriteFormItemIds);
         }
         commonTable.rendertable({
             elem: '#UserId',
@@ -266,6 +296,8 @@
             tmp.NodeConfluenceType = $('#NodeConfluenceType').val();
             tmp.ThirdPartyUrl = $('#ThirdPartyUrl').val();
             tmp.NodeName = $('#NodeName').val();
+            var vals = demo1.getValue("value");
+            tmp.CanWriteFormItemIds = vals;
             var result = {
                 NodeDesignateData: { //节点指定操作人
                     users: users,

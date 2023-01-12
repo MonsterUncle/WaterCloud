@@ -44,7 +44,7 @@ namespace WaterCloud.Web
 			//调试前端可更新
 			services.AddControllersWithViews().AddRazorRuntimeCompilation();
 			//清理缓存
-			//CacheHelper.FlushAll().GetAwaiter().GetResult();
+			//CacheHelper.FlushAllAsync().GetAwaiter().GetResult();
 		}
 
 		//AutoFac注入

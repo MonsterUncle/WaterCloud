@@ -100,7 +100,7 @@
             widht: 300,
             OpenNode: function (object) {
                 FlowDesignObject = object; //为NodeInfo窗口提供调用
-
+                valueList = $("#valueList").val().split(',');
                 if (object.type == 'start round mix' || object.type == 'end round') {
                     layer.msg("开始节点与结束节点不能设置");
                     return false;
@@ -122,6 +122,7 @@
                         if (layero.find('iframe')[0].contentWindow.initForm) {
                             var data = {};
                             data.FlowDesignObject = FlowDesignObject;
+                            data.valueList = valueList;
                             layero.find('iframe')[0].contentWindow.initForm(data);
                         }
                     },

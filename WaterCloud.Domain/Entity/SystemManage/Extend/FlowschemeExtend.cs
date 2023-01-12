@@ -23,5 +23,10 @@
 		public string[] NextNodeDesignates { get; set; }
 
 		public string NextMakerName { get; set; }
+
+		/// <summary>
+		/// 可写的表单项
+		/// </summary>
+		public string[] CanWriteFormItems { get; set; }
 	}
 }

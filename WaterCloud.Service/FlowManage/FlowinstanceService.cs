@@ -128,7 +128,7 @@ namespace WaterCloud.Service.FlowManage
 
 			FlowinstanceEntity flowInstance = await GetForm(reqest.F_FlowInstanceId);
 			flowCreator = flowInstance.F_CreatorUserId;
-
+			flowInstance.F_FrmData = reqest.F_FrmData;
 			FlowRuntime wfruntime = new FlowRuntime(flowInstance);
 
 			string resnode = "";
@@ -164,6 +164,27 @@ namespace WaterCloud.Service.FlowManage
 					flowInstance.F_MakerList = await repository.Db.Queryable<FlowInstanceTransitionHistory>().Where(a => a.F_FromNodeId == resnode && a.F_ToNodeId == prruntime.nextNodeId).OrderBy(a => a.F_CreatorTime, OrderByType.Desc).Select(a => a.F_CreatorUserId).FirstAsync();//当前节点可执行的人信息
 				}
 				await AddRejectTransHistory(wfruntime, prruntime);
+				if (flowInstance.F_FrmType == 1)
+				{
+					var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
+					var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
+					var t = referencedAssemblies
+						.SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + flowInstance.F_DbName + "Service"))).First();
+					ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
+					await icf.Edit(flowInstance.F_Id, flowInstance.F_FrmData);
+				}
+				else
+				{
+					if (!string.IsNullOrEmpty(flowInstance.F_DbName))
+					{
+						var formDic = flowInstance.F_FrmData.ToObject<Dictionary<string, object>>();
+						formDic.Add("F_CreatorUserId", this.currentuser.UserId);
+						formDic.Add("F_CreatorTime", DateTime.Now);
+						formDic.Add("F_Id", Utils.GuId());
+						await repository.Db.Insertable(formDic).AS(flowInstance.F_DbName).ExecuteCommandAsync();
+						flowInstance.F_FrmData = formDic.ToJson();
+					}
+				}
 				await repository.Update(flowInstance);
 			}
 			await repository.Db.Insertable(new FlowInstanceOperationHistory
@@ -176,6 +197,8 @@ namespace WaterCloud.Service.FlowManage
 				F_CreatorUserName = user.UserName
 				,
 				F_CreatorTime = DateTime.Now
+				,
+				F_FrmData= flowInstance.F_FrmData
 				,
 				F_Content = "【"
 						  + wfruntime.currentNode.name
@@ -238,6 +261,7 @@ namespace WaterCloud.Service.FlowManage
 				Taged = Int32.Parse(request.F_VerificationFinally)
 			};
 			FlowinstanceEntity flowInstance = await GetForm(instanceId);
+			flowInstance.F_FrmData = request.F_FrmData;
 			flowCreator = flowInstance.F_CreatorUserId;
 			FlowInstanceOperationHistory flowInstanceOperationHistory = new FlowInstanceOperationHistory
 			{
@@ -331,6 +355,28 @@ namespace WaterCloud.Service.FlowManage
 
 			wfruntime.RemoveNode(wfruntime.nextNodeId);
 			flowInstance.F_SchemeContent = wfruntime.ToSchemeObj().ToJson();
+			if (flowInstance.F_FrmType == 1)
+			{
+				var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
+				var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
+				var t = referencedAssemblies
+					.SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + flowInstance.F_DbName + "Service"))).First();
+				ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
+				await icf.Edit(flowInstance.F_Id, flowInstance.F_FrmData);
+			}
+			else
+			{
+				if (!string.IsNullOrEmpty(flowInstance.F_DbName))
+				{
+					var formDic = flowInstance.F_FrmData.ToObject<Dictionary<string, object>>();
+					formDic.Add("F_CreatorUserId", this.currentuser.UserId);
+					formDic.Add("F_CreatorTime", DateTime.Now);
+					formDic.Add("F_Id", Utils.GuId());
+					await repository.Db.Insertable(formDic).AS(flowInstance.F_DbName).ExecuteCommandAsync();
+					flowInstance.F_FrmData = formDic.ToJson();
+				}
+			}
+			flowInstanceOperationHistory.F_FrmData = flowInstance.F_FrmData;
 			await repository.Db.Updateable(flowInstance).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
 			await repository.Db.Insertable(flowInstanceOperationHistory).ExecuteCommandAsync();
 			MessageEntity msg = new MessageEntity();
@@ -649,6 +695,12 @@ namespace WaterCloud.Service.FlowManage
 				{
 					flowinstance.CurrentMakerName = "所有人";
 				}
+				var formDatas = flowinstance.F_FrmContentData.Split(',');
+				var formlist = new List<string>();
+				if (runtime.currentNode.setInfo.CanWriteFormItemIds!=null)
+					foreach (var item in runtime.currentNode.setInfo.CanWriteFormItemIds)
+						formlist.Add(formDatas[item.ToInt()]);
+				flowinstance.CanWriteFormItems = formlist.ToArray();
 			}
 			return flowinstance;
 		}
@@ -758,6 +810,8 @@ namespace WaterCloud.Service.FlowManage
 			entity.F_FrmData = dic.ToJson();
 			entity.F_InstanceSchemeId = "";
 			entity.F_DbName = form.F_WebId;
+			if (entity.F_FrmType ==0)
+				entity.F_DbName = form.F_DbName;
 			entity.F_FlowLevel = 0;
 			entity.Create();
 			flowCreator = currentuser.UserId;
@@ -775,7 +829,6 @@ namespace WaterCloud.Service.FlowManage
 			entity.F_MakerList = (wfruntime.GetNextNodeType() != 4 ? GetNextMakers(wfruntime, nodeDesignate) : "");
 			entity.F_IsFinish = (wfruntime.GetNextNodeType() == 4 ? 1 : 0);
 			repository.Db.Ado.BeginTran();
-			await repository.Db.Insertable(entity).ExecuteCommandAsync();
 
 			wfruntime.flowInstanceId = entity.F_Id;
 			//复杂表单提交
@@ -788,6 +841,19 @@ namespace WaterCloud.Service.FlowManage
 				ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
 				await icf.Add(entity.F_Id, entity.F_FrmData);
 			}
+			else
+			{
+				if (!string.IsNullOrEmpty(entity.F_DbName))
+				{
+					var formDic = entity.F_FrmData.ToObject<Dictionary<string, object>>();
+					formDic.Add("F_CreatorUserId", this.currentuser.UserId);
+					formDic.Add("F_CreatorTime", DateTime.Now);
+					formDic.Add("F_Id", Utils.GuId());
+					await repository.Db.Insertable(formDic).AS(entity.F_DbName).ExecuteCommandAsync();
+					entity.F_FrmData = formDic.ToJson();
+				}
+			}
+			await repository.Db.Insertable(entity).ExecuteCommandAsync();
 
 			#endregion 根据运行实例改变当前节点状态
 
@@ -800,6 +866,7 @@ namespace WaterCloud.Service.FlowManage
 				F_CreatorUserId = entity.F_CreatorUserId,
 				F_CreatorUserName = entity.F_CreatorUserName,
 				F_CreatorTime = entity.F_CreatorTime,
+				F_FrmData = entity.F_FrmData,
 				F_Content = "【创建】"
 						  + entity.F_CreatorUserName
 						  + "创建了一个流程【"
@@ -893,6 +960,8 @@ namespace WaterCloud.Service.FlowManage
 			entity.F_FrmId = form.F_Id;
 			entity.F_InstanceSchemeId = "";
 			entity.F_DbName = form.F_WebId;
+			if (entity.F_FrmType == 0)
+				entity.F_DbName = form.F_DbName;
 			entity.F_FlowLevel = 0;
 			flowCreator = currentuser.UserId;
 			//创建运行实例
@@ -910,7 +979,6 @@ namespace WaterCloud.Service.FlowManage
 			entity.F_MakerList = (wfruntime.GetNextNodeType() != 4 ? GetNextMakers(wfruntime, nodeDesignate) : "");
 			entity.F_IsFinish = (wfruntime.GetNextNodeType() == 4 ? 1 : 0);
 			repository.Db.Ado.BeginTran();
-			await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
 			wfruntime.flowInstanceId = entity.F_Id;
 			//复杂表单提交
 			if (entity.F_FrmType == 1)
@@ -922,6 +990,18 @@ namespace WaterCloud.Service.FlowManage
 				ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
 				await icf.Edit(entity.F_Id, entity.F_FrmData);
 			}
+			else
+			{
+				if (!string.IsNullOrEmpty(entity.F_DbName))
+				{
+					var formDic = entity.F_FrmData.ToObject<Dictionary<string, object>>();
+					formDic.Add("F_LastModifyUserId", this.currentuser.UserId);
+					formDic.Add("F_LastModifyTime", DateTime.Now);
+					await repository.Db.Updateable(formDic).AS(entity.F_DbName).ExecuteCommandAsync();
+					entity.F_FrmData= formDic.ToJson();
+				}
+			}
+			await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
 
 			#endregion 根据运行实例改变当前节点状态
 
@@ -934,6 +1014,7 @@ namespace WaterCloud.Service.FlowManage
 				F_CreatorUserId = user.UserId,
 				F_CreatorUserName = entity.F_CreatorUserName,
 				F_CreatorTime = DateTime.Now,
+				F_FrmData= entity.F_FrmData,
 				F_Content = "【修改】"
 						  + entity.F_CreatorUserName
 						  + "修改了一个流程【"
@@ -1054,6 +1135,8 @@ namespace WaterCloud.Service.FlowManage
 				F_CreatorUserName = user.UserName
 				,
 				F_CreatorTime = DateTime.Now
+				,
+				F_FrmData = flowInstance.F_FrmData
 				,
 				F_Content = "【"
 						  + wfruntime.currentNode.name

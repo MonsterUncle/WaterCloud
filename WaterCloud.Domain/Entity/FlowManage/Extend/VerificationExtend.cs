@@ -23,5 +23,11 @@
 		/// 驳回类型。null:使用节点配置的驳回类型/0:前一步/1:第一步/2：指定节点，使用NodeRejectStep
 		/// </summary>
 		public string NodeRejectType { get; set; }
+
+		/// <summary>
+		/// 新的表单数据
+		/// 如果该节点有可以修改的表单项时，会提交表单数据信息
+		/// </summary>
+		public string F_FrmData { get; set; }
 	}
 }

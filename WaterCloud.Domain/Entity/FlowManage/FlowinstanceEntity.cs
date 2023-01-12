@@ -226,5 +226,8 @@ namespace WaterCloud.Domain.FlowManage
 
 		[SugarColumn(IsIgnore = true)]
 		public string CurrentNodeDesignateType { get; set; }
+
+		[SugarColumn(IsIgnore = true)]
+		public string[] CanWriteFormItems { get; set; }
 	}
 }

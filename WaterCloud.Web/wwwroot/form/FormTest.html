@@ -70,6 +70,14 @@
             if (typeof readonly != "undefined" && readonly) {
                 common.setReadOnly('FormTest');
             }
+            if (typeof canWriteFormItems != "undefined" && Array.isArray(canWriteFormItems)) {
+                var readForm = layui.$('[lay-filter="FormTest"]');
+                for (var i = 0; i < canWriteFormItems.length; i++) {
+                    $("#" + canWriteFormItems[i]).removeAttr('disabled');
+                    $("#" + canWriteFormItems[i]).attr('lay-verify','required');
+                    readForm.find('.layui-layedit iframe').contents().find('body').prop('contenteditable', true);
+                }
+            }
             form.render();
         });
         form.render();
