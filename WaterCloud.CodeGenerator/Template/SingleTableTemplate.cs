@@ -732,8 +732,8 @@ namespace WaterCloud.CodeGenerator
 						break;
 				}
 				sb.AppendLine("             ]]");
-				sb.AppendLine("         });");
-				sb.AppendLine("         commonTable.reloadtreetable(options);");
+				sb.AppendLine("         };");
+				sb.AppendLine("         commonTable.rendertreetable(options);");
 				sb.AppendLine("         // 监听搜索操作");
 				sb.AppendLine("         form.on('submit(data-search-btn)', function (data) {");
 				sb.AppendLine("             var queryJson = data.field.txt_keyword;");
