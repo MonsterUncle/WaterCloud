@@ -17911,3 +17911,13 @@ ALTER TABLE [dbo].[sys_userlogon] ADD CONSTRAINT [PK__sys_user__2C6EC72387C53FFC
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
+
+ALTER TABLE [dbo].[oms_flowinstanceinfo] ADD [F_FrmData] nvarchar(1000) Null
+GO
+
+EXEC sp_addextendedproperty
+'MS_Description', N'表单数据',
+'SCHEMA', N'dbo',
+'TABLE', N'oms_flowinstanceinfo',
+'COLUMN', N'F_FrmData'
+GO

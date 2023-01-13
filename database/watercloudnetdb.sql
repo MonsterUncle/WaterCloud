@@ -4936,4 +4936,7 @@ CREATE TABLE `sys_userlogon`  (
 -- ----------------------------
 INSERT INTO `sys_userlogon` VALUES ('9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '9f2ec079-7d0f-4fe2-90ab-8b09a8302aba', '99e5c8431f64527c0acd80b34a3dce3c', '74aeb85d04e4b485', NULL, NULL, NULL, NULL, NULL, '2020-04-17 14:47:44', '2020-04-17 14:59:58', NULL, 0, 360, 0, NULL, NULL, 0, NULL, NULL, 'evrcyibdv42f3ykhfy1yz3ur', 0);
 
+ALTER TABLE `oms_flowinstanceinfo` ADD COLUMN `F_FrmData` varchar(1000) NULL COMMENT '表单数据';
+
 SET FOREIGN_KEY_CHECKS = 1;
+
