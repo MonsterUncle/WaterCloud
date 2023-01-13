@@ -21,9 +21,11 @@ namespace WaterCloud.Service.Event
 			var todo = (BaseEventSource)context.Source;
 			var input = (LogEntity)todo.Payload;
 			var user = todo.User;
-			var serviceProvider= GlobalContext.RootServices.CreateScope();
-			var logService= serviceProvider.ServiceProvider.GetService<LogService>();
-			await logService.WriteDbLog(input,user);
+			using (var serviceProvider = GlobalContext.RootServices.CreateScope())
+			{
+                var logService = serviceProvider.ServiceProvider.GetService<LogService>();
+                await logService.WriteDbLog(input, user);
+            }
 			await Task.CompletedTask;
 		}
 	}
