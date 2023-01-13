@@ -41,7 +41,7 @@ namespace WaterCloud.Service.AutoJob
 				JobDataMap jobData = null;
 				OpenJobEntity dbJobEntity = null;
 				DateTime now = DateTime.Now;
-				var dbContext = GlobalContext.RootServices.GetRequiredService<ISqlSugarClient>().CopyNew();
+				var dbContext = GlobalContext.RootServices.GetRequiredService<ISqlSugarClient>();
 				try
 				{
                     jobData = context.JobDetail.JobDataMap;
@@ -99,7 +99,7 @@ namespace WaterCloud.Service.AutoJob
 								}
 								else if (dbJobEntity.F_JobType == 5)
 								{
-                                    var dbContextTemp = dbContext.GetConnectionScope(dbJobEntity.F_JobDBProvider);
+                                    var dbContextTemp = dbContext.AsTenant().GetConnectionScope(dbJobEntity.F_JobDBProvider);
                                     try
 									{
                                         dbContextTemp.Ado.BeginTran();

@@ -1,4 +1,6 @@
-﻿using SqlSugar;
+﻿using Org.BouncyCastle.Asn1.Ocsp;
+using Serenity.Data.Schema;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -128,7 +130,6 @@ namespace WaterCloud.Service.FlowManage
 
 			FlowinstanceEntity flowInstance = await GetForm(reqest.F_FlowInstanceId);
 			flowCreator = flowInstance.F_CreatorUserId;
-			flowInstance.F_FrmData = reqest.F_FrmData;
 			FlowRuntime wfruntime = new FlowRuntime(flowInstance);
 
 			string resnode = "";
@@ -164,30 +165,40 @@ namespace WaterCloud.Service.FlowManage
 					flowInstance.F_MakerList = await repository.Db.Queryable<FlowInstanceTransitionHistory>().Where(a => a.F_FromNodeId == resnode && a.F_ToNodeId == prruntime.nextNodeId).OrderBy(a => a.F_CreatorTime, OrderByType.Desc).Select(a => a.F_CreatorUserId).FirstAsync();//当前节点可执行的人信息
 				}
 				await AddRejectTransHistory(wfruntime, prruntime);
-				if (flowInstance.F_FrmType == 1)
-				{
-					var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
-					var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
-					var t = referencedAssemblies
-						.SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + flowInstance.F_DbName + "Service"))).First();
-					ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
-					await icf.Edit(flowInstance.F_Id, flowInstance.F_FrmData);
-				}
-				else
-				{
-					if (!string.IsNullOrEmpty(flowInstance.F_DbName))
-					{
-						var formDic = flowInstance.F_FrmData.ToObject<Dictionary<string, object>>();
-						formDic.Add("F_CreatorUserId", this.currentuser.UserId);
-						formDic.Add("F_CreatorTime", DateTime.Now);
-						formDic.Add("F_Id", Utils.GuId());
-						await repository.Db.Insertable(formDic).AS(flowInstance.F_DbName).ExecuteCommandAsync();
-						flowInstance.F_FrmData = formDic.ToJson();
-					}
-				}
-				await repository.Update(flowInstance);
-			}
-			await repository.Db.Insertable(new FlowInstanceOperationHistory
+                var formDic = reqest.F_FrmData.ToObject<Dictionary<string, object>>();
+                var oldformDic = flowInstance.F_FrmData.ToObject<Dictionary<string, object>>();
+                foreach (var item in oldformDic)
+                    if (!formDic.ContainsKey(item.Key))
+                        formDic.Add(item.Key, item.Value);
+                if (flowInstance.F_FrmType == 1)
+                {
+                    var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
+                    var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
+                    var t = referencedAssemblies
+                        .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + flowInstance.F_DbName + "Service"))).First();
+                    ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
+                    flowInstance.F_FrmData = formDic.ToJson();
+                    await icf.Edit(flowInstance.F_Id, flowInstance.F_FrmData);
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(flowInstance.F_DbName))
+                    {
+                        formDic.Add("F_LastModifyUserId", this.currentuser.UserId);
+                        formDic.Add("F_LastModifyTime", DateTime.Now);
+                        formDic.Add("F_LastModifyUserName", this.currentuser.UserName);
+                        flowInstance.F_FrmData = formDic.ToJson();
+                        var data = repository.Db.DbMaintenance.GetColumnInfosByTableName(flowInstance.F_DbName, false);
+                        List<string> oldID = formDic.Keys.ToList();//原来数据（原来ID）
+                        List<string> newID = data.Select(a => a.DbColumnName).ToList();//新增数据（新ID）
+                        foreach (var item in oldID.Except(newID))
+                            formDic.Remove(item);
+                        await repository.Db.Updateable(formDic).AS(flowInstance.F_DbName).WhereColumns(data.FirstOrDefault(a => a.IsPrimarykey).DbColumnName).ExecuteCommandAsync();
+                    }
+                }
+                await repository.Update(flowInstance);
+            }
+            await repository.Db.Insertable(new FlowInstanceOperationHistory
 			{
 				F_Id = Utils.GuId(),
 				F_InstanceId = reqest.F_FlowInstanceId
@@ -261,7 +272,6 @@ namespace WaterCloud.Service.FlowManage
 				Taged = Int32.Parse(request.F_VerificationFinally)
 			};
 			FlowinstanceEntity flowInstance = await GetForm(instanceId);
-			flowInstance.F_FrmData = request.F_FrmData;
 			flowCreator = flowInstance.F_CreatorUserId;
 			FlowInstanceOperationHistory flowInstanceOperationHistory = new FlowInstanceOperationHistory
 			{
@@ -355,28 +365,39 @@ namespace WaterCloud.Service.FlowManage
 
 			wfruntime.RemoveNode(wfruntime.nextNodeId);
 			flowInstance.F_SchemeContent = wfruntime.ToSchemeObj().ToJson();
-			if (flowInstance.F_FrmType == 1)
-			{
-				var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
-				var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
-				var t = referencedAssemblies
-					.SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + flowInstance.F_DbName + "Service"))).First();
-				ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
-				await icf.Edit(flowInstance.F_Id, flowInstance.F_FrmData);
-			}
-			else
-			{
-				if (!string.IsNullOrEmpty(flowInstance.F_DbName))
-				{
-					var formDic = flowInstance.F_FrmData.ToObject<Dictionary<string, object>>();
-					formDic.Add("F_CreatorUserId", this.currentuser.UserId);
-					formDic.Add("F_CreatorTime", DateTime.Now);
-					formDic.Add("F_Id", Utils.GuId());
-					await repository.Db.Insertable(formDic).AS(flowInstance.F_DbName).ExecuteCommandAsync();
-					flowInstance.F_FrmData = formDic.ToJson();
-				}
-			}
-			flowInstanceOperationHistory.F_FrmData = flowInstance.F_FrmData;
+            var formDic = request.F_FrmData.ToObject<Dictionary<string, object>>();
+            var oldformDic = flowInstance.F_FrmData.ToObject<Dictionary<string, object>>();
+            foreach (var item in oldformDic)
+                if (!formDic.ContainsKey(item.Key))
+                    formDic.Add(item.Key, item.Value);
+            if (flowInstance.F_FrmType == 1)
+            {
+                var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
+                var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
+                var t = referencedAssemblies
+                    .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + flowInstance.F_DbName + "Service"))).First();
+                ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
+                flowInstance.F_FrmData = formDic.ToJson();
+                await icf.Edit(flowInstance.F_Id, flowInstance.F_FrmData);
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(flowInstance.F_DbName))
+                {
+                    formDic.Add("F_LastModifyUserId", this.currentuser.UserId);
+                    formDic.Add("F_LastModifyTime", DateTime.Now);
+                    formDic.Add("F_LastModifyUserName", this.currentuser.UserName);
+                    flowInstance.F_FrmData = formDic.ToJson();
+                    var data = repository.Db.DbMaintenance.GetColumnInfosByTableName(flowInstance.F_DbName, false);
+                    List<string> oldID = formDic.Keys.ToList();//原来数据（原来ID）
+                    List<string> newID = data.Select(a => a.DbColumnName).ToList();//新增数据（新ID）
+                    foreach (var item in oldID.Except(newID))
+                        formDic.Remove(item);
+                    await repository.Db.Updateable(formDic).AS(flowInstance.F_DbName).WhereColumns(data.FirstOrDefault(a => a.IsPrimarykey).DbColumnName).ExecuteCommandAsync();
+                }
+            }
+            await repository.Update(flowInstance);
+            flowInstanceOperationHistory.F_FrmData = flowInstance.F_FrmData;
 			await repository.Db.Updateable(flowInstance).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();
 			await repository.Db.Insertable(flowInstanceOperationHistory).ExecuteCommandAsync();
 			MessageEntity msg = new MessageEntity();
@@ -848,9 +869,15 @@ namespace WaterCloud.Service.FlowManage
 					var formDic = entity.F_FrmData.ToObject<Dictionary<string, object>>();
 					formDic.Add("F_CreatorUserId", this.currentuser.UserId);
 					formDic.Add("F_CreatorTime", DateTime.Now);
-					formDic.Add("F_Id", Utils.GuId());
-					await repository.Db.Insertable(formDic).AS(entity.F_DbName).ExecuteCommandAsync();
-					entity.F_FrmData = formDic.ToJson();
+                    formDic.Add("F_CreatorUserName", this.currentuser.UserName);
+                    formDic.Add("F_Id", Utils.GuId());
+                    entity.F_FrmData = formDic.ToJson();
+                    var data = repository.Db.DbMaintenance.GetColumnInfosByTableName(entity.F_DbName, false);
+                    List<string> oldID = formDic.Keys.ToList();//原来数据（原来ID）
+                    List<string> newID = data.Select(a => a.DbColumnName).ToList();//新增数据（新ID）
+                    foreach (var item in oldID.Except(newID))
+                        formDic.Remove(item);
+                    await repository.Db.Insertable(formDic).AS(entity.F_DbName).ExecuteCommandAsync();
 				}
 			}
 			await repository.Db.Insertable(entity).ExecuteCommandAsync();
@@ -953,7 +980,8 @@ namespace WaterCloud.Service.FlowManage
 				dic.Add("所属部门", currentuser.OrganizeId);
 			}
 			entity.F_FrmData = dic.ToJson();
-			var wfruntime = new FlowRuntime(await repository.FindEntity(entity.F_Id));
+			var oldEntity = await repository.FindEntity(entity.F_Id);
+            var wfruntime = new FlowRuntime(oldEntity);
 			entity.F_FrmContentData = form.F_ContentData;
 			entity.F_FrmContentParse = form.F_ContentParse;
 			entity.F_FrmType = form.F_FrmType;
@@ -978,7 +1006,12 @@ namespace WaterCloud.Service.FlowManage
 			entity.F_CreatorUserName = user.UserName;
 			entity.F_MakerList = (wfruntime.GetNextNodeType() != 4 ? GetNextMakers(wfruntime, nodeDesignate) : "");
 			entity.F_IsFinish = (wfruntime.GetNextNodeType() == 4 ? 1 : 0);
-			repository.Db.Ado.BeginTran();
+            var formDic = entity.F_FrmData.ToObject<Dictionary<string, object>>();
+            var oldformDic = oldEntity.F_FrmData.ToObject<Dictionary<string, object>>();
+            foreach (var item in oldformDic)
+                if (!formDic.ContainsKey(item.Key))
+                    formDic.Add(item.Key, item.Value);
+            repository.Db.Ado.BeginTran();
 			wfruntime.flowInstanceId = entity.F_Id;
 			//复杂表单提交
 			if (entity.F_FrmType == 1)
@@ -988,17 +1021,23 @@ namespace WaterCloud.Service.FlowManage
 				var t = referencedAssemblies
 					.SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + entity.F_DbName + "Service"))).First();
 				ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
-				await icf.Edit(entity.F_Id, entity.F_FrmData);
+                entity.F_FrmData = formDic.ToJson();
+                await icf.Edit(entity.F_Id, formDic.ToJson());
 			}
 			else
 			{
 				if (!string.IsNullOrEmpty(entity.F_DbName))
 				{
-					var formDic = entity.F_FrmData.ToObject<Dictionary<string, object>>();
 					formDic.Add("F_LastModifyUserId", this.currentuser.UserId);
 					formDic.Add("F_LastModifyTime", DateTime.Now);
-					await repository.Db.Updateable(formDic).AS(entity.F_DbName).ExecuteCommandAsync();
-					entity.F_FrmData= formDic.ToJson();
+					formDic.Add("F_LastModifyUserName", this.currentuser.UserName);
+                    entity.F_FrmData = formDic.ToJson();
+                    var data = repository.Db.DbMaintenance.GetColumnInfosByTableName(entity.F_DbName, false);
+                    List<string> oldID = formDic.Keys.ToList();//原来数据（原来ID）
+                    List<string> newID = data.Select(a => a.DbColumnName).ToList();//新增数据（新ID）
+                    foreach (var item in oldID.Except(newID))
+                        formDic.Remove(item);
+                    await repository.Db.Updateable(formDic).AS(entity.F_DbName).WhereColumns(data.FirstOrDefault(a=>a.IsPrimarykey).DbColumnName).ExecuteCommandAsync();
 				}
 			}
 			await repository.Db.Updateable(entity).IgnoreColumns(ignoreAllNullColumns: true).ExecuteCommandAsync();

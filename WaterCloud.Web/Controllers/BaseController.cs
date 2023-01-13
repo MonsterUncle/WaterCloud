@@ -1,6 +1,8 @@
 ﻿using Jaina;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Serenity.Data;
+using SqlSugar;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -109,8 +111,10 @@ namespace WaterCloud.Web
 		{
 			className = string.IsNullOrEmpty(className) ? ReflectionHelper.GetModuleName(isReplace: false, prefix: "Controller") : className;
 			var log = await _logService.CreateLog(message, className, keyValue != null && keyValue.ToString() != "0" ? keyValue.ToString() : "", logType, true);
-			await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", log, _logService.currentuser));
-			return Content(new AlwaysResult { state = ResultType.error.ToString(), message = LogHelper.ExMsgFormat(message) }.ToJson());
+            await GlobalContext.GetService<ISqlSugarClient>().Ado.RollbackTranAsync();
+            await GlobalContext.GetService<ISqlSugarClient>().AsTenant().RollbackTranAsync();
+            await GlobalContext.GetService<IEventPublisher>().PublishAsync(new BaseEventSource("Log:create", log, _logService.currentuser));
+            return Content(new AlwaysResult { state = ResultType.error.ToString(), message = LogHelper.ExMsgFormat(message) }.ToJson());
 		}
 
 		protected virtual ActionResult Error(string message)
