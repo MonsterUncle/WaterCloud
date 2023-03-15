@@ -24,11 +24,11 @@ namespace WaterCloud.Service
 	/// </summary>
 	public static class ServiceSetup
 	{
-		/// <summary>
-		/// SqlSugar设置
-		/// </summary>
-		/// <param name="services"></param>
-		public static IServiceCollection AddSqlSugar(this IServiceCollection services)
+        /// <summary>
+        /// SqlSugar设置
+        /// </summary>
+        /// <param name="services"></param>
+        public static IServiceCollection AddSqlSugar(this IServiceCollection services)
 		{
 			var configList = DBInitialize.GetConnectionConfigs(true);
 			SqlSugarScope sqlSugarScope = new SqlSugarScope(configList,

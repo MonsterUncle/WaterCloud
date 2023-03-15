@@ -683,7 +683,7 @@ namespace WaterCloud.Service.FlowManage
 						var tempList = new List<UserEntity>();
 						if (runtime.nextNode.setInfo.NodeDesignateData.currentDepart)
 						{
-							var currentDepartment = repository.Db.Queryable<UserEntity>().InSingle(flowCreator).F_OrganizeId.Split(',').ToList();
+							var currentDepartment = repository.Db.Queryable<UserEntity>().InSingle(flowinstance.F_CreatorUserId).F_OrganizeId.Split(',').ToList();
 							foreach (var user in temp)
 							{
 								var nextCurrentDepartment = user.F_OrganizeId.Split(',').ToList();
