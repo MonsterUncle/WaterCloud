@@ -23,7 +23,6 @@ namespace WaterCloud.Service.AutoJob
 		private ISchedulerFactory _schedulerFactory;
 		private IJobFactory _iocJobfactory;
 		private readonly IHttpClientFactory _httpClient;
-		public readonly ISqlSugarClient dbContext;
         public JobExecute(ISchedulerFactory schedulerFactory, IJobFactory iocJobfactory, IHttpClientFactory httpClient)
 		{
 			_scheduler = schedulerFactory.GetScheduler().GetAwaiter().GetResult();
@@ -31,27 +30,26 @@ namespace WaterCloud.Service.AutoJob
 			_schedulerFactory = schedulerFactory;
 			_iocJobfactory = iocJobfactory;
 			_httpClient = httpClient;
-            dbContext = new SqlSugarClient(DBInitialize.GetConnectionConfigs(true),
-			//全局上下文生效
-			db =>
-			{
-				foreach (var item in DBInitialize.GetConnectionConfigs(false))
-				{
-					string temp = item.ConfigId;
-					db.GetConnection(temp).DefaultConfig();
-				}
-			});
         }
 
 		public Task Execute(IJobExecutionContext context)
 		{
 			return Task.Run(async () =>
 			{
-				string jobId = "";
+                using var dbContext = new SqlSugarClient(DBInitialize.GetConnectionConfigs(true),
+				//全局上下文生效
+				db =>
+				{
+					foreach (var item in DBInitialize.GetConnectionConfigs(false))
+					{
+						string temp = item.ConfigId;
+						db.GetConnection(temp).DefaultConfig();
+					}
+				});
+                string jobId = "";
 				JobDataMap jobData = null;
 				OpenJobEntity dbJobEntity = null;
 				DateTime now = DateTime.Now;
-
 				try
 				{
                     jobData = context.JobDetail.JobDataMap;
