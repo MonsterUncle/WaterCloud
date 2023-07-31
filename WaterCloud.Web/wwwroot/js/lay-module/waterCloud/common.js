@@ -568,7 +568,6 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
             var readForm = layui.$('[lay-filter="' + filter + '"]');
             readForm.find('input,textarea,select').prop('disabled', true);
             readForm.find('input,textarea,select').removeAttr('lay-verify');
-            readForm.find('.layui-layedit iframe').contents().find('body').prop('contenteditable', false);
         },
         //按钮权限(控制js模板,格式必须严格,新)
         authorizeButtonNew: function (innerHTML) {

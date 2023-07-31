@@ -29,7 +29,6 @@
     <None Include="wwwroot\lib\layui\modules\jquery.js" />
     <None Include="wwwroot\lib\layui\modules\lay.js" />
     <None Include="wwwroot\lib\layui\modules\laydate.js" />
-    <None Include="wwwroot\lib\layui\modules\layedit.js" />
     <None Include="wwwroot\lib\layui\modules\layer.js" />
     <None Include="wwwroot\lib\layui\modules\laypage.js" />
     <None Include="wwwroot\lib\layui\modules\laytpl.js" />

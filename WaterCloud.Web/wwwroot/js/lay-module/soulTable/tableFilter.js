@@ -2810,7 +2810,7 @@ layui.define(['table', 'form', 'laydate', 'util', 'excel', 'laytpl'], function (
             for (i = 0; i < data.length; i++) {
                 for (j = 0; j < columns.length; j++) {
                     if ((columns[j].field || columns[j].type === 'numbers') && (customColumns && Array.isArray(customColumns) || !columns[j].hide)) {
-                        data[i][columns[j].key] = data[i][columns[j].field || columns[j]['LAY_TABLE_INDEX']]
+                        data[i][columns[j].key] = data[i][columns[j].field || columns[j]['LAY_INDEX']]
                     }
                 }
             }

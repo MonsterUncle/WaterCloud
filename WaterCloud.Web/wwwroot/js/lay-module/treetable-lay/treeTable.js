@@ -836,7 +836,7 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
         if (h) hide = h;//当所有父级存在隐藏时，隐藏所有子集
         for (var i = 0; i < data.length; i++) {
             var d = data[i];
-            d.LAY_INDEX = (parent ? parent.LAY_INDEX + '-' : '') + i;
+            d.LAY_NUM = (parent ? parent.LAY_NUM + '-' : '') + i;
             html += this.renderBodyTr(d, indent, hide);
             // 递归渲染子集
             html += this.renderBody(d[options.tree.childName], indent + 1, d, h);
@@ -870,7 +870,7 @@ layui.define(['laytpl', 'form', 'util'], function (exports) {
         if (hide) classNames += 'ew-tree-tb-hide';
         html += (' class="' + classNames + '"');
         if (haveChild) html += (' data-have-child="' + haveChild + '"');
-        html += (' data-index="' + d.LAY_INDEX + '"');
+        html += (' data-index="' + d.LAY_NUM + '"');
         html += (' data-indent="' + indent + '">');
         var index = 0;
         this.eachCols(function (i, col) {

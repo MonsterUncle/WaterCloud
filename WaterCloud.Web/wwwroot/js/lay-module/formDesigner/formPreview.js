@@ -1262,13 +1262,11 @@ layui.define(['layer', 'laytpl', 'element', 'form', 'slider', 'laydate', 'rate',
                 var readForm = $('#formPreviewForm');
                 readForm.find('input,textarea,select').prop('disabled', true);
                 readForm.find('input,textarea,select').removeAttr('lay-verify');
-                readForm.find('.layui-layedit iframe').contents().find('body').prop('contenteditable', false);
                 if (typeof options.canformitems != "undefined" && Array.isArray(options.canformitems)) {
                     var readForm = $('#formPreviewForm');
                     for (var i = 0; i < options.canformitems.length; i++) {
                         $('[name="' + options.canformitems[i]+'"]').removeAttr('disabled');
                         $('[name="' + options.canformitems[i] + ']"').attr('lay-verify', 'required');
-                        readForm.find('.layui-layedit iframe').contents().find('body').prop('contenteditable', true);
                     }
                 }
             }
