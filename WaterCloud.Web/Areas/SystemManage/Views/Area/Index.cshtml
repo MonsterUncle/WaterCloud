@@ -3,12 +3,12 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
-    layui.use(['jquery', 'form', 'table', 'common', 'treeTable', "layer"], function () {
+    layui.use(['jquery', 'form', 'table', 'common', 'treeTablelay', "layer"], function () {
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table,
             layer=layui.layer,
-            treeTable = layui.treeTable,
+            treeTablelay = layui.treeTablelay,
             common = layui.common;
         //加载数据
         //var loading = layer.load(0, { shade: false });
@@ -79,7 +79,7 @@
         /**
          * toolbar监听事件
          */
-        treeTable.on('toolbar(currentTableId)', function (obj) {
+        treeTablelay.on('toolbar(currentTableId)', function (obj) {
             var data = rendertree.checkStatus();
             if (obj.event === 'add') {  // 监听操作
                 var keyValue = data.length==1 ? data[0].F_Id : null;
@@ -140,7 +140,7 @@
             return false;
         });
         //toolbar监听事件
-        treeTable.on('tool(currentTableId)', function (obj) {
+        treeTablelay.on('tool(currentTableId)', function (obj) {
             if (obj.event === 'delete') {
                 common.deleteForm({
                     url: "/SystemManage/Area/DeleteForm",

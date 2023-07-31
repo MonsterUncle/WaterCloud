@@ -4,11 +4,11 @@
  * version:1.6
  * description:watercloud 主体框架扩展
  */
-layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], function (exports) {
+layui.define(["jquery", "layer", 'table', 'treeTablelay', 'xmSelect', 'miniTab'], function (exports) {
     var $ = layui.jquery,
         miniTab = layui.miniTab,
         layer = layui.layer,
-        treeTable = layui.treeTable,
+        treeTablelay = layui.treeTablelay,
         xmSelect = layui.xmSelect;
 
     var obj = {
@@ -75,7 +75,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                     doneCallback(res, curr, count);
                 }
             };
-            return treeTable.render(options);
+            return treeTablelay.render(options);
         },
         //treetable刷新
         reloadtreetable: function (tree, options) {
@@ -913,7 +913,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
         treeTableRowClick: function (type, rendertree, tableId, oneList, moreList, clickfunction) {
             var oneList = !!oneList ? oneList : [];
             var moreList = !!moreList ? moreList : [];
-            treeTable.on('row(' + tableId + ')', function (obj) {
+            treeTablelay.on('row(' + tableId + ')', function (obj) {
                 obj.tr.addClass("layui-table-click").siblings().removeClass("layui-table-click");
                 obj.tr.find("div.layui-unselect.layui-form-" + type)[0].click();
                 if (type == "radio") {
@@ -929,7 +929,7 @@ layui.define(["jquery", "layer", 'table', 'treeTable', 'xmSelect', 'miniTab'], f
                 }
             })
             //多选框监听
-            treeTable.on(type + '(' + tableId + ')', function (obj) {
+            treeTablelay.on(type + '(' + tableId + ')', function (obj) {
                 var buttonHumanized = sessionStorage.getItem('watercloudButtonHumanized');
                 //控制按钮
                 var data = rendertree.checkStatus(false);

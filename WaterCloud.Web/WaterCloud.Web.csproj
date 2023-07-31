@@ -41,6 +41,7 @@
     <None Include="wwwroot\lib\layui\modules\tree.js" />
     <None Include="wwwroot\lib\layui\modules\upload.js" />
     <None Include="wwwroot\lib\layui\modules\util.js" />
+    <None Include="wwwroot\lib\layui\modules\treetable.js" />
   </ItemGroup>
 
   <ItemGroup>
