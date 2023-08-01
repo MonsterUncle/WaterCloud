@@ -12,7 +12,7 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
                         ,'{{# d.data.forEach(function(item){ }}'
                             ,'{{# var selectedClass = d.callbackFn(item) }}'
                             ,'<li class="{{ selectedClass }}" data-name="{{ item.name }}" data-value="{{ item.value }}">'
-                            ,'<div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>{{ item.name }}</span></div>'
+                            ,'<div class="layui-unselect layui-form-checkbox" lay-skin="primary"><div>{{ item.name }}</div></div>'
                             ,'</li>'
                         ,'{{# }); }}'
                         ,'{{# } else { }}'
@@ -29,7 +29,7 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
                         ,'{{# d.data.forEach(function(item){ }}'
                             ,'{{# var selectedClass = d.callbackFn(item) }}'
                             ,'<li class="{{ selectedClass }}" data-name="{{ item.name }}" data-value="{{ item.value }}">'
-                            ,'<div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>{{ item.name }}</span><i class="layui-icon layui-icon-ok"></i></div>'
+                            ,'<div class="layui-unselect layui-form-checkbox" lay-skin="primary"><div>{{ item.name }}</div><i class="layui-icon layui-icon-ok"></i></div>'
                             ,'</li>'
                         ,'{{# }); }}'
                     ,'{{# } else { }}'
@@ -165,8 +165,8 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
         othis.deleteAll(),othis.leaveStat = false;
         var thisWidth = that.offsetWidth-49;
         var input = $('<input class="layui-input layui-tableEdit-input" style="left: 24px;width: '+thisWidth+'px" type="text">');//
-        var leftBtn = $('<button type="button" class="layui-btn layui-btn-sm layui-tableEdit-sub"><i class="layui-icon layui-icon-subtraction" style="margin-top:-14px!important;position: absolute;left:2px!important"></i></button>');
-        var rightBtn = $('<button type="button" class="layui-btn layui-btn-sm layui-tableEdit-add"><i class="layui-icon layui-icon-addition" style="margin-top:-14px!important;position: absolute;right:-1px!important"></i></button>');
+        var leftBtn = $('<button type="button" class="layui-btn layui-btn-sm layui-tableEdit-sub"><i class="layui-icon layui-icon-subtraction" style="margin-top:-14px!important;position: absolute;left:-1px!important;padding: 0px;"></i></button>');
+        var rightBtn = $('<button type="button" class="layui-btn layui-btn-sm layui-tableEdit-add"><i class="layui-icon layui-icon-addition" style="margin-top:-14px!important;position: absolute;right:-1px!important;padding: 0px;"></i></button>');
         if(39 - that.offsetHeight > 3){
             input.css('height','30px');leftBtn.css('top','16px');rightBtn.css('top','16px');
         }
