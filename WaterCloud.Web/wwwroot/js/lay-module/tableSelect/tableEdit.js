@@ -112,7 +112,8 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
     document.onclick = function () {if(singleInstance.leaveStat)singleInstance.deleteAll();};
 
     //日期选择框
-    Class.prototype.date = function(options){
+    Class.prototype.date = function (options) {
+        delete othis;
         var othis = this;
         othis.callback = options.callback,othis.element = options.element,othis.dateType = options.dateType;
         othis.dateType = othis.isEmpty(othis.dateType) ? "datetime":othis.dateType;
@@ -124,7 +125,8 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
         (that.offsetHeight - 39 > 3) && input.css('height','50px');
         $(that).append(input),input.focus();
         //日期时间选择器 (show: true 表示直接显示)
-        laydate.render({elem: input[0],type: othis.dateType,show: true,done:function (value, date) {
+        laydate.render({
+            elem: input[0], value: options.element.innerText,type: othis.dateType,show: true,done:function (value, date) {
             othis.deleteAll();
             if(othis.callback)othis.callback.call(that,value);
         }});
@@ -133,7 +135,8 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
     };
 
     //输入框
-    Class.prototype.input = function(options){
+    Class.prototype.input = function (options) {
+        delete othis;
         var othis = this;
         othis.callback = options.callback,othis.element = options.element;
         othis.oldValue = options.oldValue;
@@ -155,7 +158,8 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
     };
 
     //带加号和减号的输入框(只支持输入数字)
-    Class.prototype.signedInput = function(options){
+    Class.prototype.signedInput = function (options) {
+        delete othis;
         var othis = this;
         othis.callback = options.callback,othis.element = options.element;
         othis.oldValue = options.oldValue;
