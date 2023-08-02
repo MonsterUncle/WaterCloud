@@ -64,6 +64,9 @@
                 },
                 {
                     field: 'F_ActualTime', title: '实际时间', minWidth: 160, sort: true, event: 'actualTime', config: { type: 'date', dateType: 'date' }
+                    , templet: function (d) {
+                        return new Date(d.F_ActualTime).Format("yyyy-MM-dd");
+                    }
                 },
                 { field: 'F_ProductName', title: '产品名称', minWidth: 145, sort: true, event: 'productName', config: { type: 'input', verify: { type: "required" } } },
                 { field: 'F_ProductDescription', title: '产品规格', minWidth: 145, event: 'productDescription', config: { type: 'input'} },
