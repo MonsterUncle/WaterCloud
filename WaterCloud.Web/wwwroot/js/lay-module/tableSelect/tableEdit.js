@@ -113,7 +113,6 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
 
     //日期选择框
     Class.prototype.date = function (options) {
-        delete othis;
         var othis = this;
         othis.callback = options.callback,othis.element = options.element,othis.dateType = options.dateType;
         othis.dateType = othis.isEmpty(othis.dateType) ? "datetime":othis.dateType;
@@ -136,7 +135,6 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
 
     //输入框
     Class.prototype.input = function (options) {
-        delete othis;
         var othis = this;
         othis.callback = options.callback,othis.element = options.element;
         othis.oldValue = options.oldValue;
@@ -159,7 +157,6 @@ layui.define(["laydate","laytpl","table","layer"],function(exports) {
 
     //带加号和减号的输入框(只支持输入数字)
     Class.prototype.signedInput = function (options) {
-        delete othis;
         var othis = this;
         othis.callback = options.callback,othis.element = options.element;
         othis.oldValue = options.oldValue;
