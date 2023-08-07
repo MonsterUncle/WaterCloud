@@ -32,13 +32,13 @@ namespace WaterCloud.Code
 
 		public static SystemConfig SystemConfig { get; set; }
 
-		/// <summary>
-		/// 获取请求生存周期的服务(未注册返回null)
-		/// </summary>
-		/// <typeparam name="TService"></typeparam>
-		/// <param name="serviceProvider"></param>
-		/// <returns></returns>
-		public static TService GetService<TService>(IServiceProvider serviceProvider = null) where TService : class
+        /// <summary>
+        /// 获取请求生存周期的服务(未注册返回null)
+        /// </summary>
+        /// <typeparam name="TService"></typeparam>
+        /// <param name="serviceProvider"></param>
+        /// <returns></returns>
+        public static TService GetService<TService>(IServiceProvider serviceProvider = null) where TService : class
 		{
 			return GetService(typeof(TService), serviceProvider) as TService;
 		}
@@ -95,8 +95,17 @@ namespace WaterCloud.Code
 			{
 				return HttpContext.RequestServices;
 			}
-			return RootServices;
-		}
+            else if (RootServices != null)
+            {
+                using var scoped = RootServices.CreateScope();
+                return scoped.ServiceProvider;
+            }
+            else
+            {
+                using var serviceProvider = Services.BuildServiceProvider();
+                return serviceProvider;
+            }
+        }
 		/// <summary>
 		/// 获取版本号
 		/// </summary>
@@ -138,5 +147,5 @@ namespace WaterCloud.Code
 			context.Context.Response.Headers.Add("Cache-Control", new[] { "public,max-age=" + second });
 			context.Context.Response.Headers.Add("Expires", new[] { DateTime.UtcNow.AddYears(1).ToString("R") }); // Format RFC1123
 		}
-	}
+    }
 }
