@@ -111,18 +111,21 @@ namespace WaterCloud.Code
 			if (projects == null)
 			{
 				projects = new List<string>();
-				projects.Add("WaterCloud.Service");
 			}
-			foreach (var item in projects)
+            var baseType = IService;//IDenpendency 是一个接口（所有要实现依赖注入的借口都要继承该接口）
+            var controllerBaseType = controller;
+            foreach (var item in projects)
 			{
 				var assemblys = Assembly.Load(item);//Service是继承接口的实现方法类库名称
-				var baseType = IService;//IDenpendency 是一个接口（所有要实现依赖注入的借口都要继承该接口）
 				builder.RegisterAssemblyTypes(assemblys).Where(m => baseType.IsAssignableFrom(m) && m != baseType)
 				  .InstancePerLifetimeScope()//生命周期，这里没有使用接口方式
 				  .PropertiesAutowired();//属性注入
-			}
+                //插件Controller中使用属性注入
+                builder.RegisterAssemblyTypes(assemblys)
+                .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
+                .PropertiesAutowired();
+            }
 			//Controller中使用属性注入
-			var controllerBaseType = controller;
 			builder.RegisterAssemblyTypes(program.Assembly)
 			.Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
 			.PropertiesAutowired();

@@ -2,10 +2,14 @@ using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using WaterCloud.Code;
 using WaterCloud.Service;
@@ -14,14 +18,15 @@ namespace WaterCloud.Web
 {
 	public class Startup : DefaultStartUp
 	{
+		private List<string> _plugins = new List<string> { "WaterCloud.Service" };
 		public Startup(IConfiguration configuration, IWebHostEnvironment env) : base(configuration, env)
 		{
 		}
 
 		public override void ConfigureServices(IServiceCollection services)
 		{
-			base.ConfigureServices(services);
-			services.AddDefaultSwaggerGen(Assembly.GetExecutingAssembly().GetName().Name)
+            base.ConfigureServices(services);
+            services.AddDefaultSwaggerGen(Assembly.GetExecutingAssembly().GetName().Name)
 				.AddSqlSugar()
 				.AddQuartz()
 				.ReviseSuperSysem()
@@ -36,7 +41,42 @@ namespace WaterCloud.Web
 					options.KeepAliveInterval = TimeSpan.FromMinutes(2);
 				});
 			services.AddDefaultAPI();
-			services.AddDefaultMVC().AddNewtonsoftJson(options =>
+			services.AddDefaultMVC()
+			.ConfigureApplicationPartManager(apm => {
+                var plugDir = Directory.GetCurrentDirectory() + "/Plugins";
+                if (!Directory.Exists(plugDir))
+                    Directory.CreateDirectory(plugDir);
+                base.ConfigureServices(services);
+                var paths = Directory.GetDirectories(plugDir);
+				var hostAssembly= Assembly.GetExecutingAssembly();
+				foreach (var path in paths)
+				{
+					var name=Path.GetFileName(path);
+					var fn = path + "/" + name + ".dll";
+					if (File.Exists(fn))
+					{
+                        var addInAssembly = Assembly.LoadFrom(fn);
+                        var controllerAssemblyPart = new AssemblyPart(addInAssembly);
+                        apm.ApplicationParts.Add(controllerAssemblyPart);
+                        //开始判断是不是有razor页面
+                        fn = path + "/" + name + ".Views.dll";
+                        if (File.Exists(fn))
+                        {
+                            var addInAssemblyView = Assembly.LoadFrom(fn);
+                            var viewAssemblyPart = new CompiledRazorAssemblyPart(addInAssemblyView);
+                            apm.ApplicationParts.Add(viewAssemblyPart);
+                        }
+						else
+						{
+                            var viewAssemblyPart = new CompiledRazorAssemblyPart(addInAssembly);
+                            apm.ApplicationParts.Add(viewAssemblyPart);
+                        }
+                        _plugins.Add(path);
+                    }
+                }
+				_plugins = _plugins.Distinct().ToList();
+            })
+			.AddNewtonsoftJson(options =>
 			{
 				// 返回数据首字母不小写，CamelCasePropertyNamesContractResolver是小写
 				options.SerializerSettings.ContractResolver = new DefaultContractResolver();
@@ -50,8 +90,8 @@ namespace WaterCloud.Web
 		//AutoFac注入
 		public void ConfigureContainer(ContainerBuilder builder)
 		{
-			AutofacConfigureContainer(builder, default, typeof(Controller), typeof(IDenpendency), typeof(Program));
-			AutofacConfigureContainer(builder, default, typeof(ControllerBase), typeof(IDenpendency), typeof(Program));
+			AutofacConfigureContainer(builder, _plugins, typeof(Controller), typeof(IDenpendency), typeof(Program));
+			AutofacConfigureContainer(builder, _plugins, typeof(ControllerBase), typeof(IDenpendency), typeof(Program));
 		}
 
 		public override void Configure(IApplicationBuilder app)
