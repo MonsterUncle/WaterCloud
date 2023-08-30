@@ -106,6 +106,7 @@ namespace WaterCloud.Web
 					endpoints.MapControllerRoute("areas", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 					endpoints.MapControllerRoute("default", "{controller=Login}/{action=Index}/{id?}");
 					endpoints.MapControllerRoute("api", "api/{controller=ApiHome}/{action=Index}/{id?}");
+					endpoints.MapRazorPages();
 				});
 		}
 	}
