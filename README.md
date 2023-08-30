@@ -11,8 +11,8 @@
 ![](https://img.shields.io/badge/release-3.0.0.preview-red)
 
 ![](https://img.shields.io/badge/.net-6.0.0-blue)
-![](https://img.shields.io/badge/SqlSugar-5.1.3.1-blue)
-![](https://img.shields.io/badge/layui-2.7.5-blue)
+![](https://img.shields.io/badge/SqlSugar-5.1.4.59-blue)
+![](https://img.shields.io/badge/layui-2.8.11-blue)
 </div>
 
 ----
