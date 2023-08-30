@@ -22,6 +22,7 @@
     <None Include="wwwroot\lib\layui\modules\carousel.js" />
     <None Include="wwwroot\lib\layui\modules\code.js" />
     <None Include="wwwroot\lib\layui\modules\colorpicker.js" />
+    <None Include="wwwroot\lib\layui\modules\demo.js" />
     <None Include="wwwroot\lib\layui\modules\dropdown.js" />
     <None Include="wwwroot\lib\layui\modules\element.js" />
     <None Include="wwwroot\lib\layui\modules\flow.js" />

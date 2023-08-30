@@ -236,7 +236,7 @@ layui.define(['lay','layer'], function(exports){
           data: formData,
           contentType: false,
           processData: false,
-          dataType: 'json',
+          // dataType: 'json',
           headers: options.headers || {},
           success: function(res){ // 成功回调
             options.unified ? (successful += that.fileLength) : successful++;
@@ -588,8 +588,11 @@ layui.define(['lay','layer'], function(exports){
     that.elemFile.off('upload.change').on('upload.change', function(){
       var files = this.files || [];
 
+      if(files.length === 0) return;
+
       extendAttrs.call(this);
       setChooseFile(files);
+
       options.auto ? that.upload() : setChooseText(files); // 是否自动触发上传
     });
     

@@ -567,7 +567,7 @@ a cite{font-style: normal; *cursor:pointer;}
 
 /* 其它辅助 */
 .layui-auxiliar-moving{position: fixed; left: 0; right: 0; top: 0; bottom: 0; width: 100%; height: 100%; background: none; z-index: 9999999999;}
-.layui-scollbar-hide{overflow: hidden !important;}
+.layui-scrollbar-hide{overflow: hidden !important;}
 
 
 /*
@@ -764,8 +764,8 @@ a cite{font-style: normal; *cursor:pointer;}
 .layui-input-group{position: relative; display: table; box-sizing: border-box;}
 .layui-input-group>*{display: table-cell; vertical-align: middle; position: relative;}
 .layui-input-group .layui-input{padding-right: 15px;}
-.layui-input-group .layui-input-prefix{width: auto; border-right: 0;}
-.layui-input-group .layui-input-suffix{width: auto; border-left: 0;}
+.layui-input-group > .layui-input-prefix{width: auto; border-right: 0;}
+.layui-input-group > .layui-input-suffix{width: auto; border-left: 0;}
 .layui-input-group .layui-input-split{white-space: nowrap;}
 
 /* 输入框前后缀容器 */
@@ -793,12 +793,12 @@ a cite{font-style: normal; *cursor:pointer;}
 .layui-input-affix .layui-icon:hover{color: rgba(0,0,0,.6);}
 
 /* 数字输入框动态点缀  */
-.layui-input-number{width: 24px; padding: 0;}
-.layui-input-number .layui-icon{position: absolute; right: 0; width: 100%; height: 50%; line-height: normal; font-size: 12px;}
-.layui-input-number .layui-icon:before{position: absolute; left: 50%; top: 50%; margin-top: -6px; margin-left: -6px;}
-.layui-input-number .layui-icon:first-child{top: 0; border-bottom: 1px solid #eee;}
-.layui-input-number .layui-icon:last-child{bottom: 0;}
-.layui-input-number .layui-icon:hover{font-weight: 700;}
+.layui-input-wrap .layui-input-number{width: 24px; padding: 0;}
+.layui-input-wrap .layui-input-number .layui-icon{position: absolute; right: 0; width: 100%; height: 50%; line-height: normal; font-size: 12px;}
+.layui-input-wrap .layui-input-number .layui-icon:before{position: absolute; left: 50%; top: 50%; margin-top: -6px; margin-left: -6px;}
+.layui-input-wrap .layui-input-number .layui-icon:first-child{top: 0; border-bottom: 1px solid #eee;}
+.layui-input-wrap .layui-input-number .layui-icon:last-child{bottom: 0;}
+.layui-input-wrap .layui-input-number .layui-icon:hover{font-weight: 700;}
 .layui-input-wrap .layui-input[type="number"]::-webkit-outer-spin-button,
 .layui-input-wrap .layui-input[type="number"]::-webkit-inner-spin-button{-webkit-appearance: none !important;}
 .layui-input-wrap .layui-input[type="number"]{-moz-appearance: textfield;}
@@ -1071,6 +1071,7 @@ a cite{font-style: normal; *cursor:pointer;}
 
 .layui-table-cell{height: 38px; line-height: 28px; padding: 6px 15px; position: relative; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; box-sizing: border-box;}
 .layui-table-cell .layui-form-checkbox[lay-skin="primary"]{top: -1px; padding: 0;}
+.layui-table-cell .layui-form-checkbox[lay-skin="primary"] > div{padding-left: 24px;}
 .layui-table-cell .layui-table-link{color: #01AAED;}
 .layui-table-cell .layui-btn{vertical-align: inherit;}
 .layui-table-cell[align="center"]{-webkit-box-pack: center;}
@@ -1130,15 +1131,17 @@ select.layui-table-edit{padding: 0 0 0 10px; border-color: #d2d2d2;}
 
 /* 展开溢出的单元格 */
 .layui-table-grid .layui-table-cell{overflow: visible;}
-.layui-table-grid-down{position: absolute; top: 0; right: 0; width: 26px; height: 100%; padding: 5px 0; border-width: 0; border-left-width: 1px; text-align: center; background-color: #fff; color: #999; cursor: pointer;}
-.layui-table-grid-down .layui-icon{position: absolute; top: 50%; left: 50%; margin: -8px 0 0 -8px;}
+.layui-table-grid-down{position: absolute; top: 0; right: 0; width: 24px; height: 100%; padding: 5px 0; border-width: 0; border-left-width: 1px; text-align: center; background-color: #fff; color: #999; cursor: pointer;}
+.layui-table-grid-down .layui-icon{position: absolute; top: 50%; left: 50%; margin: -8px 0 0 -8px; font-size: 14px;}
 .layui-table-grid-down:hover{background-color: #fbfbfb;}
 
-body .layui-table-tips .layui-layer-content{background: none; padding: 0; box-shadow: 0 1px 6px rgba(0,0,0,.12);}
-.layui-table-tips-main{margin: -49px 0 0 -1px; max-height: 150px; padding: 8px 15px; font-size: 14px; overflow-y: scroll; background-color: #fff; color: #5F5F5F;}
-.layui-table-tips-c{position: absolute; right: -3px; top: -13px; width: 20px; height: 20px; padding: 3px; cursor: pointer; background-color: #5F5F5F; border-radius: 50%; color: #fff;}
-.layui-table-tips-c:hover{background-color: #777;}
-.layui-table-tips-c:before{position: relative; right: -2px;}
+.layui-table-expanded{height: 95px;}
+.layui-table-expanded .layui-table-cell,
+.layui-table-view .layui-table[lay-size="sm"] .layui-table-expanded .layui-table-cell,
+.layui-table-view .layui-table[lay-size="lg"] .layui-table-expanded .layui-table-cell{height: auto; max-height: 94px; white-space: normal; text-overflow: clip;}
+.layui-table-cell-c{position: absolute; bottom: -10px; right: 50%; margin-right: -9px; width: 20px; height: 20px; line-height: 18px; cursor: pointer; text-align: center; background-color: #fff; border: 1px solid #eee; border-radius: 50%; z-index: 1000; transition: 0.3s all; font-size: 14px;}
+.layui-table-cell-c:hover{border-color: #16b777;}
+.layui-table-expanded td:hover .layui-table-cell{overflow: auto;}
 
 /** 树表 **/
 .layui-table-tree-nodeIcon {max-width: 20px;}
@@ -1550,7 +1553,7 @@ body .layui-util-face  .layui-layer-content{padding:0; background-color:#fff; co
 .layui-tree-pack{display: none; padding-left: 20px; position: relative;}
 .layui-tree-line .layui-tree-pack{padding-left: 27px;}
 .layui-tree-line .layui-tree-set .layui-tree-set:after{content: ""; position: absolute; top: 14px; left: -9px; width: 17px; height: 0; border-top: 1px dotted #c0c4cc;}
-.layui-tree-entry{position: relative; padding: 3px 0; height: 20px; white-space: nowrap;}
+.layui-tree-entry{position: relative; padding: 3px 0; height: 26px; white-space: nowrap;}
 .layui-tree-entry:hover{background-color: #eee;}
 .layui-tree-line .layui-tree-entry:hover{background-color: rgba(0,0,0,0);}
 .layui-tree-line .layui-tree-entry:hover .layui-tree-txt{color: #999; text-decoration: underline; transition: 0.3s;}
@@ -1559,7 +1562,7 @@ body .layui-util-face  .layui-layer-content{padding:0; background-color:#fff; co
 .layui-tree-line .layui-tree-set.layui-tree-setLineShort:before{height: 13px;}
 .layui-tree-line .layui-tree-set.layui-tree-setHide:before{height: 0;}
 .layui-tree-iconClick{display: inline-block; vertical-align: middle; position: relative; height: 20px; line-height: 20px; margin: 0 10px; color: #c0c4cc;}
-.layui-tree-icon{height: 12px; line-height: 12px; width: 12px; text-align: center; border: 1px solid #c0c4cc;}
+.layui-tree-icon{height: 14px; line-height: 12px; width: 14px; text-align: center; border: 1px solid #c0c4cc;}
 .layui-tree-iconClick .layui-icon{font-size: 18px;}
 .layui-tree-icon .layui-icon{font-size: 12px; color: #5F5F5F;}
 .layui-tree-iconArrow{padding: 0 5px;}
@@ -1571,7 +1574,7 @@ body .layui-util-face  .layui-layer-content{padding:0; background-color:#fff; co
 .layui-tree-btnGroup .layui-icon{display: inline-block; vertical-align: middle; padding: 0 2px; cursor: pointer;}
 .layui-tree-btnGroup .layui-icon:hover{color: #999; transition: 0.3s;}
 .layui-tree-entry:hover .layui-tree-btnGroup{visibility: visible;}
-.layui-tree-editInput{position: relative; display: inline-block; vertical-align: middle; height: 20px; line-height: 20px; padding: 0 3px; border: none; background-color: rgba(0,0,0,0.05);}
+.layui-tree-editInput{position: relative; display: inline-block; vertical-align: middle; height: 20px; line-height: 20px; padding: 0; border: none; background-color: rgba(0,0,0,0.05);}
 .layui-tree-emptyText{text-align: center; color: #999;}
 
 

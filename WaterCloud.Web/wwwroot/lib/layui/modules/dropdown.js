@@ -3,11 +3,12 @@
  * 下拉菜单组件
  */
 
-layui.define(['jquery', 'laytpl', 'lay'], function(exports){
+layui.define(['jquery', 'laytpl', 'lay', 'util'], function(exports){
   "use strict";
   
   var $ = layui.$;
   var laytpl = layui.laytpl;
+  var util = layui.util;
   var hint = layui.hint();
   var device = layui.device();
   var clickOrMousedown = (device.mobile ? 'touchstart' : 'mousedown');
@@ -18,7 +19,13 @@ layui.define(['jquery', 'laytpl', 'lay'], function(exports){
 
   // 外部接口
   var dropdown = {
-    config: {},
+    config: {
+      customName: { // 自定义 data 字段名
+        id: 'id',
+        title: 'title',
+        children: 'child'
+      }
+    },
     index: layui[MOD_NAME] ? (layui[MOD_NAME].index + 10000) : 0,
 
     // 设置全局项
@@ -139,6 +146,9 @@ layui.define(['jquery', 'laytpl', 'lay'], function(exports){
       elem.attr('id') || that.index
     );
 
+    // 初始化自定义字段名
+    options.customName = $.extend({}, dropdown.config.customName, options.customName);
+
     if(options.show || (type === 'reloadData' && that.elemView && $('body').find(that.elemView.get(0)).length)) that.render(rerender, type); //初始即显示或者面板弹出之后执行了刷新数据
     that.events(); // 事件
   };
@@ -147,6 +157,7 @@ layui.define(['jquery', 'laytpl', 'lay'], function(exports){
   Class.prototype.render = function(rerender, type){
     var that = this;
     var options = that.config;
+    var customName = options.customName;
     var elemBody = $('body');
     
     // 默认菜单内容
@@ -163,9 +174,10 @@ layui.define(['jquery', 'laytpl', 'lay'], function(exports){
     // 遍历菜单项
     var eachItemView = function(views, data){
       // var views = [];
+
       layui.each(data, function(index, item){
         // 是否存在子级
-        var isChild = item.child && item.child.length > 0;
+        var isChild = item[customName.children] && item[customName.children].length > 0;
         var isSpreadItem = ('isSpreadItem' in item) ? item.isSpreadItem : options.isSpreadItem
         var title = function(title){
           var templet = item.templet || options.templet;
@@ -175,7 +187,7 @@ layui.define(['jquery', 'laytpl', 'lay'], function(exports){
             : laytpl(templet).render(item);
           }
           return title;
-        }(item.title);
+        }(util.escape(item[customName.title]));
         
         // 初始类型
         var type = function(){
@@ -192,7 +204,7 @@ layui.define(['jquery', 'laytpl', 'lay'], function(exports){
           return '';
         }();
 
-        if(type !== '-' && (!item.title && !item.id && !isChild)) return;
+        if(type !== '-' && (!item[customName.title] && !item[customName.id] && !isChild)) return;
         
         //列表元素
         var viewLi = $(['<li'+ function(){
@@ -239,14 +251,14 @@ layui.define(['jquery', 'laytpl', 'lay'], function(exports){
         
         //子级区
         if(isChild){
-          var elemPanel = $('<div class="layui-panel layui-menu-body-panel"></div>')
-          ,elemUl = $('<ul></ul>');
+          var elemPanel = $('<div class="layui-panel layui-menu-body-panel"></div>');
+          var elemUl = $('<ul></ul>');
 
           if(type === 'parent'){
-            elemPanel.append(eachItemView(elemUl, item.child));
+            elemPanel.append(eachItemView(elemUl, item[customName.children]));
             viewLi.append(elemPanel);
           } else {
-            viewLi.append(eachItemView(elemUl, item.child));
+            viewLi.append(eachItemView(elemUl, item[customName.children]));
           }
         }
 
@@ -313,7 +325,7 @@ layui.define(['jquery', 'laytpl', 'lay'], function(exports){
     that.elemView.find('.layui-menu li').on('click', function(e){
       var othis = $(this);
       var data = othis.data('item') || {};
-      var isChild = data.child && data.child.length > 0;
+      var isChild = data[customName.children] && data[customName.children].length > 0;
       var isClickAllScope = options.clickScope === 'all'; // 是否所有父子菜单均触发点击事件
 
       if(data.disabled) return; // 菜单项禁用状态
@@ -454,7 +466,7 @@ layui.define(['jquery', 'laytpl', 'lay'], function(exports){
       var that = thisModule.getThis(dropdown.thisId);
       if(!that) return;
       
-      if(!that.elemView[0] || !$('.'+ STR_ELEM)[0]){
+      if((that.elemView && !that.elemView[0]) || !$('.'+ STR_ELEM)[0]){
         return false;
       }
       
