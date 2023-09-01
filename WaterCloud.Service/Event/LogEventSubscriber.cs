@@ -1,5 +1,6 @@
 ﻿using Jaina;
 using Microsoft.Extensions.DependencyInjection;
+using SqlSugar;
 using System.Threading.Tasks;
 using WaterCloud.Code;
 using WaterCloud.Domain.SystemSecurity;
@@ -11,9 +12,9 @@ namespace WaterCloud.Service.Event
 	public class LogEventSubscriber : IEventSubscriber
 	{
 
-		public LogEventSubscriber()
+        public LogEventSubscriber()
 		{
-		}
+        }
 
 		[EventSubscribe("Log:create")]
 		public async Task SendMessages(EventHandlerExecutingContext context)
@@ -21,12 +22,18 @@ namespace WaterCloud.Service.Event
 			var todo = (BaseEventSource)context.Source;
 			var input = (LogEntity)todo.Payload;
 			var user = todo.User;
-			using (var serviceProvider = GlobalContext.RootServices.CreateScope())
+            using var dbContext = new SqlSugarClient(DBInitialize.GetConnectionConfigs(true),
+			//全局上下文生效
+			db =>
 			{
-                var logService = serviceProvider.ServiceProvider.GetService<LogService>();
-                await logService.WriteDbLog(input, user);
-            }
-			await Task.CompletedTask;
+				foreach (var item in DBInitialize.GetConnectionConfigs(false))
+				{
+					string temp = item.ConfigId;
+					db.GetConnection(temp).DefaultConfig();
+				}
+			});
+            await new LogService(dbContext).WriteDbLog(input, user);
+            await Task.CompletedTask;
 		}
 	}
 }
