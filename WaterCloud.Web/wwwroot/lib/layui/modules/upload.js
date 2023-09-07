@@ -67,11 +67,10 @@ layui.define(['lay','layer'], function(exports){
     auto: true, // 是否选完文件后自动上传
     bindAction: '', // 手动上传触发的元素
     url: '', // 上传地址
-    force: '', // 强制规定返回的数据格式，目前只支持是否强制 json
+    force: 'json', // 强制规定返回的数据格式，目前只支持是否强制 json
     field: 'file', // 文件字段名
     acceptMime: '', // 筛选出的文件类型，默认为所有文件
     method: 'post', // 请求上传的 http 类型
-    datatype: 'json', // 回调格式
     data: {}, // 请求上传的额外参数
     drag: true, // 是否允许拖拽上传
     size: 0, // 文件限制大小，默认不限制
@@ -237,7 +236,7 @@ layui.define(['lay','layer'], function(exports){
           data: formData,
           contentType: false,
           processData: false,
-          dataType: options.dataType,
+          // dataType: 'json',
           headers: options.headers || {},
           success: function(res){ // 成功回调
             options.unified ? (successful += that.fileLength) : successful++;
