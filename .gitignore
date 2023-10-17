@@ -342,3 +342,4 @@ healthchecksdb
 /WaterCloud.Web/DataProtection
 /WaterCloud.Web/wwwroot/file/local/20221006
 /WaterCloud.Web/watercloudnetdb.db-journal
+/RabbitMq
