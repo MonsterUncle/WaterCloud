@@ -191,7 +191,7 @@ layui.define(['table', 'laypage', 'jquery', 'element', 'laytpl'], function (expo
 		var reElem = obj;
 		$(reElem).addClass('layui-table-click').siblings().removeClass('layui-table-click');
 		item.id = reElem.id;
-		if (!obj.id || obj.nodeName != "DIV") {
+		if (!obj.id || obj.nodeName == "DIV") {
 			item.id = item.id.replace('card_', '');
 		}
 		var option = _instances[elem].option;
