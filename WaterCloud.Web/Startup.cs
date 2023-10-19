@@ -46,7 +46,6 @@ namespace WaterCloud.Web
                 var plugDir = Directory.GetCurrentDirectory() + "/Plugins";
                 if (!Directory.Exists(plugDir))
                     Directory.CreateDirectory(plugDir);
-                base.ConfigureServices(services);
                 var paths = Directory.GetDirectories(plugDir);
 				var hostAssembly= Assembly.GetExecutingAssembly();
 				foreach (var path in paths)
