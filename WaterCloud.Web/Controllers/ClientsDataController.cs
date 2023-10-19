@@ -100,7 +100,7 @@ namespace WaterCloud.Web.Controllers
 			}
 			Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
 			var list = await _roleAuthorizeService.GetMenuList(roleId);
-			foreach (ModuleEntity item in list.Where(a => a.F_UrlAddress != null))
+			foreach (ModuleEntity item in list.Where(a => !string.IsNullOrEmpty(a.F_UrlAddress)))
 			{
 				dictionary.Add(item.F_UrlAddress, item.F_IsFields ?? false);
 			}
