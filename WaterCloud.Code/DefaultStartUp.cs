@@ -135,8 +135,9 @@ namespace WaterCloud.Code
 
 		public virtual void Configure(IApplicationBuilder app)
 		{
-			//实时通讯跨域
-			app.UseCors("CorsPolicy");
+            GlobalContext.RootServices = app.ApplicationServices;
+            //实时通讯跨域
+            app.UseCors("CorsPolicy");
 			if (WebHostEnvironment.IsDevelopment())
 			{
 				GlobalContext.SystemConfig.Debug = true;
@@ -155,16 +156,18 @@ namespace WaterCloud.Code
 			});
 			//启用 Gzip 和 Brotil 压缩功能
 			app.UseResponseCompression();
-			app.Use(next => context =>
+			app.Use(async (context, next) =>
 			{
 				context.Request.EnableBuffering();
-				return next(context);
+                // 执行下一个中间件
+                await next.Invoke();
+                // 释放所有未托管的服务提供器
+                GlobalContext.DisposeUnmanagedObjects();
 			});
 			//session
 			app.UseSession();
 			//路径
 			app.UseRouting();
-			GlobalContext.RootServices = app.ApplicationServices;
 		}
 	}
 
