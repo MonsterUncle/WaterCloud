@@ -134,7 +134,7 @@
              var queryJson = data.field.temp_keyword;
              //执行搜索重载
              options.where = { keyword: queryJson };
-             commonTable.reloadtabletree(options);
+             commonTable.rendertreetable(options);
              itemId = null;
              return false;
          });
