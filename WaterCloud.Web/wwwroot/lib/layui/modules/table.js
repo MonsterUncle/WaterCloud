@@ -898,27 +898,9 @@ layui.define(['lay', 'laytpl', 'laypage', 'form', 'util'], function(exports){
     var that = this;
 
     if (!that.layMain) return;
-    //soultable
-    //---
-    var scrollTop = 0;
-    if (!!that.config.id) {
-        scrollTop = that.layMain[0].scrollTop;
-    }
-    //---
     that.fullSize(); // 让表格铺满
     that.setColsWidth(); // 自适应列宽
     that.scrollPatch(); // 滚动条补丁
-    //soultable
-    //---
-    if (layui.tableFilter) {
-        layui.tableFilter.resize(that.config);
-        if (!!that.config.id) {
-            that.layMain[0].scrollTop = scrollTop;
-            //同步更新滚动
-            that.layFixed.find(ELEM_BODY).scrollTop(scrollTop);
-        }
-    }
-    //---
   };
 
   // 表格重载
