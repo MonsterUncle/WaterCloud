@@ -76,7 +76,6 @@ namespace WaterCloud.Web
                 operatorModel.WxOpenId = userEntity.F_WxOpenId;
                 operatorModel.IsAdmin = userEntity.F_IsAdmin.Value;
                 operatorModel.IsBoss = userEntity.F_IsBoss.Value;
-                operatorModel.IsLeaderInDepts = userEntity.F_IsLeaderInDepts.Value;
                 operatorModel.IsSenior = userEntity.F_IsSenior.Value;
                 SystemSetEntity setEntity = await _setService.GetForm(userEntity.F_CompanyId);
                 operatorModel.DbNumber = setEntity.F_DbNumber;

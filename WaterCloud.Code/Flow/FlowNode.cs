@@ -36,7 +36,10 @@
 		public const string SPECIAL_USER = "SPECIAL_USER";  //指定用户
 		public const string ALL_USER = "ALL_USER";  //所有用户
 		public const string SPECIAL_ROLE = "SPECIAL_ROLE";  //指定角色
-		public const string RUNTIME_SPECIAL_ROLE = "RUNTIME_SPECIAL_ROLE"; //运行时指定角色
+        public const string DEPARTMENT_MANAGER = "DEPARTMENT_MANAGER";  //部门负责人
+        public const string USER_MANAGER = "USER_MANAGER";  //直属上级
+        public const string MORE_USER_MANAGER = "MORE_USER_MANAGER";  //连续多级直属上级
+        public const string RUNTIME_SPECIAL_ROLE = "RUNTIME_SPECIAL_ROLE"; //运行时指定角色
 		public const string RUNTIME_SPECIAL_USER = "RUNTIME_SPECIAL_USER"; //运行时指定用户
 
 		/// <summary>
@@ -94,12 +97,13 @@
 		public string[] roles { get; set; }
 		public string[] orgs { get; set; }
 		public bool currentDepart { get; set; }
-	}
+        public string finishRole { get; set; }
+    }
 
-	/// <summary>
-	/// 节点执行结果标签
-	/// </summary>
-	public class Tag
+    /// <summary>
+    /// 节点执行结果标签
+    /// </summary>
+    public class Tag
 	{
 		/// <summary>
 		///  1: 通过

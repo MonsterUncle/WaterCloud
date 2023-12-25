@@ -217,6 +217,10 @@ namespace WaterCloud.Service.SystemOrganize
                 {
                     userEntity.F_ManagerId = null;
                 }
+				if (userEntity.F_ManagerId.Contains(","))
+				{
+					throw new Exception("只能选择一个直属上级");
+				}
                 userEntity.Modify(keyValue);
 			}
 			else

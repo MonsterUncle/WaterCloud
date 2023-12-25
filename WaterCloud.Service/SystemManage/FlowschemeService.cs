@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.FlowManage;
@@ -133,7 +134,27 @@ namespace WaterCloud.Service.SystemManage
 					users = users.Distinct().ToList();
 					temp.NextMakerName = string.Join(',', repository.Db.Queryable<UserEntity>().Where(a => users.Contains(a.F_Id)).Select(a => a.F_RealName).ToList());
 				}
-			}
+                else if (temp.NextNodeDesignateType == Setinfo.DEPARTMENT_MANAGER)//部门负责人
+                {
+                    var orgs = runtime.nextNode.setInfo.NodeDesignateData.orgs;
+                    if (runtime.nextNode.setInfo.NodeDesignateData.currentDepart)
+                    {
+                        orgs = currentuser.OrganizeId.Split(',');
+                    }
+                    var departments = repository.Db.Queryable<OrganizeEntity>().Where(a => orgs.Contains(a.F_Id) && !string.IsNullOrEmpty(a.F_ManagerId)).Select(a => a.F_ManagerId).ToList();
+                    var departmentNames = repository.Db.Queryable<UserEntity>().Where(a => departments.Contains(a.F_Id)).Select(a => a.F_RealName).ToList();
+                    temp.NextMakerName = string.Join(',', departmentNames);
+                }
+                else if (temp.NextNodeDesignateType == Setinfo.USER_MANAGER || temp.NextNodeDesignateType == Setinfo.MORE_USER_MANAGER)//直属上级、直属上级多级负责人
+                {
+                    var userEntity = repository.Db.Queryable<UserEntity>().InSingle(currentuser.UserId);
+                    if (userEntity != null)
+                    {
+                        var manager = repository.Db.Queryable<UserEntity>().InSingle(userEntity.F_ManagerId);
+                        temp.NextMakerName = manager?.F_RealName;
+                    }
+                }
+            }
 			return temp;
 		}
 

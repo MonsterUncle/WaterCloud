@@ -15,6 +15,7 @@ using WaterCloud.Domain.InfoManage;
 using WaterCloud.Domain.SystemManage;
 using WaterCloud.Domain.SystemOrganize;
 using WaterCloud.Service.InfoManage;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace WaterCloud.Service.FlowManage
 {
@@ -343,14 +344,22 @@ namespace WaterCloud.Service.FlowManage
 				wfruntime.MakeTagNode(wfruntime.currentNodeId, tag);
 				if (tag.Taged == (int)TagState.Ok)
 				{
-					flowInstance.F_PreviousId = flowInstance.F_ActivityId;
-					flowInstance.F_ActivityId = wfruntime.nextNodeId;
-					flowInstance.F_ActivityType = wfruntime.nextNodeType;
-					flowInstance.F_ActivityName = wfruntime.nextNode.name;
-					flowInstance.F_MakerList = (wfruntime.GetNextNodeType() != 4 ? GetNextMakers(wfruntime, request) : "");
-					flowInstance.F_IsFinish = (wfruntime.nextNodeType == 4 ? 1 : 0);
-					await AddTransHistory(wfruntime);
-				}
+					var roleIds = user.RoleId.Split(',');
+					if (wfruntime.currentNode.setInfo.NodeDesignate == Setinfo.MORE_USER_MANAGER && !roleIds.Contains(wfruntime.currentNode.setInfo.NodeDesignateData.finishRole))
+					{
+                        flowInstance.F_MakerList = GetNodeMarkers(wfruntime.currentNode);
+                    }
+					else
+					{
+                        flowInstance.F_PreviousId = flowInstance.F_ActivityId;
+                        flowInstance.F_ActivityId = wfruntime.nextNodeId;
+                        flowInstance.F_ActivityType = wfruntime.nextNodeType;
+                        flowInstance.F_ActivityName = wfruntime.nextNode.name;
+                        flowInstance.F_IsFinish = (wfruntime.nextNodeType == 4 ? 1 : 0);
+                        flowInstance.F_MakerList = (wfruntime.GetNextNodeType() != 4 ? GetNextMakers(wfruntime, request) : "");
+                    }
+                    await AddTransHistory(wfruntime);
+                }
 				else
 				{
 					flowInstance.F_IsFinish = 3; //表示该节点不同意
@@ -384,9 +393,9 @@ namespace WaterCloud.Service.FlowManage
             {
                 if (!string.IsNullOrEmpty(flowInstance.F_DbName))
                 {
-                    formDic.Add("F_LastModifyUserId", this.currentuser.UserId);
-                    formDic.Add("F_LastModifyTime", DateTime.Now);
-                    formDic.Add("F_LastModifyUserName", this.currentuser.UserName);
+                    formDic.TryAdd("F_LastModifyUserId", this.currentuser.UserId);
+                    formDic.TryAdd("F_LastModifyTime", DateTime.Now);
+                    formDic.TryAdd("F_LastModifyUserName", this.currentuser.UserName);
                     flowInstance.F_FrmData = formDic.ToJson();
                     var data = repository.Db.DbMaintenance.GetColumnInfosByTableName(flowInstance.F_DbName, false);
                     List<string> oldID = formDic.Keys.ToList();//原来数据（原来ID）
@@ -629,7 +638,26 @@ namespace WaterCloud.Service.FlowManage
 					users = users.Distinct().ToList();
 					makerList = JsonHelper.ArrayToString(users, makerList);
 				}
-				else if (node.setInfo.NodeDesignate == Setinfo.RUNTIME_SPECIAL_ROLE || node.setInfo.NodeDesignate == Setinfo.RUNTIME_SPECIAL_USER)
+                else if (node.setInfo.NodeDesignate == Setinfo.DEPARTMENT_MANAGER)//部门负责人
+                {
+                    var orgs = node.setInfo.NodeDesignateData.orgs;
+                    if (node.setInfo.NodeDesignateData.currentDepart)
+                    {
+                        var temp = repository.Db.Queryable<UserEntity>().InSingle(flowCreator);
+                        orgs = temp.F_OrganizeId.Split(',');
+                    }
+                    var managers = repository.Db.Queryable<OrganizeEntity>().Where(a => orgs.Contains(a.F_Id) && !string.IsNullOrEmpty(a.F_ManagerId)).Select(a => a.F_ManagerId).ToList();
+                    makerList = JsonHelper.ArrayToString(managers, makerList);
+                }
+                else if (node.setInfo.NodeDesignate == Setinfo.USER_MANAGER || node.setInfo.NodeDesignate == Setinfo.MORE_USER_MANAGER)//直属上级、直属上级多级负责人
+                {
+                    var temp = repository.Db.Queryable<UserEntity>().InSingle(currentuser.UserId);
+                    if (temp != null)
+                    {
+                        makerList = temp.F_ManagerId;
+                    }
+                }
+                else if (node.setInfo.NodeDesignate == Setinfo.RUNTIME_SPECIAL_ROLE || node.setInfo.NodeDesignate == Setinfo.RUNTIME_SPECIAL_USER)
 				{
 					//如果是运行时选定的用户，则暂不处理。由上个节点审批时选定
 				}
@@ -703,10 +731,42 @@ namespace WaterCloud.Service.FlowManage
 					users = users.Distinct().ToList();
 					flowinstance.NextMakerName = string.Join(',', repository.Db.Queryable<UserEntity>().Where(a => users.Contains(a.F_Id)).Select(a => a.F_RealName).ToList());
 				}
-			}
+                else if (flowinstance.NextNodeDesignateType == Setinfo.DEPARTMENT_MANAGER)//部门负责人
+                {
+                    var orgs = runtime.nextNode.setInfo.NodeDesignateData.orgs;
+                    if (runtime.nextNode.setInfo.NodeDesignateData.currentDepart)
+                    {
+                        var userEntity = repository.Db.Queryable<UserEntity>().InSingle(flowinstance.F_CreatorUserId);
+                        orgs = userEntity.F_OrganizeId.Split(',');
+                    }
+                    var departments = repository.Db.Queryable<OrganizeEntity>().Where(a => orgs.Contains(a.F_Id) && !string.IsNullOrEmpty(a.F_ManagerId)).Select(a => a.F_ManagerId).ToList();
+                    var departmentNames = repository.Db.Queryable<UserEntity>().Where(a => departments.Contains(a.F_Id)).Select(a => a.F_RealName).ToList();
+                    flowinstance.NextMakerName = string.Join(',', departmentNames);
+                }
+                else if (flowinstance.NextNodeDesignateType == Setinfo.USER_MANAGER || flowinstance.NextNodeDesignateType == Setinfo.MORE_USER_MANAGER)//直属上级、直属上级多级负责人
+                {
+                    var userEntity = repository.Db.Queryable<UserEntity>().InSingle(currentuser.UserId);
+                    if (userEntity != null)
+                    {
+                        var manager = repository.Db.Queryable<UserEntity>().InSingle(userEntity.F_ManagerId);
+                        flowinstance.NextMakerName = manager?.F_RealName;
+                    }
+                }
+            }
 			if (runtime.currentNode != null && runtime.currentNode.setInfo != null && runtime.currentNodeType != 4)
 			{
 				flowinstance.CurrentNodeDesignateType = runtime.currentNode.setInfo.NodeDesignate;
+				var roles = runtime.currentNode.setInfo.NodeDesignateData.roles;
+                var currentRoles = currentuser.RoleId.Split(",");
+                if (flowinstance.CurrentNodeDesignateType == Setinfo.MORE_USER_MANAGER && currentRoles.Intersect(roles).Count() == 0)
+				{
+                    var userEntity = repository.Db.Queryable<UserEntity>().InSingle(currentuser.UserId);
+                    if (userEntity != null)
+                    {
+                        var manager = repository.Db.Queryable<UserEntity>().InSingle(userEntity.F_ManagerId);
+                        flowinstance.NextMakerName = manager?.F_RealName;
+                    }
+                }
 				if (flowinstance.F_MakerList != "1" && !string.IsNullOrEmpty(flowinstance.F_MakerList))
 				{
 					var temps = flowinstance.F_MakerList.Split(',');
@@ -867,10 +927,10 @@ namespace WaterCloud.Service.FlowManage
 				if (!string.IsNullOrEmpty(entity.F_DbName))
 				{
 					var formDic = entity.F_FrmData.ToObject<Dictionary<string, object>>();
-					formDic.Add("F_CreatorUserId", this.currentuser.UserId);
-					formDic.Add("F_CreatorTime", DateTime.Now);
-                    formDic.Add("F_CreatorUserName", this.currentuser.UserName);
-                    formDic.Add("F_Id", Utils.GuId());
+					formDic.TryAdd("F_CreatorUserId", this.currentuser.UserId);
+					formDic.TryAdd("F_CreatorTime", DateTime.Now);
+                    formDic.TryAdd("F_CreatorUserName", this.currentuser.UserName);
+                    formDic.TryAdd("F_Id", Utils.GuId());
                     entity.F_FrmData = formDic.ToJson();
                     var data = repository.Db.DbMaintenance.GetColumnInfosByTableName(entity.F_DbName, false);
                     List<string> oldID = formDic.Keys.ToList();//原来数据（原来ID）
@@ -1028,9 +1088,9 @@ namespace WaterCloud.Service.FlowManage
 			{
 				if (!string.IsNullOrEmpty(entity.F_DbName))
 				{
-					formDic.Add("F_LastModifyUserId", this.currentuser.UserId);
-					formDic.Add("F_LastModifyTime", DateTime.Now);
-					formDic.Add("F_LastModifyUserName", this.currentuser.UserName);
+					formDic.TryAdd("F_LastModifyUserId", this.currentuser.UserId);
+					formDic.TryAdd("F_LastModifyTime", DateTime.Now);
+					formDic.TryAdd("F_LastModifyUserName", this.currentuser.UserName);
                     entity.F_FrmData = formDic.ToJson();
                     var data = repository.Db.DbMaintenance.GetColumnInfosByTableName(entity.F_DbName, false);
                     List<string> oldID = formDic.Keys.ToList();//原来数据（原来ID）

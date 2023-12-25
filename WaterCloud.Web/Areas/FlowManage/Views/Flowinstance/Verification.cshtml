@@ -77,7 +77,7 @@
                         $('#CurrentMakerName').parent().parent().remove();
                     }
                     NextNodeDesignateType = data.NextNodeDesignateType;
-                    if (!data.NextNodeDesignateType) {
+                    if (!data.NextNodeDesignateType && data.CurrentNodeDesignateType != "MORE_USER_MANAGER") {
                         $('#NextMakerName').parent().parent().remove();
                     }
                     else if (data.NextNodeDesignateType == "RUNTIME_SPECIAL_ROLE") {
