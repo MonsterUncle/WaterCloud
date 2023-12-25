@@ -19,32 +19,46 @@ namespace WaterCloud.Service.SystemOrganize
 		{
 		}
 
-		public async Task<List<OrganizeEntity>> GetList()
+		public async Task<List<OrganizeExtend>> GetList()
 		{
-			var query = repository.IQueryable();
+			var query = GetQuery();
 			return await query.Where(a => a.F_DeleteMark == false).ToListAsync();
 		}
 
-		public async Task<List<OrganizeEntity>> GetLookList()
+		public async Task<List<OrganizeExtend>> GetLookList()
 		{
-			var query = repository.IQueryable().Where(a => a.F_DeleteMark == false);
+			var query = GetQuery().Where(a => a.F_DeleteMark == false);
 			query = GetDataPrivilege("a", "", query);
 			return await query.OrderBy(a => a.F_SortCode).ToListAsync();
 		}
 
-		public async Task<OrganizeEntity> GetLookForm(string keyValue)
+		public async Task<OrganizeExtend> GetLookForm(string keyValue)
 		{
-			var data = await repository.FindEntity(keyValue);
-			return GetFieldsFilterData(data);
+			var data = await GetQuery().FirstAsync(a => a.F_Id == keyValue);
+            return GetFieldsFilterData(data);
 		}
 
-		public async Task<OrganizeEntity> GetForm(string keyValue)
+		public async Task<OrganizeExtend> GetForm(string keyValue)
 		{
-			var data = await repository.FindEntity(keyValue);
+			var data = await GetQuery().FirstAsync(a => a.F_Id == keyValue);
 			return data;
 		}
 
-		public async Task DeleteForm(string keyValue)
+
+        private ISugarQueryable<OrganizeExtend> GetQuery()
+        {
+            var query = repository.Db.Queryable<OrganizeEntity, UserEntity>((a, b) => new JoinQueryInfos(
+                JoinType.Left, a.F_ManagerId == b.F_Id
+                )).Where(a => a.F_DeleteMark == false)
+                .Select((a, b) => new OrganizeExtend
+                {
+                    F_Id = a.F_Id.SelectAll(),
+                    F_ManagerName = b.F_RealName
+                }).MergeTable();
+            return query;
+        }
+
+        public async Task DeleteForm(string keyValue)
 		{
 			if (await repository.IQueryable(a => a.F_ParentId.Equals(keyValue)).AnyAsync())
 			{

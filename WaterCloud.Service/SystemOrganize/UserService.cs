@@ -67,7 +67,8 @@ namespace WaterCloud.Service.SystemOrganize
 				string[] departmentIds = item.F_OrganizeId.Split(',');
 				item.F_OrganizeName = string.Join(',', orgs.Where(a => departmentIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
 				item.F_RoleName = string.Join(',', roles.Where(a => roleIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
-			}
+                item.F_IsLeaderInDepts = orgs.Any(a => departmentIds.Contains(a.F_Id) && a.F_ManagerId == item.F_Id);
+            }
 			return data;
 		}
 
@@ -87,17 +88,19 @@ namespace WaterCloud.Service.SystemOrganize
 				string[] departmentIds = item.F_OrganizeId.Split(',');
 				item.F_OrganizeName = string.Join(',', orgs.Where(a => departmentIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
 				item.F_RoleName = string.Join(',', roles.Where(a => roleIds.Contains(a.F_Id)).Select(a => a.F_FullName).ToList());
-			}
+                item.F_IsLeaderInDepts = orgs.Any(a => departmentIds.Contains(a.F_Id) && a.F_ManagerId == item.F_Id);
+            }
 			return data;
 		}
 
 		private ISugarQueryable<UserExtend> GetQuery()
 		{
-			var query = repository.Db.Queryable<UserEntity, RoleEntity, SystemSetEntity>((a, b, c) => new JoinQueryInfos(
+			var query = repository.Db.Queryable<UserEntity, RoleEntity, SystemSetEntity,UserEntity>((a, b, c,d) => new JoinQueryInfos(
 				JoinType.Left, a.F_DutyId == b.F_Id,
-				JoinType.Left, a.F_CompanyId == c.F_Id
-				)).Where(a => a.F_DeleteMark == false)
-				.Select((a, b, c) => new UserExtend
+				JoinType.Left, a.F_CompanyId == c.F_Id,
+                JoinType.Left, a.F_ManagerId == d.F_Id
+                )).Where(a => a.F_DeleteMark == false)
+				.Select((a, b, c, d) => new UserExtend
 				{
 					F_Id = a.F_Id,
 					F_IsSenior = a.F_IsSenior,
@@ -121,9 +124,9 @@ namespace WaterCloud.Service.SystemOrganize
 					F_HeadIcon = a.F_HeadIcon,
 					F_HeadImgUrl = a.F_HeadImgUrl,
 					F_IsBoss = a.F_IsBoss,
-					F_IsLeaderInDepts = a.F_IsLeaderInDepts,
 					F_ManagerId = a.F_ManagerId,
-					F_MobilePhone = a.F_MobilePhone,
+					F_ManagerName = d.F_RealName,
+                    F_MobilePhone = a.F_MobilePhone,
 					F_NickName = a.F_NickName,
 					F_CompanyId = a.F_CompanyId,
 					F_RealName = a.F_RealName,
@@ -155,15 +158,15 @@ namespace WaterCloud.Service.SystemOrganize
 			return await query.Where(a => a.F_EnabledMark == true && a.F_DeleteMark == false).OrderBy(a => a.F_Account).ToListAsync();
 		}
 
-		public async Task<UserEntity> GetForm(string keyValue)
+		public async Task<UserExtend> GetForm(string keyValue)
 		{
-			var data = await repository.FindEntity(keyValue);
+			var data = await GetQuery().FirstAsync(a => a.F_Id == keyValue);
 			return data;
 		}
 
-		public async Task<UserEntity> GetFormExtend(string keyValue)
+		public async Task<UserExtend> GetFormExtend(string keyValue)
 		{
-			var data = await repository.FindEntity(keyValue);
+			var data = await GetQuery().FirstAsync(a => a.F_Id == keyValue);
 			string[] temp;
 			if (data.F_RoleId != null)
 			{
@@ -174,14 +177,15 @@ namespace WaterCloud.Service.SystemOrganize
 			{
 				temp = data.F_OrganizeId.Split(',');
 				data.F_OrganizeName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
-			}
+                data.F_IsLeaderInDepts = repository.Db.Queryable<OrganizeEntity>().Any(a => temp.Contains(a.F_Id) && a.F_ManagerId == data.F_Id);
+            }
 			return data;
 		}
 
-		public async Task<UserEntity> GetLookForm(string keyValue)
+		public async Task<UserExtend> GetLookForm(string keyValue)
 		{
-			var data = await repository.FindEntity(keyValue);
-			string[] temp;
+			var data = await GetQuery().FirstAsync(a => a.F_Id == keyValue);
+            string[] temp;
 			if (data.F_RoleId != null)
 			{
 				temp = data.F_RoleId.Split(',');
@@ -191,7 +195,8 @@ namespace WaterCloud.Service.SystemOrganize
 			{
 				temp = data.F_OrganizeId.Split(',');
 				data.F_OrganizeName = string.Join(",", repository.Db.Queryable<OrganizeEntity>().Where(a => temp.Contains(a.F_Id)).Select(a => a.F_FullName).ToList().ToArray());
-			}
+                data.F_IsLeaderInDepts = repository.Db.Queryable<OrganizeEntity>().Any(a => temp.Contains(a.F_Id) && a.F_ManagerId == data.F_Id);
+            }
 			return GetFieldsFilterData(data);
 		}
 
@@ -205,9 +210,14 @@ namespace WaterCloud.Service.SystemOrganize
 
 		public async Task SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
 		{
-			if (!string.IsNullOrEmpty(keyValue))
+            if (!string.IsNullOrEmpty(keyValue))
 			{
-				userEntity.Modify(keyValue);
+                //自己不能作为自己的直属上级
+                if (keyValue == userEntity.F_ManagerId) 
+                {
+                    userEntity.F_ManagerId = null;
+                }
+                userEntity.Modify(keyValue);
 			}
 			else
 			{

@@ -21,5 +21,6 @@ namespace WaterCloud.Domain.SystemOrganize
 
 		public string F_DutyName { get; set; }
 		public string F_CompanyName { get; set; }
-	}
+		public string F_ManagerName { get; set; }
+    }
 }

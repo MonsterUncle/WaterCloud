@@ -64,7 +64,7 @@ namespace WaterCloud.Domain.SystemOrganize
 		public string F_CategoryId { get; set; }
 
 		/// <summary>
-		///
+		/// 部门负责人
 		/// </summary>
 		[SugarColumn(IsNullable = true, ColumnName = "F_ManagerId", ColumnDataType = "nvarchar(50)")]
 		public string F_ManagerId { get; set; }
