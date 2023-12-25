@@ -94,7 +94,15 @@
             else if (fileds == '部门') {
                 common.modalOpen({
                     title: "选择组织",
-                    url: "/SystemOrganize/Organize/AddForm?name=" + "F_OrganizeName" + "&value=" + "F_OrganizeId" + "&ids=" + $('#F_OrganizeId').val(),
+                    url: "/SystemOrganize/Organize/AddForm?name=" + "F_OrganizeName" + "&value=" + "F_OrganizeId" + "&ids=" + $('#F_OrganizeId').val() + "&managerkey=" + $('#F_ManagerId').val() + "&managername=" + $('#F_ManagerName').val(),
+                    width: "650px",
+                    height: "600px",
+                });
+            }
+            else if (fileds == '用户') {
+                common.modalOpen({
+                    title: "选择用户",
+                    url: "/SystemOrganize/User/AddForm?name=" + "F_ManagerName" + "&value=" + "F_ManagerId" + "&ids=" + $('#F_ManagerId').val(),
                     width: "650px",
                     height: "600px",
                 });
@@ -189,17 +197,18 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label">微信</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="F_WeChat" name="F_WeChat" autocomplete="off" maxlength="50" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
                         <label class="layui-form-label">邮箱</label>
                         <div class="layui-input-block">
                             <input type="text" id="F_Email" name="F_Email" autocomplete="off" lay-verify="email" class="layui-input">
                         </div>
                     </div>
+                    <div class="layui-col-md6 layui-col-sm6 layui-hide">
+                        <label class="layui-form-label">微信</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="F_WeChat" name="F_WeChat" autocomplete="off" maxlength="50" class="layui-input">
+                        </div>
+                    </div>
+
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
@@ -212,12 +221,10 @@
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label">部门主管</label>
+                        <label class="layui-form-label">直属上级</label>
                         <div class="layui-input-block">
-                            <select id="F_IsLeaderInDepts" name="F_IsLeaderInDepts">
-                                <option value="false">否</option>
-                                <option value="true">是</option>
-                            </select>
+                            <input id="F_ManagerName" name="F_ManagerName" type="text" lay-verify="required" maxlength="50" autocomplete="off" class="layui-input" onclick="search('用户')" />
+                            <input id="F_ManagerId" name="F_ManagerId" type="text" hidden />
                         </div>
                     </div>
                 </div>

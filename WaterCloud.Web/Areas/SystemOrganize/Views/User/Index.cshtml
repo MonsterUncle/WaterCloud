@@ -39,7 +39,23 @@
                     field: 'F_OrganizeName', title: '部门名称', width: 200, sort: true
                 },
                 {
+                    field: 'F_IsLeaderInDepts', title: '部门主管', width: 120,
+                    templet: function (d) {
+                        if (d.F_EnabledMark == true) {
+                            return "<span class='layui-btn layui-btn-normal layui-btn-xs'>是</span>";
+                        } else {
+                            return "<span class='layui-btn layui-btn-warm layui-btn-xs'>否</span>";
+                        }
+                    }
+                },
+                {
+                    field: 'F_ManagerName', title: '直属上级', width: 120, sort: true, filter: true
+                },
+                {
                     field: 'F_DutyName', title: '岗位名称', width: 120, sort: true, filter: true
+                },
+                {
+                    field: 'F_RoleName', title: '角色', width: 120, sort: true
                 },
                 {
                     field: 'F_EnabledMark', title: '状态', width: 80, sort: true, filter: true,

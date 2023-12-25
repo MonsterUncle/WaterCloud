@@ -70,32 +70,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 		public async Task<ActionResult> GetFormJson(string keyValue)
 		{
 			var data = await _service.GetLookForm(keyValue);
-			if (!string.IsNullOrEmpty(data.F_OrganizeId))
-			{
-				List<string> str = new List<string>();
-				foreach (var item in data.F_OrganizeId.Split(','))
-				{
-					var temp = await _orgService.GetForm(item);
-					if (temp != null)
-					{
-						str.Add(temp.F_FullName);
-					}
-				}
-				data.F_OrganizeName = string.Join("  ", str.ToArray());
-			}
-			if (!string.IsNullOrEmpty(data.F_RoleId))
-			{
-				List<string> str = new List<string>();
-				foreach (var item in data.F_RoleId.Split(','))
-				{
-					var temp = await _roleService.GetForm(item);
-					if (temp != null)
-					{
-						str.Add(temp.F_FullName);
-					}
-				}
-				data.F_RoleName = string.Join("  ", str.ToArray());
-			}
 			return Content(data.ToJson());
 		}
 
@@ -104,32 +78,6 @@ namespace WaterCloud.Web.Areas.SystemOrganize.Controllers
 		public async Task<ActionResult> GetUserFormJson()
 		{
 			var data = await _service.GetFormExtend(_service.currentuser.UserId);
-			if (!string.IsNullOrEmpty(data.F_OrganizeId))
-			{
-				List<string> str = new List<string>();
-				foreach (var item in data.F_OrganizeId.Split(','))
-				{
-					var temp = await _orgService.GetForm(item);
-					if (temp != null)
-					{
-						str.Add(temp.F_FullName);
-					}
-				}
-				data.F_OrganizeName = string.Join("  ", str.ToArray());
-			}
-			if (!string.IsNullOrEmpty(data.F_RoleId))
-			{
-				List<string> str = new List<string>();
-				foreach (var item in data.F_RoleId.Split(','))
-				{
-					var temp = await _roleService.GetForm(item);
-					if (temp != null)
-					{
-						str.Add(temp.F_FullName);
-					}
-				}
-				data.F_RoleName = string.Join("  ", str.ToArray());
-			}
 			return Content(data.ToJson("yyyy-MM-dd"));
 		}
 

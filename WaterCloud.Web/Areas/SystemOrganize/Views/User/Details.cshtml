@@ -155,12 +155,10 @@
                         </div>
                     </div>
                     <div class="layui-col-md6 layui-col-sm6 layui-hide">
-                        <label class="layui-form-label">部门主管</label>
+                        <label class="layui-form-label">直属上级</label>
                         <div class="layui-input-block">
-                            <select id="F_IsLeaderInDepts" name="F_IsLeaderInDepts" lay-verify="required">
-                                <option value="false">否</option>
-                                <option value="true">是</option>
-                            </select>
+                            <input id="F_ManagerName" name="F_ManagerName" type="text" lay-verify="required" maxlength="50" autocomplete="off" class="layui-input" onclick="search('部门')" />
+                            <input id="F_ManagerId" name="F_ManagerId" type="text" hidden />
                         </div>
                     </div>
                 </div>

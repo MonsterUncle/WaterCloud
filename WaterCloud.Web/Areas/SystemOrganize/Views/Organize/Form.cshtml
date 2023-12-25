@@ -76,6 +76,25 @@
             return false;
         });
     });
+    function search(fileds) {
+        layui.use(['jquery', 'form', 'common'], function () {
+            var form = layui.form,
+                $ = layui.$,
+                common = layui.common;
+            //不同弹窗
+            if (fileds == '用户') {
+                common.modalOpen({
+                    title: "选择用户",
+                    url: "/SystemOrganize/User/AddForm?name=" + "F_ManagerName" + "&value=" + "F_ManagerId" + "&ids=" + $('#F_ManagerId').val(),
+                    width: "650px",
+                    height: "600px",
+                });
+            }
+            else {
+                return false;
+            }
+        });
+    }
 </script>
 <body>
     <div class="layuimini-container">
@@ -107,6 +126,13 @@
                     <label class="layui-form-label required">编号</label>
                     <div class="layui-input-block">
                         <input type="text" id="F_EnCode" name="F_EnCode" maxlength="50" lay-verify="required" class="layui-input ">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">负责人</label>
+                    <div class="layui-input-block">
+                        <input id="F_ManagerName" name="F_ManagerName" type="text" lay-verify="required" maxlength="50" autocomplete="off" class="layui-input" onclick="search('用户')" />
+                        <input id="F_ManagerId" name="F_ManagerId" type="text" hidden />
                     </div>
                 </div>
                 <div class="layui-form-item layui-hide">
