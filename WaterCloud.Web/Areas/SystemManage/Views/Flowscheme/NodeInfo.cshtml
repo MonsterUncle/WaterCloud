@@ -70,17 +70,31 @@
                                     <option value="ALL_USER">所有用户</option>
                                     <option value="SPECIAL_USER">指定用户</option>
                                     <option value="SPECIAL_ROLE">指定角色</option>
+                                    <option value="USER_MANAGER">上一级的直属上级</option>
+                                    <option value="DEPARTMENT_MANAGER">部门负责人</option>
+                                    <option value="MORE_USER_MANAGER">连续多级直属上级</option>
                                     <option value="RUNTIME_SPECIAL_ROLE">运行时指定角色</option>
                                     <option value="RUNTIME_SPECIAL_USER">运行时指定用户</option>
                                 </select>
                             </div>
                         </div>
-
+                        <div class="layui-form-item" id="department">
+                            <div class="layui-input-block" style="margin-left: 0px;">
+                                <input id="currentDepart" name="currentDepart" type="checkbox" value="true" title="当前部门">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" id="stoprole">
+                            <label>审批终点角色</label>
+                        </div>
                         <div class="layui-form-item">
                             <div class="layui-hide" id="specialrole">
-                                <input id="currentDepart" name="currentDepart" type="checkbox" value="true" title="当前部门">
                                 <div class="layui-input-block" style="margin-left: 0px;">
                                     <table class="layui-hide" id="RoleId" lay-filter="RoleTableFilter"></table>
+                                </div>
+                            </div>
+                            <div class="layui-hide" id="departmentmanager">
+                                <div class="layui-input-block" style="margin-left: 0px;">
+                                    <table class="layui-hide" id="OrganizeId" lay-filter="OrganizeTableFilter"></table>
                                 </div>
                             </div>
                             <div class="layui-hide" id="specialuser">
@@ -128,8 +142,13 @@
         $('#specialrole').addClass("layui-hide");
         $('#specialuser').addClass("layui-hide");
         $('#alluser').removeClass("layui-hide");
+        $('#department').addClass("layui-hide");
+        $('#departmentmanager').addClass("layui-hide");
+        $('#stoprole').addClass("layui-hide");
+        
         var userids = '';
         var roleids = '';
+        var orgids = '';
         //初始化节点设置信息
         if (node.setInfo != null) {
             tmp = Object.assign({}, tmp, node.setInfo);
@@ -137,23 +156,61 @@
                 form.val("adminform", {
                     "NodeDesignate": 'SPECIAL_USER' //对应radio的value
                 });
-                userids = tmp.NodeDesignateData.users;
+                userids = tmp.NodeDesignateData.users.join(',');
+                $('#stoprole').addClass("layui-hide");
+                $('#department').addClass("layui-hide");
+                $('#departmentmanager').addClass("layui-hide");
                 $('#specialrole').addClass("layui-hide");
                 $('#specialuser').removeClass("layui-hide");
                 $('#alluser').addClass("layui-hide");
-
-
             } else if (tmp.NodeDesignate === "SPECIAL_ROLE" && tmp.NodeDesignateData.roles.length > 0) {
                 form.val("adminform", {
                     "NodeDesignate": 'SPECIAL_ROLE' //对应radio的value
                 });
-                roleids = tmp.NodeDesignateData.roles;
+                roleids = tmp.NodeDesignateData.roles.join(',');
+                $('#stoprole').addClass("layui-hide");
+                $('#department').removeClass("layui-hide");
+                $('#departmentmanager').addClass("layui-hide");
                 $('#specialrole').removeClass("layui-hide");
                 $('#specialuser').addClass("layui-hide");
                 $('#alluser').addClass("layui-hide");
                 form.val("adminform", {
                     "currentDepart": tmp.NodeDesignateData.currentDepart
                 });
+            } else if (tmp.NodeDesignate === "DEPARTMENT_MANAGER") {
+                form.val("adminform", {
+                    "NodeDesignate": 'DEPARTMENT_MANAGER' //对应radio的value
+                });
+                if (tmp.NodeDesignateData.orgs.length > 0) {
+                    orgids = tmp.NodeDesignateData.orgs.join(',');
+                }
+                $('#stoprole').addClass("layui-hide");
+                $('#department').removeClass("layui-hide");
+                $('#departmentmanager').removeClass("layui-hide");
+                $('#specialrole').addClass("layui-hide");
+                $('#specialuser').addClass("layui-hide");
+                $('#alluser').addClass("layui-hide");
+                form.val("adminform", {
+                    "currentDepart": tmp.NodeDesignateData.currentDepart
+                });
+            } else if (tmp.NodeDesignate === "MORE_USER_MANAGER" && tmp.NodeDesignateData.roles.length > 0) {
+                form.val("adminform", {
+                    "NodeDesignate": 'MORE_USER_MANAGER' //对应radio的value
+                });
+                roleids = tmp.NodeDesignateData.roles.join(',');
+                $('#stoprole').removeClass("layui-hide");
+                $('#department').addClass("layui-hide");
+                $('#departmentmanager').addClass("layui-hide");
+                $('#specialrole').removeClass("layui-hide");
+                $('#specialuser').addClass("layui-hide");
+                $('#alluser').addClass("layui-hide");
+            } else {
+                $('#stoprole').addClass("layui-hide");
+                $('#department').addClass("layui-hide");
+                $('#departmentmanager').addClass("layui-hide");
+                $('#specialrole').addClass("layui-hide");
+                $('#specialuser').addClass("layui-hide");
+                $('#alluser').removeClass("layui-hide");
             }
 
         }
@@ -241,6 +298,41 @@
                 }
             ]]
         });
+        var options = {
+            id: 'OrganizeId',
+            elem: '#OrganizeId',
+            url: '/SystemOrganize/Organize/GetTreeGridJson',
+            where: { ids: !!orgids ? orgids : "" },
+            treeIdName: 'F_Id',  // id字段名称
+            treePidName: 'F_ParentId',     // pid字段名称
+            height: 'full-160',
+            toolbar: false,//工具栏
+            cols: [[
+                { type: 'checkbox' },
+                { field: 'F_FullName', title: '名称', width: 250 },
+                { field: 'F_EnCode', title: '编号', width: 200 },
+                {
+                    field: 'F_CategoryId', title: '分类', width: 120,
+                    templet: function (d) {
+                        return top.clients.dataItems["OrganizeCategory"][d.F_CategoryId] == null ? "" : top.clients.dataItems["OrganizeCategory"][d.F_CategoryId];
+                    }
+                },
+                {
+                    field: 'F_ManagerName', title: '负责人', width: 120
+                },
+                {
+                    field: 'F_EnabledMark', title: '状态', width: 80,
+                    templet: function (d) {
+                        if (d.F_EnabledMark == true) {
+                            return "<span class='layui-btn layui-btn-normal layui-btn-xs'>有效</span>";
+                        } else {
+                            return "<span class='layui-btn layui-btn-warm layui-btn-xs'>无效</span>";
+                        }
+                    }
+                }
+            ]],
+        };
+        commonTable.rendertreetable(options);
         common.val('adminform', tmp);
         if (Method == "Details") {
             common.setReadOnly('adminform');
@@ -261,15 +353,38 @@
             function (data) {
                 tmp.NodeDesignate = data.value;
                 if (data.value === "SPECIAL_USER") {
+                    $('#stoprole').addClass("layui-hide");
+                    $('#department').addClass("layui-hide");
+                    $('#departmentmanager').addClass("layui-hide");
                     $('#specialrole').addClass("layui-hide");
                     $('#specialuser').removeClass("layui-hide");
                     $('#alluser').addClass("layui-hide");
                 } else if (data.value === "SPECIAL_ROLE") {
+                    $('#stoprole').addClass("layui-hide");
+                    $('#department').removeClass("layui-hide");
+                    $('#departmentmanager').addClass("layui-hide");
+                    $('#specialrole').removeClass("layui-hide");
+                    $('#specialuser').addClass("layui-hide");
+                    $('#alluser').addClass("layui-hide");
+                } else if (data.value === "DEPARTMENT_MANAGER") {
+                    $('#stoprole').addClass("layui-hide");
+                    $('#department').removeClass("layui-hide");
+                    $('#departmentmanager').removeClass("layui-hide");
+                    $('#specialrole').addClass("layui-hide");
+                    $('#specialuser').addClass("layui-hide");
+                    $('#alluser').addClass("layui-hide");
+                } else if (data.value === "MORE_USER_MANAGER") {
+                    $('#stoprole').removeClass("layui-hide");
+                    $('#department').addClass("layui-hide");
+                    $('#departmentmanager').addClass("layui-hide");
                     $('#specialrole').removeClass("layui-hide");
                     $('#specialuser').addClass("layui-hide");
                     $('#alluser').addClass("layui-hide");
                 }
                 else {
+                    $('#stoprole').addClass("layui-hide");
+                    $('#department').addClass("layui-hide");
+                    $('#departmentmanager').addClass("layui-hide");
                     $('#specialrole').addClass("layui-hide");
                     $('#specialuser').addClass("layui-hide");
                     $('#alluser').removeClass("layui-hide");
@@ -281,15 +396,21 @@
         getVal = function () {
             var users = [];
             var roles = [];
+            var orgs = [];
             if (tmp.NodeDesignate === "SPECIAL_USER") {
                 var checkStatus = table.checkStatus("UserId").data;
                 for (var i = 0; i < checkStatus.length; i++) {
                     users.push(checkStatus[i].F_Id);
                 }
-            } else if (tmp.NodeDesignate === "SPECIAL_ROLE") {
+            } else if (tmp.NodeDesignate === "SPECIAL_ROLE" || tmp.NodeDesignate === "MORE_USER_MANAGER") {
                 var checkStatus = table.checkStatus("RoleId").data;
                 for (var i = 0; i < checkStatus.length; i++) {
                     roles.push(checkStatus[i].F_Id);
+                }
+            } else if (tmp.NodeDesignate === "DEPARTMENT_MANAGER") {
+                var checkStatus = table.checkStatus("OrganizeId").data;
+                for (var i = 0; i < checkStatus.length; i++) {
+                    orgs.push(checkStatus[i].F_Id);
                 }
             }
             tmp.NodeRejectType = $('#NodeRejectType').val();
@@ -302,7 +423,7 @@
                 NodeDesignateData: { //节点指定操作人
                     users: users,
                     roles: roles,
-                    orgs: [],
+                    orgs: orgs,
                     currentDepart: $('#currentDepart').is(':checked') ? true : false,
                 }
             };

@@ -32,7 +32,6 @@ namespace WaterCloud.Code
 		public bool IsAdmin { get; set; }
 		public bool IsBoss { get; set; }
 		public bool IsSenior { get; set; }
-		public bool IsLeaderInDepts { get; set; }
 		public bool IsSaleman { get; set; }
 
 		// 拓展字段，2019-03-03
