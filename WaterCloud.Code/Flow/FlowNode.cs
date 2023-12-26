@@ -97,7 +97,6 @@
 		public string[] roles { get; set; }
 		public string[] orgs { get; set; }
 		public bool currentDepart { get; set; }
-        public string finishRole { get; set; }
     }
 
     /// <summary>

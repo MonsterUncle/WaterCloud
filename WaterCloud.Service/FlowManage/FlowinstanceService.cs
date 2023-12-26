@@ -345,7 +345,7 @@ namespace WaterCloud.Service.FlowManage
 				if (tag.Taged == (int)TagState.Ok)
 				{
 					var roleIds = user.RoleId.Split(',');
-					if (wfruntime.currentNode.setInfo.NodeDesignate == Setinfo.MORE_USER_MANAGER && !roleIds.Contains(wfruntime.currentNode.setInfo.NodeDesignateData.finishRole))
+					if (wfruntime.currentNode.setInfo.NodeDesignate == Setinfo.MORE_USER_MANAGER && roleIds.Intersect(wfruntime.currentNode.setInfo.NodeDesignateData.roles).Count() == 0)
 					{
                         flowInstance.F_MakerList = GetNodeMarkers(wfruntime.currentNode);
                     }
