@@ -316,7 +316,7 @@ namespace WaterCloud.Code
 			this IServiceCollection @this)
 		{
 			var ret = new List<Type>();
-			var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "*.dll")
+			var assemblies = Directory.GetFiles(AppContext.BaseDirectory, "WaterCloud.*.dll")
 				.Select(x => x.Substring(@"\").Substring(@"/").Replace(".dll", ""))
 				.Select(x => Assembly.Load(x)).ToArray();
 			//排除列表
