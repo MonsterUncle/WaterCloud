@@ -47,7 +47,7 @@ namespace WaterCloud.Service
 				else
 				{
 					var dblist = DBInitialize.GetConnectionConfigs(false);
-					_context.AsTenant().AddConnection(dblist.FirstOrDefault(a => a.ConfigId == currentuser.DbNumber));
+					_context.AsTenant().AddConnection(dblist.FirstOrDefault(a => a.ConfigId.ToString() == currentuser.DbNumber));
 					repository.ChangeEntityDb(currentuser.DbNumber);
 					repository.Db.DefaultConfig();
 				}

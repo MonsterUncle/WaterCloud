@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="7.0.0" />
-    <PackageReference Include="Jaina" Version="4.1.1" />
-    <PackageReference Include="Quartz" Version="3.6.2" />
+    <PackageReference Include="Autofac" Version="8.0.0" />
+    <PackageReference Include="Jaina" Version="4.3.0" />
+    <PackageReference Include="Quartz" Version="3.11.0" />
   </ItemGroup>
 
   <ItemGroup>

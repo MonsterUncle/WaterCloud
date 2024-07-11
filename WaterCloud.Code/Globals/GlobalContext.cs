@@ -204,7 +204,7 @@ namespace WaterCloud.Code
 		{
 			int second = 365 * 24 * 60 * 60;
 			context.Context.Response.Headers.Add("Cache-Control", new[] { "public,max-age=" + second });
-			context.Context.Response.Headers.Add("Expires", new[] { DateTime.UtcNow.AddYears(1).ToString("R") }); // Format RFC1123
-		}
+            context.Context.Response.Headers.Add("Expires", new[] { DateTime.UtcNow.AddYears(1).ToString("R") }); // Format RFC1123
+        }
     }
 }

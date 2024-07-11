@@ -5,7 +5,7 @@ using WaterCloud.Code;
 
 namespace WaterCloud.Service.Event
 {
-	public class BaseEventSource : IEventSource
+    public class BaseEventSource : IEventSource
 	{
 		public BaseEventSource()
 		{
@@ -41,5 +41,7 @@ namespace WaterCloud.Service.Event
 		[Newtonsoft.Json.JsonIgnore]
 		[System.Text.Json.Serialization.JsonIgnore]
 		public CancellationToken CancellationToken { get; set; }
-	}
+
+        public bool IsConsumOnce => true;
+    }
 }
