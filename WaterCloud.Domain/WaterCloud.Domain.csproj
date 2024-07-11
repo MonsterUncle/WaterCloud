@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MiniExcel" Version="1.30.2" />
-    <PackageReference Include="SqlSugarCore" Version="5.1.4.59" />
+    <PackageReference Include="MiniExcel" Version="1.33.0" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.4.161" />
   </ItemGroup>
 
   <ItemGroup>

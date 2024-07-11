@@ -28,8 +28,7 @@ namespace WaterCloud.Service.Event
 			{
 				foreach (var item in DBInitialize.GetConnectionConfigs(false))
 				{
-					string temp = item.ConfigId;
-					db.GetConnection(temp).DefaultConfig();
+					db.GetConnection(item.ConfigId).DefaultConfig();
 				}
 			});
             await new LogService(dbContext).WriteDbLog(input, user);

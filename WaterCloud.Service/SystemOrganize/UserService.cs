@@ -276,7 +276,7 @@ namespace WaterCloud.Service.SystemOrganize
 					if (!_context.AsTenant().IsAnyConnection(setTemp.F_DbNumber))
 					{
 						var dblist = DBInitialize.GetConnectionConfigs(true);
-						_context.AsTenant().AddConnection(dblist.FirstOrDefault(a => a.ConfigId == setTemp.F_DbNumber));
+						_context.AsTenant().AddConnection(dblist.FirstOrDefault(a => a.ConfigId.ToString() == setTemp.F_DbNumber));
 						repository.ChangeEntityDb(setTemp.F_DbNumber);
 						repository.Db.DefaultConfig();
 					}

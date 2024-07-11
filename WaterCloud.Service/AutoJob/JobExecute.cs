@@ -42,8 +42,7 @@ namespace WaterCloud.Service.AutoJob
 				{
 					foreach (var item in DBInitialize.GetConnectionConfigs(false))
 					{
-						string temp = item.ConfigId;
-						db.GetConnection(temp).DefaultConfig();
+						db.GetConnection(item.ConfigId).DefaultConfig();
 					}
 				});
                 string jobId = "";

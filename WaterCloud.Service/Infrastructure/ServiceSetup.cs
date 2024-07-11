@@ -37,8 +37,7 @@ namespace WaterCloud.Service
 				{
 					foreach (var item in configList)
 					{
-						string temp = item.ConfigId;
-						db.GetConnection(temp).DefaultConfig();
+						db.GetConnection(item.ConfigId).DefaultConfig();
 					}
 				});
 			//注入数据库连接

@@ -212,16 +212,33 @@ namespace WaterCloud.Code
 		/// <returns></returns>
 		public static List<string> GetCacheKeys()
 		{
-			const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
-			var entries = Cache.GetType().GetField("_entries", flags).GetValue(Cache);
-			var cacheItems = entries as IDictionary;
-			var keys = new List<string>();
-			if (cacheItems == null) return keys;
-			foreach (DictionaryEntry cacheItem in cacheItems)
-			{
-				keys.Add(cacheItem.Key.ToString());
-			}
-			return keys;
-		}
-	}
+#if NET8_0
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            var entries = Cache.GetType().GetField("_coherentState", flags)?.GetValue(Cache);
+            var cacheItems = entries?.GetType().GetProperty("EntriesCollection", flags).GetValue(entries) as ICollection; //entries as IDictionary;
+            var keys = new List<string>();
+            if (cacheItems == null) return keys;
+            foreach (var item in cacheItems)
+            {
+                var methodInfo = item.GetType().GetProperty("Key");
+
+                var val = methodInfo.GetValue(item);
+
+                keys.Add(val.ToString());
+            }
+            return keys;
+#else
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            var entries = Cache.GetType().GetField("_entries", flags).GetValue(Cache);
+            var cacheItems = entries as IDictionary;
+            var keys = new List<string>();
+            if (cacheItems == null) return keys;
+            foreach (DictionaryEntry cacheItem in cacheItems)
+            {
+                keys.Add(cacheItem.Key.ToString());
+            }
+            return keys;
+#endif
+        }
+    }
 }
