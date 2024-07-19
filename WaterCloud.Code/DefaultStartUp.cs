@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serenity.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +24,7 @@ namespace WaterCloud.Code
 {
 	public class DefaultStartUp
 	{
-		protected IConfiguration Configuration { get; }
+		protected IConfiguration Configuration { get; set; }
 		protected IWebHostEnvironment WebHostEnvironment { get; set; }
 
 		public DefaultStartUp(IConfiguration configuration, IWebHostEnvironment env)
@@ -36,7 +37,13 @@ namespace WaterCloud.Code
 
 		public virtual void ConfigureServices(IServiceCollection services)
 		{
-			GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            //没有设置环境变量就默认生产环境
+            if (string.IsNullOrWhiteSpace(environment))
+                environment = "Production";
+            Configuration = new ConfigurationBuilder().AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true).Build();
+
+            GlobalContext.SystemConfig = Configuration.GetSection("SystemConfig").Get<SystemConfig>();
 			GlobalContext.Services = services;
 			GlobalContext.Configuration = Configuration;
 			services.Configure<CookiePolicyOptions>(options =>
