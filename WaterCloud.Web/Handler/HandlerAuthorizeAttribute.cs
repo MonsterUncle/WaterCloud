@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using WaterCloud.Code;
 using WaterCloud.Service.SystemOrganize;
 
-/// <summary>
-/// 权限验证
-/// </summary>
 namespace WaterCloud.Web
 {
-	public class HandlerAuthorizeAttribute : ActionFilterAttribute
+
+    /// <summary>
+    /// 权限验证
+    /// </summary>
+    public class HandlerAuthorizeAttribute : ActionFilterAttribute
 	{
 		private readonly bool _needAuth;
 

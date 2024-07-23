@@ -28,7 +28,7 @@ namespace WaterCloud.Domain.FlowManage
 		[SugarColumn(IsNullable = true)]
 		public DateTime? F_EndTime { get; set; }
 
-		[SugarColumn(IsNullable = false, ColumnName = "F_RequestComment", ColumnDataType = "longtext")]
+		[SugarColumn(IsNullable = true, ColumnName = "F_RequestComment", ColumnDataType = "longtext")]
 		public string F_RequestComment { get; set; }
 
 		[SugarColumn(IsNullable = true, ColumnName = "F_Attachment", ColumnDataType = "longtext")]

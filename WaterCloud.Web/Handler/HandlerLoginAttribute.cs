@@ -7,12 +7,12 @@ using System.Reflection;
 using WaterCloud.Code;
 using WaterCloud.Service.SystemOrganize;
 
-/// <summary>
-/// 登录验证
-/// </summary>
 namespace WaterCloud.Web
 {
-	public class HandlerLoginAttribute : ActionFilterAttribute
+    /// <summary>
+    /// 登录验证
+    /// </summary>
+    public class HandlerLoginAttribute : ActionFilterAttribute
 	{
 		private readonly bool _needLogin;
 

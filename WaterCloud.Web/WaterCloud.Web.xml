@@ -363,12 +363,22 @@
             <param name="next"></param>
             <returns></returns>
         </member>
+        <member name="T:WaterCloud.Web.HandlerAuthorizeAttribute">
+            <summary>
+            权限验证
+            </summary>
+        </member>
         <member name="M:WaterCloud.Web.HandlerAuthorizeAttribute.#ctor(System.String,System.Boolean)">
             <summary>
             权限特性
             </summary>
             <param name="authorize">权限参数</param>
             <param name="needAuth">是否鉴权</param>
+        </member>
+        <member name="T:WaterCloud.Web.HandlerLoginAttribute">
+            <summary>
+            登录验证
+            </summary>
         </member>
         <member name="M:WaterCloud.Web.HandlerLoginAttribute.#ctor(System.Boolean)">
             <summary>

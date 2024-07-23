@@ -7,10 +7,14 @@ using Quartz.Spi;
 using RabbitMQ.Client;
 using SqlSugar;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using WaterCloud.Code;
 using WaterCloud.DataBase;
 using WaterCloud.Domain.SystemOrganize;
@@ -19,10 +23,10 @@ using WaterCloud.Service.Event;
 
 namespace WaterCloud.Service
 {
-	/// <summary>
-	/// 服务设置
-	/// </summary>
-	public static class ServiceSetup
+    /// <summary>
+    /// 服务设置
+    /// </summary>
+    public static class ServiceSetup
 	{
         /// <summary>
         /// SqlSugar设置
@@ -40,9 +44,22 @@ namespace WaterCloud.Service
 						db.GetConnection(item.ConfigId).DefaultConfig();
 					}
 				});
-			//注入数据库连接
-			// 注册 SqlSugar
-			services.AddSingleton<ISqlSugarClient>(sqlSugarScope);
+			//初始化数据库
+			foreach (var item in configList)
+			{
+				var db = sqlSugarScope.GetConnection(item.ConfigId);
+                if (GlobalContext.SystemConfig.IsInitDb)
+                {
+                    InitDb(item, db);
+                }
+                if (GlobalContext.SystemConfig.IsSeedData)
+                {
+                    InitSeedData(item, db);
+                }
+            }
+            //注入数据库连接
+            // 注册 SqlSugar
+            services.AddSingleton<ISqlSugarClient>(sqlSugarScope);
 			return services;
 		}
 
@@ -75,7 +92,7 @@ namespace WaterCloud.Service
 					{
 						column.DbColumnName = (attributes.First(it => it is ColumnAttribute) as ColumnAttribute).Name;
 					}
-					if (attributes.Any(it => it is SugarColumn) && column.DataType == "longtext" && db.CurrentConnectionConfig.DbType == DbType.SqlServer)
+					if (attributes.Any(it => it is SugarColumn) && column.DataType == "longtext" && db.CurrentConnectionConfig.DbType == SqlSugar.DbType.SqlServer)
 					{
 						column.DataType = "nvarchar(4000)";
 					}
@@ -112,11 +129,179 @@ namespace WaterCloud.Service
 			};
 		}
 
-		/// <summary>
-		/// Quartz设置
-		/// </summary>
-		/// <param name="services"></param>
-		public static IServiceCollection AddQuartz(this IServiceCollection services)
+
+        private static void InitSeedData(ConnectionConfig config, SqlSugarProvider db)
+        {
+            var entityTypes = GlobalContext.EffectiveTypes.Where(u => !u.IsInterface && !u.IsAbstract && u.IsClass && u.IsDefined(typeof(SugarTable), false));
+            if (!entityTypes.Any()) return;//没有就退出
+
+            // 获取所有种子配置-初始化数据
+            var seedDataTypes = GlobalContext.EffectiveTypes.Where(u => !u.IsInterface && !u.IsAbstract && u.IsClass
+                && u.GetInterfaces().Any(i => i.HasImplementedRawGeneric(typeof(ISqlSugarEntitySeedData<>))));
+            if (!seedDataTypes.Any()) return;
+            foreach (var seedType in seedDataTypes)//遍历种子类
+            {
+                //使用与指定参数匹配程度最高的构造函数来创建指定类型的实例。
+                var instance = Activator.CreateInstance(seedType);
+                //获取SeedData方法
+                var hasDataMethod = seedType.GetMethod("SeedData");
+                //判断是否有种子数据
+                var seedData = ((IEnumerable)hasDataMethod?.Invoke(instance, null))?.Cast<object>();
+                if (seedData == null) continue;//没有种子数据就下一个
+                var entityType = seedType.GetInterfaces().First().GetGenericArguments().First();//获取实体类型
+                var tenantAtt = entityType.GetCustomAttribute<TenantAttribute>();//获取sqlsugar租户特性
+                if (tenantAtt != null && tenantAtt.configId.ToString() != config.ConfigId.ToString()) continue;//如果不是当前租户的就下一个
+                var seedDataTable = seedData.ToList().ToDataTable();//获取种子数据
+                seedDataTable.TableName = db.EntityMaintenance.GetEntityInfo(entityType).DbTableName;//获取表名
+
+                if (seedDataTable.Columns.Contains("F_Id"))//判断种子数据是否有主键
+                {
+                    var storage = db.Storageable(seedDataTable).WhereColumns("F_Id").ToStorage();
+
+                    //codefirst暂时全部新增,根据主键更新,用户表暂不更新
+                    storage.AsInsertable.ExecuteCommand();
+
+                    var ignoreUpdate = hasDataMethod.GetCustomAttribute<IgnoreSeedDataUpdateAttribute>();//读取忽略更新特性
+                    if (ignoreUpdate == null)
+                        storage.AsUpdateable.ExecuteCommand();//只有没有忽略更新的特性才执行更新
+                }
+                else // 没有主键或者不是预定义的主键(有重复的可能)
+                {
+                    //全量插入
+                    var storage = db.Storageable(seedDataTable).ToStorage();
+                    storage.AsInsertable.ExecuteCommand();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 初始化数据库表结构
+        /// </summary>
+        /// <param name="config">数据库配置</param>
+        private static void InitDb(ConnectionConfig config, SqlSugarProvider db)
+        {
+            try
+            {
+                db.DbMaintenance.CreateDatabase();//创建数据库
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"创建数据库失败,开始尝试操作表! ex:{ex.Message}");
+            }
+
+            var entityTypes = GlobalContext.EffectiveTypes.Where(u => !u.IsInterface && !u.IsAbstract && u.IsClass && u.IsDefined(typeof(SugarTable), false));
+            if (!entityTypes.Any()) return;//没有就退出
+            foreach (var entityType in entityTypes)
+            {
+                var tenantAtt = entityType.GetCustomAttribute<TenantAttribute>();//获取Sqlsugar多租户特性
+                var ignoreInit = entityType.GetCustomAttribute<IgnoreInitTableAttribute>();//获取忽略初始化特性
+                if (ignoreInit != null) continue;//如果有忽略初始化特性
+                if (tenantAtt != null && tenantAtt.configId.ToString() != config.ConfigId.ToString()) continue;//如果特性存在并且租户ID不是当前数据库ID
+                var splitTable = entityType.GetCustomAttribute<SplitTableAttribute>();//获取自动分表特性
+
+                if (splitTable == null)//如果特性是空
+                {
+                    db.CodeFirst.InitTables(entityType);//普通创建
+
+                }
+                else
+                    db.CodeFirst.SplitTables().InitTables(entityType);//自动分表创建
+            }
+        }
+
+        /// <summary>
+        /// 判断类型是否实现某个泛型
+        /// </summary>
+        /// <param name="type">类型</param>
+        /// <param name="generic">泛型类型</param>
+        /// <returns>bool</returns>
+        public static bool HasImplementedRawGeneric(this System.Type type, System.Type generic)
+        {
+            // 检查接口类型
+            var isTheRawGenericType = type.GetInterfaces().Any(IsTheRawGenericType);
+            if (isTheRawGenericType) return true;
+
+            // 检查类型
+            while (type != null && type != typeof(object))
+            {
+                isTheRawGenericType = IsTheRawGenericType(type);
+                if (isTheRawGenericType) return true;
+                type = type.BaseType;
+            }
+
+            return false;
+
+            // 判断逻辑
+            bool IsTheRawGenericType(System.Type type) => generic == (type.IsGenericType ? type.GetGenericTypeDefinition() : type);
+        }
+
+        /// <summary>
+        /// List转DataTable
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static DataTable ToDataTable<T>(this List<T> list)
+        {
+            DataTable result = new();
+            if (list.Count > 0)
+            {
+                // result.TableName = list[0].GetType().Name; // 表名赋值
+                PropertyInfo[] propertys = list[0].GetType().GetProperties();
+                foreach (PropertyInfo pi in propertys)
+                {
+                    System.Type colType = pi.PropertyType;
+                    if (colType.IsGenericType && colType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    {
+                        colType = colType.GetGenericArguments()[0];
+                    }
+                    if (IsIgnoreColumn(pi))
+                        continue;
+                    if (IsJsonColumn(pi))//如果是json特性就是sting类型
+                        colType = typeof(string);
+                    result.Columns.Add(pi.Name, colType);
+                }
+                for (int i = 0; i < list.Count; i++)
+                {
+                    ArrayList tempList = new();
+                    foreach (PropertyInfo pi in propertys)
+                    {
+                        if (IsIgnoreColumn(pi))
+                            continue;
+                        object obj = pi.GetValue(list[i], null);
+                        if (IsJsonColumn(pi))//如果是json特性就是转化为json格式
+                            obj = obj?.ToJson();//如果json字符串是空就传null
+                        tempList.Add(obj);
+                    }
+                    object[] array = tempList.ToArray();
+                    result.LoadDataRow(array, true);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 排除SqlSugar忽略的列
+        /// </summary>
+        /// <param name="pi"></param>
+        /// <returns></returns>
+        private static bool IsIgnoreColumn(PropertyInfo pi)
+        {
+            var sc = pi.GetCustomAttributes<SugarColumn>(false).FirstOrDefault(u => u.IsIgnore == true);
+            return sc != null;
+        }
+
+        private static bool IsJsonColumn(PropertyInfo pi)
+        {
+            var sc = pi.GetCustomAttributes<SugarColumn>(false).FirstOrDefault(u => u.IsJson == true);
+            return sc != null;
+        }
+
+        /// <summary>
+        /// Quartz设置
+        /// </summary>
+        /// <param name="services"></param>
+        public static IServiceCollection AddQuartz(this IServiceCollection services)
 		{
 			services.AddSingleton<JobExecute>();
 			//注册ISchedulerFactory的实例。
@@ -138,7 +323,7 @@ namespace WaterCloud.Service
 						ConnectionType = typeof(MySqlConnection),
 						CommandType = typeof(MySqlCommand),
 						ParameterType = typeof(MySqlParameter),
-						ParameterDbType = typeof(DbType),
+						ParameterDbType = typeof(System.Data.DbType),
 						ParameterDbTypePropertyName = "DbType",
 						ParameterNamePrefix = "@",
 						ExceptionType = typeof(MySqlException),

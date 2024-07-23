@@ -10,15 +10,18 @@ namespace WaterCloud.Domain.SystemOrganize
 	[SugarTable("sys_role")]
 	public class RoleExtend : RoleEntity
 	{
-		//使用导入错误信息
-		public string ErrorMsg { get; set; }
+        [SugarColumn(IsIgnore = true)]
+        //使用导入错误信息
+        public string ErrorMsg { get; set; }
 
-		/// <summary>
-		/// 备注
-		/// </summary>
-		/// <returns></returns>
-		public string F_Remark { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        /// <returns></returns>
+        [SugarColumn(IsIgnore = true)]
+        public string F_Remark { get; set; }
 
-		public string F_CompanyName { get; set; }
+        [SugarColumn(IsIgnore = true)]
+        public string F_CompanyName { get; set; }
 	}
 }
