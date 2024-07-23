@@ -10,17 +10,24 @@ namespace WaterCloud.Domain.SystemOrganize
 	[SugarTable("sys_user")]
 	public class UserExtend : UserEntity
 	{
-		//使用导入错误信息
-		public string ErrorMsg { get; set; }
+        //使用导入错误信息
+        [SugarColumn(IsIgnore = true)]
+        public string ErrorMsg { get; set; }
 
-		/// <summary>
-		/// 备注
-		/// </summary>
-		/// <returns></returns>
-		public string F_Remark { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        /// <returns></returns>
+        [SugarColumn(IsIgnore = true)]
+        public string F_Remark { get; set; }
 
-		public string F_DutyName { get; set; }
-		public string F_CompanyName { get; set; }
-		public string F_ManagerName { get; set; }
+        [SugarColumn(IsIgnore = true)]
+        public string F_DutyName { get; set; }
+
+        [SugarColumn(IsIgnore = true)]
+        public string F_CompanyName { get; set; }
+
+        [SugarColumn(IsIgnore = true)]
+        public string F_ManagerName { get; set; }
     }
 }

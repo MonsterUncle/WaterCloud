@@ -3,12 +3,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Text;
 using WaterCloud.Code.Model;
 
@@ -24,16 +27,18 @@ namespace WaterCloud.Code
         {
             // 未托管的对象
             UnmanagedObjects = new ConcurrentBag<IDisposable>();
+            Assemblies = GetAssemblies();
+            EffectiveTypes = Assemblies.SelectMany(GetTypes);
         }
         /// <summary>
         /// 服务集合
         /// </summary>
         public static IServiceCollection Services { get; set; }
 
-		/// <summary>
-		/// 根服务
-		/// </summary>
-		public static IServiceProvider RootServices { get; set; }
+        /// <summary>
+        /// 根服务
+        /// </summary>
+        public static IServiceProvider RootServices { get; set; }
 
 		public static IConfiguration Configuration { get; set; }
 
@@ -48,6 +53,15 @@ namespace WaterCloud.Code
 
 		public static SystemConfig SystemConfig { get; set; }
 
+
+        /// <summary>
+        /// 应用有效程序集(类型为project,项目应用的,不包括包和手动应用)
+        /// </summary>
+        public static readonly IEnumerable<Assembly> Assemblies;
+        /// <summary>
+        /// 有效程序集类型
+        /// </summary>
+        public static readonly IEnumerable<System.Type> EffectiveTypes;
         /// <summary>
         /// 获取请求生存周期的服务(未注册返回null)
         /// </summary>
@@ -205,6 +219,36 @@ namespace WaterCloud.Code
 			int second = 365 * 24 * 60 * 60;
 			context.Context.Response.Headers.Add("Cache-Control", new[] { "public,max-age=" + second });
             context.Context.Response.Headers.Add("Expires", new[] { DateTime.UtcNow.AddYears(1).ToString("R") }); // Format RFC1123
+        }
+        public static IEnumerable<Assembly> GetAssemblies()
+        {
+            var projects = DependencyContext
+                                .Default
+                                .RuntimeLibraries
+                                .Where(u => u.Type == "project" || u.Type == "reference")
+                                .Select(u => AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName(u.Name)));
+
+            return projects;
+        }
+        /// <summary>
+        /// 加载程序集中的所有类型
+        /// </summary>
+        /// <param name="ass"></param>
+        /// <returns></returns>
+        private static IEnumerable<System.Type> GetTypes(Assembly ass)
+        {
+            var types = Array.Empty<System.Type>();
+
+            try
+            {
+                types = ass.GetTypes();
+            }
+            catch
+            {
+                Console.WriteLine($"Error load `{ass.FullName}` assembly.");
+            }
+
+            return types.Where(u => u.IsPublic);
         }
     }
 }

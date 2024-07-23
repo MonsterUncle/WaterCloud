@@ -50,7 +50,7 @@ namespace WaterCloud.Domain.SystemManage
 		/// <summary>
 		/// 简拼
 		/// </summary>
-		[SugarColumn(IsNullable = false, ColumnName = "F_SimpleSpelling", ColumnDataType = "nvarchar(50)", ColumnDescription = "简拼")]
+		[SugarColumn(IsNullable = true, ColumnName = "F_SimpleSpelling", ColumnDataType = "nvarchar(50)", ColumnDescription = "简拼")]
 		public string F_SimpleSpelling { get; set; }
 
 		/// <summary>

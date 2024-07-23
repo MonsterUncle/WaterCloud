@@ -16,6 +16,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="watercloudnetdb.db" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\lib\layui\font\iconfont.svg" />
     <None Include="wwwroot\lib\layui\font\iconfont.woff2" />
     <None Include="wwwroot\lib\layui\modules\all.js" />
@@ -70,9 +74,6 @@
   <ItemGroup>
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="watercloudnetdb.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

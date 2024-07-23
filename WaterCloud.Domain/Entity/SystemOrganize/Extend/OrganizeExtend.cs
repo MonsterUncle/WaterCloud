@@ -10,8 +10,10 @@ namespace WaterCloud.Domain.SystemOrganize
 	[SugarTable("sys_organize")]
 	public class OrganizeExtend : OrganizeEntity
     {
-		//使用导入错误信息
-		public string ErrorMsg { get; set; }
-		public string F_ManagerName { get; set; }
+        [SugarColumn(IsIgnore = true)]
+        //使用导入错误信息
+        public string ErrorMsg { get; set; }
+        [SugarColumn(IsIgnore = true)]
+        public string F_ManagerName { get; set; }
     }
 }

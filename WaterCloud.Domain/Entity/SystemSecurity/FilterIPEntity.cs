@@ -82,7 +82,7 @@ namespace WaterCloud.Domain.SystemSecurity
 		/// <summary>
 		/// 修改时间
 		/// </summary>
-		[SugarColumn(IsNullable = false, ColumnDescription = "修改时间")]
+		[SugarColumn(IsNullable = true, ColumnDescription = "修改时间")]
 		public DateTime? F_LastModifyTime { get; set; }
 
 		/// <summary>
