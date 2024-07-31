@@ -8,6 +8,15 @@
             $ = layui.$,
             common = layui.common,
             laydate = layui.laydate;
+        // 自定义验证规则
+        form.verify({
+            pass: function (value, elem) {
+                var EXP = /^[\S]{6,12}$/;
+                if (value && !EXP.test(value)) {
+                    return '密码必须6到12位，且不能出现空格';
+                }
+            }
+        });
         var keyValue = $.request("keyValue");
         //权限字段
         common.authorizeFields('adminform');
