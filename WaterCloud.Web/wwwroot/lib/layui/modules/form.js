@@ -62,26 +62,27 @@ layui.define(['lay', 'layer', 'util'], function(exports){
           if (value && !EXP.test(value)) {
             return '身份证号格式不正确';
           }
-            },
-            integer: function (value) {
-                var EXP = /^\d*$/;
-                if (value && !EXP.test(value)) {
-                    return '只能填写整数';
-                }
-            },
-            pass: function (value) {
-                var EXP = /^[\S]{6,12}$/;
-                if (value && !EXP.test(value)) {
-                    return '密码必须6到12位，且不能出现空格';
-                }
-            },
-            ip: function (value) {
-                var EXP = /(^$)|^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
-                if (value && !EXP.test(value)) {
-                    return 'IP地址不符合规则';
-                }
+        },
+        integer: function (value) {
+            var EXP = /^\d*$/;
+            if (value && !EXP.test(value)) {
+                return '只能填写整数';
             }
-        }, tocomplete: null // 全局 autocomplete 状态。 null 表示不干预
+        },
+        pass: function (value) {
+            var EXP = /^[\S]{6,12}$/;
+            if (value && !EXP.test(value)) {
+                return '密码必须6到12位，且不能出现空格';
+            }
+        },
+        ip: function (value) {
+            var EXP = /(^$)|^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+            if (value && !EXP.test(value)) {
+                return 'IP地址不符合规则';
+            }
+        }
+        },
+        autocomplete: null // 全局 autocomplete 状态。 null 表示不干预
     };
   };
   
