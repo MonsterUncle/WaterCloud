@@ -270,6 +270,7 @@
    * @param {string | number} [opts.margin=5] - 边距
    * @param {Event} [opts.e] - 事件对象，仅右键生效
    * @param {boolean} [opts.SYSTEM_RELOAD] - 是否重载，用于出现滚动条时重新计算位置
+   * @param {[offsetX:number, offsetY:number]} [opts.offset] - 相对于触发元素的额外偏移量[x,y]
    * @example
    * ```js
    * <button id="targetEl">dropdown</button>
@@ -370,10 +371,12 @@
     // 定位类型
     var position = opts.position;
     if(position) elem.style.position = position;
+    var offsetX = opts.offset ? opts.offset[0] : 0;
+    var offsetY = opts.offset ? opts.offset[1] : 0;
 
     // 设置坐标
-    elem.style.left = left + (position === 'fixed' ? 0 : scrollArea(1)) + 'px';
-    elem.style.top = top + (position === 'fixed' ? 0 : scrollArea()) + 'px';
+    elem.style.left = left + (position === 'fixed' ? 0 : scrollArea(1)) + offsetX + 'px';
+    elem.style.top = top + (position === 'fixed' ? 0 : scrollArea()) + offsetY + 'px';
 
     // 防止页面无滚动条时，又因为弹出面板而出现滚动条导致的坐标计算偏差
     if(!lay.hasScrollbar()){
@@ -503,6 +506,270 @@
         }
       }
     }
+  };
+
+  /**
+   * 检测是否支持 Passive Event Listeners
+   * 引用自 https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md
+   * @type {boolean}
+   */
+  lay.passiveSupported = function(){
+    var passiveSupported = false;
+    try {
+      var opts = Object.defineProperty({}, 'passive', {
+        get: function() {
+          passiveSupported = true;
+        }
+      });
+      window.addEventListener('test', null, opts);
+      window.removeEventListener('test', null, opts);
+    } catch (err) {}
+    return passiveSupported;
+  }();
+
+  /**
+   * 是否支持 touch 事件
+   */
+  lay.touchEventsSupported = function(){
+    return 'ontouchstart' in window;
+  };
+
+  /**
+   * @typedef touchSwipeState
+   * @prop {{x: number,y: number}} pointerStart - 初始坐标
+   * @prop {{x: number,y: number}} pointerEnd - 结束坐标
+   * @prop {number} distanceX - X 轴移动距离
+   * @prop {number} distanceY - Y 轴移动距离
+   * @prop {'none'|'right'|'left'|'up'|'down'} direction - 滑动方向
+   * @prop {Date} timeStart 开始时间
+   */
+  /**
+   * @callback touchSwipeCallback
+   * @param {TouchEvent} e 滑动事件
+   * @param {touchSwipeState} state 滑动相关的状态
+   */
+  /**
+   * 基于 touch 事件的触摸滑动
+   * @param {string | HTMLElement | JQuery} elem - HTML 元素
+   * @param {{onTouchStart?: touchSwipeCallback, onTouchMove?: touchSwipeCallback, onTouchEnd?: touchSwipeCallback}} opts - 配置项
+   */
+  lay.touchSwipe = function(elem, opts){
+    var options = opts
+    var targetElem = lay(elem)[0];
+
+    if(!targetElem || !lay.touchEventsSupported()) return;
+
+    var state = {
+      pointerStart: {x:0, y:0},
+      pointerEnd: {x:0, y:0},
+      distanceX: 0,
+      distanceY: 0,
+      direction:'none', // 'up','down','left','right','none
+      timeStart: null
+    }
+
+    var onStart = function(e){
+      if(e.touches.length !== 1) return;
+      bindEvents();
+      // 重置状态
+      state.timeStart = Date.now();
+      state.pointerStart.x = state.pointerEnd.x = e.touches[0].clientX;
+      state.pointerStart.y = state.pointerEnd.y = e.touches[0].clientY;
+      state.distanceX = state.distanceY = 0;
+      state.direction = 'none'
+
+      options.onTouchStart && options.onTouchStart(e, state);
+    }
+
+    var onMove = function(e){
+      e.preventDefault();
+      state.pointerEnd.x = e.touches[0].clientX;
+      state.pointerEnd.y = e.touches[0].clientY;
+      state.distanceX = state.pointerStart.x - state.pointerEnd.x;
+      state.distanceY = state.pointerStart.y - state.pointerEnd.y;
+      if(Math.abs(state.distanceX) > Math.abs(state.distanceY)){
+        state.direction = state.distanceX > 0 ? 'left' : 'right';
+      }else{
+        state.direction = state.distanceY > 0 ? 'up' : 'down';
+      }
+      options.onTouchMove && options.onTouchMove(e, state);
+    }
+
+    var onEnd = function(e){
+      options.onTouchEnd && options.onTouchEnd(e, state);
+      unbindEvents();
+    }
+    
+    var bindEvents = function(){
+      targetElem.addEventListener('touchmove', onMove, lay.passiveSupported ? { passive: false} : false);
+      targetElem.addEventListener('touchend', onEnd);
+      targetElem.addEventListener('touchcancel', onEnd);
+    }
+
+    var unbindEvents = function(){
+      targetElem.removeEventListener('touchmove', onMove);
+      targetElem.removeEventListener('touchend', onEnd, lay.passiveSupported ? { passive: false} : false);
+      targetElem.removeEventListener('touchcancel', onEnd);
+    }
+
+    // 防止事件重复绑定
+    if(targetElem.__lay_touchswipe_cb_){
+      targetElem.removeEventListener('touchstart', targetElem.__lay_touchswipe_cb_);
+    }
+    targetElem.__lay_touchswipe_cb_ = onStart;
+    targetElem.addEventListener('touchstart', onStart);
+  }
+
+  /** @type {(elem: Element|Document|Window,eventName: string,fn:EventListenerOrEventListenerObject,options: boolean | AddEventListenerOptions) => any}*/
+  lay.addEvent = function(){
+    if(document.addEventListener){
+      return function(elem, eventName, fn, options){
+        elem.addEventListener(eventName, fn, options);
+      }
+    }else{
+      return function(elem, eventName, fn){
+        var prefix = '_lay_on_';
+        var eventsCacheName = prefix + eventName;
+        var listener = function(e){
+          e.target = e.srcElement;
+          fn.call(elem, e);
+        }
+        listener._rawFn = fn;
+        if(!elem[eventsCacheName]){
+          elem[eventsCacheName] = [];
+        }
+        var include = false;
+        lay.each(elem[eventsCacheName], function(_, listener){
+          if(listener._rawFn === fn){
+            include = true;
+            return true;
+          }
+        })
+        if(!include){
+          elem[eventsCacheName].push(listener);
+          elem.attachEvent('on' + eventName, listener);
+        }
+      }
+    }
+  }();
+
+ /** @type {(elem: Element|Document|Window,eventName: string,fn:EventListenerOrEventListenerObject,options: boolean | EventListenerOptions) => any}*/
+  lay.removeEvent = function(){
+    if(document.removeEventListener){
+      return function(elem, eventName, fn, options){
+        elem.removeEventListener(eventName, fn, options);
+      }
+    }else{
+      return function(elem, eventName, fn){
+        var prefix = '_lay_on_';
+        var eventsCacheName = prefix + eventName;
+        var events = elem[eventsCacheName];
+        if(layui.isArray(events)){
+          var newEvents = [];
+          lay.each(events, function(_, listener){
+            if(listener._rawFn === fn){
+              elem.detachEvent('on'+ eventName, listener);
+            }else{
+              newEvents.push(listener);
+            }
+          })
+          elem[eventsCacheName] = newEvents;
+        }         
+      } 
+    }
+  }();
+
+  /**
+   * 监听指定元素外部的点击
+   * @param {HTMLElement} target - 被监听的元素
+   * @param {(e: Event) => void} handler - 事件触发时执行的函数
+   * @param {object} [options] - 选项
+   * @param {string} [options.event="pointerdown"] - 监听的事件类型
+   * @param {HTMLElement | Window} [options.scope=document] - 监听范围
+   * @param {Array<HTMLElement | string>} [options.ignore] - 忽略监听的元素或选择器字符串
+   * @param {boolean} [options.capture=true] - 对内部事件侦听器使用捕获阶段
+   * @returns {() => void} - 返回一个停止事件监听的函数
+   */
+  lay.onClickOutside = function(target, handler, options){
+    options = options || {};
+    var eventType = options.event || ('onpointerdown' in window ? 'pointerdown' : 'mousedown');
+    var scopeTarget = options.scope || document;
+    var ignore = options.ignore || [];
+    var useCapture = 'capture' in options ? options.capture : true;
+
+    var listener = function(event){
+      var el = target;
+      var eventTarget = event.target || event.srcElement;
+      var eventPath = getEventPath(event);
+
+      if (!el || el === eventTarget || eventPath.indexOf(el) !== -1){
+        return;
+      }
+      if(shouldIgnore(event, eventPath)){
+        return;
+      }
+
+      handler(event);
+    };
+
+    function shouldIgnore(event, eventPath){
+      var eventTarget = event.target || event.srcElement;
+      for(var i = 0; i < ignore.length; i++){
+        var target = ignore[i];
+        if(typeof target === 'string'){
+          var targetElements = document.querySelectorAll(target);
+          for(var j = 0; j < targetElements.length; j++){
+            var targetEl = targetElements[i];
+            if(targetEl === eventTarget || eventPath.indexOf(targetEl) !== -1){
+              return true;
+            }
+          }
+        }else{
+          if(target && (target === eventTarget || eventPath.indexOf(target) !== -1)){
+            return true;
+          }
+        }
+      }
+    }
+
+    function getEventPath(event){
+      var path = (event.composedPath && event.composedPath()) || event.path;
+      var eventTarget = event.target || event.srcElement;
+
+      if (path !== null && path !== undefined){
+        return path;
+      }
+
+      function getParents(node, memo){
+        memo = memo || [];
+        var parentNode = node.parentNode;
+
+        return parentNode
+          ? getParents(parentNode, memo.concat([parentNode]))
+          : memo;
+      }
+
+      return [eventTarget].concat(getParents(eventTarget));
+    }
+
+    function bindEventListener(elem, eventName, handler, opts){
+      elem.addEventListener
+        ? elem.addEventListener(eventName, handler, opts)
+        : elem.attachEvent('on' + eventName, handler);
+
+      return function(){
+        elem.removeEventListener
+          ? elem.removeEventListener(eventName, handler, opts)
+          : elem.detachEvent('on' + eventName, handler);
+      }
+    }
+
+    return bindEventListener(
+      scopeTarget, 
+      eventType, 
+      listener, 
+      lay.passiveSupported ? { passive: true, capture: useCapture } : useCapture
+    );
   };
 
 
@@ -672,21 +939,16 @@
   };
 
   // 事件绑定
-  Class.fn.on = function(eventName, fn){
+  Class.fn.on = function(eventName, fn, options){
     return this.each(function(index, item){
-      item.attachEvent ? item.attachEvent('on' + eventName, function(e){
-        e.target = e.srcElement;
-        fn.call(item, e);
-      }) : item.addEventListener(eventName, fn, false);
+      lay.addEvent(item, eventName, fn, options)
     });
   };
 
   // 解除事件
-  Class.fn.off = function(eventName, fn){
+  Class.fn.off = function(eventName, fn, options){
     return this.each(function(index, item){
-      item.detachEvent
-        ? item.detachEvent('on'+ eventName, fn)
-      : item.removeEventListener(eventName, fn, false);
+      lay.removeEvent(item, eventName, fn, options)
     });
   };
 

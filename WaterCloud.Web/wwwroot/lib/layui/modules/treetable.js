@@ -47,7 +47,11 @@ layui.define(['table'], function (exports) {
     }
   }
 
-  // 获取当前实例
+  /**
+   * 获取当前实例
+   * @param {string} id 表格id
+   * @returns {Class}
+   */
   var getThisTable = function (id) {
     var that = thisTreeTable.that[id];
     if (!that) hint.error(id ? ('The treeTable instance with ID \'' + id + '\' not found') : 'ID argument required');
@@ -56,6 +60,7 @@ layui.define(['table'], function (exports) {
 
   // 字符
   var MOD_NAME = 'treeTable';
+  var MOD_ID = 'lay-table-id';
   var HIDE = 'layui-hide';
 
   var ELEM_VIEW = '.layui-table-view';
@@ -79,8 +84,13 @@ layui.define(['table'], function (exports) {
   var LAY_HAS_EXPANDED = 'LAY_HAS_EXPANDED';
   var LAY_ASYNC_STATUS = 'LAY_ASYNC_STATUS';
   var LAY_CASCADE = ['all', 'parent', 'children', 'none'];
+  var HTML_TAG_RE = /<[^>]+?>/;
+  var ICON_PROPS = ['flexIconClose', 'flexIconOpen', 'iconClose', 'iconOpen', 'iconLeaf', 'icon']
 
-  // 构造器
+  /**
+   * 构造器
+   * @class
+   */
   var Class = function (options) {
     var that = this;
     that.index = ++treeTable.index;
@@ -93,9 +103,9 @@ layui.define(['table'], function (exports) {
   var updateCache = function (id, childrenKey, data) {
     var tableCache = table.cache[id];
     layui.each(data || tableCache, function (index, item) {
-      var itemDataIndex = item[LAY_DATA_INDEX];
+      var itemDataIndex = item[LAY_DATA_INDEX] || '';
       if (itemDataIndex.indexOf('-') !== -1) {
-        tableCache[itemDataIndex] = item
+        tableCache[itemDataIndex] = item;
       }
       item[childrenKey] && updateCache(id, childrenKey, item[childrenKey]);
     })
@@ -126,6 +136,14 @@ layui.define(['table'], function (exports) {
 
     var parseData = options.parseData;
     var done = options.done;
+
+    // treeTable重载数据时，会先加载显示顶层节点，然后根据重载数据前的子节点展开状态，展开相应的子节点，
+    // 那么如果重载数据前有滚动条滚动在某个位子，重新加载时顶层节点如果比较少，只显示顶层节点时没有滚动条的情况下，
+    // 自动展开子节点后，滚动条就会显示在顶部，无法保持在重载数据之前的位置。
+    // 处理保持滚动条的问题，重载数据前记录滚动条的位置
+    if(reload === 'reloadData' && thatOptionsTemp.scrollPos === 'fixed'){
+      that.scrollTopCache = that.config.elem.next().find(ELEM_BODY).scrollTop();
+    }
 
     if (thatOptionsTemp.url) {
       // 异步加载的时候需要处理parseData进行转换
@@ -158,19 +176,25 @@ layui.define(['table'], function (exports) {
         options.parseData.mod = true
       }
     } else {
-      options.data = options.data || [];
-      // 处理 isSimpleData
-      if (treeOptions.data.isSimpleData) {
-        options.data = that.flatToTree(options.data);
+      if(options.data !== undefined){
+        options.data = options.data || [];
+        // 处理 isSimpleData
+        if (treeOptions.data.isSimpleData) {
+          options.data = that.flatToTree(options.data);
+        }
+        that.initData(options.data);
       }
-      that.initData(options.data);
     }
 
     if (!reload || (reload && done && !done.mod)) {
       options.done = function () {
         var args = arguments;
         var doneThat = this;
-        var isRenderData = args[3]; // 是否是 renderData
+        // undefined: 初始 render 或 reload，两者本质没有区别可以不做区分
+        // 'reloadData': 重载数据
+        // 'renderData': 重新渲染数据
+        var renderType = args[3];
+        var isRenderData = renderType === 'renderData';
         if (!isRenderData) {
           delete that.isExpandAll;
         }
@@ -196,11 +220,25 @@ layui.define(['table'], function (exports) {
 
         that.renderTreeTable(tableView);
 
+        // 恢复滚动条位置
+        if(renderType === 'reloadData' && doneThat.scrollPos === 'fixed'){
+          tableView.find(ELEM_BODY).scrollTop(that.scrollTopCache);
+        }
+
         if (layui.type(done) === 'function') {
           return done.apply(doneThat, args);
         }
       }
       options.done.mod = true;
+    }
+
+    // 处理图标
+    if(options && options.tree && options.tree.view){
+      layui.each(ICON_PROPS, function(i, iconProp){
+        if(options.tree.view[iconProp] !== undefined){
+          options.tree.view[iconProp] = that.normalizedIcon(options.tree.view[iconProp]);
+        }
+      })
     }
   }
 
@@ -270,6 +308,12 @@ layui.define(['table'], function (exports) {
     },
   };
 
+  Class.prototype.normalizedIcon = function(iconStr){
+    return iconStr
+      ? HTML_TAG_RE.test(iconStr) ? iconStr : '<i class="' + iconStr +'"></i>'
+      : ''
+  }
+
   Class.prototype.getOptions = function () {
     var that = this;
     if (that.tableIns) {
@@ -283,31 +327,40 @@ layui.define(['table'], function (exports) {
     idKey = idKey || 'id';
     pIdKey = pIdKey || 'parentId';
     childrenKey = childrenKey || 'children';
-    // 创建一个空的 nodes 对象，用于保存所有的节点
-    var nodes = {};
-    // 遍历所有节点，将其加入 nodes 对象中
+    // 创建一个空的 map 对象，用于保存所有的节点
+    var map = {};
+    var rootNodes = [];
+
     var idTemp = '';
-    layui.each(flatArr, function (index, item) {
-      idTemp = idKey + item[idKey];
-      nodes[idTemp] = $.extend({}, item);
-      nodes[idTemp][childrenKey] = [];
-    })
-    // 遍历所有节点，将其父子关系加入 nodes 对象
     var pidTemp = '';
-    layui.each(nodes, function (index, item) {
+    layui.each(flatArr, function(index, item){
+      idTemp = idKey + item[idKey];
       pidTemp = idKey + item[pIdKey];
-      if (pidTemp && nodes[pidTemp]) {
-        nodes[pidTemp][childrenKey].push(item);
+
+      // 将节点存入 map 对象
+      if(!map[idTemp]){
+        map[idTemp] = {};
+        map[idTemp][childrenKey] = [];
       }
-    })
-    // 返回顶层节点
-    return Object.keys(nodes)
-      .map(function(k) {
-        return nodes[k];
-      })
-      .filter(function (item) {
-        return rootPid ? item[pIdKey] === rootPid : !item[pIdKey];
-      })
+
+      // 合并节点
+      var tempObj = {};
+      tempObj[childrenKey] = map[idTemp][childrenKey];
+      map[idTemp] = $.extend({}, item, tempObj);
+
+      var isRootNode = (rootPid ? map[idTemp][pIdKey] === rootPid : !map[idTemp][pIdKey]);
+      if(isRootNode){
+        rootNodes.push(map[idTemp]);
+      }else{
+        if(!map[pidTemp]){
+          map[pidTemp] = {};
+          map[pidTemp][childrenKey] = [];
+        }
+        map[pidTemp][childrenKey].push(map[idTemp]);
+      }
+    });
+
+    return rootNodes;
   }
 
   Class.prototype.flatToTree = function (tableData) {
@@ -505,15 +558,19 @@ layui.define(['table'], function (exports) {
     var isParentKey = customName.isParent;
     var childrenKey = customName.children;
 
-    layui.each(data, function (i1, item1) {
-      if (!(isParentKey in item1)) {
-        item1[isParentKey] = !!(item1[childrenKey] && item1[childrenKey].length);
-      }
-      item1[LAY_DATA_INDEX_HISTORY] = item1[LAY_DATA_INDEX];
-      item1[LAY_PARENT_INDEX] = parentIndex = parentIndex || '';
-      var dataIndex = item1[LAY_DATA_INDEX] = (parentIndex ? parentIndex + '-' : '') + i1;
-      that.initData(item1[childrenKey] || [], dataIndex);
-    });
+    var update = function(data, parentIndex){
+      layui.each(data, function (i1, item1) {
+        if (!(isParentKey in item1)) {
+          item1[isParentKey] = !!(item1[childrenKey] && item1[childrenKey].length);
+        }
+        item1[LAY_DATA_INDEX_HISTORY] = item1[LAY_DATA_INDEX];
+        item1[LAY_PARENT_INDEX] = parentIndex = parentIndex || '';
+        var dataIndex = item1[LAY_DATA_INDEX] = (parentIndex ? parentIndex + '-' : '') + i1;
+        update(item1[childrenKey] || [], dataIndex);
+      });
+    }
+
+    update(data, parentIndex);
 
     updateCache(tableId, childrenKey, data);
 
@@ -536,7 +593,7 @@ layui.define(['table'], function (exports) {
     // treeNode // 需要展开的节点
     var trElem = treeNode.trElem;
     var tableViewElem = treeNode.tableViewElem || trElem.closest(ELEM_VIEW);
-    var tableId = treeNode.tableId || tableViewElem.attr('lay-id');
+    var tableId = treeNode.tableId || tableViewElem.attr(MOD_ID);
     var options = treeNode.options || table.getOptions(tableId);
     var dataIndex = treeNode.dataIndex || trElem.attr('lay-data-index'); // 可能出现多层
     var treeTableThat = getThisTable(tableId);
@@ -565,14 +622,12 @@ layui.define(['table'], function (exports) {
 
     // 找到表格中的同类节点（需要找到lay-data-index一致的所有行）
     var trsElem = tableViewElem.find('tr[lay-data-index="' + dataIndex + '"]');
-    // 处理折叠按钮图标
     var flexIconElem = trsElem.find('.layui-table-tree-flexIcon');
-    flexIconElem.html(trExpand ? treeOptions.view.flexIconOpen : treeOptions.view.flexIconClose)
-    trData[isParentKey] && flexIconElem.css('visibility', 'visible');
-    // 处理节点图标
-    treeOptions.view.showIcon && trsElem
-      .find('.layui-table-tree-nodeIcon:not(.layui-table-tree-iconCustom,.layui-table-tree-iconLeaf)')
-      .html(trExpand ? treeOptions.view.iconOpen : treeOptions.view.iconClose);
+    treeTableThat.updateNodeIcon({
+      scopeEl: trsElem,
+      isExpand: trExpand,
+      isParent: trData[isParentKey]
+    });
     trData[LAY_EXPAND] = trExpand;
     var trDataId = trData[customName.id];
     trDataId !== undefined && (treeTableThat.status.expand[trDataId] = trExpand);
@@ -715,17 +770,19 @@ layui.define(['table'], function (exports) {
               'data-index': childItem[LAY_DATA_INDEX],
               'lay-data-index': childItem[LAY_DATA_INDEX],
               'data-level': dataLevelNew
-            })
+            }).data('index', childItem[LAY_DATA_INDEX]);
+
             str2Obj.trs_fixed.eq(childIndex).attr({
               'data-index': childItem[LAY_DATA_INDEX],
               'lay-data-index': childItem[LAY_DATA_INDEX],
               'data-level': dataLevelNew
-            })
+            }).data('index', childItem[LAY_DATA_INDEX]);
+
             str2Obj.trs_fixed_r.eq(childIndex).attr({
               'data-index': childItem[LAY_DATA_INDEX],
               'lay-data-index': childItem[LAY_DATA_INDEX],
               'data-level': dataLevelNew
-            })
+            }).data('index', childItem[LAY_DATA_INDEX]);
           })
 
           tableViewElem.find(ELEM_MAIN).find('tbody tr[lay-data-index="' + dataIndex + '"]').after(str2Obj.trs);
@@ -928,9 +985,9 @@ layui.define(['table'], function (exports) {
             'lay-data-index': dataItem[LAY_DATA_INDEX],
             'data-level': dataLevel
           };
-          trAllObj.trs.eq(dataIndex).attr(props)
-          trAllObj.trs_fixed.eq(dataIndex).attr(props)
-          trAllObj.trs_fixed_r.eq(dataIndex).attr(props)
+          trAllObj.trs.eq(dataIndex).attr(props).data('index', dataItem[LAY_DATA_INDEX]);
+          trAllObj.trs_fixed.eq(dataIndex).attr(props).data('index', dataItem[LAY_DATA_INDEX]);
+          trAllObj.trs_fixed_r.eq(dataIndex).attr(props).data('index', dataItem[LAY_DATA_INDEX]);
         })
         layui.each(['main', 'fixed-l', 'fixed-r'], function (i, item) {
           tableView.find('.layui-table-' + item + ' tbody').html(trAllObj[['trs', 'trs_fixed', 'trs_fixed_r'][i]]);
@@ -939,6 +996,43 @@ layui.define(['table'], function (exports) {
       }
     }
     treeTable.resize(id);
+  }
+
+  /**
+   * @typedef updateNodeIconOptions
+   * @prop {JQuery} scopeEl - tr 元素
+   * @prop {boolean} isExpand - 是否是展开图标
+   * @prop {boolean} isParent - 是否是父节点图标
+   */
+  /**
+   * 更新节点图标
+   * @param {updateNodeIconOptions} opts
+   */
+  Class.prototype.updateNodeIcon = function(opts){
+    var that = this;
+    var options = that.getOptions();
+    var treeOptions = options.tree || {};
+    var scopeEl = opts.scopeEl;
+    var isExpand = opts.isExpand;
+    var isParent = opts.isParent;
+
+    // 处理折叠按钮图标
+    var flexIconElem = scopeEl.find('.layui-table-tree-flexIcon');
+
+    flexIconElem
+      .css('visibility', isParent || treeOptions.view.showFlexIconIfNotParent ? 'visible' : 'hidden')
+      .html(isExpand ? treeOptions.view.flexIconOpen : treeOptions.view.flexIconClose);
+    // 处理节点图标
+    if(treeOptions.view.showIcon){
+      var nodeIconElem = scopeEl.find('.layui-table-tree-nodeIcon:not(.layui-table-tree-iconCustom)');
+      var nodeIcon = isParent 
+        ? (isExpand ? treeOptions.view.iconOpen : treeOptions.view.iconClose)
+        : treeOptions.view.iconLeaf;
+
+      nodeIconElem
+        .toggleClass('layui-table-tree-iconLeaf', !isParent)
+        .html(nodeIcon);
+    }
   }
 
   Class.prototype.renderTreeTable = function (tableView, level, sonSign) {
@@ -1009,7 +1103,7 @@ layui.define(['table'], function (exports) {
             ((trData[customName.icon] || treeOptionsView.icon) ? ' layui-table-tree-iconCustom' : '') +
             (trData[isParentKey] ? '' : ' layui-table-tree-iconLeaf') +
             '">' +
-            (trData[customName.icon] || treeOptionsView.icon ||
+            (that.normalizedIcon(trData[customName.icon]) || treeOptionsView.icon ||
               (trData[isParentKey] ?
                 (trData[LAY_EXPAND] ? treeOptionsView.iconOpen : treeOptionsView.iconClose) :
                 treeOptionsView.iconLeaf) ||
@@ -1037,10 +1131,14 @@ layui.define(['table'], function (exports) {
         trDefaultExpand.find('.layui-table-tree-flexIcon').html(treeOptionsView.flexIconOpen);
         expandNode({trElem: trDefaultExpand.first()}, true);
       });
+      // #1463 expandNode 中已经展开过的节点不会重新渲染
+      debounceFn('renderTreeTable2-' + tableId, function () {
+        form.render($('.layui-table-tree[' + MOD_ID + '="' + tableId + '"]'));
+      }, 0)();
     } else {
       debounceFn('renderTreeTable-' + tableId, function () {
         options.hasNumberCol && formatNumber(that);
-        form.render($('.layui-table-tree[lay-id="' + tableId + '"]'));
+        form.render($('.layui-table-tree[' + MOD_ID + '="' + tableId + '"]'));
       }, 0)();
     }
   }
@@ -1148,8 +1246,32 @@ layui.define(['table'], function (exports) {
     if(!that) return;
 
     var options = that.getOptions();
+    var treeOptions = options.tree;
+
+    var tableData =  treeTable.getData(id);
+    var customName = treeOptions.customName;
+    var childrenKey = customName.children;
+
+    // 只和同级节点排序
+    var sort = function(data, field, type){
+      layui.sort(data, field, type, true);
+      layui.each(data, function(rowIndex, trData){
+        sort(trData[childrenKey] || [], field, type);
+      })
+    }
+
     if (options.autoSort) {
-      that.initData();
+      var initSort = options.initSort;
+      if (initSort.type) {
+        sort(tableData, initSort.field, initSort.type === 'desc');
+      } else {
+        // 恢复默认
+        sort(tableData, table.config.indexName, null);
+      }
+      // 更新缓存中数据的顺序
+      table.cache[id] = tableData;
+      // 重新初始化缓存数据
+      that.initData(tableData);
       treeTable.renderData(id);
     }
   }
@@ -1214,47 +1336,87 @@ layui.define(['table'], function (exports) {
         'data-index': trIndex,
         'lay-data-index': index,
         'data-level': trLevel
-      }));
+      }).data('index', trIndex));
     });
     that.renderTreeTable(tableView.find('tr[lay-data-index="' + index + '"]'), trLevel);
   }
 
   // 删除数据
-  treeTable.removeNode = function (id, node) {
+  // _keepParent 暂时为私有参数，仅供内部使用
+  treeTable.removeNode = function (id, node, _keepParent) {
     var that = getThisTable(id);
     if(!that) return;
 
     var options = that.getOptions();
     var treeOptions = options.tree;
+    var isParentKey = treeOptions.customName.isParent;
+    var childrenKey = treeOptions.customName.children;
     var tableView = options.elem.next();
     var delNode;
     var indexArr = [];
+    var tableCache = table.cache[id];
     delNode = that.getNodeDataByIndex(layui.type(node) === 'string' ? node : node[LAY_DATA_INDEX], false, 'delete');
     var nodeP = that.getNodeDataByIndex(delNode[LAY_PARENT_INDEX]);
     that.updateCheckStatus(nodeP);
     var delNodesFlat = that.treeToFlat([delNode], delNode[treeOptions.customName.pid], delNode[LAY_PARENT_INDEX]);
-    layui.each(delNodesFlat, function (i2, item2) {
-      indexArr.push('tr[lay-data-index="' + item2[LAY_DATA_INDEX] + '"]');
+    layui.each(delNodesFlat, function (i2, delNode) {
+      var delNodeDataIndex = delNode[LAY_DATA_INDEX];
+      indexArr.push('tr[lay-data-index="' + delNodeDataIndex + '"]');
+      // 删除临时 key
+      if(delNodeDataIndex.indexOf('-') !== -1){
+        delete tableCache[delNodeDataIndex]; 
+      }
     })
 
     tableView.find(indexArr.join(',')).remove(); // 删除行
+
+    var deleteCacheKey = function(){
+      for (var key in tableCache) {
+        // 根节点 getNodeDataByIndex 内部已处理
+        if(key.indexOf('-') !== -1){
+          // L93 updateCache() 中，cacheKey 取自 rowData 中的 LAY_DATA_INDEX，
+          // 两者不同说明当前 cacheKey 引用的 rowData 已被更新
+          if(key !== tableCache[key][LAY_DATA_INDEX]){
+            delete tableCache[key]
+          }
+        }
+      }
+    }
+
     // 重新整理数据
     var tableData = that.initData();
+    deleteCacheKey();
     // index发生变化需要更新页面tr中对应的lay-data-index 新增和删除都要注意数据结构变动之后的index问题
     layui.each(that.treeToFlat(tableData), function (i3, item3) {
       if (item3[LAY_DATA_INDEX_HISTORY] && item3[LAY_DATA_INDEX_HISTORY] !== item3[LAY_DATA_INDEX]) {
         tableView.find('tr[lay-data-index="' + item3[LAY_DATA_INDEX_HISTORY] + '"]').attr({
           'data-index': item3[LAY_DATA_INDEX],
           'lay-data-index': item3[LAY_DATA_INDEX],
-        });
+        }).data('index', item3[LAY_DATA_INDEX]);
         // item3[LAY_DATA_INDEX_HISTORY] = item3[LAY_DATA_INDEX]
       }
     });
     // 重新更新顶层节点的data-index;
-    layui.each(table.cache[id], function (i4, item4) {
-      tableView.find('tr[data-level="0"][lay-data-index="' + item4[LAY_DATA_INDEX] + '"]').attr('data-index', i4);
+    layui.each(tableCache, function (i4, item4) {
+      tableView.find('tr[data-level="0"][lay-data-index="' + item4[LAY_DATA_INDEX] + '"]')
+        .attr('data-index', i4)
+        .data('index', i4);
     })
     options.hasNumberCol && formatNumber(that);
+    // 更新父节点状态
+    if(nodeP){
+      var trEl =  tableView.find('tr[lay-data-index="' + nodeP[LAY_DATA_INDEX] + '"]');
+
+      if(!_keepParent){
+        nodeP[isParentKey] = !!(nodeP[childrenKey] && nodeP[childrenKey].length);
+      }
+
+      that.updateNodeIcon({
+        scopeEl: trEl,
+        isExpand: nodeP[LAY_EXPAND],
+        isParent: nodeP[isParentKey],
+      });  
+    }
 
     // 重新适配尺寸
     treeTable.resize(id);
@@ -1336,9 +1498,9 @@ layui.define(['table'], function (exports) {
           'lay-data-index': newNodeItem[LAY_DATA_INDEX],
           'data-level': '0'
         };
-        newNodesHtmlObj.trs.eq(newNodeIndex).attr(attrs)
-        newNodesHtmlObj.trs_fixed.eq(newNodeIndex).attr(attrs)
-        newNodesHtmlObj.trs_fixed_r.eq(newNodeIndex).attr(attrs)
+        newNodesHtmlObj.trs.eq(newNodeIndex).attr(attrs).data('index', newNodeItem[LAY_DATA_INDEX]);
+        newNodesHtmlObj.trs_fixed.eq(newNodeIndex).attr(attrs).data('index', newNodeItem[LAY_DATA_INDEX]);
+        newNodesHtmlObj.trs_fixed_r.eq(newNodeIndex).attr(attrs).data('index', newNodeItem[LAY_DATA_INDEX]);
       })
       var trIndexPrev = parseInt(newNodes[0][LAY_DATA_INDEX]) - 1;
       var tableViewElemMAIN = tableViewElem.find(ELEM_MAIN);
@@ -1346,9 +1508,16 @@ layui.define(['table'], function (exports) {
       var tableViewElemFIXR = tableViewElem.find(ELEM_FIXR);
       if (trIndexPrev === -1) {
         // 插入到开头
-        tableViewElemMAIN.find('tr[data-level="0"][data-index="0"]').before(newNodesHtmlObj.trs);
-        tableViewElemFIXL.find('tr[data-level="0"][data-index="0"]').before(newNodesHtmlObj.trs_fixed);
-        tableViewElemFIXR.find('tr[data-level="0"][data-index="0"]').before(newNodesHtmlObj.trs_fixed_r);
+        var hasTr = tableViewElemMAIN.find('tr[data-level="0"][data-index="0"]')[0];
+        if(hasTr){
+          tableViewElemMAIN.find('tr[data-level="0"][data-index="0"]').before(newNodesHtmlObj.trs);
+          tableViewElemFIXL.find('tr[data-level="0"][data-index="0"]').before(newNodesHtmlObj.trs_fixed);
+          tableViewElemFIXR.find('tr[data-level="0"][data-index="0"]').before(newNodesHtmlObj.trs_fixed_r);
+        }else{
+          tableViewElemMAIN.find('tbody').prepend(newNodesHtmlObj.trs);
+          tableViewElemFIXL.find('tbody').prepend(newNodesHtmlObj.trs_fixed);
+          tableViewElemFIXR.find('tbody').prepend(newNodesHtmlObj.trs_fixed_r);
+        }
       } else {
         if (index === -1) {
           // 追加到最后
@@ -1366,7 +1535,9 @@ layui.define(['table'], function (exports) {
 
       // 重新更新顶层节点的data-index;
       layui.each(table.cache[id], function (i4, item4) {
-        tableViewElem.find('tr[data-level="0"][lay-data-index="' + item4[LAY_DATA_INDEX] + '"]').attr('data-index', i4);
+        tableViewElem.find('tr[data-level="0"][lay-data-index="' + item4[LAY_DATA_INDEX] + '"]')
+          .attr('data-index', i4)
+          .data('index', i4);
       })
 
       that.renderTreeTable(tableViewElem.find(newNodes.map(function (value, index, array) {
@@ -1402,6 +1573,15 @@ layui.define(['table'], function (exports) {
       expandNode({trElem: tableViewElem.find('tr[lay-data-index="' + parentIndex + '"]')}, true)
     }
     that.updateCheckStatus(parentNode);
+    // 更新父节点图标状态
+    if(parentNode){
+      var trEl = tableViewElem.find('tr[lay-data-index="' + parentNode[LAY_DATA_INDEX] + '"]');
+      that.updateNodeIcon({
+        scopeEl: trEl,
+        isExpand: parentNode[LAY_EXPAND],
+        isParent: parentNode[isParentKey],
+      }); 
+    }
     treeTable.resize(id);
     if (focus) {
       // 滚动到第一个新增的节点
@@ -1587,17 +1767,23 @@ layui.define(['table'], function (exports) {
     data = data.filter(function (item) {
         return !item[options.disabledName];
     });
-    layui.each(data, function (i1, item1) {
-      if (item1[checkName] || item1[LAY_CHECKBOX_HALF]) {
-        isIndeterminate = true;
-      }
-      if (!item1[checkName]) {
-        isAll = false;
-      }
-      if (isIndeterminate && !isAll) {
-        return true;
-      }
-    })
+
+    if(data.length > 0){
+      layui.each(data, function (i1, item1) {
+        if (item1[checkName] || item1[LAY_CHECKBOX_HALF]) {
+          isIndeterminate = true;
+        }
+        if (!item1[checkName]) {
+          isAll = false;
+        }
+        if (isIndeterminate && !isAll) {
+          return true;
+        }
+      })
+    }else{
+      isAll = false;
+    }
+    
     isIndeterminate = isIndeterminate && !isAll;
     form.render(tableView.find('input[name="layTableCheckbox"][lay-filter="layTableAllChoose"]').prop({
       'checked': isAll,
@@ -1879,7 +2065,7 @@ layui.define(['table'], function (exports) {
     dataP[LAY_EXPAND] = false;
     dataP[LAY_ASYNC_STATUS] = false;
     layui.each(that.treeToFlat(dataP[treeOptions.customName.children]).reverse(), function (i1, item1) {
-      treeTable.removeNode(id, item1[LAY_DATA_INDEX]);
+      treeTable.removeNode(id, item1[LAY_DATA_INDEX], true);
     })
     // 重新展开
     treeTable.expandNode(id, {
