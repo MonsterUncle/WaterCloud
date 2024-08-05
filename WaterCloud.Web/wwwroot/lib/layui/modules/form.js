@@ -20,57 +20,58 @@ layui.define(['lay', 'layer', 'util'], function(exports){
   var OUT_OF_RANGE = 'layui-input-number-out-of-range';
   
   var Form = function(){
-    this.config = {
-      // 内置的验证规则
-      verify: {
-        required: function(value) {
-          if (!/[\S]+/.test(value)) {
-            return '必填项不能为空';
-          }
-        },
-        phone: function(value) {
-          var EXP = /^1\d{10}$/;
-          if (value && !EXP.test(value)) {
-            return '手机号格式不正确';
-          }
-        },
-        email: function(value) {
-          var EXP = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-          if (value && !EXP.test(value)) {
-            return '邮箱格式不正确';
-          }
-        },
-        url: function(value) {
-          var EXP = /^(#|(http(s?)):\/\/|\/\/)[^\s]+\.[^\s]+$/;
-          if (value && !EXP.test(value)) {
-            return '链接格式不正确';
-          }
-        },
-        number: function(value){
-          if (value && isNaN(value)) {
-            return '只能填写数字';
-          }
-        },
-        date: function(value){
-          var EXP = /^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/;
-          if (value && !EXP.test(value)) {
-            return '日期格式不正确';
-          }
-        },
-        identity: function(value) {
-          var EXP = /(^\d{15}$)|(^\d{17}(x|X|\d)$)/;
-          if (value && !EXP.test(value)) {
-            return '身份证号格式不正确';
-          }
-        },
-        integer: function (value) {
-            var EXP = /^\d*$/;
-            if (value && !EXP.test(value)) {
-                return '只能填写整数';
-            }
-        },
-        autocomplete: null // 全局 autocomplete 状态。 null 表示不干预
-    }
+      this.config = {
+          // 内置的验证规则
+          verify: {
+              required: function (value) {
+                  if (!/[\S]+/.test(value)) {
+                      return '必填项不能为空';
+                  }
+              },
+              phone: function (value) {
+                  var EXP = /^1\d{10}$/;
+                  if (value && !EXP.test(value)) {
+                      return '手机号格式不正确';
+                  }
+              },
+              email: function (value) {
+                  var EXP = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                  if (value && !EXP.test(value)) {
+                      return '邮箱格式不正确';
+                  }
+              },
+              url: function (value) {
+                  var EXP = /^(#|(http(s?)):\/\/|\/\/)[^\s]+\.[^\s]+$/;
+                  if (value && !EXP.test(value)) {
+                      return '链接格式不正确';
+                  }
+              },
+              number: function (value) {
+                  if (value && isNaN(value)) {
+                      return '只能填写数字';
+                  }
+              },
+              date: function (value) {
+                  var EXP = /^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/;
+                  if (value && !EXP.test(value)) {
+                      return '日期格式不正确';
+                  }
+              },
+              identity: function (value) {
+                  var EXP = /(^\d{15}$)|(^\d{17}(x|X|\d)$)/;
+                  if (value && !EXP.test(value)) {
+                      return '身份证号格式不正确';
+                  }
+              },
+              integer: function (value) {
+                  var EXP = /^\d*$/;
+                  if (value && !EXP.test(value)) {
+                      return '只能填写整数';
+                  }
+              }
+          },
+          autocomplete: null // 全局 autocomplete 状态。 null 表示不干预
+      };
   };
   
   // 全局设置
