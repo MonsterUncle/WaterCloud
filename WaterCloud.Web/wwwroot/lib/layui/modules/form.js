@@ -70,7 +70,7 @@ layui.define(['lay', 'layer', 'util'], function(exports){
             }
         },
         autocomplete: null // 全局 autocomplete 状态。 null 表示不干预
-    };
+    }
   };
   
   // 全局设置
