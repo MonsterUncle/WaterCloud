@@ -10,7 +10,7 @@
 [![fork](https://gitee.com/qian_wei_hong/WaterCloud/badge/fork.svg)](https://gitee.com/qian_wei_hong/WaterCloud/members)
 ![](https://img.shields.io/badge/release-3.0.0.preview-red)
 
-![](https://img.shields.io/badge/.net-6.0.0-blue)
+![](https://img.shields.io/badge/.net-8.0.0-blue)
 ![](https://img.shields.io/badge/SqlSugar-5.1.4.59-blue)
 ![](https://img.shields.io/badge/layui-2.9.0-blue)
 </div>
@@ -21,7 +21,7 @@
 #### 介绍
 
 - 请勿用于违反我国法律的项目上。
-- WaterCloud是一套基于ASP.NET 6.0  MVC + API + SqlSugar + LayUI的框架，源代码完全开源，可以帮助你解决C#.NET项目的重复工作！
+- WaterCloud是一套基于ASP.NET 8.0  MVC + API + SqlSugar + LayUI的框架，源代码完全开源，可以帮助你解决C#.NET项目的重复工作！
 - 采用主流架构思想，容易上手，简单易学，学习成本低。
 - 可完全实现二次开发让开发更多关注业务逻辑。既能快速提高开发效率，帮助公司节省人力成本，同时又不失灵活性。
 - 支持SQLServer、MySQL 等多数据库类型。模块化设计，层次结构清晰。内置一系列企业信息管理的基础功能。
@@ -64,7 +64,7 @@
 
 2、后端技术
 
-- 核心框架：ASP.NET 6.0、WEB API
+- 核心框架：ASP.NET 8.0、WEB API
 - 定时任务：QuartZ，实现web控制
 - 持久层框架：SqlSugar（支持多种数据库，复杂查询操作、多租户、分库分表等）、Chloe(支持多种数据库，复杂查询操作，比较稳定)
 - 安全支持：过滤器、Sql注入、请求伪造
@@ -80,7 +80,7 @@
 #### 环境要求
 
 1. VS2022及以上版本；
-2. Asp.net 6.0；
+2. Asp.net 8.0；
 3. Mysql或者SQLSERVER2005及以上版本，database文件夹下有sql文件可执行；
 4. 请使用VS2022及以上版本打开解决方案。
 5. Redis和RabbitMq在项目文件夹里有
