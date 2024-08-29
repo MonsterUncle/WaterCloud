@@ -201,11 +201,11 @@ namespace WaterCloud.Service
 
                 if (splitTable == null)//如果特性是空
                 {
-                    db.CodeFirst.InitTables(entityType);//普通创建
+                    db.CodeFirst.SetStringDefaultLength(50).InitTables(entityType);//普通创建
 
                 }
                 else
-                    db.CodeFirst.SplitTables().InitTables(entityType);//自动分表创建
+                    db.CodeFirst.SetStringDefaultLength(50).SplitTables().InitTables(entityType);//自动分表创建
             }
         }
 
