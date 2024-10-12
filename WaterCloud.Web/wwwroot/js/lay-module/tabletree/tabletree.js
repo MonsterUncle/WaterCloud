@@ -166,14 +166,14 @@ layui.define(['layer', 'table','soulTable'], function (exports) {
                     if (isOpen) {
                         $(this).hide();
                         var index = $(this).attr('data-index');
-                        $('div[lay-id=' + id + ']').find('.layui-table-fixed tbody tr[data-index= ' + index + ']').hide();
+                        $('div[lay-table-id=' + id + ']').find('.layui-table-fixed tbody tr[data-index= ' + index + ']').hide();
                         if ('dir' == ttype && tOpen == isOpen) {
                             $ti.trigger('click');
                         }
                     } else {
                         $(this).show();
                         var index = $(this).attr('data-index');
-                        $('div[lay-id=' + id + ']').find('.layui-table-fixed tbody tr[data-index= ' + index + ']').show();
+                        $('div[lay-table-id=' + id + ']').find('.layui-table-fixed tbody tr[data-index= ' + index + ']').show();
                         if (linkage && 'dir' == ttype && tOpen == isOpen) {
                             $ti.trigger('click');
                         }
