@@ -86,7 +86,7 @@ namespace WaterCloud.Domain.SystemSecurity
 		/// 上次发生错误信息
 		/// </summary>
 		[Description("上次发生错误信息")]
-		[SugarColumn(IsNullable = true, ColumnDescription = "上次发生错误信息")]
+		[SugarColumn(IsNullable = true, ColumnDescription = "上次发生错误信息", ColumnDataType = "nvarchar(200)")]
 		public string F_LastRunErrMsg { get; set; }
 
 		/// <summary>
