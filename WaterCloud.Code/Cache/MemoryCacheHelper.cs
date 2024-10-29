@@ -215,7 +215,7 @@ namespace WaterCloud.Code
 #if NET8_0
             const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
             var entries = Cache.GetType().GetField("_coherentState", flags)?.GetValue(Cache);
-            var cacheItems = entries?.GetType().GetProperty("EntriesCollection", flags).GetValue(entries) as ICollection; //entries as IDictionary;
+            var cacheItems = entries?.GetType()?.GetProperty("EntriesCollection", flags)?.GetValue(entries) as ICollection; //entries as IDictionary;
             var keys = new List<string>();
             if (cacheItems == null) return keys;
             foreach (var item in cacheItems)
