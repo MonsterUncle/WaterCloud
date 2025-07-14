@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaterCloud.CodeGenerator", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaterCloud.Service", "WaterCloud.Service\WaterCloud.Service.csproj", "{55C15DA5-2666-4EE2-81F4-244AAC5D2691}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterCloud.Common", "WaterCloud.Common\WaterCloud.Common.csproj", "{D545D658-26E4-4487-98C2-91B6AA896763}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{55C15DA5-2666-4EE2-81F4-244AAC5D2691}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55C15DA5-2666-4EE2-81F4-244AAC5D2691}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55C15DA5-2666-4EE2-81F4-244AAC5D2691}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D545D658-26E4-4487-98C2-91B6AA896763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D545D658-26E4-4487-98C2-91B6AA896763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D545D658-26E4-4487-98C2-91B6AA896763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D545D658-26E4-4487-98C2-91B6AA896763}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
