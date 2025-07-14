@@ -56,11 +56,20 @@ layui.define(["jquery", "layer", 'table', 'treeTablelay', 'xmSelect', 'miniTab']
             //搜索框按钮
             if (options.search) {
                 options.defaultToolbar = !options.defaultToolbar? [] : options.defaultToolbar;
-                options.defaultToolbar.push({
-                    title: '搜索',
-                    layEvent: 'TABLE_SEARCH',
-                    icon: 'layui-icon-search'
-                });
+                // 新增判断逻辑
+                const isSearchExist = options.defaultToolbar.some(item =>
+                    item.title === '搜索' &&
+                    item.layEvent === 'TABLE_SEARCH' &&
+                    item.icon === 'layui-icon-search'
+                );
+
+                if (!isSearchExist) {
+                    options.defaultToolbar.push({
+                        title: '搜索',
+                        layEvent: 'TABLE_SEARCH',
+                        icon: 'layui-icon-search'
+                    });
+                }
             }   
             //ie缓存问题
             options.url = obj.urlAddTime(options.url);
