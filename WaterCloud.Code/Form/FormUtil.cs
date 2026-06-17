@@ -43,7 +43,7 @@ namespace WaterCloud.Code
 		public static List<string> SetValueByWeb(string webForm)
 		{
 			var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
-			var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
+			var referencedAssemblies = Directory.GetFiles(path, "WaterCloud.*.dll").Select(Assembly.LoadFrom).ToArray();
 			var t = referencedAssemblies
 				.SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Domain.") && t.FullName.Contains("." + webForm + "Entity"))).First();
 			List<string> temp = new List<string>();

@@ -1,39 +1,67 @@
-﻿"use strict";
-//const connection = new signalR.HubConnectionBuilder().withUrl("https://watercloud.vip/chatHub")
-const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub")
-    .configureLogging(signalR.LogLevel.Information).build();
+"use strict";
 
-connection.serverTimeoutInMilliseconds = 24e4;
-connection.keepAliveIntervalInMilliseconds = 12e4;
-connection.start().then(function () {
-    //传入token值
-    connection.invoke("SendLogin", "").catch(err => console.error("发送失败：" + err.toString()));
-    console.log("signalr连接成功");
-}).catch(function (ex) {
-    console.log("signalr连接失败" + ex);
-    //SignalR JavaScript 客户端不会自动重新连接，必须编写代码将手动重新连接你的客户端
-    setTimeout(start(), 5000);
+// 用原生WebSocket替代SignalR
+var chatSocket = null;
+var chatReconnectTimer = null;
 
-});
+function connectChat() {
+    var protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    var wsUrl = protocol + '//' + location.host + '/ws/chat';
 
-
-function start() {
-    try {
-        connection.start();
-        console.log("connected");
-    } catch (err) {
-        console.log(err);
-        setTimeout(start(), 5000);
+    if ('WebSocket' in window) {
+        chatSocket = new WebSocket(wsUrl);
+    } else {
+        console.error('浏览器不支持WebSocket，无法启动聊天功能');
+        return;
     }
-};
-connection.on("ReceiveMessage", function (msg) {
-    var data = JSON.parse(msg);
-    layui.use(['notice','common'], function () {
+
+    chatSocket.onopen = function () {
+        console.log("聊天WebSocket连接成功");
+        sendChatMessage({ type: "Login", token: "" });
+        if (chatReconnectTimer) {
+            clearTimeout(chatReconnectTimer);
+            chatReconnectTimer = null;
+        }
+    };
+
+    chatSocket.onmessage = function (e) {
+        if (e.data === "pong" || e.data === "Close!") return;
+        try {
+            var data = JSON.parse(e.data);
+            handleReceiveMessage(data);
+        } catch (err) {
+            console.error("聊天消息解析失败：" + err);
+        }
+    };
+
+    chatSocket.onerror = function () {
+        console.log("聊天WebSocket连接失败");
+    };
+
+    chatSocket.onclose = function () {
+        console.log("聊天WebSocket断开，3秒后重连...");
+        chatReconnectTimer = setTimeout(connectChat, 3000);
+    };
+}
+
+function sendChatMessage(msg) {
+    try {
+        if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+            chatSocket.send(JSON.stringify(msg));
+        }
+    } catch (e) {
+        console.error("发送聊天消息失败:", e);
+    }
+}
+
+// 消息接收处理（保持和原SignalR版一致的UI逻辑）
+function handleReceiveMessage(data) {
+    layui.use(['notice', 'common'], function () {
         var notice = layui.notice;
         var common = layui.common;
-        if (data.F_MessageType == 0)  {
+        if (data.F_MessageType == 0) {
             notice.options = {
-                positionClass: "toast-bottom-right",//弹出的位置,
+                positionClass: "toast-bottom-right",
                 onclick: function () {
                     common.ajax({
                         url: "/InfoManage/Message/ReadMsgForm",
@@ -66,7 +94,7 @@ connection.on("ReceiveMessage", function (msg) {
         }
         else if (data.F_MessageType == 1) {
             notice.options = {
-                positionClass: "toast-bottom-right",//弹出的位置,
+                positionClass: "toast-bottom-right",
                 onclick: function () {
                     common.ajax({
                         url: "/InfoManage/Message/ReadMsgForm",
@@ -99,7 +127,7 @@ connection.on("ReceiveMessage", function (msg) {
         }
         else {
             notice.options = {
-                positionClass: "toast-bottom-right",//弹出的位置,
+                positionClass: "toast-bottom-right",
                 onclick: function () {
                     common.ajax({
                         url: "/InfoManage/Message/ReadMsgForm",
@@ -114,22 +142,8 @@ connection.on("ReceiveMessage", function (msg) {
             notice.error(data.F_MessageInfo);
         }
         $("#noticeMarker").html("<span class='layui-badge-dot'></span>");
-    })
-});
-//下面测试断线重连机制 ，
-//重连之前调用 （只有在掉线的一瞬间，只进入一次）
-connection.onreconnecting(function(error) {
-    console.log("重连中...");
-});
-//(默认4次重连)，任何一次只要回调成功，调用
-connection.onreconnected(function(connectionId){
-    console.log("重连成功");
-});
-//(默认4次重连) 全部都失败后，调用
-connection.onclose(function(error){
-    console.log('重连失败');
-});
-//关闭连接方法
-window.onbeforeunload = function (e) {
-    connection.stop();
-};
+    });
+}
+
+// 启动连接
+connectChat();

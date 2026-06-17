@@ -174,7 +174,7 @@ namespace WaterCloud.Service.FlowManage
                 if (flowInstance.F_FrmType == 1)
                 {
                     var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
-                    var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
+                    var referencedAssemblies = Directory.GetFiles(path, "WaterCloud.*.dll").Select(Assembly.LoadFrom).ToArray();
                     var t = referencedAssemblies
                         .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + flowInstance.F_DbName + "Service"))).First();
                     ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
@@ -344,7 +344,7 @@ namespace WaterCloud.Service.FlowManage
 				wfruntime.MakeTagNode(wfruntime.currentNodeId, tag);
 				if (tag.Taged == (int)TagState.Ok)
 				{
-					var roleIds = user.RoleId.Split(',');
+					var roleIds = user.RoleId?.Split(',');
 					if (wfruntime.currentNode.setInfo.NodeDesignate == Setinfo.MORE_USER_MANAGER && roleIds.Intersect(wfruntime.currentNode.setInfo.NodeDesignateData.roles).Count() == 0)
 					{
                         flowInstance.F_MakerList = GetNodeMarkers(wfruntime.currentNode);
@@ -382,7 +382,7 @@ namespace WaterCloud.Service.FlowManage
             if (flowInstance.F_FrmType == 1)
             {
                 var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
-                var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
+                var referencedAssemblies = Directory.GetFiles(path, "WaterCloud.*.dll").Select(Assembly.LoadFrom).ToArray();
                 var t = referencedAssemblies
                     .SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + flowInstance.F_DbName + "Service"))).First();
                 ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
@@ -757,7 +757,7 @@ namespace WaterCloud.Service.FlowManage
 			{
 				flowinstance.CurrentNodeDesignateType = runtime.currentNode.setInfo.NodeDesignate;
 				var roles = runtime.currentNode.setInfo.NodeDesignateData.roles;
-                var currentRoles = currentuser.RoleId.Split(",");
+                var currentRoles = currentuser.RoleId?.Split(",");
                 if (flowinstance.CurrentNodeDesignateType == Setinfo.MORE_USER_MANAGER && currentRoles.Intersect(roles).Count() == 0)
 				{
                     var userEntity = repository.Db.Queryable<UserEntity>().InSingle(currentuser.UserId);
@@ -916,7 +916,7 @@ namespace WaterCloud.Service.FlowManage
 			if (entity.F_FrmType == 1)
 			{
 				var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
-				var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
+				var referencedAssemblies = Directory.GetFiles(path, "WaterCloud.*.dll").Select(Assembly.LoadFrom).ToArray();
 				var t = referencedAssemblies
 					.SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + entity.F_DbName + "Service"))).First();
 				ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
@@ -1077,7 +1077,7 @@ namespace WaterCloud.Service.FlowManage
 			if (entity.F_FrmType == 1)
 			{
 				var path = AppDomain.CurrentDomain.RelativeSearchPath ?? AppDomain.CurrentDomain.BaseDirectory;
-				var referencedAssemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
+				var referencedAssemblies = Directory.GetFiles(path, "WaterCloud.*.dll").Select(Assembly.LoadFrom).ToArray();
 				var t = referencedAssemblies
 					.SelectMany(a => a.GetTypes().Where(t => t.FullName.Contains("WaterCloud.Service.") && t.FullName.Contains("." + entity.F_DbName + "Service"))).First();
 				ICustomerForm icf = (ICustomerForm)GlobalContext.GetRequiredService(t);
