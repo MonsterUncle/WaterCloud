@@ -131,7 +131,12 @@ namespace WaterCloud.Code.Model
 		/// rabbitmq配置
 		/// </summary>
 		public MqConfig RabbitMq { get; set; }
-	}
+
+        /// <summary>
+        /// log是否记录数据库
+        /// </summary>
+        public bool NLogDbLogEnabled { get; set; }
+    }
 
 	public class DocumentSettings
 	{
