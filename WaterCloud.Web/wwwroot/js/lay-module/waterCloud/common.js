@@ -301,10 +301,8 @@ layui.define(["jquery", "layer", 'table', 'treeTablelay', 'xmSelect', 'miniTab']
                                     obj.modalClose();
                                 }
                                 catch (err) {
-                                    miniTab.deleteCurrentByIframe();
-                                } 
-                                finally {
                                     parent.layer.close(index);
+                                    miniTab.deleteCurrentByIframe();
                                 }
 
                             }
