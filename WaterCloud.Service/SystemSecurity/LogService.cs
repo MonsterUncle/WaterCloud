@@ -92,6 +92,13 @@ namespace WaterCloud.Service.SystemSecurity
 
 		public async Task WriteDbLog(LogEntity logEntity, OperatorModel user = null)
 		{
+			// 始终写NLog文件
+			LogHelper.WriteWithTime(string.Format("[{0}] {1} {2}", logEntity.F_ModuleName, logEntity.F_Description, logEntity.F_Account ?? ""));
+			if (!GlobalContext.SystemConfig.NLogDbLogEnabled)
+			{
+				await Task.CompletedTask;
+				return;
+			}
 			logEntity.F_Id = Utils.GuId();
 			logEntity.F_Date = DateTime.Now;
 			currentuser = OperatorProvider.Provider.GetCurrent();
